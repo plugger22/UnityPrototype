@@ -20,8 +20,8 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: 997a659afd255764aab98908dcbcb192, type: 2}
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   tooltipHeader: Get rid of them
-  tooltipMain: Unknown Effects
+  tooltipMain: "PLANNER loses Contact\r\nPLANNER Motivation -1"
   tooltipDetails: Unknown Mood Effect

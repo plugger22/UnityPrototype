@@ -19,8 +19,8 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   tooltipHeader: No thanks
-  tooltipMain: Unknown Effects
+  tooltipMain: ANARCHIST Motivation -1
   tooltipDetails: Unknown Mood Effect

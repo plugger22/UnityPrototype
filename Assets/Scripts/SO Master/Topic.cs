@@ -9,7 +9,7 @@ using UnityEngine;
 public class Topic : ScriptableObject
 {
     [Header("Texts")]
-    [Tooltip("Short descriptor, used as HEADER for topic UI display")]
+    [Tooltip("Short descriptor (TWO words), used as HEADER for topic UI display and other outputs")]
     public string tag;
     [Tooltip("Topic text. Keep as short as possible")]
     [TextArea] public string text = "Unknown";

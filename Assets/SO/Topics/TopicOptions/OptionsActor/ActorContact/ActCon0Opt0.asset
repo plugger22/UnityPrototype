@@ -22,8 +22,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   tooltipHeader: Pay them
-  tooltipMain: Unknown Effects
+  tooltipMain: "ANARCHIST gains Contact\r\nANARCHIST Motivation +1\r\nANARCHIST Renown
+    +1\r\nPlayer Renown -2"
   tooltipDetails: Unknown Mood Effect

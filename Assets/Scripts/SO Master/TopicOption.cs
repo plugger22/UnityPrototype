@@ -11,7 +11,7 @@ public class TopicOption : ScriptableObject
     [Header("Texts")]
     [Tooltip("Full text explanation of option, eg 'Actor Contact 0 option 2', not used inGame")]
     public string descriptor;
-    [Tooltip("Short descriptor (keep as short as possible, used for option tooltip header)")]
+    [Tooltip("Short descriptor (ONE word, used for option tooltip header and effect outcome messages)")]
     public string tag;
     [Tooltip("Option text, max 140 chars")]
     public string text;
@@ -47,7 +47,7 @@ public class TopicOption : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        //Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(topic != null, "Invalid topic (Null)");
 

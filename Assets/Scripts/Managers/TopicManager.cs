@@ -1305,7 +1305,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
         //debug
-        foreach(Topic topic in listOfTopics)
+        foreach (Topic topic in listOfTopics)
         { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }
         return listOfTopics;
     }
@@ -1734,7 +1734,7 @@ public class TopicManager : MonoBehaviour
             {
                 bool isProceed = false;
                 //check at least one topic in pool is live
-                foreach(Topic topic in debugTopicPool.listOfTopics)
+                foreach (Topic topic in debugTopicPool.listOfTopics)
                 { if (topic.status == Status.Live) { isProceed = true; break; } }
                 if (isProceed == true)
                 {
@@ -1812,7 +1812,6 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
     #region ProcessOption
     /// <summary>
     /// process selected topic option
@@ -1826,10 +1825,68 @@ public class TopicManager : MonoBehaviour
         {
 
             //process outcome effects / rolls / messages / etc.
+            List<Effect> listOfEffects = new List<Effect>();
+            if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
+            if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
+            if (turnOption.moodEffect != null) { listOfEffects.Add(turnOption.moodEffect); }
+            //two builders for top and bottom texts
+            StringBuilder builderTop = new StringBuilder();
+            StringBuilder builderBottom = new StringBuilder();
+            //check valid effects present
+            if (listOfEffects != null && listOfEffects.Count > 0)
+            {
+                //set up
+                EffectDataReturn effectReturn = new EffectDataReturn();
+
+                //pass through data package
+                EffectDataInput dataInput = new EffectDataInput();
+                dataInput.originText = string.Format("{0}, {1}", turnTopic.tag, turnOption.tag);
+                dataInput.side = GameManager.instance.sideScript.PlayerSide;
+                //use Player node as default placeholder (actual tagNodeID is used)
+                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                //loop effects
+                foreach (Effect effect in listOfEffects)
+                {
+                    if (node != null)
+                    {
+                        //process effect
+                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                        if (effectReturn != null)
+                        {
+                            //builderTop
+                            if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                            {
+                                if (builderTop.Length > 0) { builderTop.AppendLine(); }
+                                builderTop.Append(effectReturn.topText);
+                            }
+                            //builderBottom
+                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                            {
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                            }
+                            //exit effect loop on error
+                            if (effectReturn.errorFlag == true) { break; }
+                        }
+                        else
+                        {
+                            builderTop.AppendLine();
+                            builderTop.Append("Error");
+                            builderBottom.AppendLine();
+                            builderBottom.Append("Error");
+                            effectReturn.errorFlag = true;
+                            break;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, turnOption.name); }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
+            //outcome dialogue
+            SetTopicOutcome(builderTop, builderBottom);
+
             //tidy up stuff related to chosen topic option / stats / histor / etc.
 
-            //outcome dialogue
-            SetTopicOutcome();
         }
         else { Debug.LogWarningFormat("Invalid TopicOption (Null) for optionIndex \"{0}\"", optionIndex); }
 
@@ -1840,16 +1897,25 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// Initialise outcome for selected topic option
     /// </summary>
-    public void SetTopicOutcome()
+    public void SetTopicOutcome(StringBuilder top, StringBuilder bottom, Sprite sprite = null)
     {
+        string upperText, lowerText;
+        //default sprite
+        if (sprite == null) { sprite = GameManager.instance.guiScript.infoSprite; }
+        if (top == null || top.Length == 0)
+        { upperText = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText); }
+        else { upperText = top.ToString(); }
+        if (bottom == null || bottom.Length == 0)
+        { lowerText = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText); }
+        else { lowerText = bottom.ToString(); }
 
         //TO DO -> give actual selected option outcome 
 
         ModalOutcomeDetails details = new ModalOutcomeDetails()
         {
-            textTop = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText),
-            textBottom = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText),
-            sprite = GameManager.instance.guiScript.infoSprite,
+            textTop = upperText,
+            textBottom = lowerText,
+            sprite = sprite,
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
@@ -2917,7 +2983,7 @@ public class TopicManager : MonoBehaviour
         //Good effects
         if (option.listOfGoodEffects.Count > 0)
         {
-            foreach(Effect effect in option.listOfGoodEffects)
+            foreach (Effect effect in option.listOfGoodEffects)
             {
                 if (effect != null)
                 {
@@ -2947,7 +3013,9 @@ public class TopicManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
-        option.tooltipDetails = "Unknown Mood Effect";
+        if (option.moodEffect != null)
+        { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+        else { option.tooltipDetails = "No Mood effect"; }
         return isSucceed;
     }
     #endregion
