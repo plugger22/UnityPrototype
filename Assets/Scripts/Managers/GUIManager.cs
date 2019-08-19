@@ -448,7 +448,7 @@ public class GUIManager : MonoBehaviour
 
     /// <summary>
     /// Commence processing info Pipeline (compromised gear has already been taken care off in TurnManager.cs -> ProcessNewTurn)
-    /// Process the information pipeline in order -> Message Queue -> Decision -> MainInfoApp
+    /// Process the information pipeline in order -> Message Queue -> Topic -> MainInfoApp
     /// </summary>
     /// <param name="playerSide"></param>
     public void InfoPipelineStart(GlobalSide playerSide)
@@ -478,7 +478,7 @@ public class GUIManager : MonoBehaviour
             { yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType); }
             yield return new WaitForSecondsRealtime(pipelineWait);
         }
-        yield return StartCoroutine("Decision");
+        yield return StartCoroutine("Topic");
         yield return new WaitForSecondsRealtime(pipelineWait);
         yield return StartCoroutine("MainInfoApp", playerSide);
     }
@@ -514,17 +514,17 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets up and displays Decision
+    /// Sets up and displays Topic 
     /// </summary>
     /// <returns></returns>
-    IEnumerator Decision()
+    IEnumerator Topic()
     {
         if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
         {
             //switch of all modal 0 tooltips
             SetTooltipsOff();
             waitUntilDone = true;
-            InitialiseDecision();
+            InitialiseTopic();
         }
         else { waitUntilDone = false; }
         yield return new WaitUntil(() => waitUntilDone == false);
@@ -542,9 +542,9 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sets up and runs decision prior to info app at start of turn
+    /// sets up and runs topic prior to info app at start of turn
     /// </summary>
-    private void InitialiseDecision()
+    private void InitialiseTopic()
     {
         GameManager.instance.topicDisplayScript.ActivateTopicDisplay();
     }

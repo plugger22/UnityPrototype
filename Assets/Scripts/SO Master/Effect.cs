@@ -28,7 +28,7 @@ public class Effect : ScriptableObject
     public EffectOutcome outcome;
     [Tooltip("Use Add or Subtract if appropriate, otherwise ignore")]
     public EffectOperator operand;                              //leave as 'None' if there is no specific stat adjustment
-    [Tooltip("The effect from the point of view of the Resistance. Compulsory (use Neutral if not relevant)")]
+    [Tooltip("The effect from the point of view of the Resistance. Compulsory (use Neutral if not relevant). NOTE: If a Topic effect, POV is that of the PLAYER")]
     public GlobalType typeOfEffect;
     [Tooltip("Single, one shot, effect or Ongoing? Compulsory")]
     public EffectDuration duration;                             //once off effect or ongoing?

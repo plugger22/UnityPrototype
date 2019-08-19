@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActCon1Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor Contact 1 option 2
-  tag: Get rid of them
+  tag: Dispose
   text: Tell [Actor] to get rid of them
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria: []
@@ -22,6 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Get rid of them
-  tooltipMain: "PLANNER loses Contact\r\nPLANNER Motivation -1"
-  tooltipDetails: Unknown Mood Effect
+  tooltipHeader: Dispose
+  tooltipMain: "OBSERVER loses Contact\r\nOBSERVER Motivation -1"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>

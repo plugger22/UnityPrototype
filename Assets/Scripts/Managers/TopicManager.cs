@@ -1886,7 +1886,6 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-
     #region ProcessIgnore
     /// <summary>
     /// Process Ignore button clicked where topic.listOfIgnoreEffects present
@@ -2173,21 +2172,21 @@ public class TopicManager : MonoBehaviour
                     }
                 }
             }
-            if (turnOption != null)
+            string optionName = "Unknown";
+            if (turnOption != null) { optionName = turnOption.name; }
+            { }
+            //topicHistory
+            HistoryTopic history = new HistoryTopic()
             {
-                //topicHistory
-                HistoryTopic history = new HistoryTopic()
-                {
-                    turn = turn,
-                    numSelect = listOfTopicTypesTurn.Count,
-                    topicType = turnTopicType.name,
-                    topicSubType = turnTopicSubType.name,
-                    topic = turnTopic.name,
-                    option = turnOption.name
-                };
-                GameManager.instance.dataScript.AddTopicHistory(history);
-            }
-            else { Debug.LogWarningFormat("Invalid turnOption (Null) for topic \"{0}\"", turnTopic.name); }
+                turn = turn,
+                numSelect = listOfTopicTypesTurn.Count,
+                topicType = turnTopicType.name,
+                topicSubType = turnTopicSubType.name,
+                topic = turnTopic.name,
+                option = optionName
+            };
+            GameManager.instance.dataScript.AddTopicHistory(history);
+
             //stats
             switch (turnTopic.group.name)
             {
@@ -3106,9 +3105,55 @@ public class TopicManager : MonoBehaviour
     {
         if (data != null)
         {
-            data.ignoreTooltipHeader = "Don't bother me with this";
-            data.ignoreTooltipMain = "Nothing bad will happen";
-            data.ignoreTooltipDetails = "Could be stressful";
+            //Header is topic name
+            data.ignoreTooltipHeader = string.Format("{0}", turnTopic.tag);
+            data.ignoreTooltipMain = string.Format("{0}", "Don't bother me with this");
+            //check ignore effects present
+            if (turnTopic.listOfIgnoreEffects != null && turnTopic.listOfIgnoreEffects.Count > 0)
+            {
+                StringBuilder builder = new StringBuilder();
+                //IGNORE Effects present
+                foreach (Effect effect in turnTopic.listOfIgnoreEffects)
+                {
+                    if (effect != null)
+                    {
+                        switch (effect.typeOfEffect.name)
+                        {
+                            case "Good":
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                if (string.IsNullOrEmpty(effect.description) == false)
+                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                                break;
+                            case "Neutral":
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                if (string.IsNullOrEmpty(effect.description) == false)
+                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                                break;
+                            case "Bad":
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                if (string.IsNullOrEmpty(effect.description) == false)
+                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name);
+                                break;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid effect (Null) for topic \"{0}\"", turnTopic.name); }
+
+                }
+                if (builder.Length == 0) { builder.Append("No Effects present"); }
+                //details
+                data.ignoreTooltipDetails = builder.ToString();
+            }
+            else
+            {
+                //No ignoreEffects -> default text
+                data.ignoreTooltipDetails = string.Format("{0}", "No adverse effects");
+            }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
