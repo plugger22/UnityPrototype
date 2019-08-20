@@ -15,6 +15,12 @@ public class EffectManager : MonoBehaviour
     [Tooltip("How long do ongoing effects last for? Global setting")]
     [Range(3, 20)] public int ongoingEffectTimer = 10;
 
+    //hard coded renown amounts that correspond to effect Criteria equivalents (1/2/3/5)
+    private int renownLow = 1;
+    private int renownMed = 2;
+    private int renownHigh = 3;
+    private int renownExtreme = 5;
+
     //fast access -> spiders
     private int delayNoSpider;
     private int delayYesSpider;
@@ -750,6 +756,26 @@ public class EffectManager : MonoBehaviour
                                                 //player has listOfNodeActions.Count > 0
                                                 if (GameManager.instance.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
                                                 { BuildString(result, "Player has NO NodeActions"); }
+                                                break;
+                                            case "RenownPlayerLow":
+                                                //Player has Renown Low or better
+                                                if (GameManager.instance.playerScript.Renown < renownLow)
+                                                { BuildString(result, $"Not enough Renown (need {renownLow})"); }
+                                                break;
+                                            case "RenownPlayerMed":
+                                                //Player has Renown Low or better
+                                                if (GameManager.instance.playerScript.Renown < renownLow)
+                                                { BuildString(result, $"Not enough Renown (need {renownMed})"); }
+                                                break;
+                                            case "RenownPlayerHigh":
+                                                //Player has Renown Low or better
+                                                if (GameManager.instance.playerScript.Renown < renownLow)
+                                                { BuildString(result, $"Not enough Renown (need {renownHigh})"); }
+                                                break;
+                                            case "RenownPlayerExtreme":
+                                                //Player has Renown Low or better
+                                                if (GameManager.instance.playerScript.Renown < renownLow)
+                                                { BuildString(result, $"Not enough Renown (need {renownExtreme})"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

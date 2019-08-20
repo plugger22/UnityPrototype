@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Agree
-  tooltipMain: "<color=#FF4500>Player Renown -1</color>\r\n<color=#FF4500>OPERATOR
-    Motivation +1</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  tooltipHeader: <color=#FFFFE0>Agree</color>
+  tooltipMain: "<color=#98FB98>OBSERVER Motivation +1</color>\r\n<color=#FF4500>Player
+    Renown -5</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>

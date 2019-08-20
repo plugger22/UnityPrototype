@@ -3306,6 +3306,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region ProcessActorContact
     /// <summary>
     /// subMethod for ProcessSpecialTopicData to choose an actor from list and populate relevant tag data. Returns true if successful, false otherwise
     /// </summary>
@@ -3340,6 +3341,7 @@ public class TopicManager : MonoBehaviour
         else { isSuccess = false; }
         return isSuccess;
     }
+    #endregion
 
     #endregion
 
