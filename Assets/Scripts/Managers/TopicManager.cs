@@ -1820,6 +1820,7 @@ public class TopicManager : MonoBehaviour
                             isProceed = false;
                         }
                     }
+                    //options
                     if (isProceed == true)
                     {
                         isProceed = false;
@@ -1834,6 +1835,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
+                        //everything checks out O.K
                         if (isProceed == true)
                         {
                             //ignore button tooltip

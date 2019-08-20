@@ -1631,7 +1631,7 @@ public class EffectManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogError(string.Format("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                            Debug.LogErrorFormat("Invalid Node (null) for EffectOutcome \"{0}\"", effect.outcome.name);
                             effectReturn.errorFlag = true;
                         }
                         break;
@@ -1639,65 +1639,19 @@ public class EffectManager : MonoBehaviour
                     case "Renown":
                         if (node != null)
                         {
-
+                            //Player
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                            {
-                                int playerRenown = GameManager.instance.playerScript.Renown;
-                                //Player effect
-                                switch (effect.operand.name)
-                                {
-                                    case "Add":
-                                        playerRenown += effect.value;
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
-                                        break;
-                                    case "Subtract":
-                                        playerRenown -= effect.value;
-                                        playerRenown = Mathf.Max(0, playerRenown);
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
-                                        break;
-                                }
-                                GameManager.instance.playerScript.Renown = playerRenown;
-                            }
+                            { effectReturn.bottomText = ExecutePlayerRenown(effect); }
                             else
                             {
                                 //Actor effect
                                 if (actor != null)
-                                {
-
-                                    dataBefore = actor.Renown;
-                                    switch (effect.operand.name)
-                                    {
-                                        case "Add":
-                                            actor.Renown += effect.value;
-                                            if (actor.CheckTraitEffect(actorDoubleRenown) == true)
-                                            {
-                                                //trait -> renown doubled (only for Add renown)
-                                                actor.Renown += effect.value;
-                                                effectReturn.bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
-                                                    colourNeutral, actor.GetTrait().tag, colourEnd);
-                                                //logger
-                                                GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
-                                            }
-                                            else
-                                            {
-                                                //no trait
-                                                effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd);
-                                            }
-                                            break;
-                                        case "Subtract":
-                                            actor.Renown -= effect.value;
-                                            actor.Renown = Mathf.Max(0, actor.Renown);
-                                            effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
-                                            break;
-                                    }
-                                    Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
-                                }
+                                { effectReturn.bottomText = ExecuteActorRenown(effect, actor); }
                                 else
                                 {
-                                    Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                                    Debug.LogErrorFormat("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name);
                                     effectReturn.errorFlag = true;
                                 }
-
                             }
                         }
                         else
@@ -3303,6 +3257,9 @@ public class EffectManager : MonoBehaviour
     public int GetOngoingEffectID()
     { return ongoingEffectIDCounter++; }
 
+    //
+    // - - - Topic Effects - - -
+    //
 
     /// <summary>
     /// subMethod to process topic specific effets
@@ -3314,11 +3271,7 @@ public class EffectManager : MonoBehaviour
     {
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-        //default data
-        effectResolve.topText = "Unknown effect";
-        effectResolve.bottomText = "Unknown effect";
-        effectResolve.isError = false;
-        //topic data
+        //get topic data
         TopicEffectData data = GameManager.instance.topicScript.GetTopicEffectData();
         if (data != null)
         {
@@ -3337,7 +3290,10 @@ public class EffectManager : MonoBehaviour
                         {
                             Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
                             if (actor != null)
-                            { text = string.Format("{0} {1}", actor.arc.name, effect.description); }
+                            {
+                                text = string.Format("{0} {1}", actor.arc.name, effect.description);
+                                effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor);
+                            }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
@@ -3353,6 +3309,7 @@ public class EffectManager : MonoBehaviour
                     case 'P':
                         //Player
                         text = string.Format("Player {0}", effect.description);
+                        effectResolve = ResolveTopicPlayerEffect(effect, dataInput, data);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
@@ -3374,6 +3331,135 @@ public class EffectManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid TopicEffectData (Null)"); }
         return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic Actor effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// NOTE: parent method has checked all parameters for null
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicActorEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic, Actor actor)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "Renown":
+                effectResolve.bottomText = ExecuteActorRenown(effect, actor);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+
+        return effectResolve;
+    }
+
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic Player effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// NOTE: parent method has checked all parameters for null
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicPlayerEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "Renown":
+                effectResolve.bottomText = ExecutePlayerRenown(effect);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+        return effectResolve;
+    }
+
+    //
+    // - - - SubMethods - - - 
+    //
+
+    /// <summary>
+    /// handles player renown, returns string for EffectDataResolve.bottomText
+    /// NOTE: effect checked for Null by parent method (child of several parents, ProcessEffect and ResolveTopicPlayerEffect)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private string ExecutePlayerRenown(Effect effect)
+    {
+        string bottomText = "Unknown";
+        int playerRenown = GameManager.instance.playerScript.Renown;
+        //Player effect
+        switch (effect.operand.name)
+        {
+            case "Add":
+                playerRenown += effect.value;
+                bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
+                break;
+            case "Subtract":
+                playerRenown -= effect.value;
+                playerRenown = Mathf.Max(0, playerRenown);
+                bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+        }
+        GameManager.instance.playerScript.Renown = playerRenown;
+        return bottomText;
+    }
+
+    /// <summary>
+    /// handles Actor renown, returns string for EffectDataResolve.bottomText
+    /// NOTE: effect and actor checked for Null by parent method (child of several parents, ProcessEffect and ResolveTopicActorEffect)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private string ExecuteActorRenown(Effect effect, Actor actor)
+    {
+        string bottomText = "Unknown";
+        int dataBefore = actor.Renown;
+        switch (effect.operand.name)
+        {
+            case "Add":
+                actor.Renown += effect.value;
+                if (actor.CheckTraitEffect(actorDoubleRenown) == true)
+                {
+                    //trait -> renown doubled (only for Add renown)
+                    actor.Renown += effect.value;
+                    bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, actor.arc.name, effect.value * 2, colourEnd,
+                        colourNeutral, actor.GetTrait().tag, colourEnd);
+                    //logger
+                    GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
+                }
+                else
+                {
+                    //no trait
+                    bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd);
+                }
+                break;
+            case "Subtract":
+                actor.Renown -= effect.value;
+                actor.Renown = Mathf.Max(0, actor.Renown);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+        }
+        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
+        return bottomText;
     }
 
     //place methods above here
