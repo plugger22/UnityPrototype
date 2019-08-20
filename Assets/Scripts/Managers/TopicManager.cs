@@ -139,7 +139,7 @@ public class TopicManager : MonoBehaviour
     //colour palette for Modal Outcome
     private string colourGood;
     private string colourBad;
-    private string colourNeutral; 
+    private string colourNeutral;
     private string colourNormal;
     private string colourDefault;
     private string colourAlert;
@@ -1805,35 +1805,42 @@ public class TopicManager : MonoBehaviour
                 data.sprite = turnSprite;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
+                //topic must have at least one option
+                if (data.listOfOptions != null && data.listOfOptions.Count > 0)
+                {
+                    bool isProceed = false;
+                    //initialise option tooltips
+                    for (int i = 0; i < data.listOfOptions.Count; i++)
+                    {
+                        TopicOption option = data.listOfOptions[i];
+                        if (option != null)
+                        {
+                            if (InitialiseOptionTooltip(option) == true)
+                            { isProceed = true; }
+                        }
+                        else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
+                    }
+                    if (isProceed == true)
+                    {
+                        //ignore button tooltip
+                        InitialiseIgnoreTooltip(data);
+                        //topic specific conditions may require tag data to be updated
+                        if (turnTopic.listOfCriteria.Count > 0)
+                        {
+                            if (ProcessSpecialTopicData() == true)
+                            {
+                                //send to TopicUI
+                                GameManager.instance.topicDisplayScript.InitialiseData(data);
+                            }
+                            else { Debug.LogWarningFormat("Invalid ProcessSpecialTopicData (FAILED) for topic \"{0}\"", turnTopic.name); }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
+                }
+                else
+                { Debug.LogWarningFormat("Invalid listOfOptions (Null or Empty) for topic \"{0}\" -> No topic this turn", turnTopic.name); }
             }
             else { Debug.LogError("Invalid topic (Null) normal, or debug"); }
-            //topic must have at least one option
-            if (data.listOfOptions != null && data.listOfOptions.Count > 0)
-            {
-                bool isProceed = false;
-                //initialise option tooltips
-                for (int i = 0; i < data.listOfOptions.Count; i++)
-                {
-                    TopicOption option = data.listOfOptions[i];
-                    if (option != null)
-                    {
-                        if (InitialiseOptionTooltip(option) == true)
-                        { isProceed = true; }
-                    }
-                    else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
-                }
-                if (isProceed == true)
-                {
-                    //ignore button tooltip
-                    InitialiseIgnoreTooltip(data);
-                    //send to TopicUI
-                    GameManager.instance.topicDisplayScript.InitialiseData(data);
-                }
-                else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
-            }
-            else
-            { Debug.LogWarningFormat("Invalid listOfOptions (Null or Empty) for topic \"{0}\" -> No topic this turn", turnTopic.name); }
-
         }
         //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
     }
@@ -2116,6 +2123,66 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
     }*/
+    #endregion
+
+    #region ProcessSpecialTopicData
+    /// <summary>
+    /// Any topic with criteria attached may required it's tag data to be updated prior to sending off. Criteria.EffectCriteria is used.
+    /// Multiple criteria are processed from low index to high with high overriding low in the case of conflicting tag data, eg. tagContactID (So ORDER OF CRITERIA matters)
+    /// Returns true if all O.K (even if no matching criteria). False if criteria special requirements aren't met
+    /// NOTE: Parent method (InitialiseTopicUI) has checked at least one criteria present
+    /// </summary>
+    private bool ProcessSpecialTopicData()
+    {
+        bool isSuccess = true;
+        foreach(Criteria criteria in turnTopic.listOfCriteria)
+        {
+            if (criteria != null)
+            {
+                List<Actor> listOfActors = null;
+                switch (criteria.effectCriteria.name)
+                {
+                    case "ContactsActorMin":
+                        //need to find an actor with at least one contact
+                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactMin, GameManager.instance.sideScript.PlayerSide);
+                        //randomly choose an actor
+                        if (listOfActors?.Count > 0)
+                        {
+                            Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                            if (actor != null)
+                            {
+                                //get random contact from actor
+                                Contact contact = actor.GetRandomContact();
+                                if (contact != null)
+                                {
+                                    //update tag data
+                                    tagActorID = actor.actorID;
+                                    tagContactID = contact.contactID;
+                                    tagNodeID = contact.nodeID;
+                                }
+                                else { isSuccess = false; }
+                            }
+                            else
+                            {
+                                Debug.LogError("Invalid actor (Null) in listOfActors");
+                                isSuccess = false;
+                            }
+                        }
+                        else { isSuccess = false; }
+                        break;
+                    case "ContactsActorNOTMax":
+                        //need an actor with less than the max number of contacts allowed
+                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactNOTMax, GameManager.instance.sideScript.PlayerSide);
+
+
+                        break;
+                    //default case not required as if no match then it's assumed that no update is required
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid criteria (Null) for topic \"{0}\"", turnTopic.name); }
+        }
+        return isSuccess;
+    }
     #endregion
 
     #region ProcessTopicAdmin

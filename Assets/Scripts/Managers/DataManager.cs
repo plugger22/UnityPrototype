@@ -4443,6 +4443,14 @@ public class DataManager : MonoBehaviour
                                 if (actor.CheckNumOfTeamActions() != 0)
                                 { listOfActors.Add(actor); }
                                 break;
+                            case ActorCheck.ActorContactMin:
+                                //actor with at least one, active, contact
+
+                                break;
+                            case ActorCheck.ActorContactNOTMax:
+                                //actor with less than max. num of contacts allowed
+
+                                break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
                     }

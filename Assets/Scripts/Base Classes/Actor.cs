@@ -1,8 +1,6 @@
 ﻿using packageAPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -43,7 +41,7 @@ namespace gameAPI
         [HideInInspector] public ActorTooltip tooltipStatus;     //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive
         //sprite
-        [HideInInspector][NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
+        [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
         //trait
         private Trait trait;
@@ -221,7 +219,7 @@ namespace gameAPI
                     if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                     {
                         //doesn't apply on first turn (creating actors)
-                        if ( turn > 0)
+                        if (turn > 0)
                         {
                             //motivation is special as actor compatibility with player can negate the change
                             int difference = value - datapoint1;
@@ -322,7 +320,7 @@ namespace gameAPI
                                     isSuccess = false;
                                     //Stats
                                     if (isBadOutcome == true)
-                                    { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorCompatibilityBad);}
+                                    { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorCompatibilityBad); }
                                     else { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorCompatibilityGood); }
                                 }
                                 //random roll message regardless, provided a check was made
@@ -417,15 +415,15 @@ namespace gameAPI
             }
         }
 
-            //
-            // - - - Teams - - -
-            //
+        //
+        // - - - Teams - - -
+        //
 
-            /// <summary>
-            /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
-            /// </summary>
-            /// <returns></returns>
-            public bool CheckCanDeployTeam()
+        /// <summary>
+        /// Authority method -> returns true if actors 'Ability' allows for the deployment of another team OnMap
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckCanDeployTeam()
         {
             if (listOfTeams.Count < datapoint2)
             { return true; }
@@ -520,7 +518,7 @@ namespace gameAPI
         public int GetContactNetworkEffectiveness()
         {
             int tally = 0;
-            foreach(var contact in dictOfContacts)
+            foreach (var contact in dictOfContacts)
             {
                 if (contact.Value != null)
                 { tally += contact.Value.effectiveness; }
@@ -583,6 +581,28 @@ namespace gameAPI
         }
 
         /// <summary>
+        /// Returns a random, active, contact without the need for an exclusion list of weighting of contacts in a selection pool. Returns null if none found.
+        /// </summary>
+        /// <returns></returns>
+        public Contact GetRandomContact()
+        {
+            Contact contact = null;
+            List<Contact> tempList = new List<Contact>();
+            foreach (var networkContact in dictOfContacts)
+            {
+                contact = networkContact.Value;
+                if (contact != null)
+                {
+                    if (contact.status == ContactStatus.Active)
+                    { tempList.Add(contact); }
+                }
+            }
+            if (tempList.Count > 0)
+            { contact = tempList[Random.Range(0, tempList.Count)]; }
+            return contact;
+        }
+
+        /// <summary>
         /// returns number of contacts, if any
         /// </summary>
         /// <returns></returns>
@@ -620,7 +640,7 @@ namespace gameAPI
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Stressed check", "to AVOID becoming Stressed");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Stressed check", "to AVOID becoming Stressed"); }
                         else { proceedFlag = true; }
                         break;
                     case "CORRUPT":
@@ -630,7 +650,7 @@ namespace gameAPI
                         break;
                     case "UNHAPPY":
                         if (CheckTraitEffect(actorUnhappyNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Unhappy check", "to AVOID becoming Unhappy");  }
+                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Unhappy check", "to AVOID becoming Unhappy"); }
                         else { proceedFlag = true; }
                         break;
                     case "BLACKMAILER":
@@ -737,7 +757,7 @@ namespace gameAPI
                         if (listOfConditions[i].name.Equals(condition.tag, StringComparison.Ordinal) == true)
                         {
                             //special cases
-                            switch(condition.tag)
+                            switch (condition.tag)
                             {
                                 case "BLACKMAILER":
                                     blackmailTimer = 0;
@@ -829,7 +849,7 @@ namespace gameAPI
             bool isSuccess = false;
             if (string.IsNullOrEmpty(secretName) == false)
             {
-                
+
                 if (CheckSecretPresent(secretName) == true)
                 {
                     //reverse loop through and remove secret
@@ -906,7 +926,7 @@ namespace gameAPI
         public List<string> GetSecretsTooltipList()
         {
             List<string> listTooltip = new List<string>();
-            foreach(Secret secret in listOfSecrets)
+            foreach (Secret secret in listOfSecrets)
             { listTooltip.Add(secret.tag); }
             return listTooltip;
         }
@@ -952,7 +972,7 @@ namespace gameAPI
             {
                 listOfTraitEffects.Clear();
                 this.trait = trait;
-                foreach(TraitEffect traitEffect in trait.listOfTraitEffects)
+                foreach (TraitEffect traitEffect in trait.listOfTraitEffects)
                 { listOfTraitEffects.Add(traitEffect.name); }
             }
             else { Debug.LogError("Invalid trait (Null)"); }
