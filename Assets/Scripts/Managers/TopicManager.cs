@@ -1808,35 +1808,41 @@ public class TopicManager : MonoBehaviour
                 //topic must have at least one option
                 if (data.listOfOptions != null && data.listOfOptions.Count > 0)
                 {
-                    bool isProceed = false;
-                    //initialise option tooltips
-                    for (int i = 0; i < data.listOfOptions.Count; i++)
+                    bool isProceed = true;
+                    //topic specific conditions may require tag data to be updated
+                    if (turnTopic.listOfCriteria.Count > 0)
                     {
-                        TopicOption option = data.listOfOptions[i];
-                        if (option != null)
+                        if (ProcessSpecialTopicData() == true)
+                        { isProceed = true; }
+                        else
                         {
-                            if (InitialiseOptionTooltip(option) == true)
-                            { isProceed = true; }
+                            Debug.LogWarningFormat("Invalid ProcessSpecialTopicData (FAILED) for topic \"{0}\"", turnTopic.name);
+                            isProceed = false;
                         }
-                        else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                     }
                     if (isProceed == true)
                     {
-                        //ignore button tooltip
-                        InitialiseIgnoreTooltip(data);
-                        //topic specific conditions may require tag data to be updated
-                        if (turnTopic.listOfCriteria.Count > 0)
+                        isProceed = false;
+                        //initialise option tooltips
+                        for (int i = 0; i < data.listOfOptions.Count; i++)
                         {
-                            if (ProcessSpecialTopicData() == true)
+                            TopicOption option = data.listOfOptions[i];
+                            if (option != null)
                             {
-
-                                //send to TopicUI
-                                GameManager.instance.topicDisplayScript.InitialiseData(data);
+                                if (InitialiseOptionTooltip(option) == true)
+                                { isProceed = true; }
                             }
-                            else { Debug.LogWarningFormat("Invalid ProcessSpecialTopicData (FAILED) for topic \"{0}\"", turnTopic.name); }
+                            else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
+                        if (isProceed == true)
+                        {
+                            //ignore button tooltip
+                            InitialiseIgnoreTooltip(data);
+                            //send to TopicUI
+                            GameManager.instance.topicDisplayScript.InitialiseData(data);
+                        }
+                        else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
                     }
-                    else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
                 }
                 else
                 { Debug.LogWarningFormat("Invalid listOfOptions (Null or Empty) for topic \"{0}\" -> No topic this turn", turnTopic.name); }
@@ -2136,7 +2142,7 @@ public class TopicManager : MonoBehaviour
     private bool ProcessSpecialTopicData()
     {
         bool isSuccess = true;
-        foreach(Criteria criteria in turnTopic.listOfCriteria)
+        foreach (Criteria criteria in turnTopic.listOfCriteria)
         {
             if (criteria != null)
             {
@@ -2155,7 +2161,7 @@ public class TopicManager : MonoBehaviour
                         //choose actor and update tag data
                         isSuccess = ProcessActorContact(listOfActors);
                         break;
-                    //default case not required as if no match then it's assumed that no update is required
+                        //default case not required as if no match then it's assumed that no update is required
                 }
             }
             else { Debug.LogWarningFormat("Invalid criteria (Null) for topic \"{0}\"", turnTopic.name); }
