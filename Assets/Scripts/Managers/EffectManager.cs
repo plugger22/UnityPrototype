@@ -3308,29 +3308,61 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
-        //topic effects use a specific naming convention, eg. 'X_...'
-        char key = effect.name[0];
-        //error check
-        if (effect.name[1].Equals('_') == true)
+        //topic data
+        TopicEffectData data = GameManager.instance.topicScript.GetTopicEffectData();
+        if (data != null)
         {
-            switch (key)
+            //topic effects use a specific naming convention, eg. 'X_...'
+            char key = effect.name[0];
+            //error check
+            if (effect.name[1].Equals('_') == true)
             {
-                case 'A':
-                    //Actor
-                    effectResolve.bottomText = string.Format("Actor {0}", effect.description);
-                    break;
-                case 'P':
-                    //Player
-                    effectResolve.bottomText = string.Format("Player {0}", effect.description);
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
+                //text
+                string text = "Unknown";
+                switch (key)
+                {
+                    case 'A':
+                        //Actor
+                        if (data.actorID > -1)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                            if (actor != null)
+                            { text = string.Format("{0} {1}", actor.arc.name, effect.description); }
+                            else
+                            {
+                                Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                                text = string.Format("Actor {0}", effect.description);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                            text = string.Format("Actor {0}", effect.description);
+                        }
+                        break;
+                    case 'P':
+                        //Player
+                        text = string.Format("Player {0}", effect.description);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
+                }
+                //colour
+                switch (effect.typeOfEffect.name)
+                {
+                    case "Good": text = string.Format("{0}{1}{2}", colourGood, text, colourEnd); break;
+                    case "Neutral": text = string.Format("{0}{1}{2}", colourNeutral, text, colourEnd); break;
+                    case "Bad": text = string.Format("{0}{1}{2}", colourBad, text, colourEnd); break;
+                    default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
+                }
+                effectResolve.bottomText = text;
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid topic effect \"{0}\" (Incorrect prefix, should be 'X_...')", effect.name);
+                effectResolve.isError = true;
             }
         }
-        else
-        {
-            Debug.LogWarningFormat("Invalid topic effect \"{0}\" (Incorrect prefix, should be 'X_...')", effect.name);
-            effectResolve.isError = true;
-        }
+        else { Debug.LogWarning("Invalid TopicEffectData (Null)"); }
         return effectResolve;
     }
 

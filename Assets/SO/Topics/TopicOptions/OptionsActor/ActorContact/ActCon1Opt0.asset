@@ -16,12 +16,13 @@ MonoBehaviour:
   text: Give them what they want
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   tooltipHeader: Agree
-  tooltipMain: "Player Renown -1\r\nPLANNER Motivation +1"
-  tooltipDetails: Unknown Mood Effect
+  tooltipMain: "<color=#FF4500>Player Renown -1</color>\r\n<color=#FF4500>OPERATOR
+    Motivation +1</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>

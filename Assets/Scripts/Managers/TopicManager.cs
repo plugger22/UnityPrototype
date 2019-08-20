@@ -112,6 +112,7 @@ public class TopicManager : MonoBehaviour
     private int tagActorID;
     private int tagNodeID;
     private int tagTeamID;
+    private int tagContactID;
     private int tagTurn;
     private string tagStringData;        //General purpose
 
@@ -134,6 +135,16 @@ public class TopicManager : MonoBehaviour
     //fast access
     private string levelScopeName;
     private string campaignScopeName;
+
+    //colour palette for Modal Outcome
+    private string colourGood;
+    private string colourBad;
+    private string colourNeutral; 
+    private string colourNormal;
+    private string colourDefault;
+    private string colourAlert;
+    private string colourGrey;
+    private string colourEnd;
 
 
     /// <summary>
@@ -301,8 +312,7 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-
-
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
     #endregion
 
@@ -317,7 +327,9 @@ public class TopicManager : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -326,7 +338,22 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-
+    #region SetColours
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+    #endregion
 
     #region Session Start
     //
@@ -1006,6 +1033,7 @@ public class TopicManager : MonoBehaviour
         tagActorID = -1;
         tagNodeID = -1;
         tagTeamID = -1;
+        tagContactID = -1;
         tagTurn = -1;
         tagStringData = "";
         //empty collections
@@ -1843,7 +1871,7 @@ public class TopicManager : MonoBehaviour
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 //top text
-                builderTop.AppendFormat("{0}{1}{2}", turnTopic.tag, "\n", turnOption.text);
+                builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, turnOption.text, colourEnd);
                 //loop effects
                 foreach (Effect effect in listOfEffects)
                 {
@@ -1857,7 +1885,7 @@ public class TopicManager : MonoBehaviour
                             if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                             {
                                 if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
-                                builderBottom.Append(effectReturn.bottomText);
+                                builderBottom.AppendFormat("{0}", effectReturn.bottomText);
                             }
                             //exit effect loop on error
                             if (effectReturn.errorFlag == true) { break; }
@@ -1892,7 +1920,6 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void ProcessIgnore()
     {
-
         //process outcome effects / rolls / messages / etc.
         List<Effect> listOfEffects = new List<Effect>();
         if (turnTopic.listOfIgnoreEffects != null) { listOfEffects.AddRange(turnTopic.listOfIgnoreEffects); }
@@ -1907,12 +1934,12 @@ public class TopicManager : MonoBehaviour
 
             //pass through data package
             EffectDataInput dataInput = new EffectDataInput();
-            dataInput.originText = string.Format("{0}, IGNORE", turnTopic.tag);
+            dataInput.originText = string.Format("{0} IGNORE", turnTopic.tag);
             dataInput.side = GameManager.instance.sideScript.PlayerSide;
             //use Player node as default placeholder (actual tagNodeID is used)
             Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
             //top text
-            builderTop.AppendFormat("{0}{1}{2}", turnTopic.tag, "\n", "Ignored");
+            builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, "Ignored", colourEnd);
             //loop effects
             foreach (Effect effect in listOfEffects)
             {
@@ -1964,15 +1991,15 @@ public class TopicManager : MonoBehaviour
         if (top == null || top.Length == 0)
         {
             if (string.IsNullOrEmpty(turnOption.tag) == false)
-            { upperText = GameManager.instance.colourScript.GetFormattedString(string.Format("{0}{1}{2}", turnTopic.name, "\n", turnOption.tag), ColourType.neutralText); }
-            else { upperText = string.Format("{0} Unknown", turnOption.name); }
+            { upperText = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourNeutral, turnTopic.name, colourEnd, "\n", colourAlert, turnOption.tag, colourEnd); }
+            else { upperText = string.Format("{0}{1}{2} Unknown", colourBad, turnOption.name, colourEnd); }
         }
         else { upperText = top.ToString(); }
         if (bottom == null || bottom.Length == 0)
         {
             if (string.IsNullOrEmpty(turnOption.text) == false)
-            { lowerText = GameManager.instance.colourScript.GetFormattedString(turnOption.text, ColourType.salmonText); }
-            else { lowerText = string.Format("{0} Unknown", turnOption.name); }
+            { lowerText = string.Format("{0}{1}{2}", colourAlert, turnOption.text, colourEnd); }
+            else { lowerText = string.Format("{0}{1}{2} Unknown", colourBad, turnOption.name, colourEnd); }
         }
         else { lowerText = bottom.ToString(); }
 
@@ -1987,8 +2014,8 @@ public class TopicManager : MonoBehaviour
     #endregion
 
     #region ExecuteTopic
-    /// <summary>
-    /// Takes selected topic and executes according to topic subType
+    /*/// <summary>
+    /// Takes selected topic and executes according to topic subType EDIT -> Redundant
     /// </summary>
     private void ExecuteTopic()
     {
@@ -2034,10 +2061,6 @@ public class TopicManager : MonoBehaviour
                     Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                     break;
             }
-
-
-            // TO DO -> send topic data package to UI for display and user interaction
-
             //Debug outcome dialogue in infoMsgPipeline
             string actorDetails, nodeDetails, teamDetails, nameDetails;
             //actor
@@ -2092,7 +2115,7 @@ public class TopicManager : MonoBehaviour
 
         }
         else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
-    }
+    }*/
     #endregion
 
     #region ProcessTopicAdmin
@@ -3041,6 +3064,25 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region GetTopicEffectData
+    /// <summary>
+    /// returns TopicEffectData to EffectManager.cs -> ResolveTopicData to enable topic effects to target the correct node/actor/team/contact etc.
+    /// Called directly from EffectManager.cs as specific to Topic effects and best not to clutter up TopicEffecData packages with stuff that will only be used by one type of effect (Topic)
+    /// </summary>
+    /// <returns></returns>
+    public TopicEffectData GetTopicEffectData()
+    {
+        TopicEffectData data = new TopicEffectData()
+        {
+            actorID = tagActorID,
+            nodeID = tagNodeID,
+            teamID = tagTeamID,
+            contactID = tagContactID
+        };
+        return data;
+    }
+    #endregion
+
     #region InitialiseOptionTooltip
     /// <summary>
     /// Initialise option tooltip prior to sending data Package to TopicUI.cs
@@ -3053,7 +3095,7 @@ public class TopicManager : MonoBehaviour
         bool isSucceed = true;
         //header -> from option.tag
         if (string.IsNullOrEmpty(option.tag) == false)
-        { option.tooltipHeader = option.tag; }
+        { option.tooltipHeader = string.Format("{0}{1}{2}", colourNormal, option.tag, colourEnd); }
         else { option.tooltipHeader = "Unknown"; }
         //Main -> derived from option good/bad effects
         StringBuilder builder = new StringBuilder();
@@ -3066,7 +3108,7 @@ public class TopicManager : MonoBehaviour
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
                     if (string.IsNullOrEmpty(effect.description) == false)
-                    { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                    { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
                     else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", option.name); }
@@ -3081,7 +3123,7 @@ public class TopicManager : MonoBehaviour
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
                     if (string.IsNullOrEmpty(effect.description) == false)
-                    { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                    { builder.AppendFormat("{0}{1} {2}{3}", colourBad, GetEffectPrefix(effect), effect.description, colourEnd); }
                     else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", option.name); }
@@ -3106,8 +3148,8 @@ public class TopicManager : MonoBehaviour
         if (data != null)
         {
             //Header is topic name
-            data.ignoreTooltipHeader = string.Format("{0}", turnTopic.tag);
-            data.ignoreTooltipMain = string.Format("{0}", "Don't bother me with this");
+            data.ignoreTooltipHeader = string.Format("{0}{1}{2}", colourNormal, turnTopic.tag, colourEnd);
+            data.ignoreTooltipMain = string.Format("{0}{1}{2}", colourAlert, "Don't bother me with this", colourEnd);
             //check ignore effects present
             if (turnTopic.listOfIgnoreEffects != null && turnTopic.listOfIgnoreEffects.Count > 0)
             {
@@ -3122,19 +3164,19 @@ public class TopicManager : MonoBehaviour
                             case "Good":
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 if (string.IsNullOrEmpty(effect.description) == false)
-                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
                                 else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                                 break;
                             case "Neutral":
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 if (string.IsNullOrEmpty(effect.description) == false)
-                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                { builder.AppendFormat("{0}{1} {2}{3}", colourNeutral, GetEffectPrefix(effect), effect.description, colourEnd); }
                                 else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                                 break;
                             case "Bad":
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 if (string.IsNullOrEmpty(effect.description) == false)
-                                { builder.AppendFormat("{0} {1}", GetEffectPrefix(effect), effect.description); }
+                                { builder.AppendFormat("{0}{1} {2}{3}", colourBad, GetEffectPrefix(effect), effect.description, colourEnd); }
                                 else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                                 break;
                             default:
@@ -3145,14 +3187,18 @@ public class TopicManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid effect (Null) for topic \"{0}\"", turnTopic.name); }
 
                 }
-                if (builder.Length == 0) { builder.Append("No Effects present"); }
+                if (builder.Length == 0)
+                {
+                    builder.AppendFormat("{0}No adverse effects{1}", colourGrey, colourEnd);
+                    Debug.LogWarningFormat("Invalid Ignore Effects (None showing) for topic \"{0}\"", turnTopic.name);
+                }
                 //details
                 data.ignoreTooltipDetails = builder.ToString();
             }
             else
             {
                 //No ignoreEffects -> default text
-                data.ignoreTooltipDetails = string.Format("{0}", "No adverse effects");
+                data.ignoreTooltipDetails = string.Format("{0}No adverse effects{1}", colourGrey, colourEnd);
             }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }

@@ -746,7 +746,16 @@ namespace packageAPI
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
     }
 
-
+    /// <summary>
+    /// data passed from TopicManager.cs -> EffectManager.cs to customise topic effect outcomes
+    /// </summary>
+    public class TopicEffectData
+    {
+        public int actorID;
+        public int nodeID;
+        public int teamID;
+        public int contactID;       
+    }
 
 
     //new classes above here
