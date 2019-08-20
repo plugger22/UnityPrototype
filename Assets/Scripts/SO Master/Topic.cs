@@ -13,6 +13,8 @@ public class Topic : ScriptableObject
     public string tag;
     [Tooltip("Topic text. Keep as short as possible")]
     [TextArea] public string text = "Unknown";
+    [Tooltip("Designer notes, not used inGame")]
+    [TextArea] public string designNotes;
 
     [Header("Categories")]
     [Tooltip("Topic Type that decision is associated with")]
@@ -51,10 +53,6 @@ public class Topic : ScriptableObject
     [Header("Ignore Penalty")]
     [Tooltip("Ingore effects occur if no option in the topic is selected. Can be good or bad. Optional")]
     public List<Effect> listOfIgnoreEffects;
-
-    [Header("Content")]
-    [Tooltip("Designer notes, not used inGame")]
-    [TextArea] public string notes;
 
     [Header("Options")]
     [Tooltip("Options for the decision. Max as per TopicManager.cs -> maxOptions")]

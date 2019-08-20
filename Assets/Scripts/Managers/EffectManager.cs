@@ -799,6 +799,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with TeamActions OnMap"); }
                                                 break;
+                                            case "ContactsActorMin":
+                                                //at least one actor present who has one active contact
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactMin, playerSide) == 0)
+                                                { BuildString(result, "No actors with NodeActions OnMap"); }
+                                                break;
+                                            case "ContactsActorNOTMax":
+                                                //at least one actor has less than the max. allowed number of contacts
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactNOTMax, playerSide) == 0)
+                                                { BuildString(result, "No actors with NodeActions OnMap"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

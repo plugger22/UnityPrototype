@@ -4390,6 +4390,14 @@ public class DataManager : MonoBehaviour
                                 //At least one active actor has NO personal gear
                                 if (actor.CheckIfGear() == false) { numOfActors++; }
                                 break;
+                            case ActorCheck.ActorContactMin:
+                                //At least one active actor has at least ONE contact
+                                if (actor.CheckNumOfContacts() > 0) { numOfActors++; }
+                                break;
+                            case ActorCheck.ActorContactNOTMax:
+                                //At least one active actor has less than their max allowed number of contacts
+                                if (actor.CheckNewContactAllowed() == true) { numOfActors++; }
+                                break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
                     }

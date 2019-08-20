@@ -14,6 +14,7 @@ MonoBehaviour:
   tag: New Contact
   text: '[Actor] has been approached by an individual wishing to help. They want money,
     of course, but could be useful.'
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
   subSubType: {fileID: 0}
@@ -24,16 +25,16 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: da91d7948f4e285408ae55c3c610cfba, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
-  notes: 
   listOfOptions:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
   - {fileID: 11400000, guid: eff6a8d34b8ab5d49baa8d957270e1de, type: 2}
   - {fileID: 11400000, guid: 198a55f90e44d3749a2e77f961c26448, type: 2}
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2

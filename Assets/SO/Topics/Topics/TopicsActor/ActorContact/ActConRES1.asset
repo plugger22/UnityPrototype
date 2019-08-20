@@ -14,6 +14,7 @@ MonoBehaviour:
   tag: Contact threatens
   text: One of [Actor]'s contacts, [Contact] is demanding more compensation for the
     risks that they are taking.
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
   subSubType: {fileID: 0}
@@ -24,9 +25,9 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8eb0ce3d812717142b0f8b3d9f45a4fa, type: 2}
   listOfIgnoreEffects: []
-  notes: 
   listOfOptions:
   - {fileID: 11400000, guid: 446e552d318bdd441bf2c279ccdf8865, type: 2}
   - {fileID: 11400000, guid: 5554296e05eb7fe44b4997b8251d0046, type: 2}
@@ -36,7 +37,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 2
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 1
   turnsDone: 0

@@ -90,7 +90,11 @@
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDatapoint { Datapoint0, Influence0, Connections0, Datapoint1, Motivation1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate
-    public enum ActorCheck { None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero, PersonalGearYes, PersonalGearNo,}      //DataManager.cs -> CheckNumOfActiveActorsSpecial
+    public enum ActorCheck {      //DataManager.cs -> CheckNumOfActiveActorsSpecial
+        None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero,
+        PersonalGearYes, PersonalGearNo,
+        ActorContactMin, ActorContactNOTMax
+    }
 
     //
     // - - - Gear - - -
