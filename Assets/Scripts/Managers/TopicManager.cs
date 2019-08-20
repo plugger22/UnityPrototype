@@ -1829,6 +1829,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (ProcessSpecialTopicData() == true)
                             {
+
                                 //send to TopicUI
                                 GameManager.instance.topicDisplayScript.InitialiseData(data);
                             }
@@ -2145,36 +2146,14 @@ public class TopicManager : MonoBehaviour
                     case "ContactsActorMin":
                         //need to find an actor with at least one contact
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactMin, GameManager.instance.sideScript.PlayerSide);
-                        //randomly choose an actor
-                        if (listOfActors?.Count > 0)
-                        {
-                            Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
-                            if (actor != null)
-                            {
-                                //get random contact from actor
-                                Contact contact = actor.GetRandomContact();
-                                if (contact != null)
-                                {
-                                    //update tag data
-                                    tagActorID = actor.actorID;
-                                    tagContactID = contact.contactID;
-                                    tagNodeID = contact.nodeID;
-                                }
-                                else { isSuccess = false; }
-                            }
-                            else
-                            {
-                                Debug.LogError("Invalid actor (Null) in listOfActors");
-                                isSuccess = false;
-                            }
-                        }
-                        else { isSuccess = false; }
+                        //choose actor and update tag data
+                        isSuccess = ProcessActorContact(listOfActors);
                         break;
                     case "ContactsActorNOTMax":
                         //need an actor with less than the max number of contacts allowed
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactNOTMax, GameManager.instance.sideScript.PlayerSide);
-
-
+                        //choose actor and update tag data
+                        isSuccess = ProcessActorContact(listOfActors);
                         break;
                     //default case not required as if no match then it's assumed that no update is required
                 }
@@ -3318,6 +3297,41 @@ public class TopicManager : MonoBehaviour
         return prefix;
     }
     #endregion
+
+    /// <summary>
+    /// subMethod for ProcessSpecialTopicData to choose an actor from list and populate relevant tag data. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    /// <returns></returns>
+    private bool ProcessActorContact(List<Actor> listOfActors)
+    {
+        bool isSuccess = true;
+        //randomly choose an actor
+        if (listOfActors?.Count > 0)
+        {
+            Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+            if (actor != null)
+            {
+                //get random contact from actor
+                Contact contact = actor.GetRandomContact();
+                if (contact != null)
+                {
+                    //update tag data
+                    tagActorID = actor.actorID;
+                    tagContactID = contact.contactID;
+                    tagNodeID = contact.nodeID;
+                }
+                else { isSuccess = false; }
+            }
+            else
+            {
+                Debug.LogError("Invalid actor (Null) in listOfActors");
+                isSuccess = false;
+            }
+        }
+        else { isSuccess = false; }
+        return isSuccess;
+    }
 
     #endregion
 

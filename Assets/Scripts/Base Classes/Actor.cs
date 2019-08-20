@@ -616,6 +616,23 @@ namespace gameAPI
         public bool CheckNewContactAllowed()
         { return (dictOfContacts.Count < (datapoint0 * contactsPerLevel)); }
 
+        /// <summary>
+        /// Returns true if actor has at least one Active contact present, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckIfActiveContact()
+        {
+            foreach (var contact in dictOfContacts)
+            {
+                if (contact.Value != null)
+                {
+                    if (contact.Value.status == ContactStatus.Active)
+                    { return true; }
+                }
+            }
+            return false;
+        }
+
         //
         // - - - Conditions - - -
         //

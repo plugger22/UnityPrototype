@@ -4445,11 +4445,13 @@ public class DataManager : MonoBehaviour
                                 break;
                             case ActorCheck.ActorContactMin:
                                 //actor with at least one, active, contact
-
+                                if (actor.CheckIfActiveContact() == true)
+                                { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.ActorContactNOTMax:
                                 //actor with less than max. num of contacts allowed
-
+                                if (actor.CheckNewContactAllowed() == true)
+                                { listOfActors.Add(actor); }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
