@@ -44,6 +44,7 @@ public class TopicOption : ScriptableObject
     [HideInInspector] public string tooltipMain;                //derived from effects (good / bad)
     [HideInInspector] public string tooltipDetails;             //derived from mood Effect
     [HideInInspector] public bool isValid;                      //true if passed criteria checks, false otherwise (displayed in greyed text)
+    [HideInInspector] public string textToDisplay;              //colour formatted option text ready for display by TopicUI.cs (TopicManager.cs -> InitialiseTopicUI)
 
 
     public void OnEnable()

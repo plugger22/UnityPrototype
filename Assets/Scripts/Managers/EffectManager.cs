@@ -760,22 +760,22 @@ public class EffectManager : MonoBehaviour
                                             case "RenownPlayerLow":
                                                 //Player has Renown Low or better
                                                 if (GameManager.instance.playerScript.Renown < renownLow)
-                                                { BuildString(result, $"Not enough Renown (need {renownLow})"); }
+                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownLow)); }
                                                 break;
                                             case "RenownPlayerMed":
                                                 //Player has Renown Low or better
-                                                if (GameManager.instance.playerScript.Renown < renownLow)
-                                                { BuildString(result, $"Not enough Renown (need {renownMed})"); }
+                                                if (GameManager.instance.playerScript.Renown < renownMed)
+                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownMed)); }
                                                 break;
                                             case "RenownPlayerHigh":
                                                 //Player has Renown Low or better
-                                                if (GameManager.instance.playerScript.Renown < renownLow)
-                                                { BuildString(result, $"Not enough Renown (need {renownHigh})"); }
+                                                if (GameManager.instance.playerScript.Renown < renownHigh)
+                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownHigh)); }
                                                 break;
                                             case "RenownPlayerExtreme":
                                                 //Player has Renown Low or better
-                                                if (GameManager.instance.playerScript.Renown < renownLow)
-                                                { BuildString(result, $"Not enough Renown (need {renownExtreme})"); }
+                                                if (GameManager.instance.playerScript.Renown < renownExtreme)
+                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownExtreme)); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

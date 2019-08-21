@@ -143,6 +143,7 @@ public class TopicManager : MonoBehaviour
     private string colourNormal;
     private string colourDefault;
     private string colourAlert;
+    private string colourCancel;
     private string colourGrey;
     private string colourEnd;
 
@@ -350,6 +351,7 @@ public class TopicManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -1824,17 +1826,28 @@ public class TopicManager : MonoBehaviour
                     if (isProceed == true)
                     {
                         isProceed = false;
-                        
+                        string colourOption;
                         for (int i = 0; i < data.listOfOptions.Count; i++)
                         {
                             TopicOption option = data.listOfOptions[i];
                             if (option != null)
                             {
+                                colourOption = colourNeutral;
                                 //check any criteria
-                                CheckOptionCriteria(option);
-                                //initialise option tooltips
-                                if (InitialiseOptionTooltip(option) == true)
-                                { isProceed = true; }
+                                if (CheckOptionCriteria(option) == true)
+                                {
+                                    //initialise option tooltips
+                                    if (InitialiseOptionTooltip(option) == true)
+                                    { isProceed = true; }
+                                }
+                                else
+                                {
+                                    //criteria checked failed
+                                    isProceed = true;
+                                    colourOption = colourGrey;
+                                }
+                                //colourFormat textToDisplay
+                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, option.text, colourEnd);
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -3142,11 +3155,12 @@ public class TopicManager : MonoBehaviour
 
     /// <summary>
     /// Check's option criteria (if any) and sets option flag for isValid (passed criteria) or not. If not, option tooltip is set here explaining why it failed criteria check
+    /// Returns true if criteria (if any) passes, false if not
     /// NOTE: Option checked for Null by parent method (InitialiseTopicUI)
     /// </summary>
     /// <param name="option"></param>
     /// <returns></returns>
-    private void CheckOptionCriteria(TopicOption option)
+    private bool CheckOptionCriteria(TopicOption option)
     {
         //determines whether option if viable and can be selected or is greyed out.
         option.isValid = true;
@@ -3154,13 +3168,23 @@ public class TopicManager : MonoBehaviour
         {
             CriteriaDataInput criteriaInput = new CriteriaDataInput() { listOfCriteria = option.listOfCriteria };
             string effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-            if (effectCriteria != null)
+            if (string.IsNullOrEmpty(effectCriteria) == false)
             {
+                //failed criteria check -> specify tooltip here
                 option.isValid = false;
-                //set option tooltip
-                option.tooltipHeader
+                //header -> from option.tag
+                if (string.IsNullOrEmpty(option.tag) == false)
+                { option.tooltipHeader = string.Format("{0}OPTION UNAVAILABLE{1}", "<mark=#FFFFFF4D>", "</mark>"); }
+                else { option.tooltipHeader = "Unknown"; }
+                //main -> criteria feedback
+                option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
+                //Details -> derived from option mood Effect
+                if (option.moodEffect != null)
+                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                else { option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd); }
             }
         }
+        return option.isValid;
     }
 
     #region InitialiseOptionTooltip

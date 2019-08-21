@@ -16,14 +16,17 @@ MonoBehaviour:
   text: Give them what they want
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: <color=#FFFFE0>Agree</color>
-  tooltipMain: "<color=#98FB98>OBSERVER Motivation +1</color>\r\n<color=#FF4500>Player
-    Renown -5</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Give them what they want</color>

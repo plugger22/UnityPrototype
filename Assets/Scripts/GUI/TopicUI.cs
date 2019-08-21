@@ -330,8 +330,8 @@ public class TopicUI : MonoBehaviour
                         {
                             arrayOfOptions[i] = option;
                             //initialise option text
-                            if (string.IsNullOrEmpty(option.text) == false)
-                            { arrayOfOptionTexts[i].text = option.text; }
+                            if (string.IsNullOrEmpty(option.textToDisplay) == false)
+                            { arrayOfOptionTexts[i].text = option.textToDisplay; }
                             else
                             {
                                 arrayOfOptionTexts[i].text = "Unknown";
@@ -445,10 +445,14 @@ public class TopicUI : MonoBehaviour
     {
         if (optionIndex >= 0 && optionIndex < GameManager.instance.topicScript.maxOptions)
         {
-            //close TopicUI (with parameter > -1 to indicate outcome window required)
-            CloseTopicUI(optionIndex);
-            //actual processing of selected option is handled by topicManager.cs
-            GameManager.instance.topicScript.ProcessOption(optionIndex);
+            //check option is valid
+            if (dataPackage.listOfOptions[optionIndex].isValid == true)
+            {
+                //close TopicUI (with parameter > -1 to indicate outcome window required)
+                CloseTopicUI(optionIndex);
+                //actual processing of selected option is handled by topicManager.cs
+                GameManager.instance.topicScript.ProcessOption(optionIndex);
+            }
         }
         else
         {
