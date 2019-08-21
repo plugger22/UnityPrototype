@@ -53,6 +53,11 @@ public class TopicUI : MonoBehaviour
     //data package
     private TopicUIData dataPackage;
 
+    //fast access
+    private Sprite topicDefault;
+    private Sprite topicOptionValid;
+    private Sprite topicOptionInvalid;
+
 
     //static reference
     private static TopicUI topicUI;
@@ -184,7 +189,12 @@ public class TopicUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-
+        topicDefault = GameManager.instance.guiScript.topicDefaultSprite;
+        topicOptionValid = GameManager.instance.guiScript.topicOptionValidSprite;
+        topicOptionInvalid = GameManager.instance.guiScript.topicOptionInvalidSprite;
+        Debug.Assert(topicDefault != null, "Invalid topicDefault sprite (Null)");
+        Debug.Assert(topicOptionValid != null, "Invalid topicOptionValid sprite (Null)");
+        Debug.Assert(topicOptionInvalid != null, "Invalid topicOptionInvalid sprite (Null)");
 
     }
     #endregion
@@ -313,7 +323,7 @@ public class TopicUI : MonoBehaviour
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                topicImage.sprite = GameManager.instance.guiScript.topicSprite;
+                topicImage.sprite = GameManager.instance.guiScript.topicDefaultSprite;
             }
             //options
             if (data.listOfOptions != null)
@@ -346,6 +356,9 @@ public class TopicUI : MonoBehaviour
                             { arrayOfTooltips[i].tooltipDetails = option.tooltipDetails; }
                             //button Interaction
                             arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
+                            //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
+                            if (option.isValid == true) { arrayOfButtons[i].image.sprite = topicOptionValid; }
+                            else { arrayOfButtons[i].image.sprite = topicOptionInvalid; }
                             //initialise option
                             arrayOfButtons[i].gameObject.SetActive(true);
                         }

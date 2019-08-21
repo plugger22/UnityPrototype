@@ -2932,7 +2932,11 @@ MonoBehaviour:
   priorityLowSprite: {fileID: 21300000, guid: 7417508bc8dc8c04b944767d032e7a5e, type: 3}
   actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
   objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
-  topicSprite: {fileID: 21300000, guid: f7be41304f9c8d44e8124bd9ea059e8e, type: 3}
+  topicDefaultSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
+  topicOptionValidSprite: {fileID: 21300000, guid: 2f3c5378750402347972293a67ccd38f,
+    type: 3}
+  topicOptionInvalidSprite: {fileID: 21300000, guid: 41f9a23fa9cc0c4489f4ae61389d2ccf,
+    type: 3}
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

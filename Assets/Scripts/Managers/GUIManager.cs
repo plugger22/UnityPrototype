@@ -98,8 +98,12 @@ public class GUIManager : MonoBehaviour
     public Sprite actionSprite;
     [Tooltip("Used for Objectives")]
     public Sprite objectiveSprite;
-    [Tooltip("Default sprite used for Topic UI if none specified")]
-    public Sprite topicSprite;
+    [Tooltip("Default topic sprite")]
+    public Sprite topicDefaultSprite;
+    [Tooltip("Default sprite used for Topic UI (valid option) if none specified")]
+    public Sprite topicOptionValidSprite;
+    [Tooltip("Sprite used for an invalid topic option")]
+    public Sprite topicOptionInvalidSprite; 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -144,7 +148,9 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(priorityLowSprite != null, "Invalid priorityLowSprite (Null)");
         Debug.Assert(actionSprite != null, "Invalid actionSprite (Null)");
         Debug.Assert(objectiveSprite != null, "Invalid objectiveSprite (Null)");
-        Debug.Assert(topicSprite != null, "Invalid topicSprite (Null)");
+        Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
+        Debug.Assert(topicOptionValidSprite != null, "Invalid topicValidSprite (Null)");
+        Debug.Assert(topicOptionInvalidSprite != null, "Invalid topicInvalidSprite (Null)");
     }
 
     /// <summary>
