@@ -15,7 +15,8 @@ MonoBehaviour:
   tag: Agree
   text: Give them what they want
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects:

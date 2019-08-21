@@ -1736,8 +1736,8 @@ public class TopicManager : MonoBehaviour
                 {
                     if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
                     {
+                        //prepare and send data to topicUI.cs
                         InitialiseTopicUI();
-                        /*ExecuteTopic();*/
                     }
                 }
             }
@@ -1824,12 +1824,15 @@ public class TopicManager : MonoBehaviour
                     if (isProceed == true)
                     {
                         isProceed = false;
-                        //initialise option tooltips
+                        
                         for (int i = 0; i < data.listOfOptions.Count; i++)
                         {
                             TopicOption option = data.listOfOptions[i];
                             if (option != null)
                             {
+                                //check any criteria
+                                CheckOptionCriteria(option);
+                                //initialise option tooltips
                                 if (InitialiseOptionTooltip(option) == true)
                                 { isProceed = true; }
                             }
@@ -3136,6 +3139,29 @@ public class TopicManager : MonoBehaviour
         return data;
     }
     #endregion
+
+    /// <summary>
+    /// Check's option criteria (if any) and sets option flag for isValid (passed criteria) or not. If not, option tooltip is set here explaining why it failed criteria check
+    /// NOTE: Option checked for Null by parent method (InitialiseTopicUI)
+    /// </summary>
+    /// <param name="option"></param>
+    /// <returns></returns>
+    private void CheckOptionCriteria(TopicOption option)
+    {
+        //determines whether option if viable and can be selected or is greyed out.
+        option.isValid = true;
+        if (option.listOfCriteria?.Count > 0)
+        {
+            CriteriaDataInput criteriaInput = new CriteriaDataInput() { listOfCriteria = option.listOfCriteria };
+            string effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+            if (effectCriteria != null)
+            {
+                option.isValid = false;
+                //set option tooltip
+                option.tooltipHeader
+            }
+        }
+    }
 
     #region InitialiseOptionTooltip
     /// <summary>

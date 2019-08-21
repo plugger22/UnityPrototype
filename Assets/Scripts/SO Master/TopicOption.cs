@@ -43,6 +43,7 @@ public class TopicOption : ScriptableObject
     [HideInInspector] public string tooltipHeader;              //tag
     [HideInInspector] public string tooltipMain;                //derived from effects (good / bad)
     [HideInInspector] public string tooltipDetails;             //derived from mood Effect
+    [HideInInspector] public bool isValid;                      //true if passed criteria checks, false otherwise (displayed in greyed text)
 
 
     public void OnEnable()

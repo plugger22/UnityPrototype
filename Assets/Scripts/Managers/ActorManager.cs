@@ -801,6 +801,8 @@ public class ActorManager : MonoBehaviour
                     isPlayerAction = true;
                 }
                 else { cancelText = "You are NOT present at the node"; }
+
+                #region target
                 //
                 // - - -  Target - - -
                 //
@@ -871,6 +873,8 @@ public class ActorManager : MonoBehaviour
                     }
                     else { Debug.LogError(string.Format("Invalid target \"{0}\" (Null){1}", node.targetName, "\n")); }
                 }
+                #endregion
+
                 //
                 // - - - Actors - - - 
                 //

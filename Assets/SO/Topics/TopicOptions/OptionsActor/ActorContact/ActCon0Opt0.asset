@@ -15,7 +15,8 @@ MonoBehaviour:
   tag: Pay
   text: Pay them what they want
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
