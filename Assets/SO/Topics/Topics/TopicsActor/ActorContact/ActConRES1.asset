@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActConRES1
   m_EditorClassIdentifier: 
   tag: Contact threatens
-  text: One of <Actor>'s contacts, <Contact> is demanding more compensation for the
-    risks that they are taking.
+  text: One of <Actor>'s contacts, <ContactLong> is demanding more compensation for
+    the risks that they are taking.
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}

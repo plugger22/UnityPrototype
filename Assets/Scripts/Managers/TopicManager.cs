@@ -1897,15 +1897,15 @@ public class TopicManager : MonoBehaviour
             {
                 //set up
                 EffectDataReturn effectReturn = new EffectDataReturn();
-
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
                 dataInput.originText = string.Format("{0}, {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                //top text
-                builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, turnOption.text, colourEnd);
+                //top text (can handle text tags)
+                string optionText = CheckText(turnOption.text);
+                builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
                 //loop effects
                 foreach (Effect effect in listOfEffects)
                 {
@@ -2379,6 +2379,7 @@ public class TopicManager : MonoBehaviour
                 {
                     case "Actor":
                     case "actor":
+                        //actor arc name
                         if (tagActorID > -1)
                         {
                             Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
@@ -2391,16 +2392,53 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "Contact":
                     case "contact":
+                        //contact name + node name
                         if (tagContactID > -1)
                         {
                             Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                             if (contact != null)
-                            { replaceText = string.Format("{0} {1}, {2}", contact.nameFirst, contact.nameLast, contact.job); }
+                            {
+                                if (tagNodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
+                                    if (node != null)
+                                    {
+                                        replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
+                            }
                             else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                         }
                         else
                         { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
+                    case "ContactLong":
+                    case "contactLong":
+                        //contact name + contact job + node name
+                        if (tagContactID > -1)
+                        {
+                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                            if (contact != null)
+                            {
+                                if (tagNodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
+                                    if (node != null)
+                                    {
+                                        replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
+                        break;
+
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
                 //catch all
