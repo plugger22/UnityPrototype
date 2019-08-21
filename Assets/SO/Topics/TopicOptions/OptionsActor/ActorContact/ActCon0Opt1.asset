@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Contact 0 option 1
   tag: Negotiate
-  text: Ask [Actor] to negotiate a better deal
+  text: Ask <Actor> to negotiate a better deal
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
@@ -29,3 +29,5 @@ MonoBehaviour:
   tooltipMain: "PLANNER gains Contact\r\nPLANNER Motivation +1\r\nPLANNER Renown +1\r\nPlayer
     Renown -1"
   tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 0
+  textToDisplay: 

@@ -1847,10 +1847,12 @@ public class TopicManager : MonoBehaviour
                                     colourOption = colourGrey;
                                 }
                                 //colourFormat textToDisplay
-                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, option.text, colourEnd);
+                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckText(option.text), colourEnd);
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
+                        //final tag removal for topic text
+                        data.text = CheckText(data.text);
                         //everything checks out O.K
                         if (isProceed == true)
                         {
@@ -2346,6 +2348,70 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid turnTopic (Null)"); }
+    }
+    #endregion
+
+    #region CheckText
+    /// <summary>
+    /// takes text from any topic source, checks for tags, eg. '<actor>', and replaces with context relevant info, eg. actor arc name. Returns Null if a problem
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public string CheckText(string text)
+    {
+        string checkedText = null;
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            checkedText = text;
+            string tag, replaceText;
+            int tagStart, tagFinish, length; //indexes
+
+            //loop whilever tags are present
+            while (checkedText.Contains("<") == true)
+            {
+                tagStart = checkedText.IndexOf("<");
+                tagFinish = checkedText.IndexOf(">");
+                length = tagFinish - tagStart;
+                tag = checkedText.Substring(tagStart + 1, length - 1);
+                //strip brackets
+                replaceText = null;
+                switch (tag)
+                {
+                    case "Actor":
+                    case "actor":
+                        if (tagActorID > -1)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            if (actor != null)
+                            { replaceText = actor.arc.name; }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
+                        break;
+                    case "Contact":
+                    case "contact":
+                        if (tagContactID > -1)
+                        {
+                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                            if (contact != null)
+                            { replaceText = string.Format("{0} {1}, {2}", contact.nameFirst, contact.nameLast, contact.job); }
+                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
+                }
+                //catch all
+                if (replaceText == null) { replaceText = "Unknown"; }
+                //swap tag for text
+                checkedText = checkedText.Remove(tagStart, length + 1);
+                checkedText = checkedText.Insert(tagStart, replaceText);
+            }
+        }
+        else { Debug.LogWarning("Invalid text (Null or Empty)"); }
+        return checkedText;
     }
     #endregion
 
