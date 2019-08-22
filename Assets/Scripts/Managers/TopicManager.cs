@@ -2508,9 +2508,10 @@ public class TopicManager : MonoBehaviour
             criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
             {
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
+                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicSubType: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
                 return false;
             }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicSubType: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
         }
         return true;
     }

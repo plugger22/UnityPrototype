@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Campaign
   m_EditorClassIdentifier: 
   tag: Campaign
-  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}

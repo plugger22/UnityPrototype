@@ -19,4 +19,4 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 23fcf677b30f6964c8a1a2e913c7f1b0, type: 2}
-  minInterval: 8
+  minInterval: 10
