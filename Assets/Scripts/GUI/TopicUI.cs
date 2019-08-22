@@ -388,6 +388,8 @@ public class TopicUI : MonoBehaviour
                             { arrayOfTooltips[i].tooltipMain = option.tooltipMain; }
                             if (string.IsNullOrEmpty(option.tooltipDetails) == false)
                             { arrayOfTooltips[i].tooltipDetails = option.tooltipDetails; }
+                            //need to offset to prevent obscuring part of button and suffering 'blinking tooltip' syndrome
+                            arrayOfTooltips[i].x_offset = 160;
                             //button Interaction
                             arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
                             //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
@@ -521,7 +523,7 @@ public class TopicUI : MonoBehaviour
             };
             GameManager.instance.guiScript.SetShowMe(data);
         }
-        else { Debug.LogWarningFormat("Invalid nodeID \"{0}\" (expected to be > -1)", dataPackage.nodeID); }
+        /*else { Debug.LogWarningFormat("Invalid nodeID \"{0}\" (expected to be > -1)", dataPackage.nodeID); } -> Edit: commented out as you could press SPACE and there might not be a showMe button*/
     }
 
     /// <summary>

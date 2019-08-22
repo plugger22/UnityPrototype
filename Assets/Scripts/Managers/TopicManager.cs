@@ -1031,6 +1031,7 @@ public class TopicManager : MonoBehaviour
         turnTopicSubSubType = null;
         turnTopic = null;
         turnSprite = null;
+        turnOption = null;
         //info tags
         tagActorID = -1;
         tagNodeID = -1;
@@ -1779,7 +1780,10 @@ public class TopicManager : MonoBehaviour
                         //select one of topics from the debug pool at random (enables testing of a small subset of topics)
                         turnTopicSubType = debugTopicPool.subType;
                         if (turnTopicSubType != null)
-                        { GetTopic(GameManager.instance.sideScript.PlayerSide); }
+                        {
+                            Debug.LogFormat("[Top] TopicManager.cs -> InitialiseTopicUI: Topic OVERRIDE for debugTopicPool \"{0}\"{1}", debugTopicPool.name, "\n");
+                            GetTopic(GameManager.instance.sideScript.PlayerSide);
+                        }
                         if (turnTopic != null)
                         {
                             //valid debug topic, align the rest with topic
@@ -1847,7 +1851,7 @@ public class TopicManager : MonoBehaviour
                                     colourOption = colourGrey;
                                 }
                                 //colourFormat textToDisplay
-                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckText(option.text), colourEnd);
+                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckText(option.text, false), colourEnd);
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -1906,7 +1910,7 @@ public class TopicManager : MonoBehaviour
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 //top text (can handle text tags)
-                string optionText = CheckText(turnOption.text);
+                string optionText = CheckText(turnOption.text, false);
                 builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
                 //loop effects
                 foreach (Effect effect in listOfEffects)
@@ -2047,111 +2051,6 @@ public class TopicManager : MonoBehaviour
         };
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
     }
-    #endregion
-
-    #region ExecuteTopic
-    /*/// <summary>
-    /// Takes selected topic and executes according to topic subType EDIT -> Redundant
-    /// </summary>
-    private void ExecuteTopic()
-    {
-        if (turnTopic != null)
-        {
-            //TO DO -> execution of topics (branches to a method that returns a topic data package ready to send to UI)
-
-            //Processing of topic depends on whether it's a standard subType or a dynamic, template, subType
-            switch (turnTopicSubType.name)
-            {
-                //Standard topics
-                case "CampaignAlpha":
-                case "CampaignBravo":
-                case "CampaignCharlie":
-                case "ResistanceCampaign":
-                case "ResistanceGeneral":
-                case "AuthorityCampaign":
-                case "AuthorityGeneral":
-                case "FamilyAlpha":
-                case "FamilyBravo":
-                case "FamilyCharlie":
-                    break;
-                //Dynamic topic
-                case "ActorPolitic":
-                    break;
-                case "ActorContact":
-                    break;
-                case "ActorDistrict":
-                    break;
-                case "ActorGear":
-                    break;
-                case "ActorMatch":
-                    break;
-                case "AuthorityTeam":
-                    break;
-                case "CitySub":
-                    break;
-                case "HQSub":
-                    break;
-                case "PlayerDistrict":
-                    break;
-                default:
-                    Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
-                    break;
-            }
-            //Debug outcome dialogue in infoMsgPipeline
-            string actorDetails, nodeDetails, teamDetails, nameDetails;
-            //actor
-            if (tagActorID > -1)
-            {
-                if (tagActorID != 999)
-                {
-                    //actor
-                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                    actorDetails = string.Format("{0}, {1}{2}Actor ID {3}", actor.actorName, actor.arc.name, "\n", actor.actorID);
-                    actorDetails = GameManager.instance.colourScript.GetFormattedString(actorDetails, ColourType.neutralText);
-                }
-                else
-                {
-                    //Player
-                    actorDetails = string.Format("{0}, {1}{2}Actor ID {3}", GameManager.instance.playerScript.PlayerName, "Player", "\n", tagActorID);
-                    actorDetails = GameManager.instance.colourScript.GetFormattedString(actorDetails, ColourType.neutralText);
-                }
-            }
-            else { actorDetails = "actorID -1"; }
-            //node
-            if (tagNodeID > -1)
-            {
-                Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
-                nodeDetails = string.Format("{0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-                nodeDetails = GameManager.instance.colourScript.GetFormattedString(nodeDetails, ColourType.salmonText);
-            }
-            else { nodeDetails = "nodeID -1"; }
-            //team
-            if (tagTeamID > -1)
-            {
-                Team team = GameManager.instance.dataScript.GetTeam(tagTeamID);
-                teamDetails = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID);
-                teamDetails = GameManager.instance.colourScript.GetFormattedString(teamDetails, ColourType.neutralText);
-            }
-            else { teamDetails = "teamID -1"; }
-            //stringDataName
-            if (string.IsNullOrEmpty(tagStringData) == false)
-            { nameDetails = GameManager.instance.colourScript.GetFormattedString(tagStringData, ColourType.salmonText); }
-            else { nameDetails = ""; }
-            ModalOutcomeDetails details = new ModalOutcomeDetails
-            {
-                textTop = string.Format("{0}{1}{2}", GameManager.instance.colourScript.GetFormattedString(turnTopic.name, ColourType.salmonText), "\n", turnTopic.tag),
-                textBottom = String.Format("{0}{1}{2}{3}{4}{5}{6}", actorDetails, "\n", nodeDetails, "\n", teamDetails, "\n", nameDetails),
-                sprite = GameManager.instance.guiScript.infoSprite,
-                isAction = false,
-                side = GameManager.instance.sideScript.PlayerSide,
-                type = MsgPipelineType.DebugTopic
-            };
-            if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
-            { Debug.LogWarning("Debug Topic infoPipeLine message FAILED to be added to pipeline"); }
-
-        }
-        else { Debug.LogError("Invalid turnTopic (Null) -> No decision generated this turn"); }
-    }*/
     #endregion
 
     #region ProcessSpecialTopicData
@@ -2307,8 +2206,13 @@ public class TopicManager : MonoBehaviour
                 }
             }
             string optionName = "Unknown";
-            if (turnOption != null) { optionName = turnOption.name; }
-            { }
+            //log
+            if (turnOption != null)
+            {
+                optionName = turnOption.name;
+                Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: {0}, \"{1}\" SELECTED for topic {2}, \"{3}\"{4}", optionName, turnOption.tag, turnTopic.name, turnTopic.tag, "\n");
+            }
+            else { Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: NO OPTION selected for topic \"{0}\"{1}", turnTopic.name, "\n"); }
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {
@@ -2387,108 +2291,6 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid turnTopic (Null)"); }
-    }
-    #endregion
-
-    #region CheckText
-    /// <summary>
-    /// takes text from any topic source, checks for tags, eg. '<actor>', and replaces with context relevant info, eg. actor arc name. Returns Null if a problem
-    /// </summary>
-    /// <param name="text"></param>
-    /// <returns></returns>
-    public string CheckText(string text)
-    {
-        string checkedText = null;
-        if (string.IsNullOrEmpty(text) == false)
-        {
-            checkedText = text;
-            string tag, replaceText;
-            int tagStart, tagFinish, length; //indexes
-
-            //loop whilever tags are present
-            while (checkedText.Contains("<") == true)
-            {
-                tagStart = checkedText.IndexOf("<");
-                tagFinish = checkedText.IndexOf(">");
-                length = tagFinish - tagStart;
-                tag = checkedText.Substring(tagStart + 1, length - 1);
-                //strip brackets
-                replaceText = null;
-                switch (tag)
-                {
-                    case "Actor":
-                    case "actor":
-                        //actor arc name
-                        if (tagActorID > -1)
-                        {
-                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                            if (actor != null)
-                            { replaceText = actor.arc.name; }
-                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
-                        }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
-                        break;
-                    case "Contact":
-                    case "contact":
-                        //contact name + node name
-                        if (tagContactID > -1)
-                        {
-                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
-                            if (contact != null)
-                            {
-                                if (tagNodeID > -1)
-                                {
-                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
-                                    if (node != null)
-                                    {
-                                        replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName);
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
-                                }
-                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
-                            }
-                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
-                        }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
-                        break;
-                    case "ContactLong":
-                    case "contactLong":
-                        //contact name + contact job + node name
-                        if (tagContactID > -1)
-                        {
-                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
-                            if (contact != null)
-                            {
-                                if (tagNodeID > -1)
-                                {
-                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
-                                    if (node != null)
-                                    {
-                                        replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName);
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
-                                }
-                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
-                            }
-                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
-                        }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
-                        break;
-
-                    default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
-                }
-                //catch all
-                if (replaceText == null) { replaceText = "Unknown"; }
-                //swap tag for text
-                checkedText = checkedText.Remove(tagStart, length + 1);
-                checkedText = checkedText.Insert(tagStart, replaceText);
-            }
-        }
-        else { Debug.LogWarning("Invalid text (Null or Empty)"); }
-        return checkedText;
     }
     #endregion
 
@@ -3501,7 +3303,118 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckText
+    /// <summary>
+    /// takes text from any topic source, checks for tags, eg. '[actor]', and replaces with context relevant info, eg. actor arc name. Returns Null if a problem
+    /// isColourHighlight TRUE -> Colour and bold highlights certain texts (colourAlert), no colour formatting if false, default True
+    /// Highlights -> actor.arc, node.nodeName
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public string CheckText(string text, bool isColourHighlighting = true)
+    {
+        string colourCheckText = colourAlert; //highlight colour
+        string checkedText = null;
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            checkedText = text;
+            string tag, replaceText;
+            int tagStart, tagFinish, length; //indexes
 
+            //loop whilever tags are present
+            while (checkedText.Contains("[") == true)
+            {
+                tagStart = checkedText.IndexOf("[");
+                tagFinish = checkedText.IndexOf("]");
+                length = tagFinish - tagStart;
+                tag = checkedText.Substring(tagStart + 1, length - 1);
+                //strip brackets
+                replaceText = null;
+                switch (tag)
+                {
+                    case "Actor":
+                    case "actor":
+                        //actor arc name
+                        if (tagActorID > -1)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            if (actor != null)
+                            {
+                                if (isColourHighlighting == true)
+                                { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                else { replaceText = actor.arc.name; }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
+                        break;
+                    case "Contact":
+                    case "contact":
+                        //contact name + node name
+                        if (tagContactID > -1)
+                        {
+                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                            if (contact != null)
+                            {
+                                if (tagNodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
+                                    if (node != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
+                                        else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
+                        break;
+                    case "ContactLong":
+                    case "contactLong":
+                        //contact name + contact job + node name
+                        if (tagContactID > -1)
+                        {
+                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                            if (contact != null)
+                            {
+                                if (tagNodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
+                                    if (node != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("<b>{0} {1}</b>, {2}, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
+                                        else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
+                        break;
+
+                    default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
+                }
+                //catch all
+                if (replaceText == null) { replaceText = "Unknown"; }
+                //swap tag for text
+                checkedText = checkedText.Remove(tagStart, length + 1);
+                checkedText = checkedText.Insert(tagStart, replaceText);
+            }
+        }
+        else { Debug.LogWarning("Invalid text (Null or Empty)"); }
+        return checkedText;
+    }
+    #endregion
 
     #endregion
 

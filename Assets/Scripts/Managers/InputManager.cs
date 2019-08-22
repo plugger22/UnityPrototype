@@ -364,6 +364,16 @@ public class InputManager : MonoBehaviour
                             EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "InputManager.cs -> ProcessInput Cancel");
                         }
                         break;
+                    case ModalSubState.Topic:
+                        if (Input.GetButtonDown("Cancel") == true)
+                        { EventManager.instance.PostNotification(EventType.TopicDisplayIgnore, this, null, "InputManager.cs -> ProcessInput Cancel"); }
+                        else if (Input.GetButtonDown("Multipurpose") == true)
+                        {
+                            //Space bar is keyboard shortcut for 'Show Me' button
+                            EventManager.instance.PostNotification(EventType.TopicDisplayShowMe, this, null, "InputManager.cs -> ProcessInput Multipurpose");
+                            Input.ResetInputAxes();
+                        }
+                        break;
                     case ModalSubState.InfoDisplay:
                         //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
                         if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
