@@ -1137,12 +1137,12 @@ public class MainInfoUI : MonoBehaviour
     private List<HelpData> GetItemHelpList(ItemData data)
     {
         string tag0, tag1, tag2, tag3;
+        tag0 =  tag1 = tag2 = tag3 = "";
         //Debug
         if (string.IsNullOrEmpty(data.tag0) == true)
         {
             //default data
             tag0 = "test0";
-            tag1 = ""; tag2 = ""; tag3 = "";
         }
         else
         {

@@ -31,6 +31,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// <param name="y_offset"></param>
     public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 200)
     {
+        listOfHelp.Clear();
         if (listOfHelpData != null && listOfHelpData.Count > 0)
         { listOfHelp.AddRange(listOfHelpData); }
         else
