@@ -161,6 +161,8 @@ public enum EventType
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,
+    TopicDisplayRestore,
+    TopicDisplayShowMe,
     TopicDisplayOption,
     TopicDisplayIgnore,
     //ShowMe

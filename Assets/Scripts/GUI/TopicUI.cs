@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class TopicUI : MonoBehaviour
     public Button buttonOption2;
     public Button buttonOption3;
     public Button buttonIgnore;
+    public Button buttonShowMe;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
@@ -37,12 +39,14 @@ public class TopicUI : MonoBehaviour
     private ButtonInteraction buttonInteractiveOption2;
     private ButtonInteraction buttonInteractiveOption3;
     private ButtonInteraction buttonInteractiveIgnore;
+    private ButtonInteraction buttonInteractiveShowMe;
     //tooltips
     private GenericTooltipUI tooltipOption0;
     private GenericTooltipUI tooltipOption1;
     private GenericTooltipUI tooltipOption2;
     private GenericTooltipUI tooltipOption3;
     private GenericTooltipUI tooltipIgnore;
+    private GenericTooltipUI tooltipShowMe;
     //options
     private TopicOption[] arrayOfOptions;
     private Button[] arrayOfButtons;
@@ -128,6 +132,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonOption2 != null, "Invalid buttonOption2 (Null)");
         Debug.Assert(buttonOption3 != null, "Invalid buttonOption3 (Null)");
         Debug.Assert(buttonIgnore != null, "Invalid buttonIgnore (Null)");
+        Debug.Assert(buttonShowMe != null, "Invalid buttonShowMe (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
@@ -141,28 +146,32 @@ public class TopicUI : MonoBehaviour
         buttonInteractiveOption2 = buttonOption2.GetComponent<ButtonInteraction>();
         buttonInteractiveOption3 = buttonOption3.GetComponent<ButtonInteraction>();
         buttonInteractiveIgnore = buttonIgnore.GetComponent<ButtonInteraction>();
+        buttonInteractiveShowMe = buttonShowMe.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractiveOption0 != null, "Invalid buttonInteractiveOption0 (Null)");
         Debug.Assert(buttonInteractiveOption1 != null, "Invalid buttonInteractiveOption1 (Null)");
         Debug.Assert(buttonInteractiveOption2 != null, "Invalid buttonInteractiveOption2 (Null)");
         Debug.Assert(buttonInteractiveOption3 != null, "Invalid buttonInteractiveOption3 (Null)");
         Debug.Assert(buttonInteractiveIgnore != null, "Invalid buttonInteractiveIgnore (Null)");
+        Debug.Assert(buttonInteractiveShowMe != null, "Invalid buttonInteractiveShowMe (Null)");
         //Button events
         buttonInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
         buttonInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
         buttonInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
         buttonInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
         buttonInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
-        //Tooltipos
+        //Tooltips
         tooltipOption0 = buttonOption0.GetComponent<GenericTooltipUI>();
         tooltipOption1 = buttonOption1.GetComponent<GenericTooltipUI>();
         tooltipOption2 = buttonOption2.GetComponent<GenericTooltipUI>();
         tooltipOption3 = buttonOption3.GetComponent<GenericTooltipUI>();
         tooltipIgnore = buttonIgnore.GetComponent<GenericTooltipUI>();
+        tooltipShowMe = buttonShowMe.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltipOption0 != null, "Invalid tooltipOption0 (Null)");
         Debug.Assert(tooltipOption1 != null, "Invalid tooltipOption1 (Null)");
         Debug.Assert(tooltipOption2 != null, "Invalid tooltipOption2 (Null)");
         Debug.Assert(tooltipOption3 != null, "Invalid tooltipOption3 (Null)");
         Debug.Assert(tooltipIgnore != null, "Invalid tooltipIgnore (Null)");
+        Debug.Assert(tooltipShowMe != null, "Invalid tooltipShowMe (Null)");
         //populate arrayOfButtons
         arrayOfButtons[0] = buttonOption0;
         arrayOfButtons[1] = buttonOption1;
@@ -183,6 +192,8 @@ public class TopicUI : MonoBehaviour
         arrayOfTooltips[1] = tooltipOption1;
         arrayOfTooltips[2] = tooltipOption2;
         arrayOfTooltips[3] = tooltipOption3;
+        //fixed tooltips
+        InitialiseTooltips();
     }
     #endregion
 
@@ -205,6 +216,8 @@ public class TopicUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayRestore, OnEvent, "TopicUI");
+        EventManager.instance.AddListener(EventType.TopicDisplayShowMe, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
         EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
@@ -234,6 +247,12 @@ public class TopicUI : MonoBehaviour
                 break;
             case EventType.TopicDisplayClose:
                 CloseTopicUI((int)Param);
+                break;
+            case EventType.TopicDisplayRestore:
+                RestoreTopicUI();
+                break;
+            case EventType.TopicDisplayShowMe:
+                ProcessShowMe();
                 break;
             case EventType.TopicDisplayIgnore:
                 ProcessTopicIgnore();
@@ -274,7 +293,7 @@ public class TopicUI : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckIsTopic()
-    { return dataPackage == null ? false : true;  }
+    { return dataPackage == null ? false : true; }
 
 
     /// <summary>
@@ -285,6 +304,21 @@ public class TopicUI : MonoBehaviour
         if (dataPackage != null)
         { SetTopicDisplay(dataPackage); }
         else { Debug.LogError("Invalid dataPackage (Null)"); }
+    }
+
+    /// <summary>
+    /// Initialise fixed tooltips
+    /// </summary>
+    private void InitialiseTooltips()
+    {
+        //guiManager.cs provides a standard ShowMe tooltip implementation
+        Tuple<string, string, string> texts = GameManager.instance.guiScript.GetShowMeTooltip();
+        tooltipShowMe.tooltipHeader = texts.Item1;
+        tooltipShowMe.tooltipMain = texts.Item2;
+        tooltipShowMe.tooltipDetails = texts.Item3;
+        //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
+        tooltipShowMe.x_offset = 50;
+        tooltipIgnore.x_offset = 60;
     }
 
     #region SetTopicDisplay
@@ -371,6 +405,13 @@ public class TopicUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //ignore button
             buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
+            //show Me button
+            if (dataPackage.nodeID > -1)
+            {
+                buttonShowMe.gameObject.SetActive(true);
+                buttonInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
+            }
+            else { buttonShowMe.gameObject.SetActive(false); }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
             { tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader; }
@@ -422,12 +463,26 @@ public class TopicUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Restore topicUI after a 'ShowMe'
+    /// </summary>
+    private void RestoreTopicUI()
+    {
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalSubState.Topic;
+        GameManager.instance.inputScript.SetModalState(package);
+        //restore topicUI
+        topicCanvas.gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// Ignore button pressed, no option selected
     /// </summary>
     private void ProcessTopicIgnore()
     {
         if (dataPackage != null)
         {
+            //normal
             if (dataPackage.listOfIgnoreEffects != null && dataPackage.listOfIgnoreEffects.Count > 0)
             {
                 //close TopicUI (with an arbitrary parameter > -1 to indicate outcome window required)
@@ -448,6 +503,25 @@ public class TopicUI : MonoBehaviour
             //close TopicUI without an Outcome dialogue
             CloseTopicUI(-1);
         }
+    }
+
+    /// <summary>
+    /// Show Me button pressed, no option selected
+    /// </summary>
+    private void ProcessShowMe()
+    {
+        if (dataPackage.nodeID > -1)
+        {
+            //debug
+            topicCanvas.gameObject.SetActive(false);
+            ShowMeData data = new ShowMeData()
+            {
+                restoreEvent = EventType.TopicDisplayRestore,
+                nodeID = dataPackage.nodeID
+            };
+            GameManager.instance.guiScript.SetShowMe(data);
+        }
+        else { Debug.LogWarningFormat("Invalid nodeID \"{0}\" (expected to be > -1)", dataPackage.nodeID); }
     }
 
     /// <summary>
@@ -474,6 +548,8 @@ public class TopicUI : MonoBehaviour
             CloseTopicUI(-1);
         }
     }
+
+
 
 
     //new methods above here

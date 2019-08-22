@@ -1853,6 +1853,8 @@ public class TopicManager : MonoBehaviour
                         }
                         //final tag removal for topic text
                         data.text = CheckText(data.text);
+                        //NodeID, needed to toggle 'Show Me' button
+                        data.nodeID = tagNodeID;
                         //everything checks out O.K
                         if (isProceed == true)
                         {
@@ -2186,6 +2188,43 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid criteria (Null) for topic \"{0}\"", turnTopic.name); }
         }
+        return isSuccess;
+    }
+    #endregion
+
+    #region ProcessActorContact
+    /// <summary>
+    /// subMethod for ProcessSpecialTopicData to choose an actor from list and populate relevant tag data. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    /// <returns></returns>
+    private bool ProcessActorContact(List<Actor> listOfActors)
+    {
+        bool isSuccess = true;
+        //randomly choose an actor
+        if (listOfActors?.Count > 0)
+        {
+            Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+            if (actor != null)
+            {
+                //get random contact from actor
+                Contact contact = actor.GetRandomContact();
+                if (contact != null)
+                {
+                    //update tag data
+                    tagActorID = actor.actorID;
+                    tagContactID = contact.contactID;
+                    tagNodeID = contact.nodeID;
+                }
+                else { isSuccess = false; }
+            }
+            else
+            {
+                Debug.LogError("Invalid actor (Null) in listOfActors");
+                isSuccess = false;
+            }
+        }
+        else { isSuccess = false; }
         return isSuccess;
     }
     #endregion
@@ -3257,6 +3296,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckOptionCriteria
     /// <summary>
     /// Check's option criteria (if any) and sets option flag for isValid (passed criteria) or not. If not, option tooltip is set here explaining why it failed criteria check
     /// Returns true if criteria (if any) passes, false if not
@@ -3290,6 +3330,7 @@ public class TopicManager : MonoBehaviour
         }
         return option.isValid;
     }
+    #endregion
 
     #region InitialiseOptionTooltip
     /// <summary>
@@ -3460,42 +3501,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region ProcessActorContact
-    /// <summary>
-    /// subMethod for ProcessSpecialTopicData to choose an actor from list and populate relevant tag data. Returns true if successful, false otherwise
-    /// </summary>
-    /// <param name="listOfActors"></param>
-    /// <returns></returns>
-    private bool ProcessActorContact(List<Actor> listOfActors)
-    {
-        bool isSuccess = true;
-        //randomly choose an actor
-        if (listOfActors?.Count > 0)
-        {
-            Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
-            if (actor != null)
-            {
-                //get random contact from actor
-                Contact contact = actor.GetRandomContact();
-                if (contact != null)
-                {
-                    //update tag data
-                    tagActorID = actor.actorID;
-                    tagContactID = contact.contactID;
-                    tagNodeID = contact.nodeID;
-                }
-                else { isSuccess = false; }
-            }
-            else
-            {
-                Debug.LogError("Invalid actor (Null) in listOfActors");
-                isSuccess = false;
-            }
-        }
-        else { isSuccess = false; }
-        return isSuccess;
-    }
-    #endregion
+
 
     #endregion
 

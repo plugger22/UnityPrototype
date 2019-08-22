@@ -589,10 +589,12 @@ public class MainInfoUI : MonoBehaviour
 
     private void InitialiseTooltips()
     {
+        //guiManager.cs provides a standard ShowMe tooltip implementation
+        Tuple<string, string, string> texts = GameManager.instance.guiScript.GetShowMeTooltip();
         //itemButton
-        itemButtonTooltip.tooltipHeader = string.Format("{0}Show Me{1}", colourSide, colourEnd);
-        itemButtonTooltip.tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
-        itemButtonTooltip.tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
+        itemButtonTooltip.tooltipHeader = texts.Item1;
+        itemButtonTooltip.tooltipMain = texts.Item2;
+        itemButtonTooltip.tooltipDetails = texts.Item3;
         itemButtonTooltip.x_offset = 125;
         //initialise butotnHelpInfo data
         infoHelpTop.listOfHelp = GetInfoHelpList();

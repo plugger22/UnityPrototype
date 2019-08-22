@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using gameAPI;
-using TMPro;
+﻿using gameAPI;
 using modalAPI;
 using packageAPI;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Customises and Manages the main GUI
@@ -19,7 +17,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("Alpha")]
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'Active'")]
-    [Range(0f,1f)] public float alphaActive = 1.0f;
+    [Range(0f, 1f)] public float alphaActive = 1.0f;
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'InActive'")]
     [Range(0f, 1f)] public float alphaInactive = 0.45f;
     [Tooltip("Alpha of Base Panel city and country text. Uses a 'byte' due to TextMeshPro script interface which is different to C#")]
@@ -27,7 +25,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("Modal")]
     [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
-    [Range(1,2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
+    [Range(1, 2)] public int numOfModalLevels = 2;               //NOTE: change this > 2 you'll have to tweak a few switch/case structures, search on 'modalLevel'
 
     [Header("Flashing")]
     [Tooltip("How long it takes, in seconds, for the flashing red security alert (WidgetTopUI) to go from zero to full opacity")]
@@ -103,7 +101,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Default sprite used for Topic UI (valid option) if none specified")]
     public Sprite topicOptionValidSprite;
     [Tooltip("Sprite used for an invalid topic option")]
-    public Sprite topicOptionInvalidSprite; 
+    public Sprite topicOptionInvalidSprite;
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -115,7 +113,8 @@ public class GUIManager : MonoBehaviour
     private string colourAlert;
     private string colourGood;
     private string colourNeutral;
-    //private string colourGrey;
+    private string colourGrey;
+    private string colourCancel;
     private string colourBad;
     //private string colourNormal;
     private string colourEnd;
@@ -201,7 +200,8 @@ public class GUIManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
         //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -304,7 +304,7 @@ public class GUIManager : MonoBehaviour
                                         "\n", "\n", colourBad, colourEnd);
                                     break;
                                 case ActorInactive.LieLow:
-                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name, 
+                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name,
                                         "\n", "\n", colourNeutral, colourEnd);
                                     break;
                                 case ActorInactive.StressLeave:
@@ -361,7 +361,7 @@ public class GUIManager : MonoBehaviour
                 break;
             case AlertType.HackingIndisposed:
                 details.textTop = string.Format("The AI is currently {0}inaccessible{1}", colourBad, colourEnd);
-                details.textBottom = string.Format("This is a {0}temporary{1} state and is due to the Player being {2}indisposed{3}", colourNeutral, colourEnd, 
+                details.textBottom = string.Format("This is a {0}temporary{1} state and is due to the Player being {2}indisposed{3}", colourNeutral, colourEnd,
                     colourNeutral, colourEnd);
                 break;
             default:
@@ -413,7 +413,7 @@ public class GUIManager : MonoBehaviour
         if (showMeData.connID > -1)
         { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
         //reactivate calling UI element
-        EventManager.instance.PostNotification(showMeData.restoreEvent, this, null,  "GUIManager.cs -> ShowMeRestore");
+        EventManager.instance.PostNotification(showMeData.restoreEvent, this, null, "GUIManager.cs -> ShowMeRestore");
     }
 
     //
@@ -435,7 +435,7 @@ public class GUIManager : MonoBehaviour
         if (details != null)
         {
             if (details.type != MsgPipelineType.None)
-                {
+            {
                 //add to dictionary
                 try
                 {
@@ -603,6 +603,10 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Tooltips - - -
+    //
+
     //set all modal 0 tooltips off
     public void SetTooltipsOff()
     {
@@ -610,6 +614,17 @@ public class GUIManager : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
         GameManager.instance.tooltipNodeScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
         GameManager.instance.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+    }
+
+    /// <summary>
+    /// Returns a 3 string colour Formatted Tuple for the 'Show Me' tooltip. Used to standardize tooltip for all instances of 'Show Me'
+    /// </summary>
+    public Tuple<string, string, string> GetShowMeTooltip()
+    {
+        string tooltipHeader = string.Format("{0}Show Me{1}", colourCancel, colourEnd);
+        string tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
+        string tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
+        return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
     }
 
 }

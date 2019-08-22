@@ -741,6 +741,7 @@ namespace packageAPI
         public string ignoreTooltipHeader;                                  //ignore button tooltip 
         public string ignoreTooltipMain;                                    //ignore button tooltip
         public string ignoreTooltipDetails;                                 //ignore button tooltip
+        public int nodeID;                                                  //needed to toggle 'ShowMe' button, ignore if not relevant
         public Sprite sprite;
         public List<TopicOption> listOfOptions = new List<TopicOption>();
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
