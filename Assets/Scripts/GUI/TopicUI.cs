@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class TopicUI : MonoBehaviour
     public Button buttonOption3;
     public Button buttonIgnore;
     public Button buttonShowMe;
+    public Button buttonHelp;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
@@ -133,6 +135,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonOption3 != null, "Invalid buttonOption3 (Null)");
         Debug.Assert(buttonIgnore != null, "Invalid buttonIgnore (Null)");
         Debug.Assert(buttonShowMe != null, "Invalid buttonShowMe (Null)");
+        Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
@@ -319,7 +322,19 @@ public class TopicUI : MonoBehaviour
         //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
         tooltipShowMe.x_offset = 50;
         tooltipIgnore.x_offset = 60;
+        //help
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
+        if (listOfHelp != null && listOfHelp.Count > 0)
+        { buttonHelp.GetComponent<GenericHelpTooltipUI>().SetHelpTooltip(listOfHelp, 150, 200); }
+        else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
+
+    /*/// <summary>
+    /// Get fixed help data
+    /// </summary>
+    /// <returns></returns>
+    private List<HelpData> GetInfoHelpList()
+    { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }*/
 
     #region SetTopicDisplay
     /// <summary>

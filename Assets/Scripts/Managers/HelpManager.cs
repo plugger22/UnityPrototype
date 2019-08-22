@@ -62,6 +62,51 @@ public class HelpManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
+    /// <summary>
+    /// Get help data (generic). Returns listOfHelp, empty list if a problem. Max four topics
+    /// </summary>
+    /// <param name="tag0"></param>
+    /// <param name="tag1"></param>
+    /// <param name="tag2"></param>
+    /// <param name="tag3"></param>
+    /// <returns></returns>
+    public List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+        //first topic, skip if null
+        if (string.IsNullOrEmpty(tag0) == false)
+        {
+            HelpData help0 = GameManager.instance.dataScript.GetHelpData(tag0);
+            if (help0 != null)
+            { listOfHelp.Add(help0); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag0 \"{0}\"", tag0); }
+        }
+        //second topic, skip if null
+        if (string.IsNullOrEmpty(tag1) == false)
+        {
+            HelpData help1 = GameManager.instance.dataScript.GetHelpData(tag1);
+            if (help1 != null)
+            { listOfHelp.Add(help1); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag1 \"{0}\"", tag1); }
+        }
+        //third topic, skip if null
+        if (string.IsNullOrEmpty(tag2) == false)
+        {
+            HelpData help2 = GameManager.instance.dataScript.GetHelpData(tag2);
+            if (help2 != null)
+            { listOfHelp.Add(help2); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag2 \"{0}\"", tag2); }
+        }
+        //fourth topic, skip if null
+        if (string.IsNullOrEmpty(tag3) == false)
+        {
+            HelpData help3 = GameManager.instance.dataScript.GetHelpData(tag3);
+            if (help3 != null)
+            { listOfHelp.Add(help3); }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag3 \"{0}\"", tag3); }
+        }
+        return listOfHelp;
+    }
 
 
     /// <summary>

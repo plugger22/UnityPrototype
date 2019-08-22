@@ -16,7 +16,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     private int x_offset = 0;
     private int y_offset = 0;
-    private List<HelpData> listOfHelp;
+    private List<HelpData> listOfHelp = new List<HelpData>();
 
     public void Start()
     {
@@ -29,11 +29,10 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// <param name="listOfHelpData"></param>
     /// <param name="x_offset"></param>
     /// <param name="y_offset"></param>
-    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 0, int y_offset = 0)
+    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 200)
     {
-        if (listOfHelp != null && listOfHelp.Count > 0)
+        if (listOfHelpData != null && listOfHelpData.Count > 0)
         {
-            listOfHelp.Clear();
             listOfHelp.AddRange(listOfHelpData);
         }
         else { Debug.LogWarning("Invalid listOfHelpData (Null or Empty)"); }

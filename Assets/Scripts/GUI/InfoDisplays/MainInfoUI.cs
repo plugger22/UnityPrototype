@@ -1177,7 +1177,7 @@ public class MainInfoUI : MonoBehaviour
             { listOfHelp.Add(help1); }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag1 \"{0}\"", tag1); }
         }
-        //thrid topic, skip if null
+        //third topic, skip if null
         if (string.IsNullOrEmpty(tag2) == false)
         {
             HelpData help2 = GameManager.instance.dataScript.GetHelpData(tag2);
