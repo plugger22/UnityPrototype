@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Family
   m_EditorClassIdentifier: 
   tag: Family
-  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: c572b9d7fcd2b2c45b42448287a7d36c, type: 2}

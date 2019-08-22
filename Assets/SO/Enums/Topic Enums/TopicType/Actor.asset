@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Actor
   m_EditorClassIdentifier: 
   tag: Actor
-  priority: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   minIntervalFactor: 0
   listOfSubTypes:
   - {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}

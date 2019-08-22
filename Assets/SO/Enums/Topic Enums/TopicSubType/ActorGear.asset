@@ -15,7 +15,7 @@ MonoBehaviour:
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   minIntervalFactor: 2
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   scope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   groupType: {fileID: 11400000, guid: 9bde567650578444fb1e72ca50cbb9ec, type: 2}
   listOfSubSubType: []

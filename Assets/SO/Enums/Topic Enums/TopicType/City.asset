@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: City
   m_EditorClassIdentifier: 
   tag: City
-  priority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   minIntervalFactor: 5
   listOfSubTypes:
   - {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
