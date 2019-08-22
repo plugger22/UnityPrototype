@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 using gameAPI;
 using packageAPI;
 
+/*
 /// <summary>
-/// Handles mouse over for main info APP RHS item help
+/// Handles mouse over for main info APP RHS item help -> EDIT -> Superceded by GenericHelpTooltipUI.cs
 /// </summary>
 public class MainInfoItemHelpUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -90,3 +91,4 @@ public class MainInfoItemHelpUI : MonoBehaviour, IPointerEnterHandler, IPointerE
     }
 
 }
+*/

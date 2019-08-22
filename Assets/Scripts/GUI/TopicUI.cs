@@ -323,9 +323,14 @@ public class TopicUI : MonoBehaviour
         tooltipShowMe.x_offset = 50;
         tooltipIgnore.x_offset = 60;
         //help
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2");
         if (listOfHelp != null && listOfHelp.Count > 0)
-        { buttonHelp.GetComponent<GenericHelpTooltipUI>().SetHelpTooltip(listOfHelp, 150, 200); }
+        {
+            GenericHelpTooltipUI help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
+            if (help != null)
+            { help.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI (Null)"); }
+        }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
 

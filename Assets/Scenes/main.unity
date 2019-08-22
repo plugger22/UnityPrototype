@@ -7844,7 +7844,7 @@ GameObject:
   - component: {fileID: 317918171}
   - component: {fileID: 317918170}
   - component: {fileID: 317918169}
-  - component: {fileID: 317918172}
+  - component: {fileID: 317918173}
   m_Layer: 5
   m_Name: help_button_centre
   m_TagString: Untagged
@@ -7945,7 +7945,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 317918167}
   m_CullTransparentMesh: 0
---- !u!114 &317918172
+--- !u!114 &317918173
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7953,11 +7953,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 317918167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x_offset: -400
-  y_offset: 0
 --- !u!1 &319789010
 GameObject:
   m_ObjectHideFlags: 0
@@ -8184,7 +8182,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -18275,7 +18273,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -22602,7 +22600,7 @@ GameObject:
   - component: {fileID: 924282493}
   - component: {fileID: 924282492}
   - component: {fileID: 924282491}
-  - component: {fileID: 924282494}
+  - component: {fileID: 924282495}
   m_Layer: 5
   m_Name: help_button_combined
   m_TagString: Untagged
@@ -22703,7 +22701,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 924282489}
   m_CullTransparentMesh: 0
---- !u!114 &924282494
+--- !u!114 &924282495
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22711,11 +22709,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 924282489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x_offset: -400
-  y_offset: 0
 --- !u!1001 &939625836
 Prefab:
   m_ObjectHideFlags: 0
@@ -24609,7 +24605,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -36825,7 +36821,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -43143,7 +43139,7 @@ GameObject:
   - component: {fileID: 1901418551}
   - component: {fileID: 1901418550}
   - component: {fileID: 1901418549}
-  - component: {fileID: 1901418552}
+  - component: {fileID: 1901418553}
   m_Layer: 5
   m_Name: info_button
   m_TagString: Untagged
@@ -43244,7 +43240,7 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901418547}
   m_CullTransparentMesh: 0
---- !u!114 &1901418552
+--- !u!114 &1901418553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43252,11 +43248,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1901418547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bd0e5d4727193c4bad87b0e9a7464ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x_offset: -400
-  y_offset: 50
 --- !u!1 &1901957869
 GameObject:
   m_ObjectHideFlags: 0

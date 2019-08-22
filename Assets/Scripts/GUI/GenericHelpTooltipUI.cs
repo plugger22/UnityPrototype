@@ -32,10 +32,15 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 200)
     {
         if (listOfHelpData != null && listOfHelpData.Count > 0)
+        { listOfHelp.AddRange(listOfHelpData); }
+        else
         {
-            listOfHelp.AddRange(listOfHelpData);
+            Debug.LogWarning("Invalid listOfHelpData (Null or Empty)");
+            //default data
+            List<HelpData> tempList = GameManager.instance.helpScript.GetHelpData("test0");
+            if (tempList != null)
+            { listOfHelp.AddRange(tempList); }
         }
-        else { Debug.LogWarning("Invalid listOfHelpData (Null or Empty)"); }
         //offsets
         this.x_offset = x_offset;
         this.y_offset = y_offset;

@@ -133,11 +133,10 @@ public class MainInfoUI : MonoBehaviour
     /*private ButtonInteraction buttonInteractionHelp;*/
     private ButtonInteraction buttonInteractionItem;
 
-    //item help components
-    private MainInfoItemHelpUI itemHelpCentre;                      //item help button on RHS panel (where no 'Show me' button exists)
-    private MainInfoItemHelpUI itemHelpCombined;                    //item help button on RHS panel (adjacent to Show Me button
-    private MainInfoItemHelpUI infoHelpTop;                         //info help button at top right of InfoApp (next to close button)
-
+    //item help components                       
+    private GenericHelpTooltipUI itemHelpCentre;                    //item help button on RHS panel (where no 'Show me' button exists)
+    private GenericHelpTooltipUI itemHelpCombined;                  //item help button on RHS panel (adjacent to Show Me button
+    private GenericHelpTooltipUI infoHelpTop;                       //info help button at top right of InfoApp (next to close button)
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
@@ -302,9 +301,9 @@ public class MainInfoUI : MonoBehaviour
         buttonInteractionBack.SetButton(EventType.MainInfoBack);
         buttonInteractionForward.SetButton(EventType.MainInfoForward);
         //item help button
-        itemHelpCentre = buttonHelpCentre.GetComponent<MainInfoItemHelpUI>();
-        itemHelpCombined = buttonHelpCombined.GetComponent<MainInfoItemHelpUI>();
-        infoHelpTop = buttonHelpInfo.GetComponent<MainInfoItemHelpUI>();
+        itemHelpCentre = buttonHelpCentre.GetComponent<GenericHelpTooltipUI>();
+        itemHelpCombined = buttonHelpCombined.GetComponent<GenericHelpTooltipUI>();
+        infoHelpTop = buttonHelpInfo.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(itemHelpCentre != null, "Invalid itemHelpCentre (Null)");
         Debug.Assert(itemHelpCombined != null, "Invalid itemHelpCombined (Null)");
         Debug.Assert(infoHelpTop != null, "Invalid infoHelpTop (Null)");
@@ -597,7 +596,10 @@ public class MainInfoUI : MonoBehaviour
         itemButtonTooltip.tooltipDetails = texts.Item3;
         itemButtonTooltip.x_offset = 125;
         //initialise butotnHelpInfo data
-        infoHelpTop.listOfHelp = GetInfoHelpList();
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
+        if (listOfHelp != null)
+        { infoHelpTop.SetHelpTooltip(listOfHelp, 400, 50); }
+        else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
     }
 
     /// <summary>
@@ -1082,7 +1084,10 @@ public class MainInfoUI : MonoBehaviour
                 if (data.help > -1)
                 {
                     buttonHelpCombined.gameObject.SetActive(true);
-                    itemHelpCombined.listOfHelp = GetItemHelpList(data);
+                    List<HelpData> listOfHelp = GetItemHelpList(data);
+                    if (listOfHelp != null)
+                    { itemHelpCombined.SetHelpTooltip(listOfHelp, -400, 0); }
+                    else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
                 }
             }
             else
@@ -1097,7 +1102,10 @@ public class MainInfoUI : MonoBehaviour
                 if (data.help > -1)
                 {
                     buttonHelpCentre.gameObject.SetActive(true);
-                    itemHelpCentre.listOfHelp = GetItemHelpList(data);
+                    List<HelpData> listOfHelp = GetItemHelpList(data);
+                    if (listOfHelp != null)
+                    { itemHelpCentre.SetHelpTooltip(listOfHelp, -400, 0); }
+                    else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
                 }
                 else { buttonHelpCentre.gameObject.SetActive(false); }
             }
@@ -1144,59 +1152,10 @@ public class MainInfoUI : MonoBehaviour
             tag2 = data.tag2;
             tag3 = data.tag3;
         }
-        return GetHelpData(tag0, tag1, tag2, tag3);
+        return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
-
-    /// <summary>
-    /// hard wired help for Main info app info
-    /// </summary>
-    /// <returns></returns>
-    private List<HelpData> GetInfoHelpList()
-    { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }
-
-    /// <summary>
-    /// sub method to pull data from dict and put list together
-    /// </summary>
-    /// <returns></returns>
-    public List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
-    {
-        List<HelpData> listOfHelp = new List<HelpData>();
-        //first topic, skip if null
-        if (string.IsNullOrEmpty(tag0) == false)
-        {
-            HelpData help0 = GameManager.instance.dataScript.GetHelpData(tag0);
-            if (help0 != null)
-            { listOfHelp.Add(help0); }
-            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag0 \"{0}\"", tag0); }
-        }
-        //second topic, skip if null
-        if (string.IsNullOrEmpty(tag1) == false)
-        {
-            HelpData help1 = GameManager.instance.dataScript.GetHelpData(tag1);
-            if (help1 != null)
-            { listOfHelp.Add(help1); }
-            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag1 \"{0}\"", tag1); }
-        }
-        //third topic, skip if null
-        if (string.IsNullOrEmpty(tag2) == false)
-        {
-            HelpData help2 = GameManager.instance.dataScript.GetHelpData(tag2);
-            if (help2 != null)
-            { listOfHelp.Add(help2); }
-            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag2 \"{0}\"", tag2); }
-        }
-        //fourth topic, skip if null
-        if (string.IsNullOrEmpty(tag3) == false)
-        {
-            HelpData help3 = GameManager.instance.dataScript.GetHelpData(tag3);
-            if (help3 != null)
-            { listOfHelp.Add(help3); }
-            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag3 \"{0}\"", tag3); }
-        }
-        return listOfHelp;
-    }
-
-
+    
+   
     /*/// <summary>
     /// Special method for the last tab, Help (hard wired info, not dynamic)
     /// </summary>

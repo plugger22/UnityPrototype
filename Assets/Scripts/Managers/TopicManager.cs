@@ -3390,7 +3390,7 @@ public class TopicManager : MonoBehaviour
                                     if (node != null)
                                     {
                                         if (isColourHighlighting == true)
-                                        { replaceText = string.Format("<b>{0} {1}</b>, {2}, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
+                                        { replaceText = string.Format("<b>{0} {1}, {2}</b>, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
                                         else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
                                     }
                                     else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }

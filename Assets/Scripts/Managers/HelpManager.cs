@@ -63,14 +63,14 @@ public class HelpManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get help data (generic). Returns listOfHelp, empty list if a problem. Max four topics
+    /// Get help data (generic). Returns listOfHelp, empty list if a problem. Max four topics, Min ONE topic required
     /// </summary>
     /// <param name="tag0"></param>
     /// <param name="tag1"></param>
     /// <param name="tag2"></param>
     /// <param name="tag3"></param>
     /// <returns></returns>
-    public List<HelpData> GetHelpData(string tag0, string tag1, string tag2, string tag3)
+    public List<HelpData> GetHelpData(string tag0, string tag1 = null, string tag2 = null, string tag3 = null)
     {
         List<HelpData> listOfHelp = new List<HelpData>();
         //first topic, skip if null
@@ -576,7 +576,7 @@ public class HelpManager : MonoBehaviour
         string tag1 = "lielow_1";
         string tag2 = "lielow_2";
         string tag3 = "lielow_3";
-        List<HelpData> listOfHelp = GameManager.instance.mainInfoScript.GetHelpData(tag0, tag1, tag2, tag3);
+        List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
     }

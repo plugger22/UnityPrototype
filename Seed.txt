@@ -7828,3 +7828,154 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 52691 -> Thursday, 22 August 2019 8:09 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:373)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 533 -> Thursday, 22 August 2019 8:15 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:373)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 10741 -> Thursday, 22 August 2019 8:27 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:373)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised effect.outcome "Contact" for effect A_LoseContact
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3384)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3321)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1055)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1921)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:558)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:249)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised effect.outcome "Motivation" for effect A_LoseMotLow
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3384)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3321)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1055)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1921)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:558)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:249)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 61177 -> Thursday, 22 August 2019 8:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised effect.outcome "Contact" for effect A_LoseContact
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3384)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3321)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1055)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1921)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:563)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:249)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised effect.outcome "Motivation" for effect A_LoseMotLow
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3384)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3321)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1055)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1921)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:563)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:249)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 50604 -> Thursday, 22 August 2019 8:44 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 9476 -> Thursday, 22 August 2019 8:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised effect.outcome "Motivation" for effect A_GainMotLow
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3384)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3321)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1055)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:1921)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:563)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:249)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 59673 -> Thursday, 22 August 2019 8:59 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 60908 -> Thursday, 22 August 2019 9:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
