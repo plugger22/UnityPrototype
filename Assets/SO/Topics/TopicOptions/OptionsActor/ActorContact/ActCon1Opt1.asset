@@ -22,6 +22,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Refuse
-  tooltipMain: "PLANNER loses Contact\r\nPLANNER Motivation -1"
-  tooltipDetails: Unknown Mood Effect
+  tooltipHeader: <color=#FFFFE0>Refuse</color>
+  tooltipMain: "<color=#FF4500>ANARCHIST loses Contact</color>\r\n<color=#FF4500>ANARCHIST
+    Motivation -1</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Refuse their demands</color>

@@ -19,8 +19,10 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Decline
-  tooltipMain: PLANNER Motivation -1
+  tooltipHeader: <color=#FFFFE0>Decline</color>
+  tooltipMain: <color=#FF4500>OBSERVER Motivation -1</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>No thanks</color>

@@ -23,11 +23,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Negotiate
-  tooltipMain: "PLANNER gains Contact\r\nPLANNER Motivation +1\r\nPLANNER Renown +1\r\nPlayer
-    Renown -1"
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 1)</color>'
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Ask OBSERVER to negotiate a better deal</color>
