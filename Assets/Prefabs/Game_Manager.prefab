@@ -833,6 +833,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   - {fileID: 11400000, guid: 8b8017c4a8f2f6241ad13c8505ece11d, type: 2}
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -916,6 +917,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b2d144eb0dd36540bbf3ae7c71ce2d4, type: 2}
   - {fileID: 11400000, guid: 156cb2538298ce54baf79cfa5fe161f2, type: 2}
   - {fileID: 11400000, guid: c8c122049fd9b604fbf5cd7378b477b2, type: 2}
+  - {fileID: 11400000, guid: 09cc7d2b9c7e6d446ab31303e7fc92d3, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}

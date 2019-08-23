@@ -8380,3 +8380,76 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 47397 -> Friday, 23 August 2019 4:40 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 55589 -> Friday, 23 August 2019 4:41 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 12171 -> Friday, 23 August 2019 4:57 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actor (Null) for MotivationNeutralMin
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:671)
+	TopicManager:CheckOptionCriteria(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3117)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1841)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1743)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 38953 -> Friday, 23 August 2019 5:01 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actor (Null) for MotivationNeutralMin
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:671)
+	TopicManager:CheckOptionCriteria(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3117)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1841)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1743)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 52842 -> Friday, 23 August 2019 5:09 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "ActConRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:378)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:308)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

@@ -661,6 +661,15 @@ public class EffectManager : MonoBehaviour
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
                                                 break;
+                                            case "MotivationNeutralMin":
+                                                //Actor motivation is neutral (2) or better
+                                                if (actor != null)
+                                                {
+                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    { BuildString(result, string.Format(" {0} Low Motivation (need 2+)", actor.arc.name)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid actor (Null) for MotivationNeutralMin"); }
+                                                break;
                                             case "RenownReserveMin":
                                                 //player
                                                 int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
@@ -1269,31 +1278,30 @@ public class EffectManager : MonoBehaviour
                         switch (effect.apply.name)
                         {
                             case "ActorCurrent":
+                                //current actor has their motivation changed
                                 effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
                                 break;
                             case "ActorAll":
-
+                                //all actors have their motivation changed
+                                ResolveGroupActorEffect(effect, dataInput, actor);
+                                effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
                                 break;
                         }
 
-                        switch (effect.operand.name)
+                        /*switch (effect.operand.name)
                         {
-
-
                             case "Add":
                                 switch (effect.apply.name)
                                 {
                                     case "ActorCurrent":
-                                        effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
-
-                                        /*int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                         motivation += effect.value;
                                         motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                                         actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);*/
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                         break;
                                     case "ActorAll":
                                         //all actors have their motivation raised
@@ -1309,13 +1317,11 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.apply.name)
                                 {
                                     case "ActorCurrent":
-                                        effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
-
-                                        /*int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                         motivation -= effect.value;
                                         motivation = Mathf.Max(0, motivation);
                                         actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);*/
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
                                         break;
                                     case "ActorAll":
                                         //all actors have their motivation lowered
@@ -1331,7 +1337,7 @@ public class EffectManager : MonoBehaviour
                                 Debug.LogError(string.Format("Invalid effectOperator \"{0}\"", effect.operand.name));
                                 effectReturn.errorFlag = true;
                                 break;
-                        }
+                        }*/
 
                         break;
                     case "CityLoyalty":

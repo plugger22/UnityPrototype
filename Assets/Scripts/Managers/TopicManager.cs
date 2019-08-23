@@ -3113,7 +3113,20 @@ public class TopicManager : MonoBehaviour
         option.isValid = true;
         if (option.listOfCriteria?.Count > 0)
         {
-            CriteriaDataInput criteriaInput = new CriteriaDataInput() { listOfCriteria = option.listOfCriteria };
+            //pass actor to effect criteria check if a valid actorID
+            int actorCurrentSlotID = -1;
+            if (tagActorID > -1)
+            {
+                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                if (actor != null)
+                { actorCurrentSlotID = actor.slotID; }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+            }
+            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+            {
+                listOfCriteria = option.listOfCriteria,
+                actorSlotID = actorCurrentSlotID
+            };
             string effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (string.IsNullOrEmpty(effectCriteria) == false)
             {
