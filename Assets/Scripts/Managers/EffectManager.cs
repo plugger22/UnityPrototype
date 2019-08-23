@@ -2,7 +2,6 @@
 using packageAPI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -1267,17 +1266,34 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     case "Motivation":
+                        switch (effect.apply.name)
+                        {
+                            case "ActorCurrent":
+                                effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+                                break;
+                            case "ActorAll":
+
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
+                                break;
+                        }
+
                         switch (effect.operand.name)
                         {
+
+
                             case "Add":
                                 switch (effect.apply.name)
                                 {
                                     case "ActorCurrent":
-                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+
+                                        /*int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                         motivation += effect.value;
                                         motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                                         actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);*/
                                         break;
                                     case "ActorAll":
                                         //all actors have their motivation raised
@@ -1293,11 +1309,13 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.apply.name)
                                 {
                                     case "ActorCurrent":
-                                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                        effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+
+                                        /*int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                         motivation -= effect.value;
                                         motivation = Mathf.Max(0, motivation);
                                         actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);
+                                        effectReturn.bottomText = string.Format("{0}{1} {2}{3}", colourEffect, actor.arc.name, effect.description, colourEnd);*/
                                         break;
                                     case "ActorAll":
                                         //all actors have their motivation lowered
@@ -3385,6 +3403,9 @@ public class EffectManager : MonoBehaviour
             case "Contact":
                 effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic);
                 break;
+            case "Motivation":
+                effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 
@@ -3509,12 +3530,12 @@ public class EffectManager : MonoBehaviour
             {
                 case "Add":
                     int newNodeID = GameManager.instance.contactScript.GetNewContactNodeID(actor);
-                        //viable node found -> add contact
-                        if (newNodeID > -1)
-                        {
-                            GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
-                            bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
-                        }
+                    //viable node found -> add contact
+                    if (newNodeID > -1)
+                    {
+                        GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
+                        bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
+                    }
                     break;
                 case "Subtract":
                     if (GameManager.instance.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
@@ -3525,6 +3546,37 @@ public class EffectManager : MonoBehaviour
             }
         }
         else { Debug.LogWarningFormat("Invalid topicEffectData.nodeID \"{0}\"", data.nodeID); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Current Actor gains or loses motivation.
+    /// NOTE: Parameters checked for null by parent method
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private string ExecuteActorMotivation(Effect effect, Actor actor, EffectDataInput dataInput)
+    {
+        string bottomText = "Unknown";
+        int motivation;
+        switch (effect.operand.name)
+        {
+            case "Add":
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                motivation += effect.value;
+                motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, effect.description, colourEnd);
+                break;
+            case "Subtract":
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                motivation -= effect.value;
+                motivation = Mathf.Max(0, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
+                break;
+        }
         return bottomText;
     }
 
