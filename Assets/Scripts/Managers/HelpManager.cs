@@ -201,6 +201,29 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Topic UI
+        //
+        // - - - Topic UI
+        //
+        //ignoring decision
+        data = new HelpData();
+        data.tag = "topicUI_0";
+        data.header = "Ignore the Decision";
+        builder = new StringBuilder();
+        builder.AppendFormat("Decisions can be {0}IGNORED{1} (Ignore Button or ESC) if you don't want to deal with them.", colourAlert, colourEnd);
+        builder.AppendFormat("The Ignore button {0}Tooltip{1} shows any {2}Consequences{3} that may arise if you do so", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //options
+        data = new HelpData();
+        data.tag = "topicUI_1";
+        data.header = "Greyed out Options";
+        builder = new StringBuilder();
+        builder.AppendFormat("Options may be greyed out indicating that they {0}aren't available{1}. Their {1}tooltip{2} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         #region Secrets
         //
         // - - - Secrets

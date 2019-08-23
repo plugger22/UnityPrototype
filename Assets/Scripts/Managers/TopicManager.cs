@@ -3237,20 +3237,20 @@ public class TopicManager : MonoBehaviour
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid effect (Null) for topic \"{0}\"", turnTopic.name); }
-
                 }
                 if (builder.Length == 0)
                 {
-                    builder.AppendFormat("{0}No adverse effects{1}", colourGrey, colourEnd);
+                    builder.AppendFormat("{0}No adverse effects{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
                     Debug.LogWarningFormat("Invalid Ignore Effects (None showing) for topic \"{0}\"", turnTopic.name);
                 }
+                else { builder.AppendFormat("{0}{1}ESC shortcut{2}", "\n", colourNeutral, colourEnd); }
                 //details
                 data.ignoreTooltipDetails = builder.ToString();
             }
             else
             {
                 //No ignoreEffects -> default text
-                data.ignoreTooltipDetails = string.Format("{0}No adverse effects{1}", colourGrey, colourEnd);
+                data.ignoreTooltipDetails = string.Format("{0}No adverse effects{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
             }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }

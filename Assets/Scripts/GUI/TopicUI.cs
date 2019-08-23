@@ -323,7 +323,7 @@ public class TopicUI : MonoBehaviour
         tooltipShowMe.x_offset = 50;
         tooltipIgnore.x_offset = 60;
         //help
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2");
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
             GenericHelpTooltipUI help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
