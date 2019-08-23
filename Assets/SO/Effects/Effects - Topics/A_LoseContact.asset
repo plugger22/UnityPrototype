@@ -16,7 +16,7 @@ MonoBehaviour:
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   outcome: {fileID: 11400000, guid: 43638c52ad16c0649990e998e8780541, type: 2}
-  operand: {fileID: 0}
+  operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
   typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0

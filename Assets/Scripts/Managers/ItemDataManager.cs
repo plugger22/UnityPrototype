@@ -1074,7 +1074,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //support approved
             builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.tag, "\n", "\n");
-            builder.AppendFormat("{0}Renown +{1}{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>Renown +{1}</b>{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
                 factionApproval, GameManager.instance.factionScript.maxFactionApproval);
         }

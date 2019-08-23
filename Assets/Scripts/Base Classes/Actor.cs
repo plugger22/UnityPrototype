@@ -481,12 +481,16 @@ namespace gameAPI
             {
                 Contact contact = dictOfContacts[nodeID];
                 if (contact != null)
-                {
+                { 
+                    //log
+                    Debug.LogFormat("[Cnt] Actor.cs -> RemoveContact: Contact {0} {1}, {2}, ID {3}, at nodeID {4} Removed{5}", 
+                        contact.nameFirst, contact.nameLast, contact.job, contact.contactID, contact.nodeID, "\n");
                     //update contact details
                     contact.actorID = -1;
                     contact.nodeID = -1;
                     contact.status = ContactStatus.Inactive;
                     contact.turnFinish = GameManager.instance.turnScript.Turn;
+
                 }
                 else { Debug.LogWarningFormat("Invalid contact (Null) for nodeID {0}", nodeID); }
             }

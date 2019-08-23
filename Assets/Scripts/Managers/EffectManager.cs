@@ -3381,6 +3381,9 @@ public class EffectManager : MonoBehaviour
             case "Renown":
                 effectResolve.bottomText = ExecuteActorRenown(effect, actor);
                 break;
+            case "Contact":
+                effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic);
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 
@@ -3485,6 +3488,36 @@ public class EffectManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
         Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, actor.arc.name, dataBefore, actor.Renown, "\n");
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Gain or lose an actor contact (gain/lose based on operand Add/Subtract)
+    /// NOTE: All parameters checked for Null by parent method
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="actor"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private string ExecuteActorContact(Effect effect, Actor actor, TopicEffectData data)
+    {
+        string bottomText = "Unknown";
+        if (data.nodeID > -1)
+        {
+            switch (effect.operand.name)
+            {
+                case "Add":
+                    //bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd); 
+                    break;
+                case "Subtract":
+                    if (actor.RemoveContact(data.nodeID) == true)
+                    { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
+                    else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid topicEffectData.nodeID \"{0}\"", data.nodeID); }
         return bottomText;
     }
 
