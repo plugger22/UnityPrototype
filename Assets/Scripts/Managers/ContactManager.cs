@@ -879,5 +879,51 @@ public class ContactManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActors (Null)"); }
     }
 
+    /// <summary>
+    /// finds a random node for an actor's new contact (excludes an nodes where the actor has an existing contact). Returns nodeID or -1 if a problem
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public int GetNewContactNodeID(Actor actor)
+    {
+        int newNodeID = -1;
+        if (actor != null)
+        {
+            //get a random node for contact
+            List<Node> listOfActorContactNodes = GameManager.instance.dataScript.GetListOfActorContacts(actor.actorID);
+            if (listOfActorContactNodes != null)
+            {
+                //convert to an exclusion list of nodeID where actor has existing contacts (if any)
+                List<int> listOfActorContactNodeID = listOfActorContactNodes.Select(x => x.nodeID).ToList();
+                int counter = 0;
+                //keep looking until a suitable node is found
+                while (newNodeID == -1)
+                {
+                    Node node = GameManager.instance.dataScript.GetRandomNode();
+                    if (node != null)
+                    {
+                        //is node on exclusion list?
+                        if (listOfActorContactNodeID.Exists(x => x == node.nodeID) == false)
+                        {
+                            newNodeID = node.nodeID;
+                            break;
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid node (Null) from GetRandomNode"); }
+                    //endless loop fail safe
+                    counter++;
+                    if (counter > 10)
+                    {
+                        Debug.LogWarning("Search for a new contact node TIMED OUT (counter 10+)");
+                        break;
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfActorContactNodes (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+        return newNodeID;
+    }
+
     //new methods above here
 }

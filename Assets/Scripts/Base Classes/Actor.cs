@@ -472,7 +472,7 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// Removes contact at specified node, returns true if successful, false if not. Updates contact details
+        /// Removes contact at specified node, returns true if successful, false if not. Updates contact details NOTE: Use DataManager.cs  -> RemoveContactSingle (it calls this method and does other stuff)
         /// </summary>
         /// <param name="nodeID"></param>
         public bool RemoveContact(int nodeID)
@@ -482,9 +482,6 @@ namespace gameAPI
                 Contact contact = dictOfContacts[nodeID];
                 if (contact != null)
                 { 
-                    //log
-                    Debug.LogFormat("[Cnt] Actor.cs -> RemoveContact: Contact {0} {1}, {2}, ID {3}, at nodeID {4} Removed{5}", 
-                        contact.nameFirst, contact.nameLast, contact.job, contact.contactID, contact.nodeID, "\n");
                     //update contact details
                     contact.actorID = -1;
                     contact.nodeID = -1;

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActConRES0
   m_EditorClassIdentifier: 
   tag: New Contact
-  text: '[Actor] has been approached by an individual wishing to help. They want money,
-    of course, but could be useful.'
+  text: Your [Actor] has been approached by an individual wishing to help. They want
+    money, of course, but could be useful.
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
@@ -40,6 +40,6 @@ MonoBehaviour:
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
+  turnsActive: 1
   turnsLive: 1
   turnsDone: 0

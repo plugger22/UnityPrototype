@@ -2,6 +2,7 @@
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -3507,10 +3508,16 @@ public class EffectManager : MonoBehaviour
             switch (effect.operand.name)
             {
                 case "Add":
-                    //bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd); 
+                    int newNodeID = GameManager.instance.contactScript.GetNewContactNodeID(actor);
+                        //viable node found -> add contact
+                        if (newNodeID > -1)
+                        {
+                            GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
+                            bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
+                        }
                     break;
                 case "Subtract":
-                    if (actor.RemoveContact(data.nodeID) == true)
+                    if (GameManager.instance.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
                     { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
                     else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
                     break;
