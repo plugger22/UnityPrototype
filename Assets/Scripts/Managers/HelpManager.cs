@@ -581,6 +581,41 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Contact
+        //
+        // - - - Contact (Resistance)
+        //
+        //
+        //resistance overview
+        data = new HelpData();
+        data.tag = "contact_0";
+        data.header = "Overview";
+        builder = new StringBuilder();
+        builder.AppendFormat("Contacts work for your subordinates and are your {0}eyes and ears{1} on the ground.", colourAlert, colourEnd);
+        builder.AppendFormat("Contacts enable your subordinates to carry out {0}District Actions{1} and can report on all manner of Authority activity", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Effectiveness
+        data = new HelpData();
+        data.tag = "contact_1";
+        data.header = "Effectiveness";
+        builder = new StringBuilder();
+        builder.AppendFormat("Effectiveness is a measure of the contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
+        builder.AppendFormat("It ranges from {0}{1}  1{2} '...knows stuff' (worst){3}{4}  2{5} '...is networked'{6}{7}  3{8} '...is Wired-in' (best)", 
+            "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Contacts and the Authority
+        data = new HelpData();
+        data.tag = "contact_2";
+        data.header = "Contacts and the Authority";
+        builder = new StringBuilder();
+        builder.AppendFormat("Contacts can become {0}known{1} to the Authority (if a {2}Probe Team{3} is in the same district) and can, on occasion, be {4}Erased{5} (Erasure Team in same district)", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         //
         // - - - Return
         //
@@ -595,10 +630,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "lielow_0";
-        string tag1 = "lielow_1";
-        string tag2 = "lielow_2";
-        string tag3 = "lielow_3";
+        string tag0 = "contact_0";
+        string tag1 = "contact_1";
+        string tag2 = "contact_2";
+        string tag3 = null;
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

@@ -19,10 +19,15 @@ public class ActorManager : MonoBehaviour
     [Range(1, 4)] public int maxNumOfOnMapActors = 4;      //if you increase this then GUI elements and GUIManager will need to be changed to accomodate it, default value 4
     [Tooltip("Maximum number of actors that can be in the replacement pool (applies to both sides)")]
     [Range(1, 6)] public int maxNumOfReserveActors = 4;
+
+    [Header("Stats")]
     [Tooltip("Maximum value of an actor datapoint stat")]
     [Range(2, 4)] public int maxStatValue = 3;
     [Tooltip("Minimum value of an actor datapoint stat")]
-    [Range(2, 4)] public int minStatValue = 0;
+    [Range(0, 4)] public int minStatValue = 0;
+    [Tooltip("value of a datapoint stat that is considered 'neutral'")]
+    [Range(2, 4)] public int neutralStatValue = 2;
+
     [HideInInspector] public int numOfQualities;            //initialised in LoadManager.cs -> numOfQualities (need to do this for sequencing reasons)
 
     [Header("Management")]

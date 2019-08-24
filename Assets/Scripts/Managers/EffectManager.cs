@@ -43,6 +43,7 @@ public class EffectManager : MonoBehaviour
     private string actorReserveTimerHalved;
     //fast access -> assorted
     private int maxTargetInfo = -1;
+    private int neutralStatValue = -1;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -130,6 +131,7 @@ public class EffectManager : MonoBehaviour
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         maxTargetInfo = GameManager.instance.targetScript.maxTargetInfo;
+        neutralStatValue = GameManager.instance.actorScript.neutralStatValue;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia (-1)");
@@ -138,6 +140,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage (-1)");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(maxTargetInfo > -1, "Invalid maxTargetInfo (-1)");
+        Debug.Assert(neutralStatValue > -1, "Invalid neutralStatValue (-1)");
     }
     #endregion
 
@@ -665,7 +668,7 @@ public class EffectManager : MonoBehaviour
                                                 //Actor motivation is neutral (2) or better
                                                 if (actor != null)
                                                 {
-                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) < neutralStatValue)
                                                     { BuildString(result, string.Format(" {0} Low Motivation (need 2+)", actor.arc.name)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for MotivationNeutralMin"); }

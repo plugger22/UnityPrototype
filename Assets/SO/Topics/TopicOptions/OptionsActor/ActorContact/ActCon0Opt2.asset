@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Contact 0 option 2
   tag: Volunteer
-  text: Offer them the chance to volunteer
+  text: Offer them the opportunity to volunteer
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria: []
   listOfGoodEffects:
@@ -21,6 +21,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: Volunteer
-  tooltipMain: ANARCHIST gains Contact
-  tooltipDetails: Unknown Mood Effect
+  tooltipHeader: <color=#FFFFE0>Volunteer</color>
+  tooltipMain: <color=#98FB98>FIXER gains Contact</color>
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Offer them the chance to volunteer</color>
