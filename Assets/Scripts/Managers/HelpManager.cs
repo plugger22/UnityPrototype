@@ -591,7 +591,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Stealth Rating";
         builder = new StringBuilder();
         builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("The rating changes depending on their mode{0}  - {1}Hunt{2} mode {3}-1{4} Stealth{5}  - {6}Ambush{7} mode {8}+1{9} Stealth",
+        builder.AppendFormat("The rating changes depending on their mode{0}  * {1}Hunt{2} mode {3}-1{4} Stealth{5}  * {6}Ambush{7} mode {8}+1{9} Stealth",
             "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
@@ -615,7 +615,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "contact_1";
         data.header = "Effectiveness";
         builder = new StringBuilder();
-        builder.AppendFormat("Effectiveness is a measure of the contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
+        builder.AppendFormat("Effectiveness is a measure of the Contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
         builder.AppendFormat("It ranges from {0}{1}  1{2} '...knows stuff' (worst){3}{4}  2{5} '...is networked'{6}{7}  3{8} '...is Wired-in' (best)", 
             "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd);
         data.text = builder.ToString();
@@ -664,6 +664,14 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //Teams
+        data = new HelpData();
+        data.tag = "contact_7";
+        data.header = "Spotting Teams";
+        builder = new StringBuilder();
+        builder.AppendFormat("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         #endregion
 
 
@@ -681,8 +689,8 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "contact_6";
-        string tag1 = "contact_1";
+        string tag0 = "contact_0";
+        string tag1 = "contact_7";
         string tag2 = "nemesis_0";
         string tag3 = null;
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
