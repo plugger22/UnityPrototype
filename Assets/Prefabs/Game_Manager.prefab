@@ -1585,6 +1585,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
+  - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
   arrayOfActions:
   - {fileID: 11400000, guid: e2452f8fe0121e9439cf59d543b9dc0a, type: 2}
   - {fileID: 11400000, guid: baa27ad6b90477e4e94cb6ed5cc27066, type: 2}
@@ -2712,6 +2714,7 @@ MonoBehaviour:
   maxNumOfReserveActors: 4
   maxStatValue: 3
   minStatValue: 0
+  neutralStatValue: 2
   numOfQualities: 3
   currentReserveTimer: 10
   recruitedReserveTimer: 5

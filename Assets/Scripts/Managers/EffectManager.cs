@@ -1071,7 +1071,7 @@ public class EffectManager : MonoBehaviour
                 {
                     effectReturn.topText = effectResolve.topText;
                     effectReturn.bottomText = effectResolve.bottomText;
-                    effectReturn.isAction = true;
+                    effectReturn.isAction = false;
                 }
             }
             //Non-Topic effect
@@ -1286,8 +1286,9 @@ public class EffectManager : MonoBehaviour
                                 break;
                             case "ActorAll":
                                 //all actors have their motivation changed
-                                ResolveGroupActorEffect(effect, dataInput, actor);
-                                effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                                if (ResolveGroupActorEffect(effect, dataInput, actor) == true)
+                                { effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
+                                else { effectReturn.errorFlag = true; }
                                 break;
                             default:
                                 Debug.LogWarningFormat("Invalid effect.apply \"{0}\"", effect.apply.name);
@@ -1863,14 +1864,15 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect
+    /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise
     /// NOTE: Effect, dataInput and Actor are checked for null by the calling method
     /// </summary>
     /// <param name="datapoint"></param>
     /// <param name="value"></param>
     /// <param name="actor"></param>
-    private void ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
+    private bool ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
     {
+        bool isSuccess = true;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
         if (arrayOfActors != null)
@@ -1923,7 +1925,8 @@ public class EffectManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
+        else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
+        return isSuccess;
     }
 
     /// <summary>
@@ -3359,6 +3362,12 @@ public class EffectManager : MonoBehaviour
                             Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
                             text = string.Format("Actor {0}", effect.description);
                         }
+                        break;
+                    case 'L':
+                        //All Actors
+                        if (ResolveGroupActorEffect(effect, dataInput) == true)
+                        { text = effect.description; }
+                        else { effectResolve.isError = true; }
                         break;
                     case 'P':
                         //Player

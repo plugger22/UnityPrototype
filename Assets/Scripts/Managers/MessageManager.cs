@@ -1554,8 +1554,11 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             data.tag0 = "contact_0";
-            data.tag1 = "contact_1";
-            data.tag2 = "contact_2";
+            if (isGained == true)
+            { data.tag1 = "contact_4"; }
+            else { data.tag1 = "contact_5"; }
+            data.tag2 = "contact_1";
+            data.tag3 = "contact_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1604,6 +1607,9 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
+            data.tag0 = "contact_0";
+            data.tag1 = "contact_3";
+            data.tag2 = "contact_1";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1652,6 +1658,9 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
+            data.tag0 = "contact_6";
+            data.tag1 = "contact_1";
+            data.tag2 = "nemesis_0";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

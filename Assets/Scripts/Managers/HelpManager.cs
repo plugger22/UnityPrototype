@@ -581,10 +581,25 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Nemesis
+        //
+        // - - - Nemesis
+        //
+        //Stealth
+        data = new HelpData();
+        data.tag = "nemesis_0";
+        data.header = "Stealth Rating";
+        builder = new StringBuilder();
+        builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("The rating changes depending on their mode{0}  - {1}Hunt{2} mode {3}-1{4} Stealth{5}  - {6}Ambush{7} mode {8}+1{9} Stealth",
+            "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         #region Contact
         //
         // - - - Contact (Resistance)
-        //
         //
         //resistance overview
         data = new HelpData();
@@ -592,7 +607,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Overview";
         builder = new StringBuilder();
         builder.AppendFormat("Contacts work for your subordinates and are your {0}eyes and ears{1} on the ground.", colourAlert, colourEnd);
-        builder.AppendFormat("Contacts enable your subordinates to carry out {0}District Actions{1} and can report on all manner of Authority activity", colourAlert, colourEnd);
+        builder.AppendFormat("Contacts enable your subordinates to carry out {0}Actions{1} and can report on all manner of Authority activity", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Effectiveness
@@ -614,7 +629,43 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //Target Rumours
+        data = new HelpData();
+        data.tag = "contact_3";
+        data.header = "Target Rumours";
+        builder = new StringBuilder();
+        builder.AppendFormat("Contacts can learn rumours of new targets that will appear in the future. Their {0}information{1} can be relied upon as {2}accurate{3}.", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Contacts with {0}High{1} Effectiveness are {2}more likely{3} to hear rumours than those with low Effectiveness",colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //New Contact
+        data = new HelpData();
+        data.tag = "contact_4";
+        data.header = "New Contact";
+        builder = new StringBuilder();
+        builder.AppendFormat("Your subordinate will now be able to {0}carry out actions{1} in the new contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Lost Contact
+        data = new HelpData();
+        data.tag = "contact_5";
+        data.header = "Lost Contact";
+        builder = new StringBuilder();
+        builder.AppendFormat("Your subordinate will {0}No Longer{1} be able to carry out actions in their ex-contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Nemesis
+        data = new HelpData();
+        data.tag = "contact_6";
+        data.header = "Spotting Nemesis";
+        builder = new StringBuilder();
+        builder.AppendFormat("If a Nemesis is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= Nemesis's Stealth rating{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         #endregion
+
 
         //
         // - - - Return
@@ -630,9 +681,9 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "contact_0";
+        string tag0 = "contact_6";
         string tag1 = "contact_1";
-        string tag2 = "contact_2";
+        string tag2 = "nemesis_0";
         string tag3 = null;
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);

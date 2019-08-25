@@ -3279,7 +3279,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private string GetEffectPrefix(Effect effect)
     {
-        string prefix = "Unknown";
+        string prefix = "";
         char key = effect.name[0];
         //double check that first char of effect name is followed immediately by an underscore
         if (effect.name[1].Equals('_') == true)
@@ -3292,6 +3292,9 @@ public class TopicManager : MonoBehaviour
                     if (actor != null)
                     { prefix = actor.arc.name; }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    break;
+                case 'L':
+                    //All actors
                     break;
                 case 'P':
                     //player
