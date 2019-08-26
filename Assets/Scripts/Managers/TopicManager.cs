@@ -996,11 +996,32 @@ public class TopicManager : MonoBehaviour
                         criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
                         if (criteriaCheck == null)
                         {
-                            //criteria check passed O.K
-                            listOfTopicTypesTurn.Add(topicType);
-                            //add to local list of valid TopicTypes for the Turn
-                            AddTopicTypeToList(listOfTopicTypesTurn, topicType);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
+                            //get list of SubTypes
+                            List<TopicSubType> listOfSubTypes = topicType.listOfSubTypes;
+                            if (listOfSubTypes != null)
+                            {
+                                bool isProceed = false;
+                                //topicType needs to have at least one valid subType present
+                                foreach( TopicSubType subType in listOfSubTypes)
+                                {
+                                    if (CheckSubTypeCriteria(subType) == true)
+                                    {
+                                        isProceed = true;
+                                        break;
+                                    }
+                                }
+                                //valid topicType / subType, add to selection pool
+                                if (isProceed == true)
+                                {
+                                    //criteria check passed O.K
+                                    listOfTopicTypesTurn.Add(topicType);
+                                    //add to local list of valid TopicTypes for the Turn
+                                    AddTopicTypeToList(listOfTopicTypesTurn, topicType);
+                                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
+
                         }
                         else
                         {
@@ -2508,10 +2529,10 @@ public class TopicManager : MonoBehaviour
             criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
             {
-                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicSubType: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
+                Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
                 return false;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicSubType: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
         }
         return true;
     }
