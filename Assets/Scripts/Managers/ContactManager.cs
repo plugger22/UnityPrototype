@@ -204,6 +204,7 @@ public class ContactManager : MonoBehaviour
                     contact.turnStart = -1;
                     contact.turnFinish = -1;
                     contact.usefulIntel = 0;
+                    contact.timerInactive = 0;
                     //effectiveness (random 1 to 3, weighted normal)
                     contact.effectiveness = arrayOfEffectiveness[Random.Range(0, numEffectiveness)];
                     //name & sex
@@ -266,6 +267,7 @@ public class ContactManager : MonoBehaviour
                 //initialise data
                 contact.actorID = actorID;
                 contact.nodeID = nodeID;
+                contact.timerInactive = 0;
                 contact.status = ContactStatus.Active;
                 contact.turnStart = GameManager.instance.turnScript.Turn;
                 //assign type and job
@@ -443,37 +445,49 @@ public class ContactManager : MonoBehaviour
                         contact.Value.status = ContactStatus.Active;
                         Debug.LogFormat("[Cnt] ContactManager.cs -> CheckContacts: {0} {1}, {2}, nodeID {3}, actorID {4}, now ACTIVE{5}", contact.Value.nameFirst, contact.Value.nameLast,
                             contact.Value.job, contact.Value.nodeID, contact.Value.actorID, "\n");
-                        //message
-                        Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
-                        if (actor != null)
+                        //message -> only if a valid actor present (may no longer be OnMap)
+                        if (contact.Value.actorID > -1)
                         {
-                            Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
-                            if (node != null)
+                            Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
+                            if (actor != null)
                             {
-                                string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Contact becomes ACTIVE {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
-                                    contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
-                                GameManager.instance.messageScript.ContactActive(text, actor, node, contact.Value);
+                                if (contact.Value.nodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
+                                    if (node != null)
+                                    {
+                                        string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Contact becomes ACTIVE {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
+                                            contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
+                                        GameManager.instance.messageScript.ContactActive(text, actor, node, contact.Value);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
+                                }
                             }
-                            else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for contact.actorID {0}", contact.Value.actorID); }
                         }
-                        else { Debug.LogWarningFormat("Invalid actor (Null) for contact.actorID {0}", contact.Value.actorID); }
                     }
                     else
                     {
                         //Still Inactive -> effects tab message
-                        Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
-                        if (actor != null)
+                        if (contact.Value.actorID > -1)
                         {
-                            Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
-                            if (node != null)
+                            Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
+                            if (actor != null)
                             {
-                                string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Inactive Contact {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
-                                    contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
-                                GameManager.instance.messageScript.ContactTimer(text, actor, node, contact.Value);
+                                if (contact.Value.nodeID > -1)
+                                {
+                                    Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
+                                    if (node != null)
+                                    {
+                                        string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Inactive Contact {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
+                                            contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
+                                        GameManager.instance.messageScript.ContactTimer(text, actor, node, contact.Value);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
+                                }
                             }
-                            else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for contact.actorID {0}", contact.Value.actorID); }
                         }
-                        else { Debug.LogWarningFormat("Invalid actor (Null) for contact.actorID {0}", contact.Value.actorID); }
                     }
                 }
             }

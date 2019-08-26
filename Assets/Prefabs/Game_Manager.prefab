@@ -3146,6 +3146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contactsPerLevel: 2
+  timerInactive: 6
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20
