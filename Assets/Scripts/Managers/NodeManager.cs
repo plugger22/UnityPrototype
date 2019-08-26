@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using modalAPI;
 using packageAPI;
-using System.Text;
 using System;
-using Random = UnityEngine.Random;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles all node related matters
@@ -18,11 +18,11 @@ public class NodeManager : MonoBehaviour
     public Material[] arrayOfNodeMaterials;
 
     [Tooltip("% chance times actor.Ability of a primary node being active for an Actor, halved for secondary node")]
-    [Range(10,40)] public int nodePrimaryChance = 20;                                
+    [Range(10, 40)] public int nodePrimaryChance = 20;
     [Tooltip("Minimum number of active nodes on a map for any actor type")]
-    [Range(0,4)] public int nodeActiveMinimum = 3;
+    [Range(0, 4)] public int nodeActiveMinimum = 3;
     [Tooltip("The base factor used for calculating ('factor - (gear - seclvl [High is 3, Low is 1])') the delay in notifying the Authority player that move activity has occurred ")]
-    [Range(0,10)]public int moveInvisibilityDelay = 4;
+    [Range(0, 10)] public int moveInvisibilityDelay = 4;
 
     [Header("Spiders and Tracers")]
     [Tooltip("The standard time delay, in turns, before Authority notification for any node activity that results in a loss of invisibility with no spider present")]
@@ -34,7 +34,7 @@ public class NodeManager : MonoBehaviour
 
     [Header("Datapoints")]
     [Tooltip("Maximum value of a node datapoint")]
-    [Range(0,4)] public int maxNodeValue = 3;
+    [Range(0, 4)] public int maxNodeValue = 3;
     [Tooltip("Minimum value of a node datapoint")]
     [Range(0, 4)] public int minNodeValue = 0;
     [Tooltip("Low value of a node datapoint")]
@@ -218,16 +218,16 @@ public class NodeManager : MonoBehaviour
     #region SubInitialiseEvents
     private void SubInitialiseEvents()
     {
-            //register listener
-            EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
-            EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
+        //register listener
+        EventManager.instance.AddListener(EventType.NodeDisplay, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.ActivityDisplay, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.CreateMoveMenu, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
     }
     #endregion
 
@@ -980,23 +980,32 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         //set all nodes to default colour first
         ResetNodes();
-
-        /*List<GameObject> tempList = GameManager.instance.dataScript.GetListOfActorNodes(slotID);
-        foreach (GameObject obj in tempList)
-        {
-            Node nodeTemp = obj.GetComponent<Node>();
-            nodeTemp.SetMaterial(materialActive);
-        }*/
-
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         List<Node> tempNodeList = GameManager.instance.dataScript.GetListOfActorContactNodes(slotID);
-        foreach(Node node in tempNodeList)
-        {
-            //change material for selected nodes
-            node.SetMaterial(materialActive);
-        }
-
         //Get Actor
         Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+        foreach (Node node in tempNodeList)
+        {
+            switch (playerSide.level)
+            {
+                case 1:
+                    //authority - contact status always Active
+                    if (GameManager.instance.dataScript.CheckActiveContactAtNode(node.nodeID, playerSide) == true)
+                    {
+                        //change material for selected nodes
+                        node.SetMaterial(materialActive);
+                    }
+                    break;
+                case 2:
+                    //resistance - contact status can change
+                    if (GameManager.instance.dataScript.CheckForActorContactActive(actor, node.nodeID) == true)
+                    {
+                        //change material for selected nodes
+                        node.SetMaterial(materialActive);
+                    }
+                    break;
+            }
+        }
         string displayText;
         string minionTitle;
         //work out minion's appropriate title
@@ -1186,13 +1195,13 @@ public class NodeManager : MonoBehaviour
             {
                 //loop nodes
                 bool errorFlag = false;
-                foreach(Node node in listOfNodes)
+                foreach (Node node in listOfNodes)
                 {
                     if (node != null)
                     {
                         if (node.faceObject != null)
                         {
-                            switch(activityUI)
+                            switch (activityUI)
                             {
                                 case ActivityUI.Count:
                                 case ActivityUI.Time:
@@ -1386,7 +1395,7 @@ public class NodeManager : MonoBehaviour
                                             //invisibility reduces, still above zero
                                             int delay = moveInvisibilityDelay - Mathf.Abs(gear.data - secLevel);
                                             delay = Mathf.Max(0, delay);
-                                            moveGearDetails.ai_Delay = delay; 
+                                            moveGearDetails.ai_Delay = delay;
                                             builderDetail.AppendFormat("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd,
                                                 colourNeutral, moveGearDetails.ai_Delay, colourEnd, colourBad, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd);
                                         }
@@ -2170,7 +2179,7 @@ public class NodeManager : MonoBehaviour
             int count = dictOfOngoingEffects.Count;
             if (count > 0)
             {
-                foreach(var ongoing in dictOfOngoingEffects)
+                foreach (var ongoing in dictOfOngoingEffects)
                 {
                     //message
                     if (ongoing.Value.nodeID > -1)
@@ -2248,7 +2257,7 @@ public class NodeManager : MonoBehaviour
     public int GetAIDelayForMove(ConnectionType secLvl)
     {
         int securityLevel;
-        switch(secLvl)
+        switch (secLvl)
         {
             case ConnectionType.HIGH: securityLevel = 3; break;
             case ConnectionType.MEDIUM: securityLevel = 2; break;
@@ -2296,7 +2305,7 @@ public class NodeManager : MonoBehaviour
     IEnumerator FlashingNode(Node node)
     {
         //forever loop
-        for (; ;)
+        for (; ; )
         {
             if (isFlashOn == false)
             {
@@ -2633,7 +2642,7 @@ public class NodeManager : MonoBehaviour
                             //not on exclusion list
                             if (listOfExclusion.Exists(x => x == index) == false)
                             {
-                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}", 
+                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
                                     cure.cureName, index, cure.distance, actualDistance, "\n");
                                 cureNodeID = index;
                                 break;

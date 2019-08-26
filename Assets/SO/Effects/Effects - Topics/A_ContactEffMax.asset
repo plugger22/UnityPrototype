@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: A_ContactEffMin
+  m_Name: A_ContactEffMax
   m_EditorClassIdentifier: 
-  description: Lowers Contact Effectiveness to Min
+  description: Contact Effectiveness to MAX
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   outcome: {fileID: 11400000, guid: 3e923ac93d7be1b4aa9422e51be98ae6, type: 2}
-  operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
-  typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0

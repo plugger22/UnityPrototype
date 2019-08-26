@@ -18,13 +18,13 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: 997a659afd255764aab98908dcbcb192, type: 2}
+  - {fileID: 11400000, guid: f8d5212c134eee841bf0ef0e8ef6ca87, type: 2}
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Refuse</color>
-  tooltipMain: "<color=#FF4500>OPERATOR loses Contact</color>\r\n<color=#FF4500> All
-    Subordinates Motivation -1</color>"
+  tooltipMain: "<color=#FF4500>FIXER Contact Effectiveness to MIN</color>\r\n<color=#FF4500>FIXER
+    Motivation -1</color>"
   tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Refuse their demands</color>

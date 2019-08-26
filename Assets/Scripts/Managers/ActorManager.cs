@@ -904,8 +904,9 @@ public class ActorManager : MonoBehaviour
                                     if (nodeID != playerID)
                                     {
                                         //check for actor connections at node
-                                        /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)*/
-                                        if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
+                                        /*if (GameManager.instance.levelScript.CheckNodeActive(node.nodeID, playerSide, actor.actorSlotID) == true)
+                                        if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)*/
+                                        if (GameManager.instance.dataScript.CheckForActorContactActive(actor, nodeID) == true)
                                         {
                                             //Not if actor has Spooked trait and Security Measures in place
                                             if (actor.CheckTraitEffect(actorNoActionsDuringSecurityMeasures) == true && securityState != AuthoritySecurityState.Normal)
@@ -1183,7 +1184,8 @@ public class ActorManager : MonoBehaviour
                                 teamArcID = actor.arc.preferredTeam.TeamArcID;
                                 tempAction = null;
                                 //active node for actor
-                                if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)
+                                /*if (GameManager.instance.dataScript.CheckActorContactPresent(actor.actorID, nodeID) == true)*/
+                                if (GameManager.instance.dataScript.CheckForActorContactActive(actor, nodeID) == true)
                                 {
                                     //temporary action "Any Team"
                                     tempAction = actionAnyTeam;

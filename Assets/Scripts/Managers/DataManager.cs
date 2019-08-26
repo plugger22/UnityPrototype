@@ -1160,6 +1160,7 @@ public class DataManager : MonoBehaviour
         return listOfActorContactNodes;
     }
 
+
     /// <summary>
     /// Get a list of all contacts at a particular node, null if none
     /// </summary>
@@ -1241,13 +1242,48 @@ public class DataManager : MonoBehaviour
         return isPresent;
     }
 
+    /// <summary>
+    /// Returns true if actor is active and has an active contact at specified node. Resistance only.
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public bool CheckForActorContactActive(Actor actor, int nodeID)
+    {
+        bool isActiveContact = false;
+        if (actor != null)
+        {
+            //actor active
+            if (actor.Status == ActorStatus.Active)
+            {
+                List<Contact> listOfContacts = new List<Contact>();
+                if (dictOfContactsByNodeResistance.ContainsKey(nodeID) == true)
+                {
+                    listOfContacts = dictOfContactsByNodeResistance[nodeID];
+                    if (listOfContacts != null)
+                    {
+                        Contact contact = listOfContacts.Find(x => x.actorID == actor.actorID);
+                        if (contact != null)
+                        {
+                            //check contact status
+                            if (contact.status == ContactStatus.Active)
+                            { isActiveContact = true; }
+                        }
+                    }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+        return isActiveContact;
+    }
+
 
 
     public Dictionary<int, List<int>> GetDictOfActorContacts()
     { return dictOfActorContacts; }
 
     /// <summary>
-    /// returns true if actor has a contact at the node, false otherwise. For current side.
+    /// returns true if actor has a contact at the node, false otherwise. For current side. Doesn't check for Contact status
     /// </summary>
     /// <param name="actorID"></param>
     /// <param name="nodeID"></param>

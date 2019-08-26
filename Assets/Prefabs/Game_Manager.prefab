@@ -988,6 +988,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 55ccd500cda874145bd8b156cb3f1180, type: 2}
   - {fileID: 11400000, guid: 5db88649ca695d243b284c479f425108, type: 2}
   - {fileID: 11400000, guid: 43638c52ad16c0649990e998e8780541, type: 2}
+  - {fileID: 11400000, guid: 0776f949a52c3404f81ee967cd7cb74f, type: 2}
+  - {fileID: 11400000, guid: 3e923ac93d7be1b4aa9422e51be98ae6, type: 2}
+  - {fileID: 11400000, guid: a56dea972e70b174fab9203730e6c5c1, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1587,6 +1590,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
   - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
+  - {fileID: 11400000, guid: 826042fa13cd68248a222db74a109029, type: 2}
+  - {fileID: 11400000, guid: 6aa6be9241265b646ac50029d5d767e8, type: 2}
+  - {fileID: 11400000, guid: f8d5212c134eee841bf0ef0e8ef6ca87, type: 2}
   arrayOfActions:
   - {fileID: 11400000, guid: e2452f8fe0121e9439cf59d543b9dc0a, type: 2}
   - {fileID: 11400000, guid: baa27ad6b90477e4e94cb6ed5cc27066, type: 2}
@@ -3143,6 +3149,8 @@ MonoBehaviour:
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20
+  maxEffectiveness: 3
+  minEffectiveness: 1
   rumourTarget: 5
   maxRumoursTarget: 2
   spotTeamChance: 10

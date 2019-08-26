@@ -3338,7 +3338,6 @@ public class EffectManager : MonoBehaviour
             if (effect.name[1].Equals('_') == true)
             {
                 //text
-                string text = "Unknown";
                 switch (key)
                 {
                     case 'A':
@@ -3347,44 +3346,39 @@ public class EffectManager : MonoBehaviour
                         {
                             Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
                             if (actor != null)
-                            {
-                                text = string.Format("{0} {1}", actor.arc.name, effect.description);
-                                effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor);
-                            }
+                            { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor);  }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
-                                text = string.Format("Actor {0}", effect.description);
+                                effectResolve.isError = true;
                             }
                         }
                         else
                         {
                             Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
-                            text = string.Format("Actor {0}", effect.description);
+                            effectResolve.isError = true;
                         }
                         break;
                     case 'L':
                         //All Actors
                         if (ResolveGroupActorEffect(effect, dataInput) == true)
-                        { text = effect.description; }
+                        { effectResolve.bottomText = effect.description; }
                         else { effectResolve.isError = true; }
                         break;
                     case 'P':
                         //Player
-                        text = string.Format("Player {0}", effect.description);
                         effectResolve = ResolveTopicPlayerEffect(effect, dataInput, data);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
-                //colour
+                /*//colour  EDIT -> Do in subMethods
                 switch (effect.typeOfEffect.name)
                 {
                     case "Good": text = string.Format("{0}{1}{2}", colourGood, text, colourEnd); break;
                     case "Neutral": text = string.Format("{0}{1}{2}", colourNeutral, text, colourEnd); break;
                     case "Bad": text = string.Format("{0}{1}{2}", colourBad, text, colourEnd); break;
                     default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
-                }
-                effectResolve.bottomText = text;
+                }*/
             }
             else
             {
@@ -3419,6 +3413,7 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecuteActorRenown(effect, actor);
                 break;
             case "ContactGainLose":
+            case "ContactStatus":
             case "ContactEffectiveness":
                 effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic);
                 break;
@@ -3580,10 +3575,14 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     contact.effectiveness = GameManager.instance.contactScript.maxEffectiveness;
                                     bottomText = string.Format("{0}Contact Effectiveness now MAX{1}", colourGood, colourEnd);
+                                    Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MAX ({5}){6}", contact.nameFirst, contact.nameLast,
+                                        contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
                                     break;
                                 case "Subtract":
                                     contact.effectiveness = GameManager.instance.contactScript.minEffectiveness;
                                     bottomText = string.Format("{0}Contact Effectiveness now MIN{1}", colourBad, colourEnd);
+                                    Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MIN ({5}){6}", contact.nameFirst, contact.nameLast,
+                                        contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                             }
@@ -3592,6 +3591,28 @@ public class EffectManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid data.contactID \"{0}\"", data.contactID); }
                         break;
+                case "ContactStatus":
+                    //Contact status changed to Inactive
+                    if (data.contactID > -1)
+                    {
+                        Contact contact = GameManager.instance.dataScript.GetContact(data.contactID);
+                        if (contact != null)
+                        {
+                            switch (effect.operand.name)
+                            {
+                                case "Subtract":
+                                    contact.status = ContactStatus.Inactive;
+                                    bottomText = string.Format("{0}Contact now Silent{1}", colourBad, colourEnd);
+                                    Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, Status now INACTIVE ({5}){6}", contact.nameFirst, contact.nameLast,
+                                        contact.job, contact.nodeID, contact.actorID, contact.status, "\n");
+                                    break;
+                                default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid contact (Null) for contactID \"{0}\"", data.contactID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid data.contactID \"{0}\"", data.contactID); }
+                    break;
                 default:
                     Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
             }
