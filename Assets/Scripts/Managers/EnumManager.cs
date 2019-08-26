@@ -257,6 +257,7 @@
         Contact_Target_Rumour,
         Contact_Nemesis_Spotted,
         Contact_Team_Spotted,
+        Contact_Inactive,
         Tracer_Nemesis_Spotted,
         Tracer_Team_Spotted,
         //Target

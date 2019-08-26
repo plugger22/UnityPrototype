@@ -3415,7 +3415,7 @@ public class EffectManager : MonoBehaviour
             case "ContactGainLose":
             case "ContactStatus":
             case "ContactEffectiveness":
-                effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic);
+                effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic, dataInput);
                 break;
             case "Motivation":
                 effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
@@ -3535,7 +3535,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string ExecuteActorContact(Effect effect, Actor actor, TopicEffectData data)
+    private string ExecuteActorContact(Effect effect, Actor actor, TopicEffectData data, EffectDataInput dataInput)
     {
         string bottomText = "Unknown";
         if (data.nodeID > -1)
@@ -3601,10 +3601,8 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Subtract":
-                                    contact.status = ContactStatus.Inactive;
+                                    contact.SetInactive(dataInput.originText);
                                     bottomText = string.Format("{0}Contact now Silent{1}", colourBad, colourEnd);
-                                    Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, Status now INACTIVE ({5}){6}", contact.nameFirst, contact.nameLast,
-                                        contact.job, contact.nodeID, contact.actorID, contact.status, "\n");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                             }

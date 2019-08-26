@@ -23,14 +23,36 @@ public class Contact
     public int usefulIntel;             //tracks number of useful intel items sourced by the contact
     public string typeName;             //ContactType.name
     public ContactStatus status;
-    /*public string statusName;*/
     public bool isMale;                 //Male if true, female if false
     public bool isTurned;               //working for Authority as an informant
 
+    [HideInInspector] public int timerInactive;    //countdown timer set when contact becomes inactive. Flips to active once timer reaches zero (ContactManager.cs -> CheckContacts)
     //stats
     [HideInInspector] public int statsRumours;     //number of target rumours learnt
     [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
     [HideInInspector] public int statsTeams;       //number of times spotted Erasure Teams
     #endregion
 
+
+    /// <summary>
+    /// Use for making contact Inactive (avoid doing so directly). Handles all admin. Reason is '[due to]...', keep short
+    /// </summary>
+    public void SetInactive(string reason = "Unknown")
+    {
+        status = ContactStatus.Inactive;
+        //timer
+        timerInactive = GameManager.instance.contactScript.timerInactive;
+        //admin
+        Debug.LogFormat("[Cnt] Contact.cs -> SetInactive: {0} {1}, {2} at nodeID {3}, actorID {4}, Status now INACTIVE ({5}){6}", nameFirst, nameLast, job, nodeID, actorID, status, "\n");
+        string text = string.Format("Contact {0} {1}, {2}, nodeID {3}, actorID {4}, goes INACTIVE{5}", nameFirst, nameLast, job, nodeID, actorID, "\n");
+        Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+        if (actor != null)
+        {
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node != null)
+            { GameManager.instance.messageScript.ContactInactive(text, reason, actor, node, this); }
+            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        }
+        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+    }
 }

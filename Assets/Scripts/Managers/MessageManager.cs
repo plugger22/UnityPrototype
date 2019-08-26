@@ -1710,7 +1710,54 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             data.tag0 = "contact_0";
-            data.tag1 = "contact_1";
+            data.tag1 = "contact_7";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Resistance Contact goes inactive for any reason
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    public Message ContactInactive(string text, string reason, Actor actor, Node node, Contact contact)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Inactive;
+            message.sideLevel = globalResistance.level;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s contacts goes Silent", actor.arc.name);
+            data.topText = "Contact goes Silent";
+            data.bottomText = GameManager.instance.itemDataScript.GetContactInactiveDetails(actor, node, contact, reason);
+            data.priority = ItemPriority.Low;
+            data.sprite = actor.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            data.tag0 = "contact_0";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
