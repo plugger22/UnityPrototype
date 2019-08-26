@@ -21,6 +21,12 @@ public class ContactManager : MonoBehaviour
     [Tooltip("Number of contacts to top up the pool with once the threshold is reached")]
     [Range(10, 50)] public int numOfPoolTopUp = 20;
 
+    [Header("Effectiveness")]
+    [Tooltip("Max value for contact effectiveness")]
+    [Range(3, 3)] public int maxEffectiveness = 3;
+    [Tooltip("Min value for contact effectiveness")]
+    [Range(1, 1)] public int minEffectiveness = 1;
+
     [Header("Target Rumours")]
     [Tooltip("Chance of somebody learning about an Active target, per turn")]
     [Range(0, 10)] public int rumourTarget = 5;
@@ -287,7 +293,7 @@ public class ContactManager : MonoBehaviour
                         GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to lower their Effectiveness -1");
                     }
                     //keep effectiveness with bounds
-                    contact.effectiveness = Mathf.Clamp(contact.effectiveness, 1, 3);
+                    contact.effectiveness = Mathf.Clamp(contact.effectiveness, minEffectiveness, maxEffectiveness);
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }

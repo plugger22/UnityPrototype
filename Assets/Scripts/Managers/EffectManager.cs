@@ -3418,7 +3418,8 @@ public class EffectManager : MonoBehaviour
             case "Renown":
                 effectResolve.bottomText = ExecuteActorRenown(effect, actor);
                 break;
-            case "Contact":
+            case "ContactGainLose":
+            case "ContactEffectiveness":
                 effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic);
                 break;
             case "Motivation":
@@ -3544,23 +3545,55 @@ public class EffectManager : MonoBehaviour
         string bottomText = "Unknown";
         if (data.nodeID > -1)
         {
-            switch (effect.operand.name)
+            switch (effect.outcome.name)
             {
-                case "Add":
-                    int newNodeID = GameManager.instance.contactScript.GetNewContactNodeID(actor);
-                    //viable node found -> add contact
-                    if (newNodeID > -1)
+                case "ContactGainLose":
+                    //Gain or lose a contact
+                    switch (effect.operand.name)
                     {
-                        GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
-                        bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
+                        case "Add":
+                            int newNodeID = GameManager.instance.contactScript.GetNewContactNodeID(actor);
+                            //viable node found -> add contact
+                            if (newNodeID > -1)
+                            {
+                                GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
+                                bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
+                            }
+                            break;
+                        case "Subtract":
+                            if (GameManager.instance.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
+                            { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
+                            else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }
                     break;
-                case "Subtract":
-                    if (GameManager.instance.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
-                    { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
-                    else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                case "ContactEffectiveness":
+                    //Contact effectiveness changes to Max or Min
+                    if (data.contactID > -1)
+                    {
+                        Contact contact = GameManager.instance.dataScript.GetContact(data.contactID);
+                        if (contact != null)
+                        {
+                            switch (effect.operand.name)
+                            {
+                                case "Add":
+                                    contact.effectiveness = GameManager.instance.contactScript.maxEffectiveness;
+                                    bottomText = string.Format("{0}Contact Effectiveness now MAX{1}", colourGood, colourEnd);
+                                    break;
+                                case "Subtract":
+                                    contact.effectiveness = GameManager.instance.contactScript.minEffectiveness;
+                                    bottomText = string.Format("{0}Contact Effectiveness now MIN{1}", colourBad, colourEnd);
+                                    break;
+                                default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid contact (Null) for contactID \"{0}\"", data.contactID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid data.contactID \"{0}\"", data.contactID); }
+                        break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
             }
         }
         else { Debug.LogWarningFormat("Invalid topicEffectData.nodeID \"{0}\"", data.nodeID); }
