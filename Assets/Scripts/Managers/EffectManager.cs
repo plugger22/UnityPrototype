@@ -3601,7 +3601,7 @@ public class EffectManager : MonoBehaviour
                             switch (effect.operand.name)
                             {
                                 case "Subtract":
-                                    contact.SetInactive(dataInput.originText);
+                                    contact.SetInactive(string.Format("Decision{0}{1}{2}{3}", "\n", colourNeutral, dataInput.originText, colourEnd));
                                     bottomText = string.Format("{0}Contact now Silent{1}", colourBad, colourEnd);
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;

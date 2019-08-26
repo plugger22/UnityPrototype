@@ -728,13 +728,42 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="reason"></param>
     /// <returns></returns>
-    public string GetContactInactiveDetails(Actor actor, Node node, Contact contact, string reason)
+    public string GetContactInactiveDetails(Node node, Contact contact, string reason)
     {
         StringBuilder builder = new StringBuilder();
-        string textAware = shortContactAware.GetRandomRecord(false);
-        string textAction = shortContactAction.GetRandomRecord(false);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4}{5}{6}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<b>Has gone Silent</b>{1}{2}Due to{3}<b>{4}</b>{5}{6}", colourBad, colourEnd, "\n", "\n", reason, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Inactive contact becomes active
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    public string GetContactActiveDetails(Node node, Contact contact)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4}{5}{6}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>Is back on the Grid</b>{1}<b>{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Inactive contact, effects tab, how much longer before active
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    public string GetContactTimerDetails(Node node, Contact contact)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4}{5}{6}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n", "\n");
+        builder.AppendFormat("Will remain Silent for{0}<b>another {1}{2}{3} turn{4}</b>{5}{6}", "\n", colourNeutral, contact.timerInactive, colourEnd, contact.timerInactive != 1 ? "s" : "",  "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         return builder.ToString();
     }

@@ -40,7 +40,6 @@ public class Contact
     public void SetInactive(string reason = "Unknown")
     {
         status = ContactStatus.Inactive;
-        //timer
         timerInactive = GameManager.instance.contactScript.timerInactive;
         //admin
         Debug.LogFormat("[Cnt] Contact.cs -> SetInactive: {0} {1}, {2} at nodeID {3}, actorID {4}, Status now INACTIVE ({5}){6}", nameFirst, nameLast, job, nodeID, actorID, status, "\n");

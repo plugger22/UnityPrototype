@@ -1926,7 +1926,7 @@ public class TopicManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("{0}, {1}", turnTopic.tag, turnOption.tag);
+                dataInput.originText = string.Format("\"{0}\", {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);

@@ -1747,11 +1747,104 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s contacts goes Silent", actor.arc.name);
             data.topText = "Contact goes Silent";
-            data.bottomText = GameManager.instance.itemDataScript.GetContactInactiveDetails(actor, node, contact, reason);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactInactiveDetails(node, contact, reason);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            data.tag0 = "contact_0";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Inactive resistance contact becomes active once more
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    public Message ContactActive(string text, Actor actor, Node node, Contact contact)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Active;
+            message.sideLevel = globalResistance.level;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s contacts returns", actor.arc.name);
+            data.topText = "Contact Active";
+            data.bottomText = GameManager.instance.itemDataScript.GetContactActiveDetails(node, contact);
+            data.priority = ItemPriority.Low;
+            data.sprite = actor.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            data.tag0 = "contact_0";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Effect tab update for inactive contact (how much longer before returning to Active)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="reason"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <returns></returns>
+    public Message ContactTimer(string text, Actor actor, Node node, Contact contact)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_Inactive;
+            message.sideLevel = globalResistance.level;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s contacts is Silent", actor.arc.name);
+            data.topText = "Contact off the Grid";
+            data.bottomText = GameManager.instance.itemDataScript.GetContactTimerDetails(node, contact);
+            data.priority = ItemPriority.Low;
+            data.sprite = actor.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.Effects;
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
