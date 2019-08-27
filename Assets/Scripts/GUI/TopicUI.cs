@@ -324,7 +324,7 @@ public class TopicUI : MonoBehaviour
         tooltipShowMe.tooltipDetails = texts.Item3;
         //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
         tooltipShowMe.x_offset = 60;
-        tooltipIgnore.x_offset = -425;
+        tooltipIgnore.x_offset = -400;
         tooltipImage.x_offset = -180;
         tooltipImage.y_offset = 10;
         //help
@@ -442,17 +442,23 @@ public class TopicUI : MonoBehaviour
             //initialise Image tooltip
             if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
             { tooltipImage.tooltipHeader = data.imageTooltipHeader; }
+            else { tooltipImage.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
             { tooltipImage.tooltipMain = data.imageTooltipMain; }
+            else { tooltipImage.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
             { tooltipImage.tooltipDetails = data.imageTooltipDetails; }
+            else { tooltipImage.tooltipDetails = ""; }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
             { tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader; }
+            else { tooltipIgnore.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
             { tooltipIgnore.tooltipMain = data.ignoreTooltipMain; }
+            else { tooltipIgnore.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipDetails) == false)
             { tooltipIgnore.tooltipDetails = data.ignoreTooltipDetails; }
+            else { tooltipIgnore.tooltipDetails = ""; }
             //Fixed position at screen centre
             Vector3 screenPos = new Vector3();
             screenPos.x = Screen.width / 2;

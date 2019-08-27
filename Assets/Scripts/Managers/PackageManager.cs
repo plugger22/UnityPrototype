@@ -748,6 +748,16 @@ namespace packageAPI
         public Sprite sprite;
         public List<TopicOption> listOfOptions = new List<TopicOption>();
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
+
+        /*public TopicUIData()
+        {
+            ignoreTooltipHeader = "";
+            ignoreTooltipMain = "";
+            ignoreTooltipDetails = "";
+            imageTooltipHeader = "";
+            imageTooltipMain = "";
+            imageTooltipDetails = "";
+        }*/
     }
 
     /// <summary>

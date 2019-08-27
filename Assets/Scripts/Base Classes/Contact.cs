@@ -20,6 +20,7 @@ public class Contact
     public int effectiveness;           //1 to 3 effectiveness in gaining new info (3 best, 1 worst)
     public int turnStart;               //turn started as a contact
     public int turnFinish;              //turn finished as a contact
+    public int turnTotal;               //total turns active (might have gone inactive or to reserves with actor for a while)
     public int usefulIntel;             //tracks number of useful intel items sourced by the contact
     public string typeName;             //ContactType.name
     public ContactStatus status;

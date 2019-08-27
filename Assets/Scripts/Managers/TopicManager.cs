@@ -3538,9 +3538,11 @@ public class TopicManager : MonoBehaviour
                             builder.AppendFormat("<b>{0} {1}</b>", contact.nameFirst, GameManager.instance.contactScript.GetEffectivenessFormatted(contact.effectiveness));
                             textMain = builder.ToString();
                             builder.Clear();
-                            builder.AppendFormat("Rmours heard {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsRumours, colourEnd, "\n");
-                            builder.AppendFormat("Nemesis sighted {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsNemesis, colourEnd, "\n");
-                            builder.AppendFormat("Erasure Teams {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsTeams, colourEnd, "\n");
+                            builder.AppendFormat("{0}Active for {1}{2}{3}{4} {5}turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, 
+                                contact.turnTotal, colourEnd, colourAlert, contact.turnTotal != 1 ? "s" : "", colourEnd, "\n");
+                            builder.AppendFormat("Rumours heard  {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsRumours, colourEnd, "\n");
+                            builder.AppendFormat("Nemesis sightings  {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsNemesis, colourEnd, "\n");
+                            builder.AppendFormat("Erasure Teams spotted  {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsTeams, colourEnd, "\n");
                             textDetails = builder.ToString();
                         }
                         else { Debug.LogErrorFormat("Invalid contact (Null) for tagContactID {0}", tagContactID); }
