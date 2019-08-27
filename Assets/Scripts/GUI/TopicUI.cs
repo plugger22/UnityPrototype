@@ -49,6 +49,7 @@ public class TopicUI : MonoBehaviour
     private GenericTooltipUI tooltipOption3;
     private GenericTooltipUI tooltipIgnore;
     private GenericTooltipUI tooltipShowMe;
+    private GenericTooltipUI tooltipImage;
     //options
     private TopicOption[] arrayOfOptions;
     private Button[] arrayOfButtons;
@@ -169,12 +170,14 @@ public class TopicUI : MonoBehaviour
         tooltipOption3 = buttonOption3.GetComponent<GenericTooltipUI>();
         tooltipIgnore = buttonIgnore.GetComponent<GenericTooltipUI>();
         tooltipShowMe = buttonShowMe.GetComponent<GenericTooltipUI>();
+        tooltipImage = topicImage.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltipOption0 != null, "Invalid tooltipOption0 (Null)");
         Debug.Assert(tooltipOption1 != null, "Invalid tooltipOption1 (Null)");
         Debug.Assert(tooltipOption2 != null, "Invalid tooltipOption2 (Null)");
         Debug.Assert(tooltipOption3 != null, "Invalid tooltipOption3 (Null)");
         Debug.Assert(tooltipIgnore != null, "Invalid tooltipIgnore (Null)");
         Debug.Assert(tooltipShowMe != null, "Invalid tooltipShowMe (Null)");
+        Debug.Assert(tooltipImage != null, "Invalid tooltipImage (Null)");
         //populate arrayOfButtons
         arrayOfButtons[0] = buttonOption0;
         arrayOfButtons[1] = buttonOption1;
@@ -320,8 +323,10 @@ public class TopicUI : MonoBehaviour
         tooltipShowMe.tooltipMain = texts.Item2;
         tooltipShowMe.tooltipDetails = texts.Item3;
         //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
-        tooltipShowMe.x_offset = 50;
-        tooltipIgnore.x_offset = 60;
+        tooltipShowMe.x_offset = 60;
+        tooltipIgnore.x_offset = -425;
+        tooltipImage.x_offset = -180;
+        tooltipImage.y_offset = 10;
         //help
         List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1");
         if (listOfHelp != null && listOfHelp.Count > 0)
@@ -409,7 +414,7 @@ public class TopicUI : MonoBehaviour
                             if (string.IsNullOrEmpty(option.tooltipDetails) == false)
                             { arrayOfTooltips[i].tooltipDetails = option.tooltipDetails; }
                             //need to offset to prevent obscuring part of button and suffering 'blinking tooltip' syndrome
-                            arrayOfTooltips[i].x_offset = 160;
+                            arrayOfTooltips[i].x_offset = -550;
                             //button Interaction
                             arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
                             //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
@@ -434,6 +439,13 @@ public class TopicUI : MonoBehaviour
                 buttonInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
             }
             else { buttonShowMe.gameObject.SetActive(false); }
+            //initialise Image tooltip
+            if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
+            { tooltipImage.tooltipHeader = data.imageTooltipHeader; }
+            if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
+            { tooltipImage.tooltipMain = data.imageTooltipMain; }
+            if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
+            { tooltipImage.tooltipDetails = data.imageTooltipDetails; }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
             { tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader; }

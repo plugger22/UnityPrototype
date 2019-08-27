@@ -58,6 +58,11 @@ public class Topic : ScriptableObject
     [Tooltip("Options for the decision. Max as per TopicManager.cs -> maxOptions")]
     public List<TopicOption> listOfOptions;
 
+
+    [HideInInspector] public string tooltipHeader;              //sprite tooltip
+    [HideInInspector] public string tooltipMain;                //sprite tooltip
+    [HideInInspector] public string tooltipDetails;             //sprite tooltip
+
     #region Save Data Compatible
     [HideInInspector] public Status status = Status.Dormant;
     [HideInInspector] public bool isCurrent;                                                //true if topic valid for current level (in a Campaign/city topicPool), false otherwise

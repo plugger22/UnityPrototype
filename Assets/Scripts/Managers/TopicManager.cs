@@ -1002,7 +1002,7 @@ public class TopicManager : MonoBehaviour
                             {
                                 bool isProceed = false;
                                 //topicType needs to have at least one valid subType present
-                                foreach( TopicSubType subType in listOfSubTypes)
+                                foreach (TopicSubType subType in listOfSubTypes)
                                 {
                                     if (CheckSubTypeCriteria(subType) == true)
                                     {
@@ -1879,8 +1879,8 @@ public class TopicManager : MonoBehaviour
                         data.text = CheckText(data.text);
                         //NodeID, needed to toggle 'Show Me' button
                         data.nodeID = tagNodeID;
-                        //sprite (needs to be AFTER ProcessSpecialTopicData)
-                        GetSprite();
+                        //sprite & sprite tooltip (needs to be AFTER ProcessSpecialTopicData)
+                        InitialiseSprite(data);
                         data.sprite = turnSprite;
                         //everything checks out O.K
                         if (isProceed == true)
@@ -3456,14 +3456,16 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region GetSprite
+    #region InitialiseSprite
     /// <summary>
-    /// Finds sprite for turnSprite, leaves as null if a problem
+    /// Finds sprite for turnSprite as well as setting up associated tooltip, leaves as null if a problem
+    /// tooltip created if data present, no tooltip otherwise (as no default data nothing will show on mouseover)
+    /// NOTE: data checked for Null by parent method
     /// </summary>
     /// <returns></returns>
-    public void GetSprite()
+    private void InitialiseSprite(TopicUIData data)
     {
-        turnSprite  = null;
+        turnSprite = null;
         if (turnTopicType != null)
         {
             switch (turnTopicType.name)
@@ -3473,7 +3475,19 @@ public class TopicManager : MonoBehaviour
                     {
                         Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
                         if (actor != null)
-                        { turnSprite = actor.sprite; }
+                        {
+                            turnSprite = actor.sprite;
+                            Tuple<string, string> results = GetActorTooltip();
+                            if (string.IsNullOrEmpty(results.Item1) == false)
+                            {
+                                //tooltipMain
+                                data.imageTooltipMain = results.Item1;
+                                //main present -> Add tooltip header (Actor name and type)
+                                data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                            }
+                            if (string.IsNullOrEmpty(results.Item2) == false)
+                            { data.imageTooltipDetails = results.Item2; }
+                        }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
                     }
                     else { Debug.LogWarningFormat("Invalid tagActor \"{0}\"", tagActorID); }
@@ -3495,6 +3509,48 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid turnTopicType (Null)"); }
+    }
+    #endregion
+
+    #region GetActorTooltip
+    /// <summary>
+    /// Returns tooltip main and details for various actor subTypes. tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseovre
+    /// </summary>
+    /// <param name="data"></param>
+    private Tuple<string, string> GetActorTooltip()
+    {
+        string textMain = "";
+        string textDetails = "";
+        if (turnTopicSubType != null)
+        {
+            switch (turnTopicSubType.name)
+            {
+                case "ActorContact":
+                    if (tagContactID > -1)
+                    {
+                        Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                        if (contact != null)
+                        {
+                            StringBuilder builder = new StringBuilder();
+                            builder.AppendFormat("{0}CONTACT{1}{2}", colourCancel, colourEnd, "\n");
+                            builder.AppendFormat("{0}{1} {2}{3}{4}", colourNormal, contact.nameFirst, contact.nameLast, colourEnd, "\n");
+                            builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, contact.job, colourEnd, "\n");
+                            builder.AppendFormat("<b>{0} {1}</b>", contact.nameFirst, GameManager.instance.contactScript.GetEffectivenessFormatted(contact.effectiveness));
+                            textMain = builder.ToString();
+                            builder.Clear();
+                            builder.AppendFormat("Rmours heard {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsRumours, colourEnd, "\n");
+                            builder.AppendFormat("Nemesis sighted {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsNemesis, colourEnd, "\n");
+                            builder.AppendFormat("Erasure Teams {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsTeams, colourEnd, "\n");
+                            textDetails = builder.ToString();
+                        }
+                        else { Debug.LogErrorFormat("Invalid contact (Null) for tagContactID {0}", tagContactID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid tagContactID {0}", tagContactID); }
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid turnTopicSubType (Null)"); }
+        return new Tuple<string, string>(textMain, textDetails);
     }
     #endregion
 

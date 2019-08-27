@@ -10939,3 +10939,63 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 21652 -> Tuesday, 27 August 2019 11:41 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 34171 -> Tuesday, 27 August 2019 1:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs(198,12): warning CS0414: The private field `MainInfoUI.colourSide' is assigned but its value is never used
+WARNING Assets/Scripts/Managers/TopicManager.cs(144,20): warning CS0414: The private field `TopicManager.colourDefault' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+GameManager.Update () (at Assets/Scripts/GameManager.cs:370)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:511)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:433)
+	
+Dev seed 15890 -> Tuesday, 27 August 2019 1:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63213 -> Tuesday, 27 August 2019 1:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55281 -> Tuesday, 27 August 2019 1:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39127 -> Tuesday, 27 August 2019 2:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6204 -> Tuesday, 27 August 2019 2:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33605 -> Tuesday, 27 August 2019 2:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11200 -> Tuesday, 27 August 2019 2:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48251 -> Tuesday, 27 August 2019 2:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26203 -> Tuesday, 27 August 2019 2:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46689 -> Tuesday, 27 August 2019 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62408 -> Tuesday, 27 August 2019 2:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45722 -> Tuesday, 27 August 2019 2:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26010 -> Tuesday, 27 August 2019 2:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34908 -> Tuesday, 27 August 2019 3:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43544 -> Tuesday, 27 August 2019 3:10 PM
+City seed 5678 -> London, United Kingdom

@@ -1024,5 +1024,23 @@ public class ContactManager : MonoBehaviour
         return newNodeID;
     }
 
+    /// <summary>
+    /// returns a colour formatted (red / yellow / green) string for effectiveness '[contact first name][returned string]', eg. 'Bruce knows stuff' (doesn't return a leading space)
+    /// </summary>
+    /// <param name="contactEffectveness"></param>
+    /// <returns></returns>
+    public string GetEffectivenessFormatted(int contactEffectveness)
+    {
+        string text = "Unknown";
+        switch (contactEffectveness)
+        {
+            case 1: text = GameManager.instance.colourScript.GetFormattedString("knows stuff", ColourType.badText); break;
+            case 2: text = GameManager.instance.colourScript.GetFormattedString("is networked", ColourType.neutralText); break;
+            case 3: text = GameManager.instance.colourScript.GetFormattedString("is wired-in", ColourType.goodText); break;
+            default: Debug.LogWarningFormat("Invalid contactEffectiveness \"{0}\"", contactEffectveness); break;
+        }
+        return text;
+    }
+
     //new methods above here
 }
