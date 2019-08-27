@@ -3187,35 +3187,28 @@ public class TopicManager : MonoBehaviour
         else { option.tooltipHeader = "Unknown"; }
         //Main -> derived from option good/bad effects
         StringBuilder builder = new StringBuilder();
-        //Good effects
-        if (option.listOfGoodEffects.Count > 0)
+        //normal option
+        if (option.chance == null)
         {
-            foreach (Effect effect in option.listOfGoodEffects)
-            {
-                if (effect != null)
-                {
-                    if (builder.Length > 0) { builder.AppendLine(); }
-                    if (string.IsNullOrEmpty(effect.description) == false)
-                    { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
-                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
-                }
-                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", option.name); }
-            }
+            //Good effects
+            if (option.listOfGoodEffects.Count > 0)
+            { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
+            //Bad effects
+            if (option.listOfBadEffects.Count > 0)
+            { GetBadEffects(option.listOfBadEffects, option.name, builder); }
         }
-        //Bad effects
-        if (option.listOfBadEffects.Count > 0)
+        else
         {
-            foreach (Effect effect in option.listOfBadEffects)
-            {
-                if (effect != null)
-                {
-                    if (builder.Length > 0) { builder.AppendLine(); }
-                    if (string.IsNullOrEmpty(effect.description) == false)
-                    { builder.AppendFormat("{0}{1} {2}{3}", colourBad, GetEffectPrefix(effect), effect.description, colourEnd); }
-                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
-                }
-                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", option.name); }
-            }
+            //probability based option
+            builder.AppendFormat("{<b>{0} chance of SUCCESS</b>{1}", GetProbability(option.chance), "\n");
+            if (option.listOfGoodEffects.Count > 0)
+            { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
+            else { builder.AppendFormat("{0}Nothing Happens{1}{2}", colourGrey, colourEnd, "\n"); }
+            //Bad effects
+            builder.AppendFormat("{0}If FAILED roll{1}", colourCancel, colourEnd);
+            if (option.listOfBadEffects.Count > 0)
+            { GetBadEffects(option.listOfBadEffects, option.name, builder); }
+            else { builder.AppendFormat("{0}Nothing Happens{1}{2}", colourGrey, colourEnd, "\n"); }
         }
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
@@ -3224,6 +3217,80 @@ public class TopicManager : MonoBehaviour
         { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
         else { option.tooltipDetails = "No Mood effect"; }
         return isSucceed;
+    }
+    #endregion
+
+    #region GetProbability
+    /// <summary>
+    /// returns a colour formatted string for probability, eg. 'MEDIUM' (yellow), "Unknown" if a problem
+    /// NOTE: chance checked for Null by parent method
+    /// </summary>
+    /// <param name="chance"></param>
+    /// <returns></returns>
+    private string GetProbability(GlobalChance chance)
+    {
+        string probability = "Unknown";
+        switch (chance.name)
+        {
+            case "Extreme": probability = string.Format("{0}Extreme{1}", colourGood, colourEnd); break;
+            case "High": probability = string.Format("{0}High{1}", colourGood, colourEnd); break;
+            case "Medium": probability = string.Format("{0}Medium{1}", colourNeutral, colourEnd); break;
+            case "Low": probability = string.Format("{0}Low{1}", colourBad, colourEnd); break;
+        }
+        return probability;
+    }
+    #endregion
+
+    #region GetGoodEffects
+    /// <summary>
+    /// returns (to stringbuilder parameter) colour formatted string for good effects
+    /// NOTE: parameters checked for Null by parent method
+    /// </summary>
+    /// <param name="listOfEffects"></param>
+    /// <returns></returns>
+    private void GetGoodEffects(List<Effect> listOfEffects, string optionName, StringBuilder builder)
+    {
+        if (listOfEffects != null)
+        {
+            foreach (Effect effect in listOfEffects)
+            {
+                if (effect != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    if (string.IsNullOrEmpty(effect.description) == false)
+                    { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
+                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", optionName); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", optionName); }
+    }
+    #endregion
+
+    #region GetBadEffects
+    /// <summary>
+    /// returns (to stringbuilder parameter) colour formatted string for bad effects
+    /// </summary>
+    /// <param name="listOfEffects"></param>
+    /// <returns></returns>
+    private void GetBadEffects(List<Effect> listOfEffects, string optionName, StringBuilder builder)
+    {
+        if (listOfEffects != null)
+        {
+            foreach (Effect effect in listOfEffects)
+            {
+                if (effect != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    if (string.IsNullOrEmpty(effect.description) == false)
+                    { builder.AppendFormat("{0}{1} {2}{3}", colourBad, GetEffectPrefix(effect), effect.description, colourEnd); }
+                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", optionName); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", optionName); }
     }
     #endregion
 

@@ -222,6 +222,14 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("Options may be greyed out indicating that they {0}aren't available{1}. Their {1}tooltip{2} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //more details
+        data = new HelpData();
+        data.tag = "topicUI_2";
+        data.header = "More Information";
+        builder = new StringBuilder();
+        builder.AppendFormat("{0}MOUSE OVER{1} the {2}Image{3} (top left) for more details", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         #endregion
 
         #region Secrets

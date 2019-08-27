@@ -324,11 +324,11 @@ public class TopicUI : MonoBehaviour
         tooltipShowMe.tooltipDetails = texts.Item3;
         //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
         tooltipShowMe.x_offset = 60;
-        tooltipIgnore.x_offset = -400;
+        tooltipIgnore.x_offset = -402;
         tooltipImage.x_offset = -180;
         tooltipImage.y_offset = 10;
         //help
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1");
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
             GenericHelpTooltipUI help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
