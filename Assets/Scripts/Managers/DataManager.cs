@@ -1409,8 +1409,18 @@ public class DataManager : MonoBehaviour
                     for (int i = 0; i < numOfNodes; i++)
                     {
                         nodeID = listOfActorContactNodes[i];
-                        //remove contacts from actor
-                        actor.RemoveContact(nodeID);
+
+                        if (actor.Status == ActorStatus.Reserve)
+                        {
+                            //Reserves -> retain actor contacts (in case they return) but change status to inactive
+                            actor.ChangeContactToInactive(nodeID);
+                        }
+                        else
+                        {
+                            //Left map for other reasons, remove contacts permanently
+                            actor.RemoveContact(nodeID);
+                        }
+                        
                         //find node entry in dictOfNodeContacts
                         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {

@@ -672,6 +672,33 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //Inactive
+        data = new HelpData();
+        data.tag = "contact_8";
+        data.header = "Gone Silent";
+        builder = new StringBuilder();
+        builder.AppendFormat("A Contact who has gone silent will {0}no longer{1} provide {2}information{3} or enable your subordinate to carry out {4}actions{5} in the Contact's district", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //How long Inactive
+        data = new HelpData();
+        data.tag = "contact_9";
+        data.header = "For How Long?";
+        builder = new StringBuilder();
+        builder.AppendFormat("You can check the {0}Effects Tab{1} in the InfoApp {2}next turn{3} to see when your Contact will {4}return{5}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Return to Active
+        data = new HelpData();
+        data.tag = "contact_10";
+        data.header = "Back on the Grid";
+        builder = new StringBuilder();
+        builder.AppendFormat("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
         #endregion
 
 
@@ -689,9 +716,9 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "contact_0";
-        string tag1 = "contact_7";
-        string tag2 = "nemesis_0";
+        string tag0 = "contact_8";
+        string tag1 = "contact_9";
+        string tag2 = "contact_10";
         string tag3 = null;
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);

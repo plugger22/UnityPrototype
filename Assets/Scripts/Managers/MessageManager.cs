@@ -1757,7 +1757,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
-            data.tag0 = "contact_0";
+            data.tag0 = "contact_8";
+            data.tag1 = "contact_9";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1803,7 +1804,7 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
-            data.tag0 = "contact_0";
+            data.tag0 = "contact_10";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1850,7 +1851,7 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
-            data.tag0 = "contact_0";
+            data.tag0 = "contact_8";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

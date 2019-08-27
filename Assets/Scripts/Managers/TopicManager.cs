@@ -1829,7 +1829,6 @@ public class TopicManager : MonoBehaviour
                 data.topicName = turnTopic.name;
                 data.header = turnTopic.tag;
                 data.text = turnTopic.text;
-                data.sprite = turnSprite;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 //topic must have at least one option
@@ -1880,6 +1879,9 @@ public class TopicManager : MonoBehaviour
                         data.text = CheckText(data.text);
                         //NodeID, needed to toggle 'Show Me' button
                         data.nodeID = tagNodeID;
+                        //sprite (needs to be AFTER ProcessSpecialTopicData)
+                        GetSprite();
+                        data.sprite = turnSprite;
                         //everything checks out O.K
                         if (isProceed == true)
                         {
@@ -3451,6 +3453,48 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid text (Null or Empty)"); }
         return checkedText;
+    }
+    #endregion
+
+    #region GetSprite
+    /// <summary>
+    /// Finds sprite for turnSprite, leaves as null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public void GetSprite()
+    {
+        turnSprite  = null;
+        if (turnTopicType != null)
+        {
+            switch (turnTopicType.name)
+            {
+                case "Actor":
+                    if (tagActorID > -1)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        if (actor != null)
+                        { turnSprite = actor.sprite; }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid tagActor \"{0}\"", tagActorID); }
+                    break;
+                case "Authority":
+                    break;
+                case "Resistance":
+                    break;
+                case "City":
+                    break;
+                case "Family":
+                    break;
+                case "HQ":
+                    break;
+                case "Player":
+                    turnSprite = GameManager.instance.playerScript.sprite;
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised turnTopicType \"{0}\"", turnTopicType.name); break;
+            }
+        }
+        else { Debug.LogWarning("Invalid turnTopicType (Null)"); }
     }
     #endregion
 

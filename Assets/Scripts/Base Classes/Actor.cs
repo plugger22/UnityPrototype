@@ -496,6 +496,27 @@ namespace gameAPI
         }
 
         /// <summary>
+        /// Used for when actor leaving Map, retain contact but make status inactive
+        /// </summary>
+        /// <param name="nodeID"></param>
+        public void ChangeContactToInactive(int nodeID)
+        {
+            if (dictOfContacts.ContainsKey(nodeID) == true)
+            {
+                Contact contact = dictOfContacts[nodeID];
+                if (contact != null)
+                {
+                    //update contact status
+                    contact.status = ContactStatus.Inactive;
+                    contact.timerInactive = 0;
+                    contact.turnFinish = GameManager.instance.turnScript.Turn;
+
+                }
+                else { Debug.LogWarningFormat("Invalid contact (Null) for nodeID {0}", nodeID); }
+            }
+        }
+
+        /// <summary>
         /// returns an Actor Contact for a specific node, Null if not found. Contact must be status 'Active'
         /// </summary>
         /// <param name="nodeID"></param>
