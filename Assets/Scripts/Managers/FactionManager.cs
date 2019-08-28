@@ -16,7 +16,7 @@ public class FactionManager : MonoBehaviour
     [Range(0, 10)] public int maxFactionApproval = 10;
     [Tooltip("How much Renown will the faction give per turn if they decide to support the Player")]
     [Range(1, 3)] public int renownPerTurn = 1;
-    [Tooltip("How many actors in the HQ line up")]
+    [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
 
     [Header("Actor Influence")]
@@ -161,6 +161,8 @@ public class FactionManager : MonoBehaviour
         ApprovalResistance = approval;
         Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
+        //initialise HQ actors starting lineUp
+        GameManager.instance.actorScript.InitialiseHQActors();
     }
     #endregion
 
@@ -628,7 +630,7 @@ public class FactionManager : MonoBehaviour
     /// Debug method to display faction info
     /// </summary>
     /// <returns></returns>
-    public string DisplayFactions()
+    public string DebugDisplayFactions()
     {
         StringBuilder builder = new StringBuilder();
         //authority
@@ -647,6 +649,33 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");*/
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to display HQ Actors
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHQActors()
+    {
+        StringBuilder builder = new StringBuilder();
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActors != null)
+        {
+            builder.AppendFormat("-HQ Hierarchy{0}", "\n");
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                {
+                    builder.AppendFormat("{0}- {1}{2}", "\n", actor.statusHQ, "\n");
+                    builder.AppendFormat(" {0}, ID {1}, Mot {2}, Comp {3}, R {4}{5}", actor.actorName, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                        actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i);}
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         return builder.ToString();
     }
 }

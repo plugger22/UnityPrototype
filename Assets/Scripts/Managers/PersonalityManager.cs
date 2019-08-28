@@ -907,13 +907,13 @@ public class PersonalityManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Display personalities of Player and all OnMap and Reserve actors
+    /// Display personalities of Player and all OnMap actors
     /// </summary>
     /// <returns></returns>
     public string DebugDisplayAllPersonalities()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("-Personalities{0}{1}", "\n", "\n");
+        builder.AppendFormat("-OnMap Personalities{0}{1}", "\n", "\n");
         //player
         builder.AppendFormat("-Player {0}{1}", GameManager.instance.playerScript.PlayerName, "\n");
         builder.Append(DebugDisplayIndividualPersonality(GameManager.instance.playerScript.GetPersonality()));
@@ -982,6 +982,60 @@ public class PersonalityManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfReservePool (Null)"); }*/
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Display HQ personalities
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHQPersonalities()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-HQ Personalities{0}{1}", "\n", "\n");
+        //player
+        builder.AppendFormat("-Player {0}{1}", GameManager.instance.playerScript.PlayerName, "\n");
+        builder.Append(DebugDisplayIndividualPersonality(GameManager.instance.playerScript.GetPersonality()));
+        builder.AppendLine();
+        //OnMap actors
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //display actor personality
+                        builder.AppendFormat("-{0}, {1}, ID {2}, HQ, {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.statusHQ, "\n");
+                        Trait trait = actor.GetTrait();
+                        if (trait != null)
+                        {
+                            int[] arrayOfCriteria = trait.GetArrayOfCriteria();
+                            if (arrayOfCriteria != null)
+                            {
+                                builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}",
+                                    trait.tag,
+                                    arrayOfCriteria[0] != 99 && arrayOfCriteria[0] > 0 ? "+" : "", arrayOfCriteria[0] != 99 ? arrayOfCriteria[0].ToString() : ".",
+                                    arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".",
+                                    arrayOfCriteria[2] != 99 && arrayOfCriteria[2] > 0 ? "+" : "", arrayOfCriteria[2] != 99 ? arrayOfCriteria[2].ToString() : ".",
+                                    arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".",
+                                    arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".",
+                                    "\n");
+                            }
+                            else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
+                        }
+                        else
+                        {
+                            builder.AppendFormat(" ERROR: INVALID TRAIT (NULL){0}", "\n");
+                            Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
+                        }
+                        builder.Append(DebugDisplayIndividualPersonality(actor.GetPersonality()));
+                        builder.AppendLine();
+                    }
+                }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
 

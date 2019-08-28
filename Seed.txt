@@ -11501,3 +11501,32 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 62793 -> Wednesday, 28 August 2019 2:51 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 35634 -> Wednesday, 28 August 2019 4:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37436 -> Wednesday, 28 August 2019 5:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54567 -> Wednesday, 28 August 2019 5:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53860 -> Wednesday, 28 August 2019 5:44 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object arg0) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	DataManager.DebugGetActorList (System.Collections.Generic.List`1[T] listOfActors) (at Assets/Scripts/Managers/DataManager.cs:4675)
+	DataManager.DebugDisplayActorLists () (at Assets/Scripts/Managers/DataManager.cs:4555)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1018)
+	
+Dev seed 57398 -> Wednesday, 28 August 2019 5:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33376 -> Wednesday, 28 August 2019 6:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30350 -> Wednesday, 28 August 2019 6:05 PM
+City seed 5678 -> London, United Kingdom

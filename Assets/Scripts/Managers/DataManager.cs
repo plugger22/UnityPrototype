@@ -3519,6 +3519,9 @@ public class DataManager : MonoBehaviour
     // - - - Actors - - -
     //
 
+    public Actor[] GetArrayOfActorsHQ()
+    { return arrayOfActorsHQ; }
+
     /// <summary>
     /// add a currently active actor to the arrayOfActors and update Actor status, states and actorSlotID. Also updates ActorUI
     /// </summary>
@@ -4527,26 +4530,29 @@ public class DataManager : MonoBehaviour
         builder.Append(string.Format(" Actor Lists{0}{1}", "\n", "\n"));
         //authority
         builder.Append(string.Format(" - Authority Reserve List{0}", "\n"));
-        builder.Append(GetActorList(authorityActorReserve));
+        builder.Append(DebugGetActorList(authorityActorReserve));
         builder.Append(string.Format("{0} - Authority Promoted List{1}", "\n", "\n"));
-        builder.Append(GetActorList(authorityActorPromoted));
+        builder.Append(DebugGetActorList(authorityActorPromoted));
         builder.Append(string.Format("{0} - Authority Dismissed List{1}", "\n", "\n"));
-        builder.Append(GetActorList(authorityActorDismissed));
+        builder.Append(DebugGetActorList(authorityActorDismissed));
         builder.Append(string.Format("{0} - Authority DisposedOf List{1}", "\n", "\n"));
-        builder.Append(GetActorList(authorityActorDisposedOf));
+        builder.Append(DebugGetActorList(authorityActorDisposedOf));
         builder.Append(string.Format("{0} - Authority Resigned List{1}", "\n", "\n"));
-        builder.Append(GetActorList(authorityActorResigned));
+        builder.Append(DebugGetActorList(authorityActorResigned));
         //resistance
         builder.Append(string.Format("{0} - Resistance Reserve List{1}", "\n", "\n"));
-        builder.Append(GetActorList(resistanceActorReserve));
+        builder.Append(DebugGetActorList(resistanceActorReserve));
         builder.Append(string.Format("{0} - Resistance Promoted List{1}", "\n", "\n"));
-        builder.Append(GetActorList(resistanceActorPromoted));
+        builder.Append(DebugGetActorList(resistanceActorPromoted));
         builder.Append(string.Format("{0} - Resistance Dismissed List{1}", "\n", "\n"));
-        builder.Append(GetActorList(resistanceActorDismissed));
+        builder.Append(DebugGetActorList(resistanceActorDismissed));
         builder.Append(string.Format("{0} - Resistance DisposedOf List{1}", "\n", "\n"));
-        builder.Append(GetActorList(resistanceActorDisposedOf));
+        builder.Append(DebugGetActorList(resistanceActorDisposedOf));
         builder.Append(string.Format("{0} - Resistance Resigned List{1}", "\n", "\n"));
-        builder.Append(GetActorList(resistanceActorResigned));
+        builder.Append(DebugGetActorList(resistanceActorResigned));
+        //hq
+        builder.Append(string.Format("{0} - HQ List{1}", "\n", "\n"));
+        builder.Append(DebugGetActorList(actorHQPool));
         return builder.ToString();
     }
 
@@ -4560,7 +4566,7 @@ public class DataManager : MonoBehaviour
         builder.Append(string.Format(" Actor Dictionary{0}", "\n"));
         List<int> listOfActors = dictOfActors.Keys.ToList();
         if (listOfActors != null)
-        { builder.Append(GetActorList(listOfActors)); }
+        { builder.Append(DebugGetActorList(listOfActors)); }
         else { builder.Append("Invalid listOfActors"); }
         return builder.ToString();
     }
@@ -4656,7 +4662,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfActors"></param>
     /// <returns></returns>
-    private string GetActorList(List<int> listOfActors)
+    private string DebugGetActorList(List<int> listOfActors)
     {
         StringBuilder builder = new StringBuilder();
         if (listOfActors != null)
@@ -4667,8 +4673,8 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));
-                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} U {6} {7}", actor.actorID, actor.arc.name, actor.level,
-                        actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, "\n"));
+                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.actorID, actor.arc.name, actor.level,
+                        actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
                 }
                 else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
             }

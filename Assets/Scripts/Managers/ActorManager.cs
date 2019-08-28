@@ -665,6 +665,157 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialises required number of actors to populate HQ hierarchy for player side
+    /// </summary>
+    public void InitialiseHQActors()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        int numOfArcs, level;
+        int numOfActors = GameManager.instance.factionScript.numOfActorsHQ;
+        int[] arrayOfLevels = new int[] { 3, 3, 3, 3, 2, 2, 2, 1, 1 }; //weighted towards higher calibre actors
+        List<ActorArc> listOfArcs;
+        List<Actor> listOfActors = new List<Actor>();
+        switch (playerSide.level)
+        {
+            case 1:
+                //Authority
+                listOfArcs = new List<ActorArc>(GameManager.instance.dataScript.GetActorArcs(globalAuthority));
+                if (listOfArcs != null)
+                {
+                    numOfArcs = listOfArcs.Count;
+                    for (int i = 0; i < numOfActors; i++)
+                    {
+                        //Get random arc
+                        ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
+                        //Get random level
+                        level = arrayOfLevels[Random.Range(0, arrayOfLevels.Length)];
+                        switch (level)
+                        {
+                            case 1:
+                                //level one actor
+                                Actor actorOne = CreateActor(globalAuthority, arc.name, 1, ActorStatus.HQ);
+                                if (actorOne != null)
+                                {
+                                    //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorOne.actorID);
+                                    listOfActors.Add(actorOne);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            case 2:
+                                //level two actor
+                                Actor actorTwo = CreateActor(globalAuthority, arc.name, 2, ActorStatus.HQ);
+                                if (actorTwo != null)
+                                {
+                                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorTwo.actorID);
+                                    listOfActors.Add(actorTwo);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            case 3:
+                                //level three actor
+                                Actor actorThree = CreateActor(globalAuthority, arc.name, 3, ActorStatus.HQ);
+                                if (actorThree != null)
+                                {
+                                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorThree.actorID);
+                                    listOfActors.Add(actorThree);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised level {0}", level); break;
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid list of Authority Actor Arcs (Null)"); }
+                break;
+            case 2:
+                //Resistance
+                listOfArcs = new List<ActorArc>(GameManager.instance.dataScript.GetActorArcs(globalResistance));
+                if (listOfArcs != null)
+                {
+                    numOfArcs = listOfArcs.Count;
+                    for (int i = 0; i < numOfActors; i++)
+                    {
+                        //Get random arc
+                        ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
+                        //Get random level
+                        level = arrayOfLevels[Random.Range(0, arrayOfLevels.Length)];
+                        switch (level)
+                        {
+                            case 1:
+                                //level one actor
+                                Actor actorOne = CreateActor(globalResistance, arc.name, 1, ActorStatus.HQ);
+                                if (actorOne != null)
+                                {
+                                    //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorOne.actorID);
+                                    listOfActors.Add(actorOne);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            case 2:
+                                //level two actor
+                                Actor actorTwo = CreateActor(globalResistance, arc.name, 2, ActorStatus.HQ);
+                                if (actorTwo != null)
+                                {
+                                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorTwo.actorID);
+                                    listOfActors.Add(actorTwo);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            case 3:
+                                //level three actor
+                                Actor actorThree = CreateActor(globalResistance, arc.name, 3, ActorStatus.HQ);
+                                if (actorThree != null)
+                                {
+                                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                                    GameManager.instance.dataScript.AddActorToHQ(actorThree.actorID);
+                                    listOfActors.Add(actorThree);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArc \"{0}\"", arc.name)); }
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised level {0}", level); break;
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid list of Resistance Actor Arcs (Null)"); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", playerSide.name); break;
+        }
+        //assign actors to positions at HQ
+        if (listOfActors.Count > 0)
+        {
+            int counter = 0;
+            Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+            if (arrayOfActorsHQ != null)
+            {
+                foreach (Actor actor in listOfActors)
+                {
+                    //add to array
+                    arrayOfActorsHQ[counter] = actor;
+                    counter++;
+                    //do after incrementing counter as ActorHQ enum[0] is 'None'
+                    ActorHQ statusHQ = (ActorHQ)counter;
+                    //fail safe to prevent any overflow always being workers
+                    if (statusHQ == ActorHQ.Worker)
+                    { counter--; }
+                    //assign to actor
+                    actor.statusHQ = statusHQ;
+                    //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
+                    actor.Renown = (numOfActors + 2 - counter) * 10;
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfActors (Empty)"); }
+    }
+
+    /// <summary>
     /// creates a new actor of the specified actor arc type, side and level (1 worst -> 3 best). SlotID (0 to 3) for current actor, default '-1' for reserve pool actor.
     /// adds actor to dataManager.cs ArrayOfActors if OnMap (slot ID > -1). NOT added to dictOfActors if slotID -1 (do so after actor is chosen in generic picker)
     /// returns null if a problem

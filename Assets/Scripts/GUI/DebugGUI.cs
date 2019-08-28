@@ -48,6 +48,7 @@ public class DebugGUI : MonoBehaviour
     private int trackerToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
+    private int factionToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -209,6 +210,13 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
+
+                switch (factionToggle)
+                {
+                    case 0: debugDisplay = 11; factionToggle = 1; break;
+                    case 1: debugDisplay = 71; factionToggle = 2; break;
+                    case 2: debugDisplay = 0; factionToggle = 0; break;
+                }
             }
 
             //ninth button
@@ -370,10 +378,11 @@ public class DebugGUI : MonoBehaviour
                 switch (personalityToggle)
                 {
                     case 0: debugDisplay = 57; personalityToggle = 1; break;
-                    case 1: debugDisplay = 58; personalityToggle = 2; break;
-                    case 2: debugDisplay = 59; personalityToggle = 3; break;
-                    case 3: debugDisplay = 61; personalityToggle = 4; break;
-                    case 4: debugDisplay = 0; personalityToggle = 0; break;
+                    case 1: debugDisplay = 70; personalityToggle = 2; break;
+                    case 2: debugDisplay = 58; personalityToggle = 3; break;
+                    case 3: debugDisplay = 59; personalityToggle = 4; break;
+                    case 4: debugDisplay = 61; personalityToggle = 5; break;
+                    case 5: debugDisplay = 0; personalityToggle = 0; break;
                 }
             }
 
@@ -1071,7 +1080,7 @@ public class DebugGUI : MonoBehaviour
                     //Factions
                     case 11:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.factionScript.DisplayFactions();
+                        analysis = GameManager.instance.factionScript.DebugDisplayFactions();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //Show Options
@@ -1448,7 +1457,7 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.campaignScript.DebugDisplayScenarioData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
-                    //Personality data
+                    //Personality data (OnMap actors)
                     case 57:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayAllPersonalities();
@@ -1525,6 +1534,18 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayActorTeamActionData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
+                        break;
+                    //Personality data (HQ actors)
+                    case 70:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.personScript.DebugDisplayHQPersonalities();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Factions
+                    case 71:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.factionScript.DebugDisplayHQActors();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                 }
             }
