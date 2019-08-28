@@ -13,10 +13,22 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class TopicManager : MonoBehaviour
 {
+    [Header("Main")]
     [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
     [Range(0, 10)] public int minIntervalGlobal = 2;
     [Tooltip("Maximum number of options in a topic")]
     [Range(2, 5)] public int maxOptions = 4;
+
+    [Header("Probability")]
+    [Tooltip("Number (less than) to roll for an Extreme probability option to Succeed")]
+    [Range(0, 100)] public int chanceExtreme = 90;
+    [Tooltip("Number (less than) to roll for a High probability option to Succeed")]
+    [Range(0, 100)] public int chanceHigh = 75;
+    [Tooltip("Number (less than) to roll for a Medium probability option to Succeed")]
+    [Range(0, 100)] public int chanceMedium = 50;
+    [Tooltip("Number (less than) to roll for a Low probability option to Succeed")]
+    [Range(0, 100)] public int chanceLow = 25;
+
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -103,6 +115,7 @@ public class TopicManager : MonoBehaviour
     public TopicSubSubType teamProbe;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
+
 
     [Header("Debugging")]
     [Tooltip("If there is a topic pool specified here then a topic will be randomly chosen from that pool overriding any normally selected topic")]
@@ -1911,62 +1924,104 @@ public class TopicManager : MonoBehaviour
     public void ProcessOption(int optionIndex)
     {
         turnOption = turnTopic.GetOption(optionIndex);
+        int rnd, threshold;
         if (turnOption != null)
         {
-            //process outcome effects / rolls / messages / etc.
-            List<Effect> listOfEffects = new List<Effect>();
-            if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
-            if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
-            if (turnOption.moodEffect != null) { listOfEffects.Add(turnOption.moodEffect); }
             //two builders for top and bottom texts
             StringBuilder builderTop = new StringBuilder();
             StringBuilder builderBottom = new StringBuilder();
+            //process outcome effects / rolls / messages / etc.
+            List<Effect> listOfEffects = new List<Effect>();
+            //mood effects always apply
+            if (turnOption.moodEffect != null) { listOfEffects.Add(turnOption.moodEffect); }
+            if (turnOption.chance == null)
+            {
+                //ordinary option
+                if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
+                if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
+            }
+            else
+            {
+                //probability option
+                rnd = Random.Range(0, 100);
+                threshold = 0;
+                switch (turnOption.chance.name)
+                {
+                    case "Extreme": threshold = chanceExtreme; break;
+                    case "High": threshold = chanceHigh; break;
+                    case "Medium": threshold = chanceMedium; break;
+                    case "Low": threshold = chanceLow; break;
+                    default: Debug.LogWarningFormat("Invalid turnOption.chance \"{0}\"", turnOption.chance.name); break;
+                }
+                if (rnd < threshold)
+                {
+                    //success -> good effects apply
+                    if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
+                    builderBottom.AppendFormat("{0}SUCCESS{1}", colourNeutral, colourEnd);
+                    //random message
+                    string text = string.Format("\'{0}\' decision, \'{1}\' option, SUCCEEDS", turnTopic.tag, turnOption.tag);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Decision Option", threshold, rnd);
+                }
+                else
+                {
+                    //fail -> bad effects apply
+                    if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
+                    builderBottom.AppendFormat("{0}FAILED roll{1}", colourCancel, colourEnd);
+                    //random message
+                    string text = string.Format("\'{0}\' decision, \'{1}\' option, FAILS", turnTopic.tag, turnOption.tag);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Decision Option", threshold, rnd);
+                }
+            }
             //check valid effects present
-            if (listOfEffects != null && listOfEffects.Count > 0)
+            if (listOfEffects != null)
             {
                 //set up
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("\"{0}\", {1}", turnTopic.tag, turnOption.tag);
+                dataInput.originText = string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 //top text (can handle text tags)
                 string optionText = CheckText(turnOption.text, false);
                 builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
-                //loop effects
-                foreach (Effect effect in listOfEffects)
+                if (listOfEffects.Count > 0)
                 {
-                    if (node != null)
+                    //loop effects
+                    foreach (Effect effect in listOfEffects)
                     {
-                        //process effect
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
-                        if (effectReturn != null)
+                        if (node != null)
                         {
-                            //builderBottom
-                            if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                            //process effect
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                            if (effectReturn != null)
                             {
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
-                                builderBottom.AppendFormat("{0}", effectReturn.bottomText);
+                                //builderBottom
+                                if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                                {
+                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
+                                    builderBottom.AppendFormat("{0}", effectReturn.bottomText);
+                                }
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
                             }
-                            //exit effect loop on error
-                            if (effectReturn.errorFlag == true) { break; }
+                            else
+                            {
+                                /*builderTop.AppendLine();
+                                builderTop.Append("Error");*/
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
                         }
-                        else
-                        {
-                            builderTop.AppendLine();
-                            builderTop.Append("Error");
-                            builderBottom.AppendLine();
-                            builderBottom.Append("Error");
-                            effectReturn.errorFlag = true;
-                            break;
-                        }
+                        else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, turnOption.name); }
                     }
-                    else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, turnOption.name); }
                 }
+                else { builderBottom.AppendFormat("{0}Nothing happened{1}", colourGrey, colourEnd); }
             }
-            else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
+            else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
             //tidy up
@@ -3200,7 +3255,7 @@ public class TopicManager : MonoBehaviour
         else
         {
             //probability based option
-            builder.AppendFormat("{<b>{0} chance of SUCCESS</b>{1}", GetProbability(option.chance), "\n");
+            builder.AppendFormat("<b>{0} chance of SUCCESS</b>{1}", GetProbability(option.chance), "\n");
             if (option.listOfGoodEffects.Count > 0)
             { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
             else { builder.AppendFormat("{0}Nothing Happens{1}{2}", colourGrey, colourEnd, "\n"); }
@@ -3236,6 +3291,7 @@ public class TopicManager : MonoBehaviour
             case "High": probability = string.Format("{0}High{1}", colourGood, colourEnd); break;
             case "Medium": probability = string.Format("{0}Medium{1}", colourNeutral, colourEnd); break;
             case "Low": probability = string.Format("{0}Low{1}", colourBad, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised Global Chance \"{0}\"", chance.name); break;
         }
         return probability;
     }

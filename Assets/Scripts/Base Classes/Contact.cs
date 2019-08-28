@@ -36,7 +36,7 @@ public class Contact
 
 
     /// <summary>
-    /// Use for making contact Inactive (avoid doing so directly). Handles all admin. Reason is '[due to]...', keep short
+    /// Use for making contact Inactive (avoid doing so directly). Handles all admin. Reason is '[due to a]...', keep short, eg. 'due to a Decision'
     /// </summary>
     public void SetInactive(string reason = "Unknown")
     {

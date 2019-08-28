@@ -11445,3 +11445,40 @@ System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:
 	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager.Update () (at Assets/Scripts/GameManager.cs:373)
 	
+Dev seed 32698 -> Wednesday, 28 August 2019 10:42 AM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object arg0, System.Object arg1) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.InitialiseOptionTooltip (TopicOption option) (at Assets/Scripts/Managers/TopicManager.cs:3239)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:1864)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1764)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 6126 -> Wednesday, 28 August 2019 10:45 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16507 -> Wednesday, 28 August 2019 11:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4226 -> Wednesday, 28 August 2019 11:04 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63034 -> Wednesday, 28 August 2019 11:21 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20951 -> Wednesday, 28 August 2019 11:23 AM
+
+Dev seed 61147 -> Wednesday, 28 August 2019 11:28 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50453 -> Wednesday, 28 August 2019 11:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8563 -> Wednesday, 28 August 2019 11:37 AM
+City seed 5678 -> London, United Kingdom

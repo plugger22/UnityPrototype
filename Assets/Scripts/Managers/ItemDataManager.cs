@@ -732,7 +732,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4}{5}{6}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<b>Has gone Silent</b>{1}{2}Due to{3}<b>{4}</b>{5}{6}", colourBad, colourEnd, "\n", "\n", reason, "\n", "\n");
+        builder.AppendFormat("{0}<b>Has gone Silent</b>{1}{2}Due to a{3}<b>{4}</b>{5}{6}", colourBad, colourEnd, "\n", "\n", reason, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         return builder.ToString();
     }
