@@ -28,6 +28,10 @@ public class TopicSubType : ScriptableObject
     [Tooltip("Factor which determines which group (good/bad) of topics is used. Tooltip info purposes only.")]
     public TopicGroupType groupType;
 
+    [Header("Boss")]
+    [Tooltip("If true HQ Boss will show along with opinion tooltip")]
+    public bool isBoss = true;
+
     [Header("SubSubTypes")]
     [Tooltip("List of SubSubTypes that are linked to this SubType. Ignore if none")]
     public List<TopicSubSubType> listOfSubSubType;

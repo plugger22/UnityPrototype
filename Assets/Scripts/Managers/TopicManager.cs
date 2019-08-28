@@ -1842,6 +1842,7 @@ public class TopicManager : MonoBehaviour
                 data.topicName = turnTopic.name;
                 data.header = turnTopic.tag;
                 data.text = turnTopic.text;
+                data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 //topic must have at least one option

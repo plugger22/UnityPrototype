@@ -15,6 +15,9 @@ public class TopicUI : MonoBehaviour
     public Canvas topicCanvas;
     public GameObject topicObject;
 
+    [Header("Panels")]
+    public Image panelBoss;
+
     [Header("Buttons")]
     public Button buttonOption0;
     public Button buttonOption1;
@@ -33,7 +36,8 @@ public class TopicUI : MonoBehaviour
     public TextMeshProUGUI textOption3;
 
     [Header("Sprite")]
-    public Image topicImage;
+    public Image imageTopic;
+    public Image imageBoss;
 
     //button script handlers
     private ButtonInteraction buttonInteractiveOption0;
@@ -50,6 +54,7 @@ public class TopicUI : MonoBehaviour
     private GenericTooltipUI tooltipIgnore;
     private GenericTooltipUI tooltipShowMe;
     private GenericTooltipUI tooltipImage;
+    private GenericTooltipUI tooltipBoss;
     //options
     private TopicOption[] arrayOfOptions;
     private Button[] arrayOfButtons;
@@ -130,6 +135,7 @@ public class TopicUI : MonoBehaviour
         //UI elements
         Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
         Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
+        Debug.Assert(panelBoss != null, "Invalid panelBoss (Null)");
         Debug.Assert(buttonOption0 != null, "Invalid buttonOption0 (Null)");
         Debug.Assert(buttonOption1 != null, "Invalid buttonOption1 (Null)");
         Debug.Assert(buttonOption2 != null, "Invalid buttonOption2 (Null)");
@@ -143,7 +149,8 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textOption1 != null, "Invalid textOption1 (Null)");
         Debug.Assert(textOption2 != null, "Invalid textOption2 (Null)");
         Debug.Assert(textOption3 != null, "Invalid textOption3 (Null)");
-        Debug.Assert(topicImage != null, "Invalid topicImage (Null)");
+        Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
+        Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         //Button Interactive
         buttonInteractiveOption0 = buttonOption0.GetComponent<ButtonInteraction>();
         buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
@@ -170,7 +177,8 @@ public class TopicUI : MonoBehaviour
         tooltipOption3 = buttonOption3.GetComponent<GenericTooltipUI>();
         tooltipIgnore = buttonIgnore.GetComponent<GenericTooltipUI>();
         tooltipShowMe = buttonShowMe.GetComponent<GenericTooltipUI>();
-        tooltipImage = topicImage.GetComponent<GenericTooltipUI>();
+        tooltipImage = imageTopic.GetComponent<GenericTooltipUI>();
+        tooltipBoss = imageBoss.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltipOption0 != null, "Invalid tooltipOption0 (Null)");
         Debug.Assert(tooltipOption1 != null, "Invalid tooltipOption1 (Null)");
         Debug.Assert(tooltipOption2 != null, "Invalid tooltipOption2 (Null)");
@@ -178,6 +186,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(tooltipIgnore != null, "Invalid tooltipIgnore (Null)");
         Debug.Assert(tooltipShowMe != null, "Invalid tooltipShowMe (Null)");
         Debug.Assert(tooltipImage != null, "Invalid tooltipImage (Null)");
+        Debug.Assert(tooltipBoss != null, "Invalid tooltipBoss (Null)");
         //populate arrayOfButtons
         arrayOfButtons[0] = buttonOption0;
         arrayOfButtons[1] = buttonOption1;
@@ -377,13 +386,20 @@ public class TopicUI : MonoBehaviour
             }
             //topic sprite
             if (data.sprite != null)
-            { topicImage.sprite = data.sprite; }
+            { imageTopic.sprite = data.sprite; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                topicImage.sprite = GameManager.instance.guiScript.topicDefaultSprite;
+                imageTopic.sprite = GameManager.instance.guiScript.topicDefaultSprite;
             }
+            //HQ boss
+            if (data.isBoss == true)
+            {
+                //boss present, toggle on
+                panelBoss.gameObject.SetActive(true);
+            }
+            else { panelBoss.gameObject.SetActive(false); }
             //options
             if (data.listOfOptions != null)
             {

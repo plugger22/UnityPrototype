@@ -85,9 +85,10 @@
     //
     // - - - Actors - - -
     //
-    public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned }
+    public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
+    public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker}
     public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                             //reason actor is inactive
-    public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
+    public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
     public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDatapoint { Datapoint0, Influence0, Connections0, Datapoint1, Motivation1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate
     public enum ActorCheck {      //DataManager.cs -> CheckNumOfActiveActorsSpecial

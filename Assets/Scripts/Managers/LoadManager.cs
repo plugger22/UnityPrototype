@@ -1413,8 +1413,7 @@ public class LoadManager : MonoBehaviour
                         else { arrayOfStatTags[globalResistance.level, i] = "Unknown"; }
                     }
                     //Initialise Actor Arrays
-                    GameManager.instance.dataScript.InitialiseArrayOfActors();
-                    GameManager.instance.dataScript.InitialiseArrayOfActorsPresent();
+                    GameManager.instance.dataScript.InitialiseActorArrays();
                 }
                 else { Debug.LogError("Invalid arrayOfStatTags (Null) -> Import failed"); }
             }

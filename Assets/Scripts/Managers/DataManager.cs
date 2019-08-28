@@ -28,6 +28,7 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private Factor[] arrayOfFactors;                                                            //personality factors (indexes correspond to Actor/Player personality arrays)
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
+    private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters
 
     private Graph graph;
 
@@ -77,6 +78,8 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorPromoted = new List<int>();
     private List<int> resistanceActorDisposedOf = new List<int>();
     private List<int> resistanceActorResigned = new List<int>();
+
+    private List<int> actorHQPool = new List<int>();                                        //player side HQ actors
 
     //target pools
     private List<string>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetNames for each nodeArc type. All level one targets
@@ -3977,6 +3980,16 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Add actor to HQ pool (assumed to be playerSide actor)
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void AddActorToHQ(int actorID)
+    {
+        Debug.Assert(actorID > -1, "Invalid actorID");
+        actorHQPool.Add(actorID);
+    }
+
+    /// <summary>
     /// returns number of actors currently in the relevant reserve pool (auto figures out side from optionManager.cs -> playerSide). '0' if an issue.
     /// </summary>
     /// <returns></returns>
@@ -4006,52 +4019,28 @@ public class DataManager : MonoBehaviour
             case "Authority":
                 switch (list)
                 {
-                    case ActorList.Reserve:
-                        listOfActors = authorityActorReserve;
-                        break;
-                    case ActorList.Dismissed:
-                        listOfActors = authorityActorDismissed;
-                        break;
-                    case ActorList.Promoted:
-                        listOfActors = authorityActorPromoted;
-                        break;
-                    case ActorList.Disposed:
-                        listOfActors = authorityActorDisposedOf;
-                        break;
-                    case ActorList.Resigned:
-                        listOfActors = authorityActorResigned;
-                        break;
-                    default:
-                        Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
-                        break;
+                    case ActorList.Reserve: listOfActors = authorityActorReserve; break;
+                    case ActorList.Dismissed: listOfActors = authorityActorDismissed; break;
+                    case ActorList.Promoted: listOfActors = authorityActorPromoted; break;
+                    case ActorList.Disposed: listOfActors = authorityActorDisposedOf; break;
+                    case ActorList.Resigned: listOfActors = authorityActorResigned; break;
+                    case ActorList.HQ: listOfActors = actorHQPool; break;
+                    default: Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list)); break;
                 }
                 break;
             case "Resistance":
                 switch (list)
                 {
-                    case ActorList.Reserve:
-                        listOfActors = resistanceActorReserve;
-                        break;
-                    case ActorList.Dismissed:
-                        listOfActors = resistanceActorDismissed;
-                        break;
-                    case ActorList.Promoted:
-                        listOfActors = resistanceActorPromoted;
-                        break;
-                    case ActorList.Disposed:
-                        listOfActors = resistanceActorDisposedOf;
-                        break;
-                    case ActorList.Resigned:
-                        listOfActors = resistanceActorResigned;
-                        break;
-                    default:
-                        Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list));
-                        break;
+                    case ActorList.Reserve: listOfActors = resistanceActorReserve; break;
+                    case ActorList.Dismissed: listOfActors = resistanceActorDismissed; break;
+                    case ActorList.Promoted: listOfActors = resistanceActorPromoted; break;
+                    case ActorList.Disposed: listOfActors = resistanceActorDisposedOf; break;
+                    case ActorList.Resigned: listOfActors = resistanceActorResigned; break;
+                    case ActorList.HQ: listOfActors = actorHQPool; break;
+                    default: Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list)); break;
                 }
                 break;
-            default:
-                Debug.LogWarning(string.Format("Invalid side \"{0}\"", side));
-                break;
+            default: Debug.LogWarning(string.Format("Invalid side \"{0}\"", side)); break;
         }
         return listOfActors;
     }
@@ -4314,16 +4303,14 @@ public class DataManager : MonoBehaviour
 
 
     /// <summary>
-    /// called from ImportManager.cs
+    /// Initialises all actor arrays. Called from LoadManager.cs
     /// </summary>
-    public void InitialiseArrayOfActors()
-    { arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
-
-    /// <summary>
-    /// called from ImportManager.cs
-    /// </summary>
-    public void InitialiseArrayOfActorsPresent()
-    { arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors]; }
+    public void InitialiseActorArrays()
+    {
+        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
+        arrayOfActorsHQ = new Actor[GameManager.instance.factionScript.numOfActorsHQ];
+        arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
+    }
 
     public Actor[,] GetArrayOfActors()
     { return arrayOfActors; }

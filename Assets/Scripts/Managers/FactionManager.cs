@@ -11,10 +11,13 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class FactionManager : MonoBehaviour
 {
+    [Header("Faction Data")]
     [Tooltip("Approval for both sides factions range from 0 to this amount")]
     [Range(0, 10)] public int maxFactionApproval = 10;
     [Tooltip("How much Renown will the faction give per turn if they decide to support the Player")]
     [Range(1, 3)] public int renownPerTurn = 1;
+    [Tooltip("How many actors in the HQ line up")]
+    [Range(1, 6)] public int numOfActorsHQ = 4;
 
     [Header("Actor Influence")]
     [Tooltip("Amount Faction Approval drops by whenever an Actor resigns for whatever reason")]

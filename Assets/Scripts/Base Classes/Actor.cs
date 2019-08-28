@@ -40,6 +40,7 @@ namespace gameAPI
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;     //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive
+        [HideInInspector] public ActorHQ statusHQ;               //status if in HQ, otherwise 'None'
         //sprite
         [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)

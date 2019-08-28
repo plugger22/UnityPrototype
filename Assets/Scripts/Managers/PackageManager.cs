@@ -745,19 +745,10 @@ namespace packageAPI
         public string imageTooltipMain;                                     //image button tooltip
         public string imageTooltipDetails;                                  //image button tooltip
         public int nodeID;                                                  //needed to toggle 'ShowMe' button, ignore if not relevant
+        public bool isBoss;                                                 //True if HQ boss present (image + tooltip opinion)
         public Sprite sprite;
         public List<TopicOption> listOfOptions = new List<TopicOption>();
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
-
-        /*public TopicUIData()
-        {
-            ignoreTooltipHeader = "";
-            ignoreTooltipMain = "";
-            ignoreTooltipDetails = "";
-            imageTooltipHeader = "";
-            imageTooltipMain = "";
-            imageTooltipDetails = "";
-        }*/
     }
 
     /// <summary>
