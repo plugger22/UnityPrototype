@@ -744,6 +744,9 @@ namespace packageAPI
         public string imageTooltipHeader;                                   //image button tooltip 
         public string imageTooltipMain;                                     //image button tooltip
         public string imageTooltipDetails;                                  //image button tooltip
+        public string bossTooltipHeader;                                    //boss tooltip
+        public string bossTooltipMain;                                      //boss tooltip
+        public string bossTooltipDetails;                                   //boss tooltip
         public int nodeID;                                                  //needed to toggle 'ShowMe' button, ignore if not relevant
         public bool isBoss;                                                 //True if HQ boss present (image + tooltip opinion)
         public Sprite sprite;

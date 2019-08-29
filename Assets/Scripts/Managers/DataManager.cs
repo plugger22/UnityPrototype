@@ -28,7 +28,7 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private Factor[] arrayOfFactors;                                                            //personality factors (indexes correspond to Actor/Player personality arrays)
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
-    private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters
+    private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.StatusHQ (index 0 & last are Null as 'None' & 'Worker')
 
     private Graph graph;
 
@@ -3523,6 +3523,14 @@ public class DataManager : MonoBehaviour
     { return arrayOfActorsHQ; }
 
     /// <summary>
+    /// returns HQ actor according to ActorHQ position, eg. boss, subBoss1, etc., Null if a problem.
+    /// </summary>
+    /// <param name="hq"></param>
+    /// <returns></returns>
+    public Actor GetHQActor(ActorHQ hq)
+    { return arrayOfActorsHQ[(int)hq]; }
+
+    /// <summary>
     /// add a currently active actor to the arrayOfActors and update Actor status, states and actorSlotID. Also updates ActorUI
     /// </summary>
     /// <param name="side"></param>
@@ -4311,7 +4319,9 @@ public class DataManager : MonoBehaviour
     public void InitialiseActorArrays()
     {
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-        arrayOfActorsHQ = new Actor[GameManager.instance.factionScript.numOfActorsHQ];
+        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ +2 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
+            GameManager.instance.factionScript.numOfActorsHQ + 2, (int)ActorHQ.Count);
+        arrayOfActorsHQ = new Actor[(int)ActorHQ.Count];
         arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
 

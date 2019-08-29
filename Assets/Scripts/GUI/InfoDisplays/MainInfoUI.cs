@@ -195,8 +195,8 @@ public class MainInfoUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
-    string colourSide;
-    /*string colourNormal;
+    /*string colourSide;
+    string colourNormal;
     string colourGood;
     string colourError;
     string colourInvalid;
@@ -686,10 +686,10 @@ public class MainInfoUI : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+        /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
         else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
-        /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);

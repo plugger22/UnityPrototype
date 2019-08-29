@@ -672,6 +672,7 @@ public class ActorManager : MonoBehaviour
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int numOfArcs, level;
         int numOfActors = GameManager.instance.factionScript.numOfActorsHQ;
+        int renownFactor = GameManager.instance.factionScript.renownFactor;
         int[] arrayOfLevels = new int[] { 3, 3, 3, 3, 2, 2, 2, 1, 1 }; //weighted towards higher calibre actors
         List<ActorArc> listOfArcs;
         List<Actor> listOfActors = new List<Actor>();
@@ -796,9 +797,10 @@ public class ActorManager : MonoBehaviour
             {
                 foreach (Actor actor in listOfActors)
                 {
+                    //increment counter first
+                    counter++;
                     //add to array
                     arrayOfActorsHQ[counter] = actor;
-                    counter++;
                     //do after incrementing counter as ActorHQ enum[0] is 'None'
                     ActorHQ statusHQ = (ActorHQ)counter;
                     //fail safe to prevent any overflow always being workers
@@ -807,7 +809,7 @@ public class ActorManager : MonoBehaviour
                     //assign to actor
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
-                    actor.Renown = (numOfActors + 2 - counter) * 10;
+                    actor.Renown = (numOfActors + 2 - counter) * renownFactor;
                 }
             }
             else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }

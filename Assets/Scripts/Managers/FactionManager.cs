@@ -18,6 +18,8 @@ public class FactionManager : MonoBehaviour
     [Range(1, 3)] public int renownPerTurn = 1;
     [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
+    [Tooltip("Multiplier for HQ hierarchy Actors renown (Boss gets highest renown, subBoss's progressively less) forumla renown = (numOfActorsHQ + 2 - enum.StatusHQ) * renownFactor")]
+    [Range(1, 20)] public int renownFactor = 10;
 
     [Header("Actor Influence")]
     [Tooltip("Amount Faction Approval drops by whenever an Actor resigns for whatever reason")]

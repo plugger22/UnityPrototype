@@ -154,7 +154,7 @@ public class TopicManager : MonoBehaviour
     private string colourBad;
     private string colourNeutral;
     private string colourNormal;
-    private string colourDefault;
+    /*private string colourDefault;*/
     private string colourAlert;
     private string colourCancel;
     private string colourGrey;
@@ -362,7 +362,7 @@ public class TopicManager : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        /*colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
@@ -1901,6 +1901,9 @@ public class TopicManager : MonoBehaviour
                         {
                             //ignore button tooltip
                             InitialiseIgnoreTooltip(data);
+                            //boss tooltip
+                            if (turnTopic.subType.isBoss == true)
+                            { InitialiseBossTooltip(data); }
                             //send to TopicUI
                             GameManager.instance.topicDisplayScript.InitialiseData(data);
                         }
@@ -1967,7 +1970,7 @@ public class TopicManager : MonoBehaviour
                 {
                     //fail -> bad effects apply
                     if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
-                    builderBottom.AppendFormat("{0}FAILED roll{1}", colourCancel, colourEnd);
+                    builderBottom.AppendFormat("{0}FAILED{1}", colourCancel, colourEnd);
                     //random message
                     string text = string.Format("\'{0}\' decision, \'{1}\' option, FAILS", turnTopic.tag, turnOption.tag);
                     GameManager.instance.messageScript.GeneralRandom(text, "Decision Option", threshold, rnd);
@@ -2022,7 +2025,8 @@ public class TopicManager : MonoBehaviour
                 }
                 else { builderBottom.AppendFormat("{0}Nothing happened{1}", colourGrey, colourEnd); }
             }
-            else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
+            else
+            { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
             //tidy up
@@ -3256,15 +3260,15 @@ public class TopicManager : MonoBehaviour
         else
         {
             //probability based option
-            builder.AppendFormat("<b>{0} chance of SUCCESS</b>{1}", GetProbability(option.chance), "\n");
+            builder.AppendFormat("<b>{0} chance of SUCCESS</b>", GetProbability(option.chance));
             if (option.listOfGoodEffects.Count > 0)
             { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
-            else { builder.AppendFormat("{0}Nothing Happens{1}{2}", colourGrey, colourEnd, "\n"); }
+            else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
             //Bad effects
-            builder.AppendFormat("{0}If FAILED roll{1}", colourCancel, colourEnd);
+            builder.AppendFormat("{0}{1}If FAILED roll{2}", "\n", colourCancel, colourEnd);
             if (option.listOfBadEffects.Count > 0)
             { GetBadEffects(option.listOfBadEffects, option.name, builder); }
-            else { builder.AppendFormat("{0}Nothing Happens{1}{2}", colourGrey, colourEnd, "\n"); }
+            else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
         }
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
@@ -3414,6 +3418,30 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseBossTooltip
+    /// <summary>
+    /// Initialises tooltip for boss image, top right, if present
+    /// NOTE: data checked for Null by parent method
+    /// </summary>
+    /// <param name="data"></param>
+    private void InitialiseBossTooltip(TopicUIData data)
+    {
+        Actor actor = GameManager.instance.dataScript.GetHQActor(ActorHQ.Boss);
+        if (actor != null)
+        {
+            data.bossTooltipHeader = string.Format("<b>{0}{1}{2}HQ Boss{3}</b>", actor.actorName, "\n", colourAlert, colourEnd);
+            //opinion of options
+            List<TopicOption> listOfOptions = turnTopic.listOfOptions;
+            if (listOfOptions != null)
+            {
+
+            }
+            else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", turnTopic.name); }
+        }
+        else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
     }
     #endregion
 
