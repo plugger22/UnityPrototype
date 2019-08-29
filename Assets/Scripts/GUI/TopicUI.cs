@@ -336,6 +336,7 @@ public class TopicUI : MonoBehaviour
         tooltipIgnore.x_offset = -402;
         tooltipImage.x_offset = -180;
         tooltipImage.y_offset = 10;
+        tooltipBoss.x_offset = -250;
         //help
         List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2");
         if (listOfHelp != null && listOfHelp.Count > 0)
@@ -398,6 +399,16 @@ public class TopicUI : MonoBehaviour
             {
                 //boss present, toggle on
                 panelBoss.gameObject.SetActive(true);
+                //initialise boss image tooltip
+                if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
+                { tooltipBoss.tooltipHeader = data.bossTooltipHeader; }
+                else { tooltipBoss.tooltipHeader = ""; }
+                if (string.IsNullOrEmpty(data.bossTooltipMain) == false)
+                { tooltipBoss.tooltipMain = data.bossTooltipMain; }
+                else { tooltipBoss.tooltipMain = ""; }
+                if (string.IsNullOrEmpty(data.bossTooltipDetails) == false)
+                { tooltipBoss.tooltipDetails = data.bossTooltipDetails; }
+                else { tooltipBoss.tooltipDetails = ""; }
             }
             else { panelBoss.gameObject.SetActive(false); }
             //options

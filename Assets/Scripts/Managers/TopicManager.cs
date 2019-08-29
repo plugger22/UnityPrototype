@@ -3434,12 +3434,41 @@ public class TopicManager : MonoBehaviour
         {
             data.bossTooltipHeader = string.Format("<b>{0}{1}{2}HQ Boss{3}</b>", actor.actorName, "\n", colourAlert, colourEnd);
             //opinion of options
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("{0}<b>Your Boss's opinion</b>{2}", colourNeutral, actor.actorName, colourEnd);
             List<TopicOption> listOfOptions = turnTopic.listOfOptions;
             if (listOfOptions != null)
             {
-
+                for (int i = 0; i < listOfOptions.Count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    TopicOption option = listOfOptions[i];
+                    if (option != null)
+                    {
+                        Belief belief = option.moodEffect.belief;
+                        if (belief != null)
+                        { builder.AppendFormat("{0}\'{1}\',{2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(belief, actor)); }
+                        else
+                        {
+                            //invalid belief
+                            builder.AppendFormat("{0}Unknown{1}", colourGrey, colourEnd);
+                            Debug.LogWarningFormat("Invalid belief (Null) for option \"{0}\", topic {1}", option.name, turnTopic.name);
+                        }
+                    }
+                    else
+                    {
+                        //invalid option
+                        builder.AppendFormat("{0}Unknown{1}", colourGrey, colourEnd);
+                        Debug.LogWarningFormat("Invalid option (Null) for topic \"{0}\" listOfOptions[{1}]", turnTopic.name, i);
+                    }
+                }
             }
-            else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", turnTopic.name); }
+            else
+            {
+                Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", turnTopic.name);
+                builder.Append("Unknown");
+            }
+            data.bossTooltipMain = builder.ToString();
         }
         else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
     }

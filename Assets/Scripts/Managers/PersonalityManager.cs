@@ -732,6 +732,46 @@ public class PersonalityManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a colour formatted tooltip for an HQ actor (typically the Boss) indicating their view of the topic options presented. Returns colour Coded (green approve/grey neutral/red disapprove)
+    /// NOTE: belief and actor checked for Null by calling method
+    /// </summary>
+    /// <param name="belief"></param>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public string GetHQTooltip(Belief belief, Actor actorHQ)
+    {
+        string tooltip = "Unknown";
+        //get index of factor array
+        int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
+        if (index > -1)
+        {
+            //get value of player's corresponding factor
+            int hqValue = actorHQ.GetPersonality().GetFactorValue(index);
+            //if value is Zero then no effect
+            if (hqValue != 0)
+            {
+                switch (belief.type.name)
+                {
+                    case "Good":
+                        if (hqValue > 0) { tooltip = GameManager.instance.colourScript.GetFormattedString("Approves", ColourType.goodText); }
+                        else { tooltip = GameManager.instance.colourScript.GetFormattedString("Disapproves", ColourType.badText); }
+                        break;
+                    case "Bad":
+                        if (hqValue < 0) { tooltip = GameManager.instance.colourScript.GetFormattedString("Approves", ColourType.goodText); }
+                        else { tooltip = GameManager.instance.colourScript.GetFormattedString("Disapproves", ColourType.badText); }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised belief.type.name \"{0}\"", belief.type.name);
+                        break;
+                }
+            }
+            else { tooltip = GameManager.instance.colourScript.GetFormattedString("no opinion", ColourType.greyText); }
+        }
+        else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
+        return tooltip;
+    }
+
+    /// <summary>
     /// Returns a colour formatted msg for outcome dialogue showing change to Player's mood based on them having done the indicated activity. Auto adjusts player's mood
     /// 'multiText' is normally the actor.arc.name but in the case of effects it's what has caused the effect, eg. EffectDataInput.originText
     /// NOTE: Player has done something, this is what has happened
@@ -815,6 +855,9 @@ public class PersonalityManager : MonoBehaviour
         else { Debug.LogError("Invalid actionBelief (Null)"); }
         return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
     }
+
+
+
 
 
     //
