@@ -1938,6 +1938,7 @@ public class TopicManager : MonoBehaviour
             List<Effect> listOfEffects = new List<Effect>();
             //mood effects always apply
             if (turnOption.moodEffect != null) { listOfEffects.Add(turnOption.moodEffect); }
+            //check if probability option
             if (turnOption.chance == null)
             {
                 //ordinary option
@@ -2027,6 +2028,22 @@ public class TopicManager : MonoBehaviour
             }
             else
             { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
+            //hq boss's opinion
+            Actor actorHQ = GameManager.instance.dataScript.GetHQActor(ActorHQ.Boss);
+            if (actorHQ != null)
+            {
+                int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ);
+                if (opinionChange != 0)
+                {
+                    int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+                    bossOpinion += opinionChange;
+                    GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
+                    builderBottom.AppendLine();
+                    if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
+                    else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                }
+            }
+            else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
             //tidy up

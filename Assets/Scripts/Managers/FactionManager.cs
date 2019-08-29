@@ -696,6 +696,9 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");*/
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
+        //HQ data
+        builder.AppendFormat("{0}HQ Hierarchy{1}", "\n", "\n");
+        builder.AppendFormat("bossOpinion {0}{1}, {2}", bossOpinion > 0 ? "+" : "", bossOpinion, GetBossOpinionFormatted());
         return builder.ToString();
     }
 

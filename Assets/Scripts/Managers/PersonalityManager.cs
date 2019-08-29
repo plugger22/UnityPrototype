@@ -795,6 +795,44 @@ public class PersonalityManager : MonoBehaviour
         return GetMoodMessage(results);
     }
 
+    /// <summary>
+    /// returns the amount of change to HQ actors opinion based on topic option belief (+1 if personality factor same sign, -1 if opposite, 0 if factor zero)
+    /// </summary>
+    /// <param name="belief"></param>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public int UpdateHQOpinion(Belief belief, Actor actorHQ)
+    {
+        int opinionChange = 0;
+        //get index of factor array
+        int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
+        if (index > -1)
+        {
+            //get value of player's corresponding factor
+            int hqValue = actorHQ.GetPersonality().GetFactorValue(index);
+            //if value is Zero then no effect
+            if (hqValue != 0)
+            {
+                switch (belief.type.name)
+                {
+                    case "Good":
+                        if (hqValue > 0) { opinionChange = 1; }
+                        else { opinionChange = -1; }
+                        break;
+                    case "Bad":
+                        if (hqValue < 0) { opinionChange = 1; }
+                        else { opinionChange = -1; }
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised belief.type.name \"{0}\"", belief.type.name);
+                        break;
+                }
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
+        return opinionChange;
+    }
+
 
     /// <summary>
     /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
@@ -855,8 +893,6 @@ public class PersonalityManager : MonoBehaviour
         else { Debug.LogError("Invalid actionBelief (Null)"); }
         return new Tuple<int, string, string, string, string, bool>(change, factorName, factorType, reason, factorPlayer, isStressed);
     }
-
-
 
 
 
