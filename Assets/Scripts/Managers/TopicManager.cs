@@ -3435,7 +3435,7 @@ public class TopicManager : MonoBehaviour
             data.bossTooltipHeader = string.Format("<b>{0}{1}{2}HQ Boss{3}</b>", actor.actorName, "\n", colourAlert, colourEnd);
             //opinion of options
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("{0}<b>Your Boss's opinion</b>{2}", colourNeutral, actor.actorName, colourEnd);
+            builder.Append("<b>What Boss thinks</b>");
             List<TopicOption> listOfOptions = turnTopic.listOfOptions;
             if (listOfOptions != null)
             {
@@ -3469,6 +3469,9 @@ public class TopicManager : MonoBehaviour
                 builder.Append("Unknown");
             }
             data.bossTooltipMain = builder.ToString();
+            //Boss's view of your decision making ability
+            data.bossTooltipDetails = string.Format("Boss's opinion of your Decisions{0}<b><size=115%>{1}{2}{3}</size></b>", "\n", 
+                colourNeutral, GameManager.instance.factionScript.GetBossOpinionFormatted(), colourEnd);
         }
         else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
     }

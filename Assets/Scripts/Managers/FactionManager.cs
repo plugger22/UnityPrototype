@@ -32,10 +32,12 @@ public class FactionManager : MonoBehaviour
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
 
-    private int approvalZeroTimer;                           //countdown timer once approval at zero. Player fired when timer reaches zero.
+
+    private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
+    private int approvalZeroTimer;                          //countdown timer once approval at zero. Player fired when timer reaches zero.
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
-    private int _approvalAuthority;                          //level of faction approval (out of 10) enjoyed by authority side (Player/AI)
-    private int _approvalResistance;                         //level of faction approval (out of 10) enjoyed by resistance side (Player/AI)
+    private int _approvalAuthority;                         //level of faction approval (out of 10) enjoyed by authority side (Player/AI)
+    private int _approvalResistance;                        //level of faction approval (out of 10) enjoyed by resistance side (Player/AI)
 
 
     //fast access
@@ -46,7 +48,7 @@ public class FactionManager : MonoBehaviour
     private string colourAuthority;*/
     private string colourNeutral;
     private string colourNormal;
-    /*private string colourGood;*/
+    private string colourGood;
     private string colourBad;
     private string colourGrey;
     /*private string colourAlert;*/
@@ -206,7 +208,7 @@ public class FactionManager : MonoBehaviour
         /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);*/
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);*/
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
@@ -622,6 +624,49 @@ public class FactionManager : MonoBehaviour
         else { Debug.LogError("Invalid side (Null)"); }
     }
 
+
+    //
+    // - - - Boss Opinion
+    //
+
+    public int GetBossOpinion()
+    { return bossOpinion; }
+
+    /// <summary>
+    /// change boss opinion to new value, generate message, reason is '[due to] [reason]'
+    /// </summary>
+    /// <param name="newValue"></param>
+    /// <param name="reason"></param>
+    public void SetBossOpinion(int newValue, string reason)
+    {
+        int oldValue = bossOpinion;
+        bossOpinion = newValue;
+        Debug.LogFormat("[Fac] FactionManager.cs -> SetBossOpinion: Opinion now {0} (was {1}), due to {2}{3}", newValue, oldValue, reason, "\n");
+    }
+
+    /// <summary>
+    /// returns a colour formatted string showing boss's current opinion represented as a text, eg. "Poor" (red)
+    /// </summary>
+    /// <returns></returns>
+    public string GetBossOpinionFormatted()
+    {
+        string opinion = "Unknown";
+        if (bossOpinion >= 3) { opinion = string.Format("{0}Very Good{1}", colourGood, colourEnd); }
+        else if (bossOpinion <= -3) { opinion = string.Format("{0}Very Poor{1}", colourBad, colourEnd); }
+        else
+        {
+            switch (bossOpinion)
+            {
+                case 2:
+                case 1: opinion = string.Format("{0}Good{1}", colourGood, colourEnd); break;
+                case 0: opinion = string.Format("{0}Neutral{1}", colourNeutral, colourEnd); break;
+                case -1:
+                case -2: opinion = string.Format("{0}Poor{1}", colourBad, colourEnd); break;
+                default: Debug.LogWarningFormat("Unrecognised bossOpinion \"{0}\"", bossOpinion); break;
+            }
+        }
+        return opinion;
+    }
 
 
     //

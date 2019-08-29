@@ -765,7 +765,7 @@ public class PersonalityManager : MonoBehaviour
                         break;
                 }
             }
-            else { tooltip = GameManager.instance.colourScript.GetFormattedString("no opinion", ColourType.greyText); }
+            else { tooltip = GameManager.instance.colourScript.GetFormattedString("no view", ColourType.greyText); }
         }
         else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
         return tooltip;

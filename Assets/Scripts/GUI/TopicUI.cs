@@ -336,7 +336,7 @@ public class TopicUI : MonoBehaviour
         tooltipIgnore.x_offset = -402;
         tooltipImage.x_offset = -180;
         tooltipImage.y_offset = 10;
-        tooltipBoss.x_offset = -250;
+        tooltipBoss.x_offset = -275;
         //help
         List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2");
         if (listOfHelp != null && listOfHelp.Count > 0)
