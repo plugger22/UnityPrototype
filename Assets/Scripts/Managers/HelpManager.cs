@@ -210,8 +210,8 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicUI_0";
         data.header = "Ignore the Decision";
         builder = new StringBuilder();
-        builder.AppendFormat("Decisions can be {0}IGNORED{1} (Ignore Button or ESC) if you don't want to deal with them.", colourAlert, colourEnd);
-        builder.AppendFormat("The Ignore button {0}Tooltip{1} shows any {2}Consequences{3} that may arise if you do so", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Decisions can be Ignored ({0}IGNORE Button or ESC{1}) if you don't want to deal with them. ", colourAlert, colourEnd);
+        builder.AppendFormat("The Ignore button {0}tooltip{1} shows any {2}Consequences{3} if you do so", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //options
@@ -219,7 +219,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicUI_1";
         data.header = "Greyed out Options";
         builder = new StringBuilder();
-        builder.AppendFormat("Options may be greyed out indicating that they {0}aren't available{1}. Their {1}tooltip{2} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Options may be greyed out indicating that they {0}aren't available{1}. Their {2}tooltip{3} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //more details
@@ -227,7 +227,17 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicUI_2";
         data.header = "More Information";
         builder = new StringBuilder();
-        builder.AppendFormat("{0}MOUSE OVER{1} the {2}Image{3} (top left) for more details", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("{0}Tooltip, image, top left{1} for more details", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //HQ Boss
+        data = new HelpData();
+        data.tag = "topicUI_3";
+        data.header = "HQ Boss";
+        builder = new StringBuilder();
+        builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss keeps track{3} of your choices. ", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("{0}Ignoring{1} a decision will always earn you Boss's {2}disapproval{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion

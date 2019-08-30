@@ -1895,15 +1895,15 @@ public class TopicManager : MonoBehaviour
                         data.nodeID = tagNodeID;
                         //sprite & sprite tooltip (needs to be AFTER ProcessSpecialTopicData)
                         InitialiseSprite(data);
-                        data.sprite = turnSprite;
+                        data.spriteMain = turnSprite;
                         //everything checks out O.K
                         if (isProceed == true)
                         {
                             //ignore button tooltip
                             InitialiseIgnoreTooltip(data);
-                            //boss tooltip
+                            //boss details (sprite and tooltip)
                             if (turnTopic.subType.isBoss == true)
-                            { InitialiseBossTooltip(data); }
+                            { InitialiseBossDetails(data); }
                             //send to TopicUI
                             GameManager.instance.topicDisplayScript.InitialiseData(data);
                         }
@@ -2112,10 +2112,27 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", IGNORE", turnTopic.name); }
+        //boss opinion -> player notification only if there is already an outcome dialogue
+        ProcessIgnoreBossOpinion();
+        builderBottom.AppendLine();
+        builderBottom.AppendFormat("{0}{1}Your Boss Disapproves of your inability to make a decision{2}", "\n", colourBad, colourEnd);
         //outcome dialogue
         SetTopicOutcome(builderTop, builderBottom);
         //tidy up
         ProcessTopicAdmin();
+    }
+    #endregion
+
+    #region ProcessIgnoreBossOpinion
+    /// <summary>
+    /// Boss disapproves of you ignoring decisions. Needs to be a separate method as can be called by ProcessIgnore or by TopicUI.cs -> ProcessTopicIgnore depending on whether there is an outcome dialogue or not
+    /// </summary>
+    public void ProcessIgnoreBossOpinion()
+    {
+        //hq boss's opinion
+        int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+        bossOpinion += -1;
+        GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', Ignored", turnTopic.tag));
     }
     #endregion
 
@@ -3421,34 +3438,44 @@ public class TopicManager : MonoBehaviour
                 }
                 if (builder.Length == 0)
                 {
-                    builder.AppendFormat("{0}No adverse effects{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
+                    builder.AppendFormat("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
+                        colourBad, colourEnd, "\n", colourNeutral, colourEnd);
                     Debug.LogWarningFormat("Invalid Ignore Effects (None showing) for topic \"{0}\"", turnTopic.name);
                 }
-                else { builder.AppendFormat("{0}{1}ESC shortcut{2}", "\n", colourNeutral, colourEnd); }
+                else
+                {
+                    //boss
+                    builder.AppendFormat("{0}{1}Boss will Disapprove{2}", "\n", colourBad, colourEnd);
+                    //keyboard shortcut
+                    builder.AppendFormat("{0}{1}ESC shortcut{2}", "\n", colourNeutral, colourEnd);
+                }
                 //details
                 data.ignoreTooltipDetails = builder.ToString();
             }
             else
             {
                 //No ignoreEffects -> default text
-                data.ignoreTooltipDetails = string.Format("{0}No adverse effects{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
+                data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n", 
+                colourBad, colourEnd, "\n", colourNeutral, colourEnd);
             }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
     #endregion
 
-    #region InitialiseBossTooltip
+    #region InitialiseBossDetails
     /// <summary>
-    /// Initialises tooltip for boss image, top right, if present
+    /// Initialises tooltip and sprite for boss image, top right, if present
     /// NOTE: data checked for Null by parent method
     /// </summary>
     /// <param name="data"></param>
-    private void InitialiseBossTooltip(TopicUIData data)
+    private void InitialiseBossDetails(TopicUIData data)
     {
         Actor actor = GameManager.instance.dataScript.GetHQActor(ActorHQ.Boss);
         if (actor != null)
         {
+            //sprite
+            data.spriteBoss = actor.sprite;
             data.bossTooltipHeader = string.Format("<b>{0}{1}{2}HQ Boss{3}</b>", actor.actorName, "\n", colourAlert, colourEnd);
             //opinion of options
             StringBuilder builder = new StringBuilder();
@@ -3462,9 +3489,11 @@ public class TopicManager : MonoBehaviour
                     TopicOption option = listOfOptions[i];
                     if (option != null)
                     {
-                        Belief belief = option.moodEffect.belief;
-                        if (belief != null)
-                        { builder.AppendFormat("{0}\'{1}\',{2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(belief, actor)); }
+                        if (option.moodEffect != null)
+                        {
+                            if (option.moodEffect.belief != null)
+                            { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
+                        }
                         else
                         {
                             //invalid belief
@@ -3487,7 +3516,7 @@ public class TopicManager : MonoBehaviour
             }
             data.bossTooltipMain = builder.ToString();
             //Boss's view of your decision making ability
-            data.bossTooltipDetails = string.Format("Boss's opinion of your Decisions{0}<b><size=115%>{1}{2}{3}</size></b>", "\n", 
+            data.bossTooltipDetails = string.Format("Boss's opinion of your Decisions{0}<b><size=115%>{1}{2}{3}</size></b>", "\n",
                 colourNeutral, GameManager.instance.factionScript.GetBossOpinionFormatted(), colourEnd);
         }
         else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
@@ -3739,7 +3768,7 @@ public class TopicManager : MonoBehaviour
                             builder.AppendFormat("<b>{0} {1}</b>", contact.nameFirst, GameManager.instance.contactScript.GetEffectivenessFormatted(contact.effectiveness));
                             textMain = builder.ToString();
                             builder.Clear();
-                            builder.AppendFormat("{0}Active for {1}{2}{3}{4} {5}turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral, 
+                            builder.AppendFormat("{0}Active for {1}{2}{3}{4} {5}turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral,
                                 contact.turnTotal, colourEnd, colourAlert, contact.turnTotal != 1 ? "s" : "", colourEnd, "\n");
                             builder.AppendFormat("Rumours heard  {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsRumours, colourEnd, "\n");
                             builder.AppendFormat("Nemesis sightings  {0}<b>{1}</b>{2}{3}", colourNeutral, contact.statsNemesis, colourEnd, "\n");

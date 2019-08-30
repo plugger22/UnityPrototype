@@ -749,7 +749,8 @@ namespace packageAPI
         public string bossTooltipDetails;                                   //boss tooltip
         public int nodeID;                                                  //needed to toggle 'ShowMe' button, ignore if not relevant
         public bool isBoss;                                                 //True if HQ boss present (image + tooltip opinion)
-        public Sprite sprite;
+        public Sprite spriteMain;                                           //Sprite for Main topic 
+        public Sprite spriteBoss;                                           //Sprite for Boss (if 'isBoss' true, ignore otherwise)
         public List<TopicOption> listOfOptions = new List<TopicOption>();
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
     }

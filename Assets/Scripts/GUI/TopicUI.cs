@@ -338,7 +338,7 @@ public class TopicUI : MonoBehaviour
         tooltipImage.y_offset = 10;
         tooltipBoss.x_offset = -275;
         //help
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2");
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
             GenericHelpTooltipUI help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
@@ -386,8 +386,8 @@ public class TopicUI : MonoBehaviour
                 textHeader.text = "Unknown";
             }
             //topic sprite
-            if (data.sprite != null)
-            { imageTopic.sprite = data.sprite; }
+            if (data.spriteMain != null)
+            { imageTopic.sprite = data.spriteMain; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
@@ -399,6 +399,10 @@ public class TopicUI : MonoBehaviour
             {
                 //boss present, toggle on
                 panelBoss.gameObject.SetActive(true);
+                //sprite
+                if (data.spriteBoss != null)
+                { imageBoss.sprite = data.spriteBoss; }
+                else { Debug.LogWarning("Invalid spriteBoss (Null)"); }
                 //initialise boss image tooltip
                 if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
                 { tooltipBoss.tooltipHeader = data.bossTooltipHeader; }
@@ -561,6 +565,7 @@ public class TopicUI : MonoBehaviour
             {
                 //close TopicUI without an Outcome dialogue
                 CloseTopicUI(-1);
+                GameManager.instance.topicScript.ProcessIgnoreBossOpinion();
                 GameManager.instance.topicScript.ProcessTopicAdmin();
             }
         }

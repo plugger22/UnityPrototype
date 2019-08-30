@@ -651,17 +651,19 @@ public class FactionManager : MonoBehaviour
     public string GetBossOpinionFormatted()
     {
         string opinion = "Unknown";
-        if (bossOpinion >= 3) { opinion = string.Format("{0}Very Good{1}", colourGood, colourEnd); }
-        else if (bossOpinion <= -3) { opinion = string.Format("{0}Very Poor{1}", colourBad, colourEnd); }
+        if (bossOpinion >= 4) { opinion = string.Format("{0}Very Good{1}", colourGood, colourEnd); }
+        else if (bossOpinion <= -4) { opinion = string.Format("{0}Very Poor{1}", colourBad, colourEnd); }
         else
         {
             switch (bossOpinion)
             {
-                case 2:
-                case 1: opinion = string.Format("{0}Good{1}", colourGood, colourEnd); break;
-                case 0: opinion = string.Format("{0}Neutral{1}", colourNeutral, colourEnd); break;
-                case -1:
-                case -2: opinion = string.Format("{0}Poor{1}", colourBad, colourEnd); break;
+                case 3:
+                case 2: opinion = string.Format("{0}Good{1}", colourGood, colourEnd); break;
+                case 1: 
+                case 0: 
+                case -1: opinion = string.Format("{0}Neutral{1}", colourNeutral, colourEnd); break;
+                case -2:
+                case -3: opinion = string.Format("{0}Poor{1}", colourBad, colourEnd); break;
                 default: Debug.LogWarningFormat("Unrecognised bossOpinion \"{0}\"", bossOpinion); break;
             }
         }
@@ -713,7 +715,8 @@ public class FactionManager : MonoBehaviour
         if (arrayOfActors != null)
         {
             builder.AppendFormat("-HQ Hierarchy{0}", "\n");
-            for (int i = 0; i < arrayOfActors.Length; i++)
+            //first and last indexes are blanks
+            for(int i = 1; i < (int)ActorHQ.Count; i++)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
