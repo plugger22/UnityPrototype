@@ -20,9 +20,9 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
-  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

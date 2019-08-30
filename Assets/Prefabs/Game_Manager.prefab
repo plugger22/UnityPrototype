@@ -2823,6 +2823,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFactionApproval: 10
   renownPerTurn: 1
+  numOfActorsHQ: 4
+  renownFactor: 10
   factionApprovalActorResigns: 1
   factionFirePlayerTimer: 3
   factionAuthority: {fileID: 0}
@@ -3182,6 +3184,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minIntervalGlobal: 2
   maxOptions: 4
+  chanceExtreme: 90
+  chanceHigh: 75
+  chanceMedium: 50
+  chanceLow: 25
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
@@ -3280,3 +3286,5 @@ MonoBehaviour:
   normalProfile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   levelScope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
+  maxTopicTextLength: 140
+  maxOptionTextLength: 40
