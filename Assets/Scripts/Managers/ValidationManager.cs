@@ -1696,6 +1696,8 @@ public class ValidationManager : MonoBehaviour
         CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "resistanceActorPromoted", tag, 0, false);
         CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "resistanceActorDisposedOff", tag, 0, false);
         CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "resistanceActorResigned", tag, 0, false);
+        //hq
+        CheckList(GameManager.instance.dataScript.GetListOfActorHQ(), "listOfActorHQ", tag, 0, false);
         //authority duplicates
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "actorID", "actor", "authorityActorPoolLevelOne");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "actorID", "actor", "authorityActorPoolLevelTwo");
@@ -1714,6 +1716,8 @@ public class ValidationManager : MonoBehaviour
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "actorID", "actor", "resistanceActorPromoted");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
+        //hq
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfActorHQ(), "actorID", "actor", "actorHQPool");
         //
         // - - - arrayOfActors
         //
@@ -1746,6 +1750,23 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //
+        // - - - arrayOfActorsHQ
+        //
+        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActorsHQ != null)
+        {
+            //check first and last indexes are empty (due to enum.ActorHQ as indexes have to correspond, so first, 'None' and last 'Worker' should be Null)
+            int stopIndex = (int)ActorHQ.Count - 1;
+            if (arrayOfActorsHQ[0] != null) { Debug.LogFormat("{0} Actor present in arrayOfActorsHQ[0] (should be Null){1}", tag, "\n"); }
+            if (arrayOfActorsHQ[stopIndex] != null) { Debug.LogFormat("{0} Actor present in arrayOfActorsHQ[{1}] (should be Null){2}", tag, stopIndex, "\n"); }
+            for (int i = 1; i < stopIndex; i++)
+            {
+                if (arrayOfActorsHQ[i] == null)
+                { Debug.LogFormat("{0}Invalid Actor in arrayOfActorsHQ[{1}] (Null, shouldn't be as all hierarchy positions should be filled){2}", tag, i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
     }
     #endregion
 

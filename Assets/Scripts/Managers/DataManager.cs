@@ -3990,6 +3990,9 @@ public class DataManager : MonoBehaviour
         return successFlag;
     }
 
+    public List<int> GetListOfActorHQ()
+    { return actorHQPool; }
+
     /// <summary>
     /// Add actor to HQ pool (assumed to be playerSide actor)
     /// </summary>

@@ -1,7 +1,4 @@
 ﻿using gameAPI;
-using modalAPI;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -32,13 +29,14 @@ public class FactionManager : MonoBehaviour
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
 
-
+    #region SaveDataCompatible
     private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
     private int approvalZeroTimer;                          //countdown timer once approval at zero. Player fired when timer reaches zero.
+    #endregion
+
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
     private int _approvalAuthority;                         //level of faction approval (out of 10) enjoyed by authority side (Player/AI)
     private int _approvalResistance;                        //level of faction approval (out of 10) enjoyed by resistance side (Player/AI)
-
 
     //fast access
     private GlobalSide globalAuthority;
@@ -306,6 +304,16 @@ public class FactionManager : MonoBehaviour
             }
         }
     }
+
+    public int GetApprovalZeroTimer()
+    { return approvalZeroTimer; }
+    
+    /// <summary>
+    /// Used by Save/Load to set data
+    /// </summary>
+    /// <param name="timer"></param>
+    public void LoadApprovalZeroTimer(int timer)
+    { approvalZeroTimer = timer; }
 
     /// <summary>
     /// Checks if approval zero, sets timer, counts down each turn and fires player when timer expired. Timer cancelled if approval rises
@@ -715,14 +723,14 @@ public class FactionManager : MonoBehaviour
         if (arrayOfActors != null)
         {
             builder.AppendFormat("-HQ Hierarchy{0}", "\n");
-            //first and last indexes are blanks
-            for(int i = 1; i < (int)ActorHQ.Count; i++)
+            //first and last indexes are blanks ('None' & 'Worker')
+            for(int i = 1; i < (int)ActorHQ.Count - 1; i++)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
                 {
                     builder.AppendFormat("{0}- {1}{2}", "\n", actor.statusHQ, "\n");
-                    builder.AppendFormat(" {0}, ID {1}, Mot {2}, Comp {3}, R {4}{5}", actor.actorName, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                    builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
                         actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i);}

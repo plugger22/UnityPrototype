@@ -210,6 +210,10 @@ public class SaveGameData
 public class SaveScenarioData
 {
     public int cityLoyalty;
+    //factionManager.cs
+    public int bossOpinion;
+    public int approvalZeroTimer;
+    public bool isZeroTimerThisTurn;
     public int factionSupportAuthority;
     public int factionSupportResistance;
     //ObjectiveManager.cs
@@ -247,6 +251,7 @@ public class SaveActorData
     public List<int> resistanceActorPromoted = new List<int>();
     public List<int> resistanceActorDisposedOf = new List<int>();
     public List<int> resistanceActorResigned = new List<int>();
+    public List<int> actorHQPool = new List<int>();
     //actorManager.cs
     public int actorIDCounter;
     public int lieLowTimer;

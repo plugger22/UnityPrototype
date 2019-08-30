@@ -352,6 +352,8 @@ public class FileManager : MonoBehaviour
         //cityManager.cs
         write.scenarioData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
         //factionManager.cs
+        write.scenarioData.bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+        write.scenarioData.approvalZeroTimer = GameManager.instance.factionScript.GetApprovalZeroTimer();
         write.scenarioData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
         write.scenarioData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
         //objectiveManager.cs
@@ -857,6 +859,7 @@ public class FileManager : MonoBehaviour
 
 
     #region Write Actor data
+
     /// <summary>
     /// Actor.cs (dict and lists) full data set write to file
     /// </summary>
@@ -951,6 +954,8 @@ public class FileManager : MonoBehaviour
         write.actorData.resistanceActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance));
         write.actorData.resistanceActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance));
         write.actorData.resistanceActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalResistance));
+
+        write.actorData.actorHQPool.AddRange(GameManager.instance.dataScript.GetListOfActorHQ());
         //
         // - - - ActorManager.cs 
         //
@@ -1214,6 +1219,7 @@ public class FileManager : MonoBehaviour
         write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
     }
     #endregion
+
 
     #region Write Topic Data
     /// <summary>
@@ -1638,6 +1644,8 @@ public class FileManager : MonoBehaviour
         //factionManager.cs
         GameManager.instance.factionScript.LoadSetFactionApproval(globalAuthority, read.scenarioData.factionSupportAuthority);
         GameManager.instance.factionScript.LoadSetFactionApproval(globalResistance, read.scenarioData.factionSupportResistance);
+        GameManager.instance.factionScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
+        GameManager.instance.factionScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
         //objectiveManager.cs
         List<Objective> tempList = new List<Objective>();
         for (int i = 0; i < read.scenarioData.listOfObjectiveNames.Count; i++)
@@ -2692,6 +2700,7 @@ public class FileManager : MonoBehaviour
         List<int> resistanceActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance);
         List<int> resistanceActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance);
         List<int> resistanceActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalResistance);
+        List<int> actorHQPool = GameManager.instance.dataScript.GetListOfActorHQ();
         //null checks
         if (authorityActorPoolLevelOne == null) { Debug.LogError("Invalid authorityActorPoolLevelOne (Null)"); }
         if (authorityActorPoolLevelTwo == null) { Debug.LogError("Invalid authorityActorPoolLevelTwo (Null)"); }
@@ -2709,6 +2718,7 @@ public class FileManager : MonoBehaviour
         if (resistanceActorPromoted == null) { Debug.LogError("Invalid resistanceActorPromoted (Null)"); }
         if (resistanceActorDisposedOf == null) { Debug.LogError("Invalid resistanceActorDsposedOf (Null)"); }
         if (resistanceActorResigned == null) { Debug.LogError("Invalid resistanceActorResigned (Null)"); }
+        if (actorHQPool == null) { Debug.LogError("Invalid actorHQPool (Null)"); }
         //clear lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -2726,6 +2736,7 @@ public class FileManager : MonoBehaviour
         resistanceActorPromoted.Clear();
         resistanceActorDisposedOf.Clear();
         resistanceActorResigned.Clear();
+        actorHQPool.Clear();
         //add saved data
         authorityActorPoolLevelOne.AddRange(read.actorData.authorityActorPoolLevelOne);
         authorityActorPoolLevelTwo.AddRange(read.actorData.authorityActorPoolLevelTwo);
@@ -2743,6 +2754,7 @@ public class FileManager : MonoBehaviour
         resistanceActorPromoted.AddRange(read.actorData.resistanceActorPromoted);
         resistanceActorDisposedOf.AddRange(read.actorData.resistanceActorDisposedOf);
         resistanceActorResigned.AddRange(read.actorData.resistanceActorResigned);
+        actorHQPool.AddRange(read.actorData.actorHQPool);
 
     }
     #endregion
