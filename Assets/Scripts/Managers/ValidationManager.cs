@@ -82,6 +82,12 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicScope for TopicSubType (used to run validation checks to ensure correct scope is used")]
     public TopicScope campaignScope;
 
+    [Header("Topic Data")]
+    [Tooltip("Max length of a topic (excludes tagged data) in chars (default is a twitter's worth of 140 chars")]
+    [Range(100, 200)] public int maxTopicTextLength = 140;
+    [Tooltip("Max length of a topic Option text (excludes tagged data) in chars")]
+    [Range(10, 50)] public int maxOptionTextLength = 35;
+
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -2254,6 +2260,9 @@ public class ValidationManager : MonoBehaviour
         Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
         {
+            //
+            // - - - Topic Pools
+            //
             foreach (var pool in dictOfTopicPools)
             {
                 CheckDictList(pool.Value, "listOfTopics", tag, pool.Key);
@@ -2358,6 +2367,64 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
+        //
+        // - - - Topic Options
+        //
+        int textLength;
+        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        if (dictOfTopics != null)
+        {
+            //loop topics
+            foreach(var topic in dictOfTopics)
+            {
+                if (topic.Value != null)
+                {
+                    //check topic text chars limit
+                    textLength = topic.Value.text.Length;
+                    if (textLength > maxTopicTextLength)
+                    { Debug.LogFormat("{0}, Text is overlength (is {1} chars, should be <= {2}) for topic \"{3}\"{4}", tag, textLength, maxTopicTextLength, topic.Value.name, "\n"); }
+                    if (topic.Value.listOfOptions != null)
+                    {
+                        List<TopicOption> listOfOptions = topic.Value.listOfOptions;
+                        if (listOfOptions.Count > 0)
+                        {
+                            for (int i = 0; i < listOfOptions.Count; i++)
+                            {
+                                TopicOption option = listOfOptions[i];
+                                if (option != null)
+                                {
+                                    //check option has correct topic
+                                    if (option.topic.name.Equals(topic.Value.name, StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0}, Mismatch on topic (is {1}, should be {2}) for option {3}{4}", tag, option.topic.name, topic.Value.name, option.name, "\n"); }
+                                    //
+                                    // - - - Checks for completed TopicOptions (text field has data) -> DEBUG (shouldn't be any of these on completion)
+                                    //
+                                    if (option.text != null && option.text.Length > 0)
+                                    {
+                                        textLength = option.text.Length;
+                                        if (textLength > 0)
+                                        {
+                                            //check text length limit
+                                            if (textLength > maxOptionTextLength)
+                                            { Debug.LogFormat("{0}, Text is overlength (is {1} chars, limit {2} chars) for option \"{3}\", topic {4}{5}", tag, textLength, maxOptionTextLength, option.name,
+                                                topic.Value.name, "\n"); }
+                                            //check there is at least one good or bad effect present
+                                            if (option.listOfGoodEffects.Count == 0 && option.listOfBadEffects.Count == 0)
+                                            { Debug.LogFormat("{0}, No effects present, Good or Bad, for option \"{1}\", topic {2}{3}", tag, option.name, topic.Value.name, "\n"); }
+                                        }
+                                    }
+                                }
+                                else { Debug.LogFormat("{0}, Invalid option (Null) for topic \"{0}\"{1}", topic.Key, "\n"); }
+                            }
+                        }
+                        else { Debug.LogFormat("{0}, Invalid listOfOptions (Empty) for topic \"{0}\"{1}", topic.Key, "\n"); }
+                    }
+                    else { Debug.LogFormat("{0}, Invalid listOfOptions (Null) for topic \"{0}\"{1}", topic.Key, "\n"); }
+                }
+                else { Debug.LogFormat("{0}, Invalid topic \"{0}\" (Null){1}", topic.Key, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTopics (Null)"); }
     }
     #endregion
 
