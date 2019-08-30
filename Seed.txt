@@ -11952,3 +11952,5 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 57386 -> Friday, 30 August 2019 11:15 AM
+City seed 5678 -> London, United Kingdom

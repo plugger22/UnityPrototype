@@ -229,6 +229,7 @@ public class SaveActorData
     //dataManager.cs collections
     public List<SaveActor> listOfDictActors = new List<SaveActor>();
     public List<int> listOfActors = new List<int>();
+    public List<int> listOfActorsHQ = new List<int>();
     public List<bool> listOfActorsPresent = new List<bool>();
     public List<int> authorityActorPoolLevelOne = new List<int>();
     public List<int> authorityActorPoolLevelTwo = new List<int>();
@@ -322,6 +323,7 @@ public class SaveGearData
     public List<string> listOfCurrentGear = new List<string>();
 }
 #endregion
+
 
 #region SaveTopicData
 /// <summary>
@@ -511,6 +513,7 @@ public class SaveActor
 {
     //data needed for all actors
     public ActorStatus status;
+    public ActorHQ statusHQ;
     public int actorID;
     public int datapoint0;
     public int datapoint1;

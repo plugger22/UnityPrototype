@@ -906,6 +906,7 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //arrayOfActorsPresent
         bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
         if (arrayOfActorsPresent != null)
         {
@@ -916,6 +917,19 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+        //arrayOfActorsHQ
+        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActorsHQ != null)
+        {
+            for (int i = 0; i < arrayOfActorsHQ.Length; i++)
+            {
+                Actor actor = arrayOfActorsHQ[i];
+                if (actor != null)
+                { write.actorData.listOfActorsHQ.Add(actor.actorID); }
+                else { write.actorData.listOfActorsHQ.Add(-1); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         //
         // - - - Pool lists
         //
@@ -2445,7 +2459,8 @@ public class FileManager : MonoBehaviour
                     { actor.AddTrait(trait); }
                     else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
                     //needs to be after SetGear
-                    actor.Status = readActor.status; 
+                    actor.Status = readActor.status;
+                    actor.statusHQ = readActor.statusHQ;
                     //Personality
                     Personality personality = actor.GetPersonality();
                     if (personality != null)
@@ -2573,6 +2588,7 @@ public class FileManager : MonoBehaviour
         //
         int index;
         int maxIndex;
+        int actorID;
         int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         if (read.actorData.listOfActors != null)
@@ -2584,7 +2600,6 @@ public class FileManager : MonoBehaviour
                 maxIndex = arrayOfActors.Length;
                 //empty out array
                 Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
-                int actorID;
                 Actor actor;
                 //repopulate with save data
                 for (int i = 0; i < sideNum; i++)
@@ -2626,6 +2641,26 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
+        //arrayOfActorsHQ
+        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActorsHQ != null)
+        {
+            int records = arrayOfActorsHQ.Length;
+            //empty out array
+            Array.Clear(arrayOfActorsHQ, 0, records);
+            for (int i = 0; i < records; i++)
+            {
+                actorID = read.actorData.listOfActorsHQ[i];
+                if (actorID > -1)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    { arrayOfActorsHQ[i] = actor; }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         //
         // - - - ActorManager.cs
         //
@@ -3479,6 +3514,7 @@ public class FileManager : MonoBehaviour
         // - - - base data
         //
         saveActor.status = actor.Status;
+        saveActor.statusHQ = actor.statusHQ;
         saveActor.actorID = actor.actorID;
         saveActor.datapoint0 = actor.GetDatapoint(ActorDatapoint.Datapoint0);
         saveActor.datapoint1 = actor.GetDatapoint(ActorDatapoint.Datapoint1);
