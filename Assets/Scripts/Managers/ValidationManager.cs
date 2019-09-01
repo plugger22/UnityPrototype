@@ -726,6 +726,7 @@ public class ValidationManager : MonoBehaviour
         //
         Topic[] arrayOfTopics = GameManager.instance.loadScript.arrayOfTopics;
         TopicOption[] arrayOfTopicOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        List<string> listOfMoodEffects = new List<string>();
         int maxOptions = GameManager.instance.topicScript.maxOptions;
         if (arrayOfTopics != null)
         {
@@ -746,18 +747,23 @@ public class ValidationManager : MonoBehaviour
                         if (textLength > maxTopicTextLength)
                         { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}", 
                             textLength, maxTopicTextLength, topicName, "\n"); }
+
                         //listOfOptions
                         if (topic.listOfOptions != null)
                         {
+                            //clear out temp list prior to new set of options
+                            listOfMoodEffects.Clear();
                             count = topic.listOfOptions.Count();
                             if (count > 0)
                             {
+                                //max number of options not exceeded
                                 if (count > maxOptions)
                                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
                                 isPassedCheck = false;
                                 //loop options and check that they aren't null and have the correct topic name
                                 foreach (TopicOption option in topic.listOfOptions)
                                 {
+                                    //Check parent topic matches
                                     if (option.topic.name.Equals(topicName, StringComparison.Ordinal) == false)
                                     {
                                         Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has a mismatching topic (\"{2}\"){3}",
@@ -771,6 +777,11 @@ public class ValidationManager : MonoBehaviour
                                         textLength = option.text.Length;
                                         if (textLength > 0)
                                         {
+                                            //collect all beliefs as want to check for dupes
+                                            if (option.moodEffect != null)
+                                            { listOfMoodEffects.Add(option.moodEffect.name); }
+                                            else
+                                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
                                             //check text length limit
                                             if (textLength > maxOptionTextLength)
                                             {
@@ -820,6 +831,15 @@ public class ValidationManager : MonoBehaviour
                                                 }
                                             }
                                         }
+                                        //Mood effect (must be a personality effect, if present)
+                                        if (option.moodEffect != null)
+                                        {
+                                            if (option.moodEffect.isMoodEffect == false)
+                                            {
+                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Mood Effect (NOT isMoodEffect True), effect \"{1}\", option {2}, topic {3}{4}",
+                                                    option.moodEffect.typeOfEffect.name, option.moodEffect.name, option.name, topicName, "\n");
+                                            }
+                                        }
                                     }
                                     //delete option from list
                                     if (listOfOptionNames.Remove(option.name) == false)
@@ -831,6 +851,9 @@ public class ValidationManager : MonoBehaviour
                                 //at least one option with No criteria present
                                 if (isPassedCheck == false)
                                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
+                                //check no duplicates with option moodEffects
+                                if (listOfMoodEffects.Count > 0)
+                                { CheckListForDuplicates(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects");  }
                             }
                             else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
                         }
@@ -977,7 +1000,7 @@ public class ValidationManager : MonoBehaviour
                         }
                         //check for duplicates
                         List<string> tempList = pool.listOfTopics.Select(x => x.name).ToList();
-                        CheckListForDuplicates<string>(tempList, pool.name, "listOfTopics", "topic.name");
+                        CheckListForDuplicates(tempList, pool.name, "listOfTopics", "topic.name");
                     }
                     else
                     {

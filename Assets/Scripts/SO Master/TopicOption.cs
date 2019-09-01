@@ -16,7 +16,7 @@ public class TopicOption : ScriptableObject
     [Tooltip("Option text, max 140 chars")]
     public string text;
 
-    [Header("Vitals")]
+    [Header("Parent")]
     [Tooltip("Topic that the option is connected with")]
     public Topic topic;
 
