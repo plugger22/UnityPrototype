@@ -3235,6 +3235,19 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, int> GetDictOfLookUpTeamArcs()
     { return dictOfLookUpTeamArcs; }
 
+
+    /// <summary>
+    /// Debug method to return a random team arc name, null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string DebugGetRandomTeamArc()
+    {
+        List<string> listOfTeamArcs = dictOfLookUpTeamArcs.Keys.ToList();
+        if (listOfTeamArcs != null)
+        { return listOfTeamArcs[Random.Range(0, listOfTeamArcs.Count)]; }
+        return null;
+    }
+
     public int[,] GetArrayOfTeams()
     { return arrayOfTeams; }
 
@@ -4896,6 +4909,18 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Dictionary<string, Gear> GetDictOfGear()
     { return dictOfGear; }
+
+    /// <summary>
+    /// Debug method to return a random gear name (used for testing nodeAction topics)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugGetRandomGearName()
+    {
+        List<string> listOfGearNames = dictOfGear.Keys.ToList();
+        if (listOfGearNames != null)
+        { return listOfGearNames[Random.Range(0, listOfGearNames.Count)]; }
+        return null;
+    }
 
     /// <summary>
     /// returns number of rarity types (used for array sizing in GearManager.cs -> Initialise)

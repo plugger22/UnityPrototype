@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisBlow0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District 0 Blow Stuff Up option 2
+  descriptor: Actor District 0 Blow Stuff Up option 2
+  tag: Cover Up
+  text: Cover it up. Kill them
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
+  listOfCriteria:
+  - {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 0}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

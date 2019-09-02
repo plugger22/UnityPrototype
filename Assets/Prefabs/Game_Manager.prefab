@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62242673b21f23042b952849bb450e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textlistBlowUpBuildings: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
+    type: 2}
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1203,6 +1205,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
   - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
   - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
+  - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -2538,6 +2541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -3037,7 +3041,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -3234,7 +3238,6 @@ MonoBehaviour:
   teamMedia: {fileID: 11400000, guid: 047921bfb285c66498e2dbef7fe54fad, type: 2}
   teamProbe: {fileID: 11400000, guid: c695623811af460489f36ce53bbcdc46, type: 2}
   teamSpider: {fileID: 11400000, guid: 2e3d39fc566b3ae41bb76b0aea31e3c4, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

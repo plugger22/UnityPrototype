@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisBlow0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District 0 Blow Stuff Up option 1
+  descriptor: Actor District 0 Blow Stuff Up option 1
+  tag: Apologise
+  text: Offer an Apology
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: be2c6081d4e7ed845b30b82940b73a89, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

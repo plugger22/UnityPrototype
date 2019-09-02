@@ -116,10 +116,8 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
 
-
-    [Header("Debugging")]
-    [Tooltip("If there is a topic pool specified here then a topic will be randomly chosen from that pool overriding any normally selected topic")]
-    public TopicPool debugTopicPool;
+    //debugging (testManager.cs)
+    private TopicPool debugTopicPool;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -198,6 +196,8 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()
     {
+        //debug topic pool
+        debugTopicPool = GameManager.instance.testScript.debugTopicPool;
         //initialise Topic Profile delays
         TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles;
         if (arrayOfProfiles != null)
@@ -1775,6 +1775,12 @@ public class TopicManager : MonoBehaviour
                     {
                         //prepare and send data to topicUI.cs
                         InitialiseTopicUI();
+                    }
+                    else
+                    {
+                        //autorun -> randomly choose topic option (effects not implemented)
+                        turnOption = turnTopic.listOfOptions[Random.Range(0, turnTopic.listOfOptions.Count)];
+                        ProcessTopicAdmin();
                     }
                 }
             }

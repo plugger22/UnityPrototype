@@ -278,13 +278,19 @@ public class EffectManager : MonoBehaviour
                                         {
                                             switch (criteria.effectCriteria.name)
                                             {
-                                                case "NodeSecurityMin":
+                                                case "NodeSecurityNOTMin":
                                                     val = GameManager.instance.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Security " + compareTip); }
                                                     break;
-                                                case "NodeStabilityMin":
+                                                case "NodeSecurityNOTMax":
+                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Security " + compareTip); }
+                                                    break;
+                                                case "NodeStabilityNOTMin":
                                                     val = GameManager.instance.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
                                                     if (compareTip != null)
@@ -296,8 +302,20 @@ public class EffectManager : MonoBehaviour
                                                     if (compareTip != null)
                                                     { BuildString(result, "Stability " + compareTip); }
                                                     break;
-                                                case "NodeSupportMax":
+                                                case "NodeStabilityNOTMax":
                                                     val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Stability " + compareTip); }
+                                                    break;
+                                                case "NodeSupportNOTMax":
+                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
+                                                    if (compareTip != null)
+                                                    { BuildString(result, "Support " + compareTip); }
+                                                    break;
+                                                case "NodeSupportNOTMin":
+                                                    val = GameManager.instance.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Support " + compareTip); }
@@ -3369,6 +3387,10 @@ public class EffectManager : MonoBehaviour
                         //Player
                         effectResolve = ResolveTopicPlayerEffect(effect, dataInput, data);
                         break;
+                    case 'N':
+                        //Node
+                        effectResolve = ResolveTopicNodeEffect(effect, dataInput, data);
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
                 /*//colour  EDIT -> Do in subMethods
@@ -3451,6 +3473,41 @@ public class EffectManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic Node effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicNodeEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
+        if (node != null)
+        {
+            switch (effect.outcome.name)
+            {
+                case "NodeSecurity":
+                    switch (effect.operand.name)
+                    {
+                        case "Add": node.Security++; effectResolve.bottomText = string.Format("{0}District Security +1{1}", colourBad, colourEnd); break;
+                        case "Subtract": node.Security--; effectResolve.bottomText = string.Format("{0}District Security -1{1}", colourGood, colourEnd); break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
         return effectResolve;
     }
 

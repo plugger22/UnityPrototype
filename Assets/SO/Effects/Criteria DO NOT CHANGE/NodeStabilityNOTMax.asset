@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: NodeStabilityMin
+  m_Name: NodeStabilityNOTMax
   m_EditorClassIdentifier: 
-  description: 
-  effectCriteria: {fileID: 11400000, guid: 174613b1b2f0afc45b1c7320ebb66295, type: 2}
-  comparison: {fileID: 11400000, guid: cd781701db4d25f4095b810d41e01b6d, type: 2}
+  description: < Max
+  effectCriteria: {fileID: 11400000, guid: 8c88e1c90718a694a822a5f89517cb0c, type: 2}
+  comparison: {fileID: 11400000, guid: 74d28a69fd9126445b2b6e9e9ba3689e, type: 2}
   apply: {fileID: 11400000, guid: 0ce650b70298e3a4baf31d13d2ac7b4e, type: 2}

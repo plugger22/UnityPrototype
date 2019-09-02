@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortBlowUpBuildings
+  m_EditorClassIdentifier: 
+  descriptor: 'List of generic buildings (could be in any district). Used for node
+    actions, specifically Blow Stuff Up
+
+'
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  randomList:
+  - Bus Terminal
+  - Cemetery
+  - Post Office
+  - Civic Centre
+  - Neighbourhood Watch
+  - Administration Building
+  - Community Centre
+  - Unemployment Office
+  - Auction House
+  - Tourist Bureau
+  - Fire Station
+  - Police Station
+  - Police Kiosk
+  - Doctor's Office
+  - Intersection
+  - Needle Exchange
+  - Drop In Centre
+  - Rehab Centre
+  - Medical Clinic
+  - Shopping Mall
+  - Playground
+  - Community Garden
+  - Shopping Strip
+  - Botanical Garden
+  - Plaza
+  - Church
+  - Synagogue
+  - Mosque
+  - Inquisition Office
+  - Social Club
+  - Friars Club
+  - Nightclub
+  - Jazz Club
+  - Comedy Club
+  - Lap Dancing Bar
+  - Karaoke Bar
+  - Museum
+  - Bowling Alley
+  - Betting Agency
+  - Public Pool
+  - YMCA
+  - Basketball Court
+  - Tennis Court
+  - MiniGolf Centre
+  - Skate Park
+  - Digital Kiosk
+  - Movie Theatre
+  - Community Hall
+  - Recording Studio
+  - Park

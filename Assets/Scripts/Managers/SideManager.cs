@@ -467,6 +467,8 @@ public class SideManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+                //DEBUG -> add false (but more accurate) NodeAction records for testing purposes
+                GameManager.instance.actorScript.DebugCreateNodeActionResistanceData();
                 //Gear
                 int gearUsed = GameManager.instance.aiRebelScript.GetGearUsedAdjusted();
                 int gearPoints = GameManager.instance.aiRebelScript.GetGearPoints();

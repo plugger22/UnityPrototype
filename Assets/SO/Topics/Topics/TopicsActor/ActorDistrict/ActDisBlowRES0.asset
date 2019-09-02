@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisBlowRES0
   m_EditorClassIdentifier: 
-  tag: Actor District Blow Stuff Up 0
+  tag: Influential Victim
+  text: Your [Actor]'s blowing up of the [blowUp] has reaped unexpected dividends.
+    An influential [job] was injured in the blast. We could use this.
+  designNotes: Positive anarchist event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
@@ -23,17 +26,20 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: f682cee580d928c4a86a73c4256093c2, type: 2}
   - {fileID: 11400000, guid: 6b4a3321be258124b897cca1c266c206, type: 2}
   - {fileID: 11400000, guid: 1fdec91c8237c314ca6d2395f72eccfa, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 16
   turnsDone: 0
