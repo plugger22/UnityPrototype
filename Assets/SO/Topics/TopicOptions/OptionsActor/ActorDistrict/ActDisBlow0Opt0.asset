@@ -15,11 +15,12 @@ MonoBehaviour:
   tag: Pay
   text: Pay their medical expenses
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 4618b154e6746f444b70804e4615994b, type: 2}
+  - {fileID: 11400000, guid: b95608060c96fef408b6b288015a36f3, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: 3e26cf5bc1d48a9498279626dc3248d7, type: 2}
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   tooltipHeader: 

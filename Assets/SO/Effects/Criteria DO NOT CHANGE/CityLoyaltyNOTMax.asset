@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
+  m_Name: CityLoyaltyNOTMax
+  m_EditorClassIdentifier: 
+  description: City Loyalty < max
+  effectCriteria: {fileID: 11400000, guid: db0f569a02228054d8841c512f6a873c, type: 2}
+  comparison: {fileID: 11400000, guid: 74d28a69fd9126445b2b6e9e9ba3689e, type: 2}
+  apply: {fileID: 11400000, guid: 90ecb005a366e9c4485117b705745145, type: 2}

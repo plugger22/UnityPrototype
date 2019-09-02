@@ -1895,8 +1895,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
-                        //final tag removal for topic text
-                        data.text = CheckText(data.text);
+
                         //NodeID, needed to toggle 'Show Me' button
                         data.nodeID = tagNodeID;
                         //sprite & sprite tooltip (needs to be AFTER ProcessSpecialTopicData)
@@ -1905,6 +1904,8 @@ public class TopicManager : MonoBehaviour
                         //everything checks out O.K
                         if (isProceed == true)
                         {
+                            //final tag removal for topic text
+                            data.text = CheckText(data.text);
                             //ignore button tooltip
                             InitialiseIgnoreTooltip(data);
                             //boss details (sprite and tooltip)
@@ -3461,7 +3462,7 @@ public class TopicManager : MonoBehaviour
             else
             {
                 //No ignoreEffects -> default text
-                data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n", 
+                data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
                 colourBad, colourEnd, "\n", colourNeutral, colourEnd);
             }
         }
@@ -3596,7 +3597,9 @@ public class TopicManager : MonoBehaviour
             checkedText = text;
             string tag, replaceText;
             int tagStart, tagFinish, length; //indexes
-
+            Node node = null;
+            if (tagNodeID > -1)
+            {  node = GameManager.instance.dataScript.GetNode(tagNodeID);  }
             //loop whilever tags are present
             while (checkedText.Contains("[") == true)
             {
@@ -3633,9 +3636,6 @@ public class TopicManager : MonoBehaviour
                             Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                             if (contact != null)
                             {
-                                if (tagNodeID > -1)
-                                {
-                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
                                     if (node != null)
                                     {
                                         if (isColourHighlighting == true)
@@ -3643,8 +3643,6 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
                                     }
                                     else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
-                                }
-                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
                             }
                             else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                         }
@@ -3659,9 +3657,6 @@ public class TopicManager : MonoBehaviour
                             Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                             if (contact != null)
                             {
-                                if (tagNodeID > -1)
-                                {
-                                    Node node = GameManager.instance.dataScript.GetNode(tagNodeID);
                                     if (node != null)
                                     {
                                         if (isColourHighlighting == true)
@@ -3669,15 +3664,28 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
                                     }
                                     else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
-                                }
-                                else { Debug.LogWarningFormat("Invalid tagNodeID \"{0}\"", tagNodeID); }
                             }
                             else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                         }
                         else
                         { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
-
+                    case "job":
+                    case "Job":
+                        //Random job name appropriate to node arc
+                        ContactType contactType = node.Arc.GetRandomContactType();
+                        if (contactType != null)
+                        { replaceText = contactType.pickList.GetRandomRecord(); }
+                        else
+                        { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID);  }
+                        break;
+                    case "blowUp":
+                    case "BlowUp":
+                    case "Blowup":
+                        //Random building to blow up (use TopicUIData.dataName if available, otherwise get random
+                        if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = tagStringData; }
+                        else { replaceText = GameManager.instance.actionScript.textlistBlowUpBuildings.GetRandomRecord(); }
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
                 //catch all

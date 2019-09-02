@@ -524,6 +524,22 @@ public class EffectManager : MonoBehaviour
                                         }
                                         break;
                                     //
+                                    // - - - City - - -
+                                    //
+                                    case "City":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "CityLoyaltyNOTMin":
+                                                if (GameManager.instance.cityScript.CityLoyalty == 0)
+                                                { BuildString(result, string.Format(" City Loyalty can't be Zero")); }
+                                                break;
+                                            case "CityLoyaltyNOTMax":
+                                                if (GameManager.instance.cityScript.CityLoyalty >= GameManager.instance.cityScript.maxCityLoyalty)
+                                                { BuildString(result, string.Format(" City Loyalty can't be MAX")); }
+                                                break;
+                                        }
+                                        break;
+                                    //
                                     // - - - Current Actor / Player - - -
                                     //
                                     case "ActorCurrent":
@@ -3501,6 +3517,22 @@ public class EffectManager : MonoBehaviour
                     {
                         case "Add": node.Security++; effectResolve.bottomText = string.Format("{0}District Security +1{1}", colourBad, colourEnd); break;
                         case "Subtract": node.Security--; effectResolve.bottomText = string.Format("{0}District Security -1{1}", colourGood, colourEnd); break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                case "NodeStability":
+                    switch (effect.operand.name)
+                    {
+                        case "Add": node.Stability++; effectResolve.bottomText = string.Format("{0}District Stability +1{1}", colourBad, colourEnd); break;
+                        case "Subtract": node.Stability--; effectResolve.bottomText = string.Format("{0}District Stability -1{1}", colourGood, colourEnd); break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                case "NodeSupport":
+                    switch (effect.operand.name)
+                    {
+                        case "Add": node.Support++; effectResolve.bottomText = string.Format("{0}District Support +1{1}", colourGood, colourEnd); break;
+                        case "Subtract": node.Support--; effectResolve.bottomText = string.Format("{0}District Support -1{1}", colourBad, colourEnd); break;
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }
                     break;

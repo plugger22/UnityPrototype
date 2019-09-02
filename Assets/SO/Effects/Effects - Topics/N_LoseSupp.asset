@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: N_LoseSec 1
+  m_Name: N_LoseSupp
   m_EditorClassIdentifier: 
-  description: Security -1
+  description: Support -1
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   outcome: {fileID: 11400000, guid: 4d1c81b2e596a1d4f8908148c7b6fa6f, type: 2}
   operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
-  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 1
   ignoreEffect: 0
