@@ -63,12 +63,25 @@ public class LoadManager : MonoBehaviour
     [Header("Personality Profiles")]
     public PersonProfile[] arrayOfPersonProfiles;
 
+    [Header("Effects")]
+    public Effect[] arrayOfEffectsAI;
+    public Effect[] arrayOfEffectsAuthority;
+    public Effect[] arrayOfEffectsAutoRecall;
+    public Effect[] arrayOfEffectsConditions;
+    public Effect[] arrayOfEffectsGeneral;
+    public Effect[] arrayOfEffectsGroup;
+    public Effect[] arrayOfEffectsManage;
+    public Effect[] arrayOfEffectsPersonality;
+    public Effect[] arrayOfEffectsPlayer;
+    public Effect[] arrayOfEffectsResistance;
+    public Effect[] arrayOfEffectsTeams;
+    public Effect[] arrayOfEffectsTopics;
+
     [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
-    public ActorArc[] arrayOfActorArcs;
-    public Effect[] arrayOfEffects;
+    public ActorArc[] arrayOfActorArcs;   
     public Action[] arrayOfActions;
     public TeamArc[] arrayOfTeamArcs;
     public Gear[] arrayOfGear;
@@ -117,6 +130,8 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
+
+    [HideInInspector] public Effect[] arrayOfEffects;       //used to consolidate all Effect arrays into this one
     #endregion
 
     #region InitialiseStart
@@ -237,6 +252,22 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Effect (not stored in a collection)
         //
+        List<Effect> listOfEffects = new List<Effect>();
+        //consolidate all effect arrays into the single master array (which is used for validation and code purposes)
+        listOfEffects.AddRange(arrayOfEffectsAI);
+        listOfEffects.AddRange(arrayOfEffectsAuthority);
+        listOfEffects.AddRange(arrayOfEffectsAutoRecall);
+        listOfEffects.AddRange(arrayOfEffectsConditions);
+        listOfEffects.AddRange(arrayOfEffectsGeneral);
+        listOfEffects.AddRange(arrayOfEffectsGroup);
+        listOfEffects.AddRange(arrayOfEffectsManage);
+        listOfEffects.AddRange(arrayOfEffectsPersonality);
+        listOfEffects.AddRange(arrayOfEffectsPlayer);
+        listOfEffects.AddRange(arrayOfEffectsResistance);
+        listOfEffects.AddRange(arrayOfEffectsTeams);
+        listOfEffects.AddRange(arrayOfEffectsTopics);
+        arrayOfEffects = listOfEffects.ToArray();
+        //check master array
         numArray = arrayOfEffects.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffects has {0} entries{1}", numArray, "\n"); }

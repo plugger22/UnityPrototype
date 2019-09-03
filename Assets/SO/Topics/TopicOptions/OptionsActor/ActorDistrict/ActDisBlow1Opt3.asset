@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisBlow1Opt2
+  m_Name: ActDisBlow1Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District Blow Stuff Up 1 option 2
-  tag: Confess
-  text: Take responsibility for the action
+  descriptor: Actor District Blow Stuff Up 1 option 3
+  tag: Blame
+  text: Blame it on your [Actor]
   topic: {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []

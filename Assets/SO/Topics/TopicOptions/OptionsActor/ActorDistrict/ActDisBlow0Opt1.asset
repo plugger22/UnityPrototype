@@ -15,8 +15,7 @@ MonoBehaviour:
   tag: Apologise
   text: Offer an Apology
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: be2c6081d4e7ed845b30b82940b73a89, type: 2}
+  listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 7cf992e7916447542bade6fad8590bf7, type: 2}
   listOfBadEffects: []

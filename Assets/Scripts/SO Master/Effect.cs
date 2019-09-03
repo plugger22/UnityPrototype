@@ -23,12 +23,14 @@ public class Effect : ScriptableObject
 
     [Header("Result of Effect")]
     [Tooltip("Applies to the current node, the current plus all neighbouring nodes, all nodes or nodes of the same type as the current one. Compulsory")]
-    public EffectApply apply;                                   //who does the effect apply to?
+    public EffectApply apply;
+    [Tooltip("For Topic effects only, allows you further specify what the topic effect applies to. Ignore otherwise")]
+    public EffectApply topicApply;                               //who does the effect apply to?
     [Tooltip("What the effect applies to. If none use the 'No Outcome' outcome as a default 'None' will generate a Null error on import. Compulsory")]
     public EffectOutcome outcome;
     [Tooltip("Use Add or Subtract if appropriate, otherwise ignore")]
     public EffectOperator operand;                              //leave as 'None' if there is no specific stat adjustment
-    [Tooltip("The effect from the point of view of the Resistance. Compulsory (use Neutral if not relevant). NOTE: If a Topic effect, POV is that of the PLAYER")]
+    [Tooltip("The effect from the point of view of the Resistance. Compulsory (use Neutral if not relevant)")]
     public GlobalType typeOfEffect;
     [Tooltip("Single, one shot, effect or Ongoing? Compulsory")]
     public EffectDuration duration;                             //once off effect or ongoing?

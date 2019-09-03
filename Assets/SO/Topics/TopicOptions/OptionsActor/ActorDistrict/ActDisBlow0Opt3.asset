@@ -9,17 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisBlow1Opt2
+  m_Name: ActDisBlow0Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District Blow Stuff Up 1 option 2
-  tag: Confess
-  text: Take responsibility for the action
-  topic: {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
+  descriptor: Actor District 0 Blow Stuff Up option 3
+  tag: Blame
+  text: Blame it on Authorities
+  topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

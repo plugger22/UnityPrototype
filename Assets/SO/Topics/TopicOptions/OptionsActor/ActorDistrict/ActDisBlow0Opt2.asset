@@ -17,7 +17,6 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
-  - {fileID: 11400000, guid: fd8c050fb9f58fc48a124c87cd94e3a3, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
   listOfBadEffects: []

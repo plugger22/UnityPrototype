@@ -1171,7 +1171,7 @@ public class Node : MonoBehaviour
 
 
     /// <summary>
-    /// changes fields and handles ongoing effects. Main method of changing node fields.
+    /// changes fields and handles ongoing effects. Main method of changing node fields. Adds Value so for subtract you need to provide a negative number
     /// Note: Ongoing effect doesn't affect field, just updates dictOfAdjustments ready for the following turns
     /// </summary>
     /// <param name="process"></param>

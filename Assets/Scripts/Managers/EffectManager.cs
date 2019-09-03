@@ -1442,7 +1442,7 @@ public class EffectManager : MonoBehaviour
                         }
                         effectReturn.isAction = true;
                         break;
-                    case "FactionApproval":
+                    case "HQApproval":
                         switch (effect.operand.name)
                         {
                             case "Add":
@@ -2367,7 +2367,7 @@ public class EffectManager : MonoBehaviour
                 { ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value); }
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
-                //Process Node effect for all neighbouring nodes
+                //Process Node effect for all same ARC nodes
                 List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
                 if (listOfNodes != null)
                 {
@@ -3380,7 +3380,7 @@ public class EffectManager : MonoBehaviour
                         {
                             Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
                             if (actor != null)
-                            { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor);  }
+                            { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
@@ -3406,6 +3406,10 @@ public class EffectManager : MonoBehaviour
                     case 'N':
                         //Node
                         effectResolve = ResolveTopicNodeEffect(effect, dataInput, data);
+                        break;
+                    case 'H':
+                        //HQ (Faction)
+                        effectResolve = ResolveTopicHQEffect(effect, dataInput, data);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
@@ -3510,36 +3514,132 @@ public class EffectManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
         if (node != null)
         {
-            switch (effect.outcome.name)
+            //data process package to send to node
+            EffectDataProcess dataProcess = new EffectDataProcess() { outcome = effect.outcome };
+            switch (effect.operand.name)
             {
-                case "NodeSecurity":
-                    switch (effect.operand.name)
+                case "Add": dataProcess.value = effect.value; break;
+                case "Subtract": dataProcess.value = effect.value * -1; break;
+                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+            }
+            switch (effect.topicApply.name)
+            {
+                case "NodeCurrent":
+                    //current, single, node
+                    switch (effect.outcome.name)
                     {
-                        case "Add": node.Security++; effectResolve.bottomText = string.Format("{0}District Security +1{1}", colourBad, colourEnd); break;
-                        case "Subtract": node.Security--; effectResolve.bottomText = string.Format("{0}District Security -1{1}", colourGood, colourEnd); break;
-                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                        case "NodeSecurity":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Security +1{1}", colourBad, colourEnd); break;
+                                case "Subtract": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Security -1{1}", colourGood, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        case "NodeStability":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Stability +1{1}", colourBad, colourEnd); break;
+                                case "Subtract": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Stability -1{1}", colourGood, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        case "NodeSupport":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Support +1{1}", colourGood, colourEnd); break;
+                                case "Subtract": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}District Support -1{1}", colourBad, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
                     }
                     break;
-                case "NodeStability":
-                    switch (effect.operand.name)
+                case "NodeSameArc":
+                    //all nodes of same Arc type
+                    switch (effect.outcome.name)
                     {
-                        case "Add": node.Stability++; effectResolve.bottomText = string.Format("{0}District Stability +1{1}", colourBad, colourEnd); break;
-                        case "Subtract": node.Stability--; effectResolve.bottomText = string.Format("{0}District Stability -1{1}", colourGood, colourEnd); break;
-                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                        case "NodeSecurity":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": effectResolve.bottomText = string.Format("{0}Similar Districts Security +1{1}", colourBad, colourEnd); break;
+                                case "Subtract": node.ProcessNodeEffect(dataProcess); effectResolve.bottomText = string.Format("{0}Similar Districts Security -1{1}", colourGood, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        case "NodeStability":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": effectResolve.bottomText = string.Format("{0}Similar Districts Stability +1{1}", colourBad, colourEnd); break;
+                                case "Subtract": effectResolve.bottomText = string.Format("{0}Similar Districts Stability -1{1}", colourGood, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        case "NodeSupport":
+                            switch (effect.operand.name)
+                            {
+                                case "Add": effectResolve.bottomText = string.Format("{0}Similar Districts Support +1{1}", colourGood, colourEnd); break;
+                                case "Subtract": effectResolve.bottomText = string.Format("{0}Similar Districts Support -1{1}", colourBad, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
                     }
-                    break;
-                case "NodeSupport":
-                    switch (effect.operand.name)
+                    //Process Node effect for all same ARC nodes
+                    List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                    if (listOfNodes != null)
                     {
-                        case "Add": node.Support++; effectResolve.bottomText = string.Format("{0}District Support +1{1}", colourGood, colourEnd); break;
-                        case "Subtract": node.Support--; effectResolve.bottomText = string.Format("{0}District Support -1{1}", colourBad, colourEnd); break;
-                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                        foreach (var nodeTemp in listOfNodes)
+                        {
+                            //same node Arc type and not the current node?
+                            if (nodeTemp.Arc.nodeArcID == node.Arc.nodeArcID && nodeTemp.nodeID != node.nodeID)
+                            { nodeTemp.ProcessNodeEffect(dataProcess); }
+                        }
                     }
+                    else { Debug.LogError("Invalid listOfNodes (Null)"); }
                     break;
-                default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+                default: Debug.LogWarningFormat("Unrecognised effect.topicApply \"{0}\" for effect {1}", effect.topicApply.name, effect.name); break;
             }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic HQ effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// NOTE: parent method has checked all parameters for null
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicHQEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "HQApproval":
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        GameManager.instance.factionScript.ChangeFactionApproval(1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval +1{1}", colourGood, colourEnd);
+                        break;
+                    case "Subtract":
+                        GameManager.instance.factionScript.ChangeFactionApproval(-1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
         return effectResolve;
     }
 
@@ -3679,7 +3779,7 @@ public class EffectManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid contact (Null) for contactID \"{0}\"", data.contactID); }
                     }
                     else { Debug.LogWarningFormat("Invalid data.contactID \"{0}\"", data.contactID); }
-                        break;
+                    break;
                 case "ContactStatus":
                     //Contact status changed to Inactive
                     if (data.contactID > -1)

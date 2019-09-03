@@ -3686,6 +3686,16 @@ public class TopicManager : MonoBehaviour
                         if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = tagStringData; }
                         else { replaceText = GameManager.instance.actionScript.textlistBlowUpBuildings.GetRandomRecord(); }
                         break;
+                    case "r10":
+                    case "R10":
+                        //Random number 1d10 + 1 (to avoid '1' where you have a 's' issue)
+                        break;
+                    case "turnsAgo":
+                    case "TurnsAgo":
+                        //how many turns ago expressed as '3 days'
+                        int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
+
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
                 //catch all

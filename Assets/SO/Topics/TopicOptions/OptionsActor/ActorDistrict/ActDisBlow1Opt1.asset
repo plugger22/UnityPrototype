@@ -11,5 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisBlow1Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Blow Stuff Up 1 option 1
+  descriptor: Actor District Blow Stuff Up 1 option 1
+  tag: Reframe
+  text: Reframe as an unfortunate Gas Leak
   topic: {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

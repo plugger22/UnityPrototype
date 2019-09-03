@@ -11,7 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisBlowRES1
   m_EditorClassIdentifier: 
-  tag: Actor District Blow Stuff Up 1
+  tag: Innocent Deaths
+  text: '[daysAgo], [r10] bystanders were accidentally killed when the [actor]''s
+    bomb went off at the [blowUp]. Authorities are spinning this one hard. What to
+    do?'
+  designNotes: negative anarchist
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}
@@ -23,17 +27,22 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 03901147e40b9b74b99db904ea846c16, type: 2}
   - {fileID: 11400000, guid: 03ee000dc8f828547bebe27983728be5, type: 2}
   - {fileID: 11400000, guid: fdccd871d8e466f4fadb18315bcb991d, type: 2}
+  - {fileID: 11400000, guid: 4ca2096838035fe4b8035923b6c106b0, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 25
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 18
   turnsDone: 0
