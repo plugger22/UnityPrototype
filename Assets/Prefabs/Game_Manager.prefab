@@ -2824,7 +2824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 694dd75b495d9b34f820f1979dd93266, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -3323,7 +3323,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 51090
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

@@ -3628,6 +3628,11 @@ public class TopicManager : MonoBehaviour
                         else
                         { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         break;
+                    case "District":
+                    case "district":
+                        if (node != null)
+                        { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
+                        break;
                     case "Contact":
                     case "contact":
                         //contact name + node name
@@ -3683,18 +3688,15 @@ public class TopicManager : MonoBehaviour
                     case "BlowUp":
                     case "Blowup":
                         //Random building to blow up (use TopicUIData.dataName if available, otherwise get random
-                        if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = tagStringData; }
+                        if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
                         else { replaceText = GameManager.instance.actionScript.textlistBlowUpBuildings.GetRandomRecord(); }
                         break;
-                    case "r10":
-                    case "R10":
-                        //Random number 1d10 + 1 (to avoid '1' where you have a 's' issue)
-                        break;
-                    case "turnsAgo":
-                    case "TurnsAgo":
-                        //how many turns ago expressed as '3 days'
+                    case "daysAgo":
+                    case "DaysAgo":
+                        //how many turns ago expressed as '3 days'. Mincap at '1 day'
                         int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
-
+                        turnsAgo = Mathf.Max(1, turnsAgo);
+                        replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
                         break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
