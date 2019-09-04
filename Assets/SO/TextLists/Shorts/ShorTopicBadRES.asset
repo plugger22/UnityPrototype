@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShorTopicBadRES
+  m_EditorClassIdentifier: 
+  descriptor: Resistance topics (Bad). Last line/s in topic text. Seff contained.  Accessed
+    by [badRES] tag. Full stop required for item.
+  category: {fileID: 0}
+  randomList:
+  - The Authority are spinning this one hard.
+  - It's all over the news feeds.
+  - The Authority is blaming us.
+  - The Mayor is pointing his finger at us.
+  - We are on the hook and dangling
+  - We are badly exposed on this one.
+  - The Authority is hyping this one into something big
+  - We are in danger of losing control of the story.
+  - We need to get on top of this one fast.
+  - We need to shut this narrative down.

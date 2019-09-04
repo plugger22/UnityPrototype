@@ -4642,8 +4642,8 @@ public class ActorManager : MonoBehaviour
                                                     data.dataName = GameManager.instance.dataScript.DebugGetRandomTeamArc();
                                                     break;
                                                 case "ANARCHIST":
-                                                    //get random building name
-                                                    data.dataName = GameManager.instance.actionScript.textlistBlowUpBuildings.GetRandomRecord();
+                                                    //get random Location name
+                                                    data.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
                                                     break;
                                             }
                                             actor.AddNodeAction(data);

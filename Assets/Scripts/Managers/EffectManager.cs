@@ -3353,7 +3353,7 @@ public class EffectManager : MonoBehaviour
     //
 
     /// <summary>
-    /// subMethod to process topic specific effets
+    /// subMethod to process topic specific effets. ColourEffect/Text are side specific colours for effects that vary good/bad depending on side, eg. city loyalty
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
@@ -3406,6 +3406,10 @@ public class EffectManager : MonoBehaviour
                     case 'N':
                         //Node
                         effectResolve = ResolveTopicNodeEffect(effect, dataInput, data);
+                        break;
+                    case 'C':
+                        //City
+                        effectResolve = ResolveTopicCityEffect(effect, dataInput, data);
                         break;
                     case 'H':
                         //HQ (Faction)
@@ -3643,6 +3647,62 @@ public class EffectManager : MonoBehaviour
         return effectResolve;
     }
 
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic City effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// NOTE: parent method has checked all parameters for null
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicCityEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        int change = 0;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "CityLoyalty":
+                int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        cityLoyalty += effect.value;
+                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
+                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                        change = effect.value;
+                        //good for authority, bad for resistance
+                        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+                        { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
+                        else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
+                        break;
+                    case "Subtract":
+                        cityLoyalty -= effect.value;
+                        cityLoyalty = Mathf.Max(0, cityLoyalty);
+                        change = effect.value * -1;
+                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                        //bad for authority, good for resistance
+                        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+                        { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
+                        else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                }
+                //message
+                if (change != 0)
+                { GameManager.instance.messageScript.CityLoyalty(effectResolve.bottomText, dataInput.originText, cityLoyalty, change); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+        return effectResolve;
+    }
+
     //
     // - - - SubMethods - - - 
     //
@@ -3838,6 +3898,7 @@ public class EffectManager : MonoBehaviour
         }
         return bottomText;
     }
+
 
     //place methods above here
 }

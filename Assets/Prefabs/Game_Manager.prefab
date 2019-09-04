@@ -238,8 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62242673b21f23042b952849bb450e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textlistBlowUpBuildings: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
-    type: 2}
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1216,6 +1214,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
   - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
   - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
+  - {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -2080,6 +2079,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40178269e00c15040b4bcb2d59f42ddc, type: 2}
   - {fileID: 11400000, guid: b39661020e74ca5429a5c372814543c5, type: 2}
   - {fileID: 11400000, guid: ebcc620cd235df5498afc8e160d67403, type: 2}
+  - {fileID: 11400000, guid: 4ca2096838035fe4b8035923b6c106b0, type: 2}
   arrayOfTopicProfiles:
   - {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   - {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
@@ -3475,6 +3475,10 @@ MonoBehaviour:
   chanceHigh: 75
   chanceMedium: 50
   chanceLow: 25
+  textlistGenericLocation: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
+    type: 2}
+  textListBadResistance: {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a,
+    type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}

@@ -9,29 +9,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortBlowUpBuildings
+  m_Name: ShortGenericLocation
   m_EditorClassIdentifier: 
-  descriptor: 'List of generic buildings (could be in any district). Used for node
-    actions, specifically Blow Stuff Up
+  descriptor: 'List of generic Location (could be in any district). Used for node
+    actions (topics). Used in context of ''a [location]''
 
-'
+    NOTE: Don''t use any location that requires ''an'' as a prefix'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   randomList:
   - Bus Terminal
   - Cemetery
   - Post Office
   - Civic Centre
-  - Neighbourhood Watch
-  - Administration Building
+  - Police Checkpoint
+  - Dog Park
   - Community Centre
-  - Unemployment Office
-  - Auction House
+  - Cafe
+  - Coffee shop
   - Tourist Bureau
   - Fire Station
   - Police Station
   - Police Kiosk
   - Doctor's Office
-  - Intersection
+  - Tennis Court
   - Needle Exchange
   - Drop In Centre
   - Rehab Centre
@@ -59,7 +59,7 @@ MonoBehaviour:
   - Public Pool
   - YMCA
   - Basketball Court
-  - Tennis Court
+  - Car Wash
   - MiniGolf Centre
   - Skate Park
   - Digital Kiosk

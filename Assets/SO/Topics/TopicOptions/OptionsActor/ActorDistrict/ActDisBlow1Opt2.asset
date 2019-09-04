@@ -17,9 +17,10 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

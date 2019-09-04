@@ -28,7 +28,14 @@ public class TopicManager : MonoBehaviour
     [Range(0, 100)] public int chanceMedium = 50;
     [Tooltip("Number (less than) to roll for a Low probability option to Succeed")]
     [Range(0, 100)] public int chanceLow = 25;
+    [Tooltip("If Motivation is neutral (2) then there is this % chance of the topic being good and the balance for it being bad")]
+    [Range(0, 100)] public int chanceNeutralGood = 75;
 
+    [Header("Text Lists")]
+    [Tooltip("List of locations (generic) that can be used in any district. Used for node Action / Topic immersion")]
+    public TextList textlistGenericLocation;
+    [Tooltip("List of ending lines (self contained) for a Bad resistance topic, eg. 'The Authority is spinning this one hard'. Used via the [badRES] tag")]
+    public TextList textListBadResistance;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -273,6 +280,8 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
+        //text lists
+        Debug.Assert(textlistGenericLocation != null, "Invalid textListGenericLocations (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -1991,7 +2000,7 @@ public class TopicManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag);
+                dataInput.originText = string.Format("\'{0}\', {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -2931,7 +2940,8 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicGroup
     /// <summary>
-    /// Returns a list Of Live topics filtered out of the inputList by group type, eg. Good / Bad, etc. If Neutral then all of inputList is used, if no topic found of the correct group then all used again.
+    /// Returns a list Of Live topics filtered out of the inputList by group type, eg. Good / Bad, etc. If Neutral then chanceNeutralGood (75%) good, 100 - chanceNeutralGood (25%) bad
+    /// If no topic found of the correct group then all used.
     /// Returns EMPTY list if a problem
     /// </summary>
     /// <param name="inputList"></param>
@@ -2954,7 +2964,10 @@ public class TopicManager : MonoBehaviour
                         break;
                     case GroupType.Neutral:
                         //neutral motivation, use all Active topics
-                        listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
+                        if (Random.Range(0, 100) < chanceNeutralGood)
+                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&  t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());  }
+                        else
+                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList()); }
                         break;
                     case GroupType.Bad:
                     case GroupType.VeryBad:
@@ -3306,7 +3319,7 @@ public class TopicManager : MonoBehaviour
             { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
             else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
             //Bad effects
-            builder.AppendFormat("{0}{1}If FAILED roll{2}", "\n", colourCancel, colourEnd);
+            builder.AppendFormat("{0}{1}if UNSUCCESSFUL{2}", "\n", colourCancel, colourEnd);
             if (option.listOfBadEffects.Count > 0)
             { GetBadEffects(option.listOfBadEffects, option.name, builder); }
             else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
@@ -3563,7 +3576,7 @@ public class TopicManager : MonoBehaviour
                 case 'T':
                     //team
                     break;
-                case 'Y':
+                case 'C':
                     //city
                     break;
                 case 'H':
@@ -3680,16 +3693,15 @@ public class TopicManager : MonoBehaviour
                         //Random job name appropriate to node arc
                         ContactType contactType = node.Arc.GetRandomContactType();
                         if (contactType != null)
-                        { replaceText = contactType.pickList.GetRandomRecord(); }
+                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourAlert, contactType.pickList.GetRandomRecord(), colourEnd); }
                         else
                         { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID);  }
                         break;
-                    case "blowUp":
-                    case "BlowUp":
-                    case "Blowup":
-                        //Random building to blow up (use TopicUIData.dataName if available, otherwise get random
+                    case "genLoc":
+                    case "GenLoc":
+                        //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
                         if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
-                        else { replaceText = GameManager.instance.actionScript.textlistBlowUpBuildings.GetRandomRecord(); }
+                        else { replaceText = textlistGenericLocation.GetRandomRecord(); }
                         break;
                     case "daysAgo":
                     case "DaysAgo":
@@ -3697,6 +3709,10 @@ public class TopicManager : MonoBehaviour
                         int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                         turnsAgo = Mathf.Max(1, turnsAgo);
                         replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
+                        break;
+                    case "badRES":
+                        //end of topic text for a bad outcome (Resistance)
+                        replaceText = textListBadResistance.GetRandomRecord();
                         break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
@@ -3733,7 +3749,7 @@ public class TopicManager : MonoBehaviour
                         if (actor != null)
                         {
                             turnSprite = actor.sprite;
-                            Tuple<string, string> results = GetActorTooltip();
+                            Tuple<string, string> results = GetActorTooltip(actor);
                             if (string.IsNullOrEmpty(results.Item1) == false)
                             {
                                 //tooltipMain
@@ -3771,12 +3787,14 @@ public class TopicManager : MonoBehaviour
     #region GetActorTooltip
     /// <summary>
     /// Returns tooltip main and details for various actor subTypes. tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseovre
+    /// Note: Actor checked for Null by parent method
     /// </summary>
     /// <param name="data"></param>
-    private Tuple<string, string> GetActorTooltip()
+    private Tuple<string, string> GetActorTooltip(Actor actor)
     {
         string textMain = "";
         string textDetails = "";
+        StringBuilder builder = new StringBuilder();
         if (turnTopicSubType != null)
         {
             switch (turnTopicSubType.name)
@@ -3787,7 +3805,6 @@ public class TopicManager : MonoBehaviour
                         Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                         if (contact != null)
                         {
-                            StringBuilder builder = new StringBuilder();
                             builder.AppendFormat("{0}CONTACT{1}{2}", colourCancel, colourEnd, "\n");
                             builder.AppendFormat("{0}{1} {2}{3}{4}", colourNormal, contact.nameFirst, contact.nameLast, colourEnd, "\n");
                             builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, contact.job, colourEnd, "\n");
@@ -3804,6 +3821,35 @@ public class TopicManager : MonoBehaviour
                         else { Debug.LogErrorFormat("Invalid contact (Null) for tagContactID {0}", tagContactID); }
                     }
                     else { Debug.LogWarningFormat("Invalid tagContactID {0}", tagContactID); }
+                    break;
+
+                default:
+                    //info on whether topic is good or bad and why
+                    switch (turnTopic.group.name)
+                    {
+                        case "Good":
+                            textMain = string.Format("{0}<size=115%>GOOD</size>{1}{2}event", colourGood, colourEnd, "\n");
+                            break;
+                        case "Bad":
+                            textMain = string.Format("{0}<size=115%>BAD</size>{1}{2}event", colourBad, colourEnd, "\n");
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
+                    }
+                    //details
+                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    int oddsGood = chanceNeutralGood;
+                    int oddsBad = 100 - chanceNeutralGood;
+                    builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Motivation</size>{6}{7}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd, "\n");
+                    //highlight current motivation band, grey out the rest
+                    if (motivation == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+                    else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
+
+                    if (motivation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}({3}/{4} Good/Bad){5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+                    else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
+
+                    if (motivation < 2) { builder.AppendFormat("{0}1 or 0{1}, {2}Bad{3}", colourNeutral, colourEnd, colourBad, colourEnd); }
+                    else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
+                    textDetails = builder.ToString();
                     break;
             }
         }

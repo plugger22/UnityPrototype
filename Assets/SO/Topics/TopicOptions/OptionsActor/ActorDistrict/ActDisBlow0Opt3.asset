@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District 0 Blow Stuff Up option 3
   tag: Blame
-  text: Blame it on Authorities
+  text: Blame it on the Authority
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
   listOfCriteria: []
   listOfGoodEffects:
@@ -21,8 +21,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Blame</color>
+  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
+    Renown +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
+    Happens</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Blame it on Authorities</color>

@@ -16,10 +16,6 @@ using Random = UnityEngine.Random;
 public class ActionManager : MonoBehaviour
 {
 
-    [Header("Text Lists")]
-    [Tooltip("List of buildings (generic) that an anarchist might Blow Up. Used for node Action / Topic immersion")]
-    public TextList textlistBlowUpBuildings;
-
     //fast access -> target
     private int failedTargetChance;
     //lie low
@@ -59,14 +55,12 @@ public class ActionManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
-                SubInitialiseStartUp();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
                 break;
             case GameState.LoadAtStart:
-                SubInitialiseStartUp();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
                 break;
@@ -78,16 +72,6 @@ public class ActionManager : MonoBehaviour
 
 
     #region Initialise SubMethods
-
-    #region SubInitialiseStartUp
-    /// <summary>
-    /// Startup initialisation
-    /// </summary>
-    private void SubInitialiseStartUp()
-    {
-        Debug.Assert(textlistBlowUpBuildings != null, "Invalid textListBlowUpBuildings (Null)");
-    }
-    #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -428,7 +412,7 @@ public class ActionManager : MonoBehaviour
                                     //text list
                                     switch (actor.arc.name)
                                     {
-                                        case "ANARCHIST": nodeActionData.dataName = textlistBlowUpBuildings.GetRandomRecord(); break;
+                                        case "ANARCHIST": nodeActionData.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord(); break;
                                     }
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);

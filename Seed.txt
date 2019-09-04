@@ -48,3 +48,131 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
 	
+Dev seed 51090 -> Wednesday, 4 September 2019 10:48 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 317, assets 318 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1488)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1407)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:737)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:341)
+	City seed 5678 -> London, United Kingdom
+WARNING Unrecognised effect.name first character "C" for effect "C_GainLoyalty"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:3575)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:3389)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3311)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1884)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1777)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	WARNING Unrecognised key "C" for effect C_GainLoyalty
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3414)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1101)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:2009)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:613)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:261)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 51090 -> Wednesday, 4 September 2019 11:33 AM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised effect.name first character "C" for effect "C_GainLoyalty"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:3575)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:3389)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3311)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1884)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1777)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 51090 -> Wednesday, 4 September 2019 12:10 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 46, assets 47 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1488)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1450)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:737)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:341)
+	City seed 5678 -> London, United Kingdom
+WARNING Unrecognised effect.name first character "C" for effect "C_LoseLoyalty"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:3582)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:3370)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3303)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1891)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1784)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	WARNING Unrecognised tag "blowUp"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3711)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1915)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1784)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 51090 -> Wednesday, 4 September 2019 12:18 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 46, assets 47 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1488)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1450)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:737)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:341)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 12:28 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 46, assets 47 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1488)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1450)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:737)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:341)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 12:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 1:14 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.GetActorTooltip (gameAPI.Actor actor) (at Assets/Scripts/Managers/TopicManager.cs:3836)
+	TopicManager.InitialiseSprite (packageAPI.TopicUIData data) (at Assets/Scripts/Managers/TopicManager.cs:3746)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:1909)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1784)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:373)
+	
+Dev seed 51090 -> Wednesday, 4 September 2019 1:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 1:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 1:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 2:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51090 -> Wednesday, 4 September 2019 2:13 PM
+City seed 5678 -> London, United Kingdom
