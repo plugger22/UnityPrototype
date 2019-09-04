@@ -2064,6 +2064,12 @@ public class TopicManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
+            //news snippet
+            if (string.IsNullOrEmpty(turnOption.news) == false)
+            {
+                string newsSnippet = CheckText(turnOption.news, false);
+                Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
+            }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
             //tidy up
@@ -3646,7 +3652,11 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "district":
                         if (node != null)
-                        { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
+                            else { replaceText = node.nodeName; }
+                        }
                         break;
                     case "contact":
                         //contact name + node name
@@ -3692,13 +3702,22 @@ public class TopicManager : MonoBehaviour
                         //Random job name appropriate to node arc
                         ContactType contactType = node.Arc.GetRandomContactType();
                         if (contactType != null)
-                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourAlert, contactType.pickList.GetRandomRecord(), colourEnd); }
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, contactType.pickList.GetRandomRecord(), colourEnd); }
+                            else { replaceText = contactType.pickList.GetRandomRecord(); }
+                        }
                         else
                         { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID);  }
                         break;
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
-                        if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
+                        if (string.IsNullOrEmpty(tagStringData) == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
+                            else { replaceText = tagStringData; }
+                        }
                         else { replaceText = textlistGenericLocation.GetRandomRecord(); }
                         break;
                     case "daysAgo":
@@ -3719,6 +3738,18 @@ public class TopicManager : MonoBehaviour
                     case "npcIs":
                         //npc is/was something
                         replaceText = textListNpcSomething.GetRandomRecord();
+                        break;
+                    case "mayor":
+                        //mayor + first name
+                        if (isColourHighlighting == true)
+                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
+                        else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                        break;
+                    case "city":
+                        //city name
+                        if (isColourHighlighting == true)
+                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
+                        else { replaceText = GameManager.instance.cityScript.GetCity().name; }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }
