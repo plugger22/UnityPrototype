@@ -36,6 +36,8 @@ public class TopicManager : MonoBehaviour
     public TextList textlistGenericLocation;
     [Tooltip("List of ending lines (self contained) for a Bad resistance topic, eg. 'The Authority is spinning this one hard'. Used via the [badRES] tag")]
     public TextList textListBadResistance;
+    [Tooltip("List of NPC is/was 'something'")]
+    public TextList textListNpcSomething;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -282,6 +284,8 @@ public class TopicManager : MonoBehaviour
     {
         //text lists
         Debug.Assert(textlistGenericLocation != null, "Invalid textListGenericLocations (Null)");
+        Debug.Assert(textListBadResistance != null, "Invalid textListBadResistance (Null)");
+        Debug.Assert(textListNpcSomething != null, "Invalid textListNpcSomething (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -3624,7 +3628,6 @@ public class TopicManager : MonoBehaviour
                 replaceText = null;
                 switch (tag)
                 {
-                    case "Actor":
                     case "actor":
                         //actor arc name
                         if (tagActorID > -1)
@@ -3641,12 +3644,10 @@ public class TopicManager : MonoBehaviour
                         else
                         { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         break;
-                    case "District":
                     case "district":
                         if (node != null)
                         { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
                         break;
-                    case "Contact":
                     case "contact":
                         //contact name + node name
                         if (tagContactID > -1)
@@ -3667,7 +3668,6 @@ public class TopicManager : MonoBehaviour
                         else
                         { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
-                    case "ContactLong":
                     case "contactLong":
                         //contact name + contact job + node name
                         if (tagContactID > -1)
@@ -3689,7 +3689,6 @@ public class TopicManager : MonoBehaviour
                         { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
                     case "job":
-                    case "Job":
                         //Random job name appropriate to node arc
                         ContactType contactType = node.Arc.GetRandomContactType();
                         if (contactType != null)
@@ -3698,13 +3697,11 @@ public class TopicManager : MonoBehaviour
                         { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID);  }
                         break;
                     case "genLoc":
-                    case "GenLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
                         if (string.IsNullOrEmpty(tagStringData) == false) { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
                         else { replaceText = textlistGenericLocation.GetRandomRecord(); }
                         break;
                     case "daysAgo":
-                    case "DaysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
                         int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                         turnsAgo = Mathf.Max(1, turnsAgo);
@@ -3713,6 +3710,15 @@ public class TopicManager : MonoBehaviour
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
                         replaceText = textListBadResistance.GetRandomRecord();
+                        break;
+                    case "npc":
+                        if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                        else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                        replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                        break;
+                    case "npcIs":
+                        //npc is/was something
+                        replaceText = textListNpcSomething.GetRandomRecord();
                         break;
                     default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
                 }

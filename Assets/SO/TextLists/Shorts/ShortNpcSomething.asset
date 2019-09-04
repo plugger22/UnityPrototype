@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortNpcSomething
+  m_EditorClassIdentifier: 
+  descriptor: NPC (male or female) 'is/was something', typically a sympathy evoking
+    quality.
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  randomList:
+  - a sole parent
+  - a loving parent
+  - handicapped
+  - vision impaired
+  - totally deaf
+  - a carer
+  - a cat lover
+  - a dog lover
+  - well known
+  - a parent of a handicapped child
+  - a registered blood donor
+  - agraphobic
+  - a known child molester
+  - a member of the church of Satan
+  - an organ donor
+  - a committed church goer
+  - a recoverying drunk
+  - suspected to be a Resistance sympathiser
+  - inflicted with a terminal disease
+  - a past winner of the lottery

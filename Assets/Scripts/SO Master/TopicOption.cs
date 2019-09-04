@@ -39,6 +39,9 @@ public class TopicOption : ScriptableObject
     [Tooltip("Anything other than 'None' makes this a Probability option where good effects occur if the roll succeeds and bad if it doesn't. Optional")]
     public GlobalChance chance;
 
+    [Header("Newsfeed")]
+    [Tooltip("Self contained new snippet that reflects Player's choice of this option. Can include tags. Optional")]
+    [TextArea] public string news;
 
     [HideInInspector] public string tooltipHeader;              //tag
     [HideInInspector] public string tooltipMain;                //derived from effects (good / bad)

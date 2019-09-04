@@ -1215,6 +1215,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
   - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
   - {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a, type: 2}
+  - {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -3475,9 +3476,12 @@ MonoBehaviour:
   chanceHigh: 75
   chanceMedium: 50
   chanceLow: 25
+  chanceNeutralGood: 75
   textlistGenericLocation: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
     type: 2}
   textListBadResistance: {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a,
+    type: 2}
+  textListNpcSomething: {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9,
     type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
