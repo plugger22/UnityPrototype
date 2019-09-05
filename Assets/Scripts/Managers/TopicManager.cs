@@ -134,6 +134,8 @@ public class TopicManager : MonoBehaviour
     private int tagTeamID;
     private int tagContactID;
     private int tagTurn;
+    private string tagJob;
+    private string tagLocation;
     private string tagStringData;        //General purpose
 
     //collections (local)
@@ -194,7 +196,7 @@ public class TopicManager : MonoBehaviour
                 //do nothing
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.instance.inputScript.GameState);
                 break;
         }
     }
@@ -339,8 +341,10 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TopicManager");
     }
+    #endregion
+
     #endregion
 
     /// <summary>
@@ -363,7 +367,7 @@ public class TopicManager : MonoBehaviour
         }
     }
 
-    #endregion
+
 
     #region SetColours
     /// <summary>
@@ -1085,6 +1089,8 @@ public class TopicManager : MonoBehaviour
         tagTeamID = -1;
         tagContactID = -1;
         tagTurn = -1;
+        tagJob = "";
+        tagLocation = "";
         tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
@@ -2064,10 +2070,12 @@ public class TopicManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
-            //news snippet
+            //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
             {
                 string newsSnippet = CheckText(turnOption.news, false);
+                NewsItem item = new NewsItem() { text = newsSnippet };
+                GameManager.instance.dataScript.AddNewsItem(item);
                 Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
             }
             //outcome dialogue
@@ -2975,7 +2983,7 @@ public class TopicManager : MonoBehaviour
                     case GroupType.Neutral:
                         //neutral motivation, use all Active topics
                         if (Random.Range(0, 100) < chanceNeutralGood)
-                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&  t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());  }
+                        { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList()); }
                         else
                         { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList()); }
                         break;
@@ -3622,7 +3630,7 @@ public class TopicManager : MonoBehaviour
             int tagStart, tagFinish, length; //indexes
             Node node = null;
             if (tagNodeID > -1)
-            {  node = GameManager.instance.dataScript.GetNode(tagNodeID);  }
+            { node = GameManager.instance.dataScript.GetNode(tagNodeID); }
             //loop whilever tags are present
             while (checkedText.Contains("[") == true)
             {
@@ -3665,13 +3673,13 @@ public class TopicManager : MonoBehaviour
                             Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                             if (contact != null)
                             {
-                                    if (node != null)
-                                    {
-                                        if (isColourHighlighting == true)
-                                        { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
-                                        else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                if (node != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
+                                    else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
                             }
                             else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                         }
@@ -3685,13 +3693,13 @@ public class TopicManager : MonoBehaviour
                             Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
                             if (contact != null)
                             {
-                                    if (node != null)
-                                    {
-                                        if (isColourHighlighting == true)
-                                        { replaceText = string.Format("<b>{0} {1}, {2}</b>, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
-                                        else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                if (node != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("<b>{0} {1}, {2}</b>, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
+                                    else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
                             }
                             else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                         }
@@ -3700,25 +3708,29 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "job":
                         //Random job name appropriate to node arc
-                        ContactType contactType = node.Arc.GetRandomContactType();
-                        if (contactType != null)
+                        string job = "Unknown";
+                        if (string.IsNullOrEmpty(tagJob) == true)
                         {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, contactType.pickList.GetRandomRecord(), colourEnd); }
-                            else { replaceText = contactType.pickList.GetRandomRecord(); }
+                            ContactType contactType = node.Arc.GetRandomContactType();
+                            if (contactType != null)
+                            { job = contactType.pickList.GetRandomRecord(); }
+                            else
+                            { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
                         }
-                        else
-                        { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID);  }
+                        else { job = tagJob; }
+                        if (isColourHighlighting == true)
+                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, job, colourEnd); }
+                        else { replaceText = job; }
                         break;
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
-                        if (string.IsNullOrEmpty(tagStringData) == false)
-                        {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, tagStringData, colourEnd); }
-                            else { replaceText = tagStringData; }
-                        }
-                        else { replaceText = textlistGenericLocation.GetRandomRecord(); }
+                        string location = "Unknown";
+                        if (string.IsNullOrEmpty(tagLocation) == false)
+                        { location = textlistGenericLocation.GetRandomRecord(); }
+                        else { location = tagLocation; }
+                        if (isColourHighlighting == true)
+                        { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, location, colourEnd); }
+                        else { replaceText = location; }
                         break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
@@ -3865,10 +3877,10 @@ public class TopicManager : MonoBehaviour
                     switch (turnTopic.group.name)
                     {
                         case "Good":
-                            textMain = string.Format("{0}<size=115%>GOOD</size>{1}{2}event", colourGood, colourEnd, "\n");
+                            textMain = string.Format("{0}<size=115%>GOOD{1}{2}{3}Event</size>{4}", colourGood, colourEnd, "\n", colourNormal, colourEnd);
                             break;
                         case "Bad":
-                            textMain = string.Format("{0}<size=115%>BAD</size>{1}{2}event", colourBad, colourEnd, "\n");
+                            textMain = string.Format("{0}<size=115%>BAD{1}{2}{3}Event</size>{4}", colourBad, colourEnd, "\n", colourNormal, colourEnd);
                             break;
                         default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
                     }
@@ -3881,7 +3893,7 @@ public class TopicManager : MonoBehaviour
                     if (motivation == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
                     else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
 
-                    if (motivation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}({3}/{4} Good/Bad){5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+                    if (motivation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
                     else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
 
                     if (motivation < 2) { builder.AppendFormat("{0}1 or 0{1}, {2}Bad{3}", colourNeutral, colourEnd, colourBad, colourEnd); }

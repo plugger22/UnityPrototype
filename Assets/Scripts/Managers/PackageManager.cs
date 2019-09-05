@@ -766,6 +766,21 @@ namespace packageAPI
         public int contactID;       
     }
 
+    /// <summary>
+    /// news snippet used for ticker tape newsfeed on mainInfoApp
+    /// </summary>
+    public class NewsItem
+    {
+        public int newsID;
+        public int timer;                                                   //countdown timer before item is removed from selection pool
+        public string text;                                                 //unformatted text
+
+        public NewsItem()
+        {
+            newsID = GameManager.instance.newsScript.newsIDCounter++;
+            timer = GameManager.instance.newsScript.timerMaxItemTurns;
+        }
+    }
 
     //new classes above here
 }

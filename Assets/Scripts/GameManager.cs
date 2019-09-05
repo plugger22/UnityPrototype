@@ -460,6 +460,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = dataScript.InitialiseEarly;
         startMethod.className = "DataManager Early";
         listOfGlobalMethods.Add(startMethod);
+        //News Manager
+        startMethod.handler = newsScript.Initialise;
+        startMethod.className = "NewsManager";
+        listOfGlobalMethods.Add(startMethod);
         #endregion
 
         #region Game Methods

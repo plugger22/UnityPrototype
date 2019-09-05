@@ -158,6 +158,9 @@ public class DataManager : MonoBehaviour
     private List<TopicType> listOfTopicTypes = new List<TopicType>();                                           //All topic Types
     private List<TopicType> listOfTopicTypesLevel = new List<TopicType>();                                      //Topic types available for the current level
 
+    //NewsFeed
+    private List<NewsItem> listOfNewsItems = new List<NewsItem>();
+
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
     private Dictionary<int, Node> dictOfNodes = new Dictionary<int, Node>();                                    //Key -> nodeID, Value -> Node
@@ -363,6 +366,8 @@ public class DataManager : MonoBehaviour
         listOfCureNodes.Clear();
         listOfCrisisNodes.Clear();
         listOfMoveNodes.Clear();
+        //newsFeed
+        listOfNewsItems.Clear();
         //topics
         listOfTopicTypesLevel.Clear();
         dictOfTopicPools.Clear();
@@ -7198,6 +7203,24 @@ public class DataManager : MonoBehaviour
     }
 
     #endregion
+
+    //
+    // - - - News Feed - - -
+    //
+
+    public List<NewsItem> GetListOfNewsItems()
+    { return listOfNewsItems; }
+
+    /// <summary>
+    /// Add news item
+    /// </summary>
+    /// <param name="item"></param>
+    public void AddNewsItem(NewsItem item)
+    {
+        if (item != null)
+        { listOfNewsItems.Add(item); }
+        else { Debug.LogError("Invalid newsItem (Null)"); }
+    }
 
     //new methods above here
 }
