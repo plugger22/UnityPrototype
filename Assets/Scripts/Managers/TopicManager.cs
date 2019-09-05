@@ -1630,6 +1630,7 @@ public class TopicManager : MonoBehaviour
                 tagNodeID = data.nodeID;
                 tagTurn = data.turn;
                 tagStringData = data.dataName;
+                tagLocation = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -1870,6 +1871,8 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
+                //subSubType
+                turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
                 if (data.listOfOptions != null && data.listOfOptions.Count > 0)
                 {
@@ -3713,7 +3716,10 @@ public class TopicManager : MonoBehaviour
                         {
                             ContactType contactType = node.Arc.GetRandomContactType();
                             if (contactType != null)
-                            { job = contactType.pickList.GetRandomRecord(); }
+                            {
+                                job = contactType.pickList.GetRandomRecord();
+                                tagJob = job;
+                            }
                             else
                             { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
                         }
@@ -3726,7 +3732,10 @@ public class TopicManager : MonoBehaviour
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
                         string location = "Unknown";
                         if (string.IsNullOrEmpty(tagLocation) == false)
-                        { location = textlistGenericLocation.GetRandomRecord(); }
+                        {
+                            location = textlistGenericLocation.GetRandomRecord();
+                            tagLocation = location;
+                        }
                         else { location = tagLocation; }
                         if (isColourHighlighting == true)
                         { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, location, colourEnd); }

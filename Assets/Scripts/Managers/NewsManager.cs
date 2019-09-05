@@ -1,7 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
-using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 
@@ -143,4 +143,56 @@ public class NewsManager : MonoBehaviour
         return text;
     }
 
+
+    //
+    // - - - Debug - - -
+    //
+
+    /// <summary>
+    /// Debug display of all news items currently available for selection
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayNewsItems()
+    {
+        int count, length, subLength;
+        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        StringBuilder builder = new StringBuilder();
+        if (listOfNewsItems != null)
+        {
+            count = listOfNewsItems.Count;
+            builder.AppendFormat("- News Items  ({0} record{1}){2}", count, count != 1 ? "s" : "", "\n");
+            for (int i = 0; i < count; i++)
+            {
+                NewsItem item = listOfNewsItems[i];
+                if (item != null)
+                {
+                    //split text over two lines if overlength
+                    length = item.text.Length;
+                    subLength = 0;
+                    if (length > 50)
+                    {
+                        builder.AppendFormat(" id {0}, t {1}, {2}", item.newsID, item.timer, item.text.Substring(0, 50));
+                        do
+                        {
+                            subLength += 50;
+                            if ((length - subLength) < 50)
+                            {
+                                //last segment
+                                builder.AppendFormat("{0}  ...{1}", "\n", item.text.Substring(subLength));
+                                break;
+                            }
+                            else { builder.AppendFormat("{0}  ...{1}...", "\n", item.text.Substring(subLength, 50)); }
+                        }
+                        while (subLength < length);
+                    }
+                    else { builder.AppendFormat(" id {0}, t {1}, {2}", item.newsID, item.timer, item.text); }
+                    builder.AppendLine();
+                }
+                else { Debug.LogWarningFormat("Invalid newsItem (Null) for listOfNewsItems[{0}]", i); }
+            }
+        }
+        return builder.ToString();
+    }
+
+    //new methods above here
 }

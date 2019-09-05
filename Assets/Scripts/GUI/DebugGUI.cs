@@ -46,6 +46,7 @@ public class DebugGUI : MonoBehaviour
     private int playerToggle = 0;
     private int contactToggle = 0;
     private int trackerToggle = 0;
+    private int newsToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
     private int factionToggle = 0;
@@ -119,9 +120,9 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 40), "Option Menu", customBackground);
             //background box (Info)
-            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 200), "Info Menu", customBackground);
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 240), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 200), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 240), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Level Menu", customBackground);
 
@@ -405,8 +406,6 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-
-
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Tracker Data"))
             {
                 Debug.Log("[Dbg] Button -> Tracker Data");
@@ -415,6 +414,16 @@ public class DebugGUI : MonoBehaviour
                     case 0: debugDisplay = 44; trackerToggle = 1; break;
                     case 1: debugDisplay = 45; trackerToggle = 2; break;
                     case 2: debugDisplay = 0; trackerToggle = 0; break;
+                }
+            }
+
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "News Data"))
+            {
+                Debug.Log("[Dbg] Button -> News Data");
+                switch (newsToggle)
+                {
+                    case 0: debugDisplay = 72; newsToggle = 1; break;
+                    case 1: debugDisplay = 0; newsToggle = 0; break;
                 }
             }
 
@@ -1546,6 +1555,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.factionScript.DebugDisplayHQActors();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        break;
+                    //News Items
+                    case 72:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.newsScript.DebugDisplayNewsItems();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }

@@ -1238,18 +1238,18 @@ namespace gameAPI
         { return listOfNodeActions.Count; }
 
         /// <summary>
-        /// Get most recent nodeActionData package (record at end of list)
+        /// Get most recent nodeActionData package (record at head of list)
         /// </summary>
         /// <returns></returns>
         public NodeActionData GetMostRecentNodeAction()
-        { return listOfNodeActions[listOfNodeActions.Count - 1]; }
+        { return listOfNodeActions[0]; }
 
         /// <summary>
-        /// Delete most recent nodeActionData package (record at end of list)
+        /// Delete most recent nodeActionData package (record at head of list)
         /// </summary>
         public void RemoveMostRecentNodeAction()
         {
-            int index = listOfNodeActions.Count - 1;
+            int index = 0;
             Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");
             listOfNodeActions.RemoveAt(index);
         }

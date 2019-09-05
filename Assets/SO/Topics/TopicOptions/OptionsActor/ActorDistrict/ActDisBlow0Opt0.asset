@@ -23,8 +23,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: Police are investigating [npc], [job] for illegally receiving Resistance assistance
+    with a medical bill as a result of the [district] bombing
+  tooltipHeader: <color=#FFFFE0>Pay</color>
+  tooltipMain: "<color=#98FB98> All Similar Districts Stability -1</color>\r\n<color=#FF4500>Player
+    Renown -2</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Pay their medical expenses</color>
