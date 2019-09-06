@@ -157,6 +157,8 @@ public class NewsManager : MonoBehaviour
         string text;
         string splicer = " ... Updating ... ";
         StringBuilder builder = new StringBuilder();
+        //put a header to prevent the ticker start being already out of view on opening the MainInfoApp
+        builder.AppendFormat("{0}Latest News Feed", splicer);
         //
         // - - - News Items
         //
@@ -183,6 +185,7 @@ public class NewsManager : MonoBehaviour
                     listOfNewsItems.RemoveAt(index);
                 }
             }
+            else { builder.AppendFormat("{0}City News Blackout in place. Strikes at the Server Farm", splicer); }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         //
@@ -218,8 +221,7 @@ public class NewsManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
         //fail safe
         if (builder.Length == 0) { builder.Append("News BlackOut in force"); }
-        //add splicers to the end of the text
-        return string.Format("{0}{1}", splicer, builder.ToString());
+        return builder.ToString();
     }
 
 

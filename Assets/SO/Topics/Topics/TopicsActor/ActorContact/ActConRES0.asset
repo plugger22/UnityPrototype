@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActConRES0
   m_EditorClassIdentifier: 
   tag: New Contact
-  text: Your [Actor] has been approached by an individual wishing to help. They want
+  text: Your [actor] has been approached by an individual wishing to help. They want
     money, of course, but could be useful.
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -34,12 +34,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
   - {fileID: 11400000, guid: eff6a8d34b8ab5d49baa8d957270e1de, type: 2}
   - {fileID: 11400000, guid: 198a55f90e44d3749a2e77f961c26448, type: 2}
-  status: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 1
-  turnsLive: 1
+  turnsActive: 20
+  turnsLive: 0
   turnsDone: 0

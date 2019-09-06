@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Contact 0 option 1
   tag: Negotiate
-  text: Ask [Actor] to negotiate a better deal
+  text: Ask [actor] to negotiate a better deal
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
+  news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 
