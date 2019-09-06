@@ -1216,6 +1216,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
   - {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a, type: 2}
   - {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9, type: 2}
+  - {fileID: 11400000, guid: 3cf3841dabd52074ab2250fca01adda4, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -2992,6 +2993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d2947015c6e9e41baecbba8aa0be73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerMaxItemTurns: 4
+  newsIDCounter: 0
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3480,6 +3483,8 @@ MonoBehaviour:
   textlistGenericLocation: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
     type: 2}
   textListBadResistance: {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a,
+    type: 2}
+  textListGoodResistance: {fileID: 11400000, guid: 3cf3841dabd52074ab2250fca01adda4,
     type: 2}
   textListNpcSomething: {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9,
     type: 2}

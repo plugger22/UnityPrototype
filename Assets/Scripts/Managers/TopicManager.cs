@@ -36,6 +36,8 @@ public class TopicManager : MonoBehaviour
     public TextList textlistGenericLocation;
     [Tooltip("List of ending lines (self contained) for a Bad resistance topic, eg. 'The Authority is spinning this one hard'. Used via the [badRES] tag")]
     public TextList textListBadResistance;
+    [Tooltip("List of ending lines (self contained) for a Good resistance topic, eg. 'We could use htis'. Used via the [goodRES] tag")]
+    public TextList textListGoodResistance;
     [Tooltip("List of NPC is/was 'something'")]
     public TextList textListNpcSomething;
 
@@ -287,6 +289,7 @@ public class TopicManager : MonoBehaviour
         //text lists
         Debug.Assert(textlistGenericLocation != null, "Invalid textListGenericLocations (Null)");
         Debug.Assert(textListBadResistance != null, "Invalid textListBadResistance (Null)");
+        Debug.Assert(textListGoodResistance != null, "Invalid textListGoodResistance (Null)");
         Debug.Assert(textListNpcSomething != null, "Invalid textListNpcSomething (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
@@ -3731,7 +3734,7 @@ public class TopicManager : MonoBehaviour
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
                         string location = "Unknown";
-                        if (string.IsNullOrEmpty(tagLocation) == false)
+                        if (string.IsNullOrEmpty(tagLocation) == true)
                         {
                             location = textlistGenericLocation.GetRandomRecord();
                             tagLocation = location;
@@ -3750,6 +3753,10 @@ public class TopicManager : MonoBehaviour
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
                         replaceText = textListBadResistance.GetRandomRecord();
+                        break;
+                    case "goodRES":
+                        //end of topic text for a good outcome (Resistance)
+                        replaceText = textListGoodResistance.GetRandomRecord();
                         break;
                     case "npc":
                         if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }

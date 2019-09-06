@@ -13,6 +13,8 @@ public class NewsManager : MonoBehaviour
     [Header("News Items")]
     [Tooltip("How many turns a given newsItem will stay in the selection pool before being deleted (if it's selected then it's also deleted)")]
     [Range(1, 10)] public int timerMaxItemTurns = 4;
+    [Tooltip("How many newsItems will be selected (if available) per turn")]
+    [Range(0, 3)] public int numOfNewsItems = 1;
 
     #region Save Compatible Data
     [HideInInspector] public int newsIDCounter = 0;                            //used to sequentially number newsID's
@@ -132,15 +134,44 @@ public class NewsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns
+    /// returns single newsFeed string (splices together selected newsItems)
     /// </summary>
     /// <returns></returns>
     public string GetNews()
     {
+        int index;
         string text;
-        text = "\tBreaking News: Mayor Cameron pardons Resistance prisoners. Elsewhere riots continue in Commerce and vigilante groups disrupt neighbour tranquility in Gardenna.\t";
-        //text = "\tthe world is about to end by this time tommorrow but it isn't as bad as you think.In breaking news riots have broken out across the length and breadth of Gotham city. Mayor Greene issued a statement this afternoon on CNN Live\t";
-        return text;
+        string splicer = " ... Updating ... ";
+        StringBuilder builder = new StringBuilder();
+        //randomly select item from list
+        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        if (listOfNewsItems != null)
+        {
+            int count = listOfNewsItems.Count;
+            if (count > 0)
+            {
+                //get num required per turn, capped by number available
+                int limit = Mathf.Min(count, numOfNewsItems);
+                for (int i = 0; i < limit; i++)
+                {
+                    index = Random.Range(0, count);
+                    text = listOfNewsItems[index].text;
+                    if (text != null)
+                    {
+                        if (builder.Length > 0) { builder.Append(splicer); }
+                        builder.Append(text);
+                    }
+                    else { Debug.LogWarningFormat("Invalid newsItem text (Null) for listOfNewsItem[{0}]", index); }
+                    //delete newsItem from list to prevent dupes
+                    listOfNewsItems.RemoveAt(index);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
+        //fail safe
+        if (builder.Length == 0) { builder.Append("News BlackOut in force"); }
+        //add splicers to the end of the text
+        return string.Format("{0}{1}", splicer, builder.ToString());
     }
 
 

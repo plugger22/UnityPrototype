@@ -769,6 +769,7 @@ namespace packageAPI
     /// <summary>
     /// news snippet used for ticker tape newsfeed on mainInfoApp
     /// </summary>
+    [System.Serializable]
     public class NewsItem
     {
         public int newsID;

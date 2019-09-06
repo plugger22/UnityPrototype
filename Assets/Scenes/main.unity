@@ -17311,7 +17311,7 @@ MonoBehaviour:
   flare_SW: {fileID: 1225384432}
   tickerObject: {fileID: 1985563923}
   tickerText: {fileID: 1029709316}
-  tickerSpeed: 10
+  tickerSpeed: 14
   tickerSpeedMax: 20
   tickerSpeedMin: 5
   numOfTabs: 6
@@ -24724,7 +24724,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294944512
-  m_fontColor: {r: 0.91477257, g: 0.9339623, b: 0.69166076, a: 1}
+  m_fontColor: {r: 0.90140843, g: 0.9433962, b: 0.4227483, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}

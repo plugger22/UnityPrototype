@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisBlow1Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Blow Stuff Up 1 option 2
-  tag: Confess
+  tag: Acknowledge
   text: Take responsibility for the action
   topic: {fileID: 11400000, guid: 65be758714597ac48b738b0edd34dd3c, type: 2}
   listOfCriteria: []
@@ -21,8 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: A statement from the Resistance accepts full responsibility for the [district]
-    explosion at the [genLoc] that claimed many casualties. No surprise, says [mayor].
+  news: A statement from the Resistance accepts full responsibility for the [genLoc]
+    explosion at [district] that claimed many lives. No surprise, says, [mayor].
   tooltipHeader: <color=#FFFFE0>Confess</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
     Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> HQ
