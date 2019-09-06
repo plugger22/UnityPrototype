@@ -1445,6 +1445,7 @@ public class ValidationManager : MonoBehaviour
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfAdvertTextLists);
         //NOTE: add extra text lists here (as above)
         TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
         ValidateSOGeneric<TextList>(arrayOfTextLists);

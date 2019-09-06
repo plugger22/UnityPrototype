@@ -1228,6 +1228,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ca563b32662370488e01cd3b672cd99, type: 2}
   - {fileID: 11400000, guid: 390c078c7561879469d78164dea8f4f6, type: 2}
   - {fileID: 11400000, guid: 7ad610f79786d994aa5985503ce7f18b, type: 2}
+  arrayOfAdvertTextLists:
+  - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -2994,6 +2996,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerMaxItemTurns: 4
+  numOfNewsItems: 1
+  numOfAdverts: 1
   newsIDCounter: 0
 --- !u!114 &114656477723242970
 MonoBehaviour:
@@ -3327,7 +3331,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 51090
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

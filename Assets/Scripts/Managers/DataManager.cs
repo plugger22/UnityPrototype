@@ -7228,6 +7228,9 @@ public class DataManager : MonoBehaviour
     // - - - Adverts
     //
 
+    public List<string> GetListOfAdverts()
+    { return listOfAdverts; }
+
     /// <summary>
     /// populates listOfAdverts with all textlist's from LoadManager.cs array. Run at start of a new campaign or if list runs empty (each time add is used it is deleted to prevent duplication)
     /// </summary>
@@ -7237,7 +7240,17 @@ public class DataManager : MonoBehaviour
         TextList[] arrayOfAdverts = GameManager.instance.loadScript.arrayOfAdvertTextLists;
         if (arrayOfAdverts != null)
         {
-
+            for (int i = 0; i < arrayOfAdverts.Length; i++)
+            {
+                TextList textList = arrayOfAdverts[i];
+                if (textList != null)
+                {
+                    if (textList.randomList != null)
+                    { listOfAdverts.AddRange(textList.randomList); }
+                    else { Debug.LogWarningFormat("Invalid randomList (Null) for textList {0}", textList.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid textList (Null) in arrayOfAdverts[{0}]", i); }
+            }
         }
         else { Debug.LogError("Invalid arrayOfAdverts (Null)"); }
     }

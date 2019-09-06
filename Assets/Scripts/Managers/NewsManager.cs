@@ -15,6 +15,8 @@ public class NewsManager : MonoBehaviour
     [Range(1, 10)] public int timerMaxItemTurns = 4;
     [Tooltip("How many newsItems will be selected (if available) per turn")]
     [Range(0, 3)] public int numOfNewsItems = 1;
+    [Tooltip("How many adverts will be selected (if available) per turn")]
+    [Range(0, 3)] public int numOfAdverts = 1;
 
     #region Save Compatible Data
     [HideInInspector] public int newsIDCounter = 0;                            //used to sequentially number newsID's
@@ -31,6 +33,7 @@ public class NewsManager : MonoBehaviour
         {
             case GameState.StartUp:
             case GameState.NewInitialisation:
+                SubInitialiseNewGame();
                 SubInitialiseFastAccess(); //needs to be first
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
@@ -58,6 +61,17 @@ public class NewsManager : MonoBehaviour
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()
     {
+    }
+    #endregion
+
+    #region SubInitialiseNewGame
+    /// <summary>
+    /// Start new game/campaign
+    /// </summary>
+    private void SubInitialiseNewGame()
+    {
+        //set up adverts for ticker text
+        GameManager.instance.dataScript.InitialiseAdvertList();
     }
     #endregion
 
@@ -139,35 +153,69 @@ public class NewsManager : MonoBehaviour
     /// <returns></returns>
     public string GetNews()
     {
-        int index;
+        int index, count, limit;
         string text;
         string splicer = " ... Updating ... ";
         StringBuilder builder = new StringBuilder();
-        //randomly select item from list
+        //
+        // - - - News Items
+        //
         List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
         if (listOfNewsItems != null)
         {
-            int count = listOfNewsItems.Count;
+            count = listOfNewsItems.Count;
             if (count > 0)
             {
                 //get num required per turn, capped by number available
-                int limit = Mathf.Min(count, numOfNewsItems);
+                limit = Mathf.Min(count, numOfNewsItems);
                 for (int i = 0; i < limit; i++)
-                {
+                {        
+                    //randomly select item from list
                     index = Random.Range(0, count);
                     text = listOfNewsItems[index].text;
-                    if (text != null)
+                    if (string.IsNullOrEmpty(text) == false)
                     {
                         if (builder.Length > 0) { builder.Append(splicer); }
                         builder.Append(text);
                     }
-                    else { Debug.LogWarningFormat("Invalid newsItem text (Null) for listOfNewsItem[{0}]", index); }
+                    else { Debug.LogWarningFormat("Invalid newsItem text (Null or Empty) for listOfNewsItem[{0}]", index); }
                     //delete newsItem from list to prevent dupes
                     listOfNewsItems.RemoveAt(index);
                 }
             }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
+        //
+        // - - - Adverts
+        //
+        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+        if (listOfAdverts != null)
+        {
+            count = listOfAdverts.Count;
+            if (count > 0)
+            {
+                //get num required per turn, capped by number available
+                limit = Mathf.Min(count, numOfAdverts);
+                for (int i = 0; i < limit; i++)
+                {
+                    //randomly select item from list
+                    index = Random.Range(0, count);
+                    text = listOfAdverts[index];
+                    if (string.IsNullOrEmpty(text) == false)
+                    {
+                        if (builder.Length > 0) { builder.Append(splicer); }
+                        builder.Append(text);
+                    }
+                    else { Debug.LogWarningFormat("Invalid Advert text (Null or Empty) for listOfAdverts[{0}]", index); }
+                    //delete Advert from list to prevent dupes
+                    listOfAdverts.RemoveAt(index);
+                }
+            }
+            //check if list empty and needs to be reinitialised
+            if (listOfAdverts.Count == 0)
+            { GameManager.instance.dataScript.InitialiseAdvertList(); }
+        }
+        else { Debug.LogError("Invalid listOfAdverts (Null)"); }
         //fail safe
         if (builder.Length == 0) { builder.Append("News BlackOut in force"); }
         //add splicers to the end of the text
