@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Resistance topics (Good). Last line/s in topic text. Self contained.  Accessed
     by [goodRES] tag. Full stop NOT required, or needed
-  category: {fileID: 0}
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   randomList:
   - We could use this
   - This could be to our advantage

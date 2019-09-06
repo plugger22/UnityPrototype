@@ -145,6 +145,8 @@ public class DataManager : MonoBehaviour
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
     private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
     private List<ItemData> listOfDelayedItemData = new List<ItemData>();
+    //Adverts
+    private List<string> listOfAdverts = new List<string>();
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
@@ -7220,6 +7222,24 @@ public class DataManager : MonoBehaviour
         if (item != null)
         { listOfNewsItems.Add(item); }
         else { Debug.LogError("Invalid newsItem (Null)"); }
+    }
+
+    //
+    // - - - Adverts
+    //
+
+    /// <summary>
+    /// populates listOfAdverts with all textlist's from LoadManager.cs array. Run at start of a new campaign or if list runs empty (each time add is used it is deleted to prevent duplication)
+    /// </summary>
+    public void InitialiseAdvertList()
+    {
+        listOfAdverts.Clear();
+        TextList[] arrayOfAdverts = GameManager.instance.loadScript.arrayOfAdvertTextLists;
+        if (arrayOfAdverts != null)
+        {
+
+        }
+        else { Debug.LogError("Invalid arrayOfAdverts (Null)"); }
     }
 
     //new methods above here

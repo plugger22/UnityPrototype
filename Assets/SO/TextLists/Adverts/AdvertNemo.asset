@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: AdvNemo
+  m_EditorClassIdentifier: 
+  descriptor: Adds for nemo corporation specialising in travel getaways
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  randomList:
+  - Take a Nemo Ocean Cruise. Natural, clean air, guaranteed!
+  - Nemo Resorts, Clean Air and Clean Water, everytime
+  - Nemo Near Earth Orbitals. Now with 50% more Duty Free Allowance
+  - Vomit on the others. Keep it down with a trip on a Nemo Near Earth Orbital
+  - Nemo Near Earth Orbitals. They get you home safely
+  - Nemo Near Earth Orbitals. The ones that launch without a bang
+  - Nemo Near Earth Orbitals. Nausea free sightseeing
+  - ZeroG private rooms. Only on Nemo Near Earth Orbitals
+  - Unzip on a Nemo Near Earth Orbital and have the time of your life
+  - Nobody gets bored on a Nemo Near Earth Orbital
