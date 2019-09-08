@@ -591,25 +591,28 @@ public class ValidationManager : MonoBehaviour
             if (textList != null)
             {
                 //check for duplicates
-                List<string> tempList = new List<string>(textList.randomList);
-                if (tempList != null)
+                if (textList.isTestForDuplicates == true)
                 {
-                    //loop temp list and check against master text list
-                    foreach (String item in tempList)
+                    List<string> tempList = new List<string>(textList.randomList);
+                    if (tempList != null)
                     {
-                        findList.Clear();
-                        findList = textList.randomList.FindAll(x => x == item);
-                        count = findList.Count;
-                        //always one copy present, shouldn't be any more
-                        if (count > 1)
+                        //loop temp list and check against master text list
+                        foreach (String item in tempList)
                         {
-                            //ignore first, legit, copy
-                            count--;
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");
+                            findList.Clear();
+                            findList = textList.randomList.FindAll(x => x == item);
+                            count = findList.Count;
+                            //always one copy present, shouldn't be any more
+                            if (count > 1)
+                            {
+                                //ignore first, legit, copy
+                                count--;
+                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");
+                            }
                         }
                     }
+                    else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
                 }
-                else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
             }
             else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }
         }

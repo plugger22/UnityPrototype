@@ -537,27 +537,27 @@ public class DataManager : MonoBehaviour
             tickerText = GameManager.instance.newsScript.GetNews();
             listOfNews = GameManager.instance.newsScript.GetListOfCurrentNews();
             listOfAdverts = GameManager.instance.newsScript.GetListOfCurrentAdverts();
-            //package up all three priorities for each tab into a single list and add to currentInfoData
-            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-            {
-                //add in order of priority -> High (top) / Med / Low (bottom)
-                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.High]);
-                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Medium]);
-                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Low]);
-                //add to current info data
-                currentInfoData.arrayOfItemData[outer].AddRange(tempList);
-                //check list length -> need to know if too long so I can adjust to accommodate max. possible
-                if (tempList.Count > 20)
-                { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
-                //empty out temp list ready for next tab data set
-                tempList.Clear();
-            }
-            //empty out array lists ready for next turn
-            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-            {
-                for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-                { arrayOfItemDataByPriority[outer, inner].Clear(); }
-            }
+        }
+        //package up all three priorities for each tab into a single list and add to currentInfoData
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        {
+            //add in order of priority -> High (top) / Med / Low (bottom)
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.High]);
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Medium]);
+            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Low]);
+            //add to current info data
+            currentInfoData.arrayOfItemData[outer].AddRange(tempList);
+            //check list length -> need to know if too long so I can adjust to accommodate max. possible
+            if (tempList.Count > 20)
+            { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
+            //empty out temp list ready for next tab data set
+            tempList.Clear();
+        }
+        //empty out array lists ready for next turn
+        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        {
+            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+            { arrayOfItemDataByPriority[outer, inner].Clear(); }
         }
         // archive to History dict
         if (dictOfHistory != null)
@@ -1442,7 +1442,7 @@ public class DataManager : MonoBehaviour
                             //Left map for other reasons, remove contacts permanently
                             actor.RemoveContact(nodeID);
                         }
-                        
+
                         //find node entry in dictOfNodeContacts
                         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
                         {
@@ -4354,7 +4354,7 @@ public class DataManager : MonoBehaviour
     public void InitialiseActorArrays()
     {
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ +2 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
+        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ + 2 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
             GameManager.instance.factionScript.numOfActorsHQ + 2, (int)ActorHQ.Count);
         arrayOfActorsHQ = new Actor[(int)ActorHQ.Count];
         arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
@@ -4646,7 +4646,7 @@ public class DataManager : MonoBehaviour
                                 NodeActionData data = listOfData[j];
                                 if (data != null)
                                 { builder.AppendFormat("  t{0}: {1}, A {2}, N {3}, T {4}, S {5}{6}", data.turn, data.nodeAction, data.actorID, data.nodeID, data.teamID, data.dataName, "\n"); }
-                                else { Debug.LogWarningFormat("Invalid nodeActionData for listOfData[{0}], {1}, {2}, ID {3}{4}", j, actor.actorName, actor.arc.name, actor.actorID, "\n"); } 
+                                else { Debug.LogWarningFormat("Invalid nodeActionData for listOfData[{0}], {1}, {2}, ID {3}{4}", j, actor.actorName, actor.arc.name, actor.actorID, "\n"); }
                             }
                         }
                         else { builder.AppendFormat("  no records present{0}", "\n"); }
