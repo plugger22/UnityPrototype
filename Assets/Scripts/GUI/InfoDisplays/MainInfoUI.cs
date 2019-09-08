@@ -137,6 +137,7 @@ public class MainInfoUI : MonoBehaviour
     private GenericHelpTooltipUI itemHelpCentre;                    //item help button on RHS panel (where no 'Show me' button exists)
     private GenericHelpTooltipUI itemHelpCombined;                  //item help button on RHS panel (adjacent to Show Me button
     private GenericHelpTooltipUI infoHelpTop;                       //info help button at top right of InfoApp (next to close button)
+    private GenericHelpTooltipUI tickerTextHelp;                    //ticker text (help UI repurposed here used to show all ticker text items)
 
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
@@ -148,7 +149,7 @@ public class MainInfoUI : MonoBehaviour
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
     private int currentItemNodeID = -1;
     private int currentItemConnID = -1;
-    
+
     private GameObject[] arrayItemMain;
     private TextMeshProUGUI[] arrayItemText;
     private Image[] arrayItemIcon;
@@ -195,9 +196,9 @@ public class MainInfoUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
+    string colourGood;
     /*string colourSide;
     string colourNormal;
-    string colourGood;
     string colourError;
     string colourInvalid;
     string colourCancel;*/
@@ -304,9 +305,11 @@ public class MainInfoUI : MonoBehaviour
         itemHelpCentre = buttonHelpCentre.GetComponent<GenericHelpTooltipUI>();
         itemHelpCombined = buttonHelpCombined.GetComponent<GenericHelpTooltipUI>();
         infoHelpTop = buttonHelpInfo.GetComponent<GenericHelpTooltipUI>();
+        tickerTextHelp = tickerObject.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(itemHelpCentre != null, "Invalid itemHelpCentre (Null)");
         Debug.Assert(itemHelpCombined != null, "Invalid itemHelpCombined (Null)");
         Debug.Assert(infoHelpTop != null, "Invalid infoHelpTop (Null)");
+        Debug.Assert(tickerTextHelp != null, "Invalid tickerTextHelp (Null)");
         //tooltips
         itemButtonTooltip = buttonItem.GetComponent<GenericTooltipUI>();
         Debug.Assert(itemButtonTooltip != null, "Invalid itemButtonTooltip (Null)");
@@ -686,12 +689,12 @@ public class MainInfoUI : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
         else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
@@ -725,10 +728,46 @@ public class MainInfoUI : MonoBehaviour
             scrollRect.verticalNormalizedPosition = 1.0f;
             //flashers -> Request & Meeting tabs
             SetTabFlashers();
+
             /*//flares -> moving inwards towards App
             SetFlares();*/
+
             //ticker tap
             SetTicker(data.tickerText);
+            List<HelpData> listOfHelpData = new List<HelpData>();
+            //ticker mouse over -> News
+            if (data.listOfNews != null)
+            {
+                HelpData helpData = new HelpData();
+                helpData.header = "NewsFeed";
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < data.listOfNews.Count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(data.listOfNews[i]);
+                }
+                helpData.text = builder.ToString();
+                listOfHelpData.Add(helpData);
+            }
+            else { Debug.LogWarning("Invalid data.listOfNews (Null)"); }
+            //ticker mouse over -> Adverts
+            if (data.listOfAdverts != null)
+            {
+                HelpData helpData = new HelpData();
+                helpData.header = string.Format("{0}A word from our Sponsors{1}", colourGood, colourEnd);
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < data.listOfAdverts.Count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(data.listOfAdverts[i]);
+                }
+                helpData.text = builder.ToString();
+                listOfHelpData.Add(helpData);
+            }
+            else { Debug.LogWarning("Invalid data.listOfAdverts (Null)"); }
+            //combine news and adverts (news always first, advert always second)
+            tickerTextHelp.SetHelpTooltip(listOfHelpData, -50);
+
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state
@@ -1137,7 +1176,7 @@ public class MainInfoUI : MonoBehaviour
     private List<HelpData> GetItemHelpList(ItemData data)
     {
         string tag0, tag1, tag2, tag3;
-        tag0 =  tag1 = tag2 = tag3 = "";
+        tag0 = tag1 = tag2 = tag3 = "";
         //Debug
         if (string.IsNullOrEmpty(data.tag0) == true)
         {
@@ -1154,8 +1193,8 @@ public class MainInfoUI : MonoBehaviour
         }
         return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
-    
-   
+
+
     /*/// <summary>
     /// Special method for the last tab, Help (hard wired info, not dynamic)
     /// </summary>
@@ -1505,7 +1544,7 @@ public class MainInfoUI : MonoBehaviour
         else { buttonForward.gameObject.SetActive(false); }
     }
 
-       
+
     /// <summary>
     /// Set background image and cancel button for the appropriate side
     /// </summary>

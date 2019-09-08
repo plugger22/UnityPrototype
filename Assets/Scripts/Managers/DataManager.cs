@@ -530,6 +530,8 @@ public class DataManager : MonoBehaviour
         currentInfoData.Reset();
         //news
         string tickerText = GameManager.instance.newsScript.GetNews();
+        List<string> listOfNews = GameManager.instance.newsScript.GetListOfCurrentNews();
+        List<string> listOfAdverts = GameManager.instance.newsScript.GetListOfCurrentAdverts();
         //package up all three priorities for each tab into a single list and add to currentInfoData
         for (int outer = 0; outer < (int)ItemTab.Count; outer++)
         {
@@ -558,6 +560,8 @@ public class DataManager : MonoBehaviour
             MainInfoData historyData = new MainInfoData(currentInfoData);
             int turn = GameManager.instance.turnScript.Turn;
             historyData.tickerText = tickerText;
+            historyData.listOfNews = listOfNews;
+            historyData.listOfAdverts = listOfAdverts;
             try
             { dictOfHistory.Add(turn, historyData); }
             catch (ArgumentNullException)
@@ -567,6 +571,8 @@ public class DataManager : MonoBehaviour
         }
         //Get news
         currentInfoData.tickerText = tickerText;
+        currentInfoData.listOfNews = listOfNews;
+        currentInfoData.listOfAdverts = listOfAdverts;
         return currentInfoData;
     }
 

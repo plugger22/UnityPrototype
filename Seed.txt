@@ -295,3 +295,83 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
 	
+Dev seed 31333 -> Sunday, 8 September 2019 10:28 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 10:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:09 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.listOfNews (Null)
+UnityEngine.Debug:LogWarning(Object)
+	MainInfoUI:SetMainInfo(MainInfoData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:750)
+	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:627)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:568)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 11:11 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.UpdateCurrentItemData () (at Assets/Scripts/Managers/DataManager.cs:561)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:231)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:352)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 11:14 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.listOfNews (Null)
+UnityEngine.Debug:LogWarning(Object)
+	MainInfoUI:SetMainInfo(MainInfoData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:750)
+	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:627)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:568)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 11:18 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.UpdateCurrentItemData () (at Assets/Scripts/Managers/DataManager.cs:562)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:231)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:352)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 11:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:23 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:27 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:33 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:35 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:40 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 11:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 12:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 12:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 12:08 PM
+City seed 5678 -> London, United Kingdom

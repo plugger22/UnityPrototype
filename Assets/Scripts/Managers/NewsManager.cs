@@ -19,9 +19,11 @@ public class NewsManager : MonoBehaviour
     [Range(0, 3)] public int numOfAdverts = 1;
 
     #region Save Compatible Data
-    [HideInInspector] public int newsIDCounter = 0;                            //used to sequentially number newsID's
+    [HideInInspector] public int newsIDCounter = 0;                             //used to sequentially number newsID's
     #endregion
 
+    private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
+    private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
 
     /// <summary>
     /// Initialisation
@@ -154,8 +156,10 @@ public class NewsManager : MonoBehaviour
     public string GetNews()
     {
         int index, count, limit;
-        string text;
+        string newsSnippet;
         string splicer = " ... Updating ... ";
+        listOfCurrentNews.Clear();
+        listOfCurrentAdverts.Clear();
         StringBuilder builder = new StringBuilder();
         //put a header to prevent the ticker start being already out of view on opening the MainInfoApp
         builder.AppendFormat("{0}Latest News Feed", splicer);
@@ -174,13 +178,14 @@ public class NewsManager : MonoBehaviour
                 {        
                     //randomly select item from list
                     index = Random.Range(0, count);
-                    text = listOfNewsItems[index].text;
-                    if (string.IsNullOrEmpty(text) == false)
+                    newsSnippet = listOfNewsItems[index].text;
+                    listOfCurrentNews.Add(newsSnippet);
+                    if (string.IsNullOrEmpty(newsSnippet) == false)
                     {
                         if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(text);
+                        builder.Append(newsSnippet);
                     }
-                    else { Debug.LogWarningFormat("Invalid newsItem text (Null or Empty) for listOfNewsItem[{0}]", index); }
+                    else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", index); }
                     //delete newsItem from list to prevent dupes
                     listOfNewsItems.RemoveAt(index);
                 }
@@ -203,13 +208,14 @@ public class NewsManager : MonoBehaviour
                 {
                     //randomly select item from list
                     index = Random.Range(0, count);
-                    text = listOfAdverts[index];
-                    if (string.IsNullOrEmpty(text) == false)
+                    newsSnippet = listOfAdverts[index];
+                    listOfCurrentAdverts.Add(newsSnippet);
+                    if (string.IsNullOrEmpty(newsSnippet) == false)
                     {
                         if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(text);
+                        builder.Append(newsSnippet);
                     }
-                    else { Debug.LogWarningFormat("Invalid Advert text (Null or Empty) for listOfAdverts[{0}]", index); }
+                    else { Debug.LogWarningFormat("Invalid Advert newsSnippet (Null or Empty) for listOfAdverts[{0}]", index); }
                     //delete Advert from list to prevent dupes
                     listOfAdverts.RemoveAt(index);
                 }
@@ -224,6 +230,12 @@ public class NewsManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    public List<string> GetListOfCurrentNews()
+    { return listOfCurrentNews; }
+
+    public List<string> GetListOfCurrentAdverts()
+    { return listOfCurrentAdverts; }
 
     //
     // - - - Debug - - -

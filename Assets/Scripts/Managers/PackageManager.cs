@@ -236,7 +236,9 @@ namespace packageAPI
     {
 
         public List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)ItemTab.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
-        public string tickerText;
+        public string tickerText;                                                                   //ticker text ready news string
+        public List<string> listOfNews = new List<string>();                                        //ticker text news string in individual snippets (excludes advert)
+        public List<string> listOfAdverts = new List<string>();                                     //ticker text news string ADVERTS in individual snippets                           
 
         public MainInfoData()
         {
