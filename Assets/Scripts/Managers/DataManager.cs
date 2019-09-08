@@ -524,34 +524,40 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public MainInfoData UpdateCurrentItemData()
     {
+        string tickerText = "Unknown";
+        List<string> listOfNews = new List<string>();
+        List<string> listOfAdverts = new List<string>();
         /*GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;*/
         List<ItemData> tempList = new List<ItemData>();
         //empty out data package prior to updating
         currentInfoData.Reset();
         //news
-        string tickerText = GameManager.instance.newsScript.GetNews();
-        List<string> listOfNews = GameManager.instance.newsScript.GetListOfCurrentNews();
-        List<string> listOfAdverts = GameManager.instance.newsScript.GetListOfCurrentAdverts();
-        //package up all three priorities for each tab into a single list and add to currentInfoData
-        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+        if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
         {
-            //add in order of priority -> High (top) / Med / Low (bottom)
-            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.High]);
-            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Medium]);
-            tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Low]);
-            //add to current info data
-            currentInfoData.arrayOfItemData[outer].AddRange(tempList);
-            //check list length -> need to know if too long so I can adjust to accommodate max. possible
-            if (tempList.Count > 20)
-            { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
-            //empty out temp list ready for next tab data set
-            tempList.Clear();
-        }
-        //empty out array lists ready for next turn
-        for (int outer = 0; outer < (int)ItemTab.Count; outer++)
-        {
-            for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
-            { arrayOfItemDataByPriority[outer, inner].Clear(); }
+            tickerText = GameManager.instance.newsScript.GetNews();
+            listOfNews = GameManager.instance.newsScript.GetListOfCurrentNews();
+            listOfAdverts = GameManager.instance.newsScript.GetListOfCurrentAdverts();
+            //package up all three priorities for each tab into a single list and add to currentInfoData
+            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+            {
+                //add in order of priority -> High (top) / Med / Low (bottom)
+                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.High]);
+                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Medium]);
+                tempList.AddRange(arrayOfItemDataByPriority[outer, (int)ItemPriority.Low]);
+                //add to current info data
+                currentInfoData.arrayOfItemData[outer].AddRange(tempList);
+                //check list length -> need to know if too long so I can adjust to accommodate max. possible
+                if (tempList.Count > 20)
+                { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
+                //empty out temp list ready for next tab data set
+                tempList.Clear();
+            }
+            //empty out array lists ready for next turn
+            for (int outer = 0; outer < (int)ItemTab.Count; outer++)
+            {
+                for (int inner = 0; inner < (int)ItemPriority.Count; inner++)
+                { arrayOfItemDataByPriority[outer, inner].Clear(); }
+            }
         }
         // archive to History dict
         if (dictOfHistory != null)

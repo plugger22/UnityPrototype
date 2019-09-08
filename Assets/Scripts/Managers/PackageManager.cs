@@ -774,13 +774,13 @@ namespace packageAPI
     [System.Serializable]
     public class NewsItem
     {
-        public int newsID;
+        /*public int newsID;*/
         public int timer;                                                   //countdown timer before item is removed from selection pool
         public string text;                                                 //unformatted text
 
         public NewsItem()
         {
-            newsID = GameManager.instance.newsScript.newsIDCounter++;
+            /*newsID = GameManager.instance.newsScript.newsIDCounter++;*/
             timer = GameManager.instance.newsScript.timerMaxItemTurns;
         }
     }

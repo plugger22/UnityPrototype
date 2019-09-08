@@ -375,3 +375,70 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 31333 -> Sunday, 8 September 2019 12:08 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 2:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31333 -> Sunday, 8 September 2019 2:44 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 158 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 132 records for tab 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 137 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 2:58 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 158 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 132 records for tab 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 137 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 31333 -> Sunday, 8 September 2019 3:22 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 164 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 132 records for tab 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING tempList has 140 records for tab 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

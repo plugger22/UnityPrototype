@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: AdvertSeedtronics
+  m_EditorClassIdentifier: 
+  descriptor: Adds for Seedtronic corporation specialising in food products
+  category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  randomList:
+  - Seedtronics insist that our burgers use only fresh, pure organic, maggots
+  - Seedtronics, the leader in protein enriched, maggot based foodproducts
+  - You can rely on Seedtronics pure, organic maggots to taste great
+  - The best burger a man can get. Seedtronics organic Maggot burgers
+  - You won't find a better Maggot burger on the planet. Seedtronics burgers, jammed
+    full of protein

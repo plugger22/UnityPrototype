@@ -18,9 +18,9 @@ public class NewsManager : MonoBehaviour
     [Tooltip("How many adverts will be selected (if available) per turn")]
     [Range(0, 3)] public int numOfAdverts = 1;
 
-    #region Save Compatible Data
+    /*#region Save Compatible Data
     [HideInInspector] public int newsIDCounter = 0;                             //used to sequentially number newsID's
-    #endregion
+    #endregion*/
 
     private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
     private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
@@ -264,7 +264,7 @@ public class NewsManager : MonoBehaviour
                     subLength = 0;
                     if (length > 50)
                     {
-                        builder.AppendFormat(" id {0}, t {1}, {2}", item.newsID, item.timer, item.text.Substring(0, 50));
+                        builder.AppendFormat(" t {0}, {1}", item.timer, item.text.Substring(0, 50));
                         do
                         {
                             subLength += 50;
@@ -278,7 +278,7 @@ public class NewsManager : MonoBehaviour
                         }
                         while (subLength < length);
                     }
-                    else { builder.AppendFormat(" id {0}, t {1}, {2}", item.newsID, item.timer, item.text); }
+                    else { builder.AppendFormat(" t {0}, {1}", item.timer, item.text); }
                     builder.AppendLine();
                 }
                 else { Debug.LogWarningFormat("Invalid newsItem (Null) for listOfNewsItems[{0}]", i); }

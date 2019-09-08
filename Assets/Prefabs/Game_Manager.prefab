@@ -1230,6 +1230,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7ad610f79786d994aa5985503ce7f18b, type: 2}
   arrayOfAdvertTextLists:
   - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
+  - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
@@ -2998,7 +2999,6 @@ MonoBehaviour:
   timerMaxItemTurns: 4
   numOfNewsItems: 1
   numOfAdverts: 1
-  newsIDCounter: 0
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1
