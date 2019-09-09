@@ -139,6 +139,9 @@ public class SaveDataData
     public List<ItemData> listOfDelayedItemData = new List<ItemData>();
     public List<SaveMainInfo> listOfHistoryValue = new List<SaveMainInfo>();
     public List<int> listOfHistoryKey = new List<int>();
+    //Newsfeed
+    public List<NewsItem> listOfNewsItems = new List<NewsItem>();
+    public List<string> listOfAdverts = new List<string>();
     
 }
 #endregion

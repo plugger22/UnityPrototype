@@ -197,9 +197,9 @@ public class MainInfoUI : MonoBehaviour
     string colourGrey;
     string colourAlert;
     string colourGood;
-    /*string colourSide;
+    string colourBlue;
     string colourNormal;
-    string colourError;
+    /*string colourError;
     string colourInvalid;
     string colourCancel;*/
     string colourEnd;
@@ -690,10 +690,12 @@ public class MainInfoUI : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
         else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
@@ -739,18 +741,25 @@ public class MainInfoUI : MonoBehaviour
             if (data.listOfNews != null)
             {
                 HelpData helpData = new HelpData();
-                helpData.header = "NewsFeed";
+                helpData.header = string.Format("{0}NewsFeed{1}", colourBlue, colourEnd);
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < data.listOfNews.Count; i++)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                     builder.Append(data.listOfNews[i]);
                 }
+                //advert
+                for (int i = 0; i < data.listOfAdverts.Count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(string.Format("{0}<font=\"Bangers SDF\"><size=110%><cspace=1em>{1}</cspace></size></font>{2}", colourNormal, data.listOfAdverts[i], colourEnd));
+                }
                 helpData.text = builder.ToString();
                 listOfHelpData.Add(helpData);
             }
             else { Debug.LogWarning("Invalid data.listOfNews (Null)"); }
-            //ticker mouse over -> Adverts
+
+            /*//ticker mouse over -> Adverts
             if (data.listOfAdverts != null)
             {
                 HelpData helpData = new HelpData();
@@ -759,15 +768,15 @@ public class MainInfoUI : MonoBehaviour
                 for (int i = 0; i < data.listOfAdverts.Count; i++)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(data.listOfAdverts[i]);
+                    builder.Append(string.Format("{0}<font=\"Bangers SDF\"><size=110%><cspace=1em>{1}</cspace></size></font>{2}", colourNeutral, data.listOfAdverts[i], colourEnd));
                 }
                 helpData.text = builder.ToString();
                 listOfHelpData.Add(helpData);
             }
-            else { Debug.LogWarning("Invalid data.listOfAdverts (Null)"); }
+            else { Debug.LogWarning("Invalid data.listOfAdverts (Null)"); }*/
+
             //combine news and adverts (news always first, advert always second)
             tickerTextHelp.SetHelpTooltip(listOfHelpData, -50);
-
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state

@@ -18,10 +18,6 @@ public class NewsManager : MonoBehaviour
     [Tooltip("How many adverts will be selected (if available) per turn")]
     [Range(0, 3)] public int numOfAdverts = 1;
 
-    /*#region Save Compatible Data
-    [HideInInspector] public int newsIDCounter = 0;                             //used to sequentially number newsID's
-    #endregion*/
-
     private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
     private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
 
@@ -288,6 +284,29 @@ public class NewsManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid newsItem (Null) for listOfNewsItems[{0}]", i); }
             }
         }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// debug display of listOfAdverts
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayAdverts()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfAdverts{0}", "\n");
+        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+        if (listOfAdverts != null)
+        {
+            int count = listOfAdverts.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { builder.AppendFormat(" {0}{1}", listOfAdverts[i], "\n"); }
+            }
+            else { builder.AppendFormat("{0} no records found", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfAdverts (Null)"); }
         return builder.ToString();
     }
 

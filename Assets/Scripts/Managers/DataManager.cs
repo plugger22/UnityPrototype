@@ -145,8 +145,6 @@ public class DataManager : MonoBehaviour
     private MainInfoData currentInfoData = new MainInfoData();                                      //rolling current turn MainInfoData package
     private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
     private List<ItemData> listOfDelayedItemData = new List<ItemData>();
-    //Adverts
-    private List<string> listOfAdverts = new List<string>();
 
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
@@ -162,6 +160,8 @@ public class DataManager : MonoBehaviour
 
     //NewsFeed
     private List<NewsItem> listOfNewsItems = new List<NewsItem>();
+    //Adverts
+    private List<string> listOfAdverts = new List<string>();
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -7236,6 +7236,20 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid newsItem (Null)"); }
     }
 
+    /// <summary>
+    /// Clear out and then refill listOfNewsItems with loaded save game data
+    /// </summary>
+    /// <param name="listOfAdverts"></param>
+    public void SetListOfNewsItems(List<NewsItem> listOfNews)
+    {
+        if (listOfAdverts != null)
+        {
+            listOfNewsItems.Clear();
+            listOfNewsItems.AddRange(listOfNews);
+        }
+        else { Debug.LogError("Invalid listOfNews (Null)"); }
+    }
+
     //
     // - - - Adverts
     //
@@ -7265,6 +7279,20 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfAdverts (Null)"); }
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfAdverts with loaded save game data
+    /// </summary>
+    /// <param name="listOfAdverts"></param>
+    public void SetListOfAdverts(List<string> listOfAdverts)
+    {
+        if (listOfAdverts != null)
+        {
+            listOfAdverts.Clear();
+            listOfAdverts.AddRange(listOfAdverts);
+        }
+        else { Debug.LogError("Invalid listOfAdverts (Null)"); }
     }
 
     //new methods above here

@@ -854,6 +854,19 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfHistoryNemesis.AddRange(listOfHistoryNemesis); }
         else { Debug.LogError("Invalid listOfHistoryNemesisMove (Null)"); }
         #endregion
+
+        #region newsFeed
+        //news items
+        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        if (listOfNewsItems != null)
+        { write.dataData.listOfNewsItems.AddRange(listOfNewsItems); }
+        else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
+        //adverts
+        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+        if (listOfAdverts != null)
+        { write.dataData.listOfAdverts.AddRange(listOfAdverts); }
+        else { Debug.LogError("Invalid listOfAdverts (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -2416,6 +2429,11 @@ public class FileManager : MonoBehaviour
         #region history
         GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
         GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
+        #endregion
+
+        #region News
+        GameManager.instance.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
+        GameManager.instance.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
         #endregion
     }
     #endregion
