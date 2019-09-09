@@ -23,3 +23,4 @@ MonoBehaviour:
   - Outgoing
   - Warm
   - Seeks adventure
+  isTestForDuplicates: 1

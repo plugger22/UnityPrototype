@@ -34,3 +34,4 @@ MonoBehaviour:
   - Traffic Cop
   - Airborne Patrol Cop
   - Riot Squad Cop
+  isTestForDuplicates: 1

@@ -41,3 +41,4 @@ MonoBehaviour:
   - Backyard Doc
   - Smuggler
   - Vagrant
+  isTestForDuplicates: 1

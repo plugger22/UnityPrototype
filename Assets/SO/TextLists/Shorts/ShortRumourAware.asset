@@ -28,3 +28,4 @@ MonoBehaviour:
   - has been told that
   - reports that
   - has heard on the grapevine that
+  isTestForDuplicates: 1

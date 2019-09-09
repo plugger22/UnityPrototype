@@ -38,3 +38,4 @@ MonoBehaviour:
   - Chauffeur
   - Drone Operator
   - Mechanic
+  isTestForDuplicates: 1

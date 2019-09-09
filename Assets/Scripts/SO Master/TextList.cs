@@ -17,7 +17,7 @@ public class TextList : ScriptableObject
 
     [Header("Testing")]
     [Tooltip("If true randomList is tested for duplicates (use for Textlists that contain short strings, avoid for longer strings), not if false")]
-    public bool isTestForDuplicates = true;
+    public bool isTestForDuplicates;
 
     /// <summary>
     /// returns a randomly selected record from the list, null if a problem (default) but if 'isNull' is false returns string 'Unknown'

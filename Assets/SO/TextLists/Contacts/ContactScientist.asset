@@ -34,3 +34,4 @@ MonoBehaviour:
   - Laboratory Technician
   - Toxicologist
   - Environmental Scientist
+  isTestForDuplicates: 1

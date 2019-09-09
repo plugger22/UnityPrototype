@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MissionManager missionScript;              //Mission Manager
     [HideInInspector] public ColourManager colourScript;                //Colour Manager
     [HideInInspector] public TestManager testScript;                    //Test Manager
+    [HideInInspector] public TextManager textScript;                    //Text Manager
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;           //actor tooltip static instance
@@ -203,6 +204,7 @@ public class GameManager : MonoBehaviour
         missionScript = GetComponent<MissionManager>();
         colourScript = GetComponent<ColourManager>();
         testScript = GetComponent<TestManager>();
+        textScript = GetComponent<TextManager>();
         tooltipScript = GetComponent<TooltipManager>();
         newsScript = GetComponent<NewsManager>();
         sideScript = GetComponent<SideManager>();
@@ -279,6 +281,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(missionScript != null, "Invalid missionScript (Null)");
         Debug.Assert(colourScript != null, "Invalid colourScript (Null)");
         Debug.Assert(testScript != null, "Invalid testScript (Null)");
+        Debug.Assert(textScript != null, "Invalid textScript (Null)");
         Debug.Assert(validateScript != null, "Invalid validateScript (Null)");
         Debug.Assert(tooltipScript != null, "Invalid tooltipScript (Null)");
         Debug.Assert(newsScript != null, "Invalid newsScript (Null)");
@@ -451,6 +454,10 @@ public class GameManager : MonoBehaviour
         //File Manager
         startMethod.handler = fileScript.Initialise;
         startMethod.className = "FileManager";
+        listOfGlobalMethods.Add(startMethod);
+        //Text Manager
+        startMethod.handler = textScript.Initialise;
+        startMethod.className = "TextManager";
         listOfGlobalMethods.Add(startMethod);
         //Statistic Manager -> InitialiseEarly
         startMethod.handler = statScript.InitialiseEarly;

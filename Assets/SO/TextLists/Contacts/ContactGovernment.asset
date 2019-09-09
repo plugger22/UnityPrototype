@@ -34,3 +34,4 @@ MonoBehaviour:
   - Compliance Manager
   - Air Quality Regulator
   - Records Clerk
+  isTestForDuplicates: 1

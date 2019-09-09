@@ -34,3 +34,4 @@ MonoBehaviour:
   - Financial Manager
   - Logistics Manager
   - Procurement Manager
+  isTestForDuplicates: 1

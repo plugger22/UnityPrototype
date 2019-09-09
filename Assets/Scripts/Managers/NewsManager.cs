@@ -190,7 +190,11 @@ public class NewsManager : MonoBehaviour
                     listOfNewsItems.RemoveAt(index);
                 }
             }
-            else { builder.AppendFormat("{0}City News Blackout in place. Strikes at the Server Farm", splicer); }
+            else
+            {
+                builder.AppendFormat("{0}City News Blackout in place. Strikes at the Server Farm", splicer);
+                listOfCurrentNews.Add("City News Blackout in place. Strikes at the Server Farm");
+            }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         //

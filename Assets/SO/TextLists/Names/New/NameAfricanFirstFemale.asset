@@ -16,3 +16,4 @@ MonoBehaviour:
   randomList:
   - Innocence
   - Keba
+  isTestForDuplicates: 1

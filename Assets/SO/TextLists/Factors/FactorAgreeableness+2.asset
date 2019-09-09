@@ -22,3 +22,4 @@ MonoBehaviour:
   - Warm
   - Trusting
   - Empathetic
+  isTestForDuplicates: 1

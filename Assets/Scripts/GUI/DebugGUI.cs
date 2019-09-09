@@ -892,6 +892,20 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.dataScript.DebugActivateAllCures();
             }
 
+            //twentyFifth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "Export Data"))
+            {
+                Debug.Log("[Dbg] Button -> Export Data");
+                GameManager.instance.textScript.Export();
+            }
+
+            //twentySixth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 25 + button_height * 25, button_width, button_height), "Import Data"))
+            {
+                Debug.Log("[Dbg] Button -> Import Data");
+                GameManager.instance.textScript.Import();
+            }
+
             //
             // - - - Level Menu - - -
             //

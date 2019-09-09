@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4565720453740776}
   - component: {fileID: 114736970613289560}
   - component: {fileID: 114558055555623972}
+  - component: {fileID: 114678931324486554}
   - component: {fileID: 114680662969460860}
   - component: {fileID: 114339811107641630}
   - component: {fileID: 114379107075524332}
@@ -3065,6 +3066,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544963c1e9444e144a825cd140dd4f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114678931324486554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8c5c5f8f23a0c46a201082d10aa2e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxNumOfSO: 5
+  listOfTextLists:
+  - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
+  - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
 --- !u!114 &114680662969460860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3307,6 +3323,7 @@ MonoBehaviour:
   missionScript: {fileID: 0}
   colourScript: {fileID: 0}
   testScript: {fileID: 0}
+  textScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -3331,7 +3348,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 31333
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

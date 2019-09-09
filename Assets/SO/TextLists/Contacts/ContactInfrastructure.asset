@@ -34,3 +34,4 @@ MonoBehaviour:
   - Water Analyst
   - Process Technician
   - Telemetry Engineer
+  isTestForDuplicates: 1

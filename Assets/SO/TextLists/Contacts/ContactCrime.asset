@@ -34,3 +34,4 @@ MonoBehaviour:
   - Gang Extorter
   - Gang Blackmailer
   - Gang Lawyer
+  isTestForDuplicates: 1

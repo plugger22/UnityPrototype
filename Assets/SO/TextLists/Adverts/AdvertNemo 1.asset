@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: AdvertNemo
+  m_Name: AdvertNemo 1
   m_EditorClassIdentifier: 
   descriptor: Adds for nemo corporation specialising in travel getaways
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}

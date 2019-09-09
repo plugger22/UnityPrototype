@@ -44,3 +44,4 @@ MonoBehaviour:
   - Joiner
   - Locksmith
   - Surveyor
+  isTestForDuplicates: 1

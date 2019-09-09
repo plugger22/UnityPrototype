@@ -1,112 +1,37 @@
 
-Dev seed 51090 -> Thursday, 5 September 2019 3:41 PM
+Dev seed 11190 -> Monday, 9 September 2019 9:21 AM
 City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: StartIndex cannot be less than zero.
-Parameter name: startIndex
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.Substring (System.Int32 startIndex) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:179)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
+ERROR Failed to write TEXT FROM FILE "C:/Users/cameron/AppData/LocalLow/DefaultCompany/Prototype\text0.json", error "Value cannot be null.
+Parameter name: path"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TextManager:Export() (at Assets/Scripts/Managers/TextManager.cs:69)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:899)
+	ERROR Failed to write TEXT FROM FILE "C:/Users/cameron/AppData/LocalLow/DefaultCompany/Prototype\text1.json", error "Value cannot be null.
+Parameter name: path"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TextManager:Export() (at Assets/Scripts/Managers/TextManager.cs:69)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:899)
 	
-Dev seed 51090 -> Thursday, 5 September 2019 3:44 PM
-City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
-Parameter name: startIndex
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.Substring (System.Int32 startIndex) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:179)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
-	
-Dev seed 51090 -> Thursday, 5 September 2019 3:49 PM
-City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
-Parameter name: startIndex
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.Substring (System.Int32 startIndex) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:182)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
-	
-Dev seed 51090 -> Thursday, 5 September 2019 3:56 PM
+Dev seed 57149 -> Monday, 9 September 2019 9:28 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 51090 -> Thursday, 5 September 2019 3:57 PM
-City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
-Parameter name: startIndex
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.String.Substring (System.Int32 startIndex) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:182)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
-	
-Dev seed 51090 -> Thursday, 5 September 2019 4:06 PM
-City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: Index and length must refer to a location within the string.
-Parameter name: length
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:184)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
-	
-Dev seed 51090 -> Thursday, 5 September 2019 4:12 PM
-City seed 5678 -> London, United Kingdom
-ASSERT ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
-Parameter name: startIndex
-System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	NewsManager.DebugDisplayNewsItems () (at Assets/Scripts/Managers/NewsManager.cs:182)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1562)
-	
-Dev seed 51090 -> Thursday, 5 September 2019 4:26 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Thursday, 5 September 2019 4:31 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 1:59 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 2:12 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 2:14 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 2:43 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 2:55 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 3:05 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 3:08 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 3:09 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 3:11 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 3:16 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 5:40 PM
-WARNING [Val] ValidateSO: MISMATCH on TextList, array 49, assets 50 records
+Dev seed 27961 -> Monday, 9 September 2019 9:45 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1488)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1450)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:741)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:341)
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1492)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 51090 -> Friday, 6 September 2019 5:45 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 5:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51090 -> Friday, 6 September 2019 5:55 PM
-City seed 5678 -> London, United Kingdom
+Dev seed 42803 -> Monday, 9 September 2019 10:04 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1492)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
 WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -116,7 +41,7 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -126,7 +51,7 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -136,18 +61,8 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Unrecognised turnTopicType "Campaign"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1927)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "CamResA1Opt0", topic CamResA1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "FamC0Opt0", topic FamC0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -156,8 +71,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "CamResA1Opt1", topic CamResA1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "FamC0Opt1", topic FamC0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -166,8 +81,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "CamResA1Opt2", topic CamResA1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "FamC0Opt2", topic FamC0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -176,8 +91,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid data.sprite (Null or Empty) for topic "CamResA1"
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid data.sprite (Null or Empty) for topic "FamC0"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
 	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
@@ -187,20 +102,14 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
-Dev seed 31333 -> Friday, 6 September 2019 5:55 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 33334 -> Friday, 6 September 2019 8:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Friday, 6 September 2019 8:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Friday, 6 September 2019 8:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Friday, 6 September 2019 8:35 PM
-City seed 5678 -> London, United Kingdom
+Dev seed 55194 -> Monday, 9 September 2019 10:09 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1492)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
 WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -210,7 +119,7 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -220,7 +129,7 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
 	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
@@ -230,8 +139,8 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ActPolRES1Opt0", topic ActPolRES1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActGea1Opt0", topic ActGeaRES1
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -240,8 +149,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ActPolRES1Opt1", topic ActPolRES1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActGea1Opt1", topic ActGeaRES1
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -250,8 +159,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ActPolRES1Opt2", topic ActPolRES1
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActGea1Opt2", topic ActGeaRES1
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
 	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
@@ -260,343 +169,5 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	
-Dev seed 31333 -> Friday, 6 September 2019 8:44 PM
-City seed 5678 -> London, United Kingdom
-WARNING Unrecognised tag "Actor"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3782)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Unrecognised tag "Actor"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3782)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1933)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Unrecognised tag "ContactLong"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3782)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1933)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 10:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 10:34 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:09 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid data.listOfNews (Null)
-UnityEngine.Debug:LogWarning(Object)
-	MainInfoUI:SetMainInfo(MainInfoData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:750)
-	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:627)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:568)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 11:11 AM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-DataManager.UpdateCurrentItemData () (at Assets/Scripts/Managers/DataManager.cs:561)
-	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:231)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:352)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 11:14 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid data.listOfNews (Null)
-UnityEngine.Debug:LogWarning(Object)
-	MainInfoUI:SetMainInfo(MainInfoData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:750)
-	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:627)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:568)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 11:18 AM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-DataManager.UpdateCurrentItemData () (at Assets/Scripts/Managers/DataManager.cs:562)
-	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:231)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:352)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 11:20 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:23 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:27 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:32 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:33 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:35 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:40 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:41 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:43 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 11:46 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 12:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 12:05 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 12:08 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 2:35 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31333 -> Sunday, 8 September 2019 2:44 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 158 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 137 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 2:58 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 158 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 137 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 3:22 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 164 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 140 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 5:52 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 164 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 140 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 8:05 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 164 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 140 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 31333 -> Sunday, 8 September 2019 8:26 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 164 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 132 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 140 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 26123 -> Sunday, 8 September 2019 8:29 PM
-City seed 5678 -> London, United Kingdom
-WARNING tempList has 104 records for tab 0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 99 records for tab 3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING tempList has 80 records for tab 5
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:551)
-	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:564)
-	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:546)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 56485 -> Sunday, 8 September 2019 8:32 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean) (at Assets/Scripts/Managers/TopicManager.cs:3791)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ResGen0Opt0", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ResGen0Opt1", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid belief (Null) for option "ResGen0Opt2", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3545)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:373)
-	WARNING Invalid data.sprite (Null or Empty) for topic "ResGen0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 56537 -> Sunday, 8 September 2019 8:35 PM
-City seed 5678 -> London, United Kingdom
