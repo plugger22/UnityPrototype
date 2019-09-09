@@ -2082,6 +2082,9 @@ public class TopicManager : MonoBehaviour
                 string newsSnippet = CheckText(turnOption.news, false);
                 NewsItem item = new NewsItem() { text = newsSnippet };
                 GameManager.instance.dataScript.AddNewsItem(item);
+                /*//debug (add two more)
+                GameManager.instance.dataScript.AddNewsItem(item);
+                GameManager.instance.dataScript.AddNewsItem(item);*/
                 Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
             }
             //outcome dialogue

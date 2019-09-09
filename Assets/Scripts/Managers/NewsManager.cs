@@ -13,10 +13,10 @@ public class NewsManager : MonoBehaviour
     [Header("News Items")]
     [Tooltip("How many turns a given newsItem will stay in the selection pool before being deleted (if it's selected then it's also deleted)")]
     [Range(1, 10)] public int timerMaxItemTurns = 4;
-    [Tooltip("How many newsItems will be selected (if available) per turn")]
+    [Tooltip("How many newsItems will be selected (if available) per turn. Also gives identical number of Adverts")]
     [Range(0, 3)] public int numOfNewsItems = 1;
-    [Tooltip("How many adverts will be selected (if available) per turn")]
-    [Range(0, 3)] public int numOfAdverts = 1;
+    /*[Tooltip("How many adverts will be selected (if available) per turn")]
+    [Range(0, 3)] public int numOfAdverts = 1;*/
 
     private List<string> listOfCurrentNews = new List<string>();                       //news feed cut up into individual News snippets with the last record always being an advert (excludes Adverts)
     private List<string> listOfCurrentAdverts = new List<string>();                    //news feed cut up into individual Advert snippets with the last record always being an advert (excludes News)
@@ -146,13 +146,13 @@ public class NewsManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns single newsFeed string (splices together selected newsItems)
+    /// returns single newsFeed string (splices together selected newsItems). Sequence is NewsItem + Advert repeated (1 of each)
     /// </summary>
     /// <returns></returns>
     public string GetNews()
     {
-        int index, count, limit;
-        string newsSnippet;
+        int indexNews, indexAdvert, countNews, countAdvert, limit;
+        string newsSnippet, advert;
         string splicer = " ... Updating ... ";
         listOfCurrentNews.Clear();
         listOfCurrentAdverts.Clear();
@@ -165,68 +165,67 @@ public class NewsManager : MonoBehaviour
         List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
         if (listOfNewsItems != null)
         {
-            count = listOfNewsItems.Count;
-            if (count > 0)
+            List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+            if (listOfAdverts != null)
             {
-                //get num required per turn, capped by number available
-                limit = Mathf.Min(count, numOfNewsItems);
-                for (int i = 0; i < limit; i++)
-                {        
-                    //randomly select item from list
-                    index = Random.Range(0, count);
-                    newsSnippet = listOfNewsItems[index].text;
-                    listOfCurrentNews.Add(newsSnippet);
-                    if (string.IsNullOrEmpty(newsSnippet) == false)
+                countNews = listOfNewsItems.Count;
+                if (countNews > 0)
+                {
+                    //get num required per turn, capped by number available
+                    limit = Mathf.Min(countNews, numOfNewsItems);
+                    for (int i = 0; i < limit; i++)
                     {
-                        if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(newsSnippet);
+                        //randomly select item from list
+                        indexNews = Random.Range(0, listOfNewsItems.Count);
+                        newsSnippet = listOfNewsItems[indexNews].text;
+                        listOfCurrentNews.Add(newsSnippet);
+                        if (string.IsNullOrEmpty(newsSnippet) == false)
+                        {
+                            if (builder.Length > 0) { builder.Append(splicer); }
+                            builder.Append(newsSnippet);
+                            //
+                            // - - - ADVERT -> randomly select item from list
+                            //
+                            countAdvert = listOfAdverts.Count;
+                            if (countAdvert == 0)
+                            {
+                                //reinitialise
+                                GameManager.instance.dataScript.InitialiseAdvertList();
+                                countAdvert = listOfAdverts.Count;
+                            }
+                            if (countAdvert > 0)
+                            {
+                                indexAdvert = Random.Range(0, listOfAdverts.Count);
+                                advert = listOfAdverts[indexAdvert];
+                                listOfCurrentAdverts.Add(advert);
+                                if (string.IsNullOrEmpty(advert) == false)
+                                {
+                                    if (builder.Length > 0) { builder.Append(splicer); }
+                                    builder.Append(advert);
+                                }
+                                else { Debug.LogWarningFormat("Invalid advert (Null or Empty) for listOfAdverts[{0}]", indexAdvert); }
+
+                                //delete Advert from list to prevent dupes
+                                listOfAdverts.RemoveAt(indexAdvert);
+                            }
+                            else { Debug.LogWarning("Invalid listOfAdverts (CountAdvert is Zero AFTER Reinitialising)"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", indexNews); }
+                        //delete newsItem from list to prevent dupes
+                        listOfNewsItems.RemoveAt(indexNews);
                     }
-                    else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", index); }
-                    //delete newsItem from list to prevent dupes
-                    listOfNewsItems.RemoveAt(index);
+                }
+                else
+                {
+                    builder.AppendFormat("{0}City News Blackout in force. Strikes at the Server Farm", splicer);
+                    listOfCurrentNews.Add("City News Blackout in force. Strikes at the Server Farm");
                 }
             }
-            else
-            {
-                builder.AppendFormat("{0}City News Blackout in place. Strikes at the Server Farm", splicer);
-                listOfCurrentNews.Add("City News Blackout in place. Strikes at the Server Farm");
-            }
+            else { Debug.LogError("Invalid listOfAdverts (Null)"); }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
-        //
-        // - - - Adverts
-        //
-        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
-        if (listOfAdverts != null)
-        {
-            count = listOfAdverts.Count;
-            if (count > 0)
-            {
-                //get num required per turn, capped by number available
-                limit = Mathf.Min(count, numOfAdverts);
-                for (int i = 0; i < limit; i++)
-                {
-                    //randomly select item from list
-                    index = Random.Range(0, count);
-                    newsSnippet = listOfAdverts[index];
-                    listOfCurrentAdverts.Add(newsSnippet);
-                    if (string.IsNullOrEmpty(newsSnippet) == false)
-                    {
-                        if (builder.Length > 0) { builder.Append(splicer); }
-                        builder.Append(newsSnippet);
-                    }
-                    else { Debug.LogWarningFormat("Invalid Advert newsSnippet (Null or Empty) for listOfAdverts[{0}]", index); }
-                    //delete Advert from list to prevent dupes
-                    listOfAdverts.RemoveAt(index);
-                }
-            }
-            //check if list empty and needs to be reinitialised
-            if (listOfAdverts.Count == 0)
-            { GameManager.instance.dataScript.InitialiseAdvertList(); }
-        }
-        else { Debug.LogError("Invalid listOfAdverts (Null)"); }
         //fail safe
-        if (builder.Length == 0) { builder.Append("News BlackOut in force"); }
+        if (builder.Length == 0) { builder.Append("News BlackOut in place"); }
         return builder.ToString();
     }
 

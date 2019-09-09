@@ -737,46 +737,31 @@ public class MainInfoUI : MonoBehaviour
             //ticker tap
             SetTicker(data.tickerText);
             List<HelpData> listOfHelpData = new List<HelpData>();
-            //ticker mouse over -> News
+            //ticker mouse over -> News + advert repeated sequence
             if (data.listOfNews != null)
             {
                 HelpData helpData = new HelpData();
-                helpData.header = string.Format("{0}NewsFeed{1}", colourBlue, colourEnd);
+                helpData.header = string.Format("{0}NewsFeed{1}", colourNeutral, colourEnd);
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < data.listOfNews.Count; i++)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(data.listOfNews[i]);
-                }
-                //advert
-                for (int i = 0; i < data.listOfAdverts.Count; i++)
-                {
-                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(string.Format("{0}<font=\"Bangers SDF\"><size=110%><cspace=1em>{1}</cspace></size></font>{2}", colourNormal, data.listOfAdverts[i], colourEnd));
+                    builder.AppendFormat("<size=110%>{0}{1}{2}</size>", colourNormal, data.listOfNews[i], colourEnd);
+                    //advert -> interleaved between newsItems
+                    if (data.listOfAdverts.Count >= i)
+                    {
+                        if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                        builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
+                    }
+                    else { Debug.LogWarningFormat("Mismatch on count. ListOfAdverts has {0} records, listOfNews has {1} records. Should be the same", data.listOfAdverts.Count, data.listOfNews.Count); }
                 }
                 helpData.text = builder.ToString();
                 listOfHelpData.Add(helpData);
             }
             else { Debug.LogWarning("Invalid data.listOfNews (Null)"); }
 
-            /*//ticker mouse over -> Adverts
-            if (data.listOfAdverts != null)
-            {
-                HelpData helpData = new HelpData();
-                helpData.header = string.Format("{0}A word from our Sponsors{1}", colourGood, colourEnd);
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < data.listOfAdverts.Count; i++)
-                {
-                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                    builder.Append(string.Format("{0}<font=\"Bangers SDF\"><size=110%><cspace=1em>{1}</cspace></size></font>{2}", colourNeutral, data.listOfAdverts[i], colourEnd));
-                }
-                helpData.text = builder.ToString();
-                listOfHelpData.Add(helpData);
-            }
-            else { Debug.LogWarning("Invalid data.listOfAdverts (Null)"); }*/
-
             //combine news and adverts (news always first, advert always second)
-            tickerTextHelp.SetHelpTooltip(listOfHelpData, -50);
+            tickerTextHelp.SetHelpTooltip(listOfHelpData, -50, 250);
             //set modal status
             GameManager.instance.guiScript.SetIsBlocked(true);
             //set game state

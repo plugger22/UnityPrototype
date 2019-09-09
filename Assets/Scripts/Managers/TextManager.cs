@@ -15,7 +15,7 @@ public class TextManager : MonoBehaviour
     [Tooltip("Add SO TextLists here. Only the maxNumOfSO files in the list will be accomodated, any extras will be ignored")]
     public List<TextList> listOfTextLists;
 
-    private static readonly string SAVE_FILE = "text";
+    private static readonly string SAVE_FILE = "textfile";
     private string filename;
     private string jsonWrite;
     private string jsonRead;

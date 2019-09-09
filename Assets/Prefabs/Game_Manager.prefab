@@ -2999,7 +2999,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerMaxItemTurns: 4
   numOfNewsItems: 1
-  numOfAdverts: 1
 --- !u!114 &114656477723242970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3348,7 +3347,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 50763
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
