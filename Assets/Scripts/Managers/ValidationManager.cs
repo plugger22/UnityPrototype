@@ -84,7 +84,7 @@ public class ValidationManager : MonoBehaviour
 
     [Header("Topic Data")]
     [Tooltip("Max length of a topic (excludes tagged data) in chars (default is a twitter's worth of 140 chars")]
-    [Range(100, 200)] public int maxTopicTextLength = 140;
+    [Range(100, 200)] public int maxTopicTextLength = 150;
     [Tooltip("Max length of a topic Option text (excludes tagged data) in chars")]
     [Range(10, 50)] public int maxOptionTextLength = 40;
 
@@ -330,6 +330,10 @@ public class ValidationManager : MonoBehaviour
     #endregion
 
     #endregion
+
+    //
+    // - - - Validation checks (Session start)
+    //
 
     #region ValidateTargets
     /// <summary>
@@ -750,7 +754,8 @@ public class ValidationManager : MonoBehaviour
                         if (textLength > maxTopicTextLength)
                         { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}", 
                             textLength, maxTopicTextLength, topicName, "\n"); }
-
+                        //check topic text tags
+                        GameManager.instance.topicScript.CheckText(topic.text, false, true, topicName);
                         //listOfOptions
                         if (topic.listOfOptions != null)
                         {
@@ -841,6 +846,17 @@ public class ValidationManager : MonoBehaviour
                                             {
                                                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Mood Effect (NOT isMoodEffect True), effect \"{1}\", option {2}, topic {3}{4}",
                                                     option.moodEffect.typeOfEffect.name, option.moodEffect.name, option.name, topicName, "\n");
+                                            }
+                                        }
+                                        //News snippet (check text tags are valid), only if a news snippet is present
+                                        if (string.IsNullOrEmpty(option.news) == false)
+                                        {
+                                            GameManager.instance.topicScript.CheckText(option.news, false, true, option.name);
+                                            //check max length
+                                            if (option.news.Length > maxTopicTextLength)
+                                            {
+                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Option NEWS text is overlength (is {0} chars, should be <= {1}) for option \"{2}\", topic {3}{4}",
+                                                  option.news.Length, maxTopicTextLength, option.name, topicName, "\n");
                                             }
                                         }
                                     }

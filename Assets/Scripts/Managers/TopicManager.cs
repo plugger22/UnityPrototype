@@ -3624,11 +3624,12 @@ public class TopicManager : MonoBehaviour
     /// <summary>
     /// takes text from any topic source, checks for tags, eg. '[actor]', and replaces with context relevant info, eg. actor arc name. Returns Null if a problem
     /// isColourHighlight TRUE -> Colour and bold highlights certain texts (colourAlert), no colour formatting if false, default True
+    /// isValidation true for validating topic.text/topicOption.news having correct tags, false otherwise(iscolourHighlighting ignored for validation), objectName only required for validation checks
     /// Highlights -> actor.arc, node.nodeName
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public string CheckText(string text, bool isColourHighlighting = true)
+    public string CheckText(string text, bool isColourHighlighting = true, bool isValidation = false, string objectName = "Unknown")
     {
         string colourCheckText = colourAlert; //highlight colour
         string checkedText = null;
@@ -3653,136 +3654,173 @@ public class TopicManager : MonoBehaviour
                 {
                     case "actor":
                         //actor arc name
-                        if (tagActorID > -1)
+                        if (isValidation == false)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                            if (actor != null)
+                            if (tagActorID > -1)
                             {
-                                if (isColourHighlighting == true)
-                                { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
-                                else { replaceText = actor.arc.name; }
+                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                            else
+                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         break;
                     case "district":
-                        if (node != null)
+                        if (isValidation == false)
                         {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
-                            else { replaceText = node.nodeName; }
+                            if (node != null)
+                            {
+                                if (isColourHighlighting == true)
+                                { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.nodeName, colourEnd); }
+                                else { replaceText = node.nodeName; }
+                            }
                         }
                         break;
                     case "contact":
                         //contact name + node name
-                        if (tagContactID > -1)
+                        if (isValidation == false)
                         {
-                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
-                            if (contact != null)
+                            if (tagContactID > -1)
                             {
-                                if (node != null)
+                                Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                                if (contact != null)
                                 {
-                                    if (isColourHighlighting == true)
-                                    { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
-                                    else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
+                                    if (node != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
+                                        else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
                                 }
-                                else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                            else
+                            { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
                     case "contactLong":
                         //contact name + contact job + node name
-                        if (tagContactID > -1)
+                        if (isValidation == false)
                         {
-                            Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
-                            if (contact != null)
+                            if (tagContactID > -1)
                             {
-                                if (node != null)
+                                Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                                if (contact != null)
                                 {
-                                    if (isColourHighlighting == true)
-                                    { replaceText = string.Format("<b>{0} {1}, {2}</b>, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
-                                    else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
+                                    if (node != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("<b>{0} {1}, {2}</b>, at {3}<b>{4}</b>{5},", contact.nameFirst, contact.nameLast, contact.job, colourCheckText, node.nodeName, colourEnd); }
+                                        else { replaceText = string.Format("{0} {1}, {2}, at {3},", contact.nameFirst, contact.nameLast, contact.job, node.nodeName); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
                                 }
-                                else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
+                                else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid contact (Null) for tagContactID \"{0}\"", tagContactID); }
+                            else
+                            { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         }
-                        else
-                        { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         break;
                     case "job":
                         //Random job name appropriate to node arc
-                        string job = "Unknown";
-                        if (string.IsNullOrEmpty(tagJob) == true)
+                        if (isValidation == false)
                         {
-                            ContactType contactType = node.Arc.GetRandomContactType();
-                            if (contactType != null)
+                            string job = "Unknown";
+                            if (string.IsNullOrEmpty(tagJob) == true)
                             {
-                                job = contactType.pickList.GetRandomRecord();
-                                tagJob = job;
+                                ContactType contactType = node.Arc.GetRandomContactType();
+                                if (contactType != null)
+                                {
+                                    job = contactType.pickList.GetRandomRecord();
+                                    tagJob = job;
+                                }
+                                else
+                                { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
                             }
-                            else
-                            { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                            else { job = tagJob; }
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, job, colourEnd); }
+                            else { replaceText = job; }
                         }
-                        else { job = tagJob; }
-                        if (isColourHighlighting == true)
-                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, job, colourEnd); }
-                        else { replaceText = job; }
                         break;
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
-                        string location = "Unknown";
-                        if (string.IsNullOrEmpty(tagLocation) == true)
+                        if (isValidation == false)
                         {
-                            location = textlistGenericLocation.GetRandomRecord();
-                            tagLocation = location;
+                            string location = "Unknown";
+                            if (string.IsNullOrEmpty(tagLocation) == true)
+                            {
+                                location = textlistGenericLocation.GetRandomRecord();
+                                tagLocation = location;
+                            }
+                            else { location = tagLocation; }
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, location, colourEnd); }
+                            else { replaceText = location; }
                         }
-                        else { location = tagLocation; }
-                        if (isColourHighlighting == true)
-                        { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, location, colourEnd); }
-                        else { replaceText = location; }
                         break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
-                        int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
-                        turnsAgo = Mathf.Max(1, turnsAgo);
-                        replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
+                        if (isValidation == false)
+                        {
+                            int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
+                            turnsAgo = Mathf.Max(1, turnsAgo);
+                            replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
+                        }
                         break;
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
-                        replaceText = textListBadResistance.GetRandomRecord();
+                        if (isValidation == false)
+                        { replaceText = textListBadResistance.GetRandomRecord();  }
                         break;
                     case "goodRES":
                         //end of topic text for a good outcome (Resistance)
-                        replaceText = textListGoodResistance.GetRandomRecord();
+                        if (isValidation == false)
+                        { replaceText = textListGoodResistance.GetRandomRecord(); }
                         break;
                     case "npc":
-                        if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                        else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                        replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                        if (isValidation == false)
+                        {
+                            if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                            else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                            replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                        }
                         break;
                     case "npcIs":
                         //npc is/was something
-                        replaceText = textListNpcSomething.GetRandomRecord();
+                        if (isValidation == false)
+                        { replaceText = textListNpcSomething.GetRandomRecord(); }
                         break;
                     case "mayor":
                         //mayor + first name
-                        if (isColourHighlighting == true)
-                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
-                        else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                        if (isValidation == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
+                            else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                        }
                         break;
                     case "city":
                         //city name
-                        if (isColourHighlighting == true)
-                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
-                        else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                        if (isValidation == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
+                            else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                        }
                         break;
-                    default: Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); break;
+                    default:
+                        if (isValidation == false)
+                        { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
+                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName);}
+                        break;
                 }
                 //catch all
                 if (replaceText == null) { replaceText = "Unknown"; }

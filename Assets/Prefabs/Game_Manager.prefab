@@ -3080,6 +3080,7 @@ MonoBehaviour:
   listOfTextLists:
   - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
   - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
+  - {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9, type: 2}
 --- !u!114 &114680662969460860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3605,5 +3606,5 @@ MonoBehaviour:
   normalProfile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   levelScope: {fileID: 11400000, guid: 6083a9706f629284faaa9eae516f11b7, type: 2}
   campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
-  maxTopicTextLength: 140
+  maxTopicTextLength: 150
   maxOptionTextLength: 40
