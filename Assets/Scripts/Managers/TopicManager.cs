@@ -1916,7 +1916,7 @@ public class TopicManager : MonoBehaviour
                                     colourOption = colourGrey;
                                 }
                                 //colourFormat textToDisplay
-                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckText(option.text, false), colourEnd);
+                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -1930,7 +1930,7 @@ public class TopicManager : MonoBehaviour
                         if (isProceed == true)
                         {
                             //final tag removal for topic text
-                            data.text = CheckText(data.text);
+                            data.text = CheckTopicText(data.text);
                             //ignore button tooltip
                             InitialiseIgnoreTooltip(data);
                             //boss details (sprite and tooltip)
@@ -2021,7 +2021,7 @@ public class TopicManager : MonoBehaviour
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 //top text (can handle text tags)
-                string optionText = CheckText(turnOption.text, false);
+                string optionText = CheckTopicText(turnOption.text, false);
                 builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
                 if (listOfEffects.Count > 0)
                 {
@@ -2079,7 +2079,7 @@ public class TopicManager : MonoBehaviour
             //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
             {
-                string newsSnippet = CheckText(turnOption.news, false);
+                string newsSnippet = CheckTopicText(turnOption.news, false);
                 NewsItem item = new NewsItem() { text = newsSnippet };
                 GameManager.instance.dataScript.AddNewsItem(item);
                 /*//debug (add two more)
@@ -3629,7 +3629,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public string CheckText(string text, bool isColourHighlighting = true, bool isValidation = false, string objectName = "Unknown")
+    public string CheckTopicText(string text, bool isColourHighlighting = true, bool isValidate = false, string objectName = "Unknown")
     {
         string colourCheckText = colourAlert; //highlight colour
         string checkedText = null;
@@ -3654,7 +3654,7 @@ public class TopicManager : MonoBehaviour
                 {
                     case "actor":
                         //actor arc name
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (tagActorID > -1)
                             {
@@ -3671,8 +3671,9 @@ public class TopicManager : MonoBehaviour
                             { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
                         break;
-                    case "district":
-                        if (isValidation == false)
+                    case "node":
+                        //district name
+                        if (isValidate == false)
                         {
                             if (node != null)
                             {
@@ -3682,9 +3683,21 @@ public class TopicManager : MonoBehaviour
                             }
                         }
                         break;
+                    case "nodeArc":
+                        //district arc name (caps)
+                        if (isValidate == false)
+                        {
+                            if (node != null)
+                            {
+                                if (isColourHighlighting == true)
+                                { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, node.Arc.name, colourEnd); }
+                                else { replaceText = node.nodeName; }
+                            }
+                        }
+                        break;
                     case "contact":
                         //contact name + node name
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (tagContactID > -1)
                             {
@@ -3707,7 +3720,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "contactLong":
                         //contact name + contact job + node name
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (tagContactID > -1)
                             {
@@ -3730,7 +3743,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "job":
                         //Random job name appropriate to node arc
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             string job = "Unknown";
                             if (string.IsNullOrEmpty(tagJob) == true)
@@ -3752,7 +3765,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             string location = "Unknown";
                             if (string.IsNullOrEmpty(tagLocation) == true)
@@ -3768,7 +3781,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                             turnsAgo = Mathf.Max(1, turnsAgo);
@@ -3777,16 +3790,16 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
-                        if (isValidation == false)
+                        if (isValidate == false)
                         { replaceText = textListBadResistance.GetRandomRecord();  }
                         break;
                     case "goodRES":
                         //end of topic text for a good outcome (Resistance)
-                        if (isValidation == false)
+                        if (isValidate == false)
                         { replaceText = textListGoodResistance.GetRandomRecord(); }
                         break;
                     case "npc":
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
@@ -3795,12 +3808,12 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "npcIs":
                         //npc is/was something
-                        if (isValidation == false)
+                        if (isValidate == false)
                         { replaceText = textListNpcSomething.GetRandomRecord(); }
                         break;
                     case "mayor":
                         //mayor + first name
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
@@ -3809,7 +3822,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "city":
                         //city name
-                        if (isValidation == false)
+                        if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
@@ -3817,9 +3830,9 @@ public class TopicManager : MonoBehaviour
                         }
                         break;
                     default:
-                        if (isValidation == false)
+                        if (isValidate == false)
                         { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
-                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName);}
+                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName);}
                         break;
                 }
                 //catch all

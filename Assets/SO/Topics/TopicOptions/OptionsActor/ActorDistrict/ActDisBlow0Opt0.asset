@@ -24,10 +24,11 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: Police are investigating [npc], [job] for illegally receiving Resistance assistance
-    with a medical bill as a result of the [district] bombing
-  tooltipHeader: <color=#FFFFE0>Pay</color>
-  tooltipMain: "<color=#98FB98> All Similar Districts Stability -1</color>\r\n<color=#FF4500>Player
-    Renown -2</color>"
-  tooltipDetails: <color=#FF4500>Player Mood -1</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Pay their medical expenses</color>
+    with a medical bill as a result of the [node] bombing
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Pay their medical expenses</color>

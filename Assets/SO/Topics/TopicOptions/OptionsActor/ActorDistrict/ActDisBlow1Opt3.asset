@@ -22,7 +22,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: '[npc],  [job], who was [npcIs], today died of their injuries from the recent
-    Resistance [district] explosion which claimed many lives.'
+    Resistance [node] explosion which claimed many lives.'
   tooltipHeader: <color=#FFFFE0>Blame</color>
   tooltipMain: <color=#FF4500>ANARCHIST Motivation -1</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>

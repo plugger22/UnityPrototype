@@ -23,10 +23,44 @@ MonoBehaviour:
   - a carer
   - a cat lover
   - a dog lover
+  - a volunteer charity worker
+  - a friend of the needy
+  - a convicted murderer
+  - a convicted thief
+  - a convicted embezzler
+  - a convicted con artist
+  - a suspected cannibal
+  - a registered crazy
+  - a coin collecter
+  - a bonsai enthusiast
+  - a buddhist
+  - a muslim
+  - a christian
+  - an atheist
+  - depressed
+  - schizophrenic
+  - a psychopath
+  - an abuser of bunnies
+  - suffering from early onset dementia
+  - in a wheelchair
+  - on a walking frame
+  - on a mobility scooter
+  - a member of the Church of the Blue Frog
+  - a foster child
+  - an only child
+  - a recovering alcoholic
+  - a recovering druggie
+  - an End Of Days cultist
+  - a lover of antiques
+  - an accomplished pianist
+  - a saxophone player
+  - a trumpet player
+  - a registered organ donour
   - well known
+  - well known in their local community
   - a parent of a handicapped child
   - a registered blood donor
-  - agraphobic
+  - a diabetic
   - a known child molester
   - a member of the Church of Satan
   - an organ donor
@@ -36,7 +70,9 @@ MonoBehaviour:
   - inflicted with an incurable disease
   - a past winner of the lottery
   - the sole survivor of a past tragedy
-  - slowly recovering from a life threatening illness
+  - recovering from a life threatening illness
   - under investigation for fraud
   - assisting the police with their enquiries
   - mourning their recently deceased parents
+  - mourning their recently deceased child
+  isTestForDuplicates: 1

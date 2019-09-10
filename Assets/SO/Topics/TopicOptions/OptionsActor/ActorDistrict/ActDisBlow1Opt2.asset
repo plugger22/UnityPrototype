@@ -22,7 +22,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: The Resistance  today acknowledgedl responsibility for the [genLoc] explosion
-    at [district] that claimed multiple victims. No surprise, says, [mayor].
+    at [node] that claimed multiple victims. No surprise, says, [mayor].
   tooltipHeader: <color=#FFFFE0>Acknowledge</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
     Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> HQ

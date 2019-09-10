@@ -755,7 +755,7 @@ public class ValidationManager : MonoBehaviour
                         { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}", 
                             textLength, maxTopicTextLength, topicName, "\n"); }
                         //check topic text tags
-                        GameManager.instance.topicScript.CheckText(topic.text, false, true, topicName);
+                        GameManager.instance.topicScript.CheckTopicText(topic.text, false, true, topicName);
                         //listOfOptions
                         if (topic.listOfOptions != null)
                         {
@@ -851,7 +851,7 @@ public class ValidationManager : MonoBehaviour
                                         //News snippet (check text tags are valid), only if a news snippet is present
                                         if (string.IsNullOrEmpty(option.news) == false)
                                         {
-                                            GameManager.instance.topicScript.CheckText(option.news, false, true, option.name);
+                                            GameManager.instance.topicScript.CheckTopicText(option.news, false, true, option.name);
                                             //check max length
                                             if (option.news.Length > maxTopicTextLength)
                                             {
@@ -1465,6 +1465,7 @@ public class ValidationManager : MonoBehaviour
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfAdvertTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfCrisisTextLists);
         //NOTE: add extra text lists here (as above)
         TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
         ValidateSOGeneric<TextList>(arrayOfTextLists);

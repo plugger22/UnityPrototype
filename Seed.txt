@@ -1,110 +1,20 @@
 
-Dev seed 50763 -> Monday, 9 September 2019 3:21 PM
-WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
+Dev seed 50763 -> Tuesday, 10 September 2019 11:04 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50763 -> Tuesday, 10 September 2019 11:18 AM
+WARNING  LoadManager.cs -> InitialiseStart: No CrisisTextLists present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:403)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 55 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1492)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1509)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1471)
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 50763 -> Monday, 9 September 2019 3:26 PM
-WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1492)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:20 PM
-WARNING [Val] ValidateSO: MISMATCH on TextList, array 51, assets 53 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1497)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1459)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:31 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3832)
-	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:852)
-	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	
-Dev seed 50763 -> Monday, 9 September 2019 4:33 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:33 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:50 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:52 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50763 -> Monday, 9 September 2019 4:53 PM
+Dev seed 50763 -> Tuesday, 10 September 2019 11:22 AM
 City seed 5678 -> London, United Kingdom

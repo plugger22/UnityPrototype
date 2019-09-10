@@ -783,5 +783,18 @@ namespace packageAPI
         }
     }
 
+    /// <summary>
+    /// Used to pass data to CheckNewsText
+    /// </summary>
+    public class CheckTextData
+    {
+        public string text;                                                 //text to check
+        public bool isValidate = false;                                     //if true, validation check only for correct text tags being present, default false for normal text tag replacement operation      
+        public string objectName = "Unknown";                               //name of object passing text, used for error messages
+        public Node node;                                                   //nodeID if relevant (ignore otherwise)
+        public int actorID;                                                 //actor, if relevant (ignore otherwise)
+
+    }
+
     //new classes above here
 }

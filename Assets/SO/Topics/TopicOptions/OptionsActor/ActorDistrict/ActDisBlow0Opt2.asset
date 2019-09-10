@@ -23,9 +23,9 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 'Police identified a body today as that of [npc], [job], last seen in hospital
-    recovering from the recent bombing atrocity at [district]. '
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: <color=#FFE4B5> ANARCHIST Low Motivation (need 2+)</color>
+    recovering from the recent bombing atrocity at [node]. '
+  tooltipHeader: <color=#FFFFE0>Cover Up</color>
+  tooltipMain: <color=#98FB98> City Loyalty -1</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>Cover it up. Kill them</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Cover it up. Kill them</color>

@@ -54,6 +54,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfShortTextLists;
     public TextList[] arrayOfFactorTextLists;
     public TextList[] arrayOfAdvertTextLists;
+    public TextList[] arrayOfCrisisTextLists;
 
     [Header("Consolidated TextLists")]
     public NameSet[] arrayOfNameSets;
@@ -393,6 +394,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfAdvertTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No AdvertTextLists present"); }
+        //
+        // - - - Text Lists Advertisments (not stored in a collection)
+        //
+        numArray = arrayOfCrisisTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCrisisTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CrisisTextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //

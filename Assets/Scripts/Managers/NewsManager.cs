@@ -236,6 +236,132 @@ public class NewsManager : MonoBehaviour
     public List<string> GetListOfCurrentAdverts()
     { return listOfCurrentAdverts; }
 
+    /// <summary>
+    /// Replaces text tags on non-topic News texts. Different to CheckTopicText but uses identical tags. Pass parameters in via a data package. No colour formatting involved. Returns null if a problem
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="isColourHighlighting"></param>
+    /// <param name="isValidation"></param>
+    /// <param name="objectName"></param>
+    /// <returns></returns>
+    public string CheckNewsText(CheckTextData data)
+    {
+        string checkedText = null;
+        if (data != null)
+        {
+            if (string.IsNullOrEmpty(data.text) == false)
+            {
+                checkedText = data.text;
+                string tag, replaceText;
+                int tagStart, tagFinish, length; //indexes
+                //loop while ever tags are present
+                while (checkedText.Contains("[") == true)
+                {
+                    tagStart = checkedText.IndexOf("[");
+                    tagFinish = checkedText.IndexOf("]");
+                    length = tagFinish - tagStart;
+                    tag = checkedText.Substring(tagStart + 1, length - 1);
+                    //strip brackets
+                    replaceText = null;
+                    switch (tag)
+                    {
+                        case "actor":
+                            //actor arc name
+                            if (data.isValidate == false)
+                            {
+                                if (data.actorID > -1)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                                    if (actor != null)
+                                    { replaceText = actor.arc.name; }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID \"{0}\"", data.actorID); }
+                                }
+                                else
+                                { Debug.LogWarningFormat("Invalid actorID \"{0}\" for tag [actor]", data.actorID); }
+                            }
+                            break;
+                        case "node":
+                            if (data.isValidate == false)
+                            {
+                                if (data.node != null)
+                                { replaceText = data.node.nodeName; }
+                            }
+                            break;
+                        case "nodeArc":
+                            if (data.isValidate == false)
+                            {
+                                if (data.node != null)
+                                { replaceText = data.node.Arc.name; }
+                            }
+                            break;
+                        case "npc":
+                            if (data.isValidate == false)
+                            {
+                                if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                                else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                                replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                            }
+                            break;
+                        case "npcIs":
+                            //npc is/was something
+                            if (data.isValidate == false)
+                            { replaceText = GameManager.instance.topicScript.textListNpcSomething.GetRandomRecord(); }
+                            break;
+                        case "job":
+                            //Random job name appropriate to node arc
+                            if (data.isValidate == false)
+                            {
+                                string job = "Unknown";
+                                if (data.node != null)
+                                {
+                                    ContactType contactType = data.node.Arc.GetRandomContactType();
+                                    if (contactType != null)
+                                    { job = contactType.pickList.GetRandomRecord(); }
+                                    else
+                                    { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2} for object {3}", data.node.nodeName, data.node.Arc.name, data.node.nodeID, data.objectName); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for [job] tag for object \"{0}\"", data.objectName); }
+                                replaceText = job;
+                            }
+                            break;
+                        case "genLoc":
+                            //Random Generic Location
+                            if (data.isValidate == false)
+                            {
+                                string location = "Unknown";
+                                location = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
+                                replaceText = location;
+                            }
+                            break;
+                        case "mayor":
+                            //mayor + first name
+                            if (data.isValidate == false)
+                            { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                            break;
+                        case "city":
+                            //city name
+                            if (data.isValidate == false)
+                            { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                            break;
+                        default:
+                            if (data.isValidate == false)
+                            { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
+                            else { Debug.LogFormat("[Val] NewsManager.cs -> CheckNewsText: Unrecognised tag \"{0}\" for object {1}", tag, data.objectName); }
+                            break;
+                    }
+                    //catch all
+                    if (replaceText == null) { replaceText = "Unknown"; }
+                    //swap tag for text
+                    checkedText = checkedText.Remove(tagStart, length + 1);
+                    checkedText = checkedText.Insert(tagStart, replaceText);
+                }
+            }
+            else { Debug.LogWarning("Invalid text (Null or Empty)"); }
+        }
+        else { Debug.LogError("Invalid data (Null)"); }
+        return checkedText;
+    }
+
     //
     // - - - Debug - - -
     //

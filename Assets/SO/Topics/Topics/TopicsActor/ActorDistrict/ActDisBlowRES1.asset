@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Innocent Deaths
   text: '[daysAgo] bystanders were accidentally killed when the [actor]''s bomb went
-    off prematurely at a [genLoc] at [district]. [badRES]'
+    off prematurely at a [genLoc] at [node]. [badRES]'
   designNotes: negative anarchist
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}

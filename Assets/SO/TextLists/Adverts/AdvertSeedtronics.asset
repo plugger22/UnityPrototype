@@ -15,9 +15,12 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
   randomList:
   - Seedtronics insist that our burgers use only fresh, pure organic, maggots
-  - Seedtronics, the leader in protein enriched, maggot based foodproducts
+  - Seedtronics, the leader in protein enriched, maggot based food products
   - You can rely on Seedtronics pure, organic maggots to taste great
-  - The best burger a man can get. Seedtronics organic Maggot burgers
-  - You won't find a better Maggot burger on the planet. Seedtronics burgers, jammed
-    full of protein
-  isTestForDuplicates: 0
+  - Our Maggots feed on premium biomass. Seedtronics burgers. Protein for the people
+  - Our food doesn't wriggle on the way down. Seedtronic Maggot Burgers
+  - The best burger a man can find. Seedtronics organic Maggot burgers
+  - You won't find a better Maggot burger on the planet. Seedtronics, protein for
+    the people
+  - Find a better Maggot burger if you can. Seedtronics, providing food for the future
+  isTestForDuplicates: 1
