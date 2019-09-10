@@ -3091,10 +3091,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxNumOfSO: 5
   listOfTextLists:
-  - {fileID: 11400000, guid: 5427cc5d61ea27b439d3a417de628343, type: 2}
-  - {fileID: 11400000, guid: 25f9226cef33824429f5ac12546ae153, type: 2}
-  - {fileID: 11400000, guid: 3729008d70ed0ef47b2d3891b676361c, type: 2}
-  - {fileID: 11400000, guid: f6ac0fc0d2161f2479013584b9d5cec5, type: 2}
+  - {fileID: 11400000, guid: b32ae2dd71aa8244e954163b7cac92c3, type: 2}
+  - {fileID: 11400000, guid: 665ff45633b992d43845907cb0da5b4f, type: 2}
+  - {fileID: 11400000, guid: 813cc849954eda94ab8164b30029770c, type: 2}
+  - {fileID: 11400000, guid: bf1d1b404b0eb1146a2ccaf71de682a1, type: 2}
 --- !u!114 &114680662969460860
 MonoBehaviour:
   m_ObjectHideFlags: 1
