@@ -2404,6 +2404,20 @@ public class NodeManager : MonoBehaviour
                                         bool isBad = false;
                                         if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { isBad = true; }
                                         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "District Crisis", reason, warning, true, isBad);
+                                        //news snippet
+                                        if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                                        {
+                                            if (node.crisis.textList != null)
+                                            {
+                                                CheckTextData data = new CheckTextData();
+                                                data.node = node;
+                                                data.text = node.crisis.textList.GetRandomRecord();
+                                                string newsSnippet = GameManager.instance.newsScript.CheckNewsText(data);
+                                                NewsItem item = new NewsItem() { text = newsSnippet, timer = 1 };
+                                                GameManager.instance.dataScript.AddNewsItem(item);
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid textList for crisis \"{0}\" at node {1}, id {2}", node.crisis.tag, node.nodeName, node.nodeID); }
+                                        }
                                     }
                                     else
                                     {

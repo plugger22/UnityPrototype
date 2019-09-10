@@ -584,6 +584,7 @@ public class ValidationManager : MonoBehaviour
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
         listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
+        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfCrisisTextLists);
         //NOTE: add extra text lists here (as above)
         TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
         //loop textlists
@@ -616,6 +617,17 @@ public class ValidationManager : MonoBehaviour
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
+                }
+                //check for valid Text tags
+                if (textList.isTestForTextTags == true)
+                {
+                    CheckTextData data = new CheckTextData() { isValidate = true };
+                    for (int j = 0; j < textList.randomList.Count; j++)
+                    {
+                        data.text = textList.randomList[j];
+                        data.objectName = string.Format("{0}, line {1}", textList.name, j);
+                        GameManager.instance.newsScript.CheckNewsText(data);
+                    }
                 }
             }
             else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }

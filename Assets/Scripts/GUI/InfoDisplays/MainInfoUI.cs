@@ -196,7 +196,7 @@ public class MainInfoUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
-    string colourGood;
+    /*string colourGood;*/
     string colourBlue;
     string colourNormal;
     /*string colourError;
@@ -689,9 +689,10 @@ public class MainInfoUI : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
         colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+
         /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
         else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
@@ -748,12 +749,16 @@ public class MainInfoUI : MonoBehaviour
                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                     builder.AppendFormat("<size=110%>{0}{1}{2}</size>", colourNormal, data.listOfNews[i], colourEnd);
                     //advert -> interleaved between newsItems
-                    if (data.listOfAdverts.Count >= i)
+                    if (data.listOfAdverts.Count > i)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                         builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
                     }
-                    else { Debug.LogWarningFormat("Mismatch on count. ListOfAdverts has {0} records, listOfNews has {1} records. Should be the same", data.listOfAdverts.Count, data.listOfNews.Count); }
+                    else
+                    {
+                        if (data.listOfAdverts.Count != i)
+                        { Debug.LogWarningFormat("Mismatch on count. ListOfAdverts has {0} records, listOfNews has {1} records. Should be 1 less", data.listOfAdverts.Count, data.listOfNews.Count); }
+                    }
                 }
                 helpData.text = builder.ToString();
                 listOfHelpData.Add(helpData);

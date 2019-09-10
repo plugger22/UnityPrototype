@@ -11,12 +11,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisGangs
   m_EditorClassIdentifier: 
-  descriptor: Node Crisis news items -> Crime
+  descriptor: Node Crisis news items -> Gangs
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - lj
-  - lj
-  - jll
-  - lj
-  - ljl
+  - Gang violence boiled over into the streets of [node] today, forcing residents
+    into a prolonged lockdown as Police attempted to restore order
+  - '[mayor] insisted that gang violence isn''t a problem, especially not at [node]
+    where Police confirmed a dozen drive by shootings yesterday'
+  - '[mayor] must be living on another planet, says [npc], [job], if they think that
+    gang violence isn''t a problem at [node]'
+  - Police resources are stretched as they attempt to quell an outbreak of gang violence
+    at [node]. It's in hand, says [mayor]
+  - Police are perplexed as to what is behind the recent surge in gang violence at
+    [node]
+  - If they can't protect us from the gangs why don't they let us buy a gun, says
+    [npc], [job] at [node]?
+  - Who is in charge here, asks [npc], [job] of [node]? The Police or the Gangs? Sure
+    doesn't look like the Police to me
+  - How am I supposed to get to work, asks [npc], [job], if the streets of [node]
+    are filled with gangs?
+  - Lock the door? Hey, I've nailed it shut. Gangs, says [npc], [job], of [node] are
+    totally out of control here. It's a disgrace
+  - Do I have to put the fires here at [node] out by myself, [npc], [job], demanded
+    today? [mayor] says they are on it
   isTestForDuplicates: 0

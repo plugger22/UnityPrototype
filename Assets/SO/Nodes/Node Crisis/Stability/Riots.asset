@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Riots
   m_EditorClassIdentifier: 
-  nodeCrisisID: 5
   datapoint: {fileID: 11400000, guid: 18fe623c56599d544965b9144cb965ff, type: 2}
   tag: Riots
   description: Civiil unrest on the streets
+  textList: {fileID: 11400000, guid: 25f9226cef33824429f5ac12546ae153, type: 2}

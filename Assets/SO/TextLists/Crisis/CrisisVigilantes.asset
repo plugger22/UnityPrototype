@@ -11,12 +11,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisVigilantes
   m_EditorClassIdentifier: 
-  descriptor: Node Crisis news items -> Crime
+  descriptor: Node Crisis news items -> Vigilantes
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - lj
-  - lj
-  - jll
-  - lj
-  - ljl
+  - '[mayor] today denounced the Vigilante activity at [node] as illegal and unnecessary'
+  - Vigilantes are not wanted here in [city] says [mayor]. They are a blight on our
+    well ordered society and I'll see them removed
+  - Police confirmedt that the Vigilantes operating in [node] are acting illegally
+    and will be arrested on sight
+  - '[mayor] was unable to answer the question of why Vigilantes are operating in
+    [node] in the first place? What has gone so terribly wrong there?'
+  - An anonymous source at [node] declared if it wasn't for the Vigilantes there it
+    wouldn't be safe to walk the streets
+  - Vigilantes, what of them? Making my life better is what they're doing, says [npc],
+    [job] of [node]
+  - They are keeping the scum off the streets and that's a damn good thing, says [npc],
+    [job] of [node] when asked about the Vigilantes
+  - What is [mayor] doing for us here at [node] asks [npc], [job]. The people fixing
+    the problems are the Vigilantes
+  - So what if they are illegal? They are doing a better job for us here at [node]
+    than the police, says [npc], [job]
+  - I'd vote for the Vigilantes here at [node] any day. [mayor] isn't helping us at
+    all, says [npc], [job]
   isTestForDuplicates: 0

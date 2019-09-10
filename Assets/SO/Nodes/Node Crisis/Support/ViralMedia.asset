@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: ViralMedia
   m_EditorClassIdentifier: 
-  nodeCrisisID: 11
   datapoint: {fileID: 11400000, guid: 65edf564f191a074896ec3eeb83e5008, type: 2}
   tag: Viral Media
   description: Despicable anti-Authority posts are going viral on local social media
     outlets
+  textList: {fileID: 11400000, guid: bf1d1b404b0eb1146a2ccaf71de682a1, type: 2}

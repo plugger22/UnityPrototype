@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Strikes
   m_EditorClassIdentifier: 
-  nodeCrisisID: 7
   datapoint: {fileID: 11400000, guid: 18fe623c56599d544965b9144cb965ff, type: 2}
   tag: Strikes
   description: The worker drones are downing tools
+  textList: {fileID: 11400000, guid: f6ac0fc0d2161f2479013584b9d5cec5, type: 2}

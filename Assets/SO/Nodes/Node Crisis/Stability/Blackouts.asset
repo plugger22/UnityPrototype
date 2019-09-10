@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Blackouts
   m_EditorClassIdentifier: 
-  nodeCrisisID: 4
   datapoint: {fileID: 11400000, guid: 18fe623c56599d544965b9144cb965ff, type: 2}
   tag: Blackouts
   description: Rolling blackouts on the local power grid
+  textList: {fileID: 11400000, guid: 5427cc5d61ea27b439d3a417de628343, type: 2}

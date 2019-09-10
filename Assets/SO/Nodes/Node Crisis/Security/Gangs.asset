@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Gangs
   m_EditorClassIdentifier: 
-  nodeCrisisID: 2
   datapoint: {fileID: 11400000, guid: 328fc79a49afa494c851432a4f6d6ff9, type: 2}
   tag: Gangs
   description: Gangs of thugs are roaming the District
+  textList: {fileID: 11400000, guid: 1374170661431cc43bca4b0792587d57, type: 2}

@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Posters
   m_EditorClassIdentifier: 
-  nodeCrisisID: 9
   datapoint: {fileID: 11400000, guid: 65edf564f191a074896ec3eeb83e5008, type: 2}
   tag: Posters
   description: Viscious anti-Authority posters are appearing on walls at an alarming
     rate.
+  textList: {fileID: 11400000, guid: 665ff45633b992d43845907cb0da5b4f, type: 2}

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Crime
   m_EditorClassIdentifier: 
-  nodeCrisisID: 0
   datapoint: {fileID: 11400000, guid: 328fc79a49afa494c851432a4f6d6ff9, type: 2}
   tag: Crime Wave
   description: District crime is out of control
+  textList: {fileID: 11400000, guid: 9e4019c04c452474598e6c1b083328b8, type: 2}

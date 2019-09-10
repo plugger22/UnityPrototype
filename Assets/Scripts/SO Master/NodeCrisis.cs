@@ -16,4 +16,7 @@ public class NodeCrisis : ScriptableObject
     [TextArea] public string description;
     #endregion
 
+    [Tooltip("Textlist for newsItems when a crisis erupts")]
+    public TextList textList;
+
 }

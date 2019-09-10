@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e825216ddc88f246b26792436ef3f0a, type: 3}
   m_Name: Protests
   m_EditorClassIdentifier: 
-  nodeCrisisID: 10
   datapoint: {fileID: 11400000, guid: 65edf564f191a074896ec3eeb83e5008, type: 2}
   tag: Student Protests
   description: Students are carrying out sit-down anti-Authority protests in public
     spaces
+  textList: {fileID: 11400000, guid: 813cc849954eda94ab8164b30029770c, type: 2}

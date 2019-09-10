@@ -18,6 +18,19 @@ public class TextList : ScriptableObject
     [Header("Testing")]
     [Tooltip("If true randomList is tested for duplicates (use for Textlists that contain short strings, avoid for longer strings), not if false")]
     public bool isTestForDuplicates;
+    [Tooltip("If true test for valid Text Tags using NewsManager.cs -> CheckNewsText, ignore if false")]
+    public bool isTestForTextTags;
+
+
+    public void OnEnable()
+    {
+        //constructor
+        isTestForDuplicates = false;
+        isTestForTextTags = true;
+        //asserts
+        Debug.AssertFormat(category != null, "Invalid category (Null) for {0}", name);
+    }
+
 
     /// <summary>
     /// returns a randomly selected record from the list, null if a problem (default) but if 'isNull' is false returns string 'Unknown'

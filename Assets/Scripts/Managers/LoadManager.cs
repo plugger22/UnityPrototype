@@ -47,7 +47,7 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-    [Header("TextLists")]
+    [Header("TextLists")]       //NOTE: need to add any new arrays to ValidationManager.cs -> ValidateTextLists / ValidateSO methods
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
