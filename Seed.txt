@@ -29,3 +29,12 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 20746 -> Thursday, 12 September 2019 5:18 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 860 -> Thursday, 12 September 2019 5:39 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 63, assets 66 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1521)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1483)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom

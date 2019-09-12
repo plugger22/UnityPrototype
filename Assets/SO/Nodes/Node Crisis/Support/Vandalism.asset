@@ -13,6 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datapoint: {fileID: 11400000, guid: 65edf564f191a074896ec3eeb83e5008, type: 2}
   tag: Vandalism
-  description: Authority posters, billboards, signs and monuments are being defaced
-    and vandalised in the most vicious manner
+  description: Authority symbols are being viciously defaced
   textList: {fileID: 11400000, guid: 665ff45633b992d43845907cb0da5b4f, type: 2}

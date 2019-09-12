@@ -2398,7 +2398,7 @@ public class NodeManager : MonoBehaviour
                                         msgText = string.Format("{0} crisis in {1}, {2}, ({3} turn{4} left to Resolve)", node.crisis.tag, node.nodeName, node.Arc.name,
                                             node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         itemText = string.Format("Crisis continues in {0}, {1}", node.nodeName, node.Arc.name);
-                                        string reason = string.Format("{0} crisis will shortly go CRITICAL", node.crisis.tag);
+                                        string reason = string.Format("<b>{0}{1}{2} crisis will shortly go CRITICAL</b>", colourAlert, node.crisis.tag, colourEnd);
                                         string warning = string.Format("{0} turn{1} left for Authority to resolve Crisis", node.crisisTimer, node.crisisTimer != 1 ? "s" : "");
                                         //good for Resistance, bad for Authority
                                         bool isBad = false;

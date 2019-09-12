@@ -1232,6 +1232,9 @@ MonoBehaviour:
   arrayOfAdvertTextLists:
   - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
   - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
+  - {fileID: 11400000, guid: ed33c09a4eb20ef4a8a91d1e239647dd, type: 2}
+  - {fileID: 11400000, guid: de3a80cc18834ab4cac4dc1d230938de, type: 2}
+  - {fileID: 11400000, guid: d28de6de70cc2224c8202a50c398daa4, type: 2}
   arrayOfCrisisTextLists:
   - {fileID: 11400000, guid: 5427cc5d61ea27b439d3a417de628343, type: 2}
   - {fileID: 11400000, guid: 9e4019c04c452474598e6c1b083328b8, type: 2}
@@ -3090,7 +3093,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxNumOfSO: 5
-  listOfTextLists: []
+  listOfTextLists:
+  - {fileID: 11400000, guid: ed33c09a4eb20ef4a8a91d1e239647dd, type: 2}
+  - {fileID: 11400000, guid: de3a80cc18834ab4cac4dc1d230938de, type: 2}
+  - {fileID: 11400000, guid: d28de6de70cc2224c8202a50c398daa4, type: 2}
+  - {fileID: 11400000, guid: 6759e496b6815344f82ded96f44177c4, type: 2}
+  - {fileID: 11400000, guid: 1fb3d39a39d1f7e498ca3956d68fccab, type: 2}
 --- !u!114 &114680662969460860
 MonoBehaviour:
   m_ObjectHideFlags: 1

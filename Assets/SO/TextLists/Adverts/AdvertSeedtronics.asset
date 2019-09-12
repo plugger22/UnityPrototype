@@ -23,4 +23,5 @@ MonoBehaviour:
   - You won't find a better Maggot burger on the planet. Seedtronics, protein for
     the people
   - Find a better Maggot burger if you can. Seedtronics, providing food for the future
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
+  isTestForTextTags: 1
