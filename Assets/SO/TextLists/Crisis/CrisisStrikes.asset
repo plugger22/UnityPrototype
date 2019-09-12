@@ -11,10 +11,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisStrikes
   m_EditorClassIdentifier: 
-  descriptor: Node Crisis news items -> Blackouts
+  descriptor: Node Crisis news items -> Strikes
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - We're burning, everything is burning! [npc], [job], is one of many people in [node]
-    trying to get help from the city
+  - Strikes at [node] continue as tensions reach flashpoint. [mayor] insists that
+    it has to stop
+  - Strikers at [node] marched demanding better treatment from their Robot Supervisors
+    as protests continue
+  - Placards demanding the same pay for humans as their robot equivalents were on
+    display as strikers marched at [node]
+  - If I'm going to be working like a robot I want to be paid like one, demands [npc]
+    of [node], one of hundreds on strike on the streets today
+  - Why do the damn robots earn more than me, asks [npc], of [node]? Strikes continue
+    to paralyse the district
+  - What am I supposed to do, sit at home all day and watch Serial-Flix? I want a
+    job, demands [npc] of [node], one of many strikers
+  - Robots don't have to eat so why do they get paid more than me, asks [npc] of [node]?
+    Strikes continue throughout the district
+  - Show us a robot with a family to support, huh? I'm human, I need to be paid more,
+    insists [npc]. Strikes continue at [node]
+  - I might not do as good a job as a robot but I'm human. Doesn't that count for
+    something, asks [npc]. Strikes continue at [node]
+  - Why do I have to work for a robot? Aren't they supposed to be working for us,
+    asks [npc], a striker, at [node]?
   isTestForDuplicates: 0
   isTestForTextTags: 1

@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> ViralMedia",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+        "Social media accounts in [node] are constantly being attacked and defaced by anti-Authority Viral worms",
+		"[mayor] is considering a city wide shutdown of the Net in the face of an all out viral media assault centred on [node]",
+		"The Net is a place of safety and reassurance for all citizens, insists [mayor] in the face of a viral media assault emenating from [node]",
+		"The anti-Authority viral media that is infesting the Net at [node] is at risk of spreading further, says a Police spokesman",
+		"It's messing with my Serial-Flix, complains [npc], [job] of [node], when asked about the anti-Authority viral media onslaught",
+		"Somebody must have hacked the local servers at [node], says [npc], [job] to be able to spread this sh*t. Must be pretty smart to do that",
+		"[mayor] reiterated the cities intention of handing the death penalty to anyone found guilty of causing the viral media outburst at [node]",
+		"They can't control it, that's what they don't like, says [npc], [job], commenting on the viral media spreading throughout [node]",
+		"We control the Net, insists [mayor]. The viral media coming from [node] will be eliminated. There is no place for non-authorised content",
+		"The Net is ours, declares [mayor]. We own it and control it. Viral media outbursts from [node] will not be tolerated"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

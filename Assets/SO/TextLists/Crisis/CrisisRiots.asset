@@ -11,12 +11,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisRiots
   m_EditorClassIdentifier: 
-  descriptor: 'Node Crisis news items -> Riots
-
-'
+  descriptor: Node Crisis news items -> Riots
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - We're burning, everything is burning! [npc], [job], is one of many people in [node]
-    trying to get help from the city
+  - It isn't safe to take my dog for a walk, what with all these damn riots, complains
+    [npc], [job] of [node]
+  - Riots are an unfortunate blight on our city and if they don't stop at [node] we'll
+    be breaking heads, says [mayor]
+  - The rioting at [node] will cease immediately, demands [mayor] at a press conference
+    this morning. It's got to stop, says the mayor
+  - Insurance estimates of the cost of the rioting at [node] are running high. [mayor]
+    insists that the city won't be paying out
+  - Everyday activity has ground to halt at [node] as riots continue to devastate
+    the district. Citizens have been told to stay indoors
+  - Stay inside, lock your doors and tape your windows, advises [mayor] to all citizens
+    at [node] as rioting continues
+  - Yes, extra police resources have been deployed to [node] to deal with the riots,
+    insists an exasperated [mayor] at a news conference last night
+  - I have young childern, how are they supposed to sleep through these damn riots,
+    asks [npc][job] of [node]?
+  - Is somebody going to do something about all these riots here at [node] or do I
+    have to personally call Batman, asks [npc] of [node]
+  - How am I supposed to get to work if the streets are full of rioting mobs, questions
+    [npc] of [node]? I'm a Buddhist
   isTestForDuplicates: 0
   isTestForTextTags: 1

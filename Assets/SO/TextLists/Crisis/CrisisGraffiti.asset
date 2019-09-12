@@ -11,28 +11,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisGraffiti
   m_EditorClassIdentifier: 
-  descriptor: Node Crisis news items -> Graffiti
+  descriptor: "Node Crisis news items -> Graffiti\t"
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - We're burning, everything is burning! [npc], [job], is one of many people in [node]
-    trying to get help from the city
-  - '[mayor] denied that the conflagration in [node] was beyond the capability of
-    the [city] fire department'
-  - Fire, fire , fire! [node] is cooking, says [npc], [job]. We are all going to end
-    up as crispy critters if nobody helps us
-  - It's hot in [node], says [npc], [job]. Real hot. Fires all over. Nobody seems
-    to be doing anything about it
-  - '[mayor] today ordered extra fire fighting resources to be allocated to the [node]
-    inferno'
-  - Fire fighters are demanding extra pay for having to fight the intense fires in
-    [node]. No hope, says [mayor]
-  - My dog cooked off yesterday, says [npc], [job] of [node]. Those damn fires roasted
-    him until he was nothing but a greasy puddle
-  - I can't sleep at night, says [npc], [job] of [node]. All the smoke. I'm coughing
-    up blood. Why isn't [mayor] doing something?
-  - The [city] Health Department today warned people to stay indoors at [node] due
-    to the excessive smoke from the nearby fires
-  - Smoke gets in my eyes and the grit blows in through the window, says [npc], [job]
-    of [node]. I've had enough
+  - '[mayor] today warned those who are spreading anti-Authority graffiti throughout
+    [node]. It''s a crime, says the mayor'
+  - '[mayor] was not amused, at a press conference last night, when confronted by
+    images of anti-Authority graffiti at [node]'
+  - Personally I find it funny, says [npc], [job] of [node], responding to the rash
+    of anti-Authority graffiti in the district
+  - Stick it to the Authority, should be more of it, says [npc], when asked about
+    the proliferation of anti-Authority graffiti at [node]
+  - It's a joke but then so is The Authority, says [npc], [job] when this reporter
+    questioned them about the prolific Graffiti at [node]
+  - No, I didn't do it but whoever did, hey, give them a medal, says [npc], [job]
+    talking about the spreading anti-Authority Graffiti at [node]
+  - Doesn't The Authority have a sense of humour, asked [npc], [job]? I guess not
+    when it comes to all the graffiti here at [node]
+  - It feels good to see somebody sticking it to The Authority, insists [npc], [job]
+    pointing to some of the anti-Authority graffiti at [node]
+  - All that graffiti here at [node] is just some poor, hungry, person trying to reach
+    out, insists [npc], [job] of [node]
+  - Nobody likes being made fun of, especially The Authority, says [npc], [job] as
+    they walk past some of the [node] graffiti
   isTestForDuplicates: 0
   isTestForTextTags: 1

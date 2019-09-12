@@ -11,30 +11,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: CrisisViralMedia
   m_EditorClassIdentifier: 
-  descriptor: 'Node Crisis news items -> ViralMedia
-
-'
+  descriptor: Node Crisis news items -> ViralMedia
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - We're burning, everything is burning! [npc], [job], is one of many people in [node]
-    trying to get help from the city
-  - '[mayor] denied that the conflagration in [node] was beyond the capability of
-    the [city] fire department'
-  - Fire, fire , fire! [node] is cooking, says [npc], [job]. We are all going to end
-    up as crispy critters if nobody helps us
-  - It's hot in [node], says [npc], [job]. Real hot. Fires all over. Nobody seems
-    to be doing anything about it
-  - '[mayor] today ordered extra fire fighting resources to be allocated to the [node]
-    inferno'
-  - Fire fighters are demanding extra pay for having to fight the intense fires in
-    [node]. No hope, says [mayor]
-  - My dog cooked off yesterday, says [npc], [job] of [node]. Those damn fires roasted
-    him until he was nothing but a greasy puddle
-  - I can't sleep at night, says [npc], [job] of [node]. All the smoke. I'm coughing
-    up blood. Why isn't [mayor] doing something?
-  - The [city] Health Department today warned people to stay indoors at [node] due
-    to the excessive smoke from the nearby fires
-  - Smoke gets in my eyes and the grit blows in through the window, says [npc], [job]
-    of [node]. I've had enough
+  - Social media accounts in [node] are constantly being attacked and defaced by anti-Authority
+    Viral worms
+  - '[mayor] is considering a city wide shutdown of the Net in the face of an all
+    out viral media assault centred on [node]'
+  - The Net is a place of safety and reassurance for all citizens, insists [mayor]
+    in the face of a viral media assault emenating from [node]
+  - The anti-Authority viral media that is infesting the Net at [node] is at risk
+    of spreading further, says a Police spokesman
+  - It's messing with my Serial-Flix, complains [npc], [job] of [node], when asked
+    about the anti-Authority viral media onslaught
+  - Somebody must have hacked the local servers at [node], says [npc], [job] to be
+    able to spread this sh*t. Must be pretty smart to do that
+  - '[mayor] reiterated the cities intention of handing the death penalty to anyone
+    found guilty of causing the viral media outburst at [node]'
+  - They can't control it, that's what they don't like, says [npc], [job], commenting
+    on the viral media spreading throughout [node]
+  - We control the Net, insists [mayor]. The viral media coming from [node] will be
+    eliminated. There is no place for non-authorised content
+  - The Net is ours, declares [mayor]. We own it and control it. Viral media outbursts
+    from [node] will not be tolerated
   isTestForDuplicates: 0
   isTestForTextTags: 1

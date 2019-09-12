@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Crime",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+        "[mayor] today defended the cities response to the out of control crime wave in [node]",
+        "[npc], [job], a citizen of [node], died today after being mugged in broad daylight. Disgraceful, says [mayor]",
+        "Who will stop the crime wave in [node]? [mayor] insists that the police have enough resources to deal with it",
+        "When will it end? [mayor] declares, yet again, that crime is firmly under control in [node]",
+        "Is it safe to walk the streets of [node]? No, says [npc], [job]. It very definitely isn't. Crime is out of control",
+        "Where are the police, asks [npc], [job] of [node]. How long do we have to put up with living in crime central?",
+        "If it was up to me, I'd call Batman, says [npc], [job] of [node]. Crime here is ridiculous",
+        "Aren't we supposed to be safe in [city], asks [npc], [job]. I've been robbed three times this week in [node]",
+        "What's [mayor] doing about the crime in [node]? No comment says the spokesperson. Is [mayor] missing in action?",
+        "Why has crime spiked in [node]? [mayor] struggled to answer the question at a news conference this morning"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

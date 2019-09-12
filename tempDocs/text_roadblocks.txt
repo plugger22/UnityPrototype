@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Roadblocks",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [		
+        "It's gridlock today at [node] as roadblocks have shut down all major ateries into and out of the district",
+		"Emergency services vehicles are unable to respond to any calls at [node] due to the profileration of roadblocks in the district",
+		"It's the smell of burning tyres that gets to you, says [npc], [job] of [node] when asked about the roadblocks",
+		"A dark blanket of oily smoke hangs over [node] today as roadblocks shut down all traffic in and out of the district",
+		"[mayor] appeared puzzled when asked what was causing the rash of roadblocks at [node]? It's gridlock down there",
+		"Police drones are showing images of total gridlock at [node] as roadblocks shut down the flow of traffic",
+		"The smoke from all those roadblocks is clogging up my nose, complains [npc], [job] of [node]",
+		"You'd think it was night, what with all that smoke from the roadblocks, says [npc], [job] of [node]. Hard to see anything",
+		"They are blocking the traffic 'cause they aren't happy, that's why! yells [npc], [job] of [node] to your reporter",
+		"Ride sharing has been shutdown for [node] until further notice as roadblocks continue to cause traffic chaos"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

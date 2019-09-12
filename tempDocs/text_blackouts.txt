@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Blackouts",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+		"Blackouts, explains [mayor] are the curse of modern society. They don't belong at [node] and we're going to fix that",
+        "Why are the lights always off at [node]? [mayor] doesn't, apparently, have any answers. Unrest is growing",
+		"Enquiries are ongoing, insists [mayor] when asked about the continual blackouts at [node]. We are on it, says the mayor",
+		"Daily activity is grinding to a halt at [node] due to continual blackouts. The local grid is down, acknowledged [mayor]",
+		"Every effort is being made to rectify the ongoing blackouts at [node], insists [mayor]. Citizens of [node] are still in the dark",
+		"How can I watch Serial-Flix when the power is out, questions [npc], [job] of [node]? It's a damn disgrace",
+		"There aren't any lights on here at [node], says [npc], [job]. Not a single damn one. It's as coal miner's *sshole",
+		"When is the power coming back on, that's what I want to know, demands [npc], [job] of [node]. Rolling blackouts is all we've got",
+		"How am I supposed to feed my kids when there isn't any power, questions [npc], [job] of [node]? Why are only we having blackouts?",
+		"Is the power going to come back on here at [node] or am I going to have to ship off-planet, questions [npc], [job] of [node]?"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

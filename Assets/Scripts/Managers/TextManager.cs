@@ -90,6 +90,7 @@ public class TextManager : MonoBehaviour
             //valid file present
             if (listOfTextLists[i] != null)
             {
+                jsonRead = "";
                 textList = listOfTextLists[i];
                 filename = listOfFileNames[i];
                 if (string.IsNullOrEmpty(filename) == false)

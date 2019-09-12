@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Vandalism",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+        "The whole district is has been trashed, completey trashed, laments [npc], [job] of [node]",
+		"If they want to smash things up why do they have to do it here, asks [npc], [job] of [node]?",
+		"Police are responding to multiple vandalism incidents at [node]. We have it under control, insists [mayor]",
+		"How many bricks need to get hurled through my window before the Police do something about it, asks [npc] of [node]",
+		"Who is vandalising the district, huh, who exactly, asks [npc], [job] of [node]?",
+		"Police are deploying surveillance drones over [node] in an effort to stamp out ongoing vandalism in the district",
+		"Does [mayor] know what it's like to live in Vandalism Central? I bet not, says a frustrated [npc], [job] of [node]",
+		"If [node] needed to be vandalised that badly we could have started a war instead, complains [npc], [job] of [node]",
+		"[node] is rapidly turning into a No Go Zone due to uncontrolled vandalism. [mayor] has declined to comment",
+		"Who is going to clean up all the mess, asks [npc], [job] of [node], stepping over the result of uncontrolled vandalism?"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

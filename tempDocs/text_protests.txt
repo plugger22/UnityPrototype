@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Protests",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+        "[mayor], at a recent press conference, was unable to explain the reason for the outbreak of silent, sit-down, protests at [node]",
+		"Are the silent, sit-down, protests at [node] a threat to The Authority? Nobody knows and the protesters aren't talking",
+		"Kind of spooky, if you ask me, says [npc], [job] responding to the spate of silent, sit-down, protests at [node]",
+		"They aren't happy, man, they really aren't happy, says [npc], pointing to one of the silent, sit-down, protests at [node]",
+		"Who knows what they want, asks [npc], [job] referring to the silent, sit-down, protests at [node]? They aren't saying",
+		"It's definitely illegal, says [mayor], referring to the silent, sit-down, protests at [node]. They are breaking the law",
+		"There is so many of them, points out [npc], [job] of [node]. They are just sitting there, saying nothing. It's a worry",
+		"People that don't talk about it have got problems, if you ask me, says [npc], [job] observing the silent, sit-down, protests at [node]",
+		"Why can't they do it at home, asks [npc], [job] of [node]? All that silent protest sh*t, it's disturbing. I'm disturbed",
+		"Am I going to join them? No way, I like to talk too much, laughs [npc], [job], talking about the silent, sit-down, protests at [node]"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

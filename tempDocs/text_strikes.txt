@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Strikes",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+		"Strikes at [node] continue as tensions reach flashpoint. [mayor] insists that it has to stop",
+        "Strikers at [node] marched demanding better treatment from their Robot Supervisors as protests continue",
+		"Placards demanding the same pay for humans as their robot equivalents were on display as strikers marched at [node]",
+		"If I'm going to be working like a robot I want to be paid like one, demands [npc] of [node], one of hundreds on strike on the streets today",
+		"Why do the damn robots earn more than me, asks [npc], of [node]? Strikes continue to paralyse the district",
+		"What am I supposed to do, sit at home all day and watch Serial-Flix? I want a job, demands [npc] of [node], one of many strikers",
+		"Robots don't have to eat so why do they get paid more than me, asks [npc] of [node]? Strikes continue throughout the district",
+		"Show me a robot with a family to support, huh? I'm human, I need to be paid more, insists [npc]. Strikes continue at [node]",
+		"I might not do as good a job as a robot but I'm human. Doesn't that count for something, asks [npc]. Strikes continue at [node]",
+		"Why do I have to work for a robot? Aren't they supposed to be working for us, asks [npc], a striker, at [node]?"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}

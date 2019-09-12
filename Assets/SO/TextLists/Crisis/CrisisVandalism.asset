@@ -14,25 +14,24 @@ MonoBehaviour:
   descriptor: Node Crisis news items -> Vandalism
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - We're burning, everything is burning! [npc], [job], is one of many people in [node]
-    trying to get help from the city
-  - '[mayor] denied that the conflagration in [node] was beyond the capability of
-    the [city] fire department'
-  - Fire, fire , fire! [node] is cooking, says [npc], [job]. We are all going to end
-    up as crispy critters if nobody helps us
-  - It's hot in [node], says [npc], [job]. Real hot. Fires all over. Nobody seems
-    to be doing anything about it
-  - '[mayor] today ordered extra fire fighting resources to be allocated to the [node]
-    inferno'
-  - Fire fighters are demanding extra pay for having to fight the intense fires in
-    [node]. No hope, says [mayor]
-  - My dog cooked off yesterday, says [npc], [job] of [node]. Those damn fires roasted
-    him until he was nothing but a greasy puddle
-  - I can't sleep at night, says [npc], [job] of [node]. All the smoke. I'm coughing
-    up blood. Why isn't [mayor] doing something?
-  - The [city] Health Department today warned people to stay indoors at [node] due
-    to the excessive smoke from the nearby fires
-  - Smoke gets in my eyes and the grit blows in through the window, says [npc], [job]
-    of [node]. I've had enough
+  - The whole district is has been trashed, completey trashed, laments [npc], [job]
+    of [node]
+  - If they want to smash things up why do they have to do it here, asks [npc], [job]
+    of [node]?
+  - Police are responding to multiple vandalism incidents at [node]. We have it under
+    control, insists [mayor]
+  - How many bricks need to get hurled through my window before the Police do something
+    about it, asks [npc] of [node]
+  - Who is vandalising the district, huh, who exactly, asks [npc], [job] of [node]?
+  - Police are deploying surveillance drones over [node] in an effort to stamp out
+    ongoing vandalism in the district
+  - Does [mayor] know what it's like to live in Vandalism Central? I bet not, says
+    a frustrated [npc], [job] of [node]
+  - If [node] needed to be vandalised that badly we could have started a war instead,
+    complains [npc], [job] of [node]
+  - '[node] is rapidly turning into a No Go Zone due to uncontrolled vandalism. [mayor]
+    has declined to comment'
+  - Who is going to clean up all the mess, asks [npc], [job] of [node], stepping over
+    the result of uncontrolled vandalism?
   isTestForDuplicates: 0
   isTestForTextTags: 1

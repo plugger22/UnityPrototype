@@ -1,0 +1,20 @@
+{
+    "descriptor": "Node Crisis news items -> Graffiti",
+    "category": {
+        "instanceID": 16132
+    },
+    "randomList": [
+        "[mayor] today warned those who are spreading anti-Authority graffiti throughout [node]. It's a crime, says the mayor",
+		"[mayor] was not amused, at a press conference last night, when confronted by images of anti-Authority graffiti at [node]",
+		"Personally I find it funny, says [npc], [job] of [node], responding to the rash of anti-Authority graffiti in the district",
+		"Stick it to the Authority, should be more of it, says [npc], when asked about the proliferation of anti-Authority graffiti at [node]",
+		"It's a joke but then so is The Authority, says [npc], [job] when this reporter questioned them about the prolific Graffiti at [node]",
+		"No, I didn't do it but whoever did, hey, give them a medal, says [npc], [job] talking about the spreading anti-Authority Graffiti at [node]",
+		"Doesn't The Authority have a sense of humour, asked [npc], [job]? I guess not when it comes to all the graffiti here at [node]",
+		"It feels good to see somebody sticking it to The Authority, insists [npc], [job] pointing to some of the anti-Authority graffiti at [node]",
+		"All that graffiti here at [node] is just some poor, hungry, person trying to reach out, insists [npc], [job] of [node]",
+		"Nobody likes being made fun of, especially The Authority, says [npc], [job] as they walk past some of the [node] graffiti"
+    ],
+    "isTestForDuplicates": false,
+    "isTestForTextTags": true
+}
