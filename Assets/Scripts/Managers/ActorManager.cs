@@ -346,6 +346,9 @@ public class ActorManager : MonoBehaviour
         InitialisePoolActors();
         //set actor alpha to active for all onMap slots
         GameManager.instance.actorPanelScript.SetActorsAlphaActive();
+        //HQ actors (excluding start of campaign)
+        if (GameManager.instance.campaignScript.GetScenarioIndex() > 0)
+        { UpdateHQActors(); }
     }
     #endregion
 
@@ -815,6 +818,14 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActors (Empty)"); }
+    }
+
+    /// <summary>
+    /// takes any actors at HQ (hierarcy or otherwise) and adds them to the new levels dictOfActors
+    /// </summary>
+    private void UpdateHQActors()
+    {
+
     }
 
     /// <summary>

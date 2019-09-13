@@ -22,7 +22,7 @@ public class TextList : ScriptableObject
     public bool isTestForTextTags;
 
     #region Save Data Compatible
-    private int index;
+    [HideInInspector] public int index;
     #endregion
 
 

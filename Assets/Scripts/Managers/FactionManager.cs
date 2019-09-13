@@ -93,6 +93,7 @@ public class FactionManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseNewGame();
                 SubInitialiseFastAccess();
                 SubInitialiseColours();
                 SubInitialiseEvents();
@@ -115,6 +116,14 @@ public class FactionManager : MonoBehaviour
 
 
     #region Initialise SubMethods
+
+    #region SubInitialiseNewGame
+    private void SubInitialiseNewGame()
+    {
+        //initialise HQ actors starting lineUp
+        GameManager.instance.actorScript.InitialiseHQActors();
+    }
+    #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -163,8 +172,7 @@ public class FactionManager : MonoBehaviour
         ApprovalResistance = approval;
         Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
-        //initialise HQ actors starting lineUp
-        GameManager.instance.actorScript.InitialiseHQActors();
+
     }
     #endregion
 

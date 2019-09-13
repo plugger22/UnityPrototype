@@ -420,6 +420,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No TextLists present"); }
+        //add to dictOfTextsLists
+        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        foreach(TextList textList in arrayOfTextLists)
+        {
+            if (textList != null)
+            {
+                try { dictOfTextLists.Add(textList.name, textList); }
+                catch (ArgumentException)
+                { Debug.LogWarningFormat("Duplicate TextList {0} in dictOfTextLists", textList.name); }
+            }
+            else { Debug.LogWarning("Invalid textList (Null) in arrayOfTextLists"); }
+        }
+        Debug.AssertFormat(dictOfTextLists.Count == numArray, "Mismatch on Textlists. Array has {0}, dict has {1}", numArray, dictOfTextLists.Count);
+        Debug.LogFormat("[Loa] InitialiseStart -> dictOfTextLists has {0} records{1}", dictOfTextLists.Count, "\n");
         //
         // - - - NameSets (not stored in a collection)
         //

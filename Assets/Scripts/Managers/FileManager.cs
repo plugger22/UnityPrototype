@@ -445,7 +445,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
         if (dictOfContacts != null)
         {
-            foreach(var contact in dictOfContacts)
+            foreach (var contact in dictOfContacts)
             {
                 if (contact.Value != null)
                 { write.dataData.listOfContacts.Add(contact.Value); }
@@ -461,7 +461,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
         if (dictOfActorContacts != null)
         {
-            foreach(var contactList in dictOfActorContacts)
+            foreach (var contactList in dictOfActorContacts)
             {
                 IntListWrapper listOfContacts = new IntListWrapper();
                 listOfContacts.myList.AddRange(contactList.Value);
@@ -534,7 +534,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
-            foreach(var record in dictOfTeams)
+            foreach (var record in dictOfTeams)
             {
                 if (record.Value != null)
                 {
@@ -570,7 +570,7 @@ public class FileManager : MonoBehaviour
             for (int i = 0; i < size0; i++)
             {
                 for (int j = 0; j < size1; j++)
-                { write.dataData.listOfArrayOfTeams.Add(arrayOfTeams[i, j]);  }
+                { write.dataData.listOfArrayOfTeams.Add(arrayOfTeams[i, j]); }
             }
         }
         else { Debug.LogError("Invalid arrayOfTeams (Null)"); }
@@ -599,7 +599,7 @@ public class FileManager : MonoBehaviour
         if (dictOfStatisticsLevel != null)
         {
             //only need to save stats as StatType Key's are sequentially numbered enums
-            foreach(var stat in dictOfStatisticsLevel)
+            foreach (var stat in dictOfStatisticsLevel)
             { write.dataData.listOfStatisticsLevel.Add(stat.Value); }
         }
         else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
@@ -723,7 +723,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoing != null)
         {
-            foreach(var ongoing in dictOfOngoing)
+            foreach (var ongoing in dictOfOngoing)
             {
                 if (ongoing.Value != null)
                 { write.dataData.listOfOngoingEffects.Add(ongoing.Value); }
@@ -783,7 +783,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
         if (dictOfHistory != null)
         {
-            foreach(var info in dictOfHistory)
+            foreach (var info in dictOfHistory)
             {
                 if (info.Value != null)
                 {
@@ -829,7 +829,7 @@ public class FileManager : MonoBehaviour
                 {
                     switch (inner)
                     {
-                        case 0:  prioritySave.listOfPriorityLow.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
+                        case 0: prioritySave.listOfPriorityLow.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
                         case 1: prioritySave.listOfPriorityMed.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
                         case 2: prioritySave.listOfPriorityHigh.AddRange(arrayOfItemDataByPriority[outer, inner]); break;
                         default: Debug.LogErrorFormat("Unrecognised inner {0}", inner); break;
@@ -866,6 +866,17 @@ public class FileManager : MonoBehaviour
         if (listOfAdverts != null)
         { write.dataData.listOfAdverts.AddRange(listOfAdverts); }
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
+        #endregion
+
+        #region textLists
+        //Test lists indexes
+        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        if (dictOfTextLists != null)
+        {
+            write.dataData.listOfTextListNames = dictOfTextLists.Keys.ToList();
+            write.dataData.listOfTextListIndexes = dictOfTextLists.Select(x => x.Value.index).ToList();
+        }
+        else { Debug.LogError("Invalid dictOfTextLists (Null)"); }
         #endregion
     }
     #endregion
@@ -2434,6 +2445,40 @@ public class FileManager : MonoBehaviour
         #region News
         GameManager.instance.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
         GameManager.instance.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
+        #endregion
+
+        #region textLists
+        //Text Lists -> update indexes
+        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        if (dictOfTextLists != null)
+        {
+            TextList textList;
+            if (read.dataData.listOfTextListNames != null)
+            {
+                if (read.dataData.listOfTextListIndexes != null)
+                {
+                    for (int i = 0; i < read.dataData.listOfTextListNames.Count; i++)
+                    {
+                        itemName = read.dataData.listOfTextListNames[i];
+                        if (string.IsNullOrEmpty(itemName) == false)
+                        {
+                            //find in dictionary
+                            if (dictOfTextLists.ContainsKey(itemName) == true)
+                            {
+                                textList = dictOfTextLists[itemName];
+                                if (textList != null)
+                                { textList.index = read.dataData.listOfTextListIndexes[i]; }
+                                else { Debug.LogWarningFormat("Invalid textList (Null) for \"{0}\"", itemName); }
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid textList name (Null or Empty) for listOfTextListNames[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarning("Invalid listOfTextListIndexes (Null)"); }
+            }
+            else { Debug.LogWarning("Invalid listOfTextListNames (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTextLists (Null)"); }
         #endregion
     }
     #endregion

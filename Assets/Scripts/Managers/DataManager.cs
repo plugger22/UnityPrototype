@@ -218,6 +218,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
+    private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
 
 
     #region SO enum Dictionaries
@@ -4747,7 +4748,7 @@ public class DataManager : MonoBehaviour
                     builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.actorID, actor.arc.name, actor.level,
                         actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
                 }
-                else { builder.Append(string.Format("Error for actorID {0}", listOfActors[i])); }
+                else { builder.Append(string.Format("Error for actorID {0}{1}", listOfActors[i], "\n")); }
             }
         }
         else { Debug.LogError("Invalid listOfActors (Null)"); }
@@ -7320,6 +7321,13 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
     }
+
+    //
+    // - - - Text Lists
+    //
+
+    public Dictionary<string, TextList> GetDictOfTextList()
+    { return dictOfTextLists; }
 
     //new methods above here
 }

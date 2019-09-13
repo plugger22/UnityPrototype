@@ -1579,6 +1579,7 @@ public class ValidationManager : MonoBehaviour
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
             CheckTopicData(prefix);
+            CheckTextListData(prefix);
         }
     }
     #endregion
@@ -2474,6 +2475,39 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
     }
+    #endregion
+
+    #region CheckTextListData
+    /// <summary>
+    /// Integrity check to ensure textList indexes are within bounds
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckTextListData(string prefix)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckTextListData: ");
+        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        if (arrayOfTextLists != null)
+        {
+            for (int i = 0; i < arrayOfTextLists.Length; i++)
+            {
+                TextList textList = arrayOfTextLists[i];
+                if (textList != null)
+                {
+                    //check index within bounds
+                    if (textList.index > -1)
+                    {
+                        if (textList.index >= textList.randomList.Count)
+                        { Debug.LogFormat("{0}Invalid textList index \"{0}\" for textList {1}, (has only {2} records){3}", textList.index, textList.name, textList.randomList.Count, "\n"); }
+                    }
+                    //check randomList
+                    CheckList(textList.randomList, textList.name, tag);
+                }
+                else { Debug.LogFormat("{0}Invalid textList (Null) for arrayOfTextLists[{1}]{2}", tag, i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
+    }
+
     #endregion
 
     #endregion
