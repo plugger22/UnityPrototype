@@ -2776,6 +2776,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 826042fa13cd68248a222db74a109029, type: 2}
   - {fileID: 11400000, guid: 6aa6be9241265b646ac50029d5d767e8, type: 2}
   - {fileID: 11400000, guid: f8d5212c134eee841bf0ef0e8ef6ca87, type: 2}
+  arrayOfTextLists: []
+  arrayOfTargets: []
 --- !u!114 &114395521989347528
 MonoBehaviour:
   m_ObjectHideFlags: 1

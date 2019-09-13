@@ -24,4 +24,5 @@ MonoBehaviour:
     the people
   - Find a better Maggot burger if you can. Seedtronics, providing food for the future
   isTestForDuplicates: 0
-  isTestForTextTags: 1
+  isTestForTextTags: 0
+  index: 1

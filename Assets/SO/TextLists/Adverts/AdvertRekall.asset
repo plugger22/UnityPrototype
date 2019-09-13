@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: AdvertRekall
+  m_EditorClassIdentifier: 
+  descriptor: Adds for Rekall memory implants a-la-Total-Recall
+  category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  randomList:
+  - Don't like your wife? We'll give you a better one. Rekall, memories that last
+    forever
+  - Sick of being nagged by your partner? Ours tell you how wonderful you are. Rekall,
+    memories that last forever
+  - Is your husband a flaccid, beergutted, flop? We'll give you a six pack, sensitive,
+    man who does the housework. Rekall, memories that last forever
+  - Does your wife always have a headache? We'll give you a hot wife who loves football.
+    Rekall, memories that last forever
+  - Don't like your dead end job? We'll make you boss of a megaCorp with all the perks.
+    Rekall, memories that last forever
+  - Is your job dragging you down? We'll make you an astronaut and shoot you at the
+    stars. Rekall, memories that last forever
+  - Can't breath in your oxygen deprived job? We'll make you a deep sea diver and
+    send you down, down, down. Rekall, memories that last forever
+  - Ever dreamed of going to Mars? We'll get you there, in style. Rekall, memories
+    that last forever
+  - Is Earth too dull? Take a five star trip to Mars on us. Rekall, memories that
+    last forever
+  - Can't see the sky from the smog? We'll send you Mars where you can see the stars.
+    Rekall, memories that last forever
+  - How would you like to be a dog? Woof, woof! Rekall, memories that last forever
+  - Unleash the tiger within. Prowl the jungle on us. Rekall, memories that last forever
+  - Want to be Neo and follow the white rabbit? We can help. Rekall, memories that
+    last forever
+  - Acid rain getting you down? It hasn't ever rained on Mars. Leave your umbrella
+    at home. Rekall, memories that last forever
+  isTestForDuplicates: 0
+  isTestForTextTags: 0
+  index: 0

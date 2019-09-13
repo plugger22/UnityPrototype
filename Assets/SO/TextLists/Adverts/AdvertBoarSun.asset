@@ -11,10 +11,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: AdvertBoarSun
   m_EditorClassIdentifier: 
-  descriptor: Adds for BoarSun pharmacuetical company - life expectancy / performance
+  descriptor: Adds for BoarSun pharmaceutical company - life expectancy / performance
     / health
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
   randomList:
-  - Pills
+  - Wrinkles, age spots, hair loss? Let somebody else deal with it. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Let the others get old. We'll let you drink from the fountain. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Can we give you an eternal life? No, but we can get you close. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Is your ticker starting to falter? We'll make it hum. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Does your heart pulling it's weight? We know how to get it back into line. Boarsun
+    Pharmaceuticals, giving you a better life
+  - Our heart pills are Red. They turn you into a human Ferrari that never stops.
+    Boarsun Pharmaceuticals, giving you a better life
+  - Fuzzy thinking is a thing of the past with a course of ThinkRite. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Tell the AI where to shove it with a course of premium ThinkRite. Boarsun Pharmaceuticals,
+    giving you a better life
+  - Chess or checkers. We'll make you a Master with a course of premium ThinkRite.
+    Boarsun Pharmaceuticals, giving you a better life
+  - We'll give you brain cells that you never knew you had. Premium ThinkRite. Take
+    one today. Boarsun Pharmaceuticals, giving you a better life
   isTestForDuplicates: 0
-  isTestForTextTags: 1
+  isTestForTextTags: 0
+  index: 0
