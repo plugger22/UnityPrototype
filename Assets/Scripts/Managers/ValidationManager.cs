@@ -1461,26 +1461,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfDecisionAI);
         //Mission
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfMissions);
-        //
-        // - - - TextList - - -
-        //
-        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
-        if (arrayOfTextLists != null)
-        { ValidateSOGeneric<TextList>(arrayOfTextLists); }
-        else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
-        //
-        // - - - Target - - -
-        //
-        //combine all text list arrays into a single list for validation checks
-        List<Target> listOfTargets = new List<Target>();
-        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGeneric);
-        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsCity);
-        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsVIP);
-        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsStory);
-        listOfTargets.AddRange(GameManager.instance.loadScript.arrayOfTargetsGoal);
-        //NOTE: add extra target lists here (as above)
-        Target[] arrayOfTargetLists = listOfTargets.ToArray();
-        ValidateSOGeneric<Target>(arrayOfTargetLists);
+        //TextList
+        ValidateSOGeneric<TextList>(GameManager.instance.loadScript.arrayOfTextLists);
+        //Target
+        ValidateSOGeneric<Target>(GameManager.instance.loadScript.arrayOfTargets);
 
     }
     #endregion

@@ -134,7 +134,8 @@ public class LoadManager : MonoBehaviour
     public Campaign[] arrayOfCampaigns;
 
     [HideInInspector] public Effect[] arrayOfEffects;       //used to consolidate all Effect arrays into this one
-    [HideInInspector] public TextList[] arrayOfTextLists;   //used to consolidate all TextLists into this one
+    [HideInInspector] public TextList[] arrayOfTextLists;   //used to consolidate all TextLists arrays
+    [HideInInspector] public Target[] arrayOfTargets;       //used to consolidate all Targets arrays
     #endregion
 
     #region InitialiseStart
@@ -353,6 +354,19 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTargetProfiles has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TargetProfiles present"); }
+        //
+        // - - - Target (master array consolidate)
+        //
+        List<Target> listOfTargets = new List<Target>();
+        listOfTargets.AddRange(arrayOfTargetsGeneric);
+        listOfTargets.AddRange(arrayOfTargetsCity);
+        listOfTargets.AddRange(arrayOfTargetsVIP);
+        listOfTargets.AddRange(arrayOfTargetsStory);
+        listOfTargets.AddRange(arrayOfTargetsGoal);
+        numArray = listOfTargets.Count;
+        //master array
+        arrayOfTargets = listOfTargets.ToArray();
+        Debug.LogFormat("[Loa] InitialiseEarly: arrayOfTargets has {0} entries{1}", arrayOfTargets.Length, "\n");
         //
         // - - - Text Lists Contacts (not stored in a collection)
         //
@@ -942,14 +956,20 @@ public class LoadManager : MonoBehaviour
         if (dictOfTargets != null)
         {
             counter = 0;
-            List<Target> listOfTargets = new List<Target>();
+
+            /*List<Target> listOfTargets = new List<Target>();
             listOfTargets.AddRange(arrayOfTargetsGeneric);
             listOfTargets.AddRange(arrayOfTargetsCity);
             listOfTargets.AddRange(arrayOfTargetsVIP);
             listOfTargets.AddRange(arrayOfTargetsStory);
             listOfTargets.AddRange(arrayOfTargetsGoal);
-            numArray = listOfTargets.Count;
+            numArray = listOfTargets.Count;*/
 
+            //use master array (InitialiseEarly)
+            List<Target> listOfTargets = arrayOfTargets.ToList();
+            numArray = listOfTargets.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly: arrayOfTargets has {0} entries{1}", arrayOfTargets.Length, "\n");
+            //loop targets
             for (int i = 0; i < numArray; i++)
             {
                 Target target = listOfTargets[i];
