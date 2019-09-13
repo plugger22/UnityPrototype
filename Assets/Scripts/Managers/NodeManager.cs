@@ -2411,7 +2411,7 @@ public class NodeManager : MonoBehaviour
                                             {
                                                 CheckTextData data = new CheckTextData();
                                                 data.node = node;
-                                                data.text = node.crisis.textList.GetRandomRecord();
+                                                data.text = node.crisis.textList.GetIndexedRecord();
                                                 string newsSnippet = GameManager.instance.newsScript.CheckNewsText(data);
                                                 NewsItem item = new NewsItem() { text = newsSnippet, timer = 1 };
                                                 GameManager.instance.dataScript.AddNewsItem(item);
@@ -2502,6 +2502,20 @@ public class NodeManager : MonoBehaviour
                                         //random
                                         msgText = string.Format("{0}, {1}, district CRISIS succeeds", node.nodeName, node.Arc.name);
                                         GameManager.instance.messageScript.GeneralRandom(msgText, "District Crisis", chance, rnd, true);
+                                        //news snippet
+                                        if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                                        {
+                                            if (node.crisis.textList != null)
+                                            {
+                                                CheckTextData data = new CheckTextData();
+                                                data.node = node;
+                                                data.text = node.crisis.textList.GetIndexedRecord();
+                                                string newsSnippet = GameManager.instance.newsScript.CheckNewsText(data);
+                                                NewsItem item = new NewsItem() { text = newsSnippet, timer = 1 };
+                                                GameManager.instance.dataScript.AddNewsItem(item);
+                                            }
+                                            else { Debug.LogWarningFormat("Invalid textList for crisis \"{0}\" at node {1}, id {2}", node.crisis.tag, node.nodeName, node.nodeID); }
+                                        }
                                     }
                                     else
                                     {

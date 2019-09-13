@@ -8,14 +8,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Node / NodeCrisis")]
 public class NodeCrisis : ScriptableObject
 {
-    #region Save Data Compatible
+
+    [Tooltip("Node datapoint that the crisis is associated with")]
     public NodeDatapoint datapoint;
     [Tooltip("Used for shorter description")]
     public string tag;
     [Tooltip("Used for fuller description")]
     [TextArea] public string description;
-    #endregion
-
     [Tooltip("Textlist for newsItems when a crisis erupts")]
     public TextList textList;
 

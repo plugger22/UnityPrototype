@@ -47,7 +47,7 @@ public class LoadManager : MonoBehaviour
     public SecretType[] arrayOfSecretTypes;
     public NodeDatapoint[] arrayOfNodeDatapoints;
     
-    [Header("TextLists")]       //NOTE: need to add any new arrays to ValidationManager.cs -> ValidateTextLists / ValidateSO methods
+    [Header("TextLists")]       //NOTE: need to add any new arrays to arrayOfTextLists in InitialiseEarly
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
     public TextList[] arrayOfDistrictTextLists;
@@ -134,6 +134,7 @@ public class LoadManager : MonoBehaviour
     public Campaign[] arrayOfCampaigns;
 
     [HideInInspector] public Effect[] arrayOfEffects;       //used to consolidate all Effect arrays into this one
+    [HideInInspector] public TextList[] arrayOfTextLists;   //used to consolidate all TextLists into this one
     #endregion
 
     #region InitialiseStart
@@ -401,6 +402,24 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCrisisTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CrisisTextLists present"); }
+        //
+        // - - - Text Lists -> Consolidate into master array
+        //
+        List<TextList> listOfTextLists = new List<TextList>();
+        //consolidate all into single master array (used for validation and code purposes)
+        listOfTextLists.AddRange(arrayOfContactTextLists);
+        listOfTextLists.AddRange(arrayOfNameTextLists);
+        listOfTextLists.AddRange(arrayOfDistrictTextLists);
+        listOfTextLists.AddRange(arrayOfShortTextLists);
+        listOfTextLists.AddRange(arrayOfFactorTextLists);
+        listOfTextLists.AddRange(arrayOfAdvertTextLists);
+        listOfTextLists.AddRange(arrayOfCrisisTextLists);
+        arrayOfTextLists = listOfTextLists.ToArray();
+        //check master array
+        numArray = arrayOfTextLists.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTextLists has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No TextLists present"); }
         //
         // - - - NameSets (not stored in a collection)
         //

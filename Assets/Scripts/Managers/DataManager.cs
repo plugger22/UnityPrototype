@@ -255,6 +255,11 @@ public class DataManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseNewGame();
+                SubInitialiseAll();
+                if (GameManager.instance.isSession == false)
+                { SubInitialiseStartSession(); }
+                break;
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
             case GameState.LoadGame:
@@ -270,6 +275,27 @@ public class DataManager : MonoBehaviour
 
 
     #region Initialisation SubMethods
+
+    #region SubInitialiseNewGame
+    /// <summary>
+    /// new game initialisation
+    /// </summary>
+    private void SubInitialiseNewGame()
+    {
+        //TextLists -> assign all an index (whether needed or not)
+        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        if (arrayOfTextLists != null)
+        {
+            foreach(TextList textList in arrayOfTextLists)
+            {
+                if (textList != null)
+                { textList.InitialiseIndex(); }
+                else { Debug.LogWarning("Invalid textList (Null) in arrayOfTextLists"); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
+    }
+    #endregion
 
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()

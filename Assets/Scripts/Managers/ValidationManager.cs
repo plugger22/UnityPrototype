@@ -577,61 +577,56 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTextLists()
     {
-        //combine all text list arrays into a single list for validation checks
-        List<TextList> listOfAllTextLists = new List<TextList>();
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfCrisisTextLists);
-        //NOTE: add extra text lists here (as above)
-        TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
-        //loop textlists
-        List<string> findList = new List<string>();
-        int count;
-        for (int i = 0; i < arrayOfTextLists.Length; i++)
+        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        if (arrayOfTextLists != null)
         {
-            TextList textList = arrayOfTextLists[i];
-            if (textList != null)
+            //loop textlists
+            List<string> findList = new List<string>();
+            int count;
+            for (int i = 0; i < arrayOfTextLists.Length; i++)
             {
-                //check for duplicates
-                if (textList.isTestForDuplicates == true)
+                TextList textList = arrayOfTextLists[i];
+                if (textList != null)
                 {
-                    List<string> tempList = new List<string>(textList.randomList);
-                    if (tempList != null)
+                    //check for duplicates
+                    if (textList.isTestForDuplicates == true)
                     {
-                        //loop temp list and check against master text list
-                        foreach (String item in tempList)
+                        List<string> tempList = new List<string>(textList.randomList);
+                        if (tempList != null)
                         {
-                            findList.Clear();
-                            findList = textList.randomList.FindAll(x => x == item);
-                            count = findList.Count;
-                            //always one copy present, shouldn't be any more
-                            if (count > 1)
+                            //loop temp list and check against master text list
+                            foreach (String item in tempList)
                             {
-                                //ignore first, legit, copy
-                                count--;
-                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");
+                                findList.Clear();
+                                findList = textList.randomList.FindAll(x => x == item);
+                                count = findList.Count;
+                                //always one copy present, shouldn't be any more
+                                if (count > 1)
+                                {
+                                    //ignore first, legit, copy
+                                    count--;
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTextList: {0} Duplicate{1} exist for \"{2}\" in textList {3}{4}", count, count != 1 ? "s" : "", item, textList.name, "\n");
+                                }
                             }
                         }
+                        else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
                     }
-                    else { Debug.LogErrorFormat("Invalid randomList (Null) for textList {0}", textList.descriptor); }
-                }
-                //check for valid Text tags
-                if (textList.isTestForTextTags == true)
-                {
-                    CheckTextData data = new CheckTextData() { isValidate = true };
-                    for (int j = 0; j < textList.randomList.Count; j++)
+                    //check for valid Text tags
+                    if (textList.isTestForTextTags == true)
                     {
-                        data.text = textList.randomList[j];
-                        data.objectName = string.Format("{0}, line {1}", textList.name, j);
-                        GameManager.instance.newsScript.CheckNewsText(data);
+                        CheckTextData data = new CheckTextData() { isValidate = true };
+                        for (int j = 0; j < textList.randomList.Count; j++)
+                        {
+                            data.text = textList.randomList[j];
+                            data.objectName = string.Format("{0}, line {1}", textList.name, j);
+                            GameManager.instance.newsScript.CheckNewsText(data);
+                        }
                     }
                 }
+                else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }
             }
-            else { Debug.LogErrorFormat("Invalid textList (Null) for arrayOfTextLists[{0}]", i); }
         }
+        else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
     }
 
     #endregion
@@ -1469,18 +1464,10 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - TextList - - -
         //
-        //combine all text list arrays into a single list for validation checks
-        List<TextList> listOfAllTextLists = new List<TextList>();
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfContactTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfNameTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfDistrictTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfShortTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfFactorTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfAdvertTextLists);
-        listOfAllTextLists.AddRange(GameManager.instance.loadScript.arrayOfCrisisTextLists);
-        //NOTE: add extra text lists here (as above)
-        TextList[] arrayOfTextLists = listOfAllTextLists.ToArray();
-        ValidateSOGeneric<TextList>(arrayOfTextLists);
+        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        if (arrayOfTextLists != null)
+        { ValidateSOGeneric<TextList>(arrayOfTextLists); }
+        else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
         //
         // - - - Target - - -
         //

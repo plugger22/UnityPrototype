@@ -21,6 +21,10 @@ public class TextList : ScriptableObject
     [Tooltip("If true test for valid Text Tags using NewsManager.cs -> CheckNewsText, ignore if false")]
     public bool isTestForTextTags;
 
+    #region Save Data Compatible
+    private int index;
+    #endregion
+
 
     public void OnEnable()
     {
@@ -29,6 +33,7 @@ public class TextList : ScriptableObject
         isTestForTextTags = true;
         //asserts
         Debug.AssertFormat(category != null, "Invalid category (Null) for {0}", name);
+        Debug.AssertFormat(randomList != null && randomList.Count > 0, "Invalid randomList (Null or Empty) for {0}", name);
     }
 
 
@@ -46,6 +51,46 @@ public class TextList : ScriptableObject
         if (isNull == false)
         { return "Unknown"; }
         return null;
+    }
+
+    /// <summary>
+    /// returns next record and increments index. Used to cycle through entire lists one at a time to give maximum expose to all records. Alternate method to GetRandomRecord
+    /// </summary>
+    /// <param name="isNull"></param>
+    /// <returns></returns>
+    public string GetIndexedRecord(bool isNull = true)
+    {
+        string text = "";
+        if (index > -1)
+        {
+            text = randomList[index];
+            //increment index
+            index++;
+            //rollover
+            if (index == randomList.Count)
+            { index = 0; }
+        }
+        //invalid record
+        if (string.IsNullOrEmpty(text) == true)
+        {
+            if (isNull == true)
+            { text = null; }
+            else { text = "Unknown"; }
+        }
+        return text;
+    }
+
+    /// <summary>
+    /// sets index for randomlist to a random value at start of a new game
+    /// </summary>
+    public void InitialiseIndex()
+    {
+        if (randomList != null && randomList.Count > 0)
+        {
+            index = Random.Range(0, randomList.Count);
+            /*Debug.LogFormat("[Tst] TextList.SO -> InitialiseIndex: index {0}, out of {1} records, for {2}{3}", index, randomList.Count, name, "\n");*/
+        }
+        else { index = -1; }
     }
 
     /// <summary>

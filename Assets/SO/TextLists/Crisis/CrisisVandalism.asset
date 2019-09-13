@@ -14,8 +14,8 @@ MonoBehaviour:
   descriptor: Node Crisis news items -> Vandalism
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
   randomList:
-  - The whole district is has been trashed, completey trashed, laments [npc], [job]
-    of [node]
+  - The whole district has been trashed, completey trashed, laments [npc], [job] of
+    [node]
   - If they want to smash things up why do they have to do it here, asks [npc], [job]
     of [node]?
   - Police are responding to multiple vandalism incidents at [node]. We have it under
