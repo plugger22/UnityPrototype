@@ -3574,10 +3574,12 @@ public class DataManager : MonoBehaviour
         return tempList;
     }
 
+    //
+    // - - - HQ Actors - - -
+    //
 
-    //
-    // - - - Actors - - -
-    //
+    public Dictionary<int, Actor> GetDictOfHQ()
+    { return dictOfHQ; }
 
     public Actor[] GetArrayOfActorsHQ()
     { return arrayOfActorsHQ; }
@@ -3589,6 +3591,58 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public Actor GetHQHierarchyActor(ActorHQ hq)
     { return arrayOfActorsHQ[(int)hq]; }
+
+    /// <summary>
+    /// Adds any actor to dictOfHQ, returns true if successful. actor.hqID must be valid (> -1)
+    /// </summary>
+    /// <param name="actor"></param>
+    public bool AddHQActor(Actor actor)
+    {
+        bool successFlag = true;
+        if (actor.hqID > -1)
+        {
+            //add to dictionary
+            try
+            { dictOfHQ.Add(actor.hqID, actor); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
+            catch (ArgumentException)
+            { Debug.LogErrorFormat("Invalid Actor (duplicate) hqID \"{0}\" for {1} \"{2}\"", actor.hqID, actor.arc.name, actor.actorName); successFlag = false; }
+        }
+        else { Debug.LogWarningFormat("Invalid hqID \"{0}\" for actor {1}, {2}", actor.hqID, actor.actorName, actor.arc.name); successFlag = false; }
+        return successFlag;
+    }
+
+    public List<int> GetListOfActorHQ()
+    { return actorHQPool; }
+
+    /// <summary>
+    /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID
+    /// </summary>
+    /// <param name="actorID"></param>
+    public void AddActorToHQPool(int hqID)
+    {
+        Debug.Assert(hqID > -1, "Invalid hqID");
+        actorHQPool.Add(hqID);
+    }
+
+    /// <summary>
+    /// Find actor in dictOfHQ, returns null if a problem. Uses actor.hqID (must be > -1)
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Actor GetHQActor(int hqID)
+    {
+        Debug.Assert(hqID > -1, string.Format("Invalid hqID {0}", hqID));
+        if (dictOfHQ.ContainsKey(hqID))
+        { return dictOfHQ[hqID]; }
+        else { Debug.LogWarningFormat("Not found in hqID {0}, in dictOfHQ", hqID); }
+        return null;
+    }
+
+    //
+    // - - - Actors - - -
+    //
 
     /// <summary>
     /// add a currently active actor to the arrayOfActors and update Actor status, states and actorSlotID. Also updates ActorUI
@@ -3680,7 +3734,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for RemoveActor to handle all the admin details.Handles all cases including reserves
+    /// subMethod for RemoveActor to handle all the admin details. Handles all cases including reserves. Not applicable for HQ Actors
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actor"></param>
@@ -3759,27 +3813,6 @@ public class DataManager : MonoBehaviour
         { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
         catch (ArgumentException)
         { Debug.LogError(string.Format("Invalid Actor (duplicate) actorID \"{0}\" for {1} \"{2}\"", actor.actorID, actor.arc.name, actor.actorName)); successFlag = false; }
-        return successFlag;
-    }
-
-    /// <summary>
-    /// Adds any actor to dictOfHQ, returns true if successful. actor.hqID must be valid (> -1)
-    /// </summary>
-    /// <param name="actor"></param>
-    public bool AddHQActor(Actor actor)
-    {
-        bool successFlag = true;
-        if (actor.hqID > -1)
-        {
-            //add to dictionary
-            try
-            { dictOfHQ.Add(actor.hqID, actor); }
-            catch (ArgumentNullException)
-            { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
-            catch (ArgumentException)
-            { Debug.LogErrorFormat("Invalid Actor (duplicate) hqID \"{0}\" for {1} \"{2}\"", actor.hqID, actor.arc.name, actor.actorName); successFlag = false; }
-        }
-        else { Debug.LogWarningFormat("Invalid hqID \"{0}\" for actor {1}, {2}", actor.hqID, actor.actorName, actor.arc.name); successFlag = false; }
         return successFlag;
     }
 
@@ -4071,18 +4104,7 @@ public class DataManager : MonoBehaviour
         return successFlag;
     }
 
-    public List<int> GetListOfActorHQ()
-    { return actorHQPool; }
 
-    /// <summary>
-    /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID
-    /// </summary>
-    /// <param name="actorID"></param>
-    public void AddActorToHQPool(int hqID)
-    {
-        Debug.Assert(hqID > -1, "Invalid hqID");
-        actorHQPool.Add(hqID);
-    }
 
     /// <summary>
     /// returns number of actors currently in the relevant reserve pool (auto figures out side from optionManager.cs -> playerSide). '0' if an issue.
@@ -4224,19 +4246,6 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Find actor in dictOfHQ, returns null if a problem. Uses actor.hqID (must be > -1)
-    /// </summary>
-    /// <param name="actorID"></param>
-    /// <returns></returns>
-    public Actor GetHQActor(int hqID)
-    {
-        Debug.Assert(hqID > -1, string.Format("Invalid hqID {0}", hqID));
-        if (dictOfHQ.ContainsKey(hqID))
-        { return dictOfHQ[hqID]; }
-        else { Debug.LogWarningFormat("Not found in hqID {0}, in dictOfHQ", hqID); }
-        return null;
-    }
 
     /// <summary>
     /// Get specific actor (OnMap, active or inactive). Run CheckActorSlotStatus first to check if actor present in slot
@@ -4410,15 +4419,14 @@ public class DataManager : MonoBehaviour
     }
 
 
-
     /// <summary>
     /// Initialises all actor arrays. Called from LoadManager.cs
     /// </summary>
     public void InitialiseActorArrays()
     {
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ + 2 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
-            GameManager.instance.factionScript.numOfActorsHQ + 2, (int)ActorHQ.Count);
+        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ + 3 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
+            GameManager.instance.factionScript.numOfActorsHQ + 3, (int)ActorHQ.Count);
         arrayOfActorsHQ = new Actor[(int)ActorHQ.Count];
         arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
@@ -4627,8 +4635,6 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Actor> GetDictOfActors()
     { return dictOfActors; }
 
-    public Dictionary<int, Actor> GetDictOfHQ()
-    { return dictOfHQ; }
 
 
     /// <summary>

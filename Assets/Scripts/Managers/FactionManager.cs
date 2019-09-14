@@ -732,7 +732,7 @@ public class FactionManager : MonoBehaviour
         {
             builder.AppendFormat("-HQ Hierarchy{0}", "\n");
             //first and last indexes are blanks ('None' & 'Worker')
-            for(int i = 1; i < (int)ActorHQ.Count - 1; i++)
+            for(int i = 1; i < (int)ActorHQ.Count - 2; i++)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)

@@ -12,7 +12,6 @@
         PlayGame, MetaGame, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinState { None, Authority, Resistance }                                                                //none indicates nobody has yet won level
     public enum WinReason { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, DoomTimerMin, MissionTimerMin, ObjectivesCompleted } //reason for Win State (from POV of winner)
-    /*public enum ResistanceState { Normal }                                                                              //specific Resistance states (Player or AI)*/
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   
     public enum SideState { None, AI, Human }                                                                           //who's running the side
     public enum MetaLevel { None, City, State, Nation }
@@ -52,6 +51,7 @@
     public enum NodeArcTally { Current, Minimum, Count };                                   //used for indexing of arrayOfNodeArcTotals
     public enum NodeType { Normal, Highlight, Active, Player, Nemesis, Count }
     public enum NodeData { Stability, Support, Security, Target, Probe, Spider, Erasure};    //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
+
     public enum NodeAction
     {                                                           //NodeActionData package
         None,
@@ -86,10 +86,15 @@
     // - - - Actors - - -
     //
     public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
-    public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, Count}                //determines size of DataManager.cs -> arrayOfActorsHQ       
-    public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                             //reason actor is inactive
-    public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}           //used as a parameter only to access lists (DataManager.cs -> GetActorList)
-    public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                        //actor sprite shows a relevant tooltip if other than 'None'
+
+    public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove and you'll need to...  
+                                                                                                //change code in DataManager -> InitialiseActorArrays
+                                                                                                //change code in FactionManager.cs -> DebugDisplayHQActors
+                                                                                                //change ValidationManager.cs -> CheckActorData
+
+    public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                               //reason actor is inactive
+    public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}             //used as a parameter only to access lists (DataManager.cs -> GetActorList)
+    public enum ActorTooltip { None, Breakdown, LieLow, Captured, Leave}                            //actor sprite shows a relevant tooltip if other than 'None'
     public enum ActorDatapoint { Datapoint0, Influence0, Connections0, Datapoint1, Motivation1, Ability2, Invisibility2, Datapoint2}    //interchangeable. Use whichever one is appropriate
     public enum ActorCheck {      //DataManager.cs -> CheckNumOfActiveActorsSpecial
         None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero,
@@ -117,8 +122,8 @@
     //
     public enum Priority { None, Low, Medium, High, Critical }
     public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Dismiss, Faction, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
-    public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                             //used for toggling debugGUI.cs  AI data
-    public enum AINodeCriteria { None }                                                     //AIResistanceManager.cs -> ActorArc node task (find node with this criteria)
+    public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                                      //used for toggling debugGUI.cs  AI data
+    public enum AINodeCriteria { None }                                                                         //AIResistanceManager.cs -> ActorArc node task (find node with this criteria)
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}

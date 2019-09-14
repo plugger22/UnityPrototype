@@ -3642,6 +3642,7 @@ public class FileManager : MonoBehaviour
         Actor actor = new Actor();
         //copy over data from saveActor
         actor.actorID = readActor.actorID;
+        actor.hqID = readActor.hqID;
         actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
         actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
         actor.SetDatapointLoad(ActorDatapoint.Datapoint2, readActor.datapoint2);

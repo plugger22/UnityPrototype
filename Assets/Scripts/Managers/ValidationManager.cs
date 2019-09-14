@@ -1529,6 +1529,7 @@ public class ValidationManager : MonoBehaviour
         string prefix = "[Val] ValidationManager.cs -> ";
         //range limits
         int highestActorID = GameManager.instance.actorScript.actorIDCounter;
+        int highestHQID = GameManager.instance.actorScript.hqIDCounter;
         int highestNodeID = GameManager.instance.nodeScript.nodeIDCounter;
         int highestConnID = GameManager.instance.nodeScript.connIDCounter;
         int highestSlotID = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
@@ -1552,7 +1553,7 @@ public class ValidationManager : MonoBehaviour
         {
             Debug.LogFormat("{0}ExecuteIntegrityCheck: Commence checks...{1}", prefix, "\n");
             CheckNodeData(prefix, highestNodeID);
-            CheckActorData(prefix, highestActorID, highestNodeID, highestSlotID);
+            CheckActorData(prefix, highestActorID, highestHQID, highestNodeID, highestSlotID);
             CheckTargetData(prefix, highestNodeID, highestContactID, highestTurn);
             CheckTeamData(prefix, highestNodeID, highestTeamID, highestSlotID, highestTurn, playerSide);
             CheckGearData(prefix);
@@ -1711,7 +1712,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     /// <param name="prefix"></param>
     /// <param name="highestActorID"></param>
-    private void CheckActorData(string prefix, int highestActorID, int highestNodeID, int highestSlotID)
+    private void CheckActorData(string prefix, int highestActorID, int highestHQID, int highestNodeID, int highestSlotID)
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
@@ -1721,9 +1722,6 @@ public class ValidationManager : MonoBehaviour
         int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
         int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
         int minFactor = GameManager.instance.personScript.minPersonalityFactor;
-        /*int numOfActorArcs = GameManager.instance.dataScript.GetNumOfActorArcs();*/
-
-        //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
         // - - - dictOfActors
         //
@@ -1770,6 +1768,51 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //
+        // - - - dictOfHQ
+        //
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        if (dictOfHQ != null)
+        {
+            foreach (var actor in dictOfHQ)
+            {
+                key = actor.Key.ToString();
+                CheckDictRange(actor.Key, 0, highestHQID, "hqID", tag, key);
+                CheckDictRange(actor.Value.level, 1, 3, "level", tag, key);
+                CheckDictString(actor.Value.actorName, "actorName", tag, key);
+                CheckDictString(actor.Value.firstName, "firstName", tag, key);
+                CheckDictString(actor.Value.spriteName, "spriteName", tag, key);
+                CheckDictObject(actor.Value.side, "side", tag, key);
+                CheckDictObject(actor.Value.arc, "arc", tag, key);
+                CheckDictObject(actor.Value.sprite, "sprite", tag, key);
+                CheckDictObject(actor.Value.GetTrait(), "trait", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint0), 0, maxStatValue, "datapoint0", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
+                CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
+                CheckDictRange(actor.Value.Renown, 0, 999, "Renown", tag, key);
+                //personality
+                Personality personality = actor.Value.GetPersonality();
+                if (personality != null)
+                {
+                    CheckDictArrayBounds(personality.GetFactors(), "arrayOfFactors", tag, key, minFactor, maxFactor);
+                    CheckDictRange(personality.GetCompatibilityWithPlayer(), minCompatibility, maxCompatibility, "compatibilityWithPlayer", tag, key);
+                    if (personality.GetProfile() != null)
+                    {
+                        CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
+                        CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
+                        CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
+                        CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+                    }
+                }
+                else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
+                //status
+                if (actor.Value.Status != ActorStatus.HQ) { Debug.LogFormat("{0}Invalid status \"{1}\" (should be HQ) for hqID {2}, actor {3}{4}", 
+                    tag, actor.Value.Status, actor.Value.hqID, actor.Value.actorName, "\n"); }
+                else if (actor.Value.statusHQ == ActorHQ.None) { Debug.LogFormat("{0}Invalid HQ Status \"{1}\" (shouldn't be None) for hqID {2}, actor {3}{4}", 
+                    tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHQ (Null)"); }
         //
         // - - - Other Actor Collections
         //
@@ -1854,7 +1897,7 @@ public class ValidationManager : MonoBehaviour
         if (arrayOfActorsHQ != null)
         {
             //check first and last indexes are empty (due to enum.ActorHQ as indexes have to correspond, so first, 'None' and last 'Worker' should be Null)
-            int stopIndex = (int)ActorHQ.Count - 1;
+            int stopIndex = (int)ActorHQ.Count - 2;
             if (arrayOfActorsHQ[0] != null) { Debug.LogFormat("{0} Actor present in arrayOfActorsHQ[0] (should be Null){1}", tag, "\n"); }
             if (arrayOfActorsHQ[stopIndex] != null) { Debug.LogFormat("{0} Actor present in arrayOfActorsHQ[{1}] (should be Null){2}", tag, stopIndex, "\n"); }
             for (int i = 1; i < stopIndex; i++)
