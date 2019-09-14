@@ -16,7 +16,8 @@ namespace gameAPI
         #region Save Data compatible
         [HideInInspector] public GlobalSide side;
         [HideInInspector] public int slotID;                    //actor slot ID (eg, 0 to 3)
-        [HideInInspector] public int actorID;
+        [HideInInspector] public int actorID;                   //unique ID used for non-HQ actors
+        [HideInInspector] public int hqID;                      //unique ID used for HQ actors, -1 default
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
         [HideInInspector] public int unhappyTimer;              //used when in Reserves. Becomes 'Unhappy' once expires
@@ -116,6 +117,7 @@ namespace gameAPI
         /// </summary>
         public Actor()
         {
+            hqID = -1;
             nodeCaptured = -1;
             Renown = 0;
             gearName = null;

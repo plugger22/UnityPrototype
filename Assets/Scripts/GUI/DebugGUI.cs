@@ -189,9 +189,10 @@ public class DebugGUI : MonoBehaviour
                     case 0: debugDisplay = 7; actorToggle = 1; break;
                     case 1: debugDisplay = 6; actorToggle = 2; break;
                     case 2: debugDisplay = 54; actorToggle = 3; break;
-                    case 3: debugDisplay = 68; actorToggle = 4; break;
-                    case 4: debugDisplay = 69; actorToggle = 5; break;
-                    case 5: debugDisplay = 0; actorToggle = 0; break;
+                    case 3: debugDisplay = 74; actorToggle = 4; break;
+                    case 4: debugDisplay = 68; actorToggle = 5; break;
+                    case 5: debugDisplay = 69; actorToggle = 6; break;
+                    case 6: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -1582,6 +1583,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.newsScript.DebugDisplayAdverts();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //HQ dictionary
+                    case 74:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayHQDict();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
                         break;
                 }
             }

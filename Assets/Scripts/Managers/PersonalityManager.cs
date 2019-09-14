@@ -1086,7 +1086,7 @@ public class PersonalityManager : MonoBehaviour
                     if (actor != null)
                     {
                         //display actor personality
-                        builder.AppendFormat("-{0}, {1}, ID {2}, HQ, {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.statusHQ, "\n");
+                        builder.AppendFormat("-{0}, {1}, hID {2}, HQ, {3}{4}", actor.actorName, actor.arc.name, actor.hqID, actor.statusHQ, "\n");
                         Trait trait = actor.GetTrait();
                         if (trait != null)
                         {
@@ -1107,7 +1107,7 @@ public class PersonalityManager : MonoBehaviour
                         else
                         {
                             builder.AppendFormat(" ERROR: INVALID TRAIT (NULL){0}", "\n");
-                            Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
+                            Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, hID {2}", actor.actorName, actor.arc.name, actor.hqID);
                         }
                         builder.Append(DebugDisplayIndividualPersonality(actor.GetPersonality()));
                         builder.AppendLine();

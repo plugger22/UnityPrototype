@@ -109,6 +109,7 @@ public class ActorManager : MonoBehaviour
     [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
     [HideInInspector] public NameSet nameSet;                                   //used for naming actors. Takes nameSet from city
     [HideInInspector] public int actorIDCounter = 0;                            //used to sequentially number actorID's
+    [HideInInspector] public int hqIDCounter = 0;                               //used to sequentially number hqID's
     #endregion
 
     //cached recruit picker choices
@@ -346,9 +347,6 @@ public class ActorManager : MonoBehaviour
         InitialisePoolActors();
         //set actor alpha to active for all onMap slots
         GameManager.instance.actorPanelScript.SetActorsAlphaActive();
-        //HQ actors (excluding start of campaign)
-        if (GameManager.instance.campaignScript.GetScenarioIndex() > 0)
-        { UpdateHQActors(); }
     }
     #endregion
 
@@ -607,7 +605,7 @@ public class ActorManager : MonoBehaviour
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
-                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                    GameManager.instance.dataScript.AddActor(actorOne);
                     GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -615,7 +613,7 @@ public class ActorManager : MonoBehaviour
                 Actor actorTwo = CreateActor(globalAuthority, listOfArcs[i].name, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
                 {
-                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                    GameManager.instance.dataScript.AddActor(actorTwo);
                     GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -623,7 +621,7 @@ public class ActorManager : MonoBehaviour
                 Actor actorThree = CreateActor(globalAuthority, listOfArcs[i].name, 3, ActorStatus.RecruitPool);
                 if (actorThree != null)
                 {
-                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                    GameManager.instance.dataScript.AddActor(actorThree);
                     GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -642,7 +640,7 @@ public class ActorManager : MonoBehaviour
                 if (actorOne != null)
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
-                    GameManager.instance.dataScript.AddActorToDict(actorOne);
+                    GameManager.instance.dataScript.AddActor(actorOne);
                     GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -650,7 +648,7 @@ public class ActorManager : MonoBehaviour
                 Actor actorTwo = CreateActor(globalResistance, listOfArcs[i].name, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
                 {
-                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
+                    GameManager.instance.dataScript.AddActor(actorTwo);
                     GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -658,7 +656,7 @@ public class ActorManager : MonoBehaviour
                 Actor actorThree = CreateActor(globalResistance, listOfArcs[i].name, 3, ActorStatus.RecruitPool);
                 if (actorThree != null)
                 {
-                    GameManager.instance.dataScript.AddActorToDict(actorThree);
+                    GameManager.instance.dataScript.AddActor(actorThree);
                     GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
@@ -701,8 +699,8 @@ public class ActorManager : MonoBehaviour
                                 if (actorOne != null)
                                 {
                                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
-                                    GameManager.instance.dataScript.AddActorToDict(actorOne);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorOne.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorOne);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorOne.hqID);
                                     listOfActors.Add(actorOne);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
@@ -712,8 +710,8 @@ public class ActorManager : MonoBehaviour
                                 Actor actorTwo = CreateActor(globalAuthority, arc.name, 2, ActorStatus.HQ);
                                 if (actorTwo != null)
                                 {
-                                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorTwo.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorTwo);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorTwo.hqID);
                                     listOfActors.Add(actorTwo);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArc \"{0}\"", arc.name)); }
@@ -723,8 +721,8 @@ public class ActorManager : MonoBehaviour
                                 Actor actorThree = CreateActor(globalAuthority, arc.name, 3, ActorStatus.HQ);
                                 if (actorThree != null)
                                 {
-                                    GameManager.instance.dataScript.AddActorToDict(actorThree);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorThree.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorThree);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorThree.hqID);
                                     listOfActors.Add(actorThree);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArc \"{0}\"", arc.name)); }
@@ -755,8 +753,8 @@ public class ActorManager : MonoBehaviour
                                 if (actorOne != null)
                                 {
                                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
-                                    GameManager.instance.dataScript.AddActorToDict(actorOne);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorOne.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorOne);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorOne.hqID);
                                     listOfActors.Add(actorOne);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArc \"{0}\"", arc.name)); }
@@ -766,8 +764,8 @@ public class ActorManager : MonoBehaviour
                                 Actor actorTwo = CreateActor(globalResistance, arc.name, 2, ActorStatus.HQ);
                                 if (actorTwo != null)
                                 {
-                                    GameManager.instance.dataScript.AddActorToDict(actorTwo);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorTwo.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorTwo);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorTwo.hqID);
                                     listOfActors.Add(actorTwo);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArc \"{0}\"", arc.name)); }
@@ -777,8 +775,8 @@ public class ActorManager : MonoBehaviour
                                 Actor actorThree = CreateActor(globalResistance, arc.name, 3, ActorStatus.HQ);
                                 if (actorThree != null)
                                 {
-                                    GameManager.instance.dataScript.AddActorToDict(actorThree);
-                                    GameManager.instance.dataScript.AddActorToHQ(actorThree.actorID);
+                                    GameManager.instance.dataScript.AddHQActor(actorThree);
+                                    GameManager.instance.dataScript.AddActorToHQPool(actorThree.hqID);
                                     listOfActors.Add(actorThree);
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArc \"{0}\"", arc.name)); }
@@ -820,13 +818,6 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActors (Empty)"); }
     }
 
-    /// <summary>
-    /// takes any actors at HQ (hierarcy or otherwise) and adds them to the new levels dictOfActors
-    /// </summary>
-    private void UpdateHQActors()
-    {
-
-    }
 
     /// <summary>
     /// creates a new actor of the specified actor arc type, side and level (1 worst -> 3 best). SlotID (0 to 3) for current actor, default '-1' for reserve pool actor.
@@ -859,6 +850,9 @@ public class ActorManager : MonoBehaviour
                 actor.AddTrait(GameManager.instance.dataScript.GetRandomTrait(actorCategory, side));
                 actor.GetPersonality().SetFactors(GameManager.instance.personScript.SetPersonalityFactors(actor.GetTrait().GetArrayOfCriteria()));
                 actor.Status = status;
+                //hq actor
+                if (actor.Status == ActorStatus.HQ)
+                { actor.hqID = hqIDCounter++; }
                 //TO DO -> currently actor sprite is derived from actorArc sprite
                 actor.sprite = arc.sprite;
                 actor.spriteName = arc.sprite.name;
@@ -907,7 +901,7 @@ public class ActorManager : MonoBehaviour
                     actor.Renown = 0;
                     //add to data collections
                     GameManager.instance.dataScript.AddCurrentActor(side, actor, slotID);
-                    GameManager.instance.dataScript.AddActorToDict(actor);
+                    GameManager.instance.dataScript.AddActor(actor);
                 }
                 //return actor
                 return actor;

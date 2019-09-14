@@ -238,6 +238,7 @@ public class SaveActorData
 {
     //dataManager.cs collections
     public List<SaveActor> listOfDictActors = new List<SaveActor>();
+    public List<SaveActor> listOfDictHQ = new List<SaveActor>();
     public List<int> listOfActors = new List<int>();
     public List<int> listOfActorsHQ = new List<int>();
     public List<bool> listOfActorsPresent = new List<bool>();
@@ -260,6 +261,7 @@ public class SaveActorData
     public List<int> actorHQPool = new List<int>();
     //actorManager.cs
     public int actorIDCounter;
+    public int hqIDCounter;
     public int lieLowTimer;
     public int doomTimer;
     public int captureTimer;
@@ -526,6 +528,7 @@ public class SaveActor
     public ActorStatus status;
     public ActorHQ statusHQ;
     public int actorID;
+    public int hqID;
     public int datapoint0;
     public int datapoint1;
     public int datapoint2;

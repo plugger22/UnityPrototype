@@ -70,16 +70,16 @@ public class DataManager : MonoBehaviour
     private List<int> authorityActorDisposedOf = new List<int>();
     private List<int> authorityActorResigned = new List<int>();
 
-    private List<int> resistanceActorPoolLevelOne = new List<int>();
-    private List<int> resistanceActorPoolLevelTwo = new List<int>();
-    private List<int> resistanceActorPoolLevelThree = new List<int>();
-    private List<int> resistanceActorReserve = new List<int>();
-    private List<int> resistanceActorDismissed = new List<int>();
-    private List<int> resistanceActorPromoted = new List<int>();
-    private List<int> resistanceActorDisposedOf = new List<int>();
-    private List<int> resistanceActorResigned = new List<int>();
+    private List<int> resistanceActorPoolLevelOne = new List<int>();                        //uses actorID
+    private List<int> resistanceActorPoolLevelTwo = new List<int>();                        //uses actorID
+    private List<int> resistanceActorPoolLevelThree = new List<int>();                      //uses actorID
+    private List<int> resistanceActorReserve = new List<int>();                             //uses actorID
+    private List<int> resistanceActorDismissed = new List<int>();                           //uses actorID
+    private List<int> resistanceActorPromoted = new List<int>();                            //uses actorID
+    private List<int> resistanceActorDisposedOf = new List<int>();                          //uses actorID
+    private List<int> resistanceActorResigned = new List<int>();                            //uses actorID
 
-    private List<int> actorHQPool = new List<int>();                                        //player side HQ actors
+    private List<int> actorHQPool = new List<int>();                                        //player side HQ actors, uses hqID NOT actorID
 
     //target pools
     private List<string>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetNames for each nodeArc type. All level one targets
@@ -174,6 +174,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, PathData> dictOfDijkstraWeighted = new Dictionary<int, PathData>();                 //Key -> nodeID, Value -> PathData
     private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();                  //Key -> actorArc.name, Value -> ActorArc
     private Dictionary<int, Actor> dictOfActors = new Dictionary<int, Actor>();                                 //Key -> actorID, Value -> Actor
+    private Dictionary<int, Actor> dictOfHQ = new Dictionary<int, Actor>();                                     //Key -> hqID, Value -> Actor
     private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();                           //Key -> trait.name, Value -> Trait
     private Dictionary<string, TraitEffect> dictOfTraitEffects = new Dictionary<string, TraitEffect>();         //Key -> traitEffect.name, Value -> TraitEffect
     private Dictionary<string, Action> dictOfActions = new Dictionary<string, Action>();                        //Key -> Action.name, Value -> Action
@@ -3586,7 +3587,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="hq"></param>
     /// <returns></returns>
-    public Actor GetHQActor(ActorHQ hq)
+    public Actor GetHQHierarchyActor(ActorHQ hq)
     { return arrayOfActorsHQ[(int)hq]; }
 
     /// <summary>
@@ -3748,7 +3749,7 @@ public class DataManager : MonoBehaviour
     /// Adds any actor (whether current or reserve) to dictOfActors, returns true if successful
     /// </summary>
     /// <param name="actor"></param>
-    public bool AddActorToDict(Actor actor)
+    public bool AddActor(Actor actor)
     {
         bool successFlag = true;
         //add to dictionary
@@ -3758,6 +3759,27 @@ public class DataManager : MonoBehaviour
         { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
         catch (ArgumentException)
         { Debug.LogError(string.Format("Invalid Actor (duplicate) actorID \"{0}\" for {1} \"{2}\"", actor.actorID, actor.arc.name, actor.actorName)); successFlag = false; }
+        return successFlag;
+    }
+
+    /// <summary>
+    /// Adds any actor to dictOfHQ, returns true if successful. actor.hqID must be valid (> -1)
+    /// </summary>
+    /// <param name="actor"></param>
+    public bool AddHQActor(Actor actor)
+    {
+        bool successFlag = true;
+        if (actor.hqID > -1)
+        {
+            //add to dictionary
+            try
+            { dictOfHQ.Add(actor.hqID, actor); }
+            catch (ArgumentNullException)
+            { Debug.LogError("Invalid Actor (Null)"); successFlag = false; }
+            catch (ArgumentException)
+            { Debug.LogErrorFormat("Invalid Actor (duplicate) hqID \"{0}\" for {1} \"{2}\"", actor.hqID, actor.arc.name, actor.actorName); successFlag = false; }
+        }
+        else { Debug.LogWarningFormat("Invalid hqID \"{0}\" for actor {1}, {2}", actor.hqID, actor.actorName, actor.arc.name); successFlag = false; }
         return successFlag;
     }
 
@@ -4053,13 +4075,13 @@ public class DataManager : MonoBehaviour
     { return actorHQPool; }
 
     /// <summary>
-    /// Add actor to HQ pool (assumed to be playerSide actor)
+    /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID
     /// </summary>
     /// <param name="actorID"></param>
-    public void AddActorToHQ(int actorID)
+    public void AddActorToHQPool(int hqID)
     {
-        Debug.Assert(actorID > -1, "Invalid actorID");
-        actorHQPool.Add(actorID);
+        Debug.Assert(hqID > -1, "Invalid hqID");
+        actorHQPool.Add(hqID);
     }
 
     /// <summary>
@@ -4199,6 +4221,20 @@ public class DataManager : MonoBehaviour
         if (dictOfActors.ContainsKey(actorID))
         { return dictOfActors[actorID]; }
         else { Debug.LogWarning(string.Format("Not found in actorID {0}, in dictOfActors", actorID)); }
+        return null;
+    }
+
+    /// <summary>
+    /// Find actor in dictOfHQ, returns null if a problem. Uses actor.hqID (must be > -1)
+    /// </summary>
+    /// <param name="actorID"></param>
+    /// <returns></returns>
+    public Actor GetHQActor(int hqID)
+    {
+        Debug.Assert(hqID > -1, string.Format("Invalid hqID {0}", hqID));
+        if (dictOfHQ.ContainsKey(hqID))
+        { return dictOfHQ[hqID]; }
+        else { Debug.LogWarningFormat("Not found in hqID {0}, in dictOfHQ", hqID); }
         return null;
     }
 
@@ -4591,6 +4627,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<int, Actor> GetDictOfActors()
     { return dictOfActors; }
 
+    public Dictionary<int, Actor> GetDictOfHQ()
+    { return dictOfHQ; }
+
 
     /// <summary>
     /// debug method to show contents of both sides reserve lists
@@ -4624,7 +4663,7 @@ public class DataManager : MonoBehaviour
         builder.Append(DebugGetActorList(resistanceActorResigned));
         //hq
         builder.Append(string.Format("{0} - HQ List{1}", "\n", "\n"));
-        builder.Append(DebugGetActorList(actorHQPool));
+        builder.Append(DebugGetActorList(actorHQPool, false));
         return builder.ToString();
     }
 
@@ -4640,6 +4679,21 @@ public class DataManager : MonoBehaviour
         if (listOfActors != null)
         { builder.Append(DebugGetActorList(listOfActors)); }
         else { builder.Append("Invalid listOfActors"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// debug method to display contents of dictOfHQActors
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHQDict()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" HQ Dictionary{0}", "\n"));
+        List<int> listOfHQActors = dictOfHQ.Keys.ToList();
+        if (listOfHQActors != null)
+        { builder.Append(DebugGetActorList(listOfHQActors, false)); }
+        else { builder.Append("Invalid listOfHQActors"); }
         return builder.ToString();
     }
 
@@ -4731,24 +4785,40 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// sub method for DisplayActorLists (returns list of actors in specified list)
+    /// Uses actorID unless isActorID is false, in which case uses hqID
     /// </summary>
     /// <param name="listOfActors"></param>
     /// <returns></returns>
-    private string DebugGetActorList(List<int> listOfActors)
+    private string DebugGetActorList(List<int> listOfActors, bool isActorID = true)
     {
         StringBuilder builder = new StringBuilder();
         if (listOfActors != null)
         {
             for (int i = 0; i < listOfActors.Count; i++)
             {
-                Actor actor = GetActor(listOfActors[i]);
+                Actor actor;
+                if (isActorID == true)
+                { actor = GetActor(listOfActors[i]); }
+                else { actor = GetHQActor(listOfActors[i]); }
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));
-                    builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.actorID, actor.arc.name, actor.level,
-                        actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
+                    if (isActorID == true)
+                    {
+                        builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.actorID, actor.arc.name, actor.level,
+                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
+                    }
+                    else
+                    {
+                        builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.hqID, actor.arc.name, actor.level,
+                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
+                    }
                 }
-                else { builder.Append(string.Format("Error for actorID {0}{1}", listOfActors[i], "\n")); }
+                else
+                {
+                    if (isActorID == true) { builder.AppendFormat("Error for actorID {0}{1}", listOfActors[i], "\n"); }
+                    else { builder.AppendFormat("Error for hqID {0}{1}", listOfActors[i], "\n"); }
+                }
             }
         }
         else { Debug.LogError("Invalid listOfActors (Null)"); }

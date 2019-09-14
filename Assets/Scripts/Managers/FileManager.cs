@@ -890,12 +890,12 @@ public class FileManager : MonoBehaviour
     private void WriteActorData()
     {
         //
-        // - - - Main dictionary
+        // - - - Main dictionarys
         //
+        //dictOfActors
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
-            //loop dictOfActors
             foreach (var actor in dictOfActors)
             {
                 if (actor.Value != null)
@@ -908,8 +908,25 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //dictOfHQ
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        if (dictOfHQ != null)
+        {
+            foreach (var actor in dictOfHQ)
+            {
+                if (actor.Value != null)
+                {
+                    SaveActor saveActor = WriteIndividualActor(actor.Value);
+                    if (saveActor != null)
+                    { write.actorData.listOfDictHQ.Add(saveActor); }
+                }
+                else { Debug.LogWarning("Invalid actor (Null) in dictOfHQ"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfHQ (Null)"); }
         //
         // - - - Actor arrays
+        //
         int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
@@ -952,7 +969,7 @@ public class FileManager : MonoBehaviour
             {
                 Actor actor = arrayOfActorsHQ[i];
                 if (actor != null)
-                { write.actorData.listOfActorsHQ.Add(actor.actorID); }
+                { write.actorData.listOfActorsHQ.Add(actor.hqID); }
                 else { write.actorData.listOfActorsHQ.Add(-1); }
             }
         }
@@ -984,6 +1001,7 @@ public class FileManager : MonoBehaviour
         // - - - ActorManager.cs 
         //
         write.actorData.actorIDCounter = GameManager.instance.actorScript.actorIDCounter;
+        write.actorData.hqIDCounter = GameManager.instance.actorScript.hqIDCounter;
         write.actorData.lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
         write.actorData.doomTimer = GameManager.instance.actorScript.doomTimer;
         write.actorData.captureTimer = GameManager.instance.actorScript.captureTimer;
@@ -2490,9 +2508,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadActorData()
     {
-        //
-        // - - - dictOfActors (load first)
-        // 
+        //dictOfActors (load first)
         Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
@@ -2503,163 +2519,63 @@ public class FileManager : MonoBehaviour
                 //loop list of saved actors
                 for (int i = 0; i < read.actorData.listOfDictActors.Count; i++)
                 {
-                    //
-                    // - - - Recreate actor
-                    //
-                    Actor actor = new Actor();
                     SaveActor readActor = read.actorData.listOfDictActors[i];
-                    //copy over data from saveActor
-                    actor.actorID = readActor.actorID;
-                    actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
-                    actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
-                    actor.SetDatapointLoad(ActorDatapoint.Datapoint2, readActor.datapoint2);
-                    GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
-                    if (actorSide != null)
-                    { actor.side = actorSide; }
-                    else { Debug.LogError("Invalid actorSide (Null)"); }
-                    actor.slotID = readActor.slotID;
-                    actor.level = readActor.level;
-                    actor.nodeCaptured = readActor.nodeCaptured;
-                    actor.SetGear(readActor.gearName);
-                    actor.isMale = readActor.isMale;
-                    actor.actorName = readActor.actorName;
-                    actor.firstName = readActor.firstName;
-                    actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcName);
-                    Trait trait = GameManager.instance.dataScript.GetTrait(readActor.traitName);
-                    if (trait != null)
-                    { actor.AddTrait(trait); }
-                    else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
-                    //needs to be after SetGear
-                    actor.Status = readActor.status;
-                    actor.statusHQ = readActor.statusHQ;
-                    //Personality
-                    Personality personality = actor.GetPersonality();
-                    if (personality != null)
+                    if (readActor != null)
                     {
-                        personality.SetFactors(readActor.listOfPersonalityFactors.ToArray());
-                        personality.SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
-                        personality.SetDescriptors(readActor.listOfDescriptors);
-                        if (string.IsNullOrEmpty(readActor.profile) == false)
+                        Actor actor = ReadIndividualActor(readActor);
+                        if (actor != null)
                         {
-                            personality.SetProfile(readActor.profile);
-                            personality.SetProfileDescriptor(readActor.profileDescriptor);
-                            personality.SetProfileExplanation(readActor.profileExplanation);
-                            personality.SetMotivation(readActor.listOfMotivation);
+                            //Add to dictionary
+                            try
+                            { dictOfActors.Add(actor.actorID, actor); }
+                            catch (ArgumentException)
+                            { Debug.LogErrorFormat("Duplicate actor, ID \"{0}\"{1}", actor.actorID, "\n"); }
                         }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for read.actorData.listOfDictActors[{0}]", i); }
                     }
-                    else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
-                    //sprite
-                    actor.spriteName = readActor.spriteName;
-                    actor.sprite = GameManager.instance.dataScript.GetSprite(actor.spriteName);
-                    if (actor.sprite == null)
-                    { actor.sprite = defaultSprite; }
-                    //fast access
-                    actor.actorStressNone = read.actorData.actorStressNone;
-                    actor.actorCorruptNone = read.actorData.actorCorruptNone;
-                    actor.actorUnhappyNone = read.actorData.actorUnhappyNone;
-                    actor.actorBlackmailNone = read.actorData.actorBlackmailNone;
-                    actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
-                    actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
-                    actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
-                    actor.compatibilityOne = read.actorData.compatibilityOne;
-                    actor.compatibilityTwo = read.actorData.compatibilityTwo;
-                    actor.compatibilityThree = read.actorData.compatibilityThree;
-                    //data which can be ignored (default values O.K) if actor is in the Recruit Pool
-                    if (actor.Status != ActorStatus.RecruitPool)
-                    {
-                        actor.Renown = readActor.Renown;
-                        actor.unhappyTimer = readActor.unhappyTimer;
-                        actor.blackmailTimer = readActor.blackmailTimer;
-                        actor.captureTimer = readActor.captureTimer;
-                        actor.numOfTimesBullied = readActor.numOfTimesBullied;
-                        actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
-                        actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
-                        actor.isPromised = readActor.isPromised;
-                        actor.isNewRecruit = readActor.isNewRecruit;
-                        actor.isReassured = readActor.isReassured;
-                        actor.isThreatening = readActor.isThreatening;
-                        actor.isComplaining = readActor.isComplaining;
-                        actor.isBreakdown = readActor.isBreakdown;
-                        actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
-                        actor.isStressLeave = readActor.isStressLeave;
-                        actor.isTraitor = readActor.isTraitor;
-                        actor.tooltipStatus = readActor.tooltipStatus;
-                        actor.inactiveStatus = readActor.inactiveStatus;
-                        actor.SetGearTimer(readActor.gearTimer);
-                        actor.SetGearTimesTaken(readActor.gearTimesTaken);
-                        //teams
-                        List<int> listOfTeams = actor.GetListOfTeams();
-                        if (listOfTeams != null)
-                        {
-                            listOfTeams.Clear();
-                            listOfTeams.AddRange(readActor.listOfTeams);
-                        }
-                        else { Debug.LogError("Invalid listOfTeams (Null)"); }
-                        //secrets
-                        List<Secret> listOfSecrets = actor.GetListOfSecrets();
-                        listOfSecrets.Clear();
-                        if (listOfSecrets != null)
-                        {
-                            for (int j = 0; j < readActor.listOfSecrets.Count; j++)
-                            {
-                                Secret secret = GameManager.instance.dataScript.GetSecret(readActor.listOfSecrets[j]);
-                                if (secret != null)
-                                { listOfSecrets.Add(secret); }
-                                else { Debug.LogWarningFormat("Invalid secret in readActor.listOfSecrets[{0}]", j); }
-                            }
-                        }
-                        else { Debug.LogError("Invalid listOfSecrets (Null)"); }
-                        //contacts
-                        Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
-                        if (dictOfContacts != null)
-                        {
-                            dictOfContacts.Clear();
-                            for (int j = 0; j < readActor.listOfContactNodes.Count; j++)
-                            {
-                                Contact contact = GameManager.instance.dataScript.GetContact(readActor.listOfContacts[j]);
-                                if (contact != null)
-                                {
-                                    //add to dictionary
-                                    try
-                                    { dictOfContacts.Add(readActor.listOfContactNodes[j], contact); }
-                                    catch (ArgumentException)
-                                    { Debug.LogErrorFormat("Duplicate contact, ID \"{0}\"{1}", contact.contactID, "\n"); }
-
-                                }
-                                else { Debug.LogWarningFormat("Invalid contact (Null) for readActor.listOfContacts[{0}]", j); }
-                            }
-                        }
-                        else { Debug.LogError("Invalid dictOfContacts (Null)"); }
-                        //trait effects
-                        List<string> listOfTraitEffects = actor.GetListOfTraitEffects();
-                        if (listOfTraitEffects != null)
-                        {
-                            listOfTraitEffects.Clear();
-                            listOfTraitEffects.AddRange(readActor.listOfTraitEffects);
-                        }
-                        else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
-                        //topic data
-                        actor.SetNodeActionData(readActor.listOfNodeActions);
-                        actor.SetTeamActionData(readActor.listOfTeamActions);
-                    }
-                    //
-                    // - - - Add to dictionary
-                    //
-                    try
-                    { dictOfActors.Add(actor.actorID, actor); }
-                    catch (ArgumentException)
-                    { Debug.LogErrorFormat("Duplicate actor, ID \"{0}\"{1}", actor.actorID, "\n"); }
+                    else { Debug.LogWarningFormat("Invalid SaveActor (Null) for read.actorData.listOfDictActors[{0}]", i); }
                 }
             }
             else { Debug.LogError("Invalid saveData.listOfDictActors (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        //dictOfHQ
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        if (dictOfHQ != null)
+        {
+            if (read.actorData.listOfDictHQ != null)
+            {
+                //clear dictionary
+                dictOfHQ.Clear();
+                //loop list of saved actors
+                for (int i = 0; i < read.actorData.listOfDictHQ.Count; i++)
+                {
+                    SaveActor readActor = read.actorData.listOfDictHQ[i];
+                    if (readActor != null)
+                    {
+                        Actor actor = ReadIndividualActor(readActor);
+                        if (actor != null)
+                        {
+                            //Add to dictionary
+                            try
+                            { dictOfHQ.Add(actor.hqID, actor); }
+                            catch (ArgumentException)
+                            { Debug.LogErrorFormat("Duplicate actor, hqID \"{0}\"{1}", actor.hqID, "\n"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for read.actorData.listOfDictHQ[{0}]", i); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid SaveActor (Null) for read.actorData.listOfDictHQ[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid saveData.listOfDictHQ (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfHQ (Null)"); }
         //
         // - - - Actor arrays
         //
         int index;
         int maxIndex;
-        int actorID;
+        int actorID, hqID;
         int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
         int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
         if (read.actorData.listOfActors != null)
@@ -2721,13 +2637,13 @@ public class FileManager : MonoBehaviour
             Array.Clear(arrayOfActorsHQ, 0, records);
             for (int i = 0; i < records; i++)
             {
-                actorID = read.actorData.listOfActorsHQ[i];
-                if (actorID > -1)
+                hqID = read.actorData.listOfActorsHQ[i];
+                if (hqID > -1)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    Actor actor = GameManager.instance.dataScript.GetHQActor(hqID);
                     if (actor != null)
                     { arrayOfActorsHQ[i] = actor; }
-                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for hqID {0}", hqID); }
                 }
             }
         }
@@ -2736,6 +2652,7 @@ public class FileManager : MonoBehaviour
         // - - - ActorManager.cs
         //
         GameManager.instance.actorScript.actorIDCounter = read.actorData.actorIDCounter;
+        GameManager.instance.actorScript.hqIDCounter = read.actorData.hqIDCounter;
         GameManager.instance.actorScript.lieLowTimer = read.actorData.lieLowTimer;
         GameManager.instance.actorScript.doomTimer = read.actorData.doomTimer;
         GameManager.instance.actorScript.captureTimer = read.actorData.captureTimer;
@@ -3591,6 +3508,7 @@ public class FileManager : MonoBehaviour
         saveActor.status = actor.Status;
         saveActor.statusHQ = actor.statusHQ;
         saveActor.actorID = actor.actorID;
+        saveActor.hqID = actor.hqID;
         saveActor.datapoint0 = actor.GetDatapoint(ActorDatapoint.Datapoint0);
         saveActor.datapoint1 = actor.GetDatapoint(ActorDatapoint.Datapoint1);
         saveActor.datapoint2 = actor.GetDatapoint(ActorDatapoint.Datapoint2);
@@ -3710,6 +3628,153 @@ public class FileManager : MonoBehaviour
             Debug.LogWarningFormat("Failed to serialize {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID);
         }
         return saveActor;
+    }
+    #endregion
+
+    #region ReadIndividualActor
+    /// <summary>
+    /// Restore an individual saved actor ready for loading back into dictionary
+    /// </summary>
+    /// <param name="readActor"></param>
+    /// <returns></returns>
+    private Actor ReadIndividualActor(SaveActor readActor)
+    {
+        Actor actor = new Actor();
+        //copy over data from saveActor
+        actor.actorID = readActor.actorID;
+        actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
+        actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
+        actor.SetDatapointLoad(ActorDatapoint.Datapoint2, readActor.datapoint2);
+        GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
+        if (actorSide != null)
+        { actor.side = actorSide; }
+        else { Debug.LogError("Invalid actorSide (Null)"); }
+        actor.slotID = readActor.slotID;
+        actor.level = readActor.level;
+        actor.nodeCaptured = readActor.nodeCaptured;
+        actor.SetGear(readActor.gearName);
+        actor.isMale = readActor.isMale;
+        actor.actorName = readActor.actorName;
+        actor.firstName = readActor.firstName;
+        actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcName);
+        Trait trait = GameManager.instance.dataScript.GetTrait(readActor.traitName);
+        if (trait != null)
+        { actor.AddTrait(trait); }
+        else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
+        //needs to be after SetGear
+        actor.Status = readActor.status;
+        actor.statusHQ = readActor.statusHQ;
+        //Personality
+        Personality personality = actor.GetPersonality();
+        if (personality != null)
+        {
+            personality.SetFactors(readActor.listOfPersonalityFactors.ToArray());
+            personality.SetCompatibilityWithPlayer(readActor.compatibilityWithPlayer);
+            personality.SetDescriptors(readActor.listOfDescriptors);
+            if (string.IsNullOrEmpty(readActor.profile) == false)
+            {
+                personality.SetProfile(readActor.profile);
+                personality.SetProfileDescriptor(readActor.profileDescriptor);
+                personality.SetProfileExplanation(readActor.profileExplanation);
+                personality.SetMotivation(readActor.listOfMotivation);
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
+        //sprite
+        actor.spriteName = readActor.spriteName;
+        actor.sprite = GameManager.instance.dataScript.GetSprite(actor.spriteName);
+        if (actor.sprite == null)
+        { actor.sprite = defaultSprite; }
+        //fast access
+        actor.actorStressNone = read.actorData.actorStressNone;
+        actor.actorCorruptNone = read.actorData.actorCorruptNone;
+        actor.actorUnhappyNone = read.actorData.actorUnhappyNone;
+        actor.actorBlackmailNone = read.actorData.actorBlackmailNone;
+        actor.actorBlackmailTimerHigh = read.actorData.actorBlackmailTimerHigh;
+        actor.actorBlackmailTimerLow = read.actorData.actorBlackmailTimerLow;
+        actor.maxNumOfSecrets = read.actorData.maxNumOfSecrets;
+        actor.compatibilityOne = read.actorData.compatibilityOne;
+        actor.compatibilityTwo = read.actorData.compatibilityTwo;
+        actor.compatibilityThree = read.actorData.compatibilityThree;
+        //data which can be ignored (default values O.K) if actor is in the Recruit Pool
+        if (actor.Status != ActorStatus.RecruitPool)
+        {
+            actor.Renown = readActor.Renown;
+            actor.unhappyTimer = readActor.unhappyTimer;
+            actor.blackmailTimer = readActor.blackmailTimer;
+            actor.captureTimer = readActor.captureTimer;
+            actor.numOfTimesBullied = readActor.numOfTimesBullied;
+            actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
+            actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
+            actor.isPromised = readActor.isPromised;
+            actor.isNewRecruit = readActor.isNewRecruit;
+            actor.isReassured = readActor.isReassured;
+            actor.isThreatening = readActor.isThreatening;
+            actor.isComplaining = readActor.isComplaining;
+            actor.isBreakdown = readActor.isBreakdown;
+            actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
+            actor.isStressLeave = readActor.isStressLeave;
+            actor.isTraitor = readActor.isTraitor;
+            actor.tooltipStatus = readActor.tooltipStatus;
+            actor.inactiveStatus = readActor.inactiveStatus;
+            actor.SetGearTimer(readActor.gearTimer);
+            actor.SetGearTimesTaken(readActor.gearTimesTaken);
+            //teams
+            List<int> listOfTeams = actor.GetListOfTeams();
+            if (listOfTeams != null)
+            {
+                listOfTeams.Clear();
+                listOfTeams.AddRange(readActor.listOfTeams);
+            }
+            else { Debug.LogError("Invalid listOfTeams (Null)"); }
+            //secrets
+            List<Secret> listOfSecrets = actor.GetListOfSecrets();
+            listOfSecrets.Clear();
+            if (listOfSecrets != null)
+            {
+                for (int j = 0; j < readActor.listOfSecrets.Count; j++)
+                {
+                    Secret secret = GameManager.instance.dataScript.GetSecret(readActor.listOfSecrets[j]);
+                    if (secret != null)
+                    { listOfSecrets.Add(secret); }
+                    else { Debug.LogWarningFormat("Invalid secret in readActor.listOfSecrets[{0}]", j); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfSecrets (Null)"); }
+            //contacts
+            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+            if (dictOfContacts != null)
+            {
+                dictOfContacts.Clear();
+                for (int j = 0; j < readActor.listOfContactNodes.Count; j++)
+                {
+                    Contact contact = GameManager.instance.dataScript.GetContact(readActor.listOfContacts[j]);
+                    if (contact != null)
+                    {
+                        //add to dictionary
+                        try
+                        { dictOfContacts.Add(readActor.listOfContactNodes[j], contact); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Duplicate contact, ID \"{0}\"{1}", contact.contactID, "\n"); }
+
+                    }
+                    else { Debug.LogWarningFormat("Invalid contact (Null) for readActor.listOfContacts[{0}]", j); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfContacts (Null)"); }
+            //trait effects
+            List<string> listOfTraitEffects = actor.GetListOfTraitEffects();
+            if (listOfTraitEffects != null)
+            {
+                listOfTraitEffects.Clear();
+                listOfTraitEffects.AddRange(readActor.listOfTraitEffects);
+            }
+            else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+            //topic data
+            actor.SetNodeActionData(readActor.listOfNodeActions);
+            actor.SetTeamActionData(readActor.listOfTeamActions);
+        }
+        return actor;
     }
     #endregion
 

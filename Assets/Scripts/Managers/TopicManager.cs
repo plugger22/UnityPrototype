@@ -2061,7 +2061,7 @@ public class TopicManager : MonoBehaviour
             else
             { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
             //hq boss's opinion
-            Actor actorHQ = GameManager.instance.dataScript.GetHQActor(ActorHQ.Boss);
+            Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
             if (actorHQ != null)
             {
                 int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ);
@@ -3518,7 +3518,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="data"></param>
     private void InitialiseBossDetails(TopicUIData data)
     {
-        Actor actor = GameManager.instance.dataScript.GetHQActor(ActorHQ.Boss);
+        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
         if (actor != null)
         {
             //sprite
