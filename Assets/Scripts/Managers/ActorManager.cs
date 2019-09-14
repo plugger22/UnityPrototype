@@ -7567,7 +7567,7 @@ public class ActorManager : MonoBehaviour
                         rndNum = Random.Range(0, 100);
                         if (rndNum < chanceOfPromotedToHQ)
                         {
-                            AddActorToHQ(actor);
+                            AddActorToHQ(actor, "after being Promoted");
                             numToHQ++;
                             if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
                         }
@@ -7596,7 +7596,7 @@ public class ActorManager : MonoBehaviour
                             rndNum = Random.Range(0, 100);
                             if (rndNum < chanceOfResignedToHQ)
                             {
-                                AddActorToHQ(actor);
+                                AddActorToHQ(actor, "after Resigning");
                                 numToHQ++;
                                 if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
                             }
@@ -7625,7 +7625,7 @@ public class ActorManager : MonoBehaviour
                                 rndNum = Random.Range(0, 100);
                                 if (rndNum < chanceOfDismissedToHQ)
                                 {
-                                    AddActorToHQ(actor);
+                                    AddActorToHQ(actor, "after being Dismissed");
                                     numToHQ++;
                                     if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
                                 }
@@ -7654,7 +7654,7 @@ public class ActorManager : MonoBehaviour
                                     rndNum = Random.Range(0, 100);
                                     if (rndNum < chanceOfOnMapToHQ)
                                     {
-                                        AddActorToHQ(actor);
+                                        AddActorToHQ(actor, "from Active Duty");
                                         numToHQ++;
                                         if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
                                     }
@@ -7682,7 +7682,7 @@ public class ActorManager : MonoBehaviour
                                         rndNum = Random.Range(0, 100);
                                         if (rndNum < chanceOfReservesToHQ)
                                         {
-                                            AddActorToHQ(actor);
+                                            AddActorToHQ(actor, "from Reserves");
                                             numToHQ++;
                                             if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
                                         }
@@ -7699,17 +7699,20 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// handles all admin to transfer a normal actor to HQ (as a worker)
+    /// handles all admin to transfer a normal actor to HQ (as a worker), string 'reason' is for message moved to HQ [...] ('after being dismissed', 'from active duty', 'after resigning', etc)
     /// NOTE: actor checked for Null by parent method
     /// </summary>
     /// <param name="actor"></param>
-    private void AddActorToHQ(Actor actor)
+    private void AddActorToHQ(Actor actor, string reason)
     {
         actor.Status = ActorStatus.HQ;
         actor.statusHQ = ActorHQ.Worker;
         actor.hqID = hqIDCounter++;
         GameManager.instance.dataScript.AddHQActor(actor);
         GameManager.instance.dataScript.AddActorToHQPool(actor.hqID);
+        //admin
+        if (string.IsNullOrEmpty(reason) == true) { reason = "for reasons Unknown"; }
+        Debug.LogFormat("[Act] ActorManager.cs -> AddActorToHQ: {0}, {1}, actID {2}, hqID {3}, moved to HQ {4}{5}", actor.actorName, actor.arc.name, actor.actorID, actor.hqID, reason, "\n");
     }
 
     //new methods above here
