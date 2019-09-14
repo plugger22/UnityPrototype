@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -315,7 +316,7 @@ public class FactionManager : MonoBehaviour
 
     public int GetApprovalZeroTimer()
     { return approvalZeroTimer; }
-    
+
     /// <summary>
     /// Used by Save/Load to set data
     /// </summary>
@@ -333,7 +334,7 @@ public class FactionManager : MonoBehaviour
         int approval = -1;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         Faction playerFaction = null;
-        switch(side.level)
+        switch (side.level)
         {
             case 1:
                 //Authority
@@ -415,7 +416,7 @@ public class FactionManager : MonoBehaviour
     public Faction GetCurrentFaction()
     {
         Faction faction = null;
-        switch(GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Authority":
                 faction = factionAuthority;
@@ -675,8 +676,8 @@ public class FactionManager : MonoBehaviour
             {
                 case 3:
                 case 2: opinion = string.Format("{0}Good{1}", colourGood, colourEnd); break;
-                case 1: 
-                case 0: 
+                case 1:
+                case 0:
                 case -1: opinion = string.Format("{0}Neutral{1}", colourNeutral, colourEnd); break;
                 case -2:
                 case -3: opinion = string.Format("{0}Poor{1}", colourBad, colourEnd); break;
@@ -731,8 +732,8 @@ public class FactionManager : MonoBehaviour
         if (arrayOfActors != null)
         {
             builder.AppendFormat("-HQ Hierarchy{0}", "\n");
-            //first and last indexes are blanks ('None' & 'Worker')
-            for(int i = 1; i < (int)ActorHQ.Count - 2; i++)
+            //first and last indexes are blanks ('None', 'Workers', 'LeftHQ')
+            for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
@@ -741,8 +742,50 @@ public class FactionManager : MonoBehaviour
                     builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
                         actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                 }
-                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i);}
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i); }
             }
+            //loop dictOfHQ and get Workers and LeftHQ
+            List<Actor> listOfWorkers = new List<Actor>();
+            List<Actor> listOfLeftHQ = new List<Actor>();
+            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+            if (dictOfHQ != null)
+            {
+                foreach (var actor in dictOfHQ)
+                {
+                    if (actor.Value != null)
+                    {
+                        switch (actor.Value.statusHQ)
+                        {
+                            case ActorHQ.Worker: listOfWorkers.Add(actor.Value); break;
+                            case ActorHQ.LeftHQ: listOfLeftHQ.Add(actor.Value); break;
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid actor (Null) in dictOfHQ"); }
+                }
+                //display Workers
+                builder.AppendFormat("{0}- Workers{1}", "\n", "\n");
+                if (listOfWorkers.Count > 0)
+                {
+                    foreach (Actor actor in listOfWorkers)
+                    {
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                    }
+                }
+                else { builder.AppendFormat(" No records{0}", "\n"); }
+                //display LeftHQ
+                builder.AppendFormat("{0}- LeftHQ{1}", "\n", "\n");
+                if (listOfLeftHQ.Count > 0)
+                {
+                    foreach (Actor actor in listOfLeftHQ)
+                    {
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                    }
+                }
+                else { builder.AppendFormat(" No records{0}", "\n"); }
+            }
+            else { Debug.LogError("Invalid dictOfHQ (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         return builder.ToString();

@@ -33,6 +33,7 @@ public class MetaManager : MonoBehaviour
     {
         GameManager.instance.statScript.ProcessMetaStatistics();
         GameManager.instance.topicScript.ProcessMetaTopics();
+        GameManager.instance.actorScript.ProcessMetaActors();
     }
 
 

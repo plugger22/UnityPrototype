@@ -102,6 +102,22 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
+    [Header("MetaGame")]
+    [Tooltip("Chance of Promoted actor being sent to HQ at end of level")]
+    [Range(0, 100)] public int chanceOfPromotedToHQ = 100;
+    [Tooltip("Chance of Resigned actor being sent to HQ at end of level")]
+    [Range(0, 100)] public int chanceOfResignedToHQ = 40;
+    [Tooltip("Chance of Dismissed actor being sent to HQ at end of level")]
+    [Range(0, 100)] public int chanceOfDismissedToHQ = 40;
+    [Tooltip("Chance of OnMap actor being sent to HQ at end of level")]
+    [Range(0, 100)] public int chanceOfOnMapToHQ = 40;
+    [Tooltip("Chance of Reserves actor being sent to HQ at end of level")]
+    [Range(0, 100)] public int chanceOfReservesToHQ = 40;
+    [Tooltip("Maximum number of actors that can be sent to HQ at the end of a level")]
+    [Range(0, 10)] public int maxActorsToHQ = 5;
+    [Tooltip("Maximum number of actors that can leave HQ at the end of a level (during MetaGame)")]
+    [Range(0, 10)] public int maxActorsLeaveHQ = 5;
+
     #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
     [HideInInspector] public int doomTimer;                                     //countdown doom timer set when resistance player gains the DOOMED condition (infected with a slow acting lethal virus)
@@ -852,7 +868,11 @@ public class ActorManager : MonoBehaviour
                 actor.Status = status;
                 //hq actor
                 if (actor.Status == ActorStatus.HQ)
-                { actor.hqID = hqIDCounter++; }
+                {
+                    actor.hqID = hqIDCounter++;
+                    //temporary assignment
+                    actor.statusHQ = ActorHQ.Worker;
+                }
                 //TO DO -> currently actor sprite is derived from actorArc sprite
                 actor.sprite = arc.sprite;
                 actor.spriteName = arc.sprite.name;
@@ -4422,12 +4442,12 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod for DebugAddCondition to add a condition to an actor and return a string indicating success, or otherwise
+    /// subMethod for DebugAddCondition to Remove a condition to an actor and return a string indicating success, or otherwise
     /// </summary>
     /// <param name="slotID"></param>
     /// <param name="condition"></param>
     /// <returns></returns>
-    private string DebugAddConditionToActor(int actorSlotID, Condition condition)
+    private string DebugRemoveConditionToActor(int actorSlotID, Condition condition)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < maxNumOfOnMapActors, string.Format("Invalid actorSlotID {0}", actorSlotID));
         Debug.Assert(condition != null, "Invalid Condition (Null)");
@@ -4442,7 +4462,7 @@ public class ActorManager : MonoBehaviour
                 //does actor already have the condition?
                 if (actor.CheckConditionPresent(condition) == true)
                 {
-                    //add condition
+                    //remove condition
                     if (actor.RemoveCondition(condition, "Debug Action") == true)
                     { text = string.Format("Condition {0} removed from {1}, {2}", condition.tag, actor.arc.name, actor.actorName); }
                     else { text = string.Format("Condition {0} NOT removed", condition.tag); }
@@ -4461,7 +4481,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="slotID"></param>
     /// <param name="condition"></param>
     /// <returns></returns>
-    private string DebugRemoveConditionToActor(int actorSlotID, Condition condition)
+    private string DebugAddConditionToActor(int actorSlotID, Condition condition)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < maxNumOfOnMapActors, string.Format("Invalid actorSlotID {0}", actorSlotID));
         Debug.Assert(condition != null, "Invalid Condition (Null)");
@@ -7521,6 +7541,175 @@ public class ActorManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// handles all Meta (between level) game actor matters
+    /// </summary>
+    public void ProcessMetaActors()
+    {
+        int count, rndNum;
+        bool isProceed = true;
+        int numToHQ = 0;
+        //check lists of actors at end of level to see if any get transferred to the reserves -> Promoted
+        List<int> listOfPromotedActors = GameManager.instance.dataScript.GetListOfPromotedActors(GameManager.instance.sideScript.PlayerSide);
+        if (listOfPromotedActors != null)
+        {
+            count = listOfPromotedActors.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfPromotedActors[i]);
+                    if (actor != null)
+                    {
+                        //add to HQ
+                        rndNum = Random.Range(0, 100);
+                        if (rndNum < chanceOfPromotedToHQ)
+                        {
+                            AddActorToHQ(actor);
+                            numToHQ++;
+                            if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) in listOfPromotedActors for actorID {0}", listOfPromotedActors[i]); }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfPromotedActors (Null)"); }
+        //haven't yet reached max cap on actors to HQ
+        if (isProceed == true)
+        {
+            //Resigned
+            List<int> listOfResignedActors = GameManager.instance.dataScript.GetListOfResignedActors(GameManager.instance.sideScript.PlayerSide);
+            if (listOfResignedActors != null)
+            {
+                count = listOfResignedActors.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Actor actor = GameManager.instance.dataScript.GetActor(listOfResignedActors[i]);
+                        if (actor != null)
+                        {
+                            //add to HQ 
+                            rndNum = Random.Range(0, 100);
+                            if (rndNum < chanceOfResignedToHQ)
+                            {
+                                AddActorToHQ(actor);
+                                numToHQ++;
+                                if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
+                            }
+                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) in listOfResignedActors for actorID {0}", listOfResignedActors[i]); }
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfResignedActors (Null)"); }
+            //haven't yet reached max cap on actors to HQ
+            if (isProceed == true)
+            {
+                //Dismissed
+                List<int> listOfDismissedActors = GameManager.instance.dataScript.GetListOfDismissedActors(GameManager.instance.sideScript.PlayerSide);
+                if (listOfDismissedActors != null)
+                {
+                    count = listOfDismissedActors.Count;
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(listOfDismissedActors[i]);
+                            if (actor != null)
+                            {
+                                //add to HQ 
+                                rndNum = Random.Range(0, 100);
+                                if (rndNum < chanceOfDismissedToHQ)
+                                {
+                                    AddActorToHQ(actor);
+                                    numToHQ++;
+                                    if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) in listOfDismissedActors for actorID {0}", listOfDismissedActors[i]); }
+                        }
+                    }
+                }
+                else { Debug.LogWarning("Invalid listOfDismissedActors (Null)"); }
+                //haven't yet reached max cap on actors to HQ
+                if (isProceed == true)
+                {
+                    //OnMap
+                    Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+                    if (arrayOfCurrentActors != null)
+                    {
+                        count = arrayOfCurrentActors.Length;
+                        if (count > 0)
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                Actor actor = arrayOfCurrentActors[i];
+                                if (actor != null)
+                                {
+                                    //add to HQ 
+                                    rndNum = Random.Range(0, 100);
+                                    if (rndNum < chanceOfOnMapToHQ)
+                                    {
+                                        AddActorToHQ(actor);
+                                        numToHQ++;
+                                        if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogError("Invalid arrayOfCurrentActors (Null)"); }
+                    //haven't yet reached max cap on actors to HQ
+                    if (isProceed == true)
+                    {
+                        //Reserves
+                        List<int> listOfReserveActors = GameManager.instance.dataScript.GetListOfReserveActors(GameManager.instance.sideScript.PlayerSide);
+                        if (listOfReserveActors != null)
+                        {
+                            count = listOfReserveActors.Count;
+                            if (count > 0)
+                            {
+                                for (int i = 0; i < count; i++)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                                    if (actor != null)
+                                    {
+                                        //add to HQ 
+                                        rndNum = Random.Range(0, 100);
+                                        if (rndNum < chanceOfReservesToHQ)
+                                        {
+                                            AddActorToHQ(actor);
+                                            numToHQ++;
+                                            if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
+                                        }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) in listOfReserveActors for actorID {0}", listOfReserveActors[i]); }
+                                }
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid listOfReserveActors (Null)"); }
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// handles all admin to transfer a normal actor to HQ (as a worker)
+    /// NOTE: actor checked for Null by parent method
+    /// </summary>
+    /// <param name="actor"></param>
+    private void AddActorToHQ(Actor actor)
+    {
+        actor.Status = ActorStatus.HQ;
+        actor.statusHQ = ActorHQ.Worker;
+        actor.hqID = hqIDCounter++;
+        GameManager.instance.dataScript.AddHQActor(actor);
+        GameManager.instance.dataScript.AddActorToHQPool(actor.hqID);
     }
 
     //new methods above here

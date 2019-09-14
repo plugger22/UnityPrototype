@@ -1570,7 +1570,7 @@ public class DebugGUI : MonoBehaviour
                     case 71:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.factionScript.DebugDisplayHQActors();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
                         break;
                     //News Items
                     case 72:

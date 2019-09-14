@@ -3617,13 +3617,25 @@ public class DataManager : MonoBehaviour
     { return actorHQPool; }
 
     /// <summary>
-    /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID
+    /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID. Checks for ActorStatus.HQ and that statusHQ is current (hierarchy or worker)
     /// </summary>
     /// <param name="actorID"></param>
     public void AddActorToHQPool(int hqID)
     {
         Debug.Assert(hqID > -1, "Invalid hqID");
-        actorHQPool.Add(hqID);
+        //check HQ status is hierarchy or worker (must be current)
+        Actor actor = GetHQActor(hqID);
+        if (actor != null)
+        {
+            if (actor.Status == ActorStatus.HQ)
+            {
+                if (actor.statusHQ != ActorHQ.None && actor.statusHQ != ActorHQ.LeftHQ)
+                { actorHQPool.Add(hqID); }
+                else { Debug.LogWarningFormat("Invalid HQ status \"{0}\" (can't be 'None' or 'LeftHQ') for actor {1}, hqID {2}", actor.statusHQ, actor.actorName, actor.hqID); }
+            }
+            else { Debug.LogWarningFormat("Invalid HQ actor status \"{0}\" (should be 'HQ') for actor {1}, hqID {2}", actor.Status, actor.actorName, actor.hqID); }
+        }
+        else { Debug.LogWarningFormat("Invalid HQ actor (Null) for hqID {0}", hqID); }
     }
 
     /// <summary>
@@ -3638,6 +3650,27 @@ public class DataManager : MonoBehaviour
         { return dictOfHQ[hqID]; }
         else { Debug.LogWarningFormat("Not found in hqID {0}, in dictOfHQ", hqID); }
         return null;
+    }
+
+    /// <summary>
+    /// removes actor from HQ. Changes statusHQ to LeftHQ and removes from actorHQPool
+    /// </summary>
+    /// <param name="hqID"></param>
+    /// <returns></returns>
+    public bool RemoveActorFromHQ(int hqID)
+    {
+        bool isSuccess = true;
+        Actor actor = GetHQActor(hqID);
+        if (actor != null)
+        {
+            //update status
+            actor.statusHQ = ActorHQ.LeftHQ;
+            //remove from actorHQPool
+            if(actorHQPool.Exists(x => x == hqID) == true)
+            { actorHQPool.Remove(hqID); }
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for hqID {0}", hqID); }
+        return isSuccess;
     }
 
     //
