@@ -22,10 +22,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: An unfortunate misstep by the Resistance has been averted at [node] when the
-    family in question received anonymous donations to help cope with their tragedy
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: An misstep by the Resistance has been averted at [node] when the family in
+    question received anonymous donations to help cope with their tragedy
+  tooltipHeader: <color=#FFFFE0>Buy</color>
+  tooltipMain: <color=#FF4500>Player Renown -2</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Buy your way out of trouble</color>

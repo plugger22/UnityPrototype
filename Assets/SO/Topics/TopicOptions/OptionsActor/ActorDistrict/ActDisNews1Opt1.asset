@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District News 1 option 1
   tag: So what
-  text: Sh*t happens, so what?
+  text: Stuff happens, so what?
   topic: {fileID: 11400000, guid: be20ff6bd3d0d1e4482608759ffd702a, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
@@ -23,8 +23,10 @@ MonoBehaviour:
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: It's not enough for a family to suffer, says [mayor] but they have to put
     up with Resistance propaganda that makes fun of their tragedy at [node]
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>So what</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> District
+    Support -1</color>"
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Stuff happens, so what?</color>
