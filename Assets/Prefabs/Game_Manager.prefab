@@ -3066,12 +3066,20 @@ MonoBehaviour:
   stressLeaveRenownCostResistance: 2
   stressLeaveHQApproval: 1
   lieLowCooldownPeriod: 5
+  chanceOfPromotedToHQ: 100
+  chanceOfResignedToHQ: 40
+  chanceOfDismissedToHQ: 40
+  chanceOfOnMapToHQ: 40
+  chanceOfReservesToHQ: 40
+  maxActorsToHQ: 5
+  maxActorsLeaveHQ: 5
   lieLowTimer: 0
   doomTimer: 0
   captureTimer: 0
   isGearCheckRequired: 0
   nameSet: {fileID: 0}
   actorIDCounter: 0
+  hqIDCounter: 0
 --- !u!114 &114677223304800786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3368,7 +3376,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 44614
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
