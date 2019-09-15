@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisHack1Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Hack Security 1 option 0
+  descriptor: Actor District Hack Security 1 option 0
+  tag: Rollback
+  text: Order [actor] to rollback the Hack
   topic: {fileID: 11400000, guid: 72dde0e30cb1ffa4ca6c95fe965562e9, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 199615eab7aa4b9499f61e4748579e74, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 0}
+  news: '[mayor] declared the food shortages at [node] to be a thing of the past as
+    the city cybersquad squashed a malicious Resistance hack'
+  tooltipHeader: <color=#FFFFE0>Rollback</color>
+  tooltipMain: <color=#FF4500> District Security +1</color>
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Order HACKER to rollback the Hack</color>

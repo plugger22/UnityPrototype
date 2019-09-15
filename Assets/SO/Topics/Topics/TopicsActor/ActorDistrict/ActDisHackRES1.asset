@@ -11,7 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisHackRES1
   m_EditorClassIdentifier: 
-  tag: Actor District Hack Security 1
+  tag: Unexpected Side Effects
+  text: Your [actor]'s hacking of the local grid at [node] has resulted in unexpected
+    side effects. Food deliveries have been interrupted and supplies are running low.
+    [badRES]
+  designNotes: Negative Hacker event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 04af3fab917a51b418e9c3a778334286, type: 2}
@@ -23,17 +27,20 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 5f83c69efdaa689489fd1216feaeecd0, type: 2}
   - {fileID: 11400000, guid: e80c359dc1047d3418d4ac6349fd7011, type: 2}
   - {fileID: 11400000, guid: b87ac578e244e2a4c8d12235806bd8c5, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 19
   turnsDone: 0

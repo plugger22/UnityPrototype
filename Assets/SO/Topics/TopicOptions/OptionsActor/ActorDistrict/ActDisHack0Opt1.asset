@@ -11,5 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisHack0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Hack Security 0 option 1
+  descriptor: Actor District Hack Security 0 option 1
+  tag: Exploit
+  text: Order your [actor] to ruthlessly exploit it
   topic: {fileID: 11400000, guid: e8fd41b718a2279489a516cd63a65cad, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 9dad36857709f484f90c24f27c1951be, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: The intermittent glitches in the [city] security system is nothing to be concerned
+    about, said [mayor] and have been traced back to a minor fault in the local [node]
+    district server
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

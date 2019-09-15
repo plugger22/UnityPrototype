@@ -4618,7 +4618,7 @@ public class ActorManager : MonoBehaviour
                             if (nodeAction != NodeAction.None)
                             {
                                 //test purposes only 
-                                if (nodeAction == NodeAction.ActorBlowStuffUp)
+                                if (nodeAction == NodeAction.ActorHackSecurity)
                                 {
                                     //loop for every required nodeAction
                                     for (int j = 0; j < numOfActionsPerActor; j++)
@@ -4639,7 +4639,7 @@ public class ActorManager : MonoBehaviour
                                             data.actorID = actor.actorID;
                                             data.nodeID = node.nodeID;
                                             data.nodeAction = nodeAction;
-                                            //special cases for recruit and gear
+                                            //special cases
                                             switch (actor.arc.name)
                                             {
                                                 case "RECRUITER":
