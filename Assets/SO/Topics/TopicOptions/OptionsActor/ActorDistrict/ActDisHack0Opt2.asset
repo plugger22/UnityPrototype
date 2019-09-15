@@ -21,10 +21,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: The [city] security system is rock solid, insisted [mayor] yesterday at a
-    news conference when asked about the recent glitch at the local [node] server
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: '[city] security system is rock solid, insists [mayor] when asked about the
+    recent glitch at the local [node] grid'
+  tooltipHeader: <color=#FFFFE0>Inform HQ</color>
+  tooltipMain: <color=#98FB98> HQ Approval +1</color>
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Take note of the exploit and inform HQ</color>

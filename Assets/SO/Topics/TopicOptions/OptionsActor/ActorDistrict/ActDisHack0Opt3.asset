@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActDisHack0Opt3
+  m_EditorClassIdentifier: 
+  descriptor: Actor District Hack Security 0 option 3
+  tag: Sell Info
+  text: Don't bother, sell the Info
+  topic: {fileID: 11400000, guid: e8fd41b718a2279489a516cd63a65cad, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 0}
+  news: There are rumours that exploits in [city]'s security system are for sale on
+    the blackmarket. Nosense, says [mayor]
+  tooltipHeader: <color=#FFFFE0>Sell Info</color>
+  tooltipMain: <color=#98FB98>Player Renown +2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Don't bother, sell the Info</color>
