@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNews0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District News 0 option 1
+  descriptor: Actor District News 0 option 1
+  tag: Let Go
+  text: It's too risky, let it go
   topic: {fileID: 11400000, guid: 21980f426c1813a42bb3376d51a2b9fd, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 0}
+  news: Fake news, cautions [mayor] as the citizens of [node] wonder about recent
+    posts that appear to have touched a nerve
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

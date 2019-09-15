@@ -21,7 +21,7 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: There are rumours that exploits in [city]'s security system are for sale on
+  news: There are rumours that exploits in [citys] security system are for sale on
     the blackmarket. Nosense, says [mayor]
   tooltipHeader: <color=#FFFFE0>Sell Info</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>

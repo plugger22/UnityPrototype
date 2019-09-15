@@ -4618,7 +4618,7 @@ public class ActorManager : MonoBehaviour
                             if (nodeAction != NodeAction.None)
                             {
                                 //test purposes only 
-                                if (nodeAction == NodeAction.ActorHackSecurity)
+                                if (nodeAction == NodeAction.ActorSpreadFakeNews)
                                 {
                                     //loop for every required nodeAction
                                     for (int j = 0; j < numOfActionsPerActor; j++)

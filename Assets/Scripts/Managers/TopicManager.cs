@@ -2159,6 +2159,8 @@ public class TopicManager : MonoBehaviour
         ProcessIgnoreBossOpinion();
         builderBottom.AppendLine();
         builderBottom.AppendFormat("{0}{1}Your Boss Disapproves of your inability to make a decision{2}", "\n", colourBad, colourEnd);
+        //stats
+        GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsIgnored);
         //outcome dialogue
         SetTopicOutcome(builderTop, builderBottom);
         //tidy up
@@ -2389,7 +2391,6 @@ public class TopicManager : MonoBehaviour
             switch (turnTopic.group.name)
             {
                 case "Good": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsGood); break;
-                case "Neutral": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsNeutral); break;
                 case "Bad": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsBad); break;
                 default: Debug.LogWarningFormat("Unrecognised group \"{0}\" for topic \"{1}\"", turnTopic.group.name, turnTopic.name); break;
             }
@@ -3671,6 +3672,25 @@ public class TopicManager : MonoBehaviour
                             { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
                         break;
+                    case "actors":
+                        //actor arc name, possessive, eg. Hacker's
+                        if (isValidate == false)
+                        {
+                            if (tagActorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
+                        }
+                        break;
                     case "node":
                         //district name
                         if (isValidate == false)
@@ -3826,6 +3846,15 @@ public class TopicManager : MonoBehaviour
                         {
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
+                            else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                        }
+                        break;
+                    case "citys":
+                        //city name possessive, eg. London's
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().name; }
                         }
                         break;

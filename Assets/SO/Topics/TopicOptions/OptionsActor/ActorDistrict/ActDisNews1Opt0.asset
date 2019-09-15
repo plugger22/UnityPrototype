@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNews1Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District News 1 option 0
+  descriptor: Actor District News 1 option 0
+  tag: Disown
+  text: Disown your [actors] actions
   topic: {fileID: 11400000, guid: be20ff6bd3d0d1e4482608759ffd702a, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 0}
+  news: A terrible tragedy at [node] was made worse by heartless Resistance progaganda.
+    [mayor] sends their condolences to the family
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

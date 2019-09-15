@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisHackRES0
   m_EditorClassIdentifier: 
   tag: Vulnerability Identified
-  text: Your [actor]'s tampering of the grid at [node] has revealed a previously unknown
-    vulnerability in [city]'s security system. [goodRES]
+  text: Your [actors] tampering of the grid at [node] has revealed a previously unknown
+    vulnerability in [citys] security system. [goodRES]
   designNotes: Positive Hacker event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}

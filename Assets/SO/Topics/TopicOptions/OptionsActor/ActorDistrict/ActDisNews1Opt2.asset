@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNews1Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District News 1 option 2
+  descriptor: Actor District News 1 option 2
+  tag: Double down
+  text: Order [acotr] to double down on the news
   topic: {fileID: 11400000, guid: be20ff6bd3d0d1e4482608759ffd702a, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ac8db6386433ddb4abf6695406f5d48a, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: Troubling stories about one families tragedy at [node] have spread like wildfire
+    on the Net. [citys] Censor Bureau is working overtime
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

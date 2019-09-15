@@ -175,7 +175,7 @@
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes,
-        TopicsGood, TopicsBad, TopicsNeutral
+        TopicsGood, TopicsBad, TopicsIgnored
     }
 
     //

@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNews0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District News 0 option 2
+  descriptor: Actor District News 0 option 2
+  tag: Don't Interfere
+  text: Let the story run, don't interfere
   topic: {fileID: 11400000, guid: 21980f426c1813a42bb3376d51a2b9fd, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: aee4f3459a2576d41b9137084578fcac, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: Despite attempts to shutdown what [mayor] declares as Fake News, media outlets
+    at [node] continue to run stories full of shocking revelations
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

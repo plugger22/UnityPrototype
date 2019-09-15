@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Contact 1 option 2
   tag: Dispose
-  text: Ask [actor] to get rid of them
+  text: Order [actor] to get rid of them
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}

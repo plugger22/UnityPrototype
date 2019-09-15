@@ -22,7 +22,7 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: Rare glitches in the [city] security system are nothing to be concerned about,
+  news: Rare glitches in the [citys] security system are nothing to be concerned about,
     says [mayor]. Nothing but a minor hiccup in the local [node] grid
   tooltipHeader: <color=#FFFFE0>Exploit</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>

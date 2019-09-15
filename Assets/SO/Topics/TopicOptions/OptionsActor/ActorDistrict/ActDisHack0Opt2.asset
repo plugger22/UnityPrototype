@@ -21,7 +21,7 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: '[city] security system is rock solid, insists [mayor] when asked about the
+  news: '[citys] security system is rock solid, insists [mayor] when asked about the
     recent glitch at the local [node] grid'
   tooltipHeader: <color=#FFFFE0>Inform HQ</color>
   tooltipMain: <color=#98FB98> HQ Approval +1</color>

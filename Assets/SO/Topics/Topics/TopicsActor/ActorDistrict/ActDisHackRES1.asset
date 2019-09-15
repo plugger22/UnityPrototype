@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisHackRES1
   m_EditorClassIdentifier: 
   tag: Blow Back
-  text: Your [actor]'s actions at [node] has resulted in unexpected side effects.
-    Food deliveries have been interrupted and supplies are running low. [badRES]
+  text: Your [actors] actions at [node] has resulted in unexpected side effects. Food
+    deliveries have been interrupted and supplies are running low. [badRES]
   designNotes: Negative Hacker event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}

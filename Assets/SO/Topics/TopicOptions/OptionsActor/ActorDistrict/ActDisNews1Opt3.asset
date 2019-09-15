@@ -9,20 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisNews1Opt1
+  m_Name: ActDisNews1Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District News 1 option 1
-  tag: So what
-  text: Sh*t happens, so what?
+  descriptor: Actor District News 1 option 2
+  tag: Buy
+  text: Buy your way out of trouble
   topic: {fileID: 11400000, guid: be20ff6bd3d0d1e4482608759ffd702a, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: dc7665ce7259594498d4b9b1f4f458fd, type: 2}
-  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
-  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: It's not enough for a family to suffer, says [mayor] but they have to put
-    up with Resistance propaganda that makes fun of their tragedy at [node]
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: An unfortunate misstep by the Resistance has been averted at [node] when the
+    family in question received anonymous donations to help cope with their tragedy
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
