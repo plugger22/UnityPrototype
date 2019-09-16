@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisGearRES1
   m_EditorClassIdentifier: 
   tag: Threat of Betrayal
-  text: IYour [actor] acquired gear ([gear]) from a dubious source, [daysAgo], who
+  text: Your [actor] acquired gear ([gear]) from a dubious source, [daysAgo], who
     is threatening to tell The Authority about us
   designNotes: negative fixer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -26,20 +26,22 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 9c379e77fee5895419b3959b1c95e335, type: 2}
   - {fileID: 11400000, guid: 19b84eb1321941740802c68742a7651b, type: 2}
   - {fileID: 11400000, guid: 6751b2c57897254479429ed5c34f4a8c, type: 2}
+  - {fileID: 11400000, guid: 61439624339217f448feef9ec4b3209f, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 18
   turnsDone: 0

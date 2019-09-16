@@ -13,16 +13,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 0 option 2
   tag: Fanatics
-  text: We don't need more Fanatics
+  text: We don't need any more Fanatics
   topic: {fileID: 11400000, guid: b6f905e82acc3f243a16b15eaa3b6352, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: '[npc], [npcIs], from [node], today recalled their experience of being recruited
+    by the Resistance. Losers, all of them, they told our Reporter'
+  tooltipHeader: <color=#FFFFE0>Fanatics</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>
+    HQ Approval +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
+    Happens</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>We don't need any more Fanatics</color>

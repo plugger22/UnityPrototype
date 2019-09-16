@@ -3660,6 +3660,14 @@ public class TopicManager : MonoBehaviour
                 replaceText = null;
                 switch (tag)
                 {
+                    case "player":
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.instance.playerScript.PlayerName, colourEnd); }
+                            else { replaceText = GameManager.instance.playerScript.PlayerName; }
+                        }
+                        break;
                     case "actor":
                         //actor arc name
                         if (isValidate == false)

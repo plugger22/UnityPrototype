@@ -280,6 +280,10 @@ public class NewsManager : MonoBehaviour
                                 { Debug.LogWarningFormat("Invalid actorID \"{0}\" for tag [actor]", data.actorID); }
                             }
                             break;
+                        case "player":
+                            if (data.isValidate == false)
+                            { replaceText = GameManager.instance.playerScript.PlayerName; }
+                            break;
                         case "node":
                             if (data.isValidate == false)
                             {

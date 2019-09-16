@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Name: ActDisGear0Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 0 option 1
-  tag: They Recruit
+  tag: Recruit
   text: Have [actor] recruit them
   topic: {fileID: 11400000, guid: b6f905e82acc3f243a16b15eaa3b6352, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

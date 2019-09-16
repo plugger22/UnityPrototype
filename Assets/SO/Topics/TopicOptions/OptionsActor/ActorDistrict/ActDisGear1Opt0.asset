@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisGear1Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Obtain Gear 1 option 0
+  descriptor: Actor District Obtain Gear 1 option 0
+  tag: Bribe
+  text: Bribe them to stay quiet
   topic: {fileID: 11400000, guid: 5aac7d429e1944440b619ea758d14c24, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 0}
+  news: Police revealed today that [npc], [job], suspected purveyor of illegal goods,
+    of [node] is currently under investigation for unexplained income
+  tooltipHeader: <color=#FFFFE0>Bribe</color>
+  tooltipMain: <color=#FF4500>Player Renown -2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Bribe them to stay quiet</color>
