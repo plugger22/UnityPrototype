@@ -11,5 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisGear0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Obtain Gear 0 option 1
+  descriptor: Actor District Obtain Gear 0 option 1
+  tag: They Recruit
+  text: Have [actor] recruit them
   topic: {fileID: 11400000, guid: b6f905e82acc3f243a16b15eaa3b6352, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

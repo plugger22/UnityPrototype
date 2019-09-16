@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisGearRES1
   m_EditorClassIdentifier: 
-  tag: Actor District Obtain Gear 1
+  tag: Threat of Betrayal
+  text: IYour [actor] acquired gear ([gear]) from a dubious source, [daysAgo], who
+    is threatening to tell The Authority about us
+  designNotes: negative fixer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 7624c4b94b7aec64b92169d954e6f38e, type: 2}
@@ -23,17 +26,20 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 9c379e77fee5895419b3959b1c95e335, type: 2}
   - {fileID: 11400000, guid: 19b84eb1321941740802c68742a7651b, type: 2}
   - {fileID: 11400000, guid: 6751b2c57897254479429ed5c34f4a8c, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 17
   turnsDone: 0

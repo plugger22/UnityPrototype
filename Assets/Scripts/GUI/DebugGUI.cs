@@ -309,9 +309,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixteenth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Crisis Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "Node Crisis Data"))
             {
-                Debug.Log("[Dbg] Button -> Crisis Data");
+                Debug.Log("[Dbg] Button -> Node Crisis Data");
                 if (debugDisplay != 26)
                 { debugDisplay = 26; }
                 else { debugDisplay = 0; }

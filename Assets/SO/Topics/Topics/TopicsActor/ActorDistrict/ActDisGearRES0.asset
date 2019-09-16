@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisGearRES0
   m_EditorClassIdentifier: 
-  tag: Actor District Obtain Gear 0
+  tag: Supportive Source
+  text: '[daysAgo] your [actor] acquired some gear ([gear]) from a source who appears
+    to be supportive of our cause'
+  designNotes: positive fixer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 7624c4b94b7aec64b92169d954e6f38e, type: 2}
@@ -23,17 +26,20 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 4392d8f927222514799ccce730497e89, type: 2}
   - {fileID: 11400000, guid: cfdea7433b112434989e76bc375fcaa9, type: 2}
   - {fileID: 11400000, guid: dccc070a06f843f4a8d0b8c98cd5bbf4, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 17
   turnsDone: 0

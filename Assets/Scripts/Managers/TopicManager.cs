@@ -138,6 +138,7 @@ public class TopicManager : MonoBehaviour
     private int tagTurn;
     private string tagJob;
     private string tagLocation;
+    private string tagGear;
     private string tagStringData;        //General purpose
 
     //collections (local)
@@ -817,6 +818,7 @@ public class TopicManager : MonoBehaviour
     //  - - - Select Topic - - -
     //   
 
+    #region SelectTopic method
     /// <summary>
     /// Selects a topic for the turn (there will always be one)
     /// </summary>
@@ -859,6 +861,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
+    #endregion
 
     #region CheckTopics
     /// <summary>
@@ -1094,6 +1097,7 @@ public class TopicManager : MonoBehaviour
         tagTurn = -1;
         tagJob = "";
         tagLocation = "";
+        tagGear = "";
         tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
@@ -1634,6 +1638,7 @@ public class TopicManager : MonoBehaviour
                 tagTurn = data.turn;
                 tagStringData = data.dataName;
                 tagLocation = data.dataName;
+                tagGear = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -1781,6 +1786,7 @@ public class TopicManager : MonoBehaviour
     // - - - Process Topic - - - 
     //
 
+    #region ProcessTopic method
     /// <summary>
     /// Process selected topic (decision or Information)
     /// </summary>
@@ -1810,6 +1816,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
+    #endregion
 
     #region InitialiseTopicUI
     /// <summary>
@@ -3760,6 +3767,11 @@ public class TopicManager : MonoBehaviour
                             else
                             { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         }
+                        break;
+                    case "gear":
+                        //gear tag
+                        if (isValidate == false)
+                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagGear, colourEnd); }
                         break;
                     case "job":
                         //Random job name appropriate to node arc

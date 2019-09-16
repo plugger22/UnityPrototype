@@ -278,7 +278,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Processes node actor actions (Resistance & Authority Node actions)
+    /// Processes node actor actions (Resistance and Authority Node actions)
     /// </summary>
     /// <param name="details"></param>
     public void ProcessNodeAction(ModalActionDetails details)
@@ -409,7 +409,7 @@ public class ActionManager : MonoBehaviour
                                         nodeID = node.nodeID,
                                         nodeAction = nodeActionActor
                                     };
-                                    //text list
+                                    //special cases
                                     switch (actor.arc.name)
                                     {
                                         case "ANARCHIST": nodeActionData.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord(); break;

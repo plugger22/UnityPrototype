@@ -1058,7 +1058,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     public EffectDataReturn ProcessEffect(Effect effect, Node node, EffectDataInput dataInput, Actor actor = null)
     {
-        int teamID, teamArcID, dataBefore;
+        int teamID, teamArcID;
         EffectDataReturn effectReturn = new EffectDataReturn();
         //set default values
         effectReturn.errorFlag = false;
@@ -1510,118 +1510,24 @@ public class EffectManager : MonoBehaviour
                         //raise/lower invisibility of actor or Player
                         if (node != null)
                         {
-                            bool isGearUsed = false;
-                            string reason = dataInput.originText;
+                            /*bool isGearUsed = false;
+                            string reason = dataInput.originText;*/
                             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-                            {
-                                //
-                                // - - - Player Invisibility effect - - -
-                                //
-                                switch (effect.operand.name)
-                                {
-                                    case "Add":
-                                        if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
-                                        {
-                                            //adds a variable amount
-                                            int invis = GameManager.instance.playerScript.Invisibility;
-                                            invis += effect.value;
-                                            invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
-                                            GameManager.instance.playerScript.Invisibility = invis;
-                                        }
-                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd);
-                                        break;
-                                    case "Subtract":
-                                        //does player have any invisibility type gear?
-                                        string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
-                                        if (string.IsNullOrEmpty(gearName) == false)
-                                        {
-                                            //gear present -> No drop in Invisibility
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
-                                            if (gear != null)
-                                            {
-                                                GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
-                                                effectReturn.bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
-                                                    colourEnd, colourNormal, colourEnd);
-                                            }
-                                            else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
-                                        }
-                                        else
-                                        {
-                                            //No gear present
-                                            int invisibility = GameManager.instance.playerScript.Invisibility;
-                                            //condition TAGGED
-                                            if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
-                                            {
-                                                //invisibility auto Zero
-                                                invisibility = 0;
-                                                //Immediate notification. AI flag set. Auto applies when TAGGED
-                                                effectReturn.bottomText =
-                                                    string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                    colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                                reason = "TAGGED condition";
-                                                GameManager.instance.aiScript.immediateFlagResistance = true;
-                                            }
-                                            //NOT Tagged
-                                            else
-                                            {
-                                                //double effect if spider is present
-                                                if (node.isSpider == true)
-                                                {
-                                                    invisibility -= 2;
-                                                    if (invisibility >= 0)
-                                                    { effectReturn.bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourEffect, colourEnd); }
-                                                    else
-                                                    {
-                                                        //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
-                                                        effectReturn.bottomText =
-                                                            string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                                                            colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                                        GameManager.instance.aiScript.immediateFlagResistance = true;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    invisibility -= 1;
-                                                    if (invisibility >= 0)
-                                                    { effectReturn.bottomText = string.Format("{0}Player {1}{2}", colourEffect, effect.description, colourEnd); }
-                                                    else
-                                                    {
-                                                        //immediate notification. AI flag set. Applies if player invis was 0 before action taken
-                                                        effectReturn.bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
-                                                            colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                                        GameManager.instance.aiScript.immediateFlagResistance = true;
-                                                    }
-
-                                                }
-                                            }
-                                            //mincap zero
-                                            invisibility = Mathf.Max(0, invisibility);
-                                            GameManager.instance.playerScript.Invisibility = invisibility;
-                                        }
-                                        //AI activity message
-                                        if (isGearUsed == false)
-                                        {
-                                            int delay;
-                                            if (node.isSpider == true) { delay = delayYesSpider; }
-                                            else { delay = delayNoSpider; }
-                                            GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                                                dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
-                                            //AI Immediate message
-                                            if (GameManager.instance.aiScript.immediateFlagResistance == true)
-                                            {
-                                                GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
-                                                    dataInput.originText), reason, node.nodeID, -1);
-                                            }
-                                        }
-                                        break;
-                                }
-                            }
+                            { effectReturn.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
                             else
                             {
+                                if (actor != null)
+                                { effectReturn.bottomText = ExecuteActorInvisibility(effect, dataInput, actor, node); }
+                                else
+                                {
+                                    Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+                                    effectReturn.errorFlag = true;
+                                }
+
                                 //
                                 // - - - Actor Invisibility effect - - -
                                 //
-                                if (actor != null)
+                                /*if (actor != null)
                                 {
                                     int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
                                     dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
@@ -1699,22 +1605,23 @@ public class EffectManager : MonoBehaviour
 
                                                         /*builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
                                                             colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);*/
-                                                        builder.AppendLine(); builder.AppendLine();
-                                                        builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
-                                                            colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
-                                                        effectReturn.bottomText = builder.ToString();
-                                                    }
-                                                }
-                                                else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
-                                            }
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
-                                    effectReturn.errorFlag = true;
-                                }
+
+                                /*builder.AppendLine(); builder.AppendLine();
+                                builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                    colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
+                                effectReturn.bottomText = builder.ToString();
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            Debug.LogError(string.Format("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name));
+            effectReturn.errorFlag = true;
+        }*/
 
                             }
                         }
@@ -3466,6 +3373,12 @@ public class EffectManager : MonoBehaviour
             case "Motivation":
                 effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
                 break;
+            case "Invisibility":
+                Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
+                if (node != null)
+                { effectResolve.bottomText = ExecuteActorInvisibility(effect, dataInput, actor, node); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 
@@ -3494,6 +3407,12 @@ public class EffectManager : MonoBehaviour
         {
             case "Renown":
                 effectResolve.bottomText = ExecutePlayerRenown(effect);
+                break;
+            case "Invisibility":
+                Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
+                if (node != null)
+                { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -3894,6 +3813,215 @@ public class EffectManager : MonoBehaviour
                 motivation = Mathf.Max(0, motivation);
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                 bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);
+                break;
+        }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Player gains or loses invisibility
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private string ExecutePlayerInvisibility(Effect effect, EffectDataInput dataInput, Node node)
+    {
+        bool isGearUsed = false;
+        string reason = dataInput.originText;
+        string bottomText = "Unknown";
+        switch (effect.operand.name)
+        {
+            case "Add":
+                if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
+                {
+                    //adds a variable amount
+                    int invis = GameManager.instance.playerScript.Invisibility;
+                    invis += effect.value;
+                    invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
+                    GameManager.instance.playerScript.Invisibility = invis;
+                }
+                bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
+                break;
+            case "Subtract":
+                //does player have any invisibility type gear?
+                string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
+                if (string.IsNullOrEmpty(gearName) == false)
+                {
+                    //gear present -> No drop in Invisibility
+                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                    if (gear != null)
+                    {
+                        GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
+                        bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
+                            colourEnd, colourNormal, colourEnd);
+                    }
+                    else { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
+                }
+                else
+                {
+                    //No gear present
+                    int invisibility = GameManager.instance.playerScript.Invisibility;
+                    //condition TAGGED
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
+                    {
+                        //invisibility auto Zero
+                        invisibility = 0;
+                        //Immediate notification. AI flag set. Auto applies when TAGGED
+                        bottomText =
+                            string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                            colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                        reason = "TAGGED condition";
+                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                    }
+                    //NOT Tagged
+                    else
+                    {
+                        //double effect if spider is present
+                        if (node.isSpider == true)
+                        {
+                            invisibility -= 2;
+                            if (invisibility >= 0)
+                            { bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourBadSide, colourEnd); }
+                            else
+                            {
+                                //Immediate notification. AI flag set. Applies even if player invis was 1 before action (spider effect)
+                                bottomText =
+                                    string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                                    colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                            }
+                        }
+                        else
+                        {
+                            invisibility -= 1;
+                            if (invisibility >= 0)
+                            { bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd); }
+                            else
+                            {
+                                //immediate notification. AI flag set. Applies if player invis was 0 before action taken
+                                bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
+                                    colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                            }
+
+                        }
+                    }
+                    //mincap zero
+                    invisibility = Mathf.Max(0, invisibility);
+                    GameManager.instance.playerScript.Invisibility = invisibility;
+                }
+                //AI activity message
+                if (isGearUsed == false)
+                {
+                    int delay;
+                    if (node.isSpider == true) { delay = delayYesSpider; }
+                    else { delay = delayNoSpider; }
+                    GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
+                        dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
+                    //AI Immediate message
+                    if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                    {
+                        GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                            dataInput.originText), reason, node.nodeID, -1);
+                    }
+                }
+                break;
+        }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Actor gains or loses invisibility
+    /// NOte: parameers checked for null by parent methods
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private string ExecuteActorInvisibility(Effect effect, EffectDataInput dataInput, Actor actor, Node node)
+    {
+        string bottomText = "Unknown";
+        int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+        int dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+        switch (effect.operand.name)
+        {
+            case "Add":
+                if (invisibility < GameManager.instance.actorScript.maxStatValue)
+                {
+                    //adds a variable amount
+                    invisibility += effect.value;
+                    invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
+                    actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
+                    Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                        dataBefore, invisibility, "\n");
+                }
+                bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
+                break;
+            case "Subtract":
+                //double effect if spider is present
+                if (node.isSpider == true)
+                {
+                    invisibility -= 2;
+                    if (invisibility >= 0)
+                    { bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourBadSide, actor.arc.name, colourEnd); }
+                    else
+                    {
+                        //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
+                        bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                            colourBadSide, actor.arc.name, effect.description, "\n", "\n", colourEnd);
+                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                    }
+                }
+                else
+                {
+                    invisibility -= 1;
+                    if (invisibility >= 0)
+                    { bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd); }
+                    else
+                    {
+                        //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
+                        bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
+                            colourBadSide, actor.arc.name, effect.description, "\n", "\n", colourEnd);
+                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                    }
+                }
+                //mincap zero
+                invisibility = Mathf.Max(0, invisibility);
+                actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
+                Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                    dataBefore, invisibility, "\n");
+                //AI activity message
+                int delay;
+                if (node.isSpider == true) { delay = delayYesSpider; }
+                else { delay = delayNoSpider; }
+                GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
+                    dataInput.originText, actor.arc.name), node, actor.actorID, delay);
+                //AI Immediate message
+                if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                {
+                    GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
+                        dataInput.originText, actor.arc.name), dataInput.originText, node.nodeID, -1, actor.actorID);
+                }
+                //Coward trait -> gets Stressed everytime they lose invisibility
+                if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
+                {
+                    Condition conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+                    if (conditionStressed != null)
+                    {
+                        if (actor.CheckConditionPresent(conditionStressed) == false)
+                        {
+                            actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
+                            GameManager.instance.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
+                            StringBuilder builder = new StringBuilder();
+                            builder.Append(bottomText);
+
+                            /*builder.AppendFormat("{0}{1}{2}Gains {3}{4}STRESSED{5}{6} condition due to {7}{8}Coward{9}{10} trait{11}", "\n", "\n",
+                                colourBadSide, colourEnd, colourAlert, colourEnd, colourBadSide, colourEnd, colourNeutral, colourEnd, colourBadSide, colourEnd);*/
+                            builder.AppendLine(); builder.AppendLine();
+                            builder.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
+                            bottomText = builder.ToString();
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
+                }
                 break;
         }
         return bottomText;

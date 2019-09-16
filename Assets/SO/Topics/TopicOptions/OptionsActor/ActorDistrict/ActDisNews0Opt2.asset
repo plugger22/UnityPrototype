@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisNews0Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District News 0 option 2
-  tag: Don't Interfere
+  tag: Stay Away
   text: Let the story run, don't interfere
   topic: {fileID: 11400000, guid: 21980f426c1813a42bb3376d51a2b9fd, type: 2}
   listOfCriteria: []
@@ -23,8 +23,10 @@ MonoBehaviour:
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: Despite attempts to shutdown what [mayor] declares as Fake News, media outlets
     at [node] continue to run stories full of shocking revelations
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Don't Interfere</color>
+  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
+    All Similar Districts Support +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
+    Happens</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Let the story run, don't interfere</color>
