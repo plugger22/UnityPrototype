@@ -546,3 +546,60 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 45759 -> Monday, 16 September 2019 3:43 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 45759 -> Monday, 16 September 2019 4:10 PM
+City seed 5678 -> London, United Kingdom
+WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	
+Dev seed 45759 -> Monday, 16 September 2019 4:17 PM
+City seed 5678 -> London, United Kingdom
+WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
+	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	
+Dev seed 45759 -> Monday, 16 September 2019 4:22 PM
+City seed 5678 -> London, United Kingdom

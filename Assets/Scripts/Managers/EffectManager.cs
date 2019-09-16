@@ -448,7 +448,7 @@ public class EffectManager : MonoBehaviour
                                         {
                                             switch (criteria.effectCriteria.name)
                                             {
-                                                case "NodeStabilityMin":
+                                                case "NodeStabilityNOTMin":
                                                     //at least one neighbouring node must have stability > 0
                                                     val = GameManager.instance.nodeScript.minNodeValue;
                                                     List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
