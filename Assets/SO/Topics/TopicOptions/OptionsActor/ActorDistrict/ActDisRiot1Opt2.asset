@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4664bf7b6f4ddc442ad05fa7e5754195, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: Should we share our collective guilt at the death of an innocent citizen in
+    the recent [node] riots, [daysAgo]? [mayor] suggests we blame the Resistance
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

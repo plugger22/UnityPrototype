@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: When a citizen dies in such ugly circumstances as found in the recent riots
+    at [node] all we can do is reflect on the futility of violence
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

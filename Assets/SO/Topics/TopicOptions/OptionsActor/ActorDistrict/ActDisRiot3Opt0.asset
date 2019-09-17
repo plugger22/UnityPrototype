@@ -21,7 +21,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Distressed business owners at [node] asked the [mayor] for help fixing the
+    damage caused by the recent bout of rioting. When will the Resisstance learn,
+    asks [mayor]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

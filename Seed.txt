@@ -828,3 +828,16 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 43871 -> Tuesday, 17 September 2019 5:50 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 43871 -> Tuesday, 17 September 2019 9:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised tag "[mayor"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3906)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:2095)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:613)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:261)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

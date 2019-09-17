@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Business owners at [node] have complained to the Police of ongoing harrassment
+    from Resistance thugs after the recent riots
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

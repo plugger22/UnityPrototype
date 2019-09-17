@@ -21,9 +21,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: The boiling, roiling, riot that orginated in [node] and quickly spread to
+    adjoining districts [daysAgo] doesn't appear to have a cause or leaders
+  tooltipHeader: <color=#FFFFE0>HQ</color>
+  tooltipMain: <color=#98FB98> HQ Approval +1</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Acknowledge HQ's help</color>

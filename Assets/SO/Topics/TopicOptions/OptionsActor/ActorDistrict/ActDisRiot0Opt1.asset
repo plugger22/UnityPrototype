@@ -21,9 +21,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: What caused the supercharged riot at [node] of [daysAgo]? Nobody quite knows,
+    or if they do, they aren't talking to this reporter
+  tooltipHeader: <color=#FFFFE0>Me</color>
+  tooltipMain: <color=#98FB98>Player Renown +2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>It was all because of me</color>

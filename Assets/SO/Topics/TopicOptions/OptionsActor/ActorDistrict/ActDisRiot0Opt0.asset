@@ -22,7 +22,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[node] was in lockdown during the massive riot of [daysAgo]. Security forces
+    struggled to get the district under control'
   tooltipHeader: <color=#FFFFE0>Praise</color>
   tooltipMain: <color=#98FB98> Gain STAR condition</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>

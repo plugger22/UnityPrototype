@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Businesses at [node] told this reporter that the Resistance has claimed responsibility
+    for the damage caused by the recent riots. But are they going to pay?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
