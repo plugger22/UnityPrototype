@@ -609,3 +609,94 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 45759 -> Tuesday, 17 September 2019 11:32 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 45759 -> Tuesday, 17 September 2019 2:23 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Unrecognised turnTopicType "Campaign"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3971)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1940)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "CamResC2Opt0", topic CamResC2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "CamResC2Opt1", topic CamResC2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "CamResC2Opt2", topic CamResC2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid data.sprite (Null or Empty) for topic "CamResC2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 29030 -> Tuesday, 17 September 2019 2:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29030 -> Tuesday, 17 September 2019 2:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29030 -> Tuesday, 17 September 2019 2:54 PM
+City seed 5678 -> London, United Kingdom

@@ -572,16 +572,34 @@ public class EffectManager : MonoBehaviour
                                                     {
                                                         //actor
                                                         if (actor.CheckConditionPresent(conditionStressed) == true)
-                                                        { BuildString(result, string.Format(" {0} is {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                        { BuildString(result, string.Format(" {0} already {1}STRESSED{2}", actor.actorName, colourNeutral, colourEnd)); }
                                                     }
                                                     else
                                                     {
                                                         //player
                                                         if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
-                                                        { BuildString(result, string.Format(" Player is {0}STRESSED{1}", colourNeutral, colourEnd)); }
+                                                        { BuildString(result, string.Format(" Player already {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionCorruptNo":
+                                                if (conditionCorrupt != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionCorrupt) == true)
+                                                        { BuildString(result, string.Format(" {0} already {1}CORRUPT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already {0}CORRUPT{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionCorrupt (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionCorruptYes":
                                                 if (conditionCorrupt != null)
@@ -601,6 +619,24 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionCorrupt (Null)"); errorFlag = true; }
                                                 break;
+                                            case "ConditionIncompetentNo":
+                                                if (conditionIncompetent != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionIncompetent) == true)
+                                                        { BuildString(result, string.Format(" {0} already {1}INCOMPETENT{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionIncompetent (Null)"); errorFlag = true; }
+                                                break;
                                             case "ConditionIncompetentYes":
                                                 if (conditionIncompetent != null)
                                                 {
@@ -619,6 +655,23 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionIncompetent (Null)"); errorFlag = true; }
                                                 break;
+                                            case "ConditionQuestionableNo":
+                                                if (conditionQuestionable != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        if (actor.CheckConditionPresent(conditionQuestionable) == true)
+                                                        { BuildString(result, string.Format(" {0} already {1}QUESTIONABLE{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionQuestionable (Null)"); errorFlag = true; }
+                                                break;
                                             case "ConditionQuestionableYes":
                                                 if (conditionQuestionable != null)
                                                 {
@@ -635,6 +688,23 @@ public class EffectManager : MonoBehaviour
                                                     }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionQuestionable (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionStarNo":
+                                                if (conditionStar != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        if (actor.CheckConditionPresent(conditionStar) == true)
+                                                        { BuildString(result, string.Format(" {0} already a {1}STAR{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already a {0}STAR{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionStarYes":
                                                 if (conditionStar != null)

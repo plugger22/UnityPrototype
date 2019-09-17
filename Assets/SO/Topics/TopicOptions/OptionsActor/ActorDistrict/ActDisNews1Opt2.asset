@@ -21,7 +21,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: ac8db6386433ddb4abf6695406f5d48a, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
-  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: Troubling stories about one families tragedy at [node] have spread like wildfire
     on the Net. [citys] Censor Bureau is working overtime
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

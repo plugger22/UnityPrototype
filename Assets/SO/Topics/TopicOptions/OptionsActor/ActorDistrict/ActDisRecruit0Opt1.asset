@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRecruit0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Recruit Actor 0 option 1
+  descriptor: Actor District Recruit Actor 0 option 1
+  tag: Praise
+  text: Praise your [actor]
   topic: {fileID: 11400000, guid: b37d09320dea69240aa649b5a4955d89, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

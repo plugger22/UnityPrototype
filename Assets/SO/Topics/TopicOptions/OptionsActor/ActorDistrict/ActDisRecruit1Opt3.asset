@@ -11,14 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRecruit1Opt3
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Recruit Actor 1 option 3
-  text: 
+  descriptor: Actor District Recruit Actor 1 option 3
+  tag: Incompetent
+  text: Declare [actor] Incompetent
   topic: {fileID: 11400000, guid: 38f993660b207ec458d8fc2322ab7d68, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c2585d871e8edd84ab51cfeacd4ec4b3, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 08794d7d6b82b4a4ab5d2ac3e897d392, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

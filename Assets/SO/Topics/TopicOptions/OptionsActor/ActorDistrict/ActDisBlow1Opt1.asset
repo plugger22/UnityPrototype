@@ -20,7 +20,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: dc7665ce7259594498d4b9b1f4f458fd, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
-  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 'Rumours of a gas leak causing the recent [node] explosion that killed many
     worthy citizens are the work of the Resistance, states [mayor]. '
   tooltipHeader: <color=#FFFFE0>Reframe</color>

@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRecruit0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Recruit Actor 0 option 0
+  descriptor: Actor District Recruit Actor 0 option 0
+  tag: Friends
+  text: Let them talk to their friends
   topic: {fileID: 11400000, guid: b37d09320dea69240aa649b5a4955d89, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
