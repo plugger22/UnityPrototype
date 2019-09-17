@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Australian female first names
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Sophie
   - Emily
@@ -65,4 +67,4 @@ MonoBehaviour:
   - Sophia
   - Annie
   - Cassie
-  isTestForDuplicates: 1
+  index: 0

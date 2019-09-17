@@ -17,6 +17,8 @@ MonoBehaviour:
 
     Linked to ItemDataManager.cs'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - heard a rumour that
   - heard a whisper that
@@ -28,4 +30,4 @@ MonoBehaviour:
   - has been told that
   - reports that
   - has heard on the grapevine that
-  isTestForDuplicates: 1
+  index: 0

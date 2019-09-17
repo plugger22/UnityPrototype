@@ -16,6 +16,8 @@ MonoBehaviour:
 
     NOTE: Don''t use any location that requires ''an'' as a prefix'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Bus Terminal
   - Cemetery
@@ -67,4 +69,4 @@ MonoBehaviour:
   - Community Hall
   - Recording Studio
   - Park
-  isTestForDuplicates: 1
+  index: 0

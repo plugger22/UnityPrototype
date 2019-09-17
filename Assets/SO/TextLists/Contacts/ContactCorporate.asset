@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Corporate type contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Wage Slave
   - Assistant Manager
@@ -34,4 +36,4 @@ MonoBehaviour:
   - Financial Manager
   - Logistics Manager
   - Procurement Manager
-  isTestForDuplicates: 1
+  index: 0

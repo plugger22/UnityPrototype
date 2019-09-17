@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortMoneyReason
+  m_EditorClassIdentifier: 
+  descriptor: 'Reason npc/actor wants money in format [for]... / [to]...
+
+    eg. for a transplant, to help their mother'
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - for a kidney transplant
+  - for their daughter's operation
+  - for their son's operation
+  - for a knee replacement
+  - for a hip replacement
+  - for an artificial heart
+  - for a new eye
+  - for a replacement ear
+  - to pay for their mother's treatment
+  - to pay for their father's funeral
+  - to pay for a holiday
+  - for a break
+  - for a mental health break
+  - for a new accomodation pod
+  - for repairs to their accomodation pod
+  - for a course of medication
+  - for a sex change operation
+  - for a replacement foot
+  - for an artificial hand
+  - to pay off their gambling debts
+  - to fund their drug habit
+  - to fund their gambling habit
+  - to finance their shot at local politics
+  - to buy a supermarket membership
+  - 'to pay for a course of ThinkRite '
+  - to pay for Gut Buster surgery
+  - for their childs education
+  - for a nano degree
+  - to buy friends on InYourFace
+  - to buy a life time Serial-Flix subscription
+  - for a facial reconstruction
+  - for a bio implant
+  - to afford a Companion for Life
+  - for a Nemo Near Earth Orbital experience
+  - for a fantasy Rekall memory implant
+  index: 0

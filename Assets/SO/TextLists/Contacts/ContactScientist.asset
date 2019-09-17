@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Scientific related contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Analytical Chemist
   - Animal Technician
@@ -34,4 +36,4 @@ MonoBehaviour:
   - Laboratory Technician
   - Toxicologist
   - Environmental Scientist
-  isTestForDuplicates: 1
+  index: 0

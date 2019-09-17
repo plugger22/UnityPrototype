@@ -14,6 +14,8 @@ MonoBehaviour:
   descriptor: NPC (male or female) 'is/was something', typically a sympathy evoking
     quality.
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - a sole parent
   - a loving parent
@@ -85,6 +87,11 @@ MonoBehaviour:
   - a Kill Ball player
   - a recovering ex-Kill Balll player
   - an up and coming Kill Ball player
-  isTestForDuplicates: 1
-  isTestForTextTags: 0
+  - deaf
+  - hearing impaired
+  - sight impaired
+  - blind
+  - an ex-Reality TV star
+  - a suspected murderer
+  - a suspected vigilante
   index: 42

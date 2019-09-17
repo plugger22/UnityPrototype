@@ -40,6 +40,8 @@ public class TopicManager : MonoBehaviour
     public TextList textListGoodResistance;
     [Tooltip("List of NPC is/was 'something'")]
     public TextList textListNpcSomething;
+    [Tooltip("List of reaons for wanting money")]
+    public TextList textListMoneyReason;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -139,6 +141,7 @@ public class TopicManager : MonoBehaviour
     private string tagJob;
     private string tagLocation;
     private string tagGear;
+    private string tagRecruit;
     private string tagStringData;        //General purpose
 
     //collections (local)
@@ -292,6 +295,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListBadResistance != null, "Invalid textListBadResistance (Null)");
         Debug.Assert(textListGoodResistance != null, "Invalid textListGoodResistance (Null)");
         Debug.Assert(textListNpcSomething != null, "Invalid textListNpcSomething (Null)");
+        Debug.Assert(textListMoneyReason != null, "Invalid textListMoneyReason (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -1098,6 +1102,7 @@ public class TopicManager : MonoBehaviour
         tagJob = "";
         tagLocation = "";
         tagGear = "";
+        tagRecruit = "";
         tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
@@ -1639,6 +1644,7 @@ public class TopicManager : MonoBehaviour
                 tagStringData = data.dataName;
                 tagLocation = data.dataName;
                 tagGear = data.dataName;
+                tagRecruit = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -3779,7 +3785,19 @@ public class TopicManager : MonoBehaviour
                     case "gear":
                         //gear tag
                         if (isValidate == false)
-                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagGear, colourEnd); }
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagGear, colourEnd); }
+                            else { replaceText = tagGear; }
+                        }
+                        break;
+                    case "recruit":
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, tagRecruit, colourEnd); }
+                            else { replaceText = tagRecruit; }
+                        }
                         break;
                     case "job":
                         //Random job name appropriate to node arc
@@ -3850,6 +3868,11 @@ public class TopicManager : MonoBehaviour
                         //npc is/was something
                         if (isValidate == false)
                         { replaceText = textListNpcSomething.GetRandomRecord(); }
+                        break;
+                    case "money":
+                        //reason they want money
+                        if (isValidate == false)
+                        { replaceText = textListMoneyReason.GetRandomRecord(); }
                         break;
                     case "mayor":
                         //mayor + first name

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: 
   category: {fileID: 11400000, guid: fef2ecbea1e30dd45a7b334a46f48515, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Talkative
   - Sociable
@@ -23,4 +25,4 @@ MonoBehaviour:
   - Outgoing
   - Warm
   - Seeks adventure
-  isTestForDuplicates: 1
+  index: 0

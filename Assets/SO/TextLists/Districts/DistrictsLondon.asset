@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: London city districts
   category: {fileID: 11400000, guid: 8c3d71e162950234e9ea67442945c204, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Edgware Street
   - Imperial Wharf
@@ -54,4 +56,4 @@ MonoBehaviour:
   - Bethnal Green
   - Limehouse
   - Canary Wharf
-  isTestForDuplicates: 1
+  index: 0

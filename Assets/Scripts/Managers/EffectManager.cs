@@ -2399,28 +2399,9 @@ public class EffectManager : MonoBehaviour
         //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
         string colourEffect = colourDefault;
         Condition condition = null;
-        if (effect.typeOfEffect != null)
-        {
-            switch (effect.typeOfEffect.name)
-            {
-                case "Good":
-                    colourEffect = colourGood;
-                    break;
-                case "Neutral":
-                    colourEffect = colourNeutral;
-                    break;
-                case "Bad":
-                    colourEffect = colourBad;
-                    break;
-                default:
-                    Debug.LogError(string.Format("Invalid effect.typeOfEffect \"{0}\"", effect.typeOfEffect.name));
-                    break;
-            }
-        }
-        else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
+        colourEffect = GetColourEffect(effect.typeOfEffect);
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-
         //choose big picture (Random / Any) or specific condition
         switch (effect.outcome.name)
         {
@@ -2432,30 +2413,7 @@ public class EffectManager : MonoBehaviour
             case "ConditionBlackmailer":
             case "ConditionStar":
                 //get condition
-                switch (effect.outcome.name)
-                {
-                    case "ConditionStressed":
-                        condition = conditionStressed;
-                        break;
-                    case "ConditionIncompetent":
-                        condition = conditionIncompetent;
-                        break;
-                    case "ConditionCorrupt":
-                        condition = conditionCorrupt;
-                        break;
-                    case "ConditionQuestionable":
-                        condition = conditionQuestionable;
-                        break;
-                    case "ConditionBlackmailer":
-                        condition = conditionBlackmailer;
-                        break;
-                    case "ConditionStar":
-                        condition = conditionStar;
-                        break;
-                    default:
-                        Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
-                        break;
-                }
+                condition = GetCondition(effect.outcome);
                 //resolve effect outcome
                 if (condition != null)
                 {
@@ -2485,7 +2443,6 @@ public class EffectManager : MonoBehaviour
                                 Debug.LogError(string.Format("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name));
                                 break;
                         }
-
                     }
                     else
                     {
@@ -2520,7 +2477,6 @@ public class EffectManager : MonoBehaviour
                 }
                 else { Debug.LogError(string.Format("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name)); }
                 break;
-
             //add or subtract a group condition
             case "ConditionGroupGood":
             case "ConditionGroupBad":
@@ -2717,7 +2673,6 @@ public class EffectManager : MonoBehaviour
                     else { Debug.LogError("Invalid actor (Null)"); }
                 }
                 break;
-
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                 break;
@@ -3210,6 +3165,10 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
+        //get node (sometimes won't be needed)
+        Node node = null;
+        if (dataTopic.nodeID > -1)
+        { node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID); }
         //outcome
         switch (effect.outcome.name)
         {
@@ -3225,9 +3184,18 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
                 break;
             case "Invisibility":
-                Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
                 if (node != null)
                 { effectResolve.bottomText = ExecuteActorInvisibility(effect, dataInput, actor, node); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+                break;
+            case "ConditionStressed":
+            case "ConditionIncompetent":
+            case "ConditionCorrupt":
+            case "ConditionQuestionable":
+            case "ConditionBlackmailer":
+            case "ConditionStar":
+                if (node != null)
+                { effectResolve.bottomText = ExecuteActorCondition(effect, dataInput, actor, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -3253,6 +3221,10 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
+        //get node (sometimes won't be needed)
+        Node node = null;
+        if (dataTopic.nodeID > -1)
+        { node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID); }
         //outcome
         switch (effect.outcome.name)
         {
@@ -3260,9 +3232,18 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerRenown(effect);
                 break;
             case "Invisibility":
-                Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
                 if (node != null)
                 { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+                break;
+            case "ConditionStressed":
+            case "ConditionIncompetent":
+            case "ConditionCorrupt":
+            case "ConditionQuestionable":
+            case "ConditionBlackmailer":
+            case "ConditionStar":
+                if (node != null)
+                { effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -3878,6 +3859,178 @@ public class EffectManager : MonoBehaviour
         return bottomText;
     }
 
+    /// <summary>
+    /// add or remove a condition to or from the Player
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private string ExecutePlayerCondition(Effect effect, EffectDataInput dataInput, Node node)
+    {
+        string bottomText = "Unknown";
+        //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
+        string colourEffect = colourDefault;
+        Condition condition = null;
+        colourEffect = GetColourEffect(effect.typeOfEffect);
+        //get condition
+        condition = GetCondition(effect.outcome);
+        //resolve effect outcome
+        if (condition != null)
+        {
+            //assign condition to player if at their node, otherwise actor
+            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+            {
+                //Player Condition
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        //only add condition if NOT already present
+                        if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
+                        {
+                            GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.tag, colourEnd);
+                        }
+                        break;
+                    case "Subtract":
+                        //only remove condition if present
+                        if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
+                        {
+                            GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
+                        }
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
+                        break;
+                }
+
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// add or remove a condition to or from an Actor
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    private string ExecuteActorCondition(Effect effect, EffectDataInput dataInput, Actor actor, Node node)
+    {
+        string bottomText = "Unknown";
+        //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
+        string colourEffect = colourDefault;
+        Condition condition = null;
+        colourEffect = GetColourEffect(effect.typeOfEffect);
+        //get condition
+        condition = GetCondition(effect.outcome);
+        //resolve effect outcome
+        if (condition != null)
+        {
+            if (actor != null)
+            {
+                //Actor Condition
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        //only add condition if NOT already present
+                        if (actor.CheckConditionPresent(condition) == false)
+                        {
+                            actor.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.tag, colourEnd);
+                        }
+                        break;
+                    case "Subtract":
+                        //only remove  condition if present
+                        if (actor.CheckConditionPresent(condition) == true)
+                        {
+                            actor.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.tag, colourEnd);
+                        }
+                        break;
+                    default:
+                        Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
+                        break;
+                }
+            }
+            else { Debug.LogWarning("Invalid actor (Null)"); }
+        }
+        else { Debug.LogWarningFormat("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// subMethod for topic condition methods to return a colour of effect (good/bad/neutral) string
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    private string GetColourEffect(GlobalType type)
+    {
+        string colourEffect = colourDefault;
+        if (type != null)
+        {
+            switch (type.name)
+            {
+                case "Good":
+                    colourEffect = colourGood;
+                    break;
+                case "Neutral":
+                    colourEffect = colourNeutral;
+                    break;
+                case "Bad":
+                    colourEffect = colourBad;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised effect.typeOfEffect (GlobalType) \"{0}\"", type.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid GlobalType (Null)"); }
+        return colourEffect;
+    }
+
+    /// <summary>
+    /// subMethod to return a condition. Returns null if not found
+    /// </summary>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    private Condition GetCondition(EffectOutcome outcome)
+    {
+        Condition condition = null;
+        if (outcome != null)
+        {
+            //get condition
+            switch (outcome.name)
+            {
+                case "ConditionStressed":
+                    condition = conditionStressed;
+                    break;
+                case "ConditionIncompetent":
+                    condition = conditionIncompetent;
+                    break;
+                case "ConditionCorrupt":
+                    condition = conditionCorrupt;
+                    break;
+                case "ConditionQuestionable":
+                    condition = conditionQuestionable;
+                    break;
+                case "ConditionBlackmailer":
+                    condition = conditionBlackmailer;
+                    break;
+                case "ConditionStar":
+                    condition = conditionStar;
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", outcome.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid effectOutcome (Null)"); }
+        return condition;
+    }
 
     //place methods above here
 }

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: New York City districts
   category: {fileID: 11400000, guid: 8c3d71e162950234e9ea67442945c204, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Hell's Kitchen
   - Battery Park
@@ -53,4 +55,4 @@ MonoBehaviour:
   - Cobble Hill
   - East New York
   - Brooklyn Heights
-  isTestForDuplicates: 1
+  index: 0

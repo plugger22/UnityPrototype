@@ -14,9 +14,17 @@ MonoBehaviour:
   descriptor: Resistance topics (Good). Last line/s in topic text. Self contained.  Accessed
     by [goodRES] tag. Full stop NOT required, or needed
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - We could use this
   - This could be to our advantage
   - There is an opportunity here
   - Why don't we do something with this?
   - We could turn this into a plus
+  - HQ are keen to move on this
+  - It'd be a shame to let this go
+  - HQ insist that we do something
+  - We need to grab this and run with it
+  - You don't ignore something like this
+  index: 0

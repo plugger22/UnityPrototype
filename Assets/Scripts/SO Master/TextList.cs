@@ -12,14 +12,18 @@ public class TextList : ScriptableObject
     [TextArea] public string descriptor;
     [Tooltip("Category of TextList")]
     public TextListType category;
-    [Tooltip("A list of strings (related) used to create a random pick list")]
-    public List<string> randomList;
 
     [Header("Testing")]
     [Tooltip("If true randomList is tested for duplicates (use for Textlists that contain short strings, avoid for longer strings), not if false")]
     public bool isTestForDuplicates;
     [Tooltip("If true test for valid Text Tags using NewsManager.cs -> CheckNewsText, ignore if false")]
     public bool isTestForTextTags;
+
+    [Header("List")]
+    [Tooltip("A list of strings (related) used to create a random pick list")]
+    public List<string> randomList;
+
+
 
     #region Save Data Compatible
     [HideInInspector] public int index;

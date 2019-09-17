@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Emergency personnel Contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Bounty Hunter
   - Fireman
@@ -34,4 +36,4 @@ MonoBehaviour:
   - Traffic Cop
   - Airborne Patrol Cop
   - Riot Squad Cop
-  isTestForDuplicates: 1
+  index: 0

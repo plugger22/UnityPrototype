@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Entertainer type Contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Actor
   - Blogger
@@ -32,4 +34,4 @@ MonoBehaviour:
   - Publicist
   - Celebrity Manager
   - Model
-  isTestForDuplicates: 1
+  index: 0

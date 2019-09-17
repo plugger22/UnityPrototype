@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: French Female first names
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Romaine
   - Ameline
@@ -64,4 +66,4 @@ MonoBehaviour:
   - Constance
   - Sandra
   - Philomene
-  isTestForDuplicates: 1
+  index: 0

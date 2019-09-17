@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Government related contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Customs Inspector
   - Border Control Agent
@@ -34,4 +36,4 @@ MonoBehaviour:
   - Compliance Manager
   - Air Quality Regulator
   - Records Clerk
-  isTestForDuplicates: 1
+  index: 0

@@ -17,6 +17,8 @@ MonoBehaviour:
 
     Linked to ItemDataManager.cs'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - saw
   - walked post
@@ -38,4 +40,4 @@ MonoBehaviour:
   - accidentally ran into
   - was told about
   - have a confirmed sighting of
-  isTestForDuplicates: 1
+  index: 0

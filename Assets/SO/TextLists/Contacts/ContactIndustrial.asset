@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Industrial type contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Warehouse Packer
   - Engine Reconditioner
@@ -44,4 +46,4 @@ MonoBehaviour:
   - Joiner
   - Locksmith
   - Surveyor
-  isTestForDuplicates: 1
+  index: 0
