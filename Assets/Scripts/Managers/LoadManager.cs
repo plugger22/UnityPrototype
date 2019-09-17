@@ -62,8 +62,9 @@ public class LoadManager : MonoBehaviour
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
 
-    [Header("Personality Profiles")]
+    [Header("Personality")]
     public PersonProfile[] arrayOfPersonProfiles;
+    public Belief[] arrayOfBeliefs;
 
     [Header("Effects")]
     public Effect[] arrayOfEffectsAI;
@@ -181,6 +182,37 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in PersonProfiles count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
+        //
+        // - - - Beliefs
+        //
+        Dictionary<string, int> dictOfBeliefs = GameManager.instance.dataScript.GetDictOfBeliefs();
+        if (dictOfBeliefs != null)
+        {
+            numArray = arrayOfBeliefs.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfBeliefs has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Beliefs present"); }
+            //add to dictionary
+            counter = 0;
+            for (int i = 0; i < numArray; i++)
+            {
+                Belief belief = arrayOfBeliefs[i];
+                if (belief != null)
+                {
+                    try
+                    { dictOfBeliefs.Add(belief.name, 0); counter++; }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfBeliefs for {0}", belief); }
+                }
+                else { Debug.LogWarningFormat("Invalid Belief (Null) for arrayOfBelief[{0}]", i); }
+            }
+            numDict = dictOfBeliefs.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfBeliefs has {0} entries{1}", numDict, "\n");
+            Debug.Assert(dictOfBeliefs.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfBeliefs.Count > 0, "No Beliefs imported to dictionary");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Beliefs count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfBeliefs (Null)"); }
         //
         // - - - GlobalMeta (not stored in a collection)
         //

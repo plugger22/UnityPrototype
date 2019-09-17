@@ -50,6 +50,7 @@ public class DebugGUI : MonoBehaviour
     private int actorToggle = 0;
     private int topicToggle = 0;
     private int factionToggle = 0;
+    private int analyseToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -366,9 +367,13 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 20 + button_height * 20, button_width, button_height), "Analysis Data"))
             {
                 Debug.Log("[Dbg] Button -> AI Analysis Data");
-                if (debugDisplay != 51)
-                { debugDisplay = 51; }
-                else { debugDisplay = 0; }
+                //toggles sequentially through analysis info displays and then switches off
+                switch (analyseToggle)
+                {
+                    case 0: debugDisplay = 51; analyseToggle = 1; break;
+                    case 1: debugDisplay = 75; analyseToggle = 2; break;
+                    case 2: debugDisplay = 0; analyseToggle = 0; break;
+                }
             }
 
 
@@ -1589,6 +1594,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayHQDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
+                        break;
+                    //belief frequency analysis
+                    case 75:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayBeliefCount();
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 300), analysis, customBackground);
                         break;
                 }
             }

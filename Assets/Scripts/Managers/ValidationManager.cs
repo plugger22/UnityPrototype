@@ -672,7 +672,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTopics()
     {
-        int count, countSubType, textLength;
+        int count, countSubType, textLength, num;
         bool isPassedCheck;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (playerSide == null) { Debug.LogError("Invalid playerSide (Null)"); }
@@ -741,169 +741,185 @@ public class ValidationManager : MonoBehaviour
         Topic[] arrayOfTopics = GameManager.instance.loadScript.arrayOfTopics;
         TopicOption[] arrayOfTopicOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
         List<string> listOfMoodEffects = new List<string>();
+        Dictionary<string, int> dictOfBeliefs = GameManager.instance.dataScript.GetDictOfBeliefs();
         int maxOptions = GameManager.instance.topicScript.maxOptions;
         if (arrayOfTopics != null)
         {
             if (arrayOfTopicOptions != null)
             {
-                //create a list of option names that you can progressively delete from to check if any are left over at the end
-                List<string> listOfOptionNames = arrayOfTopicOptions.Select(x => x.name).ToList();
-                string topicName;
-                //loop topics
-                for (int i = 0; i < arrayOfTopics.Length; i++)
+                if (dictOfBeliefs != null)
                 {
-                    Topic topic = arrayOfTopics[i];
-                    if (topic != null)
+                    //create a list of option names that you can progressively delete from to check if any are left over at the end
+                    List<string> listOfOptionNames = arrayOfTopicOptions.Select(x => x.name).ToList();
+                    string topicName;
+                    //loop topics
+                    for (int i = 0; i < arrayOfTopics.Length; i++)
                     {
-                        topicName = topic.name;
-                        //check topic text chars limit
-                        textLength = topic.text.Length;
-                        if (textLength > maxTopicTextLength)
-                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}", 
-                            textLength, maxTopicTextLength, topicName, "\n"); }
-                        //check topic text tags
-                        GameManager.instance.topicScript.CheckTopicText(topic.text, false, true, topicName);
-                        //listOfOptions
-                        if (topic.listOfOptions != null)
+                        Topic topic = arrayOfTopics[i];
+                        if (topic != null)
                         {
-                            //clear out temp list prior to new set of options
-                            listOfMoodEffects.Clear();
-                            count = topic.listOfOptions.Count();
-                            if (count > 0)
+                            topicName = topic.name;
+                            //check topic text chars limit
+                            textLength = topic.text.Length;
+                            if (textLength > maxTopicTextLength)
                             {
-                                //max number of options not exceeded
-                                if (count > maxOptions)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
-                                isPassedCheck = false;
-                                //loop options and check that they aren't null and have the correct topic name
-                                foreach (TopicOption option in topic.listOfOptions)
-                                {
-                                    //Check parent topic matches
-                                    if (option.topic.name.Equals(topicName, StringComparison.Ordinal) == false)
-                                    {
-                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has a mismatching topic (\"{2}\"){3}",
-                                          option.name, topicName, option.topic.name, "\n");
-                                    }
-                                    //
-                                    // - - - Checks for completed TopicOptions (text field has data) -> DEBUG (shouldn't be any of these on completion)
-                                    //
-                                    if (option.text != null && option.text.Length > 0)
-                                    {
-                                        textLength = option.text.Length;
-                                        if (textLength > 0)
-                                        {
-                                            //collect all beliefs as want to check for dupes
-                                            if (option.moodEffect != null)
-                                            { listOfMoodEffects.Add(option.moodEffect.name); }
-                                            else
-                                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
-                                            //check text length limit
-                                            if (textLength > maxOptionTextLength)
-                                            {
-                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, limit {1} chars) for option \"{2}\", topic {3}{4}", 
-                                                    textLength, maxOptionTextLength, option.name, topic.name, "\n");
-                                            }
-                                            //check there is at least one good or bad effect present
-                                            if (option.listOfGoodEffects.Count == 0 && option.listOfBadEffects.Count == 0)
-                                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: No effects present, Good or Bad, for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
-                                            else
-                                            {
-                                                //effects -> Good
-                                                if (option.listOfGoodEffects.Count > 0)
-                                                {
-                                                    for (int j = 0; j < option.listOfGoodEffects.Count; j++)
-                                                    {
-                                                        Effect effect = option.listOfGoodEffects[j];
-                                                        if (effect != null)
-                                                        {
-                                                            //check it's a good effect on the good list
-                                                            if (effect.typeOfEffect.name.Equals("Good", StringComparison.Ordinal) == false)
-                                                            {
-                                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Effect type (is {0} should be Good), effect \"{1}\", option {2}, topic {3}{4}", 
-                                                                    effect.typeOfEffect.name,  effect.name, option.name, topicName, "\n");
-                                                            }
-                                                        }
-                                                        else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid effect (Null) in listOfGoodEffects for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
-                                                    }
-                                                }
-                                                //effects -> Bad
-                                                if (option.listOfBadEffects.Count > 0)
-                                                {
-                                                    for (int j = 0; j < option.listOfBadEffects.Count; j++)
-                                                    {
-                                                        Effect effect = option.listOfBadEffects[j];
-                                                        if (effect != null)
-                                                        {
-                                                            //check it's a bad effect on the bad list
-                                                            if (effect.typeOfEffect.name.Equals("Bad", StringComparison.Ordinal) == false)
-                                                            {
-                                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Effect type (is {0} should be Bad), effect \"{1}\", option {2}, topic {3}{4}", 
-                                                                    effect.typeOfEffect.name, effect.name, option.name, topicName, "\n");
-                                                            }
-                                                        }
-                                                        else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid effect (Null) in listOfBadEffects for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        //Mood effect (must be a personality effect, if present)
-                                        if (option.moodEffect != null)
-                                        {
-                                            if (option.moodEffect.isMoodEffect == false)
-                                            {
-                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Mood Effect (NOT isMoodEffect True), effect \"{1}\", option {2}, topic {3}{4}",
-                                                    option.moodEffect.typeOfEffect.name, option.moodEffect.name, option.name, topicName, "\n");
-                                            }
-                                        }
-                                        //News snippet (check text tags are valid), only if a news snippet is present
-                                        if (string.IsNullOrEmpty(option.news) == false)
-                                        {
-                                            GameManager.instance.topicScript.CheckTopicText(option.news, false, true, option.name);
-                                            //check max length
-                                            if (option.news.Length > maxTopicTextLength)
-                                            {
-                                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Option NEWS text is overlength (is {0} chars, should be <= {1}) for option \"{2}\", topic {3}{4}",
-                                                  option.news.Length, maxTopicTextLength, option.name, topicName, "\n");
-                                            }
-                                        }
-                                    }
-                                    //delete option from list
-                                    if (listOfOptionNames.Remove(option.name) == false)
-                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" not found in arrayOfTopicOptions{2}", option.name, topicName, "\n"); }
-                                    //check at least one option has NO criteria (so topic always has at least one option available)
-                                    if (option.listOfCriteria.Count == 0)
-                                    { isPassedCheck = true; }
-                                }
-                                //at least one option with No criteria present
-                                if (isPassedCheck == false)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
-                                //check no duplicates with option moodEffects
-                                if (listOfMoodEffects.Count > 0)
-                                { CheckListForDuplicates(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects");  }
+                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}",
+                                  textLength, maxTopicTextLength, topicName, "\n");
                             }
-                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
-                        }
-                        else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+                            //check topic text tags
+                            GameManager.instance.topicScript.CheckTopicText(topic.text, false, true, topicName);
+                            //listOfOptions
+                            if (topic.listOfOptions != null)
+                            {
+                                //clear out temp list prior to new set of options
+                                listOfMoodEffects.Clear();
+                                count = topic.listOfOptions.Count();
+                                if (count > 0)
+                                {
+                                    //max number of options not exceeded
+                                    if (count > maxOptions)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
+                                    isPassedCheck = false;
+                                    //loop options and check that they aren't null and have the correct topic name
+                                    foreach (TopicOption option in topic.listOfOptions)
+                                    {
+                                        //Check parent topic matches
+                                        if (option.topic.name.Equals(topicName, StringComparison.Ordinal) == false)
+                                        {
+                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has a mismatching topic (\"{2}\"){3}",
+                                              option.name, topicName, option.topic.name, "\n");
+                                        }
+                                        //
+                                        // - - - Checks for completed TopicOptions (text field has data) -> DEBUG (shouldn't be any of these on completion)
+                                        //
+                                        if (option.text != null && option.text.Length > 0)
+                                        {
+                                            textLength = option.text.Length;
+                                            if (textLength > 0)
+                                            {
+                                                //collect all beliefs as want to check for dupes
+                                                if (option.moodEffect != null)
+                                                {
+                                                    listOfMoodEffects.Add(option.moodEffect.name);
+                                                    //tally beliefs
+                                                    if (dictOfBeliefs.ContainsKey(option.moodEffect.name) == true)
+                                                    {
+                                                        num = dictOfBeliefs[option.moodEffect.name] + 1;
+                                                        dictOfBeliefs[option.moodEffect.name] = num;
+                                                    }
+                                                    else { Debug.LogWarningFormat("Invalid moodEffect \"{0}\", (Not found in dictOfBeliefs)", option.moodEffect.name); }
+                                                }
+                                                else
+                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
+                                                //check text length limit
+                                                if (textLength > maxOptionTextLength)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, limit {1} chars) for option \"{2}\", topic {3}{4}",
+                                                        textLength, maxOptionTextLength, option.name, topic.name, "\n");
+                                                }
+                                                //check there is at least one good or bad effect present
+                                                if (option.listOfGoodEffects.Count == 0 && option.listOfBadEffects.Count == 0)
+                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: No effects present, Good or Bad, for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
+                                                else
+                                                {
+                                                    //effects -> Good
+                                                    if (option.listOfGoodEffects.Count > 0)
+                                                    {
+                                                        for (int j = 0; j < option.listOfGoodEffects.Count; j++)
+                                                        {
+                                                            Effect effect = option.listOfGoodEffects[j];
+                                                            if (effect != null)
+                                                            {
+                                                                //check it's a good effect on the good list
+                                                                if (effect.typeOfEffect.name.Equals("Good", StringComparison.Ordinal) == false)
+                                                                {
+                                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Effect type (is {0} should be Good), effect \"{1}\", option {2}, topic {3}{4}",
+                                                                        effect.typeOfEffect.name, effect.name, option.name, topicName, "\n");
+                                                                }
+                                                            }
+                                                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid effect (Null) in listOfGoodEffects for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
+                                                        }
+                                                    }
+                                                    //effects -> Bad
+                                                    if (option.listOfBadEffects.Count > 0)
+                                                    {
+                                                        for (int j = 0; j < option.listOfBadEffects.Count; j++)
+                                                        {
+                                                            Effect effect = option.listOfBadEffects[j];
+                                                            if (effect != null)
+                                                            {
+                                                                //check it's a bad effect on the bad list
+                                                                if (effect.typeOfEffect.name.Equals("Bad", StringComparison.Ordinal) == false)
+                                                                {
+                                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Effect type (is {0} should be Bad), effect \"{1}\", option {2}, topic {3}{4}",
+                                                                        effect.typeOfEffect.name, effect.name, option.name, topicName, "\n");
+                                                                }
+                                                            }
+                                                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid effect (Null) in listOfBadEffects for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            //Mood effect (must be a personality effect, if present)
+                                            if (option.moodEffect != null)
+                                            {
+                                                if (option.moodEffect.isMoodEffect == false)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Mood Effect (NOT isMoodEffect True), effect \"{1}\", option {2}, topic {3}{4}",
+                                                        option.moodEffect.typeOfEffect.name, option.moodEffect.name, option.name, topicName, "\n");
+                                                }
+                                            }
+                                            //News snippet (check text tags are valid), only if a news snippet is present
+                                            if (string.IsNullOrEmpty(option.news) == false)
+                                            {
+                                                GameManager.instance.topicScript.CheckTopicText(option.news, false, true, option.name);
+                                                //check max length
+                                                if (option.news.Length > maxTopicTextLength)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Option NEWS text is overlength (is {0} chars, should be <= {1}) for option \"{2}\", topic {3}{4}",
+                                                      option.news.Length, maxTopicTextLength, option.name, topicName, "\n");
+                                                }
+                                            }
+                                        }
+                                        //delete option from list
+                                        if (listOfOptionNames.Remove(option.name) == false)
+                                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" not found in arrayOfTopicOptions{2}", option.name, topicName, "\n"); }
+                                        //check at least one option has NO criteria (so topic always has at least one option available)
+                                        if (option.listOfCriteria.Count == 0)
+                                        { isPassedCheck = true; }
+                                    }
+                                    //at least one option with No criteria present
+                                    if (isPassedCheck == false)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
+                                    //check no duplicates with option moodEffects
+                                    if (listOfMoodEffects.Count > 0)
+                                    { CheckListForDuplicates(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects"); }
+                                }
+                                else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
 
-                        //subType matches type
-                        TopicType topicType = GameManager.instance.dataScript.GetTopicType(topic.type.name);
-                        if (topicType != null)
-                        {
-                            //check topic subType is on the listOfSubTypes
-                            if (topicType.listOfSubTypes.Find(x => x.name.Equals(topic.subType.name, StringComparison.Ordinal)) == false)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has a mismatch with it's subType \"{1}\"{2}", topicName, topic.subType.name, "\n"); }
-                        }
-                        else { Debug.LogErrorFormat("Invalid topicType (Null) for topic.type.name \"{0}\"", topic.type.name); }
+                            //subType matches type
+                            TopicType topicType = GameManager.instance.dataScript.GetTopicType(topic.type.name);
+                            if (topicType != null)
+                            {
+                                //check topic subType is on the listOfSubTypes
+                                if (topicType.listOfSubTypes.Find(x => x.name.Equals(topic.subType.name, StringComparison.Ordinal)) == false)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has a mismatch with it's subType \"{1}\"{2}", topicName, topic.subType.name, "\n"); }
+                            }
+                            else { Debug.LogErrorFormat("Invalid topicType (Null) for topic.type.name \"{0}\"", topic.type.name); }
 
+                        }
+                        else { Debug.LogWarningFormat("Invalid topic (Null) for arrayOfTopics[{0}]", i); }
                     }
-                    else { Debug.LogWarningFormat("Invalid topic (Null) for arrayOfTopics[{0}]", i); }
+                    //unused topicOptions
+                    if (listOfOptionNames.Count > 0)
+                    {
+                        foreach (string optionName in listOfOptionNames)
+                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" NOT part of any Topic's listOfOptions{1}", optionName, "\n"); }
+                    }
                 }
-                //unused topicOptions
-                if (listOfOptionNames.Count > 0)
-                {
-                    foreach (string optionName in listOfOptionNames)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" NOT part of any Topic's listOfOptions{1}", optionName, "\n"); }
-                }
+                else { Debug.LogError("Invalid dictOfBeliefs (Null)"); }
             }
             else { Debug.LogError("Invalid arrayOfTopicOptions (Null)"); }
         }

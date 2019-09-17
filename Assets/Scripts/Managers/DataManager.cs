@@ -221,6 +221,9 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
     private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
 
+    //Development only collections
+    private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
+
 
     #region SO enum Dictionaries
     //global SO's (enum equivalents)
@@ -7437,6 +7440,31 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, TextList> GetDictOfTextList()
     { return dictOfTextLists; }
+
+    //
+    // - - - Beliefs
+    //
+
+    public Dictionary<string, int> GetDictOfBeliefs()
+    { return dictOfBeliefs; }
+
+    /// <summary>
+    /// debug display of Belief count in topic Options
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayBeliefCount()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Belief Frequency Count in Topic Options{0}", "\n");
+        int count = 0;
+        foreach(var belief in dictOfBeliefs)
+        {
+            count++;
+            if (count == 3) { builder.AppendLine(); count = 1; }
+            builder.AppendFormat("{0} {1}  {2}", "\n", belief.Key, belief.Value);
+        }
+        return builder.ToString();
+    }
 
     //new methods above here
 }
