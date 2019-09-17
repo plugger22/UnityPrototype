@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRiot0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Start A Riot 0 option 1
+  descriptor: Actor District Start A Riot 0 option 1
+  tag: Me
+  text: It was all because of me
   topic: {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

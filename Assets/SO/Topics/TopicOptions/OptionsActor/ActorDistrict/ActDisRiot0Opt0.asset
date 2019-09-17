@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRiot0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Start A Riot 0 option 0
+  descriptor: Actor District Start A Riot 0 option 0
+  tag: Praise
+  text: Praise [actor] for a great riot
   topic: {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Praise</color>
+  tooltipMain: <color=#98FB98> Gain STAR condition</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Praise HEAVY for a great riot</color>

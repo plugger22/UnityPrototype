@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRiot1Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District Start A Riot 1 option 2
+  descriptor: Actor District Start A Riot 1 option 2
+  tag: Justice
+  text: It's justice, they had it coming
   topic: {fileID: 11400000, guid: 2dfa08c4fa26dec4f91d6e3b10a2094e, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 4664bf7b6f4ddc442ad05fa7e5754195, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

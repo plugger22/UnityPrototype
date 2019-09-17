@@ -22,9 +22,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: Police are investigating [recruit] of [node] who deposited a large, unexplained,
+    sum of money in their bank account [daysAgo]
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Handover the money</color>

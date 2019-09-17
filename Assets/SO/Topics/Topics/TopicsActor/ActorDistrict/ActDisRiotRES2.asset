@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisRiotRES2
   m_EditorClassIdentifier: 
-  tag: Actor District Create Riots 2
+  tag: Ripped Apart
+  text: An Authority informer, [npc], [npcIs], was torn to pieces during the riot
+    at [node], [daysAgo], organised by your [actor]. [goodRES]
+  designNotes: positive Heavy event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
@@ -23,17 +26,20 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: a160db712e060274db52ee7c9218751c, type: 2}
   - {fileID: 11400000, guid: 25f05175ce81b5d49b7cacec354d0bfd, type: 2}
   - {fileID: 11400000, guid: 323a8ab627855aa47b4b40a7bfa32357, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 22
   turnsDone: 0

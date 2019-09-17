@@ -3414,7 +3414,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 29030
+  seedDev: 43871
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

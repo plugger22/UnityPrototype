@@ -11,7 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisRiotRES1
   m_EditorClassIdentifier: 
-  tag: Actor District Create Riots 1
+  tag: Citizen Squashed
+  text: '[npc], [npcIs] of [node] was trampled to death [daysAgo] during a riot organised
+    by your [actor]. [badRES]'
+  designNotes: negative Heavy event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 07f004ee8b4a38346995487f87d3c3f4, type: 2}
@@ -23,17 +26,21 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 07ccf9c457872d64fa61789b2cf2c816, type: 2}
   - {fileID: 11400000, guid: 8ab7dc893126421418acbcce52f2ea24, type: 2}
   - {fileID: 11400000, guid: 9567f4da0e0b6dd409e4f6969e7a9d29, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 22
   turnsDone: 0

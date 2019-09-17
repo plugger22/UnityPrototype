@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisRiot1Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Start A Riot 1 option 1
+  descriptor: Actor District Start A Riot 1 option 1
+  tag: Dog
+  text: That's not a body, it's a dog
   topic: {fileID: 11400000, guid: 2dfa08c4fa26dec4f91d6e3b10a2094e, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
