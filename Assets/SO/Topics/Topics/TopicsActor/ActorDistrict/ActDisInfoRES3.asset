@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Name: ActDisInfoRES3
   m_EditorClassIdentifier: 
   tag: Spotted
-  text: Our surveillance at [node] established the pattern of routine we needed for
-    our target ([target]) but it looks our [actor] has been spotted and followed.
-    [badRES]
+  text: Surveillance at [node] has established the pattern we need for our target
+    infiltration but it appears that our [actor] has been spotted and followed
   designNotes: negative Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -27,7 +26,8 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 0dbe7cd64e090b0418d1fb2637728ea9, type: 2}
   - {fileID: 11400000, guid: 38152c16403c9294f9b4a7d1316f1761, type: 2}
@@ -35,12 +35,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 19
+  turnsDormant: 2
+  turnsActive: 2
+  turnsLive: 18
   turnsDone: 0

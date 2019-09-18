@@ -11,14 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo3Opt1
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Gain Info 3 option 1
-  text: 
+  descriptor: Actor District Gain Info 3 option 1
+  tag: Learn
+  text: Let [actor] learn from their mistakes
   topic: {fileID: 11400000, guid: 8927ba41c6eadd245bea74c9831da3c7, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ffefe4efa54188a4ab71e4f9c4acd45c, type: 2}
+  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

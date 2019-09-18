@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Gain Info 0 option 0
+  descriptor: Actor District Gain Info 0 option 0
+  tag: Threaten
+  text: Order [actor] to threaten their source
   topic: {fileID: 11400000, guid: c40d7c8a605416340bff3dd7c4e3bdb2, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

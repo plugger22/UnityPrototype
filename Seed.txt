@@ -1,62 +1,11 @@
 
-Dev seed 41077 -> Sunday, 15 September 2019 10:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 42721 -> Sunday, 15 September 2019 10:33 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13621 -> Sunday, 15 September 2019 10:33 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 10:34 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid belief (Null) for option "ActDisHack1Opt0", topic ActDisHackRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActDisHack1Opt1", topic ActDisHackRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActDisHack1Opt2", topic ActDisHackRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-TopicManager.ProcessOption (System.Int32 optionIndex) (at Assets/Scripts/Managers/TopicManager.cs:2067)
-	TopicUI.ProcessTopicOption (System.Int32 optionIndex) (at Assets/Scripts/GUI/TopicUI.cs:613)
-	TopicUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/TopicUI.cs:261)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
-	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 62010 -> Sunday, 15 September 2019 11:27 AM
+Dev seed 56401 -> Wednesday, 18 September 2019 8:37 PM
 City seed 5678 -> London, United Kingdom
 WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -64,9 +13,9 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -74,45 +23,65 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "City1Opt0", topic CitRES1
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "FamB0Opt0", topic FamB0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "City1Opt1", topic CitRES1
+	WARNING Invalid belief (Null) for option "FamB0Opt1", topic FamB0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "City1Opt2", topic CitRES1
+	WARNING Invalid belief (Null) for option "FamB0Opt2", topic FamB0
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "CitRES1"
+	WARNING Invalid belief (Null) for option "FamB0Opt3", topic FamB0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid data.sprite (Null or Empty) for topic "FamB0"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
 	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
@@ -121,11 +90,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	UnityEngine.MonoBehaviour:StartCoroutine(String)
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING Invalid text (Null or Empty)
+	
+Dev seed 56401 -> Wednesday, 18 September 2019 8:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56401 -> Wednesday, 18 September 2019 8:47 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -133,9 +108,9 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -143,9 +118,9 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid text (Null or Empty)
 UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3845)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -153,731 +128,9 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Unrecognised turnTopicType "Campaign"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3899)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1927)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt0", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt1", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt2", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "CamResC2"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 44614 -> Sunday, 15 September 2019 11:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 2:16 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 2:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 2:45 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 3:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44614 -> Sunday, 15 September 2019 4:23 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3873)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3873)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3873)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt0", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt1", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt2", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3548)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1938)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "ResGen0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 33349 -> Sunday, 15 September 2019 4:28 PM
-City seed 5678 -> London, United Kingdom
-WARNING Unrecognised tag "acotr"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3862)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1919)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1800)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	
-Dev seed 33349 -> Sunday, 15 September 2019 4:52 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 33349 -> Monday, 16 September 2019 10:17 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 33349 -> Monday, 16 September 2019 10:30 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 33349 -> Monday, 16 September 2019 10:55 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54442 -> Monday, 16 September 2019 10:56 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11683 -> Monday, 16 September 2019 12:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61826 -> Monday, 16 September 2019 2:50 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3886)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3886)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3886)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActGea1Opt0", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActGea1Opt1", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActGea1Opt2", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	
-Dev seed 48054 -> Monday, 16 September 2019 3:03 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3890)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3890)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3890)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES0Opt0", topic ActMatRES0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES0Opt1", topic ActMatRES0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES0Opt2", topic ActMatRES0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	
-Dev seed 35855 -> Monday, 16 September 2019 3:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 21012 -> Monday, 16 September 2019 3:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61695 -> Monday, 16 September 2019 3:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 3:14 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 24385 -> Monday, 16 September 2019 3:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 3:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 3:25 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3894)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3894)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3894)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1926)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES1Opt0", topic ActMatRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES1Opt1", topic ActMatRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ActMatRES1Opt2", topic ActMatRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3556)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1945)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1806)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	
-Dev seed 45759 -> Monday, 16 September 2019 3:28 PM
-City seed 5678 -> London, United Kingdom
-WARNING Unrecognised tag "whoIs"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3883)
-	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:2089)
-	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:613)
-	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:261)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 45759 -> Monday, 16 September 2019 3:32 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 3:40 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 3:43 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 4:10 PM
-City seed 5678 -> London, United Kingdom
-WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	
-Dev seed 45759 -> Monday, 16 September 2019 4:17 PM
-City seed 5678 -> London, United Kingdom
-WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityMin"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	
-Dev seed 45759 -> Monday, 16 September 2019 4:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Monday, 16 September 2019 6:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Tuesday, 17 September 2019 11:32 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45759 -> Tuesday, 17 September 2019 2:23 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Unrecognised turnTopicType "Campaign"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3971)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1940)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt0", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt1", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC2Opt2", topic CamResC2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "CamResC2"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 29030 -> Tuesday, 17 September 2019 2:24 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 2:50 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 2:54 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 3:52 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 3:59 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 4:13 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29030 -> Tuesday, 17 September 2019 5:45 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "HQ0Opt0", topic HQ0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "HQ0Opt1", topic HQ0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "HQ0Opt2", topic HQ0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "HQ0Opt3", topic HQ0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "HQ0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 17597 -> Tuesday, 17 September 2019 5:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 64540 -> Tuesday, 17 September 2019 5:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28115 -> Tuesday, 17 September 2019 5:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Tuesday, 17 September 2019 5:47 PM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid effectName "GainConditionStar" (should be 'X_...')
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:3632)
-	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:3417)
-	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:3350)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1922)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	
-Dev seed 43871 -> Tuesday, 17 September 2019 5:50 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Tuesday, 17 September 2019 9:02 PM
-City seed 5678 -> London, United Kingdom
-WARNING Unrecognised tag "[mayor"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3906)
-	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:2095)
-	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:613)
-	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:261)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 43871 -> Wednesday, 18 September 2019 9:18 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Unrecognised turnTopicType "Campaign"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3971)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1940)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3983)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1943)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -885,9 +138,9 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid belief (Null) for option "CamResA2Opt0", topic CamResA2
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -895,9 +148,9 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid belief (Null) for option "CamResA2Opt1", topic CamResA2
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -905,9 +158,9 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	WARNING Invalid belief (Null) for option "CamResA2Opt2", topic CamResA2
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
 	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
 	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
@@ -922,199 +175,64 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	UnityEngine.MonoBehaviour:StartCoroutine(String)
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3929)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1935)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActMatRES0Opt0", topic ActMatRES0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActMatRES0Opt1", topic ActMatRES0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Invalid belief (Null) for option "ActMatRES0Opt2", topic ActMatRES0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3565)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1954)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1815)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	
-Dev seed 43871 -> Wednesday, 18 September 2019 9:49 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 9:51 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 9:53 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 11:04 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Unrecognised turnTopicType "Campaign"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3971)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1940)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC3Opt0", topic CamResC3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC3Opt1", topic CamResC3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "CamResC3Opt2", topic CamResC3
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "CamResC3"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 43871 -> Wednesday, 18 September 2019 11:40 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3917)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1932)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt0", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt1", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid belief (Null) for option "ResGen0Opt2", topic ResGen0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:3562)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:1951)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1812)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
-	WARNING Invalid data.sprite (Null or Empty) for topic "ResGen0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:393)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:320)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:555)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:533)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityNOTLow"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	WARNING NodeCurrent: Invalid criteriaEffect "NodeStabilityNOTLow"
-UnityEngine.Debug:LogWarning(Object)
-	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:432)
-	ActorManager:GetNodeActions(Int32) (at Assets/Scripts/Managers/ActorManager.cs:1141)
-	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:270)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	
-Dev seed 43871 -> Wednesday, 18 September 2019 11:45 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 12:31 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 2:45 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 3:15 PM
-WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 325, assets 331 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1508)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1449)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 43871 -> Wednesday, 18 September 2019 4:06 PM
-City seed 5678 -> London, United Kingdom

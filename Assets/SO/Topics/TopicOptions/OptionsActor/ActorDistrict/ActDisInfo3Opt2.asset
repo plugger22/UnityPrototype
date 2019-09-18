@@ -11,15 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo3Opt2
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Gain Info 3 option 2
-  text: 
+  descriptor: Actor District Gain Info 3 option 2
+  tag: Move Along
+  text: Nothing to see here, move along
   topic: {fileID: 11400000, guid: 8927ba41c6eadd245bea74c9831da3c7, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

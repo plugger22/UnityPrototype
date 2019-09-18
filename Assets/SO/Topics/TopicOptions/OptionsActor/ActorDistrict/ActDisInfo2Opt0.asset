@@ -11,14 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo2Opt0
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Gain Info 2 option 0
-  text: 
+  descriptor: Actor District Gain Info 2 option 0
+  tag: Squeeze
+  text: Have [actor] squeeze them like a lemon
   topic: {fileID: 11400000, guid: 643350ebac44ec144bba34053e4db32f, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

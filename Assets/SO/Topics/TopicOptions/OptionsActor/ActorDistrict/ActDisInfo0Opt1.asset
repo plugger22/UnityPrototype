@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Gain Info 0 option 1
+  descriptor: Actor District Gain Info 0 option 1
+  tag: Grease
+  text: Grease their palm with money
   topic: {fileID: 11400000, guid: c40d7c8a605416340bff3dd7c4e3bdb2, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Grease</color>
+  tooltipMain: <color=#98FB98> all Targets, Info +1</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Grease their palm with money</color>

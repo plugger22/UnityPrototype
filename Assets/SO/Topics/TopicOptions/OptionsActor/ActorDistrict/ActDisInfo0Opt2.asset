@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District Gain Info 0 option 2
+  descriptor: Actor District Gain Info 0 option 2
+  tag: Appeal
+  text: Appeal to their better nature
   topic: {fileID: 11400000, guid: c40d7c8a605416340bff3dd7c4e3bdb2, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

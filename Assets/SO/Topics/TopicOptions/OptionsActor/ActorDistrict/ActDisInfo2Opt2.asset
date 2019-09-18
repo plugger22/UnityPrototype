@@ -11,14 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo2Opt2
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Gain Info 2 option 2
-  text: 
+  descriptor: Actor District Gain Info 2 option 2
+  tag: Kick
+  text: Tell [actor] to kick them till they cry
   topic: {fileID: 11400000, guid: 643350ebac44ec144bba34053e4db32f, type: 2}
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

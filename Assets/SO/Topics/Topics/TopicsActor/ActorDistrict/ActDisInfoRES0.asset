@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisInfoRES0
   m_EditorClassIdentifier: 
   tag: Information Bonanza
-  text: Our source, [npc] of [node], for target ([target]) information claims to have
-    knowledge of a city wide vulnerability. [goodRES]
+  text: Our source, [npc], [job], of [node], for target intel ([target]) claims to
+    have knowledge of a city wide vulnerability. [goodRES]
   designNotes: positive Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -41,5 +41,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 16
   turnsDone: 0

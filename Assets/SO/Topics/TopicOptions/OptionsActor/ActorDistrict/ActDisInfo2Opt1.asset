@@ -11,15 +11,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo2Opt1
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Gain Info 2 option 1
-  text: 
+  descriptor: Actor District Gain Info 2 option 1
+  tag: Buy Beer
+  text: Buy them a beer, befriend them
   topic: {fileID: 11400000, guid: 643350ebac44ec144bba34053e4db32f, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

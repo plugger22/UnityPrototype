@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisInfo1Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District Gain Info 1 option 2
+  descriptor: Actor District Gain Info 1 option 2
+  tag: Walk
+  text: They can walk if they want
   topic: {fileID: 11400000, guid: 373df1657db79634a939126c09eb5bc6, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

@@ -20,7 +20,7 @@ MonoBehaviour:
   isTestForTextTags: 0
   randomList:
   - The Authority are spinning this one hard
-  - It's all over the news feeds
+  - It's all over the news feed
   - The Authority is blaming us
   - The Mayor is pointing his finger at us
   - We are on the hook and dangling
@@ -33,4 +33,4 @@ MonoBehaviour:
   - This story has legs. Watch out
   - HQ are concerned
   - HQ are asking questions
-  index: 8
+  index: 10

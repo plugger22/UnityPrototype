@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisInfoRES1
   m_EditorClassIdentifier: 
-  tag: Change of Mind
-  text: Our inside contact, [npc], at [node] has provided information on our target
-    ([target]) but they are having second thoughts. [badRES]
+  tag: Second Thoughts
+  text: Our inside source, [npc], [job], at [node] has provided useful intel on our
+    target ([target]) but they appear to be reconsidering
   designNotes: negative Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 2479c441600d7bc408d044ea0f3e9c0c, type: 2}
   - {fileID: 11400000, guid: ab224918085865846aedff7e50c325e4, type: 2}
@@ -39,7 +40,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 19
+  turnsDormant: 1
+  turnsActive: 1
+  turnsLive: 20
   turnsDone: 0
