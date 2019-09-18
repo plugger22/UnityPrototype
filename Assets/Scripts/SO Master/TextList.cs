@@ -32,9 +32,6 @@ public class TextList : ScriptableObject
 
     public void OnEnable()
     {
-        //constructor
-        isTestForDuplicates = false;
-        isTestForTextTags = true;
         //asserts
         Debug.AssertFormat(category != null, "Invalid category (Null) for {0}", name);
         Debug.AssertFormat(randomList != null && randomList.Count > 0, "Invalid randomList (Null or Empty) for {0}", name);

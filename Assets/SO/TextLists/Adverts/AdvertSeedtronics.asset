@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Adds for Seedtronic corporation specialising in food products
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Seedtronics insist that our burgers use only fresh, pure organic, maggots
   - Seedtronics, the leader in protein enriched, maggot based food products
@@ -23,6 +25,4 @@ MonoBehaviour:
   - You won't find a better Maggot burger on the planet. Seedtronics, protein for
     the people
   - Find a better Maggot burger if you can. Seedtronics, providing food for the future
-  isTestForDuplicates: 0
-  isTestForTextTags: 0
-  index: 1
+  index: 2

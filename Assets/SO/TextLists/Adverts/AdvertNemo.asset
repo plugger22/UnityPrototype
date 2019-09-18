@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Adds for nemo corporation specialising in travel getaways
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Take a Nemo Ocean Cruise. Piped and filtered, clean air, guaranteed!
   - Nemo Resorts, Piped and Filtered Air and Water that you can rely on
@@ -40,6 +42,4 @@ MonoBehaviour:
   - You whack 'em, we'll stuff 'em on a Nemo Budget Prisoner Hunt Safari
   - We make sure they don't run too far. Nemo Budget Prisoner Hunt Safaris
   - We'll take care of the mess on a Nemo Budget Prisoner Hunt Safari
-  isTestForDuplicates: 0
-  isTestForTextTags: 0
-  index: 15
+  index: 9

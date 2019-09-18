@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Start A Riot 0 option 2
   tag: HQ
-  text: Acknowledge HQ's help
+  text: Acknowledge HQ's assistance
   topic: {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
   listOfCriteria: []
   listOfGoodEffects:
@@ -22,7 +22,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: The boiling, roiling, riot that orginated in [node] and quickly spread to
-    adjoining districts [daysAgo] doesn't appear to have a cause or leaders
+    adjoining districts [daysAgo] doesn't appear to have a cause or a leader
   tooltipHeader: <color=#FFFFE0>HQ</color>
   tooltipMain: <color=#98FB98> HQ Approval +1</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

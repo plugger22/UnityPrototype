@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Roadblocks
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - It's gridlock today at [node] as roadblocks have shut down all major ateries into
     and out of the district
@@ -34,5 +36,4 @@ MonoBehaviour:
     [job] of [node] to your reporter
   - Ride sharing has been shutdown for [node] until further notice as roadblocks continue
     to cause traffic chaos
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 8

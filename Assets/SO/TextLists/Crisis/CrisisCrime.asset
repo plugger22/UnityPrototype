@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Crime
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - '[mayor] today defended the cities response to the out of control crime wave in
     [node]'
@@ -34,4 +36,4 @@ MonoBehaviour:
     Is [mayor] missing in action?
   - Why has crime spiked in [node]? [mayor] struggled to answer the question at a
     news conference this morning
-  isTestForDuplicates: 0
+  index: 8

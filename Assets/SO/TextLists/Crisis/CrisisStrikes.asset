@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Strikes
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - Strikes at [node] continue as tensions reach flashpoint. [mayor] insists that
     it has to stop
@@ -34,5 +36,4 @@ MonoBehaviour:
     something, asks [npc]. Strikes continue at [node]
   - Why do I have to work for a robot? Aren't they supposed to be working for us,
     asks [npc], a striker, at [node]?
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 4

@@ -4582,7 +4582,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// creates false Resistance node action data for testing purposes, after AutoRun, based on current actor line up (so more accurate that AI data). NumOfRecords is how many records per actor will be generated
     /// </summary>
-    public void DebugCreateNodeActionResistanceData(int numOfActionsPerActor = 3)
+    public void DebugCreateNodeActionResistanceData(int numOfActionsPerActor = 4)
     {
         int turn;
         //loop OnMap actors

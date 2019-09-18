@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 943d16d8fa1bb674ab44531133ea78b7, type: 2}
   - {fileID: 11400000, guid: bfc3f351bc3d2b449b4c40dcdb46826b, type: 2}
   - {fileID: 11400000, guid: 74960dcfcdd885b4892b268925cad80f, type: 2}
+  - {fileID: 11400000, guid: cc00a3de8e625da47828df89ceee4e6f, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

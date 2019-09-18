@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Adds for Rekall memory implants a-la-Total-Recall
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Don't like your wife? We'll give you a better one. Rekall, memories that last
     forever
@@ -40,6 +42,4 @@ MonoBehaviour:
     last forever
   - Acid rain getting you down? It hasn't ever rained on Mars. Leave your umbrella
     at home. Rekall, memories that last forever
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
-  index: 12
+  index: 1

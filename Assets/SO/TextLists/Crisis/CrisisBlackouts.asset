@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Blackouts
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - Blackouts, explains [mayor] are the curse of modern society. They don't belong
     at [node] and we're going to fix that
@@ -34,5 +36,4 @@ MonoBehaviour:
     [job] of [node]? Why are only we having blackouts?
   - Is the power going to come back on here at [node] or am I going to have to ship
     off-planet, questions [npc], [job] of [node]?
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 8

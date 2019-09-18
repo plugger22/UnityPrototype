@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> ViralMedia
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - Social media accounts in [node] are constantly being attacked and defaced by anti-Authority
     Viral worms
@@ -34,5 +36,4 @@ MonoBehaviour:
     eliminated. There is no place for non-authorised content
   - The Net is ours, declares [mayor]. We own it and control it. Viral media outbursts
     from [node] will not be tolerated
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 7

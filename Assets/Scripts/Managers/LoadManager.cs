@@ -95,12 +95,29 @@ public class LoadManager : MonoBehaviour
     public TopicType[] arrayOfTopicTypes;
     public TopicSubType[] arrayOfTopicSubTypes;
     public TopicSubSubType[] arrayOfTopicSubSubTypes;
-    public TopicOption[] arrayOfTopicOptions;
     public TopicProfile[] arrayOfTopicProfiles;
     public TopicPool[] arrayOfTopicPools;
     public TopicScope[] arrayOfTopicScopes;
     public TopicGroupType[] arrayOfTopicGroupTypes;
     public Topic[] arrayOfTopics;
+
+    [Header("Topic Options")]
+    public TopicOption[] arrayOfOptionsActorContact;
+    public TopicOption[] arrayOfOptionsActorDistrict;
+    public TopicOption[] arrayOfOptionsActorMatch;
+    public TopicOption[] arrayOfOptionsActorGear;
+    public TopicOption[] arrayOfOptionsActorPolitics;
+    public TopicOption[] arrayOfOptionsAuthorityCampaign;
+    public TopicOption[] arrayOfOptionsAuthorityGeneral;
+    public TopicOption[] arrayOfOptionsAuthorityTeams;
+    public TopicOption[] arrayOfOptionsCampaign;
+    public TopicOption[] arrayOfOptionsCity;
+    public TopicOption[] arrayOfOptionsFamily;
+    public TopicOption[] arrayOfOptionsHQ;
+    public TopicOption[] arrayOfOptionsPlayerDistrict;
+    public TopicOption[] arrayOfOptionsPlayerGeneral;
+    public TopicOption[] arrayOfOptionsResistanceCampaign;
+    public TopicOption[] arrayOfOptionsResistanceGeneral;
 
     [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
@@ -135,8 +152,9 @@ public class LoadManager : MonoBehaviour
     public Campaign[] arrayOfCampaigns;
 
     [HideInInspector] public Effect[] arrayOfEffects;       //used to consolidate all Effect arrays into this one
-    [HideInInspector] public TextList[] arrayOfTextLists;   //used to consolidate all TextLists arrays
-    [HideInInspector] public Target[] arrayOfTargets;       //used to consolidate all Targets arrays
+    [HideInInspector] public TextList[] arrayOfTextLists;           //used to consolidate all TextLists arrays
+    [HideInInspector] public Target[] arrayOfTargets;               //used to consolidate all Targets arrays
+    [HideInInspector] public TopicOption[] arrayOfTopicOptions;     //used to consolidate all topicOption arrays
     #endregion
 
     #region InitialiseStart
@@ -1323,6 +1341,27 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
+        //
+        // - - - Topic Options (consolidate arrays)
+        //
+        List<TopicOption> listOfOptions = new List<TopicOption>();
+        listOfOptions.AddRange(arrayOfOptionsActorContact);
+        listOfOptions.AddRange(arrayOfOptionsActorDistrict);
+        listOfOptions.AddRange(arrayOfOptionsActorMatch);
+        listOfOptions.AddRange(arrayOfOptionsActorGear);
+        listOfOptions.AddRange(arrayOfOptionsActorPolitics);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityCampaign);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityGeneral);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityTeams);
+        listOfOptions.AddRange(arrayOfOptionsCampaign);
+        listOfOptions.AddRange(arrayOfOptionsCity);
+        listOfOptions.AddRange(arrayOfOptionsFamily);
+        listOfOptions.AddRange(arrayOfOptionsHQ);
+        listOfOptions.AddRange(arrayOfOptionsPlayerDistrict);
+        listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);
+        listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
+        listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
+        arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - Topic Options - - -
         //

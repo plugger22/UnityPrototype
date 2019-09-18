@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Adds for Companions for life sexbots
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Our models don't talk unless you tell them too. Companions for life, automation
     made real
@@ -35,6 +37,4 @@ MonoBehaviour:
     partner? Companions for life, automation made real
   - Forget the expense and drama of a human partner, we'll make you happy. Companions
     for life, automation made real
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
   index: 1

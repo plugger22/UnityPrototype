@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Vandalism
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - The whole district has been trashed, completey trashed, laments [npc], [job] of
     [node]
@@ -33,5 +35,4 @@ MonoBehaviour:
     has declined to comment'
   - Who is going to clean up all the mess, asks [npc], [job] of [node], stepping over
     the result of uncontrolled vandalism?
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 5

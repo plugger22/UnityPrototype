@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActDisRiot0Opt3
+  m_EditorClassIdentifier: 
+  descriptor: Actor District Start A Riot 0 option 3
+  tag: Order
+  text: Order [actor] to cooperate with PR
+  topic: {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 0}
+  news: '[mayor] urged citizens to ignore Resistance propaganda, currrently circulating,
+    that highlights the glamour of a career working for the Cause '
+  tooltipHeader: <color=#FFFFE0>Order</color>
+  tooltipMain: "<color=#98FB98>Player Renown +1</color>\r\n<color=#98FB98> HQ Approval
+    +1</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Order HEAVY to cooperate with HQ PR</color>

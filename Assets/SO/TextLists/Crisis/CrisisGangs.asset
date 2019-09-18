@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Gangs
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - Gang violence boiled over into the streets of [node] today, forcing residents
     into a prolonged lockdown as Police attempted to restore order
@@ -34,5 +36,4 @@ MonoBehaviour:
     totally out of control here. It's a disgrace
   - Do I have to put the fires here at [node] out by myself, [npc], [job], demanded
     today? [mayor] says they are on it
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 2

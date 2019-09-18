@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Vigilantes
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - '[mayor] today denounced the Vigilante activity at [node] as illegal and unnecessary'
   - Vigilantes are not wanted here in [city] says [mayor]. They are a blight on our
@@ -33,4 +35,4 @@ MonoBehaviour:
     than the police, says [npc], [job]
   - I'd vote for the Vigilantes here at [node] any day. [mayor] isn't helping us at
     all, says [npc], [job]
-  isTestForDuplicates: 0
+  index: 5

@@ -14,6 +14,8 @@ MonoBehaviour:
   descriptor: Adds for BoarSun pharmaceutical company - life expectancy / performance
     / health
   category: {fileID: 11400000, guid: c8fc3b650132cb646b80a21d2eded36c, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Wrinkles, age spots, hair loss? Let somebody else deal with it. Boarsun Pharmaceuticals,
     giving you a better life
@@ -35,6 +37,4 @@ MonoBehaviour:
     Boarsun Pharmaceuticals, giving you a better life
   - We'll give you brain cells that you never knew you had. Premium ThinkRite. Take
     one today. Boarsun Pharmaceuticals, giving you a better life
-  isTestForDuplicates: 0
-  isTestForTextTags: 0
-  index: 0
+  index: 7

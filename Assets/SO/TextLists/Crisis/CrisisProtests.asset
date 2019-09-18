@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Protests
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - '[mayor], at a recent press conference, was unable to explain the reason for the
     outbreak of silent, sit-down, protests at [node]'
@@ -34,5 +36,4 @@ MonoBehaviour:
     sh*t, it's disturbing. I'm disturbed
   - Am I going to join them? No way, I like to talk too much, laughs [npc], [job],
     talking about the silent, sit-down, protests at [node]
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 3

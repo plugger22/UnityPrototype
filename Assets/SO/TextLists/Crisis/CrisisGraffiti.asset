@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: "Node Crisis news items -> Graffiti\t"
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - '[mayor] today warned those who are spreading anti-Authority graffiti throughout
     [node]. It''s a crime, says the mayor'
@@ -34,5 +36,4 @@ MonoBehaviour:
     out, insists [npc], [job] of [node]
   - Nobody likes being made fun of, especially The Authority, says [npc], [job] as
     they walk past some of the [node] graffiti
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 1

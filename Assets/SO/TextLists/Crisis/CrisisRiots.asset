@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Node Crisis news items -> Riots
   category: {fileID: 11400000, guid: 152af5ed149af164ebf94c55d5e1a273, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 1
   randomList:
   - It isn't safe to take my dog for a walk, what with all these damn riots, complains
     [npc], [job] of [node]
@@ -34,5 +36,4 @@ MonoBehaviour:
     have to personally call Batman, asks [npc] of [node]
   - How am I supposed to get to work if the streets are full of rioting mobs, questions
     [npc] of [node]? I'm a Buddhist
-  isTestForDuplicates: 0
-  isTestForTextTags: 1
+  index: 2
