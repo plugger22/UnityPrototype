@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisInfoRES2
   m_EditorClassIdentifier: 
-  tag: 
-  text: Our
+  tag: Nervous Source
+  text: '[npc] of [node], is the [actors] source who is providing information on the
+    target ([target]). They are nervous and we may be able to squeeze them for more.
+    [goodRES]'
   designNotes: positive Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}

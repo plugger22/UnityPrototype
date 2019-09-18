@@ -206,6 +206,7 @@ public class EffectManager : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
+    #region CheckCriteria
     /// <summary>
     /// checks whether effect criteria is valid. Returns "Null" if O.K and a tooltip explanation string if not. Player side only.
     /// Can be used independently of Effects provided you have a listOfCriteria
@@ -1068,6 +1069,7 @@ public class EffectManager : MonoBehaviour
         { return result.ToString(); }
         else { return null; }
     }
+    #endregion
 
     /// <summary>
     /// subMethod to handle stringbuilder admin for CheckEffectCriteria()
@@ -3198,6 +3200,10 @@ public class EffectManager : MonoBehaviour
                         //HQ (Faction)
                         effectResolve = ResolveTopicHQEffect(effect, dataInput, data);
                         break;
+                    case 'T':
+                        //Target
+                        effectResolve = ResolveTopicTargetEffect(effect, dataInput, data);
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
                 /*//colour  EDIT -> Do in subMethods
@@ -3459,6 +3465,46 @@ public class EffectManager : MonoBehaviour
                     case "Subtract":
                         GameManager.instance.factionScript.ChangeFactionApproval(-1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic Target effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// NOTE: parent method has checked all parameters for null
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicTargetEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "TargetInfo":
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        //all live targets gain effect.value target info
+                        if (GameManager.instance.targetScript.ChangeTargetInfoAll(effect.value) == true)
+                        { effectResolve.bottomText = string.Format("{0}All Target Info +1{1}", colourGood, colourEnd); }
+                        break;
+                    case "Subtract":
+                        //all live targets lose effect.value target info
+                        if (GameManager.instance.targetScript.ChangeTargetInfoAll(effect.value, false) == true)
+                        { effectResolve.bottomText = string.Format("{0}All Target Info -1{1}", colourBad, colourEnd); }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }

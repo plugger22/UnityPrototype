@@ -151,10 +151,12 @@ public class LoadManager : MonoBehaviour
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
 
-    [HideInInspector] public Effect[] arrayOfEffects;       //used to consolidate all Effect arrays into this one
-    [HideInInspector] public TextList[] arrayOfTextLists;           //used to consolidate all TextLists arrays
-    [HideInInspector] public Target[] arrayOfTargets;               //used to consolidate all Targets arrays
-    [HideInInspector] public TopicOption[] arrayOfTopicOptions;     //used to consolidate all topicOption arrays
+    //Consolidated arrays
+    //NOTE: consolidation needs to happen in InitialiseEarly for sequencing reasons
+    [HideInInspector] public Effect[] arrayOfEffects;       
+    [HideInInspector] public TextList[] arrayOfTextLists;           
+    [HideInInspector] public Target[] arrayOfTargets;               
+    [HideInInspector] public TopicOption[] arrayOfTopicOptions;     
     #endregion
 
     #region InitialiseStart
@@ -231,6 +233,27 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Beliefs count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfBeliefs (Null)"); }
+        //
+        // - - - Topic Options (consolidate arrays)
+        //
+        List<TopicOption> listOfOptions = new List<TopicOption>();
+        listOfOptions.AddRange(arrayOfOptionsActorContact);
+        listOfOptions.AddRange(arrayOfOptionsActorDistrict);
+        listOfOptions.AddRange(arrayOfOptionsActorMatch);
+        listOfOptions.AddRange(arrayOfOptionsActorGear);
+        listOfOptions.AddRange(arrayOfOptionsActorPolitics);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityCampaign);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityGeneral);
+        listOfOptions.AddRange(arrayOfOptionsAuthorityTeams);
+        listOfOptions.AddRange(arrayOfOptionsCampaign);
+        listOfOptions.AddRange(arrayOfOptionsCity);
+        listOfOptions.AddRange(arrayOfOptionsFamily);
+        listOfOptions.AddRange(arrayOfOptionsHQ);
+        listOfOptions.AddRange(arrayOfOptionsPlayerDistrict);
+        listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);
+        listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
+        listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
+        arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - GlobalMeta (not stored in a collection)
         //
@@ -1341,27 +1364,6 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
-        //
-        // - - - Topic Options (consolidate arrays)
-        //
-        List<TopicOption> listOfOptions = new List<TopicOption>();
-        listOfOptions.AddRange(arrayOfOptionsActorContact);
-        listOfOptions.AddRange(arrayOfOptionsActorDistrict);
-        listOfOptions.AddRange(arrayOfOptionsActorMatch);
-        listOfOptions.AddRange(arrayOfOptionsActorGear);
-        listOfOptions.AddRange(arrayOfOptionsActorPolitics);
-        listOfOptions.AddRange(arrayOfOptionsAuthorityCampaign);
-        listOfOptions.AddRange(arrayOfOptionsAuthorityGeneral);
-        listOfOptions.AddRange(arrayOfOptionsAuthorityTeams);
-        listOfOptions.AddRange(arrayOfOptionsCampaign);
-        listOfOptions.AddRange(arrayOfOptionsCity);
-        listOfOptions.AddRange(arrayOfOptionsFamily);
-        listOfOptions.AddRange(arrayOfOptionsHQ);
-        listOfOptions.AddRange(arrayOfOptionsPlayerDistrict);
-        listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);
-        listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
-        listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
-        arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - Topic Options - - -
         //

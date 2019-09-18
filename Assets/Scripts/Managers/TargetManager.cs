@@ -1976,5 +1976,42 @@ public class TargetManager : MonoBehaviour
     private int GetTargetInfoGain(int distance)
     { return Mathf.Max(1, 3 - distance); }
 
+
+    /// <summary>
+    /// Target info for all live targets +amount (if isGain = true), or -amount (if isGain false)
+    /// </summary>
+    /// <param name="isGain"></param>
+    /// <returns></returns>
+    public bool ChangeTargetInfoAll(int amount, bool isGain = true)
+    {
+        bool isSuccess = true;
+        int intel, before;
+        List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+        if (listOfLiveTargets != null)
+        {
+            for (int i = 0; i < listOfLiveTargets.Count; i++)
+            {
+                Target target = listOfLiveTargets[i];
+                if (target != null)
+                {
+                    intel = target.intel;
+                    before = target.intel;
+                    intel = isGain == true ? intel + amount : intel - amount;
+                    intel = Mathf.Clamp(intel, 0, maxTargetInfo);
+                    target.intel = intel;
+                    Debug.LogFormat("[Tar] TargetManager.cs -> ChangeTargetInfoAll: target {0}, at ID {1}, intel now {2} (was {3}){4}", target.targetName, target.nodeID, intel, before, "\n");
+                }
+                else { Debug.LogWarningFormat("Invalide target (Null) for listOfLiveTargets[{i}]", i); }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid listOfLiveTargets (Null)");
+            isSuccess = false;
+        }
+        return isSuccess;
+    }
+
+
     //place methods above here
 }
