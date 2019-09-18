@@ -20,7 +20,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: aee4f3459a2576d41b9137084578fcac, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: '[node] media outlets are awash with Resistance propaganda that appears to
     be gaining traction'

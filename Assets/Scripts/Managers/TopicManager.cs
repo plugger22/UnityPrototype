@@ -142,6 +142,7 @@ public class TopicManager : MonoBehaviour
     private string tagLocation;
     private string tagGear;
     private string tagRecruit;
+    private string tagTarget;
     private string tagStringData;        //General purpose
 
     //collections (local)
@@ -1103,6 +1104,7 @@ public class TopicManager : MonoBehaviour
         tagLocation = "";
         tagGear = "";
         tagRecruit = "";
+        tagTarget = "";
         tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
@@ -1645,6 +1647,7 @@ public class TopicManager : MonoBehaviour
                 tagLocation = data.dataName;
                 tagGear = data.dataName;
                 tagRecruit = data.dataName;
+                tagTarget = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -3899,6 +3902,15 @@ public class TopicManager : MonoBehaviour
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                        }
+                        break;
+                    case "target":
+                        //target name
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagTarget, colourEnd); }
+                            else { replaceText = tagTarget; }
                         }
                         break;
                     default:

@@ -9,11 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActDisInfoRES0
+  m_Name: ActDisInfoRES2
   m_EditorClassIdentifier: 
-  tag: Information Bonanza
-  text: Our source, [npc] of [node[, for target ([target]) information claims to have
-    knowledge of a city wide vulnerability. [goodRES]
+  tag: 
+  text: Our
   designNotes: positive Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -28,14 +27,14 @@ MonoBehaviour:
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 4a3a3002182bc424186f7f69d6568ba8, type: 2}
-  - {fileID: 11400000, guid: 307aaedbb826a3443be9d65dfba624f6, type: 2}
-  - {fileID: 11400000, guid: a1df1f21f90513c48987a4d43610574e, type: 2}
+  - {fileID: 11400000, guid: c885526d9df29b44dba475a65a1dcec2, type: 2}
+  - {fileID: 11400000, guid: 18084a7ac2ea85948b58a3eb3d24c028, type: 2}
+  - {fileID: 11400000, guid: db8a077cc0d04914d944dd66636963cd, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   status: 2
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0

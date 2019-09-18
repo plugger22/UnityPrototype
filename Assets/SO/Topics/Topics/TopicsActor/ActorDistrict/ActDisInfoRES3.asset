@@ -9,17 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActDisInfoRES0
+  m_Name: ActDisInfoRES3
   m_EditorClassIdentifier: 
-  tag: Information Bonanza
-  text: Our source, [npc] of [node[, for target ([target]) information claims to have
-    knowledge of a city wide vulnerability. [goodRES]
-  designNotes: positive Planner event
+  tag: 
+  text: 'Our '
+  designNotes: negative Planner event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 6c8995f486569b340ad24ff901003b26, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
@@ -28,14 +27,14 @@ MonoBehaviour:
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 4a3a3002182bc424186f7f69d6568ba8, type: 2}
-  - {fileID: 11400000, guid: 307aaedbb826a3443be9d65dfba624f6, type: 2}
-  - {fileID: 11400000, guid: a1df1f21f90513c48987a4d43610574e, type: 2}
+  - {fileID: 11400000, guid: 0dbe7cd64e090b0418d1fb2637728ea9, type: 2}
+  - {fileID: 11400000, guid: 38152c16403c9294f9b4a7d1316f1761, type: 2}
+  - {fileID: 11400000, guid: 1ca01e88b328a3140bf6b07c523f1850, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   status: 2
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
