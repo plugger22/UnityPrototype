@@ -23,9 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: An unknown citizen was found badly beaten, lying in the gutter, at [node].
+    The victim has refused to make a statement to Police
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5> PLANNER Low Motivation (need 2+)</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Tell PLANNER to kick them till they cry</color>

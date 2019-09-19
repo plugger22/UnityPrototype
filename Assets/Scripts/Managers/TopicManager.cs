@@ -3852,7 +3852,7 @@ public class TopicManager : MonoBehaviour
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
                         if (isValidate == false)
-                        { replaceText = textListBadResistance.GetRandomRecord();  }
+                        { replaceText = textListBadResistance.GetRandomRecord(); }
                         break;
                     case "goodRES":
                         //end of topic text for a good outcome (Resistance)
@@ -3864,7 +3864,12 @@ public class TopicManager : MonoBehaviour
                         {
                             if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                            replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                            if (isColourHighlighting == true)
+                            {
+                                replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                                replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, replaceText, colourEnd);
+                            }
+                            else { replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord(); }
                         }
                         break;
                     case "npcIs":
@@ -3916,7 +3921,7 @@ public class TopicManager : MonoBehaviour
                     default:
                         if (isValidate == false)
                         { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
-                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName);}
+                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName); }
                         break;
                 }
                 //catch all

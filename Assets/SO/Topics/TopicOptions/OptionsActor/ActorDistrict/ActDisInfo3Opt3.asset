@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActDisInfo3Opt3
+  m_EditorClassIdentifier: 
+  descriptor: Actor District Gain Info 3 option 3
+  tag: Failure
+  text: Failure is not acceptable, blame [actor]
+  topic: {fileID: 11400000, guid: 8927ba41c6eadd245bea74c9831da3c7, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 0}
+  news: A recently foiled Resistance surveillance operation at [node] has highlighted
+    the need for an enhanced fast response Police driod unit
+  tooltipHeader: <color=#FFFFE0>Failure</color>
+  tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>PLANNER
+    Motivation -1</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Failure is not acceptable, blame PLANNER</color>

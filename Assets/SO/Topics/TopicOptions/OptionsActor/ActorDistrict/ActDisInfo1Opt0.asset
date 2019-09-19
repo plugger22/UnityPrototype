@@ -23,9 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86acc44baf30dd74fab5e4e11012e8a8, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: A body was found floating face down in aquaFood facility at [node]. Police
+    have indicated that it's a murder scene and that enquires are ongoing
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5> PLANNER Low Motivation (need 2+)</color>
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Order PLANNER to feed them to the fish</color>

@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2479c441600d7bc408d044ea0f3e9c0c, type: 2}
   - {fileID: 11400000, guid: ab224918085865846aedff7e50c325e4, type: 2}
   - {fileID: 11400000, guid: def3d2f18d6b0da468fbf145aaa6b86c, type: 2}
+  - {fileID: 11400000, guid: dbace8492f8c0344eaa72592d5f3e66f, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -40,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 20
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 16
   turnsDone: 0

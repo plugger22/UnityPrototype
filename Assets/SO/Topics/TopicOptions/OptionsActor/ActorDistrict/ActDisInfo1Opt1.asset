@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Gain Info 1 option 1
   tag: Reason
-  text: Give them a reason to reconsider
+  text: Give them a reason to stay
   topic: {fileID: 11400000, guid: 373df1657db79634a939126c09eb5bc6, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
@@ -22,9 +22,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: There are, said [mayor], some misguided citizens in our fair city of [city].
+    It is the job of the Police to weed them out and ship them off to Area 9
+  tooltipHeader: <color=#FFFFE0>Reason</color>
+  tooltipMain: <color=#FF4500>Player Renown -2</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Give them a reason to stay</color>

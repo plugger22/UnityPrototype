@@ -22,9 +22,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: Citizens, do not be seduced by the false promises of the Resistance, says
+    [mayor]. Our Reeducation facility at Area 9 will rid you of your illusions
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5> PLANNER Low Motivation (need 2+)</color>
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Order PLANNER to threaten their source</color>

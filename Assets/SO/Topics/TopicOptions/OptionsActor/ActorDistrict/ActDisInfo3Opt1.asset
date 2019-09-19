@@ -22,9 +22,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: A Resistance surveillance operation was foiled at [node] when a concerned
+    citizen reported suspicious activity to the Police
+  tooltipHeader: <color=#FFFFE0>Learn</color>
+  tooltipMain: "<color=#FF4500>PLANNER Invisibility -1</color>\r\n<color=#FF4500>PLANNER
+    Renown +1</color>"
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Let PLANNER learn from their mistakes</color>
