@@ -4618,7 +4618,7 @@ public class ActorManager : MonoBehaviour
                             if (nodeAction != NodeAction.None)
                             {
                                 //test purposes only 
-                                if (nodeAction == NodeAction.ActorGainTargetInfo)
+                                if (nodeAction == NodeAction.ActorNeutraliseTeam)
                                 {
                                     //loop for every required nodeAction
                                     for (int j = 0; j < numOfActionsPerActor; j++)
