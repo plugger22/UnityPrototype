@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisNeutTRES2
   m_EditorClassIdentifier: 
   tag: Roughing Up Civilians
-  text: The [team] at [node] that your [actor] neutralised [daysAgo] was, apparently,
-    maltreating citizens. A district delegation has expressed their gratitude
+  text: '[team] at [node] that your [actor] neutralised [daysAgo] was, apparently,
+    maltreating citizens. A delegation has expressed their gratitude'
   designNotes: positive Operator event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -31,15 +31,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06d54e4e3e4fc8e4d96bc6eac58c928e, type: 2}
   - {fileID: 11400000, guid: e8299132dae1d464ca7af1006b2bf088, type: 2}
   - {fileID: 11400000, guid: b7f92319ad3046a4ea03aee4dbca95fe, type: 2}
+  - {fileID: 11400000, guid: 4d14c4b2b3a07c148a98d00ed6774edf, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 1
+  timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
+  turnsDormant: 0
   turnsActive: 0
-  turnsLive: 21
+  turnsLive: 17
   turnsDone: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
+  - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 

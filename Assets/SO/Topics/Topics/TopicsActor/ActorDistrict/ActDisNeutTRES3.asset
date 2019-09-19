@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisNeutTRES3
   m_EditorClassIdentifier: 
   tag: Brutalised Enemy
-  text: One of the members of the [team] that was neutralised by your [actor] at [node],
+  text: One of the members of [team] that was neutralised by your [actor] at [node],
     [daysAgo], was, apparently, tortured. [badRES]
   designNotes: negative Operator event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 971b65017a7e3144eb4f7dfdee0f5d7e, type: 2}
   - {fileID: 11400000, guid: 171faf4171afd17448c5f126d005a347, type: 2}
   - {fileID: 11400000, guid: 7b850e50fe19f7e4c83a1b66d83bfb96, type: 2}
+  - {fileID: 11400000, guid: bfbfb3ad21d1a024887079745c99378f, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -40,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 20
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 17
   turnsDone: 0

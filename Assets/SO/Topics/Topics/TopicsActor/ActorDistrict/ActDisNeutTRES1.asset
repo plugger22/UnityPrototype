@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisNeutTRES1
   m_EditorClassIdentifier: 
   tag: Injured Bystander
-  text: Your [actor] reports collateral damage while neutralising a [team] at [node].
+  text: Your [actor] reports collateral damage while neutralising [team] at [node].
     A bystander, [npc], [npcIs], was badly injured
   designNotes: negative Operator event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e74e3ddc739f0464a89a8ded3bd39336, type: 2}
   - {fileID: 11400000, guid: f9cbe86d025454a4f92b7b16f393c0c6, type: 2}
   - {fileID: 11400000, guid: 4df50fed4f586b640987bc66d08af367, type: 2}
+  - {fileID: 11400000, guid: 42fa1978e6cc0fe4c9d93a777bdcb57e, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -40,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 20
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 17
   turnsDone: 0

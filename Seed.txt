@@ -605,3 +605,23 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 45530 -> Thursday, 19 September 2019 4:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45530 -> Thursday, 19 September 2019 4:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45530 -> Thursday, 19 September 2019 4:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45530 -> Thursday, 19 September 2019 5:05 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 340, assets 344 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1508)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1449)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 45530 -> Thursday, 19 September 2019 5:15 PM
+City seed 5678 -> London, United Kingdom
