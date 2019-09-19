@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Neutralise Team 0 option 0
+  descriptor: Actor District Neutralise Team 0 option 0
+  tag: Dispatches
+  text: Well done! Mention [actor] in dispatches
   topic: {fileID: 11400000, guid: 309e9c9f6c35ee34ab2a21d54dcb6b00, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

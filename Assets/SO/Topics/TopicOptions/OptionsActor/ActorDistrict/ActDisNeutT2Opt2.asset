@@ -11,15 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT2Opt2
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Neutralise Team 2 option 2
-  text: 
+  descriptor: Actor District Neutralise Team 2 option 2
+  tag: Take Credit
+  text: Take the credit but don't tell [actor]
   topic: {fileID: 11400000, guid: 1e75447d8dad9634895d3ef672528434, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

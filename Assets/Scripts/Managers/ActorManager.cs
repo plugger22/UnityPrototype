@@ -4664,7 +4664,7 @@ public class ActorManager : MonoBehaviour
                                                     break;
                                                 case "OPERATOR":
                                                     //get random team name
-                                                    data.dataName = GameManager.instance.dataScript.DebugGetRandomTeamArc();
+                                                    data.dataName = string.Format("{0} {1}", GameManager.instance.dataScript.DebugGetRandomTeamArc(), "Team Alpha");
                                                     break;
                                                 case "ANARCHIST":
                                                     //get random Location name

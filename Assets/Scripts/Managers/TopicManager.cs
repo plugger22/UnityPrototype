@@ -29,7 +29,7 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Number (less than) to roll for a Low probability option to Succeed")]
     [Range(0, 100)] public int chanceLow = 25;
     [Tooltip("If Motivation is neutral (2) then there is this % chance of the topic being good and the balance for it being bad")]
-    [Range(0, 100)] public int chanceNeutralGood = 75;
+    [Range(0, 100)] public int chanceNeutralGood = 70;
 
     [Header("Text Lists")]
     [Tooltip("List of locations (generic) that can be used in any district. Used for node Action / Topic immersion")]
@@ -135,13 +135,14 @@ public class TopicManager : MonoBehaviour
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
     private int tagNodeID;
-    private int tagTeamID;
+    private int tagTeamID;              //used for authority team actions
     private int tagContactID;
     private int tagTurn;
     private string tagJob;
     private string tagLocation;
     private string tagGear;
     private string tagRecruit;
+    private string tagTeam;                //used for resistance team actions
     private string tagTarget;
     private string tagStringData;        //General purpose
 
@@ -1105,6 +1106,7 @@ public class TopicManager : MonoBehaviour
         tagGear = "";
         tagRecruit = "";
         tagTarget = "";
+        tagTeam = "";
         tagStringData = "";
         //empty collections
         listOfTopicTypesTurn.Clear();
@@ -1648,6 +1650,7 @@ public class TopicManager : MonoBehaviour
                 tagGear = data.dataName;
                 tagRecruit = data.dataName;
                 tagTarget = data.dataName;
+                tagTeam = data.dataName;
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
         }
@@ -3798,8 +3801,16 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, tagRecruit, colourEnd); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagRecruit, colourEnd); }
                             else { replaceText = tagRecruit; }
+                        }
+                        break;
+                    case "team":
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagTeam, colourEnd); }
+                            else { replaceText = tagTeam; }
                         }
                         break;
                     case "job":
@@ -4055,7 +4066,7 @@ public class TopicManager : MonoBehaviour
                     if (motivation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
                     else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
 
-                    if (motivation < 2) { builder.AppendFormat("{0}1 or 0{1}, {2}Bad{3}", colourNeutral, colourEnd, colourBad, colourEnd); }
+                    if (motivation < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
                     else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
                     textDetails = builder.ToString();
                     break;

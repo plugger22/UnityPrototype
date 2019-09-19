@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor District Neutralise Team 0 option 2
+  descriptor: Actor District Neutralise Team 0 option 2
+  tag: Buy Lunch
+  text: Lunch is on me, great job!
   topic: {fileID: 11400000, guid: 309e9c9f6c35ee34ab2a21d54dcb6b00, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

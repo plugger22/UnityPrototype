@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Neutralise Team 0 option 1
+  descriptor: Actor District Neutralise Team 0 option 1
+  tag: Take Credit
+  text: Of course it's all due to you
   topic: {fileID: 11400000, guid: 309e9c9f6c35ee34ab2a21d54dcb6b00, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

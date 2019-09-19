@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT1Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Neutralise Team 1 option 0
+  descriptor: Actor District Neutralise Team 1 option 0
+  tag: Idiot
+  text: Your [actor] is an idiot
   topic: {fileID: 11400000, guid: 492bbcc59b3156e42b0a28230e9e5cdc, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c2585d871e8edd84ab51cfeacd4ec4b3, type: 2}
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 08794d7d6b82b4a4ab5d2ac3e897d392, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

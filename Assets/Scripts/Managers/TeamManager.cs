@@ -1484,7 +1484,7 @@ public class TeamManager : MonoBehaviour
                                         turn = GameManager.instance.turnScript.Turn,
                                         actorID = 999,
                                         nodeID = node.nodeID,
-                                        dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
+                                        dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
                                         nodeAction = NodeAction.PlayerNeutraliseTeam
                                     };
                                     //add to player's personal list

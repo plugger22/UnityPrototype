@@ -11,5 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT1Opt1
   m_EditorClassIdentifier: 
-  tag: Actor District Neutralise Team 1 option 1
+  descriptor: Actor District Neutralise Team 1 option 1
+  tag: Reparations
+  text: Pay reparations to bystander
   topic: {fileID: 11400000, guid: 492bbcc59b3156e42b0a28230e9e5cdc, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

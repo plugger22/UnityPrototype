@@ -11,18 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT3Opt1
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Neutralise Team 3 option 1
-  text: 
+  descriptor: Actor District Neutralise Team 3 option 1
+  tag: AutoTruck
+  text: It was an AutoTruck that ran over them
   topic: {fileID: 11400000, guid: 88420a1c76532ba428f56fc4213cae82, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Run Over</color>
+  tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Player
+    Renown -2</color>"
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73>An AutoTruck ran over them</color>

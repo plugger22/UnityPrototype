@@ -11,14 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisNeutT2Opt0
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Actor District Neutralise Team 2 option 0
-  text: 
+  descriptor: Actor District Neutralise Team 2 option 0
+  tag: Spread Word
+  text: Have HQ spread the word
   topic: {fileID: 11400000, guid: 1e75447d8dad9634895d3ef672528434, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
