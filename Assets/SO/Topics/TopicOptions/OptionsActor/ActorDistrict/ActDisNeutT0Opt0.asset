@@ -22,7 +22,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] confirmed that [team] was recalled early from [node] [daysAgo] due
+    to administrative matters'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

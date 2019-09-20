@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: Reports are emerging that the citizens of [node] took matters into their own
+    hands and tortured a member of [team], [daysAgo]. Can this be true?
   tooltipHeader: <color=#FFFFE0>Spread Rumour</color>
   tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
     Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> City

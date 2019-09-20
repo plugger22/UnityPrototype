@@ -21,7 +21,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: There is absolutey no truth in the allegation that [team] behaved in an inappropriate
+    manner at [node] when delpoyed there [daysAgo], insisted [mayor]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

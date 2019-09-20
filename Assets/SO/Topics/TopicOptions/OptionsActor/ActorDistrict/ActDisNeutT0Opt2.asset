@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The mayor's office issued a statement today confirming [team] was recalled
+    from [node] early due to a reallocation of resources
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

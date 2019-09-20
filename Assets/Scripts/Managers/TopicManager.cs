@@ -3857,9 +3857,7 @@ public class TopicManager : MonoBehaviour
                         {
                             int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                             turnsAgo = Mathf.Max(1, turnsAgo);
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2} day{3} ago", colourCheckText, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : ""); }
-                            else { replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : ""); }
+                            replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
                         }
                         break;
                     case "badRES":

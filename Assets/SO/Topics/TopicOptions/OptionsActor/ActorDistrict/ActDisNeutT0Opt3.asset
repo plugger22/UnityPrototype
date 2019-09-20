@@ -21,7 +21,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: Internal training was the reason given by [mayor] for [team] having been recalled
+    early from [node]. Your reporter is somewhat skeptical
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

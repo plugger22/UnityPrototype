@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: After another badly injured citizen at [node] was medevaced, [mayor] wondered
+    when would the Resistance stop their killing spree?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
