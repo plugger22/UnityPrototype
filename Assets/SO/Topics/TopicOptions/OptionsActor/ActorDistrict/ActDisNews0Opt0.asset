@@ -15,8 +15,7 @@ MonoBehaviour:
   tag: Push Hard
   text: Order [actor] to push hard
   topic: {fileID: 11400000, guid: 21980f426c1813a42bb3376d51a2b9fd, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: aee4f3459a2576d41b9137084578fcac, type: 2}
   listOfBadEffects: []

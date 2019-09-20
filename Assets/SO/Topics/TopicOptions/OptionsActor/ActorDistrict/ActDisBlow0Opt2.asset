@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District 0 Blow Stuff Up option 2
   tag: Cover Up
-  text: Cover it up. Kill them
+  text: Ask [actor] to cover it up and kill them
   topic: {fileID: 11400000, guid: 36879ac6ded8be84cbc7501931fc0f82, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}

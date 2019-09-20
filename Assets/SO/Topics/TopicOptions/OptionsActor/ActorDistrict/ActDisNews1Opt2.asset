@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District News 1 option 2
   tag: Double down
-  text: Order [actor] to double down on the news
+  text: Ask [actor] to double down on the news
   topic: {fileID: 11400000, guid: be20ff6bd3d0d1e4482608759ffd702a, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}

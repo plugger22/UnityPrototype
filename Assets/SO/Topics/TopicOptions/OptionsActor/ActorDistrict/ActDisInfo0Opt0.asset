@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Gain Info 0 option 0
   tag: Threaten
-  text: Order [actor] to threaten their source
+  text: Ask [actor] to threaten their source
   topic: {fileID: 11400000, guid: c40d7c8a605416340bff3dd7c4e3bdb2, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}

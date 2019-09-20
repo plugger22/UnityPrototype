@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Neutralise Team 2 option 1
   tag: Thank
-  text: Thank [actor]
+  text: Thank your [actor]
   topic: {fileID: 11400000, guid: 1e75447d8dad9634895d3ef672528434, type: 2}
   listOfCriteria: []
   listOfGoodEffects:

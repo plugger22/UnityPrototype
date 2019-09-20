@@ -16,7 +16,6 @@ MonoBehaviour:
   text: Order [actor] to feed them to the fish
   topic: {fileID: 11400000, guid: 373df1657db79634a939126c09eb5bc6, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   - {fileID: 11400000, guid: 1cc335ecd9c738f4ab5aef7fd5a9557c, type: 2}
   listOfGoodEffects: []
   listOfBadEffects:

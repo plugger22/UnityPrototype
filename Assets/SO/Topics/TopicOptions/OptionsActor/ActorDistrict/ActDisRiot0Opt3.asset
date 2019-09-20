@@ -13,10 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Start A Riot 0 option 3
   tag: Order
-  text: Order [actor] to cooperate with PR
+  text: Ask [actor] to cooperate with PR
   topic: {fileID: 11400000, guid: 36a73e13bb073d2449f92501d46690f4, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
