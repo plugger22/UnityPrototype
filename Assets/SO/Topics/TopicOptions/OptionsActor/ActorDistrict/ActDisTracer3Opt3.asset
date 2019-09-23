@@ -9,21 +9,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisTracer3Opt2
+  m_Name: ActDisTracer3Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District Insert Tracer 3 option 2
-  tag: Local
-  text: Handball it to the locals
+  descriptor: Actor District Insert Tracer 3 option 3
+  tag: Failed
+  text: I failed to give clear instructions
   topic: {fileID: 11400000, guid: 01b5dd5ffcf17014f894455bacb7737e, type: 2}
-  listOfCriteria: []
-  listOfGoodEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: 258cb3f65ba30fa4d845b39b1263eae1, type: 2}
-  - {fileID: 11400000, guid: dc7665ce7259594498d4b9b1f4f458fd, type: 2}
-  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: Citizens who, sadly, feel the need to cooperate with the Resistance, despite
-    all that we have done for them, face a life sentence, warns [mayor]
+  news: Covert spying on the fair citizens of [city] is a typical Resistance ploy
+    meant only to frighten and spread disharmony, warns [mayor]
   tooltipHeader: <color=#FFFFE0>Local</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
     Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> Lose

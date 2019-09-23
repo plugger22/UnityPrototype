@@ -9,21 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisTracer0Opt2
+  m_Name: ActDisTracer0Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District Insert Tracer 0 option 2
-  tag: Compliment
-  text: Compliment your [actor]
+  descriptor: Actor District Insert Tracer 0 option 3
+  tag: Corrupt?
+  text: Isn't everybody corrupt?
   topic: {fileID: 11400000, guid: af17271da3f18aa48834f554e8a00264, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
-  listOfBadEffects: []
-  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
-  chance: {fileID: 0}
-  news: Corruption isn't tolerated here in [city], insisted [mayor], despite persistent
-    rumours of money grubbing officials at [node]. Who can we believe?
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: e04c8e4eacb477443a084ec1ea71a8db, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: We can't prevent human nature but we can deal with it severely, says [mayor]
+    when asked about corruption among city officials
   tooltipHeader: <color=#FFFFE0>Compliment</color>
   tooltipMain: <color=#98FB98>OBSERVER gains STAR condition</color>
   tooltipDetails: <color=#FF4500>Player Mood -1</color>

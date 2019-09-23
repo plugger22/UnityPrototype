@@ -21,7 +21,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Recent InYourFace posts accuse an important city V.I.P, at [node], of making
+    a sport out of infidelity. Not in my city, says [mayor], no sir
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

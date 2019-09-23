@@ -9,22 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisTracer2Opt1
+  m_Name: ActDisTracer2Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor District Insert Tracer 2 option 1
-  tag: Praise
-  text: Well done [actor] !
+  descriptor: Actor District Insert Tracer 2 option 3
+  tag: Inform
+  text: Inform The Authority
   topic: {fileID: 11400000, guid: acac207d79f31a04680e09daf8de5066, type: 2}
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
-  listOfBadEffects:
-  - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
-  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: There is no place in [city] for poor morals or ethics declared [mayor]. Officials
-    are either an example for all or else they should immediately resign
+  news: '[mayor] acknowledged that an important city official, [npc], from [node]
+    was retired from service today due to family reasons'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

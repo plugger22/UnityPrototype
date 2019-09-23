@@ -22,7 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: All city officials are honest and scrupulously obey the law, insisted [mayor]
+    when asked about rumours of a bad apple at [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
