@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Insert Tracer 3 option 0
   tag: Go Back
-  text: Ask [actor] to go back in and fix it
+  text: Ask [actor] to go back in
   topic: {fileID: 11400000, guid: 01b5dd5ffcf17014f894455bacb7737e, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
@@ -23,8 +23,9 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Go Back</color>
+  tooltipMain: "<color=#FF4500>OBSERVER Motivation -1</color>\r\n<color=#FF4500>OBSERVER
+    Invisibility -1</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Ask OBSERVER to go back in and fix it</color>

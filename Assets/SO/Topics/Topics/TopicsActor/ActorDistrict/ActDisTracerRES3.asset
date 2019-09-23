@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Dead Tracer
   text: The Tracer your [actor] installed at [node] has stopped working. You'll have
-    to send somebody in to fix it. [badRES]
+    to send somebody in to fix it
   designNotes: negative Observer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -35,12 +35,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 19
   turnsDone: 0
