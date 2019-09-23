@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Name: ActDisBlow3Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District 3 Blow Stuff Up option 0
-  tag: 
-  text: 
+  tag: Incompetent
+  text: Your [actor] is an idiot
   topic: {fileID: 11400000, guid: cb25918a26d388149b94137f1b6e5b55, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c2585d871e8edd84ab51cfeacd4ec4b3, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 08794d7d6b82b4a4ab5d2ac3e897d392, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

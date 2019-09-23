@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Name: ActDisBlow2Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District 2 Blow Stuff Up option 1
-  tag: 
-  text: 
+  tag: Visit
+  text: Ask your [actor] to visit HQ
   topic: {fileID: 11400000, guid: 0d1d2c115fbeb28429216f8693832da2, type: 2}
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

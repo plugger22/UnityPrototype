@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Name: ActDisBlow2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District 2 Blow Stuff Up option 2
-  tag: 
-  text: 
+  tag: My fault
+  text: I shouldn't have given permissio
   topic: {fileID: 11400000, guid: 0d1d2c115fbeb28429216f8693832da2, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

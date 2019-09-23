@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: ActDisBlowRES2
   m_EditorClassIdentifier: 
   tag: 
-  text: unknown
+  text: Your [actor] averted a mass casualty event at [node] by minimising the explosive
+    force at the last minute. They saved a lot of lives.
   designNotes: Positive anarchist event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -40,5 +41,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 16
   turnsDone: 0

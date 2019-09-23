@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: ActDisBlowRES3
   m_EditorClassIdentifier: 
   tag: 
-  text: unknown
-  designNotes: negative anarchist
+  text: Your [actors] recent bombing attempt at [node] went wrong. Something went
+    amiss and there is now unexploded ordinance that could go off at any time
+  designNotes: negative Anarchist event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 864df12c142f7674b931ed4a6d687df4, type: 2}

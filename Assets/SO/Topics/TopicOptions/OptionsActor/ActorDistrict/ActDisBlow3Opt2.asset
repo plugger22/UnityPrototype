@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Name: ActDisBlow3Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District 3 Blow Stuff Up option 2
-  tag: 
-  text: 
+  tag: Safe
+  text: Don't tell anyone, it's probably safe
   topic: {fileID: 11400000, guid: cb25918a26d388149b94137f1b6e5b55, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown

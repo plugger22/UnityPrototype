@@ -12,14 +12,17 @@ MonoBehaviour:
   m_Name: ActDisBlow3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District 3 Blow Stuff Up option 1
-  tag: 
-  text: 
+  tag: Defuse
+  text: Ask [actor] to defuse it
   topic: {fileID: 11400000, guid: cb25918a26d388149b94137f1b6e5b55, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  - {fileID: 11400000, guid: ffefe4efa54188a4ab71e4f9c4acd45c, type: 2}
+  moodEffect: {fileID: 11400000, guid: ae1b6c67f8584794da25eb08294e77e9, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
