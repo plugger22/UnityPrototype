@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActDisRecruit2Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Actor District Recruit Actor 2 option 0
+  tag: 
+  text: 
+  topic: {fileID: 11400000, guid: becbaf2951e4f4c4eb4bf6a910b973c9, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Friends</color>
+  tooltipMain: <color=#98FB98>Player Renown +2</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Let them talk to their friends</color>

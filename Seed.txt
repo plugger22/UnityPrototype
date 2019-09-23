@@ -247,3 +247,14 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:487)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 25327 -> Monday, 23 September 2019 3:36 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:3945)
+	ValidationManager:ValidateTopics() (at Assets/Scripts/Managers/ValidationManager.cs:770)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:114)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:804)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	

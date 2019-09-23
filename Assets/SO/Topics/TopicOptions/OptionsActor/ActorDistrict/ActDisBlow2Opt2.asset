@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActDisBlow2Opt2
+  m_EditorClassIdentifier: 
+  descriptor: Actor District 2 Blow Stuff Up option 2
+  tag: 
+  text: 
+  topic: {fileID: 11400000, guid: 0d1d2c115fbeb28429216f8693832da2, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Pay their medical expenses</color>
