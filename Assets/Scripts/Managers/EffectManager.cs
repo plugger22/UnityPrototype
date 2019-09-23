@@ -3383,6 +3383,13 @@ public class EffectManager : MonoBehaviour
                                 default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                             }
                             break;
+                        case "Tracer":
+                            switch (effect.operand.name)
+                            {
+                                case "Subtract": node.RemoveTracer(); effectResolve.bottomText = string.Format("{0}Tracer Removed{1}", colourBad, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                            }
+                            break;
                         default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
                     }
                     break;

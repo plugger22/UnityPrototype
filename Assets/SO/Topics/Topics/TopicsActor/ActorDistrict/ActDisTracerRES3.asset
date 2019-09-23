@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActDisTracerRES1
+  m_Name: ActDisTracerRES3
   m_EditorClassIdentifier: 
-  tag: False Readings
-  text: The Tracer recently inserted at [node] by your [actor] is giving a lot of
-    false positives. It looks like the unit wasn't checked prior to deployment
+  tag: Dead Tracer
+  text: The Tracer your [actor] installed at [node] has stopped working. You'll have
+    to send somebody in to fix it. [badRES]
   designNotes: negative Observer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -27,11 +27,11 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects:
-  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: 90f19fec791a7694f89a5f3cfa3f873c, type: 2}
-  - {fileID: 11400000, guid: 9ec96200a4816a541b35f9a6de67ecfe, type: 2}
-  - {fileID: 11400000, guid: 4872994c27dbb714499847a4969ba2a6, type: 2}
+  - {fileID: 11400000, guid: 34fa4fac4c0a37643885842d246e2efa, type: 2}
+  - {fileID: 11400000, guid: c51cb8d765d0fe749ac00b0ed752a8de, type: 2}
+  - {fileID: 11400000, guid: fc0d828ac65af5c4a82099b4d2949363, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 18
   turnsDone: 0

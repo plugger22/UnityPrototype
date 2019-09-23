@@ -743,6 +743,7 @@ public class Node : MonoBehaviour
             isTracer = false;
             isTracerKnown = false;
             isTeamKnown = false;
+            tracerTimer = 0;
             /*sSpiderKnown = false;*/
             Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n");
             

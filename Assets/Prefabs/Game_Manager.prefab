@@ -1612,6 +1612,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
   - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
+  - {fileID: 11400000, guid: 258cb3f65ba30fa4d845b39b1263eae1, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -2006,6 +2007,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8927ba41c6eadd245bea74c9831da3c7, type: 2}
   - {fileID: 11400000, guid: 1e75447d8dad9634895d3ef672528434, type: 2}
   - {fileID: 11400000, guid: 88420a1c76532ba428f56fc4213cae82, type: 2}
+  - {fileID: 11400000, guid: acac207d79f31a04680e09daf8de5066, type: 2}
+  - {fileID: 11400000, guid: 01b5dd5ffcf17014f894455bacb7737e, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2115,6 +2118,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 90f19fec791a7694f89a5f3cfa3f873c, type: 2}
   - {fileID: 11400000, guid: 9ec96200a4816a541b35f9a6de67ecfe, type: 2}
   - {fileID: 11400000, guid: 4872994c27dbb714499847a4969ba2a6, type: 2}
+  - {fileID: 11400000, guid: 709bb633ed7cd89499bbedf10f18ebc8, type: 2}
+  - {fileID: 11400000, guid: 6cc0dc76f2456eb46a10649ab71b4002, type: 2}
+  - {fileID: 11400000, guid: 8c68f57f1a30015489b79f29f729866e, type: 2}
+  - {fileID: 11400000, guid: 34fa4fac4c0a37643885842d246e2efa, type: 2}
+  - {fileID: 11400000, guid: c51cb8d765d0fe749ac00b0ed752a8de, type: 2}
+  - {fileID: 11400000, guid: fc0d828ac65af5c4a82099b4d2949363, type: 2}
   arrayOfOptionsActorMatch:
   - {fileID: 11400000, guid: 459fe681e441ce347977fe63eaddc5cf, type: 2}
   - {fileID: 11400000, guid: e4deb31364653cd4585ad90ab3b1778d, type: 2}
@@ -3793,7 +3802,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 45530
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

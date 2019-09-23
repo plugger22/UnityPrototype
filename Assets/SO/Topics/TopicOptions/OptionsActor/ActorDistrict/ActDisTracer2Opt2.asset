@@ -9,18 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisTracer0Opt2
+  m_Name: ActDisTracer2Opt2
   m_EditorClassIdentifier: 
-  descriptor: Actor District Insert Tracer 0 option 2
-  tag: Compliment
-  text: Compliment your [actor]
-  topic: {fileID: 11400000, guid: af17271da3f18aa48834f554e8a00264, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  descriptor: Actor District Insert Tracer 2 option 2
+  tag: Reveal
+  text: Reveal all on InYourFace
+  topic: {fileID: 11400000, guid: acac207d79f31a04680e09daf8de5066, type: 2}
+  listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

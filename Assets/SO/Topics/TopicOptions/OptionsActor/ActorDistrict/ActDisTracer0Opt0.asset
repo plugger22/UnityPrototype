@@ -11,5 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActDisTracer0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor District Insert Tracer 0 option 0
+  descriptor: Actor District Insert Tracer 0 option 0
+  tag: Publicise
+  text: Splash pictures all over InYourFace
   topic: {fileID: 11400000, guid: af17271da3f18aa48834f554e8a00264, type: 2}
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 

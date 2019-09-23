@@ -9,18 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActDisTracer1Opt2
+  m_Name: ActDisTracer3Opt2
   m_EditorClassIdentifier: 
-  descriptor: Actor District Insert Tracer 1 option 2
-  tag: Shutdown
-  text: It's a hassle, order Tracer shutdown
-  topic: {fileID: 11400000, guid: 3fd57baee4aae1a4aa489b8c71844e7f, type: 2}
+  descriptor: Actor District Insert Tracer 3 option 2
+  tag: Local
+  text: Have a local supporter deal with it
+  topic: {fileID: 11400000, guid: 01b5dd5ffcf17014f894455bacb7737e, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 258cb3f65ba30fa4d845b39b1263eae1, type: 2}
-  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
-  chance: {fileID: 0}
+  - {fileID: 11400000, guid: dc7665ce7259594498d4b9b1f4f458fd, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

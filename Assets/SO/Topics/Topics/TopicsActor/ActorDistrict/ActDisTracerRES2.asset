@@ -9,29 +9,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: ActDisTracerRES1
+  m_Name: ActDisTracerRES2
   m_EditorClassIdentifier: 
-  tag: False Readings
-  text: The Tracer recently inserted at [node] by your [actor] is giving a lot of
-    false positives. It looks like the unit wasn't checked prior to deployment
-  designNotes: negative Observer event
+  tag: Unexpected Discovery
+  text: Analysis of traffic data from the Tracer your [actor] inserted at [node],
+    [daysAgo], reveals a V.I.P in a compromising relationship. [goodRES]
+  designNotes: positive Observer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 39204a073affb884a88039c73fd2ffca, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  listOfIgnoreEffects:
-  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 90f19fec791a7694f89a5f3cfa3f873c, type: 2}
-  - {fileID: 11400000, guid: 9ec96200a4816a541b35f9a6de67ecfe, type: 2}
-  - {fileID: 11400000, guid: 4872994c27dbb714499847a4969ba2a6, type: 2}
+  - {fileID: 11400000, guid: 709bb633ed7cd89499bbedf10f18ebc8, type: 2}
+  - {fileID: 11400000, guid: 6cc0dc76f2456eb46a10649ab71b4002, type: 2}
+  - {fileID: 11400000, guid: 8c68f57f1a30015489b79f29f729866e, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +41,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 18
   turnsDone: 0
