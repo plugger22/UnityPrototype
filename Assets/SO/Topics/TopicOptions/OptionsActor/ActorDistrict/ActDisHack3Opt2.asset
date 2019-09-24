@@ -15,6 +15,7 @@ MonoBehaviour:
   tag: HQ
   text: Inform HQ and wear the consequences
   topic: {fileID: 11400000, guid: e874461828b415a40bd5700fcedd068b, type: 2}
+  isPreferredByHQ: 1
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:

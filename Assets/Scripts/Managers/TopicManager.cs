@@ -2086,7 +2086,7 @@ public class TopicManager : MonoBehaviour
             Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
             if (actorHQ != null)
             {
-                int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ);
+                int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ);
                 if (opinionChange != 0)
                 {
                     int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
@@ -3562,7 +3562,12 @@ public class TopicManager : MonoBehaviour
                         if (option.moodEffect != null)
                         {
                             if (option.moodEffect.belief != null)
-                            { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
+                            {
+                                //if an HQ preferred option it is automatically 'Good', otherwise it's based on HQ Boss's personality
+                                if (option.isPreferredByHQ == false)
+                                { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
+                                else { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }
+                            }
                         }
                         else
                         {

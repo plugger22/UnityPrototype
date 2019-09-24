@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 3 option 2
   tag: Public Relations
-  text: Is this a PR opportunity?
+  text: Is this a Public Relations opportunity?
   topic: {fileID: 11400000, guid: ab699997467bed644997d764e5e205c7, type: 2}
+  isPreferredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
@@ -23,8 +24,10 @@ MonoBehaviour:
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 'What happens to old Resistance members, asks [mayor]? Do they have a place
     here at [city]? We process them into Rat food is what happens '
-  tooltipHeader: <color=#FFFFE0>Friends</color>
-  tooltipMain: <color=#98FB98>Player Renown +2</color>
-  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  tooltipHeader: <color=#FFFFE0>Public Relations</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>RECRUITER
+    Renown +3</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Let them talk to their friends</color>
+  textToDisplay: <color=#EEFB73>Is this a PR opportunity?</color>

@@ -20,6 +20,10 @@ public class TopicOption : ScriptableObject
     [Tooltip("Topic that the option is connected with")]
     public Topic topic;
 
+    [Header("HQ")]
+    [Tooltip("Select this if the option is preferred by HQ. Doing so will override the HQ Boss's personality preferences. Ignore otherwise")]
+    public bool isPreferredByHQ;
+
     [Header("Criteria")]
     [Tooltip("Option will show as Greyed text if criteria check fails. At least one option from each topic needs to have Zero criteria so an option is always available. Optional")]
     public List<Criteria> listOfCriteria;

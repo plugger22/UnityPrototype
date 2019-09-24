@@ -801,35 +801,43 @@ public class PersonalityManager : MonoBehaviour
     /// <param name="belief"></param>
     /// <param name="actorHQ"></param>
     /// <returns></returns>
-    public int UpdateHQOpinion(Belief belief, Actor actorHQ)
+    public int UpdateHQOpinion(Belief belief, Actor actorHQ, bool isHQPreferredOption)
     {
         int opinionChange = 0;
-        //get index of factor array
-        int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
-        if (index > -1)
+        if (isHQPreferredOption == false)
         {
-            //get value of player's corresponding factor
-            int hqValue = actorHQ.GetPersonality().GetFactorValue(index);
-            //if value is Zero then no effect
-            if (hqValue != 0)
+            //get index of factor array
+            int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
+            if (index > -1)
             {
-                switch (belief.type.name)
+                //get value of player's corresponding factor
+                int hqValue = actorHQ.GetPersonality().GetFactorValue(index);
+                //if value is Zero then no effect
+                if (hqValue != 0)
                 {
-                    case "Good":
-                        if (hqValue > 0) { opinionChange = 1; }
-                        else { opinionChange = -1; }
-                        break;
-                    case "Bad":
-                        if (hqValue < 0) { opinionChange = 1; }
-                        else { opinionChange = -1; }
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Unrecognised belief.type.name \"{0}\"", belief.type.name);
-                        break;
+                    switch (belief.type.name)
+                    {
+                        case "Good":
+                            if (hqValue > 0) { opinionChange = 1; }
+                            else { opinionChange = -1; }
+                            break;
+                        case "Bad":
+                            if (hqValue < 0) { opinionChange = 1; }
+                            else { opinionChange = -1; }
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised belief.type.name \"{0}\"", belief.type.name);
+                            break;
+                    }
                 }
             }
+            else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
         }
-        else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
+        else
+        {
+            //HQ Preferred option -> always good
+            opinionChange = 1;
+        }
         return opinionChange;
     }
 

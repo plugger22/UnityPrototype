@@ -15,6 +15,7 @@ MonoBehaviour:
   tag: HQ
   text: Inform HQ
   topic: {fileID: 11400000, guid: b37d09320dea69240aa649b5a4955d89, type: 2}
+  isPreferredByHQ: 1
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}

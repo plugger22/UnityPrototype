@@ -15,6 +15,7 @@ MonoBehaviour:
   tag: HQ
   text: See if HQ can use it
   topic: {fileID: 11400000, guid: af17271da3f18aa48834f554e8a00264, type: 2}
+  isPreferredByHQ: 1
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
