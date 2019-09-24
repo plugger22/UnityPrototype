@@ -3656,6 +3656,15 @@ public class TopicManager : MonoBehaviour
     {
         string colourCheckText = colourAlert; //highlight colour
         string checkedText = null;
+        //if validation run need dictionary of tags for analysis purposes
+        Dictionary<string, int> dictOfTags = null;
+        if (isValidate == true)
+        {
+            dictOfTags = GameManager.instance.dataScript.GetDictOfTags();
+            if (dictOfTags == null)
+            { Debug.LogError("Invalid dictOfTags (Null)"); }
+        }
+        //check string for tags
         if (string.IsNullOrEmpty(text) == false)
         {
             checkedText = text;
@@ -3682,6 +3691,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.instance.playerScript.PlayerName, colourEnd); }
                             else { replaceText = GameManager.instance.playerScript.PlayerName; }
                         }
+                        else { CountTextTag("player", dictOfTags); }
                         break;
                     case "actor":
                         //actor arc name
@@ -3701,6 +3711,7 @@ public class TopicManager : MonoBehaviour
                             else
                             { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
+                        else { CountTextTag("actor", dictOfTags); }
                         break;
                     case "actors":
                         //actor arc name, possessive, eg. Hacker's
@@ -3720,6 +3731,7 @@ public class TopicManager : MonoBehaviour
                             else
                             { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
+                        else { CountTextTag("actors", dictOfTags); }
                         break;
                     case "node":
                         //district name
@@ -3732,6 +3744,7 @@ public class TopicManager : MonoBehaviour
                                 else { replaceText = node.nodeName; }
                             }
                         }
+                        else { CountTextTag("node", dictOfTags); }
                         break;
                     case "nodeArc":
                         //district arc name (caps)
@@ -3744,6 +3757,7 @@ public class TopicManager : MonoBehaviour
                                 else { replaceText = node.nodeName; }
                             }
                         }
+                        else { CountTextTag("nodeArc", dictOfTags); }
                         break;
                     case "contact":
                         //contact name + node name
@@ -3767,6 +3781,7 @@ public class TopicManager : MonoBehaviour
                             else
                             { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         }
+                        else { CountTextTag("contact", dictOfTags); }
                         break;
                     case "contactLong":
                         //contact name + contact job + node name
@@ -3790,6 +3805,7 @@ public class TopicManager : MonoBehaviour
                             else
                             { Debug.LogWarningFormat("Invalid tagContactID \"{0}\" for tag <Contact>", tagContactID); }
                         }
+                        else { CountTextTag("contactLong", dictOfTags); }
                         break;
                     case "gear":
                         //gear tag
@@ -3807,6 +3823,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagRecruit, colourEnd); }
                             else { replaceText = tagRecruit; }
                         }
+                        else { CountTextTag("recruit", dictOfTags); }
                         break;
                     case "team":
                         if (isValidate == false)
@@ -3815,6 +3832,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagTeam, colourEnd); }
                             else { replaceText = tagTeam; }
                         }
+                        else { CountTextTag("team", dictOfTags); }
                         break;
                     case "job":
                         //Random job name appropriate to node arc
@@ -3837,6 +3855,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, job, colourEnd); }
                             else { replaceText = job; }
                         }
+                        else { CountTextTag("job", dictOfTags); }
                         break;
                     case "genLoc":
                         //Random Generic Location(use TopicUIData.dataName if available, otherwise get random
@@ -3853,6 +3872,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, location, colourEnd); }
                             else { replaceText = location; }
                         }
+                        else { CountTextTag("genLoc", dictOfTags); }
                         break;
                     case "policy":
                         //Random HR Policy (both sides)
@@ -3863,6 +3883,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, policy, colourEnd); }
                             else { replaceText = policy; }
                         }
+                        else { CountTextTag("policy", dictOfTags); }
                         break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
@@ -3872,16 +3893,19 @@ public class TopicManager : MonoBehaviour
                             turnsAgo = Mathf.Max(1, turnsAgo);
                             replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
                         }
+                        else { CountTextTag("daysAgo", dictOfTags); }
                         break;
                     case "badRES":
                         //end of topic text for a bad outcome (Resistance)
                         if (isValidate == false)
                         { replaceText = textListBadResistance.GetRandomRecord(); }
+                        else { CountTextTag("badRES", dictOfTags); }
                         break;
                     case "goodRES":
                         //end of topic text for a good outcome (Resistance)
                         if (isValidate == false)
                         { replaceText = textListGoodResistance.GetRandomRecord(); }
+                        else { CountTextTag("goodRES", dictOfTags); }
                         break;
                     case "npc":
                         if (isValidate == false)
@@ -3895,11 +3919,13 @@ public class TopicManager : MonoBehaviour
                             }
                             else { replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord(); }
                         }
+                        else { CountTextTag("npc", dictOfTags); }
                         break;
                     case "npcIs":
                         //npc is/was something
                         if (isValidate == false)
                         { replaceText = textListNpcSomething.GetRandomRecord(); }
+                        else { CountTextTag("npcIs", dictOfTags); }
                         break;
                     case "money":
                         //reason they want money
@@ -3909,6 +3935,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, textListMoneyReason.GetRandomRecord(), colourEnd); }
                             else { replaceText = textListMoneyReason.GetRandomRecord(); }
                         }
+                        else { CountTextTag("money", dictOfTags); }
                         break;
                     case "mayor":
                         //mayor + first name
@@ -3918,6 +3945,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
                         }
+                        else { CountTextTag("mayor", dictOfTags); }
                         break;
                     case "city":
                         //city name
@@ -3927,6 +3955,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().name; }
                         }
+                        else { CountTextTag("city", dictOfTags); }
                         break;
                     case "citys":
                         //city name possessive, eg. London's
@@ -3936,6 +3965,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
                             else { replaceText = GameManager.instance.cityScript.GetCity().name; }
                         }
+                        else { CountTextTag("citys", dictOfTags); }
                         break;
                     case "target":
                         //target name
@@ -3945,6 +3975,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagTarget, colourEnd); }
                             else { replaceText = tagTarget; }
                         }
+                        else { CountTextTag("target", dictOfTags); }
                         break;
                     default:
                         if (isValidate == false)
@@ -3961,6 +3992,38 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid text (Null or Empty)"); }
         return checkedText;
+    }
+    #endregion
+
+    #region CountTextTag
+    /// <summary>
+    /// subMethod to count text tags in topics and topicOptions for analysis purposes
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="dictOfTags"></param>
+    private void CountTextTag(string tag, Dictionary<string, int> dictOfTags)
+    {
+        if (dictOfTags != null)
+        {
+            if (string.IsNullOrEmpty(tag) == false)
+            {
+                //already in dictionary
+                if (dictOfTags.ContainsKey(tag) == true)
+                {
+                    //increment counter
+                    dictOfTags[tag]++;
+                }
+                else
+                {
+                    //new entry, count of 1
+                    try { dictOfTags.Add(tag, 1); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate key \"{0}\" in dictOfTags", tag); }
+                }
+            }
+            else { Debug.LogWarning("Invalid tag (Null or Empty)"); }
+        }
+        else { Debug.LogError("Invalid dictOfTags (Null)"); }
     }
     #endregion
 

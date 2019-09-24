@@ -223,6 +223,7 @@ public class DataManager : MonoBehaviour
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
+    private Dictionary<string, int> dictOfTags = new Dictionary<string, int>();                                 //Key -> Topic Manager.cs text tag, Value -> count (options & topics)
 
 
     #region SO enum Dictionaries
@@ -7442,7 +7443,7 @@ public class DataManager : MonoBehaviour
     { return dictOfTextLists; }
 
     //
-    // - - - Beliefs
+    // - - - Development only
     //
 
     public Dictionary<string, int> GetDictOfBeliefs()
@@ -7463,6 +7464,28 @@ public class DataManager : MonoBehaviour
             if (count == 3) { builder.AppendLine(); count = 1; }
             builder.AppendFormat("{0} {1}  {2}", "\n", belief.Key, belief.Value);
         }
+        return builder.ToString();
+    }
+
+    public Dictionary<string, int>  GetDictOfTags()
+    { return dictOfTags; }
+
+
+    /// <summary>
+    /// debug display of text tag counts in topics and topicOptions
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTextTagCount()
+    {
+        StringBuilder builder = new StringBuilder();
+        IEnumerable<string> sorted =
+            from tag in dictOfTags
+            orderby tag.Value
+            select string.Format("{0}   {1}", tag.Key, tag.Value);
+        List<string> listOfSortedTags = sorted.ToList();
+        builder.AppendFormat("- Text Tag Frequency Count in topics and topicOptions{0}", "\n");
+        foreach(string tag in listOfSortedTags)
+        { builder.AppendFormat("{0}{1}", "\n", tag); }
         return builder.ToString();
     }
 
