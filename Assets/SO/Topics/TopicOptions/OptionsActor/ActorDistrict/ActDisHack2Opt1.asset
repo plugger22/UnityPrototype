@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisHack2Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Hack Security 2 option 1
-  tag: 
-  text: 
+  tag: Breach
+  text: Call it an Authority Privacy Breach
   topic: {fileID: 11400000, guid: d6d092aeb1f55ca4dad25eecd3fa67e1, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: '[mayor] insists that the recent privacy data breach originating from a, supposedly,
+    secure server at [node] is nothing to be concerned about'
   tooltipHeader: <color=#FFFFE0>Explore</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     All Similar Districts Security -1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing

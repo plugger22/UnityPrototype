@@ -18,9 +18,9 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  - {fileID: 11400000, guid: ac8db6386433ddb4abf6695406f5d48a, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
-  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: RoboDog sniffers are scouring [node] as a result of an anonymous tipoff to
     Police that there may be unexploded ordinance present
   tooltipHeader: <color=#FFFFE0>Safe</color>

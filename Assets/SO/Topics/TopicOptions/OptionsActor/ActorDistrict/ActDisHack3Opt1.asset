@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisHack3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Hack Security 3 option 1
-  tag: 
-  text: 
+  tag: Diversion
+  text: Use yourself as a diversion
   topic: {fileID: 11400000, guid: e874461828b415a40bd5700fcedd068b, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: An excited Police spokesman confirmed a sighting of [player], [daysAgo] at
+    [node]. We have teams on the ground and expect a result soon, they said
   tooltipHeader: <color=#FFFFE0>Explore</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     All Similar Districts Security -1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing

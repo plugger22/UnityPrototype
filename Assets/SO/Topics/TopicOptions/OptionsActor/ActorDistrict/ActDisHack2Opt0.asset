@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisHack2Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District Hack Security 2 option 0
-  tag: 
-  text: 
+  tag: Unethical
+  text: Erase the data, ethics matter
   topic: {fileID: 11400000, guid: d6d092aeb1f55ca4dad25eecd3fa67e1, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: aee4f3459a2576d41b9137084578fcac, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: Was there a breach of citizen's personal data during a recent net hack at
+    [node], [daysAgo]? Officials are neither confirming or denying
   tooltipHeader: <color=#FFFFE0>Explore</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     All Similar Districts Security -1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing

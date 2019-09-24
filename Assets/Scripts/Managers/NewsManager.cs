@@ -347,6 +347,11 @@ public class NewsManager : MonoBehaviour
                             if (data.isValidate == false)
                             { replaceText = GameManager.instance.cityScript.GetCity().name; }
                             break;
+                        case "citys":
+                            //city name plural
+                            if (data.isValidate == false)
+                            { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
+                            break;
                         default:
                             if (data.isValidate == false)
                             { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }

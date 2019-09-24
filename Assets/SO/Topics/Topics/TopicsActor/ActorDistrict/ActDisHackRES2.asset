@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisHackRES2
   m_EditorClassIdentifier: 
-  tag: 
-  text: unknown
+  tag: Privacy Breach
+  text: Your [actors] activity at [node] also hoovered up a large cache of citizen's
+    personal data from an unsecure server. Should we use this?
   designNotes: Positive Hacker event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -33,12 +34,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 1
+  timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
+  turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 14
   turnsDone: 0

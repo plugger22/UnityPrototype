@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisHack3Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District Hack Security 3 option 0
-  tag: 
-  text: 
+  tag: Leak Info
+  text: Hang [actor] out to dry
   topic: {fileID: 11400000, guid: e874461828b415a40bd5700fcedd068b, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ffefe4efa54188a4ab71e4f9c4acd45c, type: 2}
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Police sources confirm that a Resistance [actor] was spotted at [node] recently.
+    It's only a matter of time, says [mayor]. We'll get them
   tooltipHeader: <color=#FFFFE0>Explore</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     All Similar Districts Security -1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing

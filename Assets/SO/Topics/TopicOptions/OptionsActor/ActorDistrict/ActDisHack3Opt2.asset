@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisHack3Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Hack Security 3 option 2
-  tag: 
-  text: 
+  tag: HQ
+  text: Inform HQ and wear the consequences
   topic: {fileID: 11400000, guid: e874461828b415a40bd5700fcedd068b, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: Yes, [city] has a cybersecurity department, confirmed [mayor]. Why wouldn't
+    we? They are currently investigating a Resistance hack at [node]
   tooltipHeader: <color=#FFFFE0>Explore</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     All Similar Districts Security -1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
