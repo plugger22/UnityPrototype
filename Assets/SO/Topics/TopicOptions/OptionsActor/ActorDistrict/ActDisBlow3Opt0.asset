@@ -22,11 +22,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08794d7d6b82b4a4ab5d2ac3e897d392, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: '<color=#FFE4B5>Not enough Renown
-
-    (need 2)</color>'
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>Pay their medical expenses</color>
+  news: The bomb squad are attempting to defuse unexploded ordinance at [node]. Police
+    have locked down the district and asked citizens to stay clear
+  tooltipHeader: <color=#FFFFE0>Incompetent</color>
+  tooltipMain: <color=#FF4500>ANARCHIST gains INCOMPETENT condition</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Your ANARCHIST is an idiot</color>

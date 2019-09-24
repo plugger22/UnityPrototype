@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisGear3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 3 option 1
-  tag: 
-  text: 
+  tag: Waste
+  text: Order [actor] to waste them
   topic: {fileID: 11400000, guid: 7a8a1554f89102b4fa6e170c79deb902, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: When unregistered organisations fight each other over who gets what piece
+    of illegal gear we leave them to it, says [mayor]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

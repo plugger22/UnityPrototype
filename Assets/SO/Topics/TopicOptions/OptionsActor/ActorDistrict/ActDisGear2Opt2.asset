@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisGear2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 2 option 2
-  tag: 
-  text: 
+  tag: HQ
+  text: Give it to HQ, of course
   topic: {fileID: 11400000, guid: afcce9c05358715429022bbc90f732ef, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Are we tagging black market gear with tracking tech? Of course we are, says
+    a beaming [mayor] today at [node]. We do it all the time
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisBlowRES3
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Misfire
   text: Your [actors] recent bombing attempt at [node] went wrong. Something went
     amiss and there is now unexploded ordinance that could go off at any time
   designNotes: negative Anarchist event
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 16
+  turnsLive: 17
   turnsDone: 0

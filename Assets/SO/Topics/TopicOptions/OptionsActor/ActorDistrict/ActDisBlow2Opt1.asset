@@ -23,11 +23,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: '<color=#FFE4B5>Not enough Renown
-
-    (need 2)</color>'
+  news: Police are puzzled by a minor explosion at [node], [daysAgo]. Crime scene
+    evidence indicates the presence of a large amount of explosives
+  tooltipHeader: <color=#FFFFE0>Visit</color>
+  tooltipMain: "<color=#98FB98>Player Renown +2</color>\r\n<color=#FF4500>ANARCHIST
+    Renown +2</color>"
   tooltipDetails: <color=#98FB98>Player Mood +2</color>
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>Pay their medical expenses</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Ask your ANARCHIST to visit HQ</color>

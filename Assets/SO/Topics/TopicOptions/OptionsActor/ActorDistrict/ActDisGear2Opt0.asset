@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisGear2Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 2 option 0
-  tag: 
-  text: 
+  tag: Star
+  text: Well done [actor]! What a star
   topic: {fileID: 11400000, guid: afcce9c05358715429022bbc90f732ef, type: 2}
-  listOfCriteria: []
-  listOfGoodEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: b4e5003b30b043942b834b489fd7ae5c, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 41f385ea801470c46a3cfaaf264ed4f7, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] denied reports that The Authority has been tagging illegal gear in
+    an attempt to geo locate Resistance HQ. Rumours and lies, says [mayor]'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

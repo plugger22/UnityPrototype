@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisGear3Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Obtain Gear 3 option 2
-  tag: 
-  text: 
+  tag: Apologise
+  text: Apologise to [actor] for yelling at them
   topic: {fileID: 11400000, guid: 7a8a1554f89102b4fa6e170c79deb902, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: Word on the street has the Resistance in conflict with an unnamed organisation
+    over a recent incident at [node]. Is it true?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

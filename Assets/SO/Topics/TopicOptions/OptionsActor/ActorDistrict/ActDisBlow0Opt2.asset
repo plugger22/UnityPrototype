@@ -26,6 +26,6 @@ MonoBehaviour:
     recovering from the recent bombing atrocity at [node]. '
   tooltipHeader: <color=#FFFFE0>Cover Up</color>
   tooltipMain: <color=#98FB98> City Loyalty -1</color>
-  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Cover it up. Kill them</color>
+  textToDisplay: <color=#EEFB73>Ask ANARCHIST to cover it up and kill them</color>

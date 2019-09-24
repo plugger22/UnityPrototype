@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisBlowRES1
   m_EditorClassIdentifier: 
   tag: Innocent Deaths
-  text: '[daysAgo] bystanders were accidentally killed when the [actor]''s bomb went
+  text: '[daysAgo] bystanders were accidentally killed when the [actors] bomb went
     off prematurely at a [genLoc] at [node]. [badRES]'
   designNotes: negative anarchist
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -41,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
+  turnsDormant: 1
+  turnsActive: 1
   turnsLive: 16
   turnsDone: 0
