@@ -372,7 +372,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 51; analyseToggle = 1; break;
                     case 1: debugDisplay = 75; analyseToggle = 2; break;
-                    case 2: debugDisplay = 0; analyseToggle = 0; break;
+                    case 2: debugDisplay = 76; analyseToggle = 3; break;
+                    case 3: debugDisplay = 0; analyseToggle = 0; break;
                 }
             }
 
@@ -1448,7 +1449,7 @@ public class DebugGUI : MonoBehaviour
                     case 51:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = string.Format("{0}{1}", GameManager.instance.aiScript.DebugShowTaskAnalysis(), GameManager.instance.aiRebelScript.DebugShowTaskAnalysis());
-                        GUI.Box(new Rect(Screen.width - 205, 10, 200, 300), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 355, 10, 500, 350), analysis, customBackground);
                         break;
                     //Remove Condition
                     case 52:
@@ -1599,7 +1600,13 @@ public class DebugGUI : MonoBehaviour
                     case 75:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayBeliefCount();
-                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 300), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 355, 10, 500, 300), analysis, customBackground);
+                        break;
+                    //topic and topicOption text tag frequency analysis
+                    case 76:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayTextTagCount();
+                        GUI.Box(new Rect(Screen.width - 355, 10, 500, 350), analysis, customBackground);
                         break;
                 }
             }

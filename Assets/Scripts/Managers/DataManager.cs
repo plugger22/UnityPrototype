@@ -7480,7 +7480,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         IEnumerable<string> sorted =
             from tag in dictOfTags
-            orderby tag.Value
+            orderby tag.Value descending
             select string.Format("{0}   {1}", tag.Key, tag.Value);
         List<string> listOfSortedTags = sorted.ToList();
         builder.AppendFormat("- Text Tag Frequency Count in topics and topicOptions{0}", "\n");
