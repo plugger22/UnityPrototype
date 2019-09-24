@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor District News 0 option 0
   tag: Push Hard
-  text: Order [actor] to push hard
+  text: Have [actor] push hard
   topic: {fileID: 11400000, guid: 21980f426c1813a42bb3376d51a2b9fd, type: 2}
   listOfCriteria: []
   listOfGoodEffects:

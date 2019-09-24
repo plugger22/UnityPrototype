@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisNews2Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District News 2 option 0
-  tag: 
-  text: 
+  tag: Viralbot
+  text: Insert a Viralbot and stand well back
   topic: {fileID: 11400000, guid: 4d9ca2788f8689d41842f17105ecc638, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: aee4f3459a2576d41b9137084578fcac, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: dc7665ce7259594498d4b9b1f4f458fd, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: We are actively working with social media Megacorps to lock out Resistance
+    fake news, says [mayor], reading a statement on behalf of The Authority
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

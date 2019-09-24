@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Name: ActDisNews3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District News 3 option 1
-  tag: 
-  text: 
+  tag: Mislead
+  text: Have [actor] set a false trail
   topic: {fileID: 11400000, guid: ce28f6fbd702c6b49bd11e7b2c914b2f, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ffefe4efa54188a4ab71e4f9c4acd45c, type: 2}
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: '[city] has zero tolerance for Resistance propaganda, says [mayor]. There
+    was a regrettable incident [daysAgo] at [node] but it was dealt with'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

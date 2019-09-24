@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisNews2Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District News 2 option 1
-  tag: 
-  text: 
+  tag: Let it be
+  text: You can't trust AI, let it be
   topic: {fileID: 11400000, guid: 4d9ca2788f8689d41842f17105ecc638, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: '[city] news is extensively filtered prior to release to ensure that only
+    legitimate, approved, stories make the feed. You can rely on us, says [mayor]'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

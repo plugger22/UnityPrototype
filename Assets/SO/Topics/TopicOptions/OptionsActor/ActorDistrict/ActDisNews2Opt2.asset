@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisNews2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District News 2 option 2
-  tag: 
-  text: 
+  tag: HQ
+  text: Let HQ play with it
   topic: {fileID: 11400000, guid: 4d9ca2788f8689d41842f17105ecc638, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: We don't believe in a freeforall, says [mayor]. Citizens should be able to
+    rely on their newsFeed to be truthful which is why we have censorship
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
