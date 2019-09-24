@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActDisRecruitRES2
   m_EditorClassIdentifier: 
-  tag: 
-  text: unknown
+  tag: New Policy
+  text: Our [actor] wants to introduce a [policy] to help in sourcing higher quality
+    candidates. [goodRES]
   designNotes: positive recruiter event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -40,5 +41,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 16
+  turnsLive: 20
   turnsDone: 0
