@@ -67,6 +67,8 @@ public class Campaign : ScriptableObject
     [Header("Player Topic Pools")]
     [Tooltip("Topic pool for Player District decisions")]
     public TopicPool playerDistrictPool;
+    [Tooltip("Topic pool for Player General decisions")]
+    public TopicPool playerGeneralPool;
 
     [Header("HQ Topic Pools")]
     [Tooltip("Topic pool for HQ decisions")]

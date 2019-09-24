@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
   m_Name: PlayerDistrictPool0
   m_EditorClassIdentifier: 
-  tag: Player District topic test pool 0
+  tag: Player District topic pool 0
   descriptor: Placeholder pool needed to allow consolidation of subSubType pools into
     one at session start for validation and operational purposes. The topics within
     this pool will be removed and serve no purpose other than placeholders (or more
@@ -27,6 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0af455c46045ade4da1a6ef74a4b24f1, type: 2}
   - {fileID: 11400000, guid: 92511e824f351eb428c08422e890d556, type: 2}
   - {fileID: 11400000, guid: 9a94381c6b816264d883f900e5c18d7b, type: 2}
+  - {fileID: 11400000, guid: a9993ebd53757f9458ac6cfd39e6d840, type: 2}
+  - {fileID: 11400000, guid: 35c20db460cc4634dbfa003e9bb798b1, type: 2}
   - {fileID: 11400000, guid: 0368ac2e24405bc47a71da6102ade116, type: 2}
   - {fileID: 11400000, guid: e1deb096efe1a8640bfc972165172a79, type: 2}
   - {fileID: 11400000, guid: 23787ddf8be2a9344871e92d2c51dc07, type: 2}
@@ -39,8 +41,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8982ba447998a9469fc9cd5bad79120, type: 2}
   - {fileID: 11400000, guid: e541d66fc6a3eae4f9d0d4cd53f677b7, type: 2}
   - {fileID: 11400000, guid: 96491a64fc358564eb8e5402bf422bb6, type: 2}
-  - {fileID: 11400000, guid: a9993ebd53757f9458ac6cfd39e6d840, type: 2}
-  - {fileID: 11400000, guid: 35c20db460cc4634dbfa003e9bb798b1, type: 2}
   listOfSubSubTypePools:
   - {fileID: 11400000, guid: 48125f6dd5fc6e04a8be838aa5dc7ac9, type: 2}
   - {fileID: 11400000, guid: a2c142db197c19e4c8d101f2c999fdfa, type: 2}

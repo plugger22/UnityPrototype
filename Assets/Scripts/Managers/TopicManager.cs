@@ -528,6 +528,19 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "PlayerGeneral":
+                                                        if (campaign.playerGeneralPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.playerGeneralPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.playerGeneralPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGeneralPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.playerGeneralPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     case "AuthorityCampaign":
                                                         if (campaign.authorityCampaignPool != null)
                                                         {
@@ -1313,6 +1326,10 @@ public class TopicManager : MonoBehaviour
                         //based on player Mood
                         listOfPotentialTopics = GetPlayerDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
+                    case "PlayerGeneral":
+                        //based on player Mood
+                        listOfPotentialTopics = GetPlayerGeneralTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                         break;
@@ -1712,6 +1729,29 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region GetPlayerGeneralTopics
+    /// <summary>
+    /// subType PlayerGeneral template topics selected by player based on mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerGeneralTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //All topics based on current actor line up
+
+        //group based on Player Mood
+        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+        //if no entries use entire list by default
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        return listOfTopics;
+    }
+    #endregion
+
     #region GetAuthorityTeamTopics
     /// <summary>
     /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
@@ -2104,9 +2144,6 @@ public class TopicManager : MonoBehaviour
                 string newsSnippet = CheckTopicText(turnOption.news, false);
                 NewsItem item = new NewsItem() { text = newsSnippet };
                 GameManager.instance.dataScript.AddNewsItem(item);
-                /*//debug (add two more)
-                GameManager.instance.dataScript.AddNewsItem(item);
-                GameManager.instance.dataScript.AddNewsItem(item);*/
                 Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
             }
             //outcome dialogue
