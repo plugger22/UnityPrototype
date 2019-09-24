@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Name: ActDisRecruit2Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 2 option 1
-  tag: 
-  text: 
+  tag: Pay Rise
+  text: Throw in a pay rise as well
   topic: {fileID: 11400000, guid: becbaf2951e4f4c4eb4bf6a910b973c9, type: 2}
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: Do people ever join the Resistance voluntarily, wondered [mayor]? Or are they
+    coerced with threats of violence to their loved ones?
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisRecruit2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 2 option 2
-  tag: 
-  text: 
+  tag: HQ
+  text: Let's check with HQ first
   topic: {fileID: 11400000, guid: becbaf2951e4f4c4eb4bf6a910b973c9, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: '[city] offers work, food and shelter for all citizens. Why join the Resistance
+    when there is a ServoPod here with your name on it, asks [mayor]?'
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

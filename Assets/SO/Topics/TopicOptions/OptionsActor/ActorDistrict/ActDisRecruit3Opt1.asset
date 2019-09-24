@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisRecruit3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 3 option 1
-  tag: 
-  text: 
+  tag: Against Regulations
+  text: It's not in the Rules
   topic: {fileID: 11400000, guid: ab699997467bed644997d764e5e205c7, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfBadEffects:
+  - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: Join the Resistance and you can expect to be hunted down like a feral animal,
+    stated [mayor] today. If we can't get you we'll get your family
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

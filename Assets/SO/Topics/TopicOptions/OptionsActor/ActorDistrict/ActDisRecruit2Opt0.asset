@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisRecruit2Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 2 option 0
-  tag: 
-  text: 
+  tag: Retrospective
+  text: It should apply to everybody
   topic: {fileID: 11400000, guid: becbaf2951e4f4c4eb4bf6a910b973c9, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  news: Why would anyone want to join the Resistance, mocked [mayor]? Who wants to
+    die wearing last weeks clothes and half starved?
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Name: ActDisRecruit3Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 3 option 0
-  tag: 
-  text: 
+  tag: Console Widow
+  text: A grieving widow is a terrible thing
   topic: {fileID: 11400000, guid: ab699997467bed644997d764e5e205c7, type: 2}
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: What happens to the family of known Resistance members here at [city], asks
+    [mayor]? Do we treat them poorly? Of course we do
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

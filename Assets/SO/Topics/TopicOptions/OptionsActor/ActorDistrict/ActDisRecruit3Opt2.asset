@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActDisRecruit3Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor District Recruit Actor 3 option 2
-  tag: 
-  text: 
+  tag: Public Relations
+  text: Is this a PR opportunity?
   topic: {fileID: 11400000, guid: ab699997467bed644997d764e5e205c7, type: 2}
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 'What happens to old Resistance members, asks [mayor]? Do they have a place
+    here at [city]? We process them into Rat food is what happens '
   tooltipHeader: <color=#FFFFE0>Friends</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

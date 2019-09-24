@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisRecruitRES2
   m_EditorClassIdentifier: 
   tag: New Policy
-  text: Our [actor] wants to introduce a [policy] to help in sourcing higher quality
-    candidates. [goodRES]
+  text: Our [actor] wants to introduce a [policy] to aid in sourcing higher quality
+    candidates
   designNotes: positive recruiter event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -34,7 +34,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2

@@ -22,7 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 08794d7d6b82b4a4ab5d2ac3e897d392, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[npc], [job], of [node], a suspected Resistance member was executed today
+    by a public roboHanger'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

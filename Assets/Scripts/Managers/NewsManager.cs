@@ -12,7 +12,7 @@ public class NewsManager : MonoBehaviour
 {
     [Header("News Items")]
     [Tooltip("How many turns a given newsItem will stay in the selection pool before being deleted (if it's selected then it's also deleted)")]
-    [Range(1, 10)] public int timerMaxItemTurns = 4;
+    [Range(1, 10)] public int timerMaxItemTurns = 2;
     [Tooltip("How many newsItems will be selected (if available) per turn. Also gives identical number of Adverts")]
     [Range(0, 3)] public int numOfNewsItems = 1;
     /*[Tooltip("How many adverts will be selected (if available) per turn")]

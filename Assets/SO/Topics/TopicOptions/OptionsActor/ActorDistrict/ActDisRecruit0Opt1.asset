@@ -22,7 +22,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Anyone considering a career with the Resistance needs to seriously think aoubt
+    life insurance, joked [mayor]. Do they offer that?
   tooltipHeader: <color=#FFFFE0>Praise</color>
   tooltipMain: <color=#98FB98>RECRUITER gains STAR condition</color>
   tooltipDetails: <color=#FF4500>Player Mood -2</color>

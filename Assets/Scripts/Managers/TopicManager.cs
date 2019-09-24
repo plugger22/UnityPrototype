@@ -40,8 +40,10 @@ public class TopicManager : MonoBehaviour
     public TextList textListGoodResistance;
     [Tooltip("List of NPC is/was 'something'")]
     public TextList textListNpcSomething;
-    [Tooltip("List of reaons for wanting money")]
+    [Tooltip("List of reasons for wanting money")]
     public TextList textListMoneyReason;
+    [Tooltip("List of HR Policy")]
+    public TextList textListPolicy;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -298,6 +300,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListGoodResistance != null, "Invalid textListGoodResistance (Null)");
         Debug.Assert(textListNpcSomething != null, "Invalid textListNpcSomething (Null)");
         Debug.Assert(textListMoneyReason != null, "Invalid textListMoneyReason (Null)");
+        Debug.Assert(textListPolicy != null, "Invalid textListPolicy (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -3851,6 +3854,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = location; }
                         }
                         break;
+                    case "policy":
+                        //Random HR Policy (both sides)
+                        if (isValidate == false)
+                        {
+                            string policy = textListPolicy.GetRandomRecord();
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, policy, colourEnd); }
+                            else { replaceText = policy; }
+                        }
+                        break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
                         if (isValidate == false)
@@ -3891,7 +3904,11 @@ public class TopicManager : MonoBehaviour
                     case "money":
                         //reason they want money
                         if (isValidate == false)
-                        { replaceText = textListMoneyReason.GetRandomRecord(); }
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, textListMoneyReason.GetRandomRecord(), colourEnd); }
+                            else { replaceText = textListMoneyReason.GetRandomRecord(); }
+                        }
                         break;
                     case "mayor":
                         //mayor + first name
