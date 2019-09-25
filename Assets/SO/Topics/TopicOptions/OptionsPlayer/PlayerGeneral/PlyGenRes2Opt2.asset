@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Name: PlyGenRes2Opt2
   m_EditorClassIdentifier: 
   descriptor: Player General Res2 option 2
-  tag: 
-  text: 
+  tag: Roasting
+  text: Your [option2]
   topic: {fileID: 11400000, guid: c203504c7f4086845b73455e4d373b3c, type: 2}
   isPreferredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: c7c1da9f8a5d2344b8bd82eb257eade2, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

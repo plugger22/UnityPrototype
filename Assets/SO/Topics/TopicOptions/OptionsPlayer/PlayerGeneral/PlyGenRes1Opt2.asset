@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Name: PlyGenRes1Opt2
   m_EditorClassIdentifier: 
   descriptor: Player General Res1 option 2
-  tag: 
-  text: 
+  tag: Receives Award
+  text: Your [option2]
   topic: {fileID: 11400000, guid: f97836556ca9ddf408cfc29f632839f4, type: 2}
   isPreferredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

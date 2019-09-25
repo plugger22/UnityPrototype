@@ -1753,7 +1753,6 @@ public class TopicManager : MonoBehaviour
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
-            int index = 0;
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
@@ -1766,8 +1765,7 @@ public class TopicManager : MonoBehaviour
                         if (actor.Status == ActorStatus.Active)
                         {
                             //add actorID to array
-                            arrayOfOptionActorIDs[index] = actor.actorID;
-                            index++;
+                            arrayOfOptionActorIDs[i] = actor.actorID;
                         }
                     }
                 }
