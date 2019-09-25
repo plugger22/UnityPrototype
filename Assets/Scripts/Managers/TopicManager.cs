@@ -17,7 +17,7 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
     [Range(0, 10)] public int minIntervalGlobal = 2;
     [Tooltip("Maximum number of options in a topic")]
-    [Range(2, 5)] public int maxOptions = 4;
+    [Range(2, 4)] public int maxOptions = 4;
 
     [Header("Probability")]
     [Tooltip("Number (less than) to roll for an Extreme probability option to Succeed")]
@@ -147,6 +147,7 @@ public class TopicManager : MonoBehaviour
     private string tagTeam;                //used for resistance team actions
     private string tagTarget;
     private string tagStringData;        //General purpose
+    private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
 
     //collections (local)
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
@@ -237,6 +238,8 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfProfiles (Null)"); }
+        //arrayOfOptionActorID's
+        arrayOfOptionActorIDs = new int[maxOptions];
         //calculates topicType/SubType minimum Intervals based on global setting (minTopicTypeTurns)
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
@@ -1732,6 +1735,7 @@ public class TopicManager : MonoBehaviour
     #region GetPlayerGeneralTopics
     /// <summary>
     /// subType PlayerGeneral template topics selected by player based on mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// arrayOfOptionActorIDs is initialised with actorID's (active, OnMap actors), -1 if none, where array index corresponds to option index, eg. actorID for index 0 is for option 0
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -1742,8 +1746,34 @@ public class TopicManager : MonoBehaviour
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
+        //initialise array to default -1 values (no actor present)
+        for (int i = 0; i < arrayOfOptionActorIDs.Length; i++)
+        { arrayOfOptionActorIDs[i] = -1; }
         //All topics based on current actor line up
-
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            int index = 0;
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //must be active
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //add actorID to array
+                            arrayOfOptionActorIDs[index] = actor.actorID;
+                            index++;
+                        }
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //group based on Player Mood
         group = GetGroupMood(GameManager.instance.playerScript.GetMood());
         //if no entries use entire list by default
@@ -3774,6 +3804,90 @@ public class TopicManager : MonoBehaviour
                             { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
                         }
                         else { CountTextTag("actors", dictOfTags); }
+                        break;
+                    case "option0":
+                        //actor name for option 0
+                        if (isValidate == false)
+                        {
+                            int actorID = arrayOfOptionActorIDs[0];
+                            if ( actorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[0] \"{0}\"", actorID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); }
+                        }
+                        else { CountTextTag("option0", dictOfTags); }
+                        break;
+                    case "option1":
+                        //actor name for option 1
+                        if (isValidate == false)
+                        {
+                            int actorID = arrayOfOptionActorIDs[1];
+                            if (actorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[1] \"{0}\"", actorID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); }
+                        }
+                        else { CountTextTag("option1", dictOfTags); }
+                        break;
+                    case "option2":
+                        //actor name for option 2
+                        if (isValidate == false)
+                        {
+                            int actorID = arrayOfOptionActorIDs[2];
+                            if (actorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[0] \"{0}\"", actorID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); }
+                        }
+                        else { CountTextTag("option2", dictOfTags); }
+                        break;
+                    case "option3":
+                        //actor name for option 3
+                        if (isValidate == false)
+                        {
+                            int actorID = arrayOfOptionActorIDs[3];
+                            if (actorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[3] \"{0}\"", actorID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); }
+                        }
+                        else { CountTextTag("option3", dictOfTags); }
                         break;
                     case "node":
                         //district name

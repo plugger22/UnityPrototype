@@ -96,3 +96,96 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 6914 -> Wednesday, 25 September 2019 9:19 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 15200 -> Wednesday, 25 September 2019 11:27 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicPool, array 50, assets 51 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicPool[]) (at Assets/Scripts/Managers/ValidationManager.cs:1508)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1451)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid profile (Null) for topic "PlyGenRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	
+Dev seed 16779 -> Wednesday, 25 September 2019 11:29 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicPool, array 50, assets 51 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicPool[]) (at Assets/Scripts/Managers/ValidationManager.cs:1508)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1451)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid profile (Null) for topic "PlyGenRES0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid profile (Null) for topic "PlyGenRES3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:SetTopicDynamicData(List`1) (at Assets/Scripts/Managers/TopicManager.cs:830)
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:543)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:293)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:195)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	
+Dev seed 54276 -> Wednesday, 25 September 2019 11:31 AM
+City seed 5678 -> London, United Kingdom
