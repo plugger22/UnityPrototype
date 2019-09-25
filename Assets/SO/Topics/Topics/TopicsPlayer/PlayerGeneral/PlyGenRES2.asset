@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyGenRES2
   m_EditorClassIdentifier: 
   tag: Discipline
-  text: You've decided that some discipline is in order. You'll make an example of
-    one of your subordinates. Who will you roast?
+  text: You've decided that some discipline is in order. It's time to make an example
+    of one of your subordinates. Who will you roast?
   designNotes: positive Player General event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 009911c2d99e7cd489e874e835111a00, type: 2}
@@ -35,12 +35,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 16
+  turnsDormant: 2
+  turnsActive: 2
+  turnsLive: 14
   turnsDone: 0

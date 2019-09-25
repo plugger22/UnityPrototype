@@ -792,12 +792,16 @@ public class ValidationManager : MonoBehaviour
                                         //
                                         // - - - Checks for completed TopicOptions (text field has data) -> DEBUG (shouldn't be any of these on completion)
                                         //
+                                        //check text tags
+                                        if (string.IsNullOrEmpty(option.text) == false)
+                                        { GameManager.instance.topicScript.CheckTopicText(option.text, false, true, option.name); }
+                                        //text
                                         if (option.text != null && option.text.Length > 0)
                                         {
                                             textLength = option.text.Length;
                                             if (textLength > 0)
                                             {
-                                                //collect all beliefs as want to check for dupes
+                                                /*//collect all beliefs as want to check for dupes
                                                 if (option.moodEffect != null)
                                                 {
                                                     listOfMoodEffects.Add(option.moodEffect.name);
@@ -810,7 +814,8 @@ public class ValidationManager : MonoBehaviour
                                                     else { Debug.LogWarningFormat("Invalid moodEffect \"{0}\", (Not found in dictOfBeliefs)", option.moodEffect.name); }
                                                 }
                                                 else
-                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
+                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }*/
+
                                                 //check text length limit
                                                 if (textLength > maxOptionTextLength)
                                                 {
@@ -868,7 +873,19 @@ public class ValidationManager : MonoBehaviour
                                                     Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Mood Effect (NOT isMoodEffect True), effect \"{1}\", option {2}, topic {3}{4}",
                                                         option.moodEffect.typeOfEffect.name, option.moodEffect.name, option.name, topicName, "\n");
                                                 }
+
+                                                listOfMoodEffects.Add(option.moodEffect.name);
+                                                //tally beliefs
+                                                if (dictOfBeliefs.ContainsKey(option.moodEffect.name) == true)
+                                                {
+                                                    num = dictOfBeliefs[option.moodEffect.name] + 1;
+                                                    dictOfBeliefs[option.moodEffect.name] = num;
+                                                }
+                                                else { Debug.LogWarningFormat("Invalid moodEffect \"{0}\", (Not found in dictOfBeliefs)", option.moodEffect.name); }
+
                                             }
+                                            else
+                                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
                                             //News snippet (check text tags are valid), only if a news snippet is present
                                             if (string.IsNullOrEmpty(option.news) == false)
                                             {
@@ -891,9 +908,22 @@ public class ValidationManager : MonoBehaviour
                                     //at least one option with No criteria present
                                     if (isPassedCheck == false)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
-                                    //check no duplicates with option moodEffects
+
+                                    //check option moodEffects
                                     if (listOfMoodEffects.Count > 0)
-                                    { CheckListForDuplicates(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects"); }
+                                    {
+                                        if (topic.subType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == false)
+                                        {
+                                            //no duplicates present
+                                            CheckListForDuplicates(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects");
+                                        }
+                                        else
+                                        {
+                                            //all should be the same -> Player General topic
+                                            CheckListForSame(listOfMoodEffects, topic.name, "moodEffect", "AllMoodEffects");
+                                        }
+                                    }
+
                                 }
                                 else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has an Empty listOfOptions{1}", topicName, "\n"); }
                             }
@@ -1822,10 +1852,16 @@ public class ValidationManager : MonoBehaviour
                 }
                 else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
                 //status
-                if (actor.Value.Status != ActorStatus.HQ) { Debug.LogFormat("{0}Invalid status \"{1}\" (should be HQ) for hqID {2}, actor {3}{4}", 
-                    tag, actor.Value.Status, actor.Value.hqID, actor.Value.actorName, "\n"); }
-                else if (actor.Value.statusHQ == ActorHQ.None) { Debug.LogFormat("{0}Invalid HQ Status \"{1}\" (shouldn't be None) for hqID {2}, actor {3}{4}", 
-                    tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n"); }
+                if (actor.Value.Status != ActorStatus.HQ)
+                {
+                    Debug.LogFormat("{0}Invalid status \"{1}\" (should be HQ) for hqID {2}, actor {3}{4}",
+tag, actor.Value.Status, actor.Value.hqID, actor.Value.actorName, "\n");
+                }
+                else if (actor.Value.statusHQ == ActorHQ.None)
+                {
+                    Debug.LogFormat("{0}Invalid HQ Status \"{1}\" (shouldn't be None) for hqID {2}, actor {3}{4}",
+tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
+                }
             }
         }
         else { Debug.LogError("Invalid dictOfHQ (Null)"); }
@@ -2426,7 +2462,7 @@ public class ValidationManager : MonoBehaviour
                         { Debug.LogFormat("{0}, topic \"{1}\", Invalid isCurrent (is {2}, should be {3}){4}", tag, topic.name, topic.isCurrent, "True", "\n"); }
                         //shouldn't have a linkedIndex other than the default -1 value
                         if (topic.linkedIndex > -1)
-                        { Debug.LogFormat("{0}, topic \"{1}\", Invalid linkedIndex (is {2}, should be default -1){3}", tag, topic.name, topic.linkedIndex,  "\n"); }
+                        { Debug.LogFormat("{0}, topic \"{1}\", Invalid linkedIndex (is {2}, should be default -1){3}", tag, topic.name, topic.linkedIndex, "\n"); }
                         //both linked and buddy lists should be empty
                         if (topic.listOfLinkedTopics != null)
                         {
@@ -2590,6 +2626,33 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForDuplicates: Invalid listToCheck {0} (Null){1}", nameOfList, "\n"); }
+    }
+    #endregion
+
+    #region CheckListForSame
+    /// <summary>
+    /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks that all items are identical. Message generated if not.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="listToCheck"></param>
+    /// <param name="typeOfObject"></param>
+    /// <param name="nameOfObject"></param>
+    /// <param name="nameOfList"></param>
+    private void CheckListForSame<T>(List<T> listToCheck, string typeOfObject = "Unknown", string nameOfObject = "Unknown", string nameOfList = "Unknown") where T : IComparable
+    {
+        if (listToCheck != null)
+        {
+            if (listToCheck.Count > 0)
+            {
+                var query = listToCheck.GroupBy(x => x)
+                                .Where(g => g.Count() > 1)
+                                .Select(y => new { Element = y.Key, Counter = y.Count() })
+                                .ToList();
+                if (query.Count != 1)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForSame: {0} \"{1}\" , list \"{2}\", has DIFFERENCES (should all be the same){3}", typeOfObject, nameOfObject, nameOfList, "\n"); }
+            }
+        }
+        else { Debug.LogFormat("[Val] ValidationManager.cs -> CheckListForSame: Invalid listToCheck {0} (Null){1}", nameOfList, "\n"); }
     }
     #endregion
 
@@ -2935,7 +2998,7 @@ public class ValidationManager : MonoBehaviour
                         Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", {2} has Mismatching subTypes (is {3}, should be {4}){5}", campaign.name, pool.name,
                           subSubPool.name, subSubPool.subType.name, subType.name, "\n");
                     }
-                    
+
                 }
                 else { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", has invalid SubSubTypePool (Null){2}", campaign.name, pool.name, "\n"); }
             }
@@ -2958,9 +3021,9 @@ public class ValidationManager : MonoBehaviour
                     }
                     //check at least one good and one bad topic  present in pool
                     if (topic.group.name.Equals("Good", StringComparison.Ordinal) == true)
-                        { isGoodTopicPresent = true; }
+                    { isGoodTopicPresent = true; }
                     if (topic.group.name.Equals("Bad", StringComparison.Ordinal) == true)
-                        { isBadTopicPresent = true; }
+                    { isBadTopicPresent = true; }
                 }
                 else
                 {

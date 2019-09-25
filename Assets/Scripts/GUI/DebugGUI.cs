@@ -1606,7 +1606,7 @@ public class DebugGUI : MonoBehaviour
                     case 76:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayTextTagCount();
-                        GUI.Box(new Rect(Screen.width - 355, 10, 500, 350), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 355, 10, 700, 350), analysis, customBackground);
                         break;
                 }
             }

@@ -1995,6 +1995,13 @@ public class TopicManager : MonoBehaviour
                                 //check any criteria
                                 if (CheckOptionCriteria(option) == true)
                                 {
+                                    //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
+                                    if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
+                                    {
+                                        if (option.optionNumber > -1)
+                                        { tagActorID = arrayOfOptionActorIDs[option.optionNumber]; }
+                                        else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", option.optionNumber, option.name); }
+                                    }
                                     //initialise option tooltips
                                     if (InitialiseOptionTooltip(option) == true)
                                     { isProceed = true; }
@@ -2110,6 +2117,13 @@ public class TopicManager : MonoBehaviour
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
+                if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
+                {
+                    if (turnOption.optionNumber > -1)
+                    { tagActorID = arrayOfOptionActorIDs[turnOption.optionNumber]; }
+                    else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", turnOption.optionNumber, turnOption.name); }
+                }
                 //top text (can handle text tags)
                 string optionText = CheckTopicText(turnOption.text, false);
                 builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);

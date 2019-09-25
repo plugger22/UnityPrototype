@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class TopicOption : ScriptableObject
     [Tooltip("Topic that the option is connected with")]
     public Topic topic;
 
-    [Header("HQ")]
+    [Header("Special")]
     [Tooltip("Select this if the option is preferred by HQ. Doing so will override the HQ Boss's personality preferences. Ignore otherwise")]
     public bool isPreferredByHQ;
 
@@ -52,6 +53,7 @@ public class TopicOption : ScriptableObject
     [HideInInspector] public string tooltipDetails;             //derived from mood Effect
     [HideInInspector] public bool isValid;                      //true if passed criteria checks, false otherwise (displayed in greyed text)
     [HideInInspector] public string textToDisplay;              //colour formatted option text ready for display by TopicUI.cs (TopicManager.cs -> InitialiseTopicUI)
+    [HideInInspector] public int optionNumber;                  //number of option for topic, eg. 0 -> 3, if named 'PlyRes3Opt1' then it's number is 1. 
 
 
     public void OnEnable()
@@ -59,6 +61,20 @@ public class TopicOption : ScriptableObject
         /*Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name); DEBUG -> need to activate this once topics in place*/
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(topic != null, "Invalid topic (Null)");
-
+        //assign optionNumber based on TopicOption name (last char is number of option in sequence, eg. 0 -> 3)
+        string last;
+        optionNumber = -1;
+        try
+         {
+            last = name.Substring(name.Length - 1, 1);
+            optionNumber = Convert.ToInt32(last);
+        }
+        catch(ArgumentOutOfRangeException)
+        { Debug.LogWarningFormat("Invalid subString arguments for last for {0}", name); }
+        catch(OverflowException)
+        { Debug.LogWarningFormat("Invalid conversion, Overflow exception for {0}", name); }
+        catch(FormatException)
+        { Debug.LogWarningFormat("Invalid conversion, formatException for {0}", name); }
+        Debug.AssertFormat(optionNumber > -1 && optionNumber < 4, "Invalid optionNumber \"{0}\" (should be 0 to 3) for {1}", optionNumber, name);
     }
 }
