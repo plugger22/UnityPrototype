@@ -1911,8 +1911,12 @@ public class TopicManager : MonoBehaviour
         {
             TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
             TopicUIData data = new TopicUIData();
-            //Debug initialise data package if any debug topics present (if none use normally selected topic)
-            if (debugTopicPool != null)
+            //special case
+            bool isPlayerGeneral = false;
+            if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
+            { isPlayerGeneral = true; }
+                //Debug initialise data package if any debug topics present (if none use normally selected topic)
+                if (debugTopicPool != null)
             {
                 bool isProceed = false;
                 //check at least one topic in pool is live
@@ -1996,7 +2000,7 @@ public class TopicManager : MonoBehaviour
                                 if (CheckOptionCriteria(option) == true)
                                 {
                                     //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
-                                    if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
+                                    if (isPlayerGeneral == true)
                                     {
                                         if (option.optionNumber > -1)
                                         { tagActorID = arrayOfOptionActorIDs[option.optionNumber]; }
@@ -2010,10 +2014,14 @@ public class TopicManager : MonoBehaviour
                                 {
                                     //criteria checked failed
                                     isProceed = true;
+                                    tagActorID = -1;
                                     colourOption = colourGrey;
                                 }
-                                //colourFormat textToDisplay
-                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
+                                //colourFormat textToDisplay -> special case first
+                                if (isPlayerGeneral == true && tagActorID < 0)
+                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, "Subordinate unavailable", colourEnd); }
+                                else
+                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -4216,16 +4224,16 @@ public class TopicManager : MonoBehaviour
                         if (actor != null)
                         {
                             turnSprite = actor.sprite;
-                            Tuple<string, string> results = GetActorTooltip(actor);
-                            if (string.IsNullOrEmpty(results.Item1) == false)
+                            Tuple<string, string> resultsActor = GetActorTooltip(actor);
+                            if (string.IsNullOrEmpty(resultsActor.Item1) == false)
                             {
                                 //tooltipMain
-                                data.imageTooltipMain = results.Item1;
+                                data.imageTooltipMain = resultsActor.Item1;
                                 //main present -> Add tooltip header (Actor name and type)
                                 data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
                             }
-                            if (string.IsNullOrEmpty(results.Item2) == false)
-                            { data.imageTooltipDetails = results.Item2; }
+                            if (string.IsNullOrEmpty(resultsActor.Item2) == false)
+                            { data.imageTooltipDetails = resultsActor.Item2; }
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
                     }
@@ -4243,6 +4251,17 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "Player":
                     turnSprite = GameManager.instance.playerScript.sprite;
+                    Tuple<string, string> resultsPlayer = GetPlayerTooltip();
+                    string playerName = GameManager.instance.playerScript.PlayerName;
+                    if (string.IsNullOrEmpty(resultsPlayer.Item1) == false)
+                    {
+                        //tooltipMain
+                        data.imageTooltipMain = resultsPlayer.Item1;
+                        //main present -> Add tooltip header (Player name)
+                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, playerName, colourEnd);
+                    }
+                    if (string.IsNullOrEmpty(resultsPlayer.Item2) == false)
+                    { data.imageTooltipDetails = resultsPlayer.Item2; }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised turnTopicType \"{0}\"", turnTopicType.name); break;
             }
@@ -4253,7 +4272,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorTooltip
     /// <summary>
-    /// Returns tooltip main and details for various actor subTypes. tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseovre
+    /// Returns tooltip main and details for various actor subTypes (Motivation). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
     /// Note: Actor checked for Null by parent method
     /// </summary>
     /// <param name="data"></param>
@@ -4317,6 +4336,59 @@ public class TopicManager : MonoBehaviour
                     if (motivation < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
                     else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
                     textDetails = builder.ToString();
+                    break;
+            }
+        }
+        else { Debug.LogWarning("Invalid turnTopicSubType (Null)"); }
+        return new Tuple<string, string>(textMain, textDetails);
+    }
+    #endregion
+
+    #region GetPlayerTooltip
+    /// <summary>
+    /// Returns tooltip main and details for various player subTypes (Mood). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// </summary>
+    /// <param name="data"></param>
+    private Tuple<string, string> GetPlayerTooltip()
+    {
+        string textMain = "";
+        string textDetails = "";
+        StringBuilder builder = new StringBuilder();
+        if (turnTopicSubType != null)
+        {
+            switch (turnTopicSubType.name)
+            {
+                case "PlayerDistrict":
+                case "PlayerGeneral":
+                    //info on whether topic is good or bad and why
+                    switch (turnTopic.group.name)
+                    {
+                        case "Good":
+                            textMain = string.Format("{0}<size=115%>GOOD{1}{2}{3}Event</size>{4}", colourGood, colourEnd, "\n", colourNormal, colourEnd);
+                            break;
+                        case "Bad":
+                            textMain = string.Format("{0}<size=115%>BAD{1}{2}{3}Event</size>{4}", colourBad, colourEnd, "\n", colourNormal, colourEnd);
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
+                    }
+                    //details
+                    int mood = GameManager.instance.playerScript.GetMood();
+                    int oddsGood = chanceNeutralGood;
+                    int oddsBad = 100 - chanceNeutralGood;
+                    builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Mood</size>{6}{7}", "\n", colourAlert, "Player", colourEnd, "\n", colourNeutral, colourEnd, "\n");
+                    //highlight current mood band, grey out the rest
+                    if (mood == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+                    else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
+
+                    if (mood == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+                    else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
+
+                    if (mood < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
+                    else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
+                    textDetails = builder.ToString();
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType.name);
                     break;
             }
         }

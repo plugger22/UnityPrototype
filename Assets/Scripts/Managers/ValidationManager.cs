@@ -801,21 +801,6 @@ public class ValidationManager : MonoBehaviour
                                             textLength = option.text.Length;
                                             if (textLength > 0)
                                             {
-                                                /*//collect all beliefs as want to check for dupes
-                                                if (option.moodEffect != null)
-                                                {
-                                                    listOfMoodEffects.Add(option.moodEffect.name);
-                                                    //tally beliefs
-                                                    if (dictOfBeliefs.ContainsKey(option.moodEffect.name) == true)
-                                                    {
-                                                        num = dictOfBeliefs[option.moodEffect.name] + 1;
-                                                        dictOfBeliefs[option.moodEffect.name] = num;
-                                                    }
-                                                    else { Debug.LogWarningFormat("Invalid moodEffect \"{0}\", (Not found in dictOfBeliefs)", option.moodEffect.name); }
-                                                }
-                                                else
-                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }*/
-
                                                 //check text length limit
                                                 if (textLength > maxOptionTextLength)
                                                 {
@@ -906,7 +891,7 @@ public class ValidationManager : MonoBehaviour
                                         { isPassedCheck = true; }
                                     }
                                     //at least one option with No criteria present
-                                    if (isPassedCheck == false)
+                                    if (isPassedCheck == false && topic.subType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == false)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has NO options without CRITERIA (should be at least one){1}", topicName, "\n"); }
 
                                     //check option moodEffects

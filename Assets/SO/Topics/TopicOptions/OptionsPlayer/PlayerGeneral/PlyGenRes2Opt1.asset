@@ -16,7 +16,8 @@ MonoBehaviour:
   text: Your [option1]
   topic: {fileID: 11400000, guid: c203504c7f4086845b73455e4d373b3c, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: ce614d7811035ea4f9d3cc7a81185c03, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: c7c1da9f8a5d2344b8bd82eb257eade2, type: 2}
   listOfBadEffects: []
@@ -28,3 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
+  optionNumber: 1

@@ -851,6 +851,26 @@ public class EffectManager : MonoBehaviour
                                                 if (val == 0)
                                                 { BuildString(result, "Secrets Zero"); }
                                                 break;
+                                            case "ActiveActorSlot0":
+                                                //check there is an active actor present onMap at slot 0
+                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(0, playerSide) == false)
+                                                { BuildString(result, "No Active Subordinate"); }
+                                                break;
+                                            case "ActiveActorSlot1":
+                                                //check there is an active actor present onMap at slot 1
+                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(1, playerSide) == false)
+                                                { BuildString(result, "No Active Subordinate"); }
+                                                break;
+                                            case "ActiveActorSlot2":
+                                                //check there is an active actor present onMap at slot 2
+                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(2, playerSide) == false)
+                                                { BuildString(result, "No Active Subordinate"); }
+                                                break;
+                                            case "ActiveActorSlot3":
+                                                //check there is an active actor present onMap at slot 3
+                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(3, playerSide) == false)
+                                                { BuildString(result, "No Active Subordinate"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));

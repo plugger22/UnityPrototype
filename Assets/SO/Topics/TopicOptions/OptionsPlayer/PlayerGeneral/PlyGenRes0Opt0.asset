@@ -16,16 +16,17 @@ MonoBehaviour:
   text: Your [option0]
   topic: {fileID: 11400000, guid: f35a5742cc719df4ea7208c8b0f67114, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 4c30825600ff23b4d8c6db72d99eaf17, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4b34851bab0426140a88209f646e79bc, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <color=#FFFFE0>Luxury Goods</color>
-  tooltipMain: <color=#98FB98>RECRUITER Motivation +3</color>
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  tooltipHeader: <color=#FFFFE0>Luxury</color>
+  tooltipMain: <color=#98FB98>HACKER Motivation +3</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Your RECRUITER</color>
+  textToDisplay: <color=#EEFB73>Your HACKER</color>
   optionNumber: 0

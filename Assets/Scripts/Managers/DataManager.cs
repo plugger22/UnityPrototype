@@ -4384,6 +4384,31 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns true if there is a current, OnMap, Active actor present in the specified slot, false otherwise
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public bool CheckActiveActorPresent(int slotID, GlobalSide side)
+    {
+        bool isPresent = false;
+        if (side != null)
+        {
+            if (CheckActorSlotStatus(slotID, side) == true)
+            {
+                Actor actor = GetCurrentActor(slotID, side);
+                if (actor != null)
+                {
+                    if (actor.Status == ActorStatus.Active)
+                    { isPresent = true; }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid side (Null), invalidated check returns default false"); }
+        return isPresent;
+    }
+
+    /// <summary>
     /// returns true if specified actor Arc is present in OnMap line up and active (default -> to ignore this condition set isActiveIgnore to true), false otherwise
     /// </summary>
     /// <param name="arc"></param>
