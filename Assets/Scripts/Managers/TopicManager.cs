@@ -891,7 +891,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region archive
+    #region archive Old Code
     /*public void SelectTopic(GlobalSide playerSide)
     {
         if (playerSide != null)
@@ -1084,7 +1084,8 @@ public class TopicManager : MonoBehaviour
     {
         //clear list at start of selection (not done in ResetTopicAdmin as it should only be done once at start, not every iteration inside the selection loop
         listOfTopicTypesTurn.Clear();
-        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        //by value, not reference, as you'll be passing them onto listOfTopicTypesTurn and removing occasionally
+        List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.instance.dataScript.GetListOfTopicTypesLevel());
         if (listOfTopicTypesLevel != null)
         {
             string criteriaCheck;
@@ -1176,9 +1177,6 @@ public class TopicManager : MonoBehaviour
         tagTeam = "";
         tagStringData = "";
         //empty collections
-
-        /*listOfTopicTypesTurn.Clear();*/
-
         listOfTypePool.Clear();
         listOfSubTypePool.Clear();
     }

@@ -1050,6 +1050,9 @@ public class EffectManager : MonoBehaviour
                                             case "TopicAuthority":
                                                 isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType, turn);
                                                 break;
+                                            case "TopicPlayer":
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.playerType, turn);
+                                                break;
                                             default:
                                                 Debug.LogWarning(string.Format("Topic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                 errorFlag = true;

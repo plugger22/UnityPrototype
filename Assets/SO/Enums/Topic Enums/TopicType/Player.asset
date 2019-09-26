@@ -18,5 +18,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
   - {fileID: 11400000, guid: 009911c2d99e7cd489e874e835111a00, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 93a685faa0eac434fb8c0f81c21ddea6, type: 2}
   minInterval: 0

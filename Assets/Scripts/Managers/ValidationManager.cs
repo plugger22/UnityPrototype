@@ -48,12 +48,12 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType resistanceGeneralSubType;
 
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType hqType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType hqSubType;
 
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType actorType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType actorContactSubType;
@@ -65,6 +65,13 @@ public class ValidationManager : MonoBehaviour
     public TopicSubType actorMatchSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType actorPoliticSubType;
+
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType playerType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType playerDistrictSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType playerGeneralSubType;
 
     [Header("City.SO Pool Criteria")]
     [Tooltip("TopicType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
@@ -286,6 +293,26 @@ public class ValidationManager : MonoBehaviour
         }
         else
         { Debug.LogError("Invalid hqType (Null)"); }
+        //subType checks -> Player
+        if (playerType != null)
+        {
+            //player District
+            if (playerDistrictSubType != null)
+            {
+                if (playerType.listOfSubTypes.Exists(x => x.name.Equals(playerDistrictSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerDistrictSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerDistrictSubType.name, playerType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid playerDistrictSubType (Null)"); }
+            //player General
+            if (playerGeneralSubType != null)
+            {
+                if (playerType.listOfSubTypes.Exists(x => x.name.Equals(playerGeneralSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerGeneralSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerGeneralSubType.name, playerType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid playerGeneralSubType (Null)"); }
+        }
+        else
+        { Debug.LogError("Invalid playerType (Null)"); }
         //subType checks -> Actor
         if (actorType != null)
         {
