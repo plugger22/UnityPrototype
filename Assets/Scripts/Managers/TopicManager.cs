@@ -857,6 +857,51 @@ public class TopicManager : MonoBehaviour
                 CheckTopics();
                 //select a topic, if none found then drop the global interval by 1 and try again
                 minIntervalGlobalActual = minIntervalGlobal;
+                //initialise listOfTopicTypesTurn prior to selection loop
+                CheckForValidTopicTypes();
+                Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: listOfTopicTypeTurn has {0} records{1}", listOfTopicTypesTurn.Count, "\n");
+                do
+                {
+                    //reset needs to be inside the loop
+                    ResetTopicAdmin();
+
+                    if (GetTopicType() == true)
+                    {
+                        if (GetTopicSubType(playerSide) == true)
+                        { GetTopic(playerSide); }
+                    }
+                    //repeat process with a reduced minInterval
+                    if (turnTopic == null)
+                    {
+                        minIntervalGlobalActual--;
+                        Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                    }
+                    else { break; }
+                }
+                while (turnTopic == null && minIntervalGlobalActual > 0);
+                //only if a valid topic selected
+                if (turnTopic != null)
+                {
+                    //debug purposes only -> BEFORE UpdateTopicTypeData
+                    UnitTestTopic(playerSide);
+                }
+            }
+        }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
+    }
+    #endregion
+
+    #region archive
+    /*public void SelectTopic(GlobalSide playerSide)
+    {
+        if (playerSide != null)
+        {
+            //Player must be Active
+            if (CheckPlayerStatus(playerSide) == true)
+            {
+                CheckTopics();
+                //select a topic, if none found then drop the global interval by 1 and try again
+                minIntervalGlobalActual = minIntervalGlobal;
                 do
                 {
                     //reset needs to be inside the loop
@@ -885,7 +930,7 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
-    }
+    }*/
     #endregion
 
     #region CheckTopics
@@ -1037,6 +1082,8 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void CheckForValidTopicTypes()
     {
+        //clear list at start of selection (not done in ResetTopicAdmin as it should only be done once at start, not every iteration inside the selection loop
+        listOfTopicTypesTurn.Clear();
         List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
         {
@@ -1074,9 +1121,10 @@ public class TopicManager : MonoBehaviour
                                 //valid topicType / subType, add to selection pool
                                 if (isProceed == true)
                                 {
-                                    //criteria check passed O.K
-                                    listOfTopicTypesTurn.Add(topicType);
-                                    //add to local list of valid TopicTypes for the Turn
+
+                                    /*listOfTopicTypesTurn.Add(topicType);*/
+
+                                    //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
                                     AddTopicTypeToList(listOfTopicTypesTurn, topicType);
                                     Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
                                 }
@@ -1128,7 +1176,9 @@ public class TopicManager : MonoBehaviour
         tagTeam = "";
         tagStringData = "";
         //empty collections
-        listOfTopicTypesTurn.Clear();
+
+        /*listOfTopicTypesTurn.Clear();*/
+
         listOfTypePool.Clear();
         listOfSubTypePool.Clear();
     }
@@ -1136,7 +1186,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetTopicType
     /// <summary>
-    /// Get topicType for turn Decision based of listOfTopicTypesTurn. Returns true if valid topicType found, false otherwise
+    /// Get topicType for turn Decision based off listOfTopicTypesTurn. Returns true if valid topicType found, false otherwise
     /// </summary>
     private bool GetTopicType()
     {
@@ -1178,6 +1228,8 @@ public class TopicManager : MonoBehaviour
     {
         int numOfEntries;
         bool isProceed;
+        if (turnTopicType.name.Equals("Player") == true)
+        { numOfEntries = 0; }
         if (turnTopicType != null)
         {
             //loop all subTypes for topicType
@@ -1248,7 +1300,20 @@ public class TopicManager : MonoBehaviour
                 Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: SELECTED turnTopicSubType \"{0}\"", turnTopicSubType.name);
                 return true;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n"); }
+            else
+            {
+                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n");
+                //remove topicType from listOfTopicTypesTurn (selection list) to prevent it being selected again given that there are no valid topics anywhere within that topicType
+                if (minIntervalGlobalActual > 1)
+                {
+                    int index = listOfTopicTypesTurn.FindIndex(x => x.name.Equals(turnTopicType.name, StringComparison.Ordinal) == true);
+                    if (index > -1)
+                    {
+                        Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: topicType \"{0}\" REMOVED from listOfTopicTypesTurn{1}", turnTopicType.name, "\n");
+                        listOfTopicTypesTurn.RemoveAt(index);
+                    }
+                }
+            }
         }
         else { Debug.LogWarning("Invalid turnTopic (Null)"); }
         //O.K for there to be no valid topic
@@ -2014,8 +2079,9 @@ public class TopicManager : MonoBehaviour
                                 {
                                     //criteria checked failed
                                     isProceed = true;
-                                    tagActorID = -1;
                                     colourOption = colourGrey;
+                                    if (isPlayerGeneral == true)
+                                    { tagActorID = -1; }
                                 }
                                 //colourFormat textToDisplay -> special case first
                                 if (isPlayerGeneral == true && tagActorID < 0)

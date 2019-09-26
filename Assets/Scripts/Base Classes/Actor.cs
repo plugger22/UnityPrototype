@@ -1227,7 +1227,7 @@ namespace gameAPI
                 { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, actorName, arc.name); }
                 //add to list
                 listOfNodeActions.Add(data);
-                Debug.LogFormat("[Tst] Actor.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");
+                /*Debug.LogFormat("[Tst] Actor.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");*/
             }
             else { Debug.LogError("Invalid nodeDataAction (Null)"); }
         }
@@ -1252,7 +1252,7 @@ namespace gameAPI
         public void RemoveMostRecentNodeAction()
         {
             int index = 0;
-            Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");
+            /*Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");*/
             listOfNodeActions.RemoveAt(index);
         }
 
@@ -1302,7 +1302,7 @@ namespace gameAPI
                 { Debug.LogWarningFormat("Invalid TeamActionData teamAction \"{0}\" for {1}, {2}", data.teamAction, actorName, arc.name); }
                 //add to list
                 listOfTeamActions.Add(data);
-                Debug.LogFormat("[Tst] Actor.cs -> AddTeamAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.teamAction, data.dataName, "\n");
+                /*Debug.LogFormat("[Tst] Actor.cs -> AddTeamAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.teamAction, data.dataName, "\n");*/
             }
             else { Debug.LogError("Invalid teamDataAction (Null)"); }
         }
@@ -1327,7 +1327,7 @@ namespace gameAPI
         public void RemoveMostRecentTeamAction()
         {
             int index = listOfTeamActions.Count - 1;
-            Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentTeamAction: {0}, {1}, teamAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfTeamActions[index].teamAction, "\n");
+            /*Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentTeamAction: {0}, {1}, teamAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfTeamActions[index].teamAction, "\n");*/
             listOfTeamActions.RemoveAt(index);
         }
 

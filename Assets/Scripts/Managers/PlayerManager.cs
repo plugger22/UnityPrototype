@@ -1643,7 +1643,7 @@ public class PlayerManager : MonoBehaviour
             { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, PlayerName, "Player"); }
             //add to list
             listOfNodeActions.Add(data);
-            Debug.LogFormat("[Tst] PlayerManager.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");
+            /*Debug.LogFormat("[Tst] PlayerManager.cs -> AddNodeAction: t {0}, actorID {1}, nodeID {2}, act {3}, data {4}{5}", data.turn, data.actorID, data.nodeID, data.nodeAction, data.dataName, "\n");*/
         }
         else { Debug.LogError("Invalid nodeDataAction (Null)"); }
     }
