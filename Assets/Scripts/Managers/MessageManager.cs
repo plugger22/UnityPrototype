@@ -22,6 +22,8 @@ public class MessageManager : MonoBehaviour
     [HideInInspector] public int messageIDCounter = 0;                                          //messageID counter
     #endregion
 
+    #region InitialseEarly
+
     /// <summary>
     /// Set up at start
     /// </summary>
@@ -47,6 +49,7 @@ public class MessageManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
         EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "MessageManager");
     }
+    #endregion
 
     /// <summary>
     /// needed due to gameManager initialisation sequence
@@ -79,11 +82,13 @@ public class MessageManager : MonoBehaviour
 
     #endregion
 
+    #region ResetCounter
     /// <summary>
     /// Reset message ID counter prior to a new level
     /// </summary>
     public void ResetCounter()
     { messageIDCounter = 0; }
+    #endregion
 
     /// <summary>
     /// handles events
@@ -108,6 +113,8 @@ public class MessageManager : MonoBehaviour
         }
     }
 
+
+    #region StartTurnEarly
     /// <summary>
     /// Checks pending messages, decrements delay timers and moves any with a zero timer to Current messages.
     /// </summary>
@@ -168,7 +175,10 @@ public class MessageManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfDelayItemData (Null)"); }
     }
+    #endregion
 
+
+    #region EndTurn
     /// <summary>
     /// checks current messages, moves all of them to Archive messages
     /// </summary>
@@ -189,6 +199,7 @@ public class MessageManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
     }
+    #endregion
 
 
     //
@@ -285,12 +296,13 @@ public class MessageManager : MonoBehaviour
     /// Random roll results (only ones that matter, don't spam). Auto player side. Format text as "Faction support Declined" with NO need, rolled, etc. 
     /// Set 'isReversed' to true if success means a bad outcome, eg. in case of Gear Compromise check a success is failing the roll
     /// 'typeOfCheck' is InfoApp RHS header in format '... Check', eg. 'Compromise'. Keep short
+    /// help is to add an additional help tag explaining the individual item, if needed, ignored otherwise
     /// </summary>
     /// <param name="text"></param>
     /// <param name="numNeeded"></param>
     /// <param name="numRolled"></param>
     /// <returns></returns>
-    public void GeneralRandom(string text, string typeOfCheck, int numNeeded, int numRolled, bool isReversed = false)
+    public void GeneralRandom(string text, string typeOfCheck, int numNeeded, int numRolled, bool isReversed = false, string help = "")
     {
         Debug.Assert(string.IsNullOrEmpty(typeOfCheck) == false, "Invalid typeOfCheck (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
@@ -316,9 +328,18 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
-            data.tag0 = "roll_0";
-            data.tag1 = "roll_1";
-            data.tag2 = "roll_2";
+            if (string.IsNullOrEmpty(help) == true)
+            {
+                data.tag0 = "roll_0";
+                data.tag1 = "roll_1";
+                data.tag2 = "roll_2";
+            }
+            else
+            {
+                data.tag0 = help;
+                data.tag1 = "roll_1";
+                data.tag2 = "roll_2";
+            }
             //add (message only if a meaningful outcome)
             if (isReversed == false)
             { if (numRolled >= numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }

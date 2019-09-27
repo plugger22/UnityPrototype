@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: ActDisRecallAUT1
   m_EditorClassIdentifier: 
   tag: Actor District Recall Team 1
+  text: Unknown
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 7e6e385977e5c6347a00f7c7048eaac7, type: 2}
@@ -21,15 +23,18 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: da5da1e69910fa4418a567b5b5cf21ac, type: 2}
   - {fileID: 11400000, guid: bcf1c8eaa09b7bf41ac59c6135d5cdc0, type: 2}
   - {fileID: 11400000, guid: 93b82cf87c1ab614892aac0541adb3f7, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0

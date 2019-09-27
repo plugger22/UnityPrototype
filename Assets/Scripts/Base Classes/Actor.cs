@@ -329,8 +329,8 @@ namespace gameAPI
                                 //random roll message regardless, provided a check was made
                                 if (numNeeded > 0)
                                 {
-                                    text = string.Format("{0}, {1}, Compatibility check {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
-                                    GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome);
+                                    text = string.Format("{0}, {1}, ignore Motivation {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
+                                    GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome, "rand_0");
                                     Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2}{3}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, "\n");
                                 }
                                 //motivational History

@@ -128,6 +128,33 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("No help has been provided here. You need to go into {0}HelpManager.cs{1} and create a series of topics for the this item", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
+        #region RandomTab items Help
+        //
+        // - - - Random Tab additional (single topic, green header) item help (explains meaning of particular item) -> Number sequentially 'rand_x'
+        //
+        //Compatibility check
+        data = new HelpData();
+        data.tag = "rand_0";
+        data.header = string.Format("{0}Compatibility Check{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("The actor's {0}Compatibility{1} with yourself can {2}prevent{3} any change in motivation occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("If they have a good opinion of you {0}they may ignore{1} a drop in motivation and vice versa. ", colourAlert, colourEnd);
+        builder.AppendFormat("The {0}more{1} Compatible/Incompatibile they are with you the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Faction support
+        data = new HelpData();
+        data.tag = "rand_1";
+        int approval = 5;
+        data.header = string.Format("{0}Faction Support{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
+        builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd, 
+            colourAlert, colourEnd, approval, approval * 10);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         #region Faction Support
         //
         // - - - Faction Support

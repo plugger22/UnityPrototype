@@ -292,7 +292,7 @@ public class FactionManager : MonoBehaviour
                             string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
                             GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd, false, "rand_1");
                             //Support given
                             GameManager.instance.playerScript.Renown += renownPerTurn;
                         }
@@ -303,7 +303,7 @@ public class FactionManager : MonoBehaviour
                             string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
                             GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd, false, "rand_1");
                         }
                         break;
                     default:
@@ -501,6 +501,22 @@ public class FactionManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid side (Null)"); }
         return description;
+    }
+
+    /// <summary>
+    /// returns faction approval level for current side, returns -1 if a problem
+    /// </summary>
+    /// <returns></returns>
+    public int GetFactionApproval()
+    {
+        int approval = -1;
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1: approval = _approvalAuthority; break;
+            case 2: approval = _approvalResistance; break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.instance.sideScript.PlayerSide.level); break;
+        }
+        return approval;
     }
 
     /// <summary>

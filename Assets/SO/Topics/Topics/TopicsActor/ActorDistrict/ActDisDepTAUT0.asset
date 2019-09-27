@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: ActDisDepTAUT0
   m_EditorClassIdentifier: 
   tag: Actor District Deploy Team 0
+  text: Unknown
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
   subSubType: {fileID: 11400000, guid: 5abf4e1267a28594a822d32f9668aa90, type: 2}
@@ -21,15 +23,18 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: a1ffce317e6412840b33fcb2329df566, type: 2}
   - {fileID: 11400000, guid: e339c4a98157ab642853f416e8fb435a, type: 2}
   - {fileID: 11400000, guid: 9c985d72b2d81df4eaa0b10f7776b2a6, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
