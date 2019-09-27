@@ -735,6 +735,12 @@ public class ValidationManager : MonoBehaviour
                                 {
                                     if (listOfSubTypes.Remove(subType) == false)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" not in topicType \"{1}\" listOfSubTopics{2}", subType.tag, type.tag, "\n"); }
+                                    //check subType min interval is equal to or greater than parent type interval
+                                    if (subType.minIntervalFactor < type.minIntervalFactor)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topicSubType \"{0}\" has min interval ({1}) LESS THAN parent type interval \"{2}\" ({3}){4}", subType.name,
+                                          subType.minIntervalFactor, type.name, type.minIntervalFactor, "\n");
+                                    }
                                 }
                             }
                             else { Debug.LogWarningFormat("Invalid topicSubType (Null) for topic \"{0}\"", type.name); }
@@ -1168,6 +1174,12 @@ public class ValidationManager : MonoBehaviour
                         //Actor Politic Pool
                         if (campaign.actorPoliticPool != null)
                         { CheckCampaignPool(campaign, campaign.actorPoliticPool, actorPoliticSubType); }
+                        //Player District Pool
+                        if (campaign.playerDistrictPool != null)
+                        { CheckCampaignPool(campaign, campaign.playerDistrictPool, playerDistrictSubType); }
+                        //Player General Pool
+                        if (campaign.playerGeneralPool != null)
+                        { CheckCampaignPool(campaign, campaign.playerGeneralPool, playerGeneralSubType); }
                         //
                         // - - - Scenario side and City pools (topics in pool correct side check only)
                         //
@@ -2979,14 +2991,17 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                                             campaign.name, subSubPool.name, topic.name, topic.subSubType.name, subSubPool.subSubType.name, "\n");
                                     }
                                     //check at least one good and one bad topic with 'Normal' profile present in pool (see DecisionTopic/DesignNotes in Keep) -> needs to be one of each present at all times
+                                    //NOTE: -> checks first four characters for a match to 'Norm' (could be Norm2X, for example). Sep '`9
                                     if (topic.group.name.Equals("Good", StringComparison.Ordinal) == true)
                                     {
-                                        if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)
+                                        /*if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)*/
+                                        if (topic.profile.name.Substring(0, 4).Equals("Norm", StringComparison.Ordinal) == true)
                                         { isGoodTopicPresent = true; }
                                     }
                                     if (topic.group.name.Equals("Bad", StringComparison.Ordinal) == true)
                                     {
-                                        if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)
+                                        /*if (topic.profile.name.Equals(normalProfile.name, StringComparison.Ordinal) == true)*/
+                                        if (topic.profile.name.Substring(0, 4).Equals("Norm", StringComparison.Ordinal) == true)
                                         { isBadTopicPresent = true; }
                                     }
                                 }
@@ -3041,6 +3056,15 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                 {
                     Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\", topic \"{2}\" Invalid (Null){3}}",
                         campaign.name, pool.name, topic.name, "\n");
+                }
+                //check topic profile interval is equal to or greater than the subType min interval -> SubSubType's only
+                if (pool.subSubType != null)
+                {
+                    if (topic.profile.delayRepeatFactor < pool.subType.minIntervalFactor)
+                    {
+                        Debug.LogFormat("[Val] ValidationManager.cs -> CheckCampaignPool: topic \"{0}\" has profile interval factor ({1}) LESS THAN subType \"{2}\" ({3}){4}", topic.name,
+                          topic.profile.delayRepeatFactor, pool.subType.name, pool.subType.minIntervalFactor, "\n");
+                    }
                 }
             }
             //Has one good and one bad topic present?

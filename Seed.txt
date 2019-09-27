@@ -13146,3 +13146,58 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 60029 -> Friday, 27 September 2019 11:51 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 61962 -> Friday, 27 September 2019 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63570 -> Friday, 27 September 2019 2:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27559 -> Friday, 27 September 2019 2:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56178 -> Friday, 27 September 2019 2:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43128 -> Friday, 27 September 2019 2:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44235 -> Friday, 27 September 2019 2:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27479 -> Friday, 27 September 2019 2:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42980 -> Friday, 27 September 2019 2:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25581 -> Friday, 27 September 2019 2:40 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.CheckCampaignPool (Campaign campaign, TopicPool pool, TopicSubType subType) (at Assets/Scripts/Managers/ValidationManager.cs:3057)
+	ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:1140)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:121)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:748)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:804)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:353)
+	
+Dev seed 16725 -> Friday, 27 September 2019 2:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57641 -> Friday, 27 September 2019 2:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47373 -> Friday, 27 September 2019 2:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13807 -> Friday, 27 September 2019 3:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43029 -> Friday, 27 September 2019 3:04 PM
+City seed 5678 -> London, United Kingdom
