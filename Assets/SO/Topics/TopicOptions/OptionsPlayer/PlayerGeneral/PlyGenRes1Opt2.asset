@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] says that the Resistance treats their people badly but I hear that
+    it''s the opposite, says [npc], of [node]'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

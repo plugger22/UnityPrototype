@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: What help would I be to the Resistance with my [handicap]? [mayor] said they
+    eat you. No thanks, says [npc], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -44,6 +44,8 @@ public class TopicManager : MonoBehaviour
     public TextList textListMoneyReason;
     [Tooltip("List of HR Policy")]
     public TextList textListPolicy;
+    [Tooltip("List of Handicaps")]
+    public TextList textListHandicap;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -304,6 +306,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListNpcSomething != null, "Invalid textListNpcSomething (Null)");
         Debug.Assert(textListMoneyReason != null, "Invalid textListMoneyReason (Null)");
         Debug.Assert(textListPolicy != null, "Invalid textListPolicy (Null)");
+        Debug.Assert(textListHandicap != null, "Invalid textListHandicap (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -1833,6 +1836,11 @@ public class TopicManager : MonoBehaviour
                     }
                 }
             }
+            //assign a random node (used only for news text tags)
+            Node node = GameManager.instance.dataScript.GetRandomNode();
+            if (node != null)
+            { tagNodeID = node.nodeID; }
+            else { Debug.LogError("Invalid random node (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //group based on Player Mood
@@ -4166,6 +4174,12 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         { replaceText = textListNpcSomething.GetRandomRecord(); }
                         else { CountTextTag("npcIs", dictOfTags); }
+                        break;
+                    case "handicap":
+                        //handicap, eg. 'my [handicap]'
+                        if (isValidate == false)
+                        { replaceText = textListHandicap.GetRandomRecord(); }
+                        else { CountTextTag("handicap", dictOfTags); }
                         break;
                     case "money":
                         //reason they want money

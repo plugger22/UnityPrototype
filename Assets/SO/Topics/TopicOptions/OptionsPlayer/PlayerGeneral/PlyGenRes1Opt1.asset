@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Nobody has said that the Resistance treats people badly, says [npc], of [node].
+    I hear it's a good deal
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

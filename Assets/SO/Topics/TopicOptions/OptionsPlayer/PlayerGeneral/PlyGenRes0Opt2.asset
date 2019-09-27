@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Luxury</color>
-  tooltipMain: <color=#98FB98>ANARCHIST Motivation +3</color>
-  tooltipDetails: <color=#FF4500>Player Mood -1</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Your ANARCHIST</color>
+  news: I saw the autoHanger go through several captured Resistance members yesterday.
+    Glad that I wasn't one of them, says [npc], [job] of [node]
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>No Active Subordinate</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Subordinate unavailable</color>
   optionNumber: 2

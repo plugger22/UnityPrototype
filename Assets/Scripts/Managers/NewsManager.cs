@@ -311,6 +311,11 @@ public class NewsManager : MonoBehaviour
                             if (data.isValidate == false)
                             { replaceText = GameManager.instance.topicScript.textListNpcSomething.GetRandomRecord(); }
                             break;
+                        case "handicap":
+                            //npc has a handicap
+                            if (data.isValidate == false)
+                            { replaceText = GameManager.instance.topicScript.textListHandicap.GetRandomRecord(); }
+                            break;
                         case "job":
                             //Random job name appropriate to node arc
                             if (data.isValidate == false)

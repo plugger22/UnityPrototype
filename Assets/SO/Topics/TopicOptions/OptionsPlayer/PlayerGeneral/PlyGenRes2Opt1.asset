@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: I hear that they treat you really badly in the Resistance, like robots, says
+    [npc], [job] of [node]
+  tooltipHeader: <color=#FFFFE0>Roasting</color>
+  tooltipMain: <color=#98FB98>HEAVY Renown -3</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Your HEAVY</color>
   optionNumber: 1

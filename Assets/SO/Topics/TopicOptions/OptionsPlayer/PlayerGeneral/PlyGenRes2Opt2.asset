@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: I'm not happy about my [handicap] but at least it keeps me out of the Resistance,
+    says [npc], [job], of [node]. I hear that they mistreat you
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>No Active Subordinate</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Subordinate unavailable</color>
   optionNumber: 2

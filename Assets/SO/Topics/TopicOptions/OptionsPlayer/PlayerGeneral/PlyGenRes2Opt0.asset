@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: They say that the Resistance is like the Army. I'm glad that I have a [handicap]
+    and can't join, says [npc], [handicap] of [node]
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>No Active Subordinate</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Subordinate unavailable</color>
   optionNumber: 0
