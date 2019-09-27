@@ -1481,7 +1481,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     string reason = GameManager.instance.colourScript.GetFormattedString("Watching SerialFlix", ColourType.goodText);
                     string explanation = string.Format("<b>{0}{1}{2}</b>You had Unused Actions at the end of your turn", reason, "\n", "\n");
-                    ChangeMood(unusedActions, explanation, "n.a");
+                    ChangeMood(unusedActions, "Watching SerialFlix", "n.a");
                 }
             }
         }

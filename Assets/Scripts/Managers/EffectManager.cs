@@ -972,6 +972,26 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactNOTMax, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
+                                            case "RenownActorsMore":
+                                                //at least one actor has more renown than player
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownMore, playerSide) == 0)
+                                                { BuildString(result, "No actors with more Renown than Player"); }
+                                                break;
+                                            case "RenownActorsLess":
+                                                //at least one actor has less renown than player
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownLess, playerSide) == 0)
+                                                { BuildString(result, "No actors with less Renown than Player"); }
+                                                break;
+                                            case "ActorsKnowSecret":
+                                                //at least one actor knows at least one of the player's secrets
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsSecret, playerSide) == 0)
+                                                { BuildString(result, "No actors know any Player Secrets"); }
+                                                break;
+                                            case "ActorsKnowNothing":
+                                                //at least one actor knows none of the player's secrets
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsNothing, playerSide) == 0)
+                                                { BuildString(result, "All actors know Player Secrets"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

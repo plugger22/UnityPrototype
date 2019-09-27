@@ -139,7 +139,7 @@ public class HelpManager : MonoBehaviour
         builder = new StringBuilder();
         builder.AppendFormat("The actor's {0}Compatibility{1} with you can {2}prevent{3} any change in motivation occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("If they have a good opinion of you {0}they may ignore{1} a drop in motivation and vice versa. ", colourAlert, colourEnd);
-        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are with you the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Faction support

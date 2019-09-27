@@ -1986,8 +1986,8 @@ public class TopicManager : MonoBehaviour
             bool isPlayerGeneral = false;
             if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
             { isPlayerGeneral = true; }
-                //Debug initialise data package if any debug topics present (if none use normally selected topic)
-                if (debugTopicPool != null)
+            //Debug initialise data package if any debug topics present (if none use normally selected topic)
+            if (debugTopicPool != null)
             {
                 bool isProceed = false;
                 //check at least one topic in pool is live
@@ -2209,6 +2209,9 @@ public class TopicManager : MonoBehaviour
                 builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
                 if (listOfEffects.Count > 0)
                 {
+                    //probability option and only one effect (which would be mood)
+                    if (turnOption.chance != null && listOfEffects.Count == 1)
+                    { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
                     //loop effects
                     foreach (Effect effect in listOfEffects)
                     {
@@ -3902,7 +3905,7 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             int actorID = arrayOfOptionActorIDs[0];
-                            if ( actorID > -1)
+                            if (actorID > -1)
                             {
                                 Actor actor = GameManager.instance.dataScript.GetActor(actorID);
                                 if (actor != null)

@@ -4523,7 +4523,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns number of active, onMap actors, for the specified side, who meet the special enum criteria, Zero if a problem
+    /// returns number of Active, onMap actors, for the specified side, who meet the special enum criteria, Zero if a problem
     /// </summary>
     /// <param name="check"></param>
     /// <returns></returns>
@@ -4611,6 +4611,22 @@ public class DataManager : MonoBehaviour
                             case ActorCheck.ActorContactNOTMax:
                                 //At least one active actor has less than their max allowed number of contacts
                                 if (actor.CheckNewContactAllowed() == true) { numOfActors++; }
+                                break;
+                            case ActorCheck.RenownMore:
+                                //At least one active actor with MORE renown than Player
+                                if (actor.Renown > GameManager.instance.playerScript.Renown) { numOfActors++; }
+                                break;
+                            case ActorCheck.RenownLess:
+                                //At least one active actor with LESS renown than Player
+                                if (actor.Renown < GameManager.instance.playerScript.Renown) { numOfActors++; }
+                                break;
+                            case ActorCheck.KnowsSecret:
+                                //At least one active actor knows at least one of the Player's secrets
+                                if (actor.CheckNumOfSecrets() > 0) { numOfActors++; }
+                                break;
+                            case ActorCheck.KnowsNothing:
+                                //At least one active actor knows at least one of the Player's secrets
+                                if (actor.CheckNumOfSecrets() == 0) { numOfActors++; }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }
