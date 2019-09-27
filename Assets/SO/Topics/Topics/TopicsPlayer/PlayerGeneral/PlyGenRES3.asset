@@ -27,7 +27,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects:
-  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 62fd093cb5b3c364a9541753bd1ecb7e, type: 2}
   - {fileID: 11400000, guid: 922253d87c8c5a34cbeda694652eb668, type: 2}
@@ -39,9 +39,9 @@ MonoBehaviour:
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 5
+  timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 25
+  turnsLive: 20
   turnsDone: 0

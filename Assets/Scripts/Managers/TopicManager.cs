@@ -4737,6 +4737,44 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Debug display of current topic pool
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCurrentTopicPool()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- dictOfTopicPools{0}", "\n");
+        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
+        if (listOfTopics != null)
+        {
+
+            if (listOfTopics.Count > 0)
+            {            
+                //current topic subType pool
+                builder.AppendFormat("{0}- {1}{2}", "\n", turnTopicSubType.name, "\n");
+                foreach (Topic topic in listOfTopics)
+                {
+                    builder.AppendFormat(" {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status,
+                      topic.priority.name, topic.group.name, "\n");
+                }
+                //current topic profile data
+                builder.AppendFormat("{0}{1}- Profile data{2}", "\n", "\n", "\n");
+                foreach (Topic topic in listOfTopics)
+                {
+                    if (topic.profile != null)
+                    {
+                        builder.AppendFormat(" {0} -> {1}{2}  ts {3}, tr {4}, tw {5} -> D {6}, A {7}, L {8}, D {9} -> {10}{11}", topic.name, topic.profile.name, "\n", topic.timerStart,
+                            topic.timerRepeat, topic.timerWindow, topic.turnsDormant, topic.turnsActive, topic.turnsLive, topic.turnsDone, topic.isCurrent ? "true" : "FALSE", "\n");
+                    }
+                }
+            }
+            else { builder.AppendFormat("     none found{0}", "\n"); }
+        }
+        else { builder.AppendFormat("{0} Error with turnTopicSubType", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Debug display of selection pools and data
     /// </summary>
     /// <returns></returns>

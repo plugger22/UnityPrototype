@@ -1533,7 +1533,7 @@ public class DebugGUI : MonoBehaviour
                     //Topic Pools
                     case 64:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicPools();
+                        analysis = GameManager.instance.topicScript.DebugDisplayCurrentTopicPool();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Selection data
@@ -1606,7 +1606,7 @@ public class DebugGUI : MonoBehaviour
                     case 76:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayTextTagCount();
-                        GUI.Box(new Rect(Screen.width - 355, 10, 700, 350), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 355, 10, 500, 500), analysis, customBackground);
                         break;
                 }
             }
