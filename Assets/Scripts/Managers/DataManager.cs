@@ -4660,28 +4660,39 @@ public class DataManager : MonoBehaviour
                         {
                             case ActorCheck.CompatibilityNOTZero:
                                 //actor with compatibility anything other than Zero
-                                if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
-                                { listOfActors.Add(actor); }
+                                if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.NodeActionsNOTZero:
                                 //actor with listOfNodeActions.Count > 0
-                                if (actor.CheckNumOfNodeActions() != 0)
-                                { listOfActors.Add(actor); }
+                                if (actor.CheckNumOfNodeActions() != 0) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.TeamActionsNOTZero:
                                 //actor with listOfTeamActions.Count > 0
-                                if (actor.CheckNumOfTeamActions() != 0)
-                                { listOfActors.Add(actor); }
+                                if (actor.CheckNumOfTeamActions() != 0) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.ActorContactMin:
                                 //actor with at least one, active, contact
-                                if (actor.CheckIfActiveContact() == true)
-                                { listOfActors.Add(actor); }
+                                if (actor.CheckIfActiveContact() == true) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.ActorContactNOTMax:
                                 //actor with less than max. num of contacts allowed
-                                if (actor.CheckNewContactAllowed() == true)
-                                { listOfActors.Add(actor); }
+                                if (actor.CheckNewContactAllowed() == true) { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.RenownMore:
+                                //At least one active actor with MORE renown than Player
+                                if (actor.Renown > GameManager.instance.playerScript.Renown) { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.RenownLess:
+                                //At least one active actor with LESS renown than Player
+                                if (actor.Renown < GameManager.instance.playerScript.Renown) { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.KnowsSecret:
+                                //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
+                                if (actor.CheckNumOfSecrets() > 0 && actor.CheckConditionPresent(GetCondition("BLACKMAILER")) == false) { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.KnowsNothing:
+                                //At least one active actor knows at least one of the Player's secrets
+                                if (actor.CheckNumOfSecrets() == 0) { listOfActors.Add(actor); }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }

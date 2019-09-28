@@ -146,7 +146,8 @@ public class TopicManager : MonoBehaviour
     private string tagLocation;
     private string tagGear;
     private string tagRecruit;
-    private string tagSecret;              //name of secret (not tag)
+    private string tagSecretName;               //secret.name
+    private string tagSecretTag;                //secret.tag
     private string tagTeam;                //used for resistance team actions
     private string tagTarget;
     private string tagStringData;        //General purpose
@@ -1177,7 +1178,8 @@ public class TopicManager : MonoBehaviour
         tagLocation = "";
         tagGear = "";
         tagRecruit = "";
-        tagSecret = "";
+        tagSecretName = "";
+        tagSecretTag = "";
         tagTarget = "";
         tagTeam = "";
         tagStringData = "";
@@ -2553,7 +2555,11 @@ public class TopicManager : MonoBehaviour
                         {
                             tagActorID = actor.actorID;
                             Secret secret = actor.GetSecret();
-                            if (secret != null) { tagSecret = secret.name; }
+                            if (secret != null)
+                            {
+                                tagSecretName = secret.name;
+                                tagSecretTag = secret.tag;
+                            }
                             else { Debug.LogWarningFormat("Invalid secret (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                         }
                         else { Debug.LogError("Invalid actor (Null) in listOfActors"); isSuccess = false; }
@@ -3537,7 +3543,7 @@ public class TopicManager : MonoBehaviour
             nodeID = tagNodeID,
             teamID = tagTeamID,
             contactID = tagContactID,
-            secret = tagSecret
+            secret = tagSecretName
         };
         return data;
     }
@@ -4304,8 +4310,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}{1}{2} secret", colourCheckText, tagSecret, colourEnd); }
-                            else { replaceText = string.Format("{0} secret", tagSecret); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2} secret", colourCheckText, tagSecretTag, colourEnd); }
+                            else { replaceText = string.Format("{0} secret", tagSecretTag); }
                         }
                         else { CountTextTag("secret", dictOfTags); }
                         break;
@@ -4551,6 +4557,7 @@ public class TopicManager : MonoBehaviour
     #region GetPlayerTooltip
     /// <summary>
     /// Returns tooltip main and details for various player subTypes (Mood). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// Note: also does actorMatch as this is based around Player mood as well
     /// </summary>
     /// <param name="data"></param>
     private Tuple<string, string> GetPlayerTooltip()
@@ -4564,6 +4571,7 @@ public class TopicManager : MonoBehaviour
             {
                 case "PlayerDistrict":
                 case "PlayerGeneral":
+                case "ActorMatch":
                     //info on whether topic is good or bad and why
                     switch (turnTopic.group.name)
                     {

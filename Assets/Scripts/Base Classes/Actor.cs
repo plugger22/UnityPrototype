@@ -1251,9 +1251,13 @@ namespace gameAPI
         /// </summary>
         public void RemoveMostRecentNodeAction()
         {
-            int index = 0;
-            /*Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");*/
-            listOfNodeActions.RemoveAt(index);
+            if (listOfNodeActions.Count > 0)
+            {
+                int index = 0;
+                /*Debug.LogFormat("[Tst] Actor.cs -> RemoveMostRecentNodeAction: {0}, {1}, nodeAction (District) \"{2}\" Removed{3}", actorName, arc.name, listOfNodeActions[index].nodeAction, "\n");*/
+                listOfNodeActions.RemoveAt(index);
+            }
+            else { Debug.LogWarning("Invalid listOfNodeActions (Empty)"); }
         }
 
         /// <summary>

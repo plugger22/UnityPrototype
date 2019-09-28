@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActMatRES1
   m_EditorClassIdentifier: 
-  tag: Actor Match Resistance 1
+  tag: Threatened
   text: Your [actor] reminds you that they know all about your [secret]. They've 'suggested'
     that it'd be nice if they received more recognition
   designNotes: negative actor Match event (actor -> player relationship)
@@ -41,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 15
+  turnsDormant: 3
+  turnsActive: 9
+  turnsLive: 8
   turnsDone: 0
