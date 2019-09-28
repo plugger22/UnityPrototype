@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActMatRES1Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 1 option 0
-  tag: Speak to HQ
+  tag: Agree
   text: I'll speak to HQ
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
   isPreferredByHQ: 0
@@ -20,7 +20,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

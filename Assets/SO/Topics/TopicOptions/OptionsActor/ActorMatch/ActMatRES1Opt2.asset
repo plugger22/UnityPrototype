@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: ActMatRES1Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 1 option 2
-  tag: 
-  text: 
+  tag: Promise
+  text: I'll make it up to you, I promise
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

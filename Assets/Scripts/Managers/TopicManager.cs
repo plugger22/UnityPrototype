@@ -1516,7 +1516,7 @@ public class TopicManager : MonoBehaviour
         //group depends on player mood
         group = GetGroupMood(GameManager.instance.playerScript.GetMood());
         //if no entries use entire list by default
-        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         //get a candidate actor (may change later in ProcessSpecialTopicData) -> aim for actor with motivation that coresponds to group
         List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
@@ -1546,7 +1546,7 @@ public class TopicManager : MonoBehaviour
                 //use entire list of actors if none found by group criteria
                 selectionList = listOfActors;
             }
-      
+
             if (selectionList.Count > 0)
             {
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
@@ -2484,7 +2484,7 @@ public class TopicManager : MonoBehaviour
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.instance.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
-                   //default case not required as if no match then it's assumed that no update is required
+                        //default case not required as if no match then it's assumed that no update is required
                 }
             }
             else { Debug.LogWarningFormat("Invalid criteria (Null) for topic \"{0}\"", turnTopic.name); }
@@ -2544,7 +2544,7 @@ public class TopicManager : MonoBehaviour
         {
             if (effectCriteria != null)
             {
-                switch(effectCriteria.name)
+                switch (effectCriteria.name)
                 {
                     case "ActorsKnowSecret":
                         //get random actor and actor secret from list
@@ -4410,16 +4410,34 @@ public class TopicManager : MonoBehaviour
                         if (actor != null)
                         {
                             turnSprite = actor.sprite;
-                            Tuple<string, string> resultsActor = GetActorTooltip(actor);
-                            if (string.IsNullOrEmpty(resultsActor.Item1) == false)
+                            switch (turnTopicSubType.name)
                             {
-                                //tooltipMain
-                                data.imageTooltipMain = resultsActor.Item1;
-                                //main present -> Add tooltip header (Actor name and type)
-                                data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                case "ActorMatch":
+                                    //based on player mood
+                                    Tuple<string, string> resultsMatch = GetPlayerTooltip();
+                                    if (string.IsNullOrEmpty(resultsMatch.Item1) == false)
+                                    {
+                                        //tooltipMain
+                                        data.imageTooltipMain = resultsMatch.Item1;
+                                        //main present -> Add tooltip header (Actor name and type)
+                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                    }
+                                    if (string.IsNullOrEmpty(resultsMatch.Item2) == false)
+                                    { data.imageTooltipDetails = resultsMatch.Item2; }
+                                    break;
+                                default:
+                                    Tuple<string, string> resultsActor = GetActorTooltip(actor);
+                                    if (string.IsNullOrEmpty(resultsActor.Item1) == false)
+                                    {
+                                        //tooltipMain
+                                        data.imageTooltipMain = resultsActor.Item1;
+                                        //main present -> Add tooltip header (Actor name and type)
+                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                    }
+                                    if (string.IsNullOrEmpty(resultsActor.Item2) == false)
+                                    { data.imageTooltipDetails = resultsActor.Item2; }
+                                    break;
                             }
-                            if (string.IsNullOrEmpty(resultsActor.Item2) == false)
-                            { data.imageTooltipDetails = resultsActor.Item2; }
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
                     }
@@ -4854,7 +4872,7 @@ public class TopicManager : MonoBehaviour
         {
 
             if (listOfTopics.Count > 0)
-            {            
+            {
                 //current topic subType pool
                 builder.AppendFormat("{0}- {1}{2}", "\n", turnTopicSubType.name, "\n");
                 foreach (Topic topic in listOfTopics)
