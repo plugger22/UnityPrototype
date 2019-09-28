@@ -13,12 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: gains BLACKMAILER condition
   ongoingTooltip: 
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: dae35e80e83b6b24687c68f6103c188f, type: 2}
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   topicApply: {fileID: 0}
-  outcome: {fileID: 11400000, guid: b2b3163bf16ee9b43b85c76bc3b25b8a, type: 2}
+  outcome: {fileID: 11400000, guid: 9fb7dbc59986f0c458cca7556c42e585, type: 2}
   operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
-  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0

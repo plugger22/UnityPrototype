@@ -1504,7 +1504,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorMatchTopics
     /// <summary>
-    /// subType ActorMatch template topics selected by actor compatibility (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorMatch template topics selected by player mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
@@ -1512,7 +1512,53 @@ public class TopicManager : MonoBehaviour
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-        //get all active, onMap actors
+
+        //group depends on player mood
+        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+        //if no entries use entire list by default
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+        //get a candidate actor (may change later in ProcessSpecialTopicData) -> aim for actor with motivation that coresponds to group
+        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        if (listOfActors != null)
+        {
+            List<Actor> selectionList = new List<Actor>();
+            foreach (Actor actor in listOfActors)
+            {
+                if (actor != null)
+                {
+                    switch (group)
+                    {
+                        case GroupType.Good:
+                            //actors with motivation 2+
+                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                            { selectionList.Add(actor); }
+                            break;
+                        case GroupType.Bad:
+                            //actors with motivation 2-
+                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) <= 2)
+                            { selectionList.Add(actor); }
+                            break;
+                    }
+                }
+            }
+            if (selectionList.Count == 0)
+            {
+                //use entire list of actors if none found by group criteria
+                selectionList = listOfActors;
+            }
+      
+            if (selectionList.Count > 0)
+            {
+                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
+                if (actor != null)
+                { tagActorID = actor.actorID; }
+            }
+            else { Debug.LogWarning("Invalid selectionList (Empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null)"); }
+
+
+        /*//get all active, onMap actors
         List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
         {
@@ -1553,7 +1599,8 @@ public class TopicManager : MonoBehaviour
                 tagActorID = actor.actorID;
             }
         }
-        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorMatch subType"); }
+        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorMatch subType"); }*/
+
         return listOfTopics;
     }
     #endregion
@@ -1785,9 +1832,11 @@ public class TopicManager : MonoBehaviour
                 group = GetGroupMood(GameManager.instance.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
-                //debug
+
+                /*//debug
                 foreach (Topic topic in listOfTopics)
-                { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }*/
+
                 //Info tags
                 tagActorID = data.actorID;
                 tagNodeID = data.nodeID;
