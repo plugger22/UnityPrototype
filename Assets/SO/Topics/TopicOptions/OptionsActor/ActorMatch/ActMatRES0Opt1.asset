@@ -11,5 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActMatRES0Opt1
   m_EditorClassIdentifier: 
-  tag: Actor Match Resistance 0 option 1
+  descriptor: Actor Match Resistance 0 option 1
+  tag: Discount
+  text: Will you take an IOU?
   topic: {fileID: 11400000, guid: 890b5b9cd2411ee41ab2803f4afa34fa, type: 2}
+  isPreferredByHQ: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: fdcf7de5e9e865b43943d3260ad5f402, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 1

@@ -11,5 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActMatRES1Opt1
   m_EditorClassIdentifier: 
-  tag: Actor Match Resistance 1 option 1
+  descriptor: Actor Match Resistance 1 option 1
+  tag: Blackmail
+  text: I don't respond to blackmail
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
+  isPreferredByHQ: 0
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 0}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 1

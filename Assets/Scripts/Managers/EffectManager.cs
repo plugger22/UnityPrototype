@@ -3317,6 +3317,16 @@ public class EffectManager : MonoBehaviour
                 { effectResolve.bottomText = ExecuteActorCondition(effect, dataInput, actor, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
+            case "Secret":
+                //remove a secret from actor
+                Secret secret = GameManager.instance.dataScript.GetSecret(dataTopic.secret);
+                if (secret != null)
+                {
+                    if (actor.RemoveSecret(dataTopic.secret) == true)
+                    { effectResolve.bottomText = string.Format("{0}{1} secret lost{2}", colourGood, secret.tag, colourEnd); }
+                }
+                else { Debug.LogWarningFormat("Invalid secret (Null) for dataTopic.secret \"{0}\"", dataTopic.secret); }
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 

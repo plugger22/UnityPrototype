@@ -4621,8 +4621,8 @@ public class DataManager : MonoBehaviour
                                 if (actor.Renown < GameManager.instance.playerScript.Renown) { numOfActors++; }
                                 break;
                             case ActorCheck.KnowsSecret:
-                                //At least one active actor knows at least one of the Player's secrets
-                                if (actor.CheckNumOfSecrets() > 0) { numOfActors++; }
+                                //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
+                                if (actor.CheckNumOfSecrets() > 0 && actor.CheckConditionPresent(GetCondition("BLACKMAILER")) == false) { numOfActors++; }
                                 break;
                             case ActorCheck.KnowsNothing:
                                 //At least one active actor knows at least one of the Player's secrets

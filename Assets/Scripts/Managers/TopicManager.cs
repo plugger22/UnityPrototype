@@ -146,6 +146,7 @@ public class TopicManager : MonoBehaviour
     private string tagLocation;
     private string tagGear;
     private string tagRecruit;
+    private string tagSecret;              //name of secret (not tag)
     private string tagTeam;                //used for resistance team actions
     private string tagTarget;
     private string tagStringData;        //General purpose
@@ -1176,6 +1177,7 @@ public class TopicManager : MonoBehaviour
         tagLocation = "";
         tagGear = "";
         tagRecruit = "";
+        tagSecret = "";
         tagTarget = "";
         tagTeam = "";
         tagStringData = "";
@@ -2045,7 +2047,7 @@ public class TopicManager : MonoBehaviour
                 if (data.listOfOptions != null && data.listOfOptions.Count > 0)
                 {
                     bool isProceed = true;
-                    //topic specific conditions may require tag data to be updated
+                    //topic specific conditions may require topic tag data to be updated
                     if (turnTopic.listOfCriteria.Count > 0)
                     {
                         if (ProcessSpecialTopicData() == true)
@@ -2401,7 +2403,7 @@ public class TopicManager : MonoBehaviour
 
     #region ProcessSpecialTopicData
     /// <summary>
-    /// Any topic with criteria attached may required it's tag data to be updated prior to sending off. Criteria.EffectCriteria is used.
+    /// Any topic with criteria attached may required it's topic tag data to be updated prior to sending off. Criteria.EffectCriteria is used.
     /// Multiple criteria are processed from low index to high with high overriding low in the case of conflicting tag data, eg. tagContactID (So ORDER OF CRITERIA matters)
     /// Returns true if all O.K (even if no matching criteria). False if criteria special requirements aren't met
     /// NOTE: Parent method (InitialiseTopicUI) has checked at least one criteria present
@@ -2428,7 +2430,12 @@ public class TopicManager : MonoBehaviour
                         //choose actor and update tag data
                         isSuccess = ProcessActorContact(listOfActors);
                         break;
-                        //default case not required as if no match then it's assumed that no update is required
+                    case "ActorsKnowSecret":
+                        //need an actor with at least one secret who doesn't have blackmailer trait
+                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.instance.sideScript.PlayerSide);
+                        isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
+                        break;
+                   //default case not required as if no match then it's assumed that no update is required
                 }
             }
             else { Debug.LogWarningFormat("Invalid criteria (Null) for topic \"{0}\"", turnTopic.name); }
@@ -2469,7 +2476,45 @@ public class TopicManager : MonoBehaviour
                 isSuccess = false;
             }
         }
-        else { isSuccess = false; }
+        else { Debug.LogWarning("Invalid listOfActors (Null or Empty)"); isSuccess = false; }
+        return isSuccess;
+    }
+    #endregion
+
+
+    #region ProcessActorMatch
+    /// <summary>
+    /// subMethod for ProcessSpecialTopicData to choose an actor from list and populate relevant tag data. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="listOfActors"></param>
+    /// <returns></returns>
+    private bool ProcessActorMatch(List<Actor> listOfActors, EffectCriteria effectCriteria)
+    {
+        bool isSuccess = true;
+        if (listOfActors?.Count > 0)
+        {
+            if (effectCriteria != null)
+            {
+                switch(effectCriteria.name)
+                {
+                    case "ActorsKnowSecret":
+                        //get random actor and actor secret from list
+                        Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                        if (actor != null)
+                        {
+                            tagActorID = actor.actorID;
+                            Secret secret = actor.GetSecret();
+                            if (secret != null) { tagSecret = secret.name; }
+                            else { Debug.LogWarningFormat("Invalid secret (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                        }
+                        else { Debug.LogError("Invalid actor (Null) in listOfActors"); isSuccess = false; }
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised effectCriteria.name \"{0}\"", effectCriteria.name); isSuccess = false; break;
+                }
+            }
+            else { Debug.LogWarning("Invalid effectCriteria (Null)"); isSuccess = false; }
+        }
+        else { Debug.LogWarning("Invalid listOfActors (Null or Empty)"); isSuccess = false; }
         return isSuccess;
     }
     #endregion
@@ -3442,7 +3487,8 @@ public class TopicManager : MonoBehaviour
             actorID = tagActorID,
             nodeID = tagNodeID,
             teamID = tagTeamID,
-            contactID = tagContactID
+            contactID = tagContactID,
+            secret = tagSecret
         };
         return data;
     }
@@ -4203,6 +4249,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
                         }
                         else { CountTextTag("mayor", dictOfTags); }
+                        break;
+                    case "secret":
+                        //name of random secret from among those known by the actor
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}{1}{2} secret", colourCheckText, tagSecret, colourEnd); }
+                            else { replaceText = string.Format("{0} secret", tagSecret); }
+                        }
+                        else { CountTextTag("secret", dictOfTags); }
                         break;
                     case "city":
                         //city name

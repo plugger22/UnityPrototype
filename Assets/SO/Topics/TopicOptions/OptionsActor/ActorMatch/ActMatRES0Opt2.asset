@@ -11,5 +11,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActMatRES0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor Match Resistance 0 option 2
+  descriptor: Actor Match Resistance 0 option 2
+  tag: Good Word
+  text: I'll put in a good word for you with HQ
   topic: {fileID: 11400000, guid: 890b5b9cd2411ee41ab2803f4afa34fa, type: 2}
+  isPreferredByHQ: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: fdcf7de5e9e865b43943d3260ad5f402, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 2

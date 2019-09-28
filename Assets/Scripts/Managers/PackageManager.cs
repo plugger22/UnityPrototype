@@ -765,7 +765,8 @@ namespace packageAPI
         public int actorID;
         public int nodeID;
         public int teamID;
-        public int contactID;       
+        public int contactID;
+        public string secret;       //name of secret, not tag
     }
 
     /// <summary>

@@ -11,5 +11,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActMatRES0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor Match Resistance 0 option 0
+  descriptor: Actor Match Resistance 0 option 0
+  tag: Give Money
+  text: Sure, why not?
   topic: {fileID: 11400000, guid: 890b5b9cd2411ee41ab2803f4afa34fa, type: 2}
+  isPreferredByHQ: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: fdcf7de5e9e865b43943d3260ad5f402, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 0
