@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActMatRES1
   m_EditorClassIdentifier: 
   tag: Threatened
-  text: Your [actor] reminds you that they know all about your [secret]. They've 'suggested'
-    that it'd be nice if they received more recognition
+  text: Your [actor] reminds you that they know all about your dirty [secret]. They've
+    <b>'suggested'</b> that it'd be nice if they received more recognition
   designNotes: negative actor Match event (actor -> player relationship)
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
@@ -33,15 +33,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3afd9835257ee494d8f4edee3600f5e4, type: 2}
   - {fileID: 11400000, guid: bbbdfedf09d4a244a9a78c0cc9bd07ba, type: 2}
   - {fileID: 11400000, guid: fb32b69d94d26784cbcbe29fa97e96fe, type: 2}
+  - {fileID: 11400000, guid: b4f39c30bdc75d647a45f207fb586cbe, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
-  turnsActive: 9
-  turnsLive: 8
+  turnsActive: 2
+  turnsLive: 13
   turnsDone: 0

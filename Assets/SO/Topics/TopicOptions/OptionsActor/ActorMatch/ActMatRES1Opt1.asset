@@ -16,16 +16,20 @@ MonoBehaviour:
   text: I don't respond to blackmail
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: The Resistance? All that lot do is fight and argue among themselves. Pack
+    of wolves, if you ask me, says [npc], [job] of [node]
+  tooltipHeader: <color=#FFFFE0>Blackmail</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> HQ
+    Approval -1</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I don't respond to blackmail</color>
   optionNumber: 1

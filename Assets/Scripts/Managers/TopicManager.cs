@@ -1554,6 +1554,11 @@ public class TopicManager : MonoBehaviour
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
                 if (actor != null)
                 { tagActorID = actor.actorID; }
+                //get a random nodeID (used for news items)
+                Node node = GameManager.instance.dataScript.GetRandomNode();
+                if (node != null)
+                { tagNodeID = node.nodeID; }
+                else { Debug.LogError("Invalid random node (Null)"); }
             }
             else { Debug.LogWarning("Invalid selectionList (Empty)"); }
         }
@@ -2531,7 +2536,6 @@ public class TopicManager : MonoBehaviour
         return isSuccess;
     }
     #endregion
-
 
     #region ProcessActorMatch
     /// <summary>

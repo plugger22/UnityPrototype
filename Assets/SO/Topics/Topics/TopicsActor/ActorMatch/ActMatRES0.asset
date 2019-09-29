@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActMatRES0
   m_EditorClassIdentifier: 
-  tag: Need Money
-  text: Your [actor] knows your secret. They need money [money] and are willing to
-    forget all about your embarrassing [secret] if you come to the party
+  tag: Desperate
+  text: Your [actor] knows things. They desperately need money [money] and are willing
+    to forget all about your embarrassing [secret] if you help them
   designNotes: positive actor Match event (actor -> player relationship)
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7fa9f9dde48275d49a25ebaa12a1a92a, type: 2}
   - {fileID: 11400000, guid: 0f8521367002886418f80733c386f391, type: 2}
   - {fileID: 11400000, guid: 83e01c2dc24af2b42a12ecb2a7541bf2, type: 2}
+  - {fileID: 11400000, guid: d059474add78d3b499662d486bb79d9c, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -41,6 +42,6 @@ MonoBehaviour:
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
-  turnsActive: 5
-  turnsLive: 12
+  turnsActive: 1
+  turnsLive: 17
   turnsDone: 0

@@ -2211,6 +2211,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3afd9835257ee494d8f4edee3600f5e4, type: 2}
   - {fileID: 11400000, guid: bbbdfedf09d4a244a9a78c0cc9bd07ba, type: 2}
   - {fileID: 11400000, guid: fb32b69d94d26784cbcbe29fa97e96fe, type: 2}
+  - {fileID: 11400000, guid: b4f39c30bdc75d647a45f207fb586cbe, type: 2}
+  - {fileID: 11400000, guid: d059474add78d3b499662d486bb79d9c, type: 2}
   arrayOfOptionsActorGear:
   - {fileID: 11400000, guid: 85fdfdb0fd7fcee4b82365675db02c3e, type: 2}
   - {fileID: 11400000, guid: c26631bfe9b21d64ea3d5bddc33c8610, type: 2}

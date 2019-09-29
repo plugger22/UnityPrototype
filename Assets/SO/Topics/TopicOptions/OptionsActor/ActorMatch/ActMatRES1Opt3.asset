@@ -9,22 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: ActMatRES1Opt2
+  m_Name: ActMatRES1Opt3
   m_EditorClassIdentifier: 
-  descriptor: Actor Match Resistance 1 option 2
-  tag: Promise
-  text: I'll make it up to you, I promise
+  descriptor: Actor Match Resistance 1 option 3
+  tag: Coin Toss
+  text: Let's toss for it, heads I win, tails you do
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria:
-  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
-  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: '[city] has been good to me. I like it hear. Join the Resistance? Why, [mayor]
-    can feed me to the roboDog squad? No thanks, say [npc] of [node]'
+  news: The Resistance? Bunch of nut jobs if you ask me, says [npc], [job] of [node].
+    What have they ever done for [city] apart from blowing stuff up?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
