@@ -13,13 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 5 option 0
   tag: Fire
-  text: Fire [actor]
+  text: Fire [actor] for insubordination
   topic: {fileID: 11400000, guid: cdd10c51c9047954c99cf6cba67a3ddc, type: 2}
   isPreferredByHQ: 0
-  listOfCriteria: []
+  isIgnoredByHQ: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5180cb32faecb064e87709922ef94364, type: 2}
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

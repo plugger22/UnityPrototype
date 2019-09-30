@@ -801,10 +801,10 @@ public class PersonalityManager : MonoBehaviour
     /// <param name="belief"></param>
     /// <param name="actorHQ"></param>
     /// <returns></returns>
-    public int UpdateHQOpinion(Belief belief, Actor actorHQ, bool isHQPreferredOption)
+    public int UpdateHQOpinion(Belief belief, Actor actorHQ, bool isHQPreferredOption, bool isHQIgnoredOption)
     {
         int opinionChange = 0;
-        if (isHQPreferredOption == false)
+        if (isHQPreferredOption == false && isHQIgnoredOption == false)
         {
             //get index of factor array
             int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
@@ -835,8 +835,17 @@ public class PersonalityManager : MonoBehaviour
         }
         else
         {
-            //HQ Preferred option -> always good
-            opinionChange = 1;
+            if (isHQPreferredOption == true)
+            {
+                //HQ Preferred option -> always good
+                opinionChange = 1;
+            }
+            else if (isHQIgnoredOption == true)
+            {
+                //HQ Ignores this option -> always neutral
+                opinionChange = 0;
+            }
+            else { Debug.LogWarning("Unrecognised paramater option"); }
         }
         return opinionChange;
     }

@@ -16,11 +16,12 @@ MonoBehaviour:
   text: Gosh, all I do is try and help others
   topic: {fileID: 11400000, guid: 44cfe2fa1ce9d1b4f9f5d759d3a28f7e, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 

@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: ActMatRES2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 2 option 2
-  tag: Good minions
+  tag: Good Help
   text: It helps to have good subordinates
   topic: {fileID: 11400000, guid: 6d6ee03471b1cd0408f298538b19b7cf, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

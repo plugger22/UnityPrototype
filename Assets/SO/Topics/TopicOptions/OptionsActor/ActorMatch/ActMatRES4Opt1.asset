@@ -16,11 +16,12 @@ MonoBehaviour:
   text: Perhaps you could mention this to HQ?
   topic: {fileID: 11400000, guid: 44cfe2fa1ce9d1b4f9f5d759d3a28f7e, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 1
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

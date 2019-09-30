@@ -16,12 +16,13 @@ MonoBehaviour:
   text: Ask if they could not tell HQ
   topic: {fileID: 11400000, guid: bd46c9576df7cff4580deb108e6c1b41, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 1
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 

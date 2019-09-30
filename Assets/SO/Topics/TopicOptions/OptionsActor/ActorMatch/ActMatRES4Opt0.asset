@@ -16,11 +16,12 @@ MonoBehaviour:
   text: Yes, no doubt about it
   topic: {fileID: 11400000, guid: 44cfe2fa1ce9d1b4f9f5d759d3a28f7e, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 45f7fee155c23b347b0da0b28018cd2a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 

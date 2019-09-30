@@ -16,6 +16,7 @@ MonoBehaviour:
   text: kk
   topic: {fileID: 11400000, guid: cdd10c51c9047954c99cf6cba67a3ddc, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects: []
@@ -27,4 +28,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

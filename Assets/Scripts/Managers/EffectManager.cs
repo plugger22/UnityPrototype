@@ -3327,6 +3327,16 @@ public class EffectManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for dataTopic.secret \"{0}\"", dataTopic.secret); }
                 break;
+            case "ActorDismissed":
+                //fire actor
+                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Dismissed) == true)
+                { effectResolve.bottomText = string.Format("{0}{1}, {2}, Fired{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
+                break;
+            case "ActorToReserves":
+                //move actor to reserves
+                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Reserve) == true)
+                { effectResolve.bottomText = string.Format("{0}{1}, {2}, moved to Reserves{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 
