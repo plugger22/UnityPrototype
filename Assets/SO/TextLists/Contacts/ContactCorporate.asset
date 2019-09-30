@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Corporate type contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Wage Slave
@@ -36,4 +36,14 @@ MonoBehaviour:
   - Financial Manager
   - Logistics Manager
   - Procurement Manager
-  index: 5
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  - Office Drone
+  index: 10

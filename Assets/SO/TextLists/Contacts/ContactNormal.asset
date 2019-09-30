@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Legally employed contact
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Accountant
@@ -40,4 +40,15 @@ MonoBehaviour:
   - Chauffeur
   - Drone Operator
   - Mechanic
-  index: 3
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  - Street Sweeper
+  index: 8

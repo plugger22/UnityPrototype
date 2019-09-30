@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Government related contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Customs Inspector
@@ -36,4 +36,14 @@ MonoBehaviour:
   - Compliance Manager
   - Air Quality Regulator
   - Records Clerk
-  index: 16
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  - Government Drone
+  index: 4

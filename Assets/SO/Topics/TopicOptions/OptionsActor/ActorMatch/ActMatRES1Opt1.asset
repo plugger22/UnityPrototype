@@ -16,6 +16,7 @@ MonoBehaviour:
   text: I don't respond to blackmail
   topic: {fileID: 11400000, guid: 2a0d11ee3b1c31242ae2ad1a211f7557, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 1
   listOfCriteria:
   - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
@@ -27,9 +28,9 @@ MonoBehaviour:
     of wolves, if you ask me, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Blackmail</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
-    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> HQ
-    Approval -1</color>"
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+    Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Player
+    Renown -2</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I don't respond to blackmail</color>
   optionNumber: 1

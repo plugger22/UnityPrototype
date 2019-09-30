@@ -24,10 +24,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: Who would be crazy enough to join the Resistance, asks [npc], [job] of [node]?
+    [mayor] would have you be the star of the Robohanger show
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5> OBSERVER Low Motivation (need 2+)</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Ask OBSERVER to tell HQ</color>
   optionNumber: 0

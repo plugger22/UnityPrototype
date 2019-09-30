@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Emergency personnel Contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Bounty Hunter
@@ -36,4 +36,14 @@ MonoBehaviour:
   - Traffic Cop
   - Airborne Patrol Cop
   - Riot Squad Cop
-  index: 12
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  - Rent-A-Cop
+  index: 9

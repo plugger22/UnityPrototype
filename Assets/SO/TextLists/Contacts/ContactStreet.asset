@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Street Living Contact
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Pickpocket
@@ -43,4 +43,12 @@ MonoBehaviour:
   - Backyard Doc
   - Smuggler
   - Vagrant
-  index: 14
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  - Vagrant
+  index: 5

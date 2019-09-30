@@ -3854,7 +3854,7 @@ public class TopicManager : MonoBehaviour
                                 {
                                     if (option.isIgnoredByHQ == false)
                                     { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
-                                    else { builder.AppendFormat("{0}no view{1}", colourGrey, colourEnd); }
+                                    else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                                 }
                                 else { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }
                             }

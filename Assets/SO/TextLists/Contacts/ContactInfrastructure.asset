@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Infrastructure type contacts
   category: {fileID: 11400000, guid: bbd40e5a7e48ffa49a4904bb8db8ed17, type: 2}
-  isTestForDuplicates: 1
+  isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
   - Control Room Operator
@@ -36,4 +36,4 @@ MonoBehaviour:
   - Water Analyst
   - Process Technician
   - Telemetry Engineer
-  index: 6
+  index: 2

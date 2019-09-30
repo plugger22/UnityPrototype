@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: I'm willing to do anything for the Resistance, even cohabit with animals if
+    that's what it takes to get enough [money], says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

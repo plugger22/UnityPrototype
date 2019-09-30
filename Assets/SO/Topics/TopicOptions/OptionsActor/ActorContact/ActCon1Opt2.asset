@@ -16,6 +16,7 @@ MonoBehaviour:
   text: Ask [actor] to get rid of them
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
@@ -23,9 +24,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Police sources confirm the body found yesterday at [node] was that of [contact].
+    It appears to have suffered multiple contusions to the face
   tooltipHeader: <color=#FFFFE0>Dispose</color>
   tooltipMain: <color=#FF4500>BLOGGER loses Contact</color>
   tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Ask Unknown to get rid of them</color>
+  optionNumber: 2

@@ -15,6 +15,8 @@ MonoBehaviour:
   tag: Pay
   text: Pay them what they want
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria:
   - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects:
@@ -25,6 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
+  news: You don't have to work for the Resistance, all you've got to do is tell them
+    things, says [contact] of [node]. They'll pay you
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 
@@ -32,3 +36,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 0
   textToDisplay: <color=#BDC3C7>Pay them what they want</color>
+  optionNumber: 0

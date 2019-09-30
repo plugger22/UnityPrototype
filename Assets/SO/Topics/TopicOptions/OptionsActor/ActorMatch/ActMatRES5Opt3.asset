@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: ActMatRES5Opt3
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 5 option 3
-  tag: jj
-  text: kk
+  tag: Feelings
+  text: Your feelings are unimportant to me
   topic: {fileID: 11400000, guid: cdd10c51c9047954c99cf6cba67a3ddc, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: I feel like I'd be a super valuable asset to the Resistance, says [npc], [job]
+    of [node]. I'm available just as soon as I sort out my [handicap]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Name: ActMatRES3Opt3
   m_EditorClassIdentifier: 
   descriptor: Actor Match Resistance 3 option 3
-  tag: jj
-  text: kk
+  tag: Irrelevant
+  text: Your opinion is irrelevant
   topic: {fileID: 11400000, guid: bd46c9576df7cff4580deb108e6c1b41, type: 2}
   isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Does the Resistance have a proper HR policy? I can't imagine that they wouldn't
+    but you never know, do you, asks [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

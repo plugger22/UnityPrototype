@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Nobody has told me what they pay? How am I supposed to join the Resistance
+    if it's on a wing and prayer, asks [npc], [job] or [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -15,6 +15,8 @@ MonoBehaviour:
   tag: Agree
   text: Give them what they want
   topic: {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
   listOfCriteria:
   - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects:
@@ -24,6 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
+  news: If you're going to be a contact for the Resistance you have to treat it like
+    a job and assume that you're dealing with idiots, says [contact] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 
@@ -31,3 +35,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 0
   textToDisplay: <color=#BDC3C7>Give them what they want</color>
+  optionNumber: 0
