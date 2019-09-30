@@ -23,11 +23,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: If I can't earn more money than what I get from my dead end,  Robo supervised
+  news: If I can't earn more money than what I get from my dead end,  Robo supervised,
     job then I'm going to join the Resistance, insists [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Agree</color>
-  tooltipMain: <color=#FF4500>RECRUITER Renown +3</color>
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  tooltipMain: <color=#FF4500>FIXER Renown +3</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I'll speak to HQ</color>
   optionNumber: 0

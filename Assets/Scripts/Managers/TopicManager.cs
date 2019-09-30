@@ -1548,7 +1548,6 @@ public class TopicManager : MonoBehaviour
                 //use entire list of actors if none found by group criteria
                 selectionList = listOfActors;
             }
-
             if (selectionList.Count > 0)
             {
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
@@ -2040,10 +2039,6 @@ public class TopicManager : MonoBehaviour
         {
             TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
             TopicUIData data = new TopicUIData();
-            //special case
-            bool isPlayerGeneral = false;
-            if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
-            { isPlayerGeneral = true; }
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
             if (debugTopicPool != null)
             {
@@ -2088,6 +2083,10 @@ public class TopicManager : MonoBehaviour
                 else { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: No LIVE topics found in debugTopicPool{0}", "\n"); }
             }
             Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
+            //special case (need to do AFTER override otherwise can be set true by pre-override topic
+            bool isPlayerGeneral = false;
+            if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
+            { isPlayerGeneral = true; }
             //use normal or debug topic
             if (turnTopic != null)
             {

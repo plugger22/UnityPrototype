@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: If you're going to be a contact for the Resistance you have to treat it like
+  news: If you're going to be a snitch for the Resistance you have to treat it like
     a job and assume that you're dealing with idiots, says [contact] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown

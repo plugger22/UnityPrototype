@@ -878,11 +878,6 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                         }
                                         break;
-                                    default:
-                                        BuildString(result, "Error!");
-                                        Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
-                                        errorFlag = true;
-                                        break;
                                     //
                                     // - - - Player (new, older ones are in Current Actor / Player above) - - -
                                     //
@@ -1081,7 +1076,11 @@ public class EffectManager : MonoBehaviour
                                         if (isValid == false)
                                         { BuildString(result, "FAILED topic"); }
                                         break;
-
+                                    default:
+                                        BuildString(result, "Error!");
+                                        Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));
+                                        errorFlag = true;
+                                        break;
                                 }
 
                             }

@@ -958,7 +958,7 @@ public class PersonalityManager : MonoBehaviour
             {
                 //already stressed prior to becoming stressed again -> Super Stressed!
                 text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
-                builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText));
+                builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText));
             }
         }
         if (GameManager.instance.optionScript.fullMoodInfo == true)
