@@ -2491,6 +2491,16 @@ public class TopicManager : MonoBehaviour
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.instance.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
+                    case "RenownActorsLess":
+                        //need an actor with less renown than player
+                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownLess, GameManager.instance.sideScript.PlayerSide);
+                        isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
+                        break;
+                    case "RenownActorsMore":
+                        //need an actor with more renown than player
+                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.instance.sideScript.PlayerSide);
+                        isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
+                        break;
                         //default case not required as if no match then it's assumed that no update is required
                 }
             }
@@ -2546,6 +2556,7 @@ public class TopicManager : MonoBehaviour
     private bool ProcessActorMatch(List<Actor> listOfActors, EffectCriteria effectCriteria)
     {
         bool isSuccess = true;
+        Actor actor = null;
         if (listOfActors?.Count > 0)
         {
             if (effectCriteria != null)
@@ -2554,7 +2565,7 @@ public class TopicManager : MonoBehaviour
                 {
                     case "ActorsKnowSecret":
                         //get random actor and actor secret from list
-                        Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                        actor = listOfActors[Random.Range(0, listOfActors.Count)];
                         if (actor != null)
                         {
                             tagActorID = actor.actorID;
@@ -2566,6 +2577,14 @@ public class TopicManager : MonoBehaviour
                             }
                             else { Debug.LogWarningFormat("Invalid secret (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                         }
+                        else { Debug.LogError("Invalid actor (Null) in listOfActors"); isSuccess = false; }
+                        break;
+                    case "RenownActorsLess":
+                    case "RenownActorsMore":
+                        //get random actor from list
+                        actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                        if (actor != null)
+                        { tagActorID = actor.actorID; }
                         else { Debug.LogError("Invalid actor (Null) in listOfActors"); isSuccess = false; }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised effectCriteria.name \"{0}\"", effectCriteria.name); isSuccess = false; break;
