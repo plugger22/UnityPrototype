@@ -1,6 +1,5 @@
 ﻿using gameAPI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,6 +23,7 @@ public class ActorPanelUI : MonoBehaviour
     public Image picture2;
     public Image picture3;
     public Image picturePlayer;
+    public Image moodStars;
 
     public TextMeshProUGUI type0;
     public TextMeshProUGUI type1;
@@ -48,6 +48,11 @@ public class ActorPanelUI : MonoBehaviour
     private CanvasGroup canvas2;
     private CanvasGroup canvas3;
     private CanvasGroup canvasPlayer;
+
+    private Sprite mood0;
+    private Sprite mood1;
+    private Sprite mood2;
+    private Sprite mood3;
 
     public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
@@ -91,7 +96,6 @@ public class ActorPanelUI : MonoBehaviour
         canvas2 = Actor2.GetComponent<CanvasGroup>();
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
-
     }
 
     /// <summary>
@@ -119,7 +123,7 @@ public class ActorPanelUI : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
                 break;
-        }      
+        }
     }
 
     #region Initialisation Submethods
@@ -130,8 +134,8 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseEvents()
     {
-            //event listener
-            EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+        //event listener
+        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
     }
     #endregion
 
@@ -141,11 +145,20 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseFastAccess()
     {
-            //fast access
-            vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
-            vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
-            Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
-            Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        //fast access
+        vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
+        vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
+        Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
+        Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        //mood stars
+        mood0 = GameManager.instance.guiScript.moodStar0;
+        mood1 = GameManager.instance.guiScript.moodStar1;
+        mood2 = GameManager.instance.guiScript.moodStar2;
+        mood3 = GameManager.instance.guiScript.moodStar3;
+        Debug.Assert(mood0 != null, "Invalid mood0 (Null)");
+        Debug.Assert(mood1 != null, "Invalid mood1 (Null)");
+        Debug.Assert(mood2 != null, "Invalid mood2 (Null)");
+        Debug.Assert(mood3 != null, "Invalid mood3 (Null)");
     }
     #endregion
 
@@ -340,6 +353,23 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="alpha"></param>
     public void UpdatePlayerAlpha(float alpha)
     { canvasPlayer.alpha = alpha; }
+
+
+    /// <summary>
+    /// changes the sprite for the  moodPanel to reflect player mood
+    /// </summary>
+    /// <param name="mood"></param>
+    public void SetPlayerMoodUI(int mood)
+    {
+        switch (mood)
+        {
+            case 3: moodStars.sprite = mood3; break;
+            case 2: moodStars.sprite = mood2; break;
+            case 1: moodStars.sprite = mood1; break;
+            case 0: moodStars.sprite = mood0; break;
+            default: Debug.LogWarningFormat("Unrecognised player mood \"{0}\"", mood);  break;
+        }
+    }
 
     /// <summary>
     /// toggles actor renown display on/off depending on status. If set to true and no actor present in slot (Vacant) will auto switch off

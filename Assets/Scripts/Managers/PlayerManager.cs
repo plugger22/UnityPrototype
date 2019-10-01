@@ -261,6 +261,8 @@ public class PlayerManager : MonoBehaviour
         //set stats      
         Invisibility = 3;
         mood = moodStart;
+        //Update player mood
+        GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
     }
     #endregion
 
@@ -1405,6 +1407,8 @@ public class PlayerManager : MonoBehaviour
                 isStressed = true;
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
+            //change sprite
+            GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
             //add a record
             HistoryMood record = new HistoryMood()
             {

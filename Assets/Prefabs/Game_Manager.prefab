@@ -3678,7 +3678,7 @@ MonoBehaviour:
   moodMax: 3
   moodStart: 2
   moodReset: 3
-  sprite: {fileID: 21300000, guid: e7cc3aa6b3bdc6a43951687e10335e03, type: 3}
+  sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
   actorID: 999
   status: 0
   tooltipStatus: 0
@@ -3829,6 +3829,10 @@ MonoBehaviour:
     type: 3}
   topicOptionInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
     type: 3}
+  moodStar0: {fileID: 21300000, guid: 46d16ded92993224a90875292a820d6f, type: 3}
+  moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
+  moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
+  moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

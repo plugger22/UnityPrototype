@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
-    [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
+     [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods

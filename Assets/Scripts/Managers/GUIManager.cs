@@ -102,6 +102,15 @@ public class GUIManager : MonoBehaviour
     public Sprite topicOptionValidSprite;
     [Tooltip("Sprite used for an invalid topic option")]
     public Sprite topicOptionInvalidSprite;
+    [Tooltip("Player mood 0 star")]
+    public Sprite moodStar0;
+    [Tooltip("Player mood 1 star")]
+    public Sprite moodStar1;
+    [Tooltip("Player mood 2 star")]
+    public Sprite moodStar2;
+    [Tooltip("Player mood 3 star")]
+    public Sprite moodStar3;
+
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -150,6 +159,10 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
         Debug.Assert(topicOptionValidSprite != null, "Invalid topicValidSprite (Null)");
         Debug.Assert(topicOptionInvalidSprite != null, "Invalid topicInvalidSprite (Null)");
+        Debug.Assert(moodStar0 != null, "Invalid moodStar0 (Null)");
+        Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
+        Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");
+        Debug.Assert(moodStar3 != null, "Invalid moodStar3 (Null)");
     }
 
     /// <summary>
