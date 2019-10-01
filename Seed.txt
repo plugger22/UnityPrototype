@@ -17253,3 +17253,33 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 48844 -> Tuesday, 1 October 2019 4:50 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Tuesday, 1 October 2019 9:03 PM
+ASSERT UnassignedReferenceException: The variable tooltipHelpObject of TooltipHelp has not been assigned.
+You probably need to assign the tooltipHelpObject variable of the TooltipHelp script in the inspector.
+UnityEngine.GameObject.GetComponent[T] () (at C:/buildslave/unity/build/Runtime/Export/GameObject.bindings.cs:28)
+	TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:43)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorPanelUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ActorPanelUI.cs:214)
+	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:115)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:748)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:802)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:353)
+	
+Dev seed 48844 -> Tuesday, 1 October 2019 9:04 PM
+ASSERT UnassignedReferenceException: The variable tooltipHelpObject of TooltipHelp has not been assigned.
+You probably need to assign the tooltipHelpObject variable of the TooltipHelp script in the inspector.
+UnityEngine.GameObject.GetComponent[T] () (at C:/buildslave/unity/build/Runtime/Export/GameObject.bindings.cs:28)
+	TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:43)
+	City seed 5678 -> London, United Kingdom
+ASSERT UnassignedReferenceException: The variable tooltipHelpObject of TooltipHelp has not been assigned.
+You probably need to assign the tooltipHelpObject variable of the TooltipHelp script in the inspector.
+TooltipHelp.CloseTooltip (System.String text) (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:160)
+	ModalOutcome.SetModalOutcome (modalAPI.ModalOutcomeDetails details) (at Assets/Scripts/GUI/ModalOutcome.cs:128)
+	ModalOutcome.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
+	SideManager.ShowAutoRunMessage () (at Assets/Scripts/Managers/SideManager.cs:522)
+	SideManager.RevertToHumanPlayer () (at Assets/Scripts/Managers/SideManager.cs:496)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:238)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:355)
+	

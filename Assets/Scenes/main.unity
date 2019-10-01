@@ -40836,6 +40836,7 @@ GameObject:
   - component: {fileID: 1794215391}
   - component: {fileID: 1794215393}
   - component: {fileID: 1794215392}
+  - component: {fileID: 1794215394}
   m_Layer: 5
   m_Name: MoodPanel
   m_TagString: Untagged
@@ -40895,6 +40896,30 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1794215390}
   m_CullTransparentMesh: 0
+--- !u!114 &1794215394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794215390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ab9ec125affbb4b89fa313f9500805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHelpObject: {fileID: 0}
+  topicObject_0: {fileID: 0}
+  topicObject_1: {fileID: 0}
+  topicObject_2: {fileID: 0}
+  topicObject_3: {fileID: 0}
+  headerTopic_0: {fileID: 0}
+  headerTopic_1: {fileID: 0}
+  headerTopic_2: {fileID: 0}
+  headerTopic_3: {fileID: 0}
+  textTopic_0: {fileID: 0}
+  textTopic_1: {fileID: 0}
+  textTopic_2: {fileID: 0}
+  textTopic_3: {fileID: 0}
 --- !u!1 &1799744838
 GameObject:
   m_ObjectHideFlags: 0

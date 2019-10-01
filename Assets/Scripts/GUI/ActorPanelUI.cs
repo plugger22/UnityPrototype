@@ -54,6 +54,8 @@ public class ActorPanelUI : MonoBehaviour
     private Sprite mood2;
     private Sprite mood3;
 
+    private TooltipHelp playerMoodHelp;
+
     public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
     private Image[] arrayOfRenownCircles = new Image[4];      //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
@@ -96,6 +98,9 @@ public class ActorPanelUI : MonoBehaviour
         canvas2 = Actor2.GetComponent<CanvasGroup>();
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
+        //mood help
+        playerMoodHelp = moodStars.GetComponent<TooltipHelp>();
+        Debug.Assert(playerMoodHelp != null, "Invalid playerMoodHelp (Null)");
     }
 
     /// <summary>
@@ -200,12 +205,17 @@ public class ActorPanelUI : MonoBehaviour
             listOfActorPortraits.Add(picture3);
         }
         else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
-
         //player
         typePlayer.text = "PLAYER";
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+        //mood help
+        /*playerMoodHelp.headerTopic_0.text = "mood_0";
+        playerMoodHelp.headerTopic_1.text = "mood_1";
+        playerMoodHelp.headerTopic_2.text = "mood_2";
+        playerMoodHelp.headerTopic_3.text = "mood_3";*/
+
         //initialse listOfRenownCircles
         arrayOfRenownCircles[0] = renownCircle0;
         arrayOfRenownCircles[1] = renownCircle1;
