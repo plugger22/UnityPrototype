@@ -37,6 +37,7 @@ public class TooltipPlayer : MonoBehaviour
     private string colourName;
     private string colourAlert;
     private string colourGrey;
+    private string colourCancel;
     private string colourEnd;
 
 
@@ -99,6 +100,7 @@ public class TooltipPlayer : MonoBehaviour
         colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -131,7 +133,7 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Name - - -
         //
-        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}{4}{5}", colourAlert, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
+        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}<size=110%><b>{4}</b></size>{5}", colourCancel, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
         //
         // - - - Status - - -
         //
@@ -210,17 +212,21 @@ public class TooltipPlayer : MonoBehaviour
         {
             case 1:
                 //Authority
-                StringBuilder builderStats = new StringBuilder();
-                builderStats.AppendFormat("{0}Teams{1}{2}", colourAlert, colourEnd, "\n");
-                builderStats.AppendFormat("<b>On Map<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
-                builderStats.AppendFormat("<b>In Transit<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
-                builderStats.AppendFormat("<b>Reserves<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
-                playerStats.text = builderStats.ToString();
+                StringBuilder builderAut = new StringBuilder();
+                builderAut.AppendFormat("{0}Teams{1}{2}", colourAlert, colourEnd, "\n");
+                builderAut.AppendFormat("<b>On Map<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
+                builderAut.AppendFormat("<b>In Transit<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
+                builderAut.AppendFormat("<b>Reserves<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
+                playerStats.text = builderAut.ToString();
                 break;
             case 2:
                 //Resistance
                 int invisibility = GameManager.instance.playerScript.Invisibility;
-                playerStats.text = string.Format("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd);
+                int mood = GameManager.instance.playerScript.GetMood();
+                StringBuilder builderRes = new StringBuilder();
+                builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
+                builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);
+                playerStats.text = builderRes.ToString();
                 break;
         }
         //
@@ -238,7 +244,7 @@ public class TooltipPlayer : MonoBehaviour
                 if (listOfGear != null && listOfGear.Count > 0)
                 {
                     StringBuilder builderGear = new StringBuilder();
-                    builderGear.AppendFormat("{0}Gear{1}", colourAlert, colourEnd);
+                    builderGear.AppendFormat("{0}<b>Gear</b>{1}", colourCancel, colourEnd);
                     //gear in inventory
                     foreach (string gearName in listOfGear)
                     {
@@ -258,8 +264,8 @@ public class TooltipPlayer : MonoBehaviour
         if (listOfSecrets != null && listOfSecrets.Count > 0)
         {
             StringBuilder builderSecrets = new StringBuilder();
-            builderSecrets.AppendFormat("{0}Secrets{1}", colourAlert, colourEnd);
-            //lo0p secrets
+            builderSecrets.AppendFormat("{0}<b>Secrets</b>{1}", colourCancel, colourEnd);
+            //loop secrets
             foreach (Secret secret in listOfSecrets)
             {
                 //secrets shown as Red if known by other actors, green otherwise
