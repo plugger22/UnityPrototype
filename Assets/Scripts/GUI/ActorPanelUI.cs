@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -54,7 +55,7 @@ public class ActorPanelUI : MonoBehaviour
     private Sprite mood2;
     private Sprite mood3;
 
-    private TooltipHelp playerMoodHelp;
+    private GenericHelpTooltipUI playerMoodHelp;
 
     public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
@@ -99,7 +100,7 @@ public class ActorPanelUI : MonoBehaviour
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
         //mood help
-        playerMoodHelp = moodStars.GetComponent<TooltipHelp>();
+        playerMoodHelp = moodStars.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(playerMoodHelp != null, "Invalid playerMoodHelp (Null)");
     }
 
@@ -210,12 +211,6 @@ public class ActorPanelUI : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
-        //mood help
-        /*playerMoodHelp.headerTopic_0.text = "mood_0";
-        playerMoodHelp.headerTopic_1.text = "mood_1";
-        playerMoodHelp.headerTopic_2.text = "mood_2";
-        playerMoodHelp.headerTopic_3.text = "mood_3";*/
-
         //initialse listOfRenownCircles
         arrayOfRenownCircles[0] = renownCircle0;
         arrayOfRenownCircles[1] = renownCircle1;
@@ -364,6 +359,16 @@ public class ActorPanelUI : MonoBehaviour
     public void UpdatePlayerAlpha(float alpha)
     { canvasPlayer.alpha = alpha; }
 
+    /// <summary>
+    /// In a separate method due to sequencing issues (accessing dictOfHelp)
+    /// Called from LoadManager.cs -> InitialiseLate
+    /// </summary>
+    public void SetPlayerMoodHelp()
+    {
+        //mood help
+        List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData("mood_0", "mood_1", "mood_2", "mood_3");
+        playerMoodHelp.SetHelpTooltip(listOfHelpData, 200, 200);
+    }
 
     /// <summary>
     /// changes the sprite for the  moodPanel to reflect player mood

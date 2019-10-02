@@ -6,7 +6,7 @@ using gameAPI;
 using packageAPI;
 
 /// <summary>
-/// Handles mouse over help tooltip for help icon for all non-MainInfoApp UI help
+/// Handles mouse over help tooltip for help icon for all non-MainInfoApp UI help, acts as a front end to TooltipHelp.cs
 /// </summary>
 public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -86,7 +86,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.ModalUI)
+        if (onMouseFlag == true /*&& GameManager.instance.inputScript.ModalState == ModalState.ModalUI*/)
         {
             if (listOfHelp != null)
             {

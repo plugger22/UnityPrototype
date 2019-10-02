@@ -17283,3 +17283,361 @@ TooltipHelp.CloseTooltip (System.String text) (at Assets/Scripts/GUI/Tooltips/To
 	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:238)
 	GameManager.Start () (at Assets/Scripts/GameManager.cs:355)
 	
+Dev seed 48844 -> Wednesday, 2 October 2019 9:07 AM
+WARNING Not found, tag "mood_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "mood_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag1 "mood_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:90)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:95)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag2 "mood_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:98)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_3", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:103)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag3 "mood_3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:106)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 9:17 AM
+WARNING Not found, tag "mood_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "mood_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag1 "mood_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:90)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:95)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag2 "mood_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:98)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_3", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:103)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag3 "mood_3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:106)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 9:22 AM
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorPanelUI.UpdateActorPanel () (at Assets/Scripts/GUI/ActorPanelUI.cs:284)
+	DataManager.AddCurrentActor (GlobalSide side, gameAPI.Actor actor, System.Int32 slotID) (at Assets/Scripts/Managers/DataManager.cs:3707)
+	ActorManager.CreateActor (GlobalSide side, System.String arcName, System.Int32 level, gameAPI.ActorStatus status, System.Int32 slotID) (at Assets/Scripts/Managers/ActorManager.cs:923)
+	ActorManager.InitialiseActors (System.Int32 num, GlobalSide side) (at Assets/Scripts/Managers/ActorManager.cs:572)
+	ActorManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/ActorManager.cs:360)
+	ActorManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ActorManager.cs:217)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:748)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:802)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:353)
+	
+Dev seed 48844 -> Wednesday, 2 October 2019 9:25 AM
+WARNING Not found, tag "mood_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "mood_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag1 "mood_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:90)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:95)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag2 "mood_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:98)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "mood_3", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:103)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag3 "mood_3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:106)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:215)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:6764)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:79)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:82)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:216)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:802)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 9:53 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+HelpManager.CreateItemDataHelp () (at Assets/Scripts/Managers/HelpManager.cs:546)
+	LoadManager.InitialiseEarly (gameAPI.GameState state) (at Assets/Scripts/Managers/LoadManager.cs:1855)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:748)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:344)
+	
+Dev seed 48844 -> Wednesday, 2 October 2019 10:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:02 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:09 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:17 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:18 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:33 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48844 -> Wednesday, 2 October 2019 10:36 AM
+City seed 5678 -> London, United Kingdom

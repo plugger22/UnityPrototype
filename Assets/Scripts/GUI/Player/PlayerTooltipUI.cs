@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// Handles tooltip for player name in ActorUI
+/// Handles tooltip for player name in ActorUI -> REDUNDANT Oct'19 as player tooltip moved over to PlayerSpriteTooltipUI.cs
 /// </summary>
 public class PlayerTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
