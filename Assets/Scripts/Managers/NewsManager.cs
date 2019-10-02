@@ -237,7 +237,7 @@ public class NewsManager : MonoBehaviour
     { return listOfCurrentAdverts; }
 
     /// <summary>
-    /// Replaces text tags on non-topic News texts. Different to CheckTopicText but uses identical tags. Pass parameters in via a data package. No colour formatting involved. Returns null if a problem
+    /// Replaces text tags on NON-TOPIC News texts. Different to CheckTopicText but uses identical tags. Pass parameters in via a data package. No colour formatting involved. Returns null if a problem
     /// </summary>
     /// <param name="text"></param>
     /// <param name="isColourHighlighting"></param>
@@ -356,6 +356,12 @@ public class NewsManager : MonoBehaviour
                             //city name plural
                             if (data.isValidate == false)
                             { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
+                            break;
+                        case "who":
+                            //My '[best friend]'s [crazy] [sister]' 
+                            if (data.isValidate == false)
+                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
+                                GameManager.instance.topicScript.textListWho.GetRandomRecord()); }
                             break;
                         default:
                             if (data.isValidate == false)

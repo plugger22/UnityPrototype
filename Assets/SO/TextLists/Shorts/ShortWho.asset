@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortWho
+  m_EditorClassIdentifier: 
+  descriptor: "Used for the [my] tag this is the person who the npc/actor knows, \nas
+    in my '[shortWho]'s [condition] [short Who]'"
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - brother
+  - sister
+  - mother
+  - father
+  - stepbrother
+  - stepsister
+  - best friend
+  - second cousin
+  - uncle
+  - nephew
+  - cousin
+  - aunt
+  - niece
+  - brother-in-law
+  - father-in-law
+  - mother-in-law
+  - grandparent
+  - sister-in-law
+  - close friend
+  - partner
+  index: 0

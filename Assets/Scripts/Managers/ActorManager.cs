@@ -6100,11 +6100,8 @@ public class ActorManager : MonoBehaviour
                             //check if Player has stressed condition -> Player.RemoveCondition handles mood change
                             if (GameManager.instance.playerScript.isStressed == true)
                             { GameManager.instance.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
-                            else
-                            {
-                                //not stressed -> improve mood
-                                GameManager.instance.playerScript.ChangeMood(GameManager.instance.playerScript.moodReset, "Finished Lying Low", "n.a");
-                            }
+                            //improve mood
+                            GameManager.instance.playerScript.ChangeMood(GameManager.instance.playerScript.moodReset, "Finished Lying Low", "n.a");
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance, null, HelpType.LieLow);
@@ -6388,7 +6385,7 @@ public class ActorManager : MonoBehaviour
             }
         }
         //
-        // - - - Statuses
+        // - - - Status's
         //
         switch (GameManager.instance.aiRebelScript.status)
         {
@@ -7189,7 +7186,7 @@ public class ActorManager : MonoBehaviour
         GenericTooltipData data = new GenericTooltipData();
         data.header = "Renown";
         data.main = string.Format("{0}The more the better{1}", colourNeutral, colourEnd);
-        data.details = string.Format("{0}Renown is the currency you use to do many things such as Hack the AI, Manage your subordinates, make decision, etc.{1}", colourNormal, colourEnd);
+        data.details = string.Format("{0}Renown is the currency you use to do things. It represents money, goodwill, accrued favours and reputation{1}", colourNormal, colourEnd);
         return data;
     }
 

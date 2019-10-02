@@ -23,13 +23,13 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: My brother's nephew is in the Resistance and tells everybody that it's great.
-    Then again he's half crazy, so who knows, says [npc], [job] of [node]?
+  news: My [who] is in the Resistance and tells everybody that it's great. Can you
+    believe that, asks [npc], [job] of [node]?
   tooltipHeader: <color=#FFFFE0>Raining</color>
-  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>RECRUITER
+  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>OBSERVER
     loses a Secret</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
     Happens</color>"
-  tooltipDetails: <color=#FF4500>Player Mood -1</color>
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Into every life a little rain must fall</color>
   optionNumber: 3

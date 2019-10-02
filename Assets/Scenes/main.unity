@@ -2883,12 +2883,12 @@ Prefab:
     - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
         type: 2}
       propertyPath: m_fontSize
-      value: 24
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
         type: 2}
       propertyPath: m_fontSizeBase
-      value: 24
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
         type: 2}
@@ -2959,6 +2959,47 @@ Prefab:
     - target: {fileID: 1643721797393278, guid: 8ce85c71c31c83d41a06a316c3e871ef, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_text
+      value: stressed
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6,
+        type: 2}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_fontColor.r
+      value: 0.9811321
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_fontColor.g
+      value: 0.1342115
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_fontColor.b
+      value: 0.18391854
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333344759344438, guid: 8ce85c71c31c83d41a06a316c3e871ef,
+        type: 2}
+      propertyPath: m_characterSpacing
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114109203483185900, guid: 8ce85c71c31c83d41a06a316c3e871ef, type: 2}
@@ -9664,7 +9705,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1643721797393278, guid: 8ce85c71c31c83d41a06a316c3e871ef,
     type: 2}
   m_PrefabInternal: {fileID: 90017172}
---- !u!114 &373622835
+--- !u!114 &373622834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9672,9 +9713,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 373622833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d8a6ea5b1c9ade4ab90f7a38a4ff126, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1 &390121602
 GameObject:
   m_ObjectHideFlags: 0
@@ -17221,7 +17271,7 @@ MonoBehaviour:
   type1: {fileID: 898307078}
   type2: {fileID: 1517522710}
   type3: {fileID: 1351372487}
-  typePlayer: {fileID: 90017174}
+  playerStressed: {fileID: 90017174}
   renownCircle0: {fileID: 1499294081}
   renownCircle1: {fileID: 898307079}
   renownCircle2: {fileID: 1517522711}
@@ -40904,9 +40954,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1794215390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!1 &1799744838
 GameObject:
   m_ObjectHideFlags: 0

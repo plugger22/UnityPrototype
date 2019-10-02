@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortCondition
+  m_EditorClassIdentifier: 
+  descriptor: 'Used for the [my] tag this is the condition of the person known
+
+    as in my ''[shortWho]''s [condition] [short Who]'''
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - crazy
+  - idiotic
+  - mad
+  - unhinged
+  - mixed up
+  - insane
+  - kooky
+  - nutty
+  - wacky
+  - potty
+  - lunatic
+  - demented
+  - deranged
+  - psycho
+  - screwball
+  - cracked
+  - dippy
+  - flipped out
+  - fruity
+  - lovable
+  - round the bend
+  - out to lunch
+  - maniacal
+  - schizo
+  - unglued
+  - bizarro
+  - goofy
+  - outrageous
+  - ridiculous
+  - strange
+  - weird
+  - loony
+  - wild
+  - cockeyed
+  - half-baked
+  - harebrained
+  - hysterical
+  - fanatical
+  - zealous
+  - adorable
+  - charming
+  - delightful
+  - angelic
+  - bewitching
+  - cuddly
+  - winsome
+  - affable
+  - kind
+  - benevolent
+  - solicitous
+  index: 16

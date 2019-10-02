@@ -30,7 +30,7 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI type1;
     public TextMeshProUGUI type2;
     public TextMeshProUGUI type3;
-    public TextMeshProUGUI typePlayer;
+    public TextMeshProUGUI playerStressed;
 
     public Image renownCircle0;
     public Image renownCircle1;
@@ -55,7 +55,8 @@ public class ActorPanelUI : MonoBehaviour
     private Sprite mood2;
     private Sprite mood3;
 
-    private GenericHelpTooltipUI playerMoodHelp;
+    private GenericTooltipUI playerMoodTooltip;
+    private GenericTooltipUI playerStressedTooltip;
 
     public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
 
@@ -64,7 +65,6 @@ public class ActorPanelUI : MonoBehaviour
     //fast access
     private Sprite vacantAuthorityActor;
     private Sprite vacantResistanceActor;
-
 
     private static ActorPanelUI actorPanelUI;
 
@@ -100,8 +100,10 @@ public class ActorPanelUI : MonoBehaviour
         canvas3 = Actor3.GetComponent<CanvasGroup>();
         canvasPlayer = ActorPlayer.GetComponent<CanvasGroup>();
         //mood help
-        playerMoodHelp = moodStars.GetComponent<GenericHelpTooltipUI>();
-        Debug.Assert(playerMoodHelp != null, "Invalid playerMoodHelp (Null)");
+        playerMoodTooltip = moodStars.GetComponent<GenericTooltipUI>();
+        playerStressedTooltip = playerStressed.GetComponent<GenericTooltipUI>();
+        Debug.Assert(playerMoodTooltip != null, "Invalid playerMoodHelp (Null)");
+        Debug.Assert(playerStressedTooltip != null, "Invalid playerStressedHelp (Null)");
     }
 
     /// <summary>
@@ -174,6 +176,8 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
+        //initialise tooltips
+        InitialiseTooltips();
         //assign actorSlotID's to all Actor components
         Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
         Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
@@ -206,8 +210,8 @@ public class ActorPanelUI : MonoBehaviour
             listOfActorPortraits.Add(picture3);
         }
         else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
-        //player
-        typePlayer.text = "PLAYER";
+        //player Stressed
+        playerStressed.text = "STRESSED";
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
@@ -360,29 +364,49 @@ public class ActorPanelUI : MonoBehaviour
     { canvasPlayer.alpha = alpha; }
 
     /// <summary>
-    /// In a separate method due to sequencing issues (accessing dictOfHelp)
-    /// Called from LoadManager.cs -> InitialiseLate
+    /// Initialise Player related tooltips
     /// </summary>
-    public void SetPlayerMoodHelp()
+    public void InitialiseTooltips()
     {
-        //mood help
-        List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData("mood_0", "mood_1", "mood_2", "mood_3");
-        playerMoodHelp.SetHelpTooltip(listOfHelpData, 200, 200);
+        //player mood UI
+        playerMoodTooltip.tooltipHeader = "Mood";
+        playerMoodTooltip.tooltipMain = GameManager.instance.colourScript.GetFormattedString("from 0 to 3 stars", ColourType.neutralText);
+        string details = string.Format("You will become STRESSED if your mood goes below zero");
+        playerMoodTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
+        playerMoodTooltip.y_offset = 100;
+        //player stressed UI
+        playerStressedTooltip.tooltipHeader = GameManager.instance.colourScript.GetFormattedString("Stressed", ColourType.badText);
+        playerStressedTooltip.tooltipMain = GameManager.instance.colourScript.GetFormattedString("Mood falls below Zero", ColourType.neutralText);
+        details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
+        playerStressedTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
+        playerStressedTooltip.y_offset = 100;
+
     }
 
     /// <summary>
     /// changes the sprite for the  moodPanel to reflect player mood
     /// </summary>
     /// <param name="mood"></param>
-    public void SetPlayerMoodUI(int mood)
+    public void SetPlayerMoodUI(int mood, bool isStressed = false)
     {
-        switch (mood)
+        if (isStressed == false)
         {
-            case 3: moodStars.sprite = mood3; break;
-            case 2: moodStars.sprite = mood2; break;
-            case 1: moodStars.sprite = mood1; break;
-            case 0: moodStars.sprite = mood0; break;
-            default: Debug.LogWarningFormat("Unrecognised player mood \"{0}\"", mood);  break;
+            playerStressed.gameObject.SetActive(false);
+            moodStars.gameObject.SetActive(true);
+            switch (mood)
+            {
+                case 3: moodStars.sprite = mood3; break;
+                case 2: moodStars.sprite = mood2; break;
+                case 1: moodStars.sprite = mood1; break;
+                case 0: moodStars.sprite = mood0; break;
+                default: Debug.LogWarningFormat("Unrecognised player mood \"{0}\"", mood); break;
+            }
+        }
+        else
+        {
+            //stressed
+            playerStressed.gameObject.SetActive(true);
+            moodStars.gameObject.SetActive(false);
         }
     }
 

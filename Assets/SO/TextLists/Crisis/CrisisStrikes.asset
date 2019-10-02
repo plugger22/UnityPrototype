@@ -33,7 +33,7 @@ MonoBehaviour:
   - Show us a robot with a family to support, huh? I'm human, I need to be paid more,
     insists [npc]. Strikes continue at [node]
   - I might not do as good a job as a robot but I'm human. Surely that counts for
-    something, asks [npc]. Strikes continue at [node]
+    something, asks [npc]? Strikes continue at [node]
   - Why do I have to work for a robot? Aren't they supposed to be working for us,
     asks [npc], a striker, at [node]?
   index: 9

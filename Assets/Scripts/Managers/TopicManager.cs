@@ -46,6 +46,10 @@ public class TopicManager : MonoBehaviour
     public TextList textListPolicy;
     [Tooltip("List of Handicaps")]
     public TextList textListHandicap;
+    [Tooltip("List of Who, eg. Sister, best friend, etc.")]
+    public TextList textListWho;
+    [Tooltip("List of condition relating to person referred to be textListWho")]
+    public TextList textListCondition;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -309,6 +313,8 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListMoneyReason != null, "Invalid textListMoneyReason (Null)");
         Debug.Assert(textListPolicy != null, "Invalid textListPolicy (Null)");
         Debug.Assert(textListHandicap != null, "Invalid textListHandicap (Null)");
+        Debug.Assert(textListWho != null, "Invalid textListWho (Null)");
+        Debug.Assert(textListCondition != null, "Invalid textListCondition (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -4370,6 +4376,15 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = tagTarget; }
                         }
                         else { CountTextTag("target", dictOfTags); }
+                        break;
+                    case "who":
+                        //My '[best friend]'s [crazy] [sister]' 
+                        if (isValidate == false)
+                        {
+                            replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
+                              GameManager.instance.topicScript.textListWho.GetRandomRecord());
+                        }
+                        else { CountTextTag("who", dictOfTags); }
                         break;
                     default:
                         if (isValidate == false)

@@ -845,6 +845,8 @@ public class PlayerManager : MonoBehaviour
                         case "STRESSED":
                             mood = 0;
                             isStressed = true;
+                            //update UI
+                            GameManager.instance.actorPanelScript.SetPlayerMoodUI(0, isStressed);
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
                             break;
@@ -958,6 +960,8 @@ public class PlayerManager : MonoBehaviour
                                     ChangeMood(moodReset, reason, "n.a");
                                     isStressed = false;
                                     numOfSuperStress = 0;
+                                    //change UI mood sprite
+                                    GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
                                     break;
                             }
                             return true;
@@ -1408,7 +1412,7 @@ public class PlayerManager : MonoBehaviour
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
             //change sprite
-            GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
+            GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
             //add a record
             HistoryMood record = new HistoryMood()
             {

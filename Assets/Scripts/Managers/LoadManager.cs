@@ -1919,8 +1919,6 @@ public class LoadManager : MonoBehaviour
                 }
                 Debug.Assert(dictOfHelp.Count == count, "Mismatch on count between dictOfHelp and listOfHelp");
                 Debug.LogFormat("[Loa] InitialiseLate -> listOfHelp has {0} entries{1}", counter, "\n");
-                //set up Player Mood UI help, now dictOfHelp has been initialised
-                GameManager.instance.actorPanelScript.SetPlayerMoodHelp();
             }
             else { Debug.LogError("Invalid listOfHelp (Empty)"); }
         }
