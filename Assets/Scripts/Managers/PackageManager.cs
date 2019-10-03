@@ -758,6 +758,21 @@ namespace packageAPI
     }
 
     /// <summary>
+    /// used to pass topic data across to MessageManager.cs
+    /// </summary>
+    public class TopicMessageData
+    {
+        public string topicName;
+        public string optionName;
+        public Sprite sprite;
+        public string spriteName;
+        public string text;
+        public int actorID;
+        public int nodeID;
+        public string outcome;
+    }
+
+    /// <summary>
     /// data passed from TopicManager.cs -> EffectManager.cs to customise topic effect outcomes
     /// </summary>
     public class TopicEffectData

@@ -737,7 +737,7 @@ public class MessageManager : MonoBehaviour
                         break;
                 }
             }
-            
+
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -3980,6 +3980,66 @@ public class MessageManager : MonoBehaviour
             GameManager.instance.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    //
+    // - - - Topic
+    //
+
+    public Message Topic(TopicMessageData topicData)
+    {
+        if (topicData != null)
+        {
+            if (string.IsNullOrEmpty(topicData.topicName) == true)
+            {
+                Debug.LogWarning("Invalid topic (Null or Empty)");
+                topicData.topicName = "Unknown";
+            }
+            if (string.IsNullOrEmpty(topicData.optionName) == true)
+            {
+                Debug.LogWarningFormat("Invalid option (Null or Empty)");
+                topicData.optionName = "Ignored";
+            }
+            if (topicData.sprite == null)
+            {
+                Debug.LogWarning("Invalid sprite (Null)");
+                topicData.sprite = GameManager.instance.guiScript.infoSprite;
+            }
+            if (string.IsNullOrEmpty(topicData.text) == false)
+            {
+                Message message = new Message();
+                //message.text = text;
+                message.type = MessageType.TOPIC;
+                message.subType = MessageSubType.Topic_Record;
+                message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+                message.isPublic = true;
+                message.data0 = topicData.nodeID;
+                message.data1 = topicData.actorID;
+                message.dataName = string.Format("\'{0}\', {1}", topicData.topicName, topicData.optionName);
+                //ItemData
+                ItemData data = new ItemData();
+                if (topicData.optionName.Equals("Ignored", System.StringComparison.Ordinal) == false)
+                { data.itemText = "Decision taken"; }
+                else { data.itemText = "Decision Ignored"; }
+                data.topText = topicData.topicName;
+                data.bottomText = string.Format("\"{0}\" option{1}{2}{3}", topicData.optionName, "\n", "\n", topicData.outcome);
+                data.priority = ItemPriority.Low;
+                data.sprite = topicData.sprite;
+                data.spriteName = topicData.spriteName;
+                data.tab = ItemTab.ALERTS;
+                data.type = message.type;
+                data.subType = message.subType;
+                data.sideLevel = message.sideLevel;
+                data.help = 1;
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.dataScript.AddItemData(data);
+            }
+            else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        }
+        else { Debug.LogWarning("Invalid topicMessageData package (Null)"); }
         return null;
     }
 

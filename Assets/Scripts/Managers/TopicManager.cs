@@ -159,6 +159,7 @@ public class TopicManager : MonoBehaviour
     private string tagTeam;                //used for resistance team actions
     private string tagTarget;
     private string tagStringData;        //General purpose
+    private string tagSpriteName;
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
 
     //collections (local)
@@ -1193,6 +1194,7 @@ public class TopicManager : MonoBehaviour
         tagSecretTag = "";
         tagTarget = "";
         tagTeam = "";
+        tagSpriteName = "";
         tagStringData = "";
         //empty collections
         listOfTypePool.Clear();
@@ -2684,7 +2686,7 @@ public class TopicManager : MonoBehaviour
                     }
                 }
             }
-            string optionName = "Unknown";
+            string optionName = "Ignored";
             //log
             if (turnOption != null)
             {
@@ -2692,6 +2694,19 @@ public class TopicManager : MonoBehaviour
                 Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: {0}, \"{1}\" SELECTED for topic {2}, \"{3}\"{4}", optionName, turnOption.tag, turnTopic.name, turnTopic.tag, "\n");
             }
             else { Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: NO OPTION selected for topic \"{0}\"{1}", turnTopic.name, "\n"); }
+            //topic message
+            TopicMessageData data = new TopicMessageData()
+            {
+                topicName = turnTopic.tag,
+                optionName = optionName,
+                sprite = turnSprite,
+                spriteName = tagSpriteName,
+                actorID = tagActorID,
+                nodeID = tagNodeID,
+                outcome = "Outcome",
+                text = "text"
+            };
+            GameManager.instance.messageScript.Topic(data);
             //topicHistory
             HistoryTopic history = new HistoryTopic()
             {
@@ -4475,6 +4490,7 @@ public class TopicManager : MonoBehaviour
                         if (actor != null)
                         {
                             turnSprite = actor.sprite;
+                            tagSpriteName = actor.actorName;
                             switch (turnTopicSubType.name)
                             {
                                 case "ActorMatch":
@@ -4520,6 +4536,7 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "Player":
                     turnSprite = GameManager.instance.playerScript.sprite;
+                    tagSpriteName = GameManager.instance.playerScript.PlayerName;
                     Tuple<string, string> resultsPlayer = GetPlayerTooltip();
                     string playerName = GameManager.instance.playerScript.PlayerName;
                     if (string.IsNullOrEmpty(resultsPlayer.Item1) == false)

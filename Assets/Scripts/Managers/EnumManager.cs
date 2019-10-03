@@ -198,7 +198,7 @@
     //
     public enum MsgPipelineType { None, CompromisedGear, Nemesis, CapturePlayer, ReleasePlayer, WinLose, DebugTopic }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC }
     public enum MessageSubType
     {
         None,
@@ -293,7 +293,9 @@
         Faction_Support,
         Faction_Approval,
         //Objective
-        Objective_Progress
+        Objective_Progress,
+        //Topic
+        Topic_Record
 
     }
 
