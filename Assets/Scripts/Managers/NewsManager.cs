@@ -360,8 +360,8 @@ public class NewsManager : MonoBehaviour
                         case "who":
                             //My '[best friend]'s [crazy] [sister]' 
                             if (data.isValidate == false)
-                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
-                                GameManager.instance.topicScript.textListWho.GetRandomRecord()); }
+                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho0.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
+                                GameManager.instance.topicScript.textListWho1.GetRandomRecord()); }
                             break;
                         default:
                             if (data.isValidate == false)

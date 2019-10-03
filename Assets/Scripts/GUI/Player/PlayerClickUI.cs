@@ -62,6 +62,8 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                                 listOfButtonDetails = GameManager.instance.actorScript.GetPlayerActions(),
                                 menuType = ActionMenuType.Player
                             };
+                        //close Player tooltip
+                        GameManager.instance.tooltipPlayerScript.CloseTooltip();
                             //activate menu
                             GameManager.instance.actionMenuScript.SetActionMenu(details);
                     }

@@ -104,7 +104,7 @@ public class TooltipPlayer : MonoBehaviour
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
-
+    #region SetToolip
     /// <summary>
     /// Initialise Player Tool tip
     /// </summary>
@@ -299,7 +299,7 @@ public class TooltipPlayer : MonoBehaviour
         tooltipPlayerObject.transform.position = worldPos;
         Debug.LogFormat("[UI] TooltipPlayer.cs -> SetTooltip{0}", "\n");
     }
-
+    #endregion
 
     public void SetOpacity(float opacity)
     { canvasGroup.alpha = opacity; }

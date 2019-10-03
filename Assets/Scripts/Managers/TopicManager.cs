@@ -30,6 +30,8 @@ public class TopicManager : MonoBehaviour
     [Range(0, 100)] public int chanceLow = 25;
     [Tooltip("If Motivation is neutral (2) then there is this % chance of the topic being good and the balance for it being bad")]
     [Range(0, 100)] public int chanceNeutralGood = 70;
+    [Tooltip("If Player Stressed there is a random chance that any option in a topic will be unavailable")]
+    [Range(0, 100)] public int chanceStressedNoOption = 25;
 
     [Header("Text Lists")]
     [Tooltip("List of locations (generic) that can be used in any district. Used for node Action / Topic immersion")]
@@ -46,8 +48,10 @@ public class TopicManager : MonoBehaviour
     public TextList textListPolicy;
     [Tooltip("List of Handicaps")]
     public TextList textListHandicap;
-    [Tooltip("List of Who, eg. Sister, best friend, etc.")]
-    public TextList textListWho;
+    [Tooltip("List of Who, first instance, eg. Sister, best friend, etc.")]
+    public TextList textListWho0;
+    [Tooltip("List of Who, second instance, eg. stepsister, second cousin, etc.")]
+    public TextList textListWho1;
     [Tooltip("List of condition relating to person referred to be textListWho")]
     public TextList textListCondition;
 
@@ -313,7 +317,8 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListMoneyReason != null, "Invalid textListMoneyReason (Null)");
         Debug.Assert(textListPolicy != null, "Invalid textListPolicy (Null)");
         Debug.Assert(textListHandicap != null, "Invalid textListHandicap (Null)");
-        Debug.Assert(textListWho != null, "Invalid textListWho (Null)");
+        Debug.Assert(textListWho0 != null, "Invalid textListWho0 (Null)");
+        Debug.Assert(textListWho1 != null, "Invalid textListWho1 (Null)");
         Debug.Assert(textListCondition != null, "Invalid textListCondition (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
@@ -3580,7 +3585,7 @@ public class TopicManager : MonoBehaviour
     #region CheckOptionCriteria
     /// <summary>
     /// Check's option criteria (if any) and sets option flag for isValid (passed criteria) or not. If not, option tooltip is set here explaining why it failed criteria check
-    /// Returns true if criteria (if any) passes, false if not
+    /// Returns true if criteria (if any) passes, false if not. If player STRESSED then a random chance that option will be unavailable
     /// NOTE: Option checked for Null by parent method (InitialiseTopicUI)
     /// </summary>
     /// <param name="option"></param>
@@ -3589,38 +3594,51 @@ public class TopicManager : MonoBehaviour
     {
         //determines whether option if viable and can be selected or is greyed out.
         option.isValid = true;
-        if (option.listOfCriteria?.Count > 0)
+        string effectCriteria = null;
+        //Player NOT stressed, proceed as normal
+        if (GameManager.instance.playerScript.isStressed == false)
         {
-            //pass actor to effect criteria check if a valid actorID
-            int actorCurrentSlotID = -1;
-            if (tagActorID > -1)
+            if (option.listOfCriteria?.Count > 0)
             {
-                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                if (actor != null)
-                { actorCurrentSlotID = actor.slotID; }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+
+                //pass actor to effect criteria check if a valid actorID
+                int actorCurrentSlotID = -1;
+                if (tagActorID > -1)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    if (actor != null)
+                    { actorCurrentSlotID = actor.slotID; }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                }
+                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                {
+                    listOfCriteria = option.listOfCriteria,
+                    actorSlotID = actorCurrentSlotID
+                };
+                effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             }
-            CriteriaDataInput criteriaInput = new CriteriaDataInput()
-            {
-                listOfCriteria = option.listOfCriteria,
-                actorSlotID = actorCurrentSlotID
-            };
-            string effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-            if (string.IsNullOrEmpty(effectCriteria) == false)
-            {
-                //failed criteria check -> specify tooltip here
-                option.isValid = false;
-                //header -> from option.tag
-                if (string.IsNullOrEmpty(option.tag) == false)
-                { option.tooltipHeader = string.Format("{0}OPTION UNAVAILABLE{1}", "<mark=#FFFFFF4D>", "</mark>"); }
-                else { option.tooltipHeader = "Unknown"; }
-                //main -> criteria feedback
-                option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
-                //Details -> derived from option mood Effect
-                if (option.moodEffect != null)
-                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-                else { option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd); }
-            }
+        }
+        else
+        {
+            //Player stressed, random chance option unavailable
+            int rnd = Random.Range(0, 100);
+            if (rnd < chanceStressedNoOption)
+            { effectCriteria = "Player STRESSED"; }
+        }
+        if (string.IsNullOrEmpty(effectCriteria) == false)
+        {
+            //failed criteria check -> specify tooltip here
+            option.isValid = false;
+            //header -> from option.tag
+            if (string.IsNullOrEmpty(option.tag) == false)
+            { option.tooltipHeader = string.Format("{0}OPTION UNAVAILABLE{1}", "<mark=#FFFFFF4D>", "</mark>"); }
+            else { option.tooltipHeader = "Unknown"; }
+            //main -> criteria feedback
+            option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
+            //Details -> derived from option mood Effect
+            if (option.moodEffect != null)
+            { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+            else { option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd); }
         }
         return option.isValid;
     }
@@ -4381,8 +4399,8 @@ public class TopicManager : MonoBehaviour
                         //My '[best friend]'s [crazy] [sister]' 
                         if (isValidate == false)
                         {
-                            replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
-                              GameManager.instance.topicScript.textListWho.GetRandomRecord());
+                            replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho0.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
+                              GameManager.instance.topicScript.textListWho1.GetRandomRecord());
                         }
                         else { CountTextTag("who", dictOfTags); }
                         break;

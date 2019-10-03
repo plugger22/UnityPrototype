@@ -131,3 +131,20 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:231)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:355)
 	
+Dev seed 5076 -> Thursday, 3 October 2019 10:52 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 71, assets 72 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1562)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1535)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 24259 -> Thursday, 3 October 2019 11:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35641 -> Thursday, 3 October 2019 11:49 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39895 -> Thursday, 3 October 2019 12:01 PM
+City seed 5678 -> London, United Kingdom

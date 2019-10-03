@@ -1249,6 +1249,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2722b7af5d0f2a148bc5f1c8a47a059b, type: 2}
   - {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   - {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
+  - {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -4087,7 +4088,8 @@ MonoBehaviour:
     type: 2}
   textListPolicy: {fileID: 11400000, guid: a36166163ef83be40a74e6b77df95cb9, type: 2}
   textListHandicap: {fileID: 11400000, guid: 2722b7af5d0f2a148bc5f1c8a47a059b, type: 2}
-  textListWho: {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
+  textListWho0: {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
+  textListWho1: {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
   textListCondition: {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
