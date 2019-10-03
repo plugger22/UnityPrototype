@@ -4309,7 +4309,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a list containing the actorArc names of all current, OnMap, actors (active or inactive) for a side. Null if a problem.
+    /// returns a list containing the actorArc names of all current, OnMap, actors (active or inactive) for a side. Empty list if none
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
@@ -4322,8 +4322,9 @@ public class DataManager : MonoBehaviour
             if (CheckActorSlotStatus(i, side) == true)
             { tempList.Add(arrayOfActors[side.level, i].arc.name); }
         }
-        if (tempList.Count > 0) { return tempList; }
-        return null;
+        /*if (tempList.Count > 0) { return tempList; }*/
+        return tempList;
+        /*return null;*/
     }
 
     /// <summary>

@@ -728,3 +728,48 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 37477 -> Thursday, 3 October 2019 8:17 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12144 -> Friday, 4 October 2019 9:24 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13312 -> Friday, 4 October 2019 9:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28604 -> Friday, 4 October 2019 9:38 AM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentNullException: Value cannot be null.
+Parameter name: collection
+System.ThrowHelper.ThrowArgumentNullException (System.ExceptionArgument argument) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T]..ctor (System.Collections.Generic.IEnumerable`1[T] collection) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorManager.AddNewActorOnMapAI (GlobalSide side, Node node, System.Int32 slotID) (at Assets/Scripts/Managers/ActorManager.cs:7403)
+	AIRebelManager.ExecuteRecruiterTask (packageAPI.AITask task) (at Assets/Scripts/Managers/AIRebelManager.cs:3201)
+	AIRebelManager.ExecuteActorArcTask (packageAPI.AITask task) (at Assets/Scripts/Managers/AIRebelManager.cs:3060)
+	AIRebelManager.ExecuteTask (packageAPI.AITask task) (at Assets/Scripts/Managers/AIRebelManager.cs:2816)
+	AIRebelManager.ProcessTaskFinal () (at Assets/Scripts/Managers/AIRebelManager.cs:2787)
+	AIRebelManager.ProcessAI () (at Assets/Scripts/Managers/AIRebelManager.cs:546)
+	AIManager.ProcessAISideResistance () (at Assets/Scripts/Managers/AIManager.cs:632)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:468)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:271)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:355)
+	
+Dev seed 28604 -> Friday, 4 October 2019 9:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28604 -> Friday, 4 October 2019 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28604 -> Friday, 4 October 2019 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28604 -> Friday, 4 October 2019 9:48 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9359 -> Friday, 4 October 2019 9:48 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32744 -> Friday, 4 October 2019 9:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1628 -> Friday, 4 October 2019 9:53 AM
+City seed 5678 -> London, United Kingdom

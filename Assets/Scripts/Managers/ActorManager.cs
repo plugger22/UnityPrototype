@@ -6108,7 +6108,11 @@ public class ActorManager : MonoBehaviour
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.instance.playerScript.GetPlayerName(playerSide), "\n");
                         }
                         else
-                        { GameManager.instance.playerScript.Invisibility = invis; }
+                        {
+                            //statistic
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysLieLow);
+                            GameManager.instance.playerScript.Invisibility = invis;
+                        }
                         break;
                     case ActorInactive.StressLeave:
                         if (GameManager.instance.playerScript.isStressLeave == false)
@@ -6436,7 +6440,11 @@ public class ActorManager : MonoBehaviour
                             { GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalResistance, "Lying Low removes Stress"); }
                         }
                         else
-                        { GameManager.instance.playerScript.Invisibility = invis; }
+                        {
+                            GameManager.instance.playerScript.Invisibility = invis;
+                            //statistic
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysLieLow);
+                        }
                         break;
                 }
                 //
@@ -7401,58 +7409,62 @@ public class ActorManager : MonoBehaviour
                     List<string> listOfCurrentArcs = new List<string>(GameManager.instance.dataScript.GetAllCurrentActorArcs(side));
                     if (listOfCurrentArcs != null)
                     {
-                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                        if (listOfCurrentArcs.Count > 0)
                         {
-                            //player at node, select from 3 x level 1 options, different from current OnMap actor types
-                            listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, side));
-                        }
-                        else
-                        {
-                            //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
-                            listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, side));
-                        }
-                        if (listOfPoolActors.Count > 0)
-                        {
-                            //loop backwards through pool of actors (do for both) and remove any that match the curent OnMap types
-                            for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
+                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
                             {
-                                Actor actorTemp = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
-                                if (actorTemp != null)
-                                {
-                                    if (listOfCurrentArcs.Count > 0)
-                                    {
-                                        if (listOfCurrentArcs.Exists(x => x == actorTemp.arc.name))
-                                        { listOfPoolActors.RemoveAt(i); }
-                                    }
-                                }
-                                else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
+                                //player at node, select from 3 x level 1 options, different from current OnMap actor types
+                                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, side));
                             }
-                            //actors present
+                            else
+                            {
+                                //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
+                                listOfPoolActors.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, side));
+                            }
                             if (listOfPoolActors.Count > 0)
                             {
-                                //randomly select an actor
-                                int actorID = listOfPoolActors[Random.Range(0, listOfPoolActors.Count)];
-                                Actor actorNew = GameManager.instance.dataScript.GetActor(actorID);
-                                if (actorNew != null)
+                                //loop backwards through pool of actors (do for both) and remove any that match the curent OnMap types
+                                for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
                                 {
-                                    //
-                                    // - - - Add Actor
-                                    //
-                                    GameManager.instance.dataScript.RemoveActorFromPool(actorNew.actorID, actorNew.level, side);
-                                    //place actor on Map (reset states)
-                                    GameManager.instance.dataScript.AddCurrentActor(side, actorNew, slotID);
-                                    //stats
-                                    GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
-                                    //admin
-                                    Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
-                                    string textAutoRun = string.Format("{0}{1}{2} {3}Recruited{4}", colourAlert, actorNew.arc.name, colourEnd, colourGood, colourEnd);
-                                    GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+                                    Actor actorTemp = GameManager.instance.dataScript.GetActor(listOfPoolActors[i]);
+                                    if (actorTemp != null)
+                                    {
+                                        if (listOfCurrentArcs.Count > 0)
+                                        {
+                                            if (listOfCurrentArcs.Exists(x => x == actorTemp.arc.name))
+                                            { listOfPoolActors.RemoveAt(i); }
+                                        }
+                                    }
+                                    else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
                                 }
-                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                                //actors present
+                                if (listOfPoolActors.Count > 0)
+                                {
+                                    //randomly select an actor
+                                    int actorID = listOfPoolActors[Random.Range(0, listOfPoolActors.Count)];
+                                    Actor actorNew = GameManager.instance.dataScript.GetActor(actorID);
+                                    if (actorNew != null)
+                                    {
+                                        //
+                                        // - - - Add Actor
+                                        //
+                                        GameManager.instance.dataScript.RemoveActorFromPool(actorNew.actorID, actorNew.level, side);
+                                        //place actor on Map (reset states)
+                                        GameManager.instance.dataScript.AddCurrentActor(side, actorNew, slotID);
+                                        //stats
+                                        GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
+                                        //admin
+                                        Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
+                                        string textAutoRun = string.Format("{0}{1}{2} {3}Recruited{4}", colourAlert, actorNew.arc.name, colourEnd, colourGood, colourEnd);
+                                        GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                                }
+                                else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: No actors available to add to OnMap roster{0}", "\n"); }
                             }
-                            else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: No actors available to add to OnMap roster{0}", "\n"); }
+                            else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: NO SUITABLE RECRUITS AVAILABLE{0}", "\n"); }
                         }
-                        else { Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: NO SUITABLE RECRUITS AVAILABLE{0}", "\n"); }
+                        else { Debug.LogWarning("Info: ListOfCurrentActorArcs (Empty) ->  No actors present"); }
                     }
                     else { Debug.LogError("Invalid listOfCurrentArcs (Null)"); }
                 }
