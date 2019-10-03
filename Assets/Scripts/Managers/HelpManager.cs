@@ -265,7 +265,7 @@ public class HelpManager : MonoBehaviour
         builder = new StringBuilder();
         builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss keeps track{3} of your choices. ", 
             colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("{0}Ignoring{1} a decision will always earn you Boss's {2}disapproval{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("{0}Ignoring{1} a decision will always earn your Boss's {2}disapproval{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
