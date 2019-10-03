@@ -4004,7 +4004,8 @@ public class MessageManager : MonoBehaviour
             }
             if (topicData.sprite == null)
             {
-                Debug.LogWarning("Invalid sprite (Null)");
+                if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                { Debug.LogWarning("Invalid sprite (Null)"); }
                 topicData.sprite = GameManager.instance.guiScript.infoSprite;
             }
             if (string.IsNullOrEmpty(topicData.text) == false)
@@ -4024,7 +4025,7 @@ public class MessageManager : MonoBehaviour
                 { data.itemText = "Decision taken"; }
                 else { data.itemText = "Decision Ignored"; }
                 data.topText = topicData.topicName;
-                data.bottomText = string.Format("\"{0}\" option{1}{2}{3}", topicData.optionName, "\n", "\n", topicData.outcome);
+                data.bottomText = string.Format("<b>{0}</b>{1}{2}<b>{3}</b>", topicData.optionName, "\n", "\n", topicData.outcome);
                 data.priority = ItemPriority.Low;
                 data.sprite = topicData.sprite;
                 data.spriteName = topicData.spriteName;
@@ -4033,6 +4034,7 @@ public class MessageManager : MonoBehaviour
                 data.subType = message.subType;
                 data.sideLevel = message.sideLevel;
                 data.help = 1;
+                data.tag0 = "topicMess_0";
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
                 GameManager.instance.dataScript.AddItemData(data);

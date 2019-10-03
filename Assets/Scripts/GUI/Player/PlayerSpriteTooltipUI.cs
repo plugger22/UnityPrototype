@@ -93,6 +93,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
                 if (data != null)
                 {
                     data.screenPos = transform.position;
+                    data.screenPos.y += 50;
                     GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 }
                 yield return null;

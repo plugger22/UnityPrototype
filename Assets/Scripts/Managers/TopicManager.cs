@@ -160,6 +160,7 @@ public class TopicManager : MonoBehaviour
     private string tagTarget;
     private string tagStringData;        //General purpose
     private string tagSpriteName;
+    private string tagOutcome;
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
 
     //collections (local)
@@ -1194,6 +1195,7 @@ public class TopicManager : MonoBehaviour
         tagSecretTag = "";
         tagTarget = "";
         tagTeam = "";
+        tagOutcome = "";
         tagSpriteName = "";
         tagStringData = "";
         //empty collections
@@ -2343,6 +2345,8 @@ public class TopicManager : MonoBehaviour
             }
             //outcome dialogue
             SetTopicOutcome(builderTop, builderBottom);
+            //message outcome
+            tagOutcome = builderBottom.ToString();
             //tidy up
             ProcessTopicAdmin();
         }
@@ -2417,6 +2421,8 @@ public class TopicManager : MonoBehaviour
         GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsIgnored);
         //outcome dialogue
         SetTopicOutcome(builderTop, builderBottom);
+        //message
+        tagOutcome = builderBottom.ToString();
         //tidy up
         ProcessTopicAdmin();
     }
@@ -2694,20 +2700,32 @@ public class TopicManager : MonoBehaviour
                 Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: {0}, \"{1}\" SELECTED for topic {2}, \"{3}\"{4}", optionName, turnOption.tag, turnTopic.name, turnTopic.tag, "\n");
             }
             else { Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: NO OPTION selected for topic \"{0}\"{1}", turnTopic.name, "\n"); }
-            //topic message
-            TopicMessageData data = new TopicMessageData()
+            //topic Message (not for autoRun)
+            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
             {
-                topicName = turnTopic.tag,
-                optionName = optionName,
-                sprite = turnSprite,
-                spriteName = tagSpriteName,
-                actorID = tagActorID,
-                nodeID = tagNodeID,
-                outcome = "Outcome",
-                text = "text"
-            };
-            GameManager.instance.messageScript.Topic(data);
-            //topicHistory
+                TopicMessageData data = new TopicMessageData()
+                {
+                    topicName = turnTopic.tag,
+                    sprite = turnSprite,
+                    spriteName = tagSpriteName,
+                    actorID = tagActorID,
+                    nodeID = tagNodeID,
+                    outcome = tagOutcome
+                };
+                //separate to cover Ignore option
+                if (turnOption != null)
+                {
+                    data.optionName = string.Format("{0}{1}{2}", colourAlert, turnOption.text, colourEnd);
+                    data.text = string.Format("Topic \'{0}\', option {1}, actorID {2}, nodeID {3}", turnTopic.tag, turnOption.tag, tagActorID, tagNodeID);
+                }
+                else
+                {
+                    data.optionName = string.Format("{0}Decision IGNORED{1}", colourAlert, colourEnd);
+                    data.text = string.Format("Topic \'{0}\', option IGNORED, actorID {1}, nodeID {2}", turnTopic.tag, tagActorID, tagNodeID);
+                }
+                GameManager.instance.messageScript.Topic(data);
+            }
+            //topic history
             HistoryTopic history = new HistoryTopic()
             {
                 turn = turn,
@@ -2718,7 +2736,6 @@ public class TopicManager : MonoBehaviour
                 option = optionName
             };
             GameManager.instance.dataScript.AddTopicHistory(history);
-
             //stats
             switch (turnTopic.group.name)
             {

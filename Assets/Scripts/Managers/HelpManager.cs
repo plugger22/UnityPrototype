@@ -270,6 +270,20 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region TopicMessage
+        //
+        // - - - Topic Message
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "topicMess_0";
+        data.header = "Decision";
+        builder = new StringBuilder();
+        builder.AppendFormat("This item records the outcome of the decision that you have decided upon at the {0}start of this turn{1}", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         #region Secrets
         //
         // - - - Secrets
