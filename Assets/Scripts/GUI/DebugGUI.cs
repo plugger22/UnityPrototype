@@ -48,6 +48,7 @@ public class DebugGUI : MonoBehaviour
     private int trackerToggle = 0;
     private int newsToggle = 0;
     private int actorToggle = 0;
+    private int statisticsToggle = 0;
     private int topicToggle = 0;
     private int factionToggle = 0;
     private int analyseToggle = 0;
@@ -358,9 +359,13 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 19 + button_height * 19, button_width, button_height), "Statistics Data"))
             {
                 Debug.Log("[Dbg] Button -> Statistics Data");
-                if (debugDisplay != 50)
-                { debugDisplay = 50; }
-                else { debugDisplay = 0; }
+                //toggles sequentially through statistic info displays and then switches off
+                switch (analyseToggle)
+                {
+                    case 0: debugDisplay = 50; analyseToggle = 1; break;
+                    case 1: debugDisplay = 77; analyseToggle = 2; break;
+                    case 2: debugDisplay = 0; analyseToggle = 0; break;
+                }
             }
 
             //twentyfirst button
@@ -1607,6 +1612,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayTextTagCount();
                         GUI.Box(new Rect(Screen.width - 355, 10, 500, 500), analysis, customBackground);
+                        break;
+                    //Statistics Data
+                    case 77:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.statScript.DebugShowRatios();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

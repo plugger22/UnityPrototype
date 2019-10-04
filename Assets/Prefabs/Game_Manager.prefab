@@ -4076,6 +4076,7 @@ MonoBehaviour:
   chanceMedium: 50
   chanceLow: 25
   chanceNeutralGood: 70
+  chanceStressedNoOption: 25
   textlistGenericLocation: {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add,
     type: 2}
   textListBadResistance: {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a,

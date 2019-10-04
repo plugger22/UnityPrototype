@@ -1011,3 +1011,27 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 3775 -> Friday, 4 October 2019 3:41 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 6136 -> Friday, 4 October 2019 5:00 PM
+City seed 5678 -> London, United Kingdom
+ASSERT DivideByZeroException: Attempted to divide by zero.
+StatisticManager.UpdateRatios () (at Assets/Scripts/Managers/StatisticManager.cs:123)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:518)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:395)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:355)
+	
+Dev seed 47427 -> Friday, 4 October 2019 5:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51545 -> Friday, 4 October 2019 5:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11332 -> Friday, 4 October 2019 5:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49756 -> Friday, 4 October 2019 5:18 PM
+City seed 5678 -> London, United Kingdom

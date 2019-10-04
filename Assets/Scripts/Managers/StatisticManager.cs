@@ -117,8 +117,43 @@ public class StatisticManager : MonoBehaviour
     /// </summary>
     public void UpdateRatios()
     {
+        int turn = GameManager.instance.turnScript.Turn;
         //PlayerNodeActions
-
+        float dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
+        float dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance);
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerNodeActions = dataTop / dataBottom; }
+        else { ratioPlayerNodeActions = 0; }
+        //PlayerTargetAttempts
+        dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
+        dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts);
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerTargetAttempts = dataTop / dataBottom; }
+        else { ratioPlayerTargetAttempts = 0; }
+        //PlayerMoveActions
+        dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions);
+        dataBottom = turn;
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerMoveActions = dataTop / dataBottom; }
+        else { ratioPlayerMoveActions = 0; }
+        //PlayerLieLowDays
+        dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+        dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal);
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerLieLowDays = dataTop / dataBottom; }
+        else { ratioPlayerLieLowDays = 0; }
+        //PlayerGiveGear
+        dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
+        dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal);
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerGiveGear = dataTop / dataBottom; }
+        else { ratioPlayerGiveGear = 0; }
+        //PlayerManageActions
+        dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions);
+        dataBottom = turn;
+        if (dataTop != 0 && dataBottom != 0)
+        { ratioPlayerManageActions = dataTop / dataBottom; }
+        else { ratioPlayerManageActions = 0; }
     }
     #endregion
 
@@ -141,6 +176,26 @@ public class StatisticManager : MonoBehaviour
             GameManager.instance.dataScript.StatisticGetCampaign((StatType)stat), "\n"); }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Display statistic ratios
+    /// </summary>
+    /// <returns></returns>
+    public string DebugShowRatios()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Ratios{0}{1}", "\n", "\n");
+        builder.AppendFormat(" ratioPlayerNodeActions: {0}{1}", ratioPlayerNodeActions, "\n");
+        builder.AppendFormat(" ratioPlayerTargetAttempts: {0}{1}", ratioPlayerTargetAttempts, "\n");
+        builder.AppendFormat(" ratioPlayerMoveActions: {0}{1}", ratioPlayerMoveActions, "\n");
+        builder.AppendFormat(" ratioPlayerLieLowDays: {0}{1}", ratioPlayerLieLowDays, "\n");
+        builder.AppendFormat(" ratioPlayerGiveGear: {0}{1}", ratioPlayerGiveGear, "\n");
+        builder.AppendFormat(" ratioPlayerManageActions: {0}{1}", ratioPlayerManageActions, "\n");
+
+        return builder.ToString();
+    }
+
+
     #endregion
 
     //new methods above here
