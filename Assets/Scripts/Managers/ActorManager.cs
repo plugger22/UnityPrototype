@@ -515,6 +515,7 @@ public class ActorManager : MonoBehaviour
             }
         }
         UpdateReserveActors();
+        GameManager.instance.statScript.UpdateRatios();
         //Lie Low cooldown timer
         if (lieLowTimer > 0) { lieLowTimer--; }
     }

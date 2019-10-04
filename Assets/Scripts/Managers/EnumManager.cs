@@ -166,6 +166,7 @@
     }
     public enum PlayerCheck { None, NodeActionsNOTZero }
 
+
     //
     // - - - Statistics - - - 
     //
@@ -180,6 +181,7 @@
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored
     }
+
 
     //
     // - - - Help - - -

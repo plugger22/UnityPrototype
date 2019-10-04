@@ -11,6 +11,13 @@ using UnityEngine;
 public class StatisticManager : MonoBehaviour
 {
 
+    private float ratioPlayerNodeActions;
+    private float ratioPlayerTargetAttempts;
+    private float ratioPlayerMoveActions;
+    private float ratioPlayerLieLowDays;
+    private float ratioPlayerGiveGear;
+    private float ratioPlayerManageActions;
+
     public void InitialiseEarly(GameState state)
     {
         switch (state)
@@ -67,6 +74,7 @@ public class StatisticManager : MonoBehaviour
 
     #endregion
 
+    #region ProcessMetaStatics
     /// <summary>
     /// Update campaign statistics with previous level stats and clear out level stats ready for new level
     /// </summary>
@@ -101,6 +109,23 @@ public class StatisticManager : MonoBehaviour
         //reset all level based statistics back to zero
         GameManager.instance.dataScript.StatisticReset();
     }
+    #endregion
+
+    #region UpdateRatios
+    /// <summary>
+    /// Method to update all ratios at start of each turn
+    /// </summary>
+    public void UpdateRatios()
+    {
+        //PlayerNodeActions
+
+    }
+    #endregion
+
+    #region Debug Methods
+    //
+    // - - - Debug Methods
+    //
 
     /// <summary>
     /// Display statistics
@@ -116,7 +141,7 @@ public class StatisticManager : MonoBehaviour
             GameManager.instance.dataScript.StatisticGetCampaign((StatType)stat), "\n"); }
         return builder.ToString();
     }
-
+    #endregion
 
     //new methods above here
 }
