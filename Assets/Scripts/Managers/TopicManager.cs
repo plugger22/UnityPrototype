@@ -160,6 +160,7 @@ public class TopicManager : MonoBehaviour
     private string tagTarget;
     private string tagStringData;        //General purpose
     private string tagSpriteName;
+    private string tagOptionText;           //option.text after CheckTopicText
     private string tagOutcome;
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
 
@@ -1197,6 +1198,7 @@ public class TopicManager : MonoBehaviour
         tagTeam = "";
         tagOutcome = "";
         tagSpriteName = "";
+        tagOptionText = "";
         tagStringData = "";
         //empty collections
         listOfTypePool.Clear();
@@ -2277,8 +2279,8 @@ public class TopicManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", turnOption.optionNumber, turnOption.name); }
                 }
                 //top text (can handle text tags)
-                string optionText = CheckTopicText(turnOption.text, false);
-                builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, optionText, colourEnd);
+                tagOptionText = CheckTopicText(turnOption.text, false);
+                builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, tagOptionText, colourEnd);
                 if (listOfEffects.Count > 0)
                 {
                     //probability option and only one effect (which would be mood)
@@ -2715,7 +2717,7 @@ public class TopicManager : MonoBehaviour
                 //separate to cover Ignore option
                 if (turnOption != null)
                 {
-                    data.optionName = string.Format("{0}{1}{2}", colourAlert, turnOption.text, colourEnd);
+                    data.optionName = string.Format("{0}{1}{2}", colourAlert, tagOptionText, colourEnd);
                     data.text = string.Format("Topic \'{0}\', option {1}, actorID {2}, nodeID {3}", turnTopic.tag, turnOption.tag, tagActorID, tagNodeID);
                 }
                 else

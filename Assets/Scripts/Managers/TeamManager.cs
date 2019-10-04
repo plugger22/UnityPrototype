@@ -1490,7 +1490,11 @@ public class TeamManager : MonoBehaviour
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
                                     Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                    //statistics
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
+                                //statistics
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                             }
                             else
                             {

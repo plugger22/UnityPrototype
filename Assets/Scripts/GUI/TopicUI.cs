@@ -500,7 +500,7 @@ public class TopicUI : MonoBehaviour
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Topic };
             GameManager.instance.inputScript.SetModalState(package);
             GameManager.instance.guiScript.SetIsBlocked(true);
-            Debug.LogFormat("[UI] MainInfoUI.cs -> SetTopicDisplay{0}", "\n");
+            Debug.LogFormat("[UI] TopicUI.cs -> SetTopicDisplay{0}", "\n");
             //initialise Canvas (switches one everything once all ready to go)
             topicCanvas.gameObject.SetActive(true);
         }
@@ -517,7 +517,7 @@ public class TopicUI : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         topicCanvas.gameObject.SetActive(false);
-
+        Debug.LogFormat("[UI] TopicUI.cs -> CloseTopicDisplay{0}", "\n");
         //switch of AlertUI 
         GameManager.instance.alertScript.CloseAlertUI();
 
@@ -544,6 +544,7 @@ public class TopicUI : MonoBehaviour
         GameManager.instance.inputScript.SetModalState(package);
         //restore topicUI
         topicCanvas.gameObject.SetActive(true);
+        Debug.LogFormat("[UI] TopicUI.cs -> RestoreTopicUI after 'ShowMe'{0}", "\n");
     }
 
     /// <summary>

@@ -2091,6 +2091,8 @@ public class NodeManager : MonoBehaviour
                 history.invisibility = GameManager.instance.playerScript.Invisibility;
                 history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
                 GameManager.instance.dataScript.AddHistoryRebelMove(history);
+                //Statistics
+                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerMoveActions);
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }

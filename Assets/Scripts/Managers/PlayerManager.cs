@@ -560,6 +560,8 @@ public class PlayerManager : MonoBehaviour
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
                     GameManager.instance.dataScript.AddGearNew(gear);
+                    //statistics
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.GearTotal);
                     return true;
                 }
                 else
@@ -1591,7 +1593,7 @@ public class PlayerManager : MonoBehaviour
         //stats
         builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
         builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
-        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLow), "\n");
+        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowTimes), "\n");
         return builder.ToString();
     }
 

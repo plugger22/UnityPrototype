@@ -431,7 +431,11 @@ public class ActionManager : MonoBehaviour
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
                                     Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                    //statistics
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
+                                //statistics
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                             }
                             //texts
                             outcomeDetails.textTop = builderTop.ToString();
@@ -484,9 +488,11 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        bool isPlayer = false;
         Node node = null;
         Action action = null;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
+        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { isPlayer = true; }
         //renown (do prior to effects as Player renown will change)
         int renownBefore = GameManager.instance.playerScript.Renown;
         //resolve action
@@ -513,7 +519,7 @@ public class ActionManager : MonoBehaviour
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
                         dataInput.originText = string.Format("{0} District Action", details.gearName);
-                        
+
                         //
                         // - - - Process effects
                         //
@@ -549,6 +555,10 @@ public class ActionManager : MonoBehaviour
                         //texts
                         outcomeDetails.textTop = builderTop.ToString();
                         outcomeDetails.textBottom = builderBottom.ToString();
+                        //statistics
+                        if (isPlayer == true)
+                        { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions); }
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                     }
                     else
                     {
@@ -973,7 +983,7 @@ public class ActionManager : MonoBehaviour
 
                                 }
                                 else
-                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);  }
+                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
                             }
                             else
                             {
@@ -1298,7 +1308,7 @@ public class ActionManager : MonoBehaviour
             GameManager.instance.playerScript.inactiveStatus = ActorInactive.LieLow;
             GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
             GameManager.instance.playerScript.isLieLowFirstturn = true;
-            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLow);
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
             outcomeDetails.textTop = string.Format("{0}{1}{2} will go to ground and {3}Lie Low{4}", colourAlert, playerName, colourEnd, colourNeutral, colourEnd);
             outcomeDetails.sprite = GameManager.instance.playerScript.sprite;
             //message
@@ -1596,7 +1606,7 @@ public class ActionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Process Give Gear actor action (Resistance only)
+    /// Process Give Gear actor action (Resistance only) -> Player gives gear to actor
     /// </summary>
     /// <param name="details"></param>
     public void ProcessGiveGearAction(ModalActionDetails details)
@@ -1690,10 +1700,9 @@ public class ActionManager : MonoBehaviour
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
             GameManager.instance.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
-        }
-        //action (if valid) expended -> must be BEFORE outcome window event
-        if (errorFlag == false)
-        {
+            //statistics
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerGiveGear);
+            //action (if valid) expended -> must be BEFORE outcome window event
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Give Gear";
             //is there a delegate method that needs processing?
@@ -2352,7 +2361,7 @@ public class ActionManager : MonoBehaviour
         bool isAction = false;
         bool isSuccessful = false;
         bool isZeroInvisibility = false;
-        bool isPlayerAction = false;
+        bool isPlayer = false;
         int actorID = GameManager.instance.playerScript.actorID;
         string text;
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
@@ -2375,7 +2384,7 @@ public class ActionManager : MonoBehaviour
                 //Player
                 if (nodeID == GameManager.instance.nodeScript.nodePlayer)
                 {
-                    isPlayerAction = true;
+                    isPlayer = true;
                     details = GameManager.instance.captureScript.CheckCaptured(nodeID, actorID);
                     if (GameManager.instance.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
@@ -2428,7 +2437,9 @@ public class ActionManager : MonoBehaviour
                 int chance = GameManager.instance.targetScript.GetTargetChance(tally);
                 Debug.LogFormat("[Tar] TargetManager.cs -> ProcessNodeTarget: Target {0}{1}", target.targetName, "\n");
                 target.numOfAttempts++;
+                //statistics
                 GameManager.instance.dataScript.StatisticIncrement(StatType.TargetAttempts);
+                if (isPlayer == true) { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTargetAttempts); }
                 int roll = Random.Range(0, 100);
                 if (roll < chance)
                 {
@@ -2495,7 +2506,7 @@ public class ActionManager : MonoBehaviour
                     listOfEffects.AddRange(target.listOfGoodEffects);
                     listOfEffects.AddRange(target.listOfBadEffects);
                     listOfEffects.Add(target.ongoingEffect);
-                    if (isPlayerAction == true)
+                    if (isPlayer == true)
                     { listOfEffects.Add(target.moodEffect); }
                 }
                 else
@@ -2733,6 +2744,10 @@ public class ActionManager : MonoBehaviour
             }
             else
             { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
+            //mood info
+            builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+            //statistics
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerManageActions);
         }
         else
         {
@@ -2745,8 +2760,6 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to move anyone to the Reserve Pool at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
-        //mood info
-        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
         //
         // - - - Outcome - - - 
         //
@@ -2898,6 +2911,10 @@ public class ActionManager : MonoBehaviour
             }
             else
             { Debug.LogError("Invalid optionText (Null or empty)"); }
+        //mood info
+        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+        //statistics
+        GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerManageActions);
         }
         else
         {
@@ -2910,8 +2927,7 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to dismiss or promote anyone at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
-        //mood info
-        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+
         //
         // - - - Outcome - - - 
         //
@@ -3059,6 +3075,10 @@ public class ActionManager : MonoBehaviour
             }
             else
             { Debug.LogError("Invalid optionText (Null or empty)"); }
+            //mood info
+            builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+            //statistics
+            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerManageActions);
         }
         else
         {
@@ -3071,8 +3091,6 @@ public class ActionManager : MonoBehaviour
             builderTop.Append("Something has gone wrong. You are unable to dispose off anyone at present");
             builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
         }
-        //mood info
-        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
         //
         // - - - Outcome - - - 
         //

@@ -3820,7 +3820,11 @@ public class ActorManager : MonoBehaviour
                                     //add to player's personal list
                                     GameManager.instance.playerScript.AddNodeAction(nodeActionData);
                                     Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                    //statistics
+                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
+                                //statistics
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                             }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", data.nodeID)); }
                         }
@@ -4743,7 +4747,10 @@ public class ActorManager : MonoBehaviour
                                             GameManager.instance.contactScript.UpdateNodeContacts();*/
                                         }
                                         else
-                                        { actor.SetDatapoint(ActorDatapoint.Invisibility2, invis); }
+                                        {
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invis);
+                                            GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
+                                        }
                                         break;
                                     case ActorInactive.Breakdown:
                                         //restore actor (one stress turn only)
@@ -6110,7 +6117,8 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //statistic
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysLieLow);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLowDays);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
                             GameManager.instance.playerScript.Invisibility = invis;
                         }
                         break;
@@ -6443,7 +6451,7 @@ public class ActorManager : MonoBehaviour
                         {
                             GameManager.instance.playerScript.Invisibility = invis;
                             //statistic
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysLieLow);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLowDays);
                         }
                         break;
                 }
