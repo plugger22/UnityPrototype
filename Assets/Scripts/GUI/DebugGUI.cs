@@ -48,10 +48,10 @@ public class DebugGUI : MonoBehaviour
     private int trackerToggle = 0;
     private int newsToggle = 0;
     private int actorToggle = 0;
-    private int statisticsToggle = 0;
     private int topicToggle = 0;
     private int factionToggle = 0;
     private int analyseToggle = 0;
+    private int statisticsToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -360,11 +360,11 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Statistics Data");
                 //toggles sequentially through statistic info displays and then switches off
-                switch (analyseToggle)
+                switch (statisticsToggle)
                 {
-                    case 0: debugDisplay = 50; analyseToggle = 1; break;
-                    case 1: debugDisplay = 77; analyseToggle = 2; break;
-                    case 2: debugDisplay = 0; analyseToggle = 0; break;
+                    case 0: debugDisplay = 50; statisticsToggle = 1; break;
+                    case 1: debugDisplay = 77; statisticsToggle = 2; break;
+                    case 2: debugDisplay = 0; statisticsToggle = 0; break;
                 }
             }
 

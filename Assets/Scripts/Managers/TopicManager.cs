@@ -563,6 +563,19 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "PlayerStats":
+                                                        if (campaign.playerStatsPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.playerStatsPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.playerStatsPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerStatsPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.playerStatsPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     case "AuthorityCampaign":
                                                         if (campaign.authorityCampaignPool != null)
                                                         {
@@ -1420,6 +1433,10 @@ public class TopicManager : MonoBehaviour
                         //based on player Mood
                         listOfPotentialTopics = GetPlayerGeneralTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
+                    case "PlayerStats":
+                        //based on Statistics
+                        listOfPotentialTopics = GetPlayerStatsTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                         break;
@@ -1579,51 +1596,6 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogWarning("Invalid selectionList (Empty)"); }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null)"); }
-
-
-        /*//get all active, onMap actors
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
-        if (listOfActors != null)
-        {
-            List<Actor> selectionList = new List<Actor>();
-            int compatibility;
-            foreach (Actor actor in listOfActors)
-            {
-                if (actor != null)
-                {
-                    //filter actors for compatibility != 0
-                    compatibility = actor.GetPersonality().GetCompatibilityWithPlayer();
-                    if (compatibility != 0)
-                    {
-                        //seed actor selection pool based on ABS(compatility), eg. 2 entries for compatibility +/-2 and 1 for compability +/-1
-                        for (int i = 0; i < Mathf.Abs(compatibility); i++)
-                        { selectionList.Add(actor); }
-                    }
-                }
-                else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
-            }
-            //check at least one entry in selectionList
-            if (selectionList.Count > 0)
-            {
-                //randomly select an actor from compatibility weighted list
-                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                group = GetGroupCompatibility(actor.GetPersonality().GetCompatibilityWithPlayer());
-                //if no entries use entire list by default
-                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
-                //Debug
-                if (listOfTopics.Count == 0)
-                {
-                    Debug.LogWarning("ActorMatch count 0");
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: listOfSubTopics.Count {0}, group {1}{2}", listOfSubTypeTopics.Count, group, "\n");
-                    foreach (Topic topic in listOfSubTypeTopics)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorMatchTopic: topic \"{0}\", status {1}{2}", topic.name, topic.status, "\n"); }
-                }
-                //Info tags
-                tagActorID = actor.actorID;
-            }
-        }
-        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorMatch subType"); }*/
-
         return listOfTopics;
     }
     #endregion
@@ -1918,6 +1890,59 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //group based on Player Mood
+        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+        //if no entries use entire list by default
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetPlayerStatsTopics
+    /// <summary>
+    /// subType PlayerStats template topics selected by player based on player Mood. Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// arrayOfOptionActorIDs is initialised with actorID's (active, OnMap actors), -1 if none, where array index corresponds to option index, eg. actorID for index 0 is for option 0
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerStatsTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //initialise array to default -1 values (no actor present)
+        for (int i = 0; i < arrayOfOptionActorIDs.Length; i++)
+        { arrayOfOptionActorIDs[i] = -1; }
+        //All topics based on current actor line up
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //must be active
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //add actorID to array
+                            arrayOfOptionActorIDs[i] = actor.actorID;
+                        }
+                    }
+                }
+            }
+            //assign a random node (used only for news text tags)
+            Node node = GameManager.instance.dataScript.GetRandomNode();
+            if (node != null)
+            { tagNodeID = node.nodeID; }
+            else { Debug.LogError("Invalid random node (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //group based on Actor Motivation
         group = GetGroupMood(GameManager.instance.playerScript.GetMood());
         //if no entries use entire list by default
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
@@ -2808,7 +2833,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region TopicTypeData
+    #region CheckTopicTypeData
     //
     // - - - TopicTypeData - - -
     //
