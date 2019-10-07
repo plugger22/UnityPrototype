@@ -1534,9 +1534,11 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
-        //debug
+
+        /*//debug
         foreach (Topic topic in listOfTopics)
-        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }
+        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }*/
+
         return listOfTopics;
     }
     #endregion
@@ -1914,9 +1916,7 @@ public class TopicManager : MonoBehaviour
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-        //initialise array to default -1 values (no actor present)
-        for (int i = 0; i < arrayOfOptionActorIDs.Length; i++)
-        { arrayOfOptionActorIDs[i] = -1; }
+        List<int> listOfActors = new List<int>();
         //All topics based on current actor line up
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
@@ -1932,8 +1932,8 @@ public class TopicManager : MonoBehaviour
                         //must be active
                         if (actor.Status == ActorStatus.Active)
                         {
-                            //add actorID to array
-                            arrayOfOptionActorIDs[i] = actor.actorID;
+                            //add actorID to list
+                            listOfActors.Add(actor.actorID);
                         }
                     }
                 }
@@ -1946,9 +1946,9 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //choose a random actor
-        if (arrayOfOptionActorIDs.Length > 0)
+        if (listOfActors.Count > 0)
         {
-            tagActorID = arrayOfOptionActorIDs[Random.Range(0, arrayOfOptionActorIDs.Length)];
+            tagActorID = listOfActors[Random.Range(0, listOfActors.Count)];
             if (tagActorID > -1)
             {
                 //group based on Actor Motivation
@@ -1964,7 +1964,7 @@ public class TopicManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Invalid arrayOfOptionsActorIDs (Empty), PlayerStats topic cancelled");
+            Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
             listOfTopics.Clear();
         }
         return listOfTopics;

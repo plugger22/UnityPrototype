@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes12Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res12 option 0
-  tag: 
-  text: 
+  tag: Team
+  text: You're a great team
   topic: {fileID: 11400000, guid: c2331e8dc4d14ed47a45ffa305781ef9, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

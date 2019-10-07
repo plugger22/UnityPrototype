@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes13Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res13 option 0
-  tag: 
-  text: 
+  tag: Useless
+  text: If you weren't so useless...
   topic: {fileID: 11400000, guid: 8a4e294a28c260c41bc33ef23e196f1a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

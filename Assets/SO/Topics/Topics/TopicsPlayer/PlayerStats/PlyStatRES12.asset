@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES12
   m_EditorClassIdentifier: 
-  tag: 
-  text: Of the [x] district actions taken, you've done [y] of them. Your [actor] compliments
-    you for your hands on approach
+  tag: District Actions
+  text: Of the [x] district actions taken, you've done [y] of them. Your [actor] appears
+    pleased that you have faith in them to do the job
   designNotes: Player Node Actions good event (low criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
