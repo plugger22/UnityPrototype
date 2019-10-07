@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: PlyStatRES3
+  m_EditorClassIdentifier: 
+  tag: 
+  text: Unknown
+  designNotes: 
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: c21d59001241aa8408754efa79ea61fa, type: 2}
+  - {fileID: 11400000, guid: 8cf59d03d522f0f4c89b3eeca51436fd, type: 2}
+  - {fileID: 11400000, guid: 46c282c812bf1ca46bb789dfce034912, type: 2}
+  - {fileID: 11400000, guid: 9112a1d66dfed764292f05e615e17cd5, type: 2}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0
