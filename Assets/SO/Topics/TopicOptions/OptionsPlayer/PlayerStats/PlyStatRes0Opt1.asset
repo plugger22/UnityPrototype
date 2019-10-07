@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes0Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res0 option 1
-  tag: 
-  text: 
+  tag: Gifted
+  text: I'm gifted, what can I say?
   topic: {fileID: 11400000, guid: 4835e4b7249fb894bbabb75565890c5c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4b34851bab0426140a88209f646e79bc, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

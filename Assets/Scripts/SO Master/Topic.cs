@@ -58,6 +58,10 @@ public class Topic : ScriptableObject
     [Tooltip("Options for the decision. Max as per TopicManager.cs -> maxOptions")]
     public List<TopicOption> listOfOptions;
 
+    [Header("Testing")]
+    [Tooltip("If true topic is disabled and not available for selection")]
+    public bool isDisabled;
+
 
     [HideInInspector] public string tooltipHeader;              //sprite tooltip
     [HideInInspector] public string tooltipMain;                //sprite tooltip

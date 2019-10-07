@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes1Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res1 option 1
-  tag: 
-  text: 
+  tag: Orders
+  text: I give the orders around here
   topic: {fileID: 11400000, guid: c1e063ec8b4c43e4a9acba07bce4adc8, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

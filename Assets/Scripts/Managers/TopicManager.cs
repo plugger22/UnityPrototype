@@ -1456,15 +1456,18 @@ public class TopicManager : MonoBehaviour
                             Topic topic = listOfPotentialTopics[i];
                             if (topic != null)
                             {
-                                //check topic Live (timer and status checks O.K)
-                                if (topic.status == Status.Live)
+                                if (topic.isDisabled == false)
                                 {
-                                    //populate pool based on priorities
-                                    numOfEntries = GetNumOfEntries(topic.priority);
-                                    if (numOfEntries > 0)
+                                    //check topic Live (timer and status checks O.K)
+                                    if (topic.status == Status.Live)
                                     {
-                                        for (int j = 0; j < numOfEntries; j++)
-                                        { listOfTopicPool.Add(topic); }
+                                        //populate pool based on priorities
+                                        numOfEntries = GetNumOfEntries(topic.priority);
+                                        if (numOfEntries > 0)
+                                        {
+                                            for (int j = 0; j < numOfEntries; j++)
+                                            { listOfTopicPool.Add(topic); }
+                                        }
                                     }
                                 }
                             }
@@ -1942,10 +1945,28 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogError("Invalid random node (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-        //group based on Actor Motivation
-        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
-        //if no entries use entire list by default
-        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        //choose a random actor
+        if (arrayOfOptionActorIDs.Length > 0)
+        {
+            tagActorID = arrayOfOptionActorIDs[Random.Range(0, arrayOfOptionActorIDs.Length)];
+            if (tagActorID > -1)
+            {
+                //group based on Actor Motivation
+                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);
+                listOfTopics.Clear();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid arrayOfOptionsActorIDs (Empty), PlayerStats topic cancelled");
+            listOfTopics.Clear();
+        }
         return listOfTopics;
     }
     #endregion
@@ -2993,12 +3014,15 @@ public class TopicManager : MonoBehaviour
                                         Topic topic = listOfTopics[j];
                                         if (topic != null)
                                         {
-                                            //check status
-                                            if (topic.status == Status.Live)
+                                            if (topic.isDisabled == false)
                                             {
-                                                //at least one valid topic present, exit
-                                                isValid = true;
-                                                break;
+                                                //check status
+                                                if (topic.status == Status.Live)
+                                                {
+                                                    //at least one valid topic present, exit
+                                                    isValid = true;
+                                                    break;
+                                                }
                                             }
                                         }
                                         else { Debug.LogErrorFormat("Invalid topic (Null) for subTopicType \"{0}\" listOfTopics[{1}]", subType.name, j); }
@@ -4691,6 +4715,7 @@ public class TopicManager : MonoBehaviour
             {
                 case "PlayerDistrict":
                 case "PlayerGeneral":
+                case "PlayerStats":
                 case "ActorMatch":
                     //info on whether topic is good or bad and why
                     switch (turnTopic.group.name)

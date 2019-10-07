@@ -1123,18 +1123,29 @@ public class EffectManager : MonoBehaviour
                                             //
                                             // - - - Base Stats
                                             //
-                                            case "StatsDaysLieLowMin":
-                                                //Minimum number of days that actors/player have spent lying low
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal) < statDaysLieLowMin)
-                                                { BuildString(result, "Insufficient days Lying Low"); }
+                                            case "StatDaysLieLowMin":
+                                                //auto success if testManager.cs -> testRatioPlayLieLow != 0
+                                                if (GameManager.instance.testScript.testRatioPlayLieLow == 0)
+                                                {
+                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal) < statDaysLieLowMin)
+                                                    { BuildString(result, "Insufficient days Lying Low"); }
+                                                }
                                                 break;
-                                            case "StatsGearItemsMin":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
-                                                { BuildString(result, "Insufficient Gear items acquired"); }
+                                            case "StatGearItemsMin":
+                                                //auto success if testManager.cs -> testRatioPlayGiveGear != 0
+                                                if (GameManager.instance.testScript.testRatioPlayGiveGear == 0)
+                                                {
+                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
+                                                    { BuildString(result, "Insufficient Gear items acquired"); }
+                                                }
                                                 break;
-                                            case "StatsNodeActionsMin":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance) < statNodeActionsMin)
-                                                { BuildString(result, "Insufficient Node Actions"); }
+                                            case "StatNodeActionsMin":
+                                                //auto success if testManager.cs -> testRatioPlayNodeAct != 0
+                                                if (GameManager.instance.testScript.testRatioPlayNodeAct == 0)
+                                                {
+                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance) < statNodeActionsMin)
+                                                    { BuildString(result, "Insufficient Node Actions"); }
+                                                }
                                                 break;
                                             case "StatTargetAttemptsMin":
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts) < statTargetAttemptsMin)

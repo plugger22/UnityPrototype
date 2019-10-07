@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: PlyStatRES4
   m_EditorClassIdentifier: 
   tag: 
-  text: Unknown
-  designNotes: 
+  text: player move actions good event (high criteria)
+  designNotes: 'player move activities good event
+
+    delayed start profile to give stats a chance to build up'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -23,7 +25,7 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  profile: {fileID: 11400000, guid: 3d7bee04346e0b240a52e2a907c37c07, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
@@ -31,15 +33,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bb8461f3e946e746afbef2529ac64ce, type: 2}
   - {fileID: 11400000, guid: 8e0ebdd577e55174bb82aab25239fb3a, type: 2}
   - {fileID: 11400000, guid: d3c2439f2ffe58f47890d2448bacb5be, type: 2}
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 0
+  status: 2
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsDormant: 9
+  turnsActive: 1
+  turnsLive: 8
   turnsDone: 0

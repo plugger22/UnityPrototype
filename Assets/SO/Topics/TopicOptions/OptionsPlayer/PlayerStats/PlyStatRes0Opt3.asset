@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: PlyStatRes0Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res0 option 3
-  tag: 
-  text: 
+  tag: Tell others
+  text: Let the others know
   topic: {fileID: 11400000, guid: 4835e4b7249fb894bbabb75565890c5c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

@@ -9,20 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: PlyStatRes0Opt2
+  m_Name: PlyStatRes13Opt2
   m_EditorClassIdentifier: 
-  descriptor: Player Stats Res0 option 2
-  tag: Tell HQ
-  text: Perhaps you could tell HQ
-  topic: {fileID: 11400000, guid: 4835e4b7249fb894bbabb75565890c5c, type: 2}
+  descriptor: Player Stats Res13 option 2
+  tag: 
+  text: 
+  topic: {fileID: 11400000, guid: 8a4e294a28c260c41bc33ef23e196f1a, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 1
-  listOfCriteria:
-  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
-  listOfGoodEffects:
-  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  isIgnoredByHQ: 0
+  listOfCriteria: []
+  listOfGoodEffects: []
   listOfBadEffects: []
-  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +28,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 1

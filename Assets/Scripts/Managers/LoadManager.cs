@@ -116,6 +116,7 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsHQ;
     public TopicOption[] arrayOfOptionsPlayerDistrict;
     public TopicOption[] arrayOfOptionsPlayerGeneral;
+    public TopicOption[] arrayOfOptionsPlayerStats;
     public TopicOption[] arrayOfOptionsResistanceCampaign;
     public TopicOption[] arrayOfOptionsResistanceGeneral;
 
@@ -251,6 +252,7 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsHQ);
         listOfOptions.AddRange(arrayOfOptionsPlayerDistrict);
         listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);
+        listOfOptions.AddRange(arrayOfOptionsPlayerStats);
         listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
         listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
         arrayOfTopicOptions = listOfOptions.ToArray();

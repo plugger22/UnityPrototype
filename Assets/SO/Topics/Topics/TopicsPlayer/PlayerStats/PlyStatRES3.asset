@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyStatRES3
   m_EditorClassIdentifier: 
   tag: 
-  text: Unknown
-  designNotes: 
+  text: player target attempts bad event (low criteria)
+  designNotes: player target attempt bad event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -24,22 +24,24 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 1d1d2270a72317348b5a27834c1e9bc4, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: c21d59001241aa8408754efa79ea61fa, type: 2}
   - {fileID: 11400000, guid: 8cf59d03d522f0f4c89b3eeca51436fd, type: 2}
   - {fileID: 11400000, guid: 46c282c812bf1ca46bb789dfce034912, type: 2}
   - {fileID: 11400000, guid: 9112a1d66dfed764292f05e615e17cd5, type: 2}
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

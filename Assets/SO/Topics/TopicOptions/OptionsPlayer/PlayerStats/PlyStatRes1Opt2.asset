@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes1Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res1 option 2
-  tag: 
-  text: 
+  tag: Blame
+  text: Blame it on HQ, nothing to do with me
   topic: {fileID: 11400000, guid: c1e063ec8b4c43e4a9acba07bce4adc8, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

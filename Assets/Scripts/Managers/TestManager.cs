@@ -34,6 +34,20 @@ public class TestManager : MonoBehaviour
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
 
+    [Header("Player Ratios")]
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayNodeAct = 0;
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayTargetAtt = 0;
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayMoveAct = 0;
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayLieLow = 0;
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayGiveGear = 0;
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioPlayManageAct = 0;
+
 
     Stopwatch timer;
 

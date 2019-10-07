@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: PlyStatRes1Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res1 option 3
-  tag: 
-  text: 
+  tag: Who Cares?
+  text: Who cares as long as it gets done?
   topic: {fileID: 11400000, guid: c1e063ec8b4c43e4a9acba07bce4adc8, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

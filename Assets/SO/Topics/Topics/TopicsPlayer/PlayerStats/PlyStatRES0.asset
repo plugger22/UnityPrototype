@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: PlyStatRES0
   m_EditorClassIdentifier: 
   tag: 
-  text: Unknown
-  designNotes: 
+  text: Of the [x] district actions taken, you've done [y] of them. Your [actor] compliments
+    you for your hands on approach
+  designNotes: Player Node Actions good event (high criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -24,7 +25,9 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: ded8bd96f3eb7db449ae2e2c5fae738d, type: 2}
+  - {fileID: 11400000, guid: fc7eb199de80eff4f9a2817235d9375c, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 838464167a10a034699f851a0305f312, type: 2}
