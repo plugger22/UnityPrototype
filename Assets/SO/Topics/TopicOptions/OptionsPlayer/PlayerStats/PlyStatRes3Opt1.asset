@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res3 option 1
-  tag: 
-  text: 
+  tag: Help Me
+  text: I am, help me
   topic: {fileID: 11400000, guid: 3499f7b6facfb044ebaf775c6c4b1f86, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

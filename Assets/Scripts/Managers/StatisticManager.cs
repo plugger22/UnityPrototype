@@ -9,13 +9,14 @@ using UnityEngine;
 /// </summary>
 public class StatisticManager : MonoBehaviour
 {
-
-    private float ratioPlayerNodeActions;
-    private float ratioPlayerTargetAttempts;
-    private float ratioPlayerMoveActions;
-    private float ratioPlayerLieLowDays;
-    private float ratioPlayerGiveGear;
-    private float ratioPlayerManageActions;
+    #region Save Compatible Data
+    [HideInInspector] public float ratioPlayerNodeActions;
+    [HideInInspector] public float ratioPlayerTargetAttempts;
+    [HideInInspector] public float ratioPlayerMoveActions;
+    [HideInInspector] public float ratioPlayerLieLowDays;
+    [HideInInspector] public float ratioPlayerGiveGear;
+    [HideInInspector] public float ratioPlayerManageActions;
+    #endregion
 
     public void InitialiseEarly(GameState state)
     {

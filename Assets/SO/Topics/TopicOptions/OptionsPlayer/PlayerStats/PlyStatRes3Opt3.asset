@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes3Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res3 option 3
-  tag: 
-  text: 
+  tag: Idiots
+  text: If I wasn't surrounded by idiots
   topic: {fileID: 11400000, guid: 3499f7b6facfb044ebaf775c6c4b1f86, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5b0e077df9a540e4fa5050ea3f4a240c, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

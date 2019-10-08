@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Name: PlyStatRes2Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res2 option 3
-  tag: 
-  text: 
+  tag: Tell HQ
+  text: Why don't you tell HQ?
   topic: {fileID: 11400000, guid: 06f7b3e5fb19a984ca70e0c8d23cc31f, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
+  isIgnoredByHQ: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

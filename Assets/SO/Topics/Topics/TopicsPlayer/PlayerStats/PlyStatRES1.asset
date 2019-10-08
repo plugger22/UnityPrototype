@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbc0c4dce3e47804596b11e8994ba356, type: 2}
   - {fileID: 11400000, guid: 1324124637922194ba13f7ee300f3be2, type: 2}
   - {fileID: 11400000, guid: bfd1e626c346ccd4eb8f11b966e1c0af, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -45,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 1
-  turnsLive: 17
+  turnsActive: 3
+  turnsLive: 18
   turnsDone: 0

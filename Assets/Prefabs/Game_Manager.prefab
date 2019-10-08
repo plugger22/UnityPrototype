@@ -3527,8 +3527,8 @@ MonoBehaviour:
   conditionTurnResistance: -1
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
-  testRatioPlayNodeAct: 0.3
-  testRatioPlayTargetAtt: 0
+  testRatioPlayNodeAct: 0
+  testRatioPlayTargetAtt: 0.092
   testRatioPlayMoveAct: 0
   testRatioPlayLieLow: 0
   testRatioPlayGiveGear: 0
@@ -4058,7 +4058,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 53966
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
@@ -4158,6 +4158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977c5eec213cef54da61cd90ffbe0e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ratioPlayerNodeActions: 0
+  ratioPlayerTargetAttempts: 0
+  ratioPlayerMoveActions: 0
+  ratioPlayerLieLowDays: 0
+  ratioPlayerGiveGear: 0
+  ratioPlayerManageActions: 0
 --- !u!114 &114851938744220614
 MonoBehaviour:
   m_ObjectHideFlags: 1

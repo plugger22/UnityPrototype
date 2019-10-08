@@ -5613,6 +5613,10 @@ public class DataManager : MonoBehaviour
         if (message != null)
         {
             //Generate a Debug Message for the log
+
+            /*if (message.text.Length == 0)
+            { Debug.LogWarning("Invalid Message text (Empty)"); }*/
+
             Debug.LogFormat("[Msg] {0}{1}", message.text, "\n");
             //auto sort
             switch (message.isPublic)

@@ -4244,7 +4244,7 @@ public class TopicManager : MonoBehaviour
                         else { CountTextTag("nodeArc", dictOfTags); }
                         break;
                     case "contact":
-                        //contact name + node name
+                        //contact name
                         if (isValidate == false)
                         {
                             if (tagContactID > -1)
@@ -4255,8 +4255,8 @@ public class TopicManager : MonoBehaviour
                                     if (node != null)
                                     {
                                         if (isColourHighlighting == true)
-                                        { replaceText = string.Format("<b>{0} {1}</b> at {2}<b>{3}</b>{4},", contact.nameFirst, contact.nameLast, colourCheckText, node.nodeName, colourEnd); }
-                                        else { replaceText = string.Format("{0} {1} at {2},", contact.nameFirst, contact.nameLast, node.nodeName); }
+                                        { replaceText = string.Format("<b>{0} {1}</b>,", contact.nameFirst, contact.nameLast); }
+                                        else { replaceText = string.Format("{0} {1}", contact.nameFirst, contact.nameLast); }
                                     }
                                     else { Debug.LogWarningFormat("Invalid node (Null) for tagNodeID {0}", tagNodeID); }
                                 }
@@ -4585,6 +4585,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions).ToString(); }
                         }
                         else { CountTextTag("stat9", dictOfTags); }
+                        break;
+                    case "turn":
+                        //Turn (number of days)
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.turnScript.Turn, colourEnd); }
+                            else { replaceText = GameManager.instance.turnScript.Turn.ToString(); }
+                        }
+                        else { CountTextTag("turn", dictOfTags); }
                         break;
                     default:
                         if (isValidate == false)

@@ -11,9 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES2
   m_EditorClassIdentifier: 
-  tag: 
-  text: player target attempts good event (high criteria)
-  designNotes: player Target attempt good event
+  tag: Target Attempts
+  text: Of the [stat3] target attempts that have been made, you've contributed [stat2]
+    of them. Your [actor] is impressed
+  designNotes: player Target attempt good event (High criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -32,16 +33,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf43a391ad5f74447b17ffbfc6c8b5ce, type: 2}
   - {fileID: 11400000, guid: 41630147c9eb88f4d976f4785e6267e2, type: 2}
   - {fileID: 11400000, guid: ea140e32fce27d34999f306e02839813, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 6
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 18
-  turnsLive: 0
+  turnsDormant: 2
+  turnsActive: 0
+  turnsLive: 18
   turnsDone: 0

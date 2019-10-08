@@ -80,6 +80,7 @@ public class FileManager : MonoBehaviour
         WriteAIData();
         WriteTopicData();
         WriteTargetData();
+        WriteStatisticsData();
     }
     #endregion
 
@@ -198,6 +199,7 @@ public class FileManager : MonoBehaviour
                 ValidatePlayerData();
                 ReadContactData();
                 ReadTargetData();
+                ReadStatisticsData();
                 UpdateGUI(playerSide);
                 Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
             }
@@ -883,7 +885,6 @@ public class FileManager : MonoBehaviour
 
 
     #region Write Actor data
-
     /// <summary>
     /// Actor.cs (dict and lists) full data set write to file
     /// </summary>
@@ -1520,6 +1521,22 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTargetPoolDone (Null)"); }
+    }
+    #endregion
+
+
+    #region Write Statistics Data
+    /// <summary>
+    /// StatisticsManager.cs write data to file
+    /// </summary>
+    private void WriteStatisticsData()
+    {
+        write.statisticsData.ratioPlayerNodeActions = GameManager.instance.statScript.ratioPlayerNodeActions;
+        write.statisticsData.ratioPlayerTargetAttempts = GameManager.instance.statScript.ratioPlayerTargetAttempts;
+        write.statisticsData.ratioPlayerMoveActions = GameManager.instance.statScript.ratioPlayerMoveActions;
+        write.statisticsData.ratioPlayerLieLowDays = GameManager.instance.statScript.ratioPlayerLieLowDays;
+        write.statisticsData.ratioPlayerGiveGear = GameManager.instance.statScript.ratioPlayerGiveGear;
+        write.statisticsData.ratioPlayerManageActions = GameManager.instance.statScript.ratioPlayerManageActions;
     }
     #endregion
 
@@ -3246,6 +3263,22 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
         }
         GameManager.instance.dataScript.SetTargetPool(listOfDone, Status.Done);
+    }
+    #endregion
+
+
+    #region Read Statistics Data
+    /// <summary>
+    /// read StatisticsManager.cs data
+    /// </summary>
+    private void ReadStatisticsData()
+    {
+        GameManager.instance.statScript.ratioPlayerNodeActions = read.statisticsData.ratioPlayerNodeActions;
+        GameManager.instance.statScript.ratioPlayerTargetAttempts = read.statisticsData.ratioPlayerTargetAttempts;
+        GameManager.instance.statScript.ratioPlayerMoveActions = read.statisticsData.ratioPlayerMoveActions;
+        GameManager.instance.statScript.ratioPlayerLieLowDays = read.statisticsData.ratioPlayerLieLowDays;
+        GameManager.instance.statScript.ratioPlayerGiveGear = read.statisticsData.ratioPlayerGiveGear;
+        GameManager.instance.statScript.ratioPlayerManageActions = read.statisticsData.ratioPlayerManageActions;
     }
     #endregion
 

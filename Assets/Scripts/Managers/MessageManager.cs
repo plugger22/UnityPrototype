@@ -622,8 +622,8 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(change != 0, "Invalid change (Zero)");
         string text = "Unknown";
         string topText = "Unknown";
-        if (change > 0) { text = "Player's MOOD has IMPROVED"; topText = "Mood Improves"; }
-        else { text = "Player's MOOD has WORSENED"; topText = "Mood Worsens"; }
+        if (change > 0) { text = string.Format("Player's MOOD has IMPROVED, now {0}", moodAfterChange); topText = "Mood Improves"; }
+        else { text = string.Format("Player's MOOD has WORSENED, now {0}", moodAfterChange); topText = "Mood Worsens"; }
         Message message = new Message();
         message.text = text;
         message.type = MessageType.PLAYER;
@@ -4019,6 +4019,7 @@ public class MessageManager : MonoBehaviour
                 message.data0 = topicData.nodeID;
                 message.data1 = topicData.actorID;
                 message.dataName = string.Format("\'{0}\', {1}", topicData.topicName, topicData.optionName);
+                message.text = topicData.text;
                 //ItemData
                 ItemData data = new ItemData();
                 if (topicData.optionName.Equals("Ignored", System.StringComparison.Ordinal) == false)

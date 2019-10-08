@@ -27,7 +27,7 @@ public class Save
     public SaveScenarioData scenarioData = new SaveScenarioData();
     public SaveContactData contactData = new SaveContactData();
     public SaveTargetData targetData = new SaveTargetData();
-
+    public SaveStatisticsData statisticsData = new SaveStatisticsData();
 }
 
 #region Managers
@@ -440,6 +440,23 @@ public class SaveTargetData
     //other
     public List<int> listOfNodesWithTargets = new List<int>();
     public List<StringListWrapper> listOfGenericTargets = new List<StringListWrapper>();
+}
+#endregion
+
+
+#region SaveStatisticsData
+/// <summary>
+/// StatisticsManager.cs data
+/// </summary>
+[System.Serializable]
+public class SaveStatisticsData
+{
+    public float ratioPlayerNodeActions;
+    public float ratioPlayerTargetAttempts;
+    public float ratioPlayerMoveActions;
+    public float ratioPlayerLieLowDays;
+    public float ratioPlayerGiveGear;
+    public float ratioPlayerManageActions;
 }
 #endregion
 

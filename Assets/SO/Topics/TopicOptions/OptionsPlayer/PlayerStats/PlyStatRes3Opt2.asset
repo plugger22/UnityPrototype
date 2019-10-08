@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes3Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res3 option 2
-  tag: 
-  text: 
+  tag: Fired!
+  text: Pack your Bags
   topic: {fileID: 11400000, guid: 3499f7b6facfb044ebaf775c6c4b1f86, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5180cb32faecb064e87709922ef94364, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

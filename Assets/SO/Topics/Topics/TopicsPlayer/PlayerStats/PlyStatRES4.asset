@@ -11,9 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES4
   m_EditorClassIdentifier: 
-  tag: 
-  text: player move actions good event (high criteria)
-  designNotes: 'player move activities good event
+  tag: Moving
+  text: In the last [turn] days, you have moved [stat4] times. You need to see what's
+    going on in [city], says your [actor]. Keep it up!
+  designNotes: 'player move activities good event (high criteria)
 
     delayed start profile to give stats a chance to build up'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
@@ -33,7 +34,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bb8461f3e946e746afbef2529ac64ce, type: 2}
   - {fileID: 11400000, guid: 8e0ebdd577e55174bb82aab25239fb3a, type: 2}
   - {fileID: 11400000, guid: d3c2439f2ffe58f47890d2448bacb5be, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

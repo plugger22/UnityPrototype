@@ -1117,7 +1117,6 @@ public class EffectManager : MonoBehaviour
                                     // - - - Statistics - - - 
                                     //
                                     case "Statistics":
-                                        float topNum, bottomNum;
                                         switch (criteria.effectCriteria.name)
                                         {
                                             //
@@ -1148,82 +1147,62 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 break;
                                             case "StatTargetAttemptsMin":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts) < statTargetAttemptsMin)
-                                                { BuildString(result, "Insufficient Target Attempts"); }
+                                                //auto success if testManager.cs -> testRatioTargetAttempts != 0
+                                                if (GameManager.instance.testScript.testRatioPlayTargetAtt == 0)
+                                                {
+                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts) < statTargetAttemptsMin)
+                                                    { BuildString(result, "Insufficient Target Attempts"); }
+                                                }
                                                 break;
                                             //
                                             // - - - Ratios
                                             //
                                             case "RatioPlayNodeActLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance);
-                                                if ((topNum / bottomNum) > ratioPlayNodeActLow)
+                                                if (GameManager.instance.statScript.ratioPlayerNodeActions > ratioPlayNodeActLow)
                                                 { BuildString(result, "To many Player Node Actions for Low"); }
                                                 break;
                                             case "RatioPlayNodeActHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance);
-                                                if ((topNum / bottomNum) < ratioPlayNodeActHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerNodeActions < ratioPlayNodeActHigh)
                                                 { BuildString(result, "Insufficient Player Node Actions for High"); }
                                                 break;
                                             case "RatioPlayTargetAttLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts);
-                                                if ((topNum / bottomNum) > ratioPlayTargetAttLow)
+                                                if (GameManager.instance.statScript.ratioPlayerTargetAttempts > ratioPlayTargetAttLow)
                                                 { BuildString(result, "To many Player Attempts for Low"); }
                                                 break;
                                             case "RatioPlayTargetAttHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts);
-                                                if ((topNum / bottomNum) < ratioPlayTargetAttHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerTargetAttempts < ratioPlayTargetAttHigh)
                                                 { BuildString(result, "Insufficient Player Attempts for High"); }
                                                 break;
                                             case "RatioPlayMoveActLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions);
-                                                bottomNum = GameManager.instance.turnScript.Turn;
-                                                if ((topNum / bottomNum) > ratioPlayMoveActLow)
+                                                if (GameManager.instance.statScript.ratioPlayerMoveActions > ratioPlayMoveActLow)
                                                 { BuildString(result, "To many Player Move Actions for Low"); }
                                                 break;
                                             case "RatioPlayMoveActHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions);
-                                                bottomNum = GameManager.instance.turnScript.Turn;
-                                                if ((topNum / bottomNum) < ratioPlayMoveActHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerMoveActions < ratioPlayMoveActHigh)
                                                 { BuildString(result, "Insufficient Player Move Actions for High"); }
                                                 break;
                                             case "RatioPlayLieLowLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal);
-                                                if ((topNum / bottomNum) > ratioPlayLieLowLow)
+                                                if (GameManager.instance.statScript.ratioPlayerLieLowDays > ratioPlayLieLowLow)
                                                 { BuildString(result, "To many Player Days Lie Low for Low"); }
                                                 break;
                                             case "RatioPlayLieLowHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal);
-                                                if ((topNum / bottomNum) < ratioPlayLieLowHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerLieLowDays < ratioPlayLieLowHigh)
                                                 { BuildString(result, "Insufficient Player Days Lie Low for High"); }
                                                 break;
                                             case "RatioPlayGiveGearLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal);
-                                                if ((topNum / bottomNum) > ratioGiveGearLow)
+                                                if (GameManager.instance.statScript.ratioPlayerGiveGear > ratioGiveGearLow)
                                                 { BuildString(result, "To many Give Gear actions for Low"); }
                                                 break;
                                             case "RatioPlayGiveGearHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
-                                                bottomNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal);
-                                                if ((topNum / bottomNum) < ratioGiveGearHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerGiveGear < ratioGiveGearHigh)
                                                 { BuildString(result, "Insufficient Give Gear actions for High"); }
                                                 break;
                                             case "RatioPlayManageActLow":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions);
-                                                bottomNum = GameManager.instance.turnScript.Turn;
-                                                if ((topNum / bottomNum) > ratioPlayManageActLow)
+                                                if (GameManager.instance.statScript.ratioPlayerManageActions > ratioPlayManageActLow)
                                                 { BuildString(result, "To many Player Manage actions for Low"); }
                                                 break;
                                             case "RatioPlayManageActHigh":
-                                                topNum = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions);
-                                                bottomNum = GameManager.instance.turnScript.Turn;
-                                                if ((topNum / bottomNum) < ratioPlayManageActHigh)
+                                                if (GameManager.instance.statScript.ratioPlayerManageActions < ratioPlayManageActHigh)
                                                 { BuildString(result, "Insufficient Player Manage actions for High"); }
                                                 break;
                                             default:
@@ -3399,7 +3378,14 @@ public class EffectManager : MonoBehaviour
                     case 'L':
                         //All Actors
                         if (ResolveGroupActorEffect(effect, dataInput) == true)
-                        { effectResolve.bottomText = effect.description; }
+                        {
+                            switch (effect.typeOfEffect.name)
+                            {
+                                case "Good": effectResolve.bottomText = string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd); break;
+                                case "Bad": effectResolve.bottomText = string.Format("{0}{1}{2}", colourBad, effect.description, colourEnd); break;
+                                default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect \"{0}\"", effect.typeOfEffect); effectResolve.bottomText = effect.description; break;
+                            }
+                        }
                         else { effectResolve.isError = true; }
                         break;
                     case 'P':

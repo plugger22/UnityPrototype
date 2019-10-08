@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes2Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res2 option 1
-  tag: 
-  text: 
+  tag: Amazing
+  text: You are amazing
   topic: {fileID: 11400000, guid: 06f7b3e5fb19a984ca70e0c8d23cc31f, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

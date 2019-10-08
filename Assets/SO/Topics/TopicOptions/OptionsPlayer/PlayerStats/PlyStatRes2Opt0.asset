@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Name: PlyStatRes2Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res2 option 0
-  tag: 
-  text: 
+  tag: Super Star
+  text: Yes, I'm a super star
   topic: {fileID: 11400000, guid: 06f7b3e5fb19a984ca70e0c8d23cc31f, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
