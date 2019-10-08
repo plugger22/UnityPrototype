@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res5 option 1
-  tag: 
-  text: 
+  tag: Managing
+  text: I'm managing fine, thank you
   topic: {fileID: 11400000, guid: 6fc7ee340062c314fbff9aa18c567f38, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5b0e077df9a540e4fa5050ea3f4a240c, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -3528,8 +3528,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   testRatioPlayNodeAct: 0
-  testRatioPlayTargetAtt: 0.092
-  testRatioPlayMoveAct: 0
+  testRatioPlayTargetAtt: 0
+  testRatioPlayMoveAct: 0.104
   testRatioPlayLieLow: 0
   testRatioPlayGiveGear: 0
   testRatioPlayManageAct: 0

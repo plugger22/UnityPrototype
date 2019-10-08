@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes4Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res4 option 2
-  tag: 
-  text: 
+  tag: Sit Still
+  text: You can't sit still in this job
   topic: {fileID: 11400000, guid: 1b8b12fa8c335ea4db775d13d43823e8, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: 1
+  tooltipHeader: Unknown
+  tooltipMain: No Effects present
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
+  optionNumber: 2

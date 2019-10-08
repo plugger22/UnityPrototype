@@ -39,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 1
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 7
+  timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 18
-  turnsLive: 2
+  turnsDormant: 0
+  turnsActive: 19
+  turnsLive: 0
   turnsDone: 0

@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes4Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res4 option 0
-  tag: 
-  text: 
+  tag: Times
+  text: I move with the times
   topic: {fileID: 11400000, guid: 1b8b12fa8c335ea4db775d13d43823e8, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 8f2a89aa2380f5c41ba78c36ca70d813, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: No Effects present
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 0
