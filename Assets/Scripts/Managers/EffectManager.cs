@@ -1712,6 +1712,7 @@ public class EffectManager : MonoBehaviour
                             //dialogue
                             effectReturn.topText = string.Format("{0}A Tracer has been successfully inserted{1}", colourText, colourEnd);
                             effectReturn.bottomText = string.Format("{0}Any Spider at the district is revealed{1}", colourEffect, colourEnd);
+                            effectReturn.isAction = true;
                         }
                         else
                         {
@@ -1972,6 +1973,24 @@ public class EffectManager : MonoBehaviour
                                             motivation -= effect.value;
                                             motivation = Mathf.Max(GameManager.instance.actorScript.minStatValue, motivation);
                                             actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                            break;
+                                        default:
+                                            Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
+                                            break;
+                                    }
+                                    break;
+                                case "Renown":
+                                    int renown = actor.Renown;
+                                    switch (effect.operand.name)
+                                    {
+                                        case "Add":
+                                            renown += effect.value;
+                                            actor.Renown = renown;
+                                            break;
+                                        case "Subtract":
+                                            renown -= effect.value;
+                                            renown = Mathf.Max(0, renown);
+                                            actor.Renown = renown;
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);

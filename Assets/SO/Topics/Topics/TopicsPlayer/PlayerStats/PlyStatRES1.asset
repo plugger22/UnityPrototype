@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyStatRES1
   m_EditorClassIdentifier: 
   tag: District Actions
-  text: Of the [x] district actions taken, you've done [y] of them. Your [actor] wants
-    to know why you are so lazy?
+  text: Of the [stat1] district actions taken, you've done [stat0] of them. Your [actor]
+    wants to know why you are so lazy?
   designNotes: Player node actions bad event (low criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
@@ -28,7 +28,8 @@ MonoBehaviour:
   listOfCriteria:
   - {fileID: 11400000, guid: ded8bd96f3eb7db449ae2e2c5fae738d, type: 2}
   - {fileID: 11400000, guid: 6bc1e066ccd102245872419586dd39c3, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: fe1c747f5216d0a4fa96956847480684, type: 2}
   - {fileID: 11400000, guid: dbc0c4dce3e47804596b11e8994ba356, type: 2}
@@ -38,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 7
+  turnsDormant: 0
   turnsActive: 1
-  turnsLive: 10
+  turnsLive: 17
   turnsDone: 0

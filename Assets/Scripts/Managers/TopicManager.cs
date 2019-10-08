@@ -1445,8 +1445,8 @@ public class TopicManager : MonoBehaviour
                 //SubType should have provided a list of topics ready for a random draw
                 if (listOfPotentialTopics != null)
                 {
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, listOfPotentialTopics.Count, "\n");
                     int count = listOfPotentialTopics.Count;
+                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, count, "\n");
                     //shouldn't be empty
                     if (count > 0)
                     {
@@ -1469,7 +1469,9 @@ public class TopicManager : MonoBehaviour
                                             { listOfTopicPool.Add(topic); }
                                         }
                                     }
+                                    else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, NOT LIVE{2}", topic.name, topic.status, "\n"); }
                                 }
+                                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, DISABLED{2}", topic.name, topic.status, "\n"); }
                             }
                             else { Debug.LogWarningFormat("Invalid topic (Null) for {0}.listOfTopics[{1}]", turnTopicSubType.name, i); }
                         }
@@ -1938,11 +1940,8 @@ public class TopicManager : MonoBehaviour
                     }
                 }
             }
-            //assign a random node (used only for news text tags)
-            Node node = GameManager.instance.dataScript.GetRandomNode();
-            if (node != null)
-            { tagNodeID = node.nodeID; }
-            else { Debug.LogError("Invalid random node (Null)"); }
+            //default NO nodeID so that 'Show Me' button not enabled for topic UI
+            tagNodeID = -1;
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //choose a random actor
@@ -2133,7 +2132,7 @@ public class TopicManager : MonoBehaviour
                             //valid debug topic, align the rest with topic
                             turnTopicType = debugTopicPool.type;
                             turnTopicSubSubType = debugTopicPool.subSubType;
-                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: VALID debug Topic{0}", "\n");
+                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: VALID debug Topic \"{0}\"{1}", turnTopic.name, "\n");
                         }
                         else
                         {
@@ -4487,6 +4486,106 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("who", dictOfTags); }
                         break;
+                    case "stat0":
+                        //Statistics -> Player Node Actions
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions).ToString(); }
+                        }
+                        else { CountTextTag("stat0", dictOfTags); }
+                        break;
+                    case "stat1":
+                        //Statistics -> Total Node Actions
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance).ToString(); }
+                        }
+                        else { CountTextTag("stat1", dictOfTags); }
+                        break;
+                    case "stat2":
+                        //Statistics -> Player Target Attempts
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts).ToString(); }
+                        }
+                        else { CountTextTag("stat2", dictOfTags); }
+                        break;
+                    case "stat3":
+                        //Statistics -> Target Attempts
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts).ToString(); }
+                        }
+                        else { CountTextTag("stat3", dictOfTags); }
+                        break;
+                    case "stat4":
+                        //Statistics -> Player Move Actions
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions).ToString(); }
+                        }
+                        else { CountTextTag("stat4", dictOfTags); }
+                        break;
+                    case "stat5":
+                        //Statistics -> Player Lie Low Days
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays).ToString(); }
+                        }
+                        else { CountTextTag("stat5", dictOfTags); }
+                        break;
+                    case "stat6":
+                        //Statistics -> Lie Low Days Total
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal).ToString(); }
+                        }
+                        else { CountTextTag("stat6", dictOfTags); }
+                        break;
+                    case "stat7":
+                        //Statistics -> Player Give Gear
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear).ToString(); }
+                        }
+                        else { CountTextTag("stat7", dictOfTags); }
+                        break;
+                    case "stat8":
+                        //Statistics -> Gear Total
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal).ToString(); }
+                        }
+                        else { CountTextTag("stat8", dictOfTags); }
+                        break;
+                    case "stat9":
+                        //Statistics -> Player Manage Actions
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions).ToString(); }
+                        }
+                        else { CountTextTag("stat9", dictOfTags); }
+                        break;
                     default:
                         if (isValidate == false)
                         { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
@@ -4603,16 +4702,57 @@ public class TopicManager : MonoBehaviour
                 case "HQ":
                     break;
                 case "Player":
+                    string tooltipName = GameManager.instance.playerScript.PlayerName;
+                    switch (turnTopicSubType.name)
+                    {
+                        case "PlayerDistrict":
+                        case "PlayerGeneral":
                     turnSprite = GameManager.instance.playerScript.sprite;
                     tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            break;
+                        case "PlayerStats":
+                            //use actor sprite
+                            if (tagActorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                if (actor != null)
+                                {
+                                    turnSprite = actor.sprite;
+                                    tagSpriteName = actor.actorName;
+                                    tooltipName = string.Format("{0}{1}{2}{3}{4}", colourNormal, actor.actorName, colourEnd, "\n", actor.arc.name);
+                                }
+                                else
+                                {
+                                    Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID);
+                                    //use player sprite as a backup
+                                    turnSprite = GameManager.instance.playerScript.sprite;
+                                    tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogWarning("Invalid tagActorID (less than Zero)");
+                                //use player sprite as a backup
+                                turnSprite = GameManager.instance.playerScript.sprite;
+                                tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            }
+                            break;
+                        default:
+                            Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType);
+                            //use player sprite as a backup
+                            turnSprite = GameManager.instance.playerScript.sprite;
+                            tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            break;
+                    }
+
+                    //tooltip
                     Tuple<string, string> resultsPlayer = GetPlayerTooltip();
-                    string playerName = GameManager.instance.playerScript.PlayerName;
                     if (string.IsNullOrEmpty(resultsPlayer.Item1) == false)
                     {
                         //tooltipMain
                         data.imageTooltipMain = resultsPlayer.Item1;
                         //main present -> Add tooltip header (Player name)
-                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, playerName, colourEnd);
+                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tooltipName, colourEnd);
                     }
                     if (string.IsNullOrEmpty(resultsPlayer.Item2) == false)
                     { data.imageTooltipDetails = resultsPlayer.Item2; }

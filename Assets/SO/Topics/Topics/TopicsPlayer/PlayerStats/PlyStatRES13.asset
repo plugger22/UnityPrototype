@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyStatRES13
   m_EditorClassIdentifier: 
   tag: District Actions
-  text: Of the [x] district actions taken, you've done [y] of them. Your [actor] is
-    annoyed at your constant interference
+  text: Of the [stat1] district actions taken, you've done [stat0] of them. Your [actor]
+    is annoyed at your constant interference
   designNotes: Player node actions bad event (high criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
@@ -28,7 +28,8 @@ MonoBehaviour:
   listOfCriteria:
   - {fileID: 11400000, guid: ded8bd96f3eb7db449ae2e2c5fae738d, type: 2}
   - {fileID: 11400000, guid: fc7eb199de80eff4f9a2817235d9375c, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: caf22ac224178904bbcedd7a34e4af8b, type: 2}
   - {fileID: 11400000, guid: 2ac24417735dab643886181b7c5dfb2d, type: 2}
@@ -38,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 0
+  status: 2
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 18
   turnsDone: 0

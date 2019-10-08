@@ -1488,11 +1488,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
                 //only improve mood if there is room for improvement
                 if (mood < moodMax && isStressed == false)
-                {
-                    /*string reason = GameManager.instance.colourScript.GetFormattedString("Watching SerialFlix", ColourType.goodText);
-                    string explanation = string.Format("<b>{0}{1}{2}</b>You had Unused Actions at the end of your turn", reason, "\n", "\n");*/
-                    ChangeMood(unusedActions, "Watching SerialFlix", "n.a");
-                }
+                { ChangeMood(unusedActions, "Watching SerialFlix", "n.a"); }
             }
         }
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
