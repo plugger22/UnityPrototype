@@ -163,6 +163,7 @@ public class SavePlayerData
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
+    public ActorSex sex;
     public bool isBreakdown;
     public bool isEndOfTurnGearCheck;
     public bool isLieLowFirstturn;   
@@ -544,6 +545,7 @@ public class SaveActor
     //data needed for all actors
     public ActorStatus status;
     public ActorHQ statusHQ;
+    public ActorSex sex;
     public int actorID;
     public int hqID;
     public int datapoint0;
@@ -554,7 +556,6 @@ public class SaveActor
     public int level;
     public int nodeCaptured;
     public string gearName;
-    public bool isMale;
     public string actorName;
     public string firstName;
     public string spriteName;

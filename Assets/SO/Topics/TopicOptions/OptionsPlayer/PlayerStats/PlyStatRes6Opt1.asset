@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes6Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res6 option 1
-  tag: 
-  text: 
+  tag: Hide
+  text: Real [menP] don't hide
   topic: {fileID: 11400000, guid: 00cff1860777a31419616f8ee2972cca, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4b34851bab0426140a88209f646e79bc, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

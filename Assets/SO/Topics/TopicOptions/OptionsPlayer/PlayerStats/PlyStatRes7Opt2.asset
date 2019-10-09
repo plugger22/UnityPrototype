@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes7Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res7 option 2
-  tag: 
-  text: 
+  tag: Meddling
+  text: It's none of your business
   topic: {fileID: 11400000, guid: ed2e7583a0b334b4e9863407e7419a20, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

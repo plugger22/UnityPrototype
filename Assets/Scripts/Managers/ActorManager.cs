@@ -881,12 +881,12 @@ public class ActorManager : MonoBehaviour
                 //name
                 if (Random.Range(0, 100) < 50)
                 {
-                    actor.isMale = true;
+                    actor.sex = ActorSex.Male;
                     actor.firstName = nameSet.firstMaleNames.GetRandomRecord();
                 }
                 else
                 {
-                    actor.isMale = false;
+                    actor.sex = ActorSex.Female;
                     actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
                 }
                 actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());

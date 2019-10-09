@@ -86,7 +86,7 @@
     // - - - Actors - - -
     //
     public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
-
+    public enum ActorSex { None, Male, Female}
     public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove and you'll need to...  
                                                                                                 //change code in DataManager -> InitialiseActorArrays
                                                                                                 //change code in FactionManager.cs -> DebugDisplayHQActors

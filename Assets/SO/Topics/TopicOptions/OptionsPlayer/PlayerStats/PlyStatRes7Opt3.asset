@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes7Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res7 option 3
-  tag: 
-  text: 
+  tag: Bye
+  text: Bye...
   topic: {fileID: 11400000, guid: ed2e7583a0b334b4e9863407e7419a20, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5180cb32faecb064e87709922ef94364, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

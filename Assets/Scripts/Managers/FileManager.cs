@@ -263,6 +263,7 @@ public class FileManager : MonoBehaviour
     {
         write.playerData.renown = GameManager.instance.playerScript.Renown;
         write.playerData.status = GameManager.instance.playerScript.status;
+        write.playerData.sex = GameManager.instance.playerScript.sex;
         write.playerData.Invisibility = GameManager.instance.playerScript.Invisibility;
         write.playerData.mood = GameManager.instance.playerScript.GetMood();
         write.playerData.tooltipStatus = GameManager.instance.playerScript.tooltipStatus;
@@ -1602,6 +1603,7 @@ public class FileManager : MonoBehaviour
     {
         GameManager.instance.playerScript.Renown = read.playerData.renown;
         GameManager.instance.playerScript.Invisibility = read.playerData.Invisibility;
+        GameManager.instance.playerScript.sex = read.playerData.sex;
         GameManager.instance.playerScript.SetMood(read.playerData.mood);
         GameManager.instance.playerScript.status = read.playerData.status;
         GameManager.instance.playerScript.tooltipStatus = read.playerData.tooltipStatus;
@@ -3550,7 +3552,7 @@ public class FileManager : MonoBehaviour
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
         saveActor.gearName = actor.GetGearName();
-        saveActor.isMale = actor.isMale;
+        saveActor.sex = actor.sex;
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;
         saveActor.spriteName = actor.spriteName;
@@ -3687,7 +3689,7 @@ public class FileManager : MonoBehaviour
         actor.level = readActor.level;
         actor.nodeCaptured = readActor.nodeCaptured;
         actor.SetGear(readActor.gearName);
-        actor.isMale = readActor.isMale;
+        actor.sex = readActor.sex;
         actor.actorName = readActor.actorName;
         actor.firstName = readActor.firstName;
         actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcName);

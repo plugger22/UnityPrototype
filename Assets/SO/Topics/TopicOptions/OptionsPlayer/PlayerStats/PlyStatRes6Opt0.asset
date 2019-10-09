@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res6 option 0
-  tag: 
-  text: 
+  tag: Days Off
+  text: I don't believe in days off
   topic: {fileID: 11400000, guid: 00cff1860777a31419616f8ee2972cca, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 8f2a89aa2380f5c41ba78c36ca70d813, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

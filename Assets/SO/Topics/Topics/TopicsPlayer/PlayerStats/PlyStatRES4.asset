@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyStatRES4
   m_EditorClassIdentifier: 
   tag: Moving
-  text: In the last [turn] days, you have moved [stat4] times. You need to see what's
-    going on in [city], says your [actor]. Keep it up!
+  text: In the last [turn] days, you have moved [stat4] times. Good to see you keeping
+    your ear to the ground in [city], says your [actor]. Keep it up!
   designNotes: 'player move activities good event (high criteria)
 
     delayed start profile to give stats a chance to build up'
@@ -34,7 +34,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1bb8461f3e946e746afbef2529ac64ce, type: 2}
   - {fileID: 11400000, guid: 8e0ebdd577e55174bb82aab25239fb3a, type: 2}
   - {fileID: 11400000, guid: d3c2439f2ffe58f47890d2448bacb5be, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -45,5 +45,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 9
   turnsActive: 1
-  turnsLive: 9
+  turnsLive: 5
   turnsDone: 0

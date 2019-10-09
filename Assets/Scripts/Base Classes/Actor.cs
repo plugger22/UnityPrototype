@@ -35,13 +35,13 @@ namespace gameAPI
         [HideInInspector] public bool isLieLowFirstturn;        //set true when lie low action, prevents invis incrementing on first turn
         [HideInInspector] public bool isStressLeave;            //set true to ensure actor spends one turn inactive on stress leave
         [HideInInspector] public bool isTraitor;                //set true to be a traitor (determined at time of release from captivity)
-        [HideInInspector] public bool isMale;                   //set true if actor is a male
         [HideInInspector] public string actorName;              //complete name
         [HideInInspector] public string firstName;              //first name
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;     //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive
         [HideInInspector] public ActorHQ statusHQ;               //status if in HQ, otherwise 'None'
+        [HideInInspector] public ActorSex sex;
         //sprite
         [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)

@@ -4596,6 +4596,56 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("turn", dictOfTags); }
                         break;
+                    case "manP":
+                        //man or woman -> Player
+                        if (isValidate == false)
+                        {
+                            if (GameManager.instance.playerScript.sex == ActorSex.Male) { replaceText = "man"; }
+                            else if (GameManager.instance.playerScript.sex == ActorSex.Female) { replaceText = "woman"; }
+                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.instance.playerScript.sex); replaceText = "unknown"; }
+                        }
+                        else { CountTextTag("manP", dictOfTags); }
+                        break;
+                    case "menP":
+                        //men or women -> Player
+                        if (isValidate == false)
+                        {
+                            if (GameManager.instance.playerScript.sex == ActorSex.Male) { replaceText = "men"; }
+                            else if (GameManager.instance.playerScript.sex == ActorSex.Female) { replaceText = "women"; }
+                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.instance.playerScript.sex); replaceText = "unknown"; }
+                        }
+                        else { CountTextTag("menP", dictOfTags); }
+                        break;
+                    case "manA":
+                        //man or woman -> Actor
+                        if (isValidate == false)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            if (actor != null)
+                            {
+                                if (actor.sex == ActorSex.Male) { replaceText = "man"; }
+                                else if (actor.sex == ActorSex.Female) { replaceText = "woman"; }
+                                else { Debug.LogWarningFormat("Unrecognised actor sex \"{0}\"", actor.sex); replaceText = "unknown"; }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); replaceText = "unknown"; }
+                        }
+                        else { CountTextTag("manP", dictOfTags); }
+                        break;
+                    case "menA":
+                        //men or women -> Actor
+                        if (isValidate == false)
+                        {
+                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            if (actor != null)
+                            {
+                                if (actor.sex == ActorSex.Male) { replaceText = "men"; }
+                                else if (actor.sex == ActorSex.Female) { replaceText = "women"; }
+                                else { Debug.LogWarningFormat("Unrecognised actor sex \"{0}\"", actor.sex); replaceText = "unknown"; }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); replaceText = "unknown"; }
+                        }
+                        else { CountTextTag("manP", dictOfTags); }
+                        break;
                     default:
                         if (isValidate == false)
                         { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }

@@ -3529,8 +3529,8 @@ MonoBehaviour:
   conditionResistance: {fileID: 0}
   testRatioPlayNodeAct: 0
   testRatioPlayTargetAtt: 0
-  testRatioPlayMoveAct: 0.104
-  testRatioPlayLieLow: 0
+  testRatioPlayMoveAct: 0
+  testRatioPlayLieLow: 0.132
   testRatioPlayGiveGear: 0
   testRatioPlayManageAct: 0
 --- !u!114 &114584680957149894

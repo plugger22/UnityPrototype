@@ -11,9 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES6
   m_EditorClassIdentifier: 
-  tag: 
-  text: Player days lie low good event (low criteria)
-  designNotes: player days lie low good event
+  tag: Lying Low
+  text: Resistance members in [city] have spent [stat6] days lying low, [stat5] of
+    them yours. We all appreciate you being here for us, says your [actor]
+  designNotes: player days lie low good event (low criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -32,7 +33,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50c334a203060c742b5a8081b975c73a, type: 2}
   - {fileID: 11400000, guid: da6df96971dcb9b478f5a2cfea8c7e4c, type: 2}
   - {fileID: 11400000, guid: 257bfaecad24f1a488051de494286dc2, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,6 +43,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 19
+  turnsActive: 15
   turnsLive: 0
   turnsDone: 0

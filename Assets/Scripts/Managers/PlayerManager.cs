@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public ActorStatus status;
     [HideInInspector] public ActorTooltip tooltipStatus;                            //Actor sprite shows a relevant tooltip if tooltipStatus > None (Breakdown, etc)
     [HideInInspector] public ActorInactive inactiveStatus;                          //reason actor is inactive
+    [HideInInspector] public ActorSex sex;
     [HideInInspector] public bool isBreakdown;                                      //enforces a minimum one turn gap between successive breakdowns
     [HideInInspector] public bool isEndOfTurnGearCheck;                             //set true by UpdateGear (as a result of Compromised gear check)
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
@@ -210,6 +211,8 @@ public class PlayerManager : MonoBehaviour
         }
         //set personality factors
         personality.SetFactors(arrayOfFactors);
+        //sex -> DEBUG (placeholder)
+        sex = ActorSex.Male;
     }
     #endregion
 

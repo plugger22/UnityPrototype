@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES7
   m_EditorClassIdentifier: 
-  tag: 
-  text: player days lie low bad event (High criteria)
+  tag: Lying Low
+  text: Resistance members in [city] have spent [stat6] days lying low, [stat5] of
+    them yours. What have you been doing, asks your [actor], sleeping?
   designNotes: player days lie low bad event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
@@ -26,22 +27,23 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 642c521f6982e4c428444afddcd50e9b, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: f8f7a04793ebba14297ea2cbe68a3f9c, type: 2}
   - {fileID: 11400000, guid: cc163cd904eb8934fb67d93b018a417f, type: 2}
   - {fileID: 11400000, guid: a2c5e20dce9baa44797c99c4b77eab4f, type: 2}
   - {fileID: 11400000, guid: a7c124d68b18e8043af0d484933564cb, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 1
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 19
-  turnsLive: 0
+  turnsDormant: 7
+  turnsActive: 0
+  turnsLive: 12
   turnsDone: 0
