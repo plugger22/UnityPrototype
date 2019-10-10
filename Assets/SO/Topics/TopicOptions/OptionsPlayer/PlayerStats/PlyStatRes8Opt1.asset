@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Name: PlyStatRes8Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res8 option 1
-  tag: 
-  text: 
+  tag: Pleasure
+  text: I take no pleasure in being so
   topic: {fileID: 11400000, guid: 02eb606c2706d234683af0545f49d7fd, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 37edc5ac74530a04db1d3f9798698a57, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

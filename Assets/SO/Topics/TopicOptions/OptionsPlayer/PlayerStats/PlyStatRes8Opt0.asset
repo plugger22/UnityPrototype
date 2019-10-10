@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes8Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res8 option 0
-  tag: 
-  text: 
+  tag: Charity
+  text: Charity begins at home
   topic: {fileID: 11400000, guid: 02eb606c2706d234683af0545f49d7fd, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4b34851bab0426140a88209f646e79bc, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

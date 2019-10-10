@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes8Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res8 option 3
-  tag: 
-  text: 
+  tag: The Best
+  text: You all deserve the best
   topic: {fileID: 11400000, guid: 02eb606c2706d234683af0545f49d7fd, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

@@ -4170,8 +4170,8 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); 
-                                actorID = arrayOfOptionInactiveIDs[0];
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); 
+                                /*actorID = arrayOfOptionInactiveIDs[0];
                                 if (actorID > -1)
                                 {
                                     Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -4182,7 +4182,7 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = actor.arc.name; }
                                     }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[0] \"{0}\"", actorID); }
-                                }
+                                }*/
                             }
                         }
                         else { CountTextTag("option0", dictOfTags); }
@@ -4205,8 +4205,8 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); 
-                                actorID = arrayOfOptionInactiveIDs[1];
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); 
+                                /*actorID = arrayOfOptionInactiveIDs[1];
                                 if (actorID > -1)
                                 {
                                     Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -4217,7 +4217,7 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = actor.arc.name; }
                                     }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[1] \"{0}\"", actorID); }
-                                }
+                                }*/
                             }
                         }
                         else { CountTextTag("option1", dictOfTags); }
@@ -4240,8 +4240,8 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); 
-                                actorID = arrayOfOptionInactiveIDs[2];
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); 
+                                /*actorID = arrayOfOptionInactiveIDs[2];
                                 if (actorID > -1)
                                 {
                                     Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -4252,7 +4252,7 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = actor.arc.name; }
                                     }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[2] \"{0}\"", actorID); }
-                                }
+                                }*/
                             }
                         }
                         else { CountTextTag("option2", dictOfTags); }
@@ -4275,8 +4275,8 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); 
-                                actorID = arrayOfOptionInactiveIDs[3];
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); 
+                                /*actorID = arrayOfOptionInactiveIDs[3];
                                 if (actorID > -1)
                                 {
                                     Actor actor = GameManager.instance.dataScript.GetActor(actorID);
@@ -4287,7 +4287,7 @@ public class TopicManager : MonoBehaviour
                                         else { replaceText = actor.arc.name; }
                                     }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[3] \"{0}\"", actorID); }
-                                }
+                                }*/
                             }
                         }
                         else { CountTextTag("option3", dictOfTags); }

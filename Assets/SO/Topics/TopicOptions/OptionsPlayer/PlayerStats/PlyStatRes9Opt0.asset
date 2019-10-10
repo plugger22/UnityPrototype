@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Name: PlyStatRes9Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res9 option 0
-  tag: 
-  text: 
+  tag: Hands Off
+  text: Hands Off! They're mine
   topic: {fileID: 11400000, guid: 94aeaa074b0e88643a10cc342f411719, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: c0f81d5b6aef0a94ebd9ac3b22ebefd5, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

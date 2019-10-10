@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES8
   m_EditorClassIdentifier: 
-  tag: 
-  text: player give gear good event (high criteria)
+  tag: Give Gear
+  text: '[stat8] items of gear have been acquired and you''ve given away [stat7] of
+    them. Your [actor] appreciates your generosity'
   designNotes: player give gear good event (high criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
@@ -43,6 +44,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 16
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0
