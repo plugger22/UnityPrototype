@@ -163,6 +163,7 @@ public class TopicManager : MonoBehaviour
     private string tagOptionText;           //option.text after CheckTopicText
     private string tagOutcome;
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
+    private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
     //collections (local)
     private List<TopicType> listOfTopicTypesTurn = new List<TopicType>();                               //level topics that passed their turn checks
@@ -255,6 +256,7 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfProfiles (Null)"); }
         //arrayOfOptionActorID's
         arrayOfOptionActorIDs = new int[maxOptions];
+        arrayOfOptionInactiveIDs = new int[maxOptions];
         //calculates topicType/SubType minimum Intervals based on global setting (minTopicTypeTurns)
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
@@ -1867,7 +1869,10 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         //initialise array to default -1 values (no actor present)
         for (int i = 0; i < arrayOfOptionActorIDs.Length; i++)
-        { arrayOfOptionActorIDs[i] = -1; }
+        {
+            arrayOfOptionActorIDs[i] = -1;
+            arrayOfOptionInactiveIDs[i] = -1;
+        }
         //All topics based on current actor line up
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
@@ -1886,14 +1891,18 @@ public class TopicManager : MonoBehaviour
                             //add actorID to array
                             arrayOfOptionActorIDs[i] = actor.actorID;
                         }
+                        else { arrayOfOptionInactiveIDs[i] = actor.actorID; }
                     }
                 }
             }
-            //assign a random node (used only for news text tags)
+            /*//assign a random node (used only for news text tags)
             Node node = GameManager.instance.dataScript.GetRandomNode();
             if (node != null)
             { tagNodeID = node.nodeID; }
-            else { Debug.LogError("Invalid random node (Null)"); }
+            else { Debug.LogError("Invalid random node (Null)"); }*/
+
+            //set node to default to avoid displaying 'Show Me' button
+            tagNodeID = -1;
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //group based on Player Mood
@@ -2193,7 +2202,10 @@ public class TopicManager : MonoBehaviour
                                     if (isPlayerGeneral == true)
                                     {
                                         if (option.optionNumber > -1)
-                                        { tagActorID = arrayOfOptionActorIDs[option.optionNumber]; }
+                                        {
+                                            tagActorID = arrayOfOptionActorIDs[option.optionNumber];
+                                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: optionNumber {0}, tagActorID {1}{2}", option.optionNumber, tagActorID, "\n");
+                                        }
                                         else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", option.optionNumber, option.name); }
                                     }
                                     //initialise option tooltips
@@ -4157,7 +4169,21 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[0] \"{0}\"", actorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); }
+                            {
+                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); 
+                                actorID = arrayOfOptionInactiveIDs[0];
+                                if (actorID > -1)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                    if (actor != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                        else { replaceText = actor.arc.name; }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[0] \"{0}\"", actorID); }
+                                }
+                            }
                         }
                         else { CountTextTag("option0", dictOfTags); }
                         break;
@@ -4178,7 +4204,21 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[1] \"{0}\"", actorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); }
+                            {
+                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); 
+                                actorID = arrayOfOptionInactiveIDs[1];
+                                if (actorID > -1)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                    if (actor != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                        else { replaceText = actor.arc.name; }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[1] \"{0}\"", actorID); }
+                                }
+                            }
                         }
                         else { CountTextTag("option1", dictOfTags); }
                         break;
@@ -4199,7 +4239,21 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[0] \"{0}\"", actorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); }
+                            {
+                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); 
+                                actorID = arrayOfOptionInactiveIDs[2];
+                                if (actorID > -1)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                    if (actor != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                        else { replaceText = actor.arc.name; }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[2] \"{0}\"", actorID); }
+                                }
+                            }
                         }
                         else { CountTextTag("option2", dictOfTags); }
                         break;
@@ -4220,7 +4274,21 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionActorIDs[3] \"{0}\"", actorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); }
+                            {
+                                //Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); 
+                                actorID = arrayOfOptionInactiveIDs[3];
+                                if (actorID > -1)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                    if (actor != null)
+                                    {
+                                        if (isColourHighlighting == true)
+                                        { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                        else { replaceText = actor.arc.name; }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOptionInactiveIDs[3] \"{0}\"", actorID); }
+                                }
+                            }
                         }
                         else { CountTextTag("option3", dictOfTags); }
                         break;

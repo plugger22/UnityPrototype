@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Lying Low
   text: Resistance members in [city] have spent [stat6] days lying low, [stat5] of
     them yours. What have you been doing, asks your [actor], sleeping?
-  designNotes: player days lie low bad event
+  designNotes: player days lie low bad event (high criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -27,6 +27,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 642c521f6982e4c428444afddcd50e9b, type: 2}
+  - {fileID: 11400000, guid: af33d2835e7faa2488375c974d373856, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   listOfOptions:
@@ -38,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 1
+  timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 7
+  turnsDormant: 0
   turnsActive: 0
-  turnsLive: 12
+  turnsLive: 16
   turnsDone: 0

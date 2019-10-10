@@ -27,7 +27,8 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: 3d7bee04346e0b240a52e2a907c37c07, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 3317d24a7106a404aa8cd56ff1e9ecb8, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 0891f34ec1232a048ba9718e4ab40bd0, type: 2}
@@ -45,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 9
   turnsActive: 1
-  turnsLive: 5
+  turnsLive: 6
   turnsDone: 0

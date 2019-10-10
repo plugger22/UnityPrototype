@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: 
   text: player give gear good event (high criteria)
-  designNotes: player give gear good event
+  designNotes: player give gear good event (high criteria)
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}
@@ -26,6 +26,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c3d19bba65ce8ce498b7ae96583c4881, type: 2}
+  - {fileID: 11400000, guid: 694c9ce91bea0db43a9acde73165c5b1, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 7198eca8d1e3c184ab43f87445aba3e8, type: 2}
@@ -42,6 +43,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 15
+  turnsActive: 16
   turnsLive: 0
   turnsDone: 0

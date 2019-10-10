@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: 
   text: player manage actions bad event (high criteria)
-  designNotes: 'player manage actions bad event
+  designNotes: 'player manage actions bad event (high citeria)
 
     delayed start profile to give stats a chance to build up'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: 3d7bee04346e0b240a52e2a907c37c07, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 2ef409c8639deeb4aac34d4eaa5a71ad, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: d497610b0361ea74bb70a98e0a4d2446, type: 2}
@@ -44,5 +45,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 9
   turnsActive: 1
-  turnsLive: 5
+  turnsLive: 6
   turnsDone: 0

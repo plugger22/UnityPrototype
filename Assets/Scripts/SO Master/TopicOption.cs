@@ -55,7 +55,7 @@ public class TopicOption : ScriptableObject
     [HideInInspector] public string tooltipDetails;             //derived from mood Effect
     [HideInInspector] public bool isValid;                      //true if passed criteria checks, false otherwise (displayed in greyed text)
     [HideInInspector] public string textToDisplay;              //colour formatted option text ready for display by TopicUI.cs (TopicManager.cs -> InitialiseTopicUI)
-    [HideInInspector] public int optionNumber;                  //number of option for topic, eg. 0 -> 3, if named 'PlyRes3Opt1' then it's number is 1. 
+    [HideInInspector] public int optionNumber;                  //number of option for topic, eg. 0 -> 3, if named 'PlyRes3Opt1' then it's number is 1 (last character). 
 
 
     public void OnEnable()

@@ -27,6 +27,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 642c521f6982e4c428444afddcd50e9b, type: 2}
+  - {fileID: 11400000, guid: 1e5893a6d2fc1e04892bf64d2c66cae6, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 7be7559562d8acf4d8d16fe61bdef622, type: 2}
@@ -37,12 +38,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 4
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 15
-  turnsLive: 0
+  turnsDormant: 4
+  turnsActive: 0
+  turnsLive: 12
   turnsDone: 0
