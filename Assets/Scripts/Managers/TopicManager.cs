@@ -2312,7 +2312,7 @@ public class TopicManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("\'{0}\', {1}", turnTopic.tag, turnOption.tag);
+                dataInput.originText = string.Format("Event \'{0}\', {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
@@ -4073,6 +4073,13 @@ public class TopicManager : MonoBehaviour
             Node node = null;
             if (tagNodeID > -1)
             { node = GameManager.instance.dataScript.GetNode(tagNodeID); }
+            else
+            {
+                //get default node 0 to accomdodate jobs tag, if required, but still not display 'Show Me' button (tagNodeID > -1)
+                node = GameManager.instance.dataScript.GetNode(0);
+            }
+            if (node == null)
+            { Debug.LogWarning("Invalid node (Null)"); }
             //loop whilever tags are present
             while (checkedText.Contains("[") == true)
             {
@@ -4325,14 +4332,18 @@ public class TopicManager : MonoBehaviour
                             string job = "Unknown";
                             if (string.IsNullOrEmpty(tagJob) == true)
                             {
-                                ContactType contactType = node.Arc.GetRandomContactType();
-                                if (contactType != null)
+                                if (node != null)
                                 {
-                                    job = contactType.pickList.GetRandomRecord();
-                                    tagJob = job;
+                                    ContactType contactType = node.Arc.GetRandomContactType();
+                                    if (contactType != null)
+                                    {
+                                        job = contactType.pickList.GetRandomRecord();
+                                        tagJob = job;
+                                    }
+                                    else
+                                    { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
                                 }
-                                else
-                                { Debug.LogWarningFormat("Invalid contactType (Null) for node {0}, {1}, {2}", node.nodeName, node.Arc.name, node.nodeID); }
+                                else { job = "Street Bum"; }
                             }
                             else { job = tagJob; }
                             if (isColourHighlighting == true)

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Male first names, British
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Winston
   - Jeremy
@@ -21,4 +23,5 @@ MonoBehaviour:
   - Arthur
   - Ford
   - Benedict
-  isTestForDuplicates: 1
+  - Lex
+  index: 6

@@ -24,7 +24,8 @@ public class Contact
     public int usefulIntel;             //tracks number of useful intel items sourced by the contact
     public string typeName;             //ContactType.name
     public ContactStatus status;
-    public bool isMale;                 //Male if true, female if false
+    public ActorSex sex;
+    //public bool isMale;                 //Male if true, female if false
     public bool isTurned;               //working for Authority as an informant
 
     [HideInInspector] public int timerInactive;    //countdown timer set when contact becomes inactive. Flips to active once timer reaches zero (ContactManager.cs -> CheckContacts)

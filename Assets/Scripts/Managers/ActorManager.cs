@@ -4880,7 +4880,11 @@ public class ActorManager : MonoBehaviour
                                             GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaActive);
                                         }
                                         else
-                                        { actor.SetDatapoint(ActorDatapoint.Invisibility2, invis); }
+                                        {
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invis);
+                                            //stats
+                                            GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
+                                        }
                                         break;
                                     case ActorInactive.Breakdown:
                                         //restore actor (one stress turn only)
@@ -6453,6 +6457,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.playerScript.Invisibility = invis;
                             //statistic
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLowDays);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
                         }
                         break;
                 }

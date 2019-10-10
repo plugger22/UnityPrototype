@@ -213,17 +213,17 @@ public class ContactManager : MonoBehaviour
                         //50% chance of being either sex
                         if (Random.Range(0, 100) < 50)
                         {
-                            contact.isMale = true;
+                            contact.sex = ActorSex.Male;
                             contact.nameFirst = nameSet.firstMaleNames.GetRandomRecord();
                         }
                         else
                         {
-                            contact.isMale = false;
+                            contact.sex = ActorSex.Female;
                             contact.nameFirst = nameSet.firstFemaleNames.GetRandomRecord();
                         }
                         contact.nameLast = nameSet.lastNames.GetRandomRecord();
                     }
-                    else { contact.nameFirst = "Unknown"; contact.nameLast = "Unknown"; contact.isMale = true; }
+                    else { contact.nameFirst = "Unknown"; contact.nameLast = "Unknown"; contact.sex = ActorSex.Male; }
                     //add to dictionary
                     try
                     {

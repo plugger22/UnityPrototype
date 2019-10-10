@@ -1832,6 +1832,9 @@ public class ValidationManager : MonoBehaviour
                 CheckDictList(actor.Value.GetListOfConditions(), "listOfConditions", tag, key);
                 CheckDictList(actor.Value.GetListOfTraitEffects(), "listOfTraitEffects", tag, key);
                 CheckDictDict(actor.Value.GetDictOfContacts(), "dictOfContacts", tag, key);
+                //sex
+                if (actor.Value.sex == ActorSex.None)
+                { Debug.LogFormat("{0}Invalid sex ('None') for actorID {1}{2}", tag, actor.Key, "\n"); }
                 //personality
                 Personality personality = actor.Value.GetPersonality();
                 if (personality != null)
@@ -2365,6 +2368,9 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                         break;
                 }
                 CheckDictRange(contact.Value.effectiveness, 1, 3, "effectiveness", tag, key);
+                //sex
+                if (contact.Value.sex == ActorSex.None)
+                { Debug.LogFormat("{0}Invalid sex ('None') for contact {0} {1}, ID {2}{3}", contact.Value.nameFirst, contact.Value.nameLast, contact.Value.contactID, "\n"); }
             }
         }
         else { Debug.LogError("Invalid dictOfContacts (Null)"); }
@@ -2445,6 +2451,9 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
         //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         CheckRange(GameManager.instance.playerScript.GetMood(), 0, GameManager.instance.playerScript.moodMax, "mood", tag);
         CheckRange(GameManager.instance.playerScript.actorID, 999, 999, "actorID", tag);
+        //sex
+        if (GameManager.instance.playerScript.sex == ActorSex.None)
+        { Debug.LogFormat("{0}Invalid sex ('None') for Player{1}", tag, "\n"); }
         //personality
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)

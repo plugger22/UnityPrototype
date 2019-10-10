@@ -3530,7 +3530,7 @@ MonoBehaviour:
   testRatioPlayNodeAct: 0
   testRatioPlayTargetAtt: 0
   testRatioPlayMoveAct: 0
-  testRatioPlayLieLow: 0.132
+  testRatioPlayLieLow: 0.914
   testRatioPlayGiveGear: 0
   testRatioPlayManageAct: 0
 --- !u!114 &114584680957149894
@@ -3821,6 +3821,7 @@ MonoBehaviour:
   status: 0
   tooltipStatus: 0
   inactiveStatus: 0
+  sex: 0
   isBreakdown: 0
   isEndOfTurnGearCheck: 0
   isLieLowFirstturn: 0

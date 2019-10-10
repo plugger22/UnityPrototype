@@ -1570,6 +1570,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
         builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
         builder.AppendFormat(" numOfSuperStressed {0}{1}", numOfSuperStress, "\n");
+        builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
         builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
         builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");
