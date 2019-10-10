@@ -3531,7 +3531,7 @@ MonoBehaviour:
   testRatioPlayTargetAtt: 0
   testRatioPlayMoveAct: 0
   testRatioPlayLieLow: 0
-  testRatioPlayGiveGear: 0
+  testRatioPlayGiveGear: 0.892
   testRatioPlayManageAct: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:

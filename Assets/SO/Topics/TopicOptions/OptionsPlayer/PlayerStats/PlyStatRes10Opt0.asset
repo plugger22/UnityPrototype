@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Name: PlyStatRes10Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res10 option 0
-  tag: 
-  text: 
+  tag: Pamper
+  text: I'd pamper you all if I could
   topic: {fileID: 11400000, guid: 69194aa2a1c85254689a4b2484d658c3, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: No Effects present
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 0

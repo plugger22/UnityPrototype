@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyStatRES10
   m_EditorClassIdentifier: 
-  tag: 
-  text: player manage actions good event (low criteria)
+  tag: Managerial Decisions
+  text: During the last [turn] days, you've made [stat9] managerial decisions. A light
+    touch is exactly what we need around here, says your [actor]
   designNotes: 'player manage actions good event  (low criteria)
 
     delayed start profile to give stats a chance to build up
@@ -36,7 +37,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5c65b5d274d401469707d793db013ed, type: 2}
   - {fileID: 11400000, guid: 52d4e1c8de4e76e48ab8bc7396945081, type: 2}
   - {fileID: 11400000, guid: 2b69e2c42b5ae72419f3683df1b57d4e, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -47,5 +48,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 9
   turnsActive: 1
-  turnsLive: 6
+  turnsLive: 7
   turnsDone: 0

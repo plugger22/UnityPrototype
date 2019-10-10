@@ -932,12 +932,12 @@ public class EffectManager : MonoBehaviour
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownLow)); }
                                                 break;
                                             case "RenownPlayerMed":
-                                                //Player has Renown Low or better
+                                                //Player has Renown Med or better
                                                 if (GameManager.instance.playerScript.Renown < renownMed)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownMed)); }
                                                 break;
                                             case "RenownPlayerHigh":
-                                                //Player has Renown Low or better
+                                                //Player has Renown High or better
                                                 if (GameManager.instance.playerScript.Renown < renownHigh)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownHigh)); }
                                                 break;
@@ -1137,6 +1137,7 @@ public class EffectManager : MonoBehaviour
                                                     if (GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
                                                     { BuildString(result, "Insufficient Gear items acquired"); }
                                                 }
+                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: StatGearItemsMin PASSED{0}", "\n"); }
                                                 break;
                                             case "StatNodeActionsMin":
                                                 //auto success if testManager.cs -> testRatioPlayNodeAct != 0
@@ -1192,10 +1193,12 @@ public class EffectManager : MonoBehaviour
                                             case "RatioPlayGiveGearLow":
                                                 if (GameManager.instance.statScript.ratioPlayerGiveGear > ratioGiveGearLow)
                                                 { BuildString(result, "To many Give Gear actions for Low"); }
+                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: RatioPlayGiveGearLow PASSED{0}", "\n"); }
                                                 break;
                                             case "RatioPlayGiveGearHigh":
                                                 if (GameManager.instance.statScript.ratioPlayerGiveGear < ratioGiveGearHigh)
                                                 { BuildString(result, "Insufficient Give Gear actions for High"); }
+                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: RatioPlayGiveGearHigh PASSED{0}", "\n"); }
                                                 break;
                                             case "RatioPlayManageActLow":
                                                 if (GameManager.instance.statScript.ratioPlayerManageActions > ratioPlayManageActLow)

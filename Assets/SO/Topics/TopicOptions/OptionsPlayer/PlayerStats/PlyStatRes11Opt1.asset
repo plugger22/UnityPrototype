@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes11Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res11 option 1
-  tag: 
-  text: 
+  tag: Feel Like
+  text: I do whatever I feel like
   topic: {fileID: 11400000, guid: 82ad35e76043cca46978af0cc1293622, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1d33e57c153f79e4d978c2b2368f2645, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

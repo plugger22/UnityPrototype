@@ -34,16 +34,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50c334a203060c742b5a8081b975c73a, type: 2}
   - {fileID: 11400000, guid: da6df96971dcb9b478f5a2cfea8c7e4c, type: 2}
   - {fileID: 11400000, guid: 257bfaecad24f1a488051de494286dc2, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 4
+  timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 4
-  turnsActive: 0
-  turnsLive: 12
+  turnsDormant: 0
+  turnsActive: 18
+  turnsLive: 2
   turnsDone: 0

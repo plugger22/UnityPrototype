@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyStatRes11Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res11 option 2
-  tag: 
-  text: 
+  tag: Fire
+  text: Consider yourself managed
   topic: {fileID: 11400000, guid: 82ad35e76043cca46978af0cc1293622, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5180cb32faecb064e87709922ef94364, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +29,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes10Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res10 option 3
-  tag: 
-  text: 
+  tag: Tell HQ
+  text: Order [actor] to let HQ know
   topic: {fileID: 11400000, guid: 69194aa2a1c85254689a4b2484d658c3, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: 2
+  tooltipHeader: Unknown
+  tooltipMain: No Effects present
+  tooltipDetails: No Mood effect
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
+  optionNumber: 3
