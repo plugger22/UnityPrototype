@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Managerial Decisions
   text: During the last [turn] days, you've made [stat9] managerial decisions. You're
-    all over the place, says your [actor]. Don't know what you're doing
+    all over the place, says your [actor]. Don't know what you're doing?
   designNotes: 'player manage actions bad event (high citeria)
 
     delayed start profile to give stats a chance to build up'
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 9
-  turnsActive: 8
-  turnsLive: 0
+  turnsActive: 1
+  turnsLive: 8
   turnsDone: 0
