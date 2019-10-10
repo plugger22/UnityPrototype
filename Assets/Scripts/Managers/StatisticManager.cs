@@ -140,7 +140,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerTargetAttempts = dataTop / dataBottom; }
             else { ratioPlayerTargetAttempts = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayTargetAtt; }
+        else { ratioPlayerTargetAttempts = GameManager.instance.testScript.testRatioPlayTargetAtt; }
         //PlayerMoveActions
         if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayMoveAct == 0)
         {
@@ -150,7 +150,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerMoveActions = dataTop / dataBottom; }
             else { ratioPlayerMoveActions = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayMoveAct; }
+        else { ratioPlayerMoveActions = GameManager.instance.testScript.testRatioPlayMoveAct; }
         //PlayerLieLowDays
         if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayLieLow == 0)
         {
@@ -160,7 +160,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerLieLowDays = dataTop / dataBottom; }
             else { ratioPlayerLieLowDays = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayLieLow; }
+        else { ratioPlayerLieLowDays = GameManager.instance.testScript.testRatioPlayLieLow; }
         //PlayerGiveGear
         if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayGiveGear == 0)
         {
@@ -170,7 +170,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerGiveGear = dataTop / dataBottom; }
             else { ratioPlayerGiveGear = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayGiveGear; }
+        else { ratioPlayerGiveGear = GameManager.instance.testScript.testRatioPlayGiveGear; }
         //PlayerManageActions
         if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayManageAct == 0)
         {
@@ -180,7 +180,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerManageActions = dataTop / dataBottom; }
             else { ratioPlayerManageActions = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayManageAct; }
+        else { ratioPlayerManageActions = GameManager.instance.testScript.testRatioPlayManageAct; }
     }
     #endregion
 

@@ -3531,8 +3531,8 @@ MonoBehaviour:
   testRatioPlayTargetAtt: 0
   testRatioPlayMoveAct: 0
   testRatioPlayLieLow: 0
-  testRatioPlayGiveGear: 0.892
-  testRatioPlayManageAct: 0
+  testRatioPlayGiveGear: 0.132
+  testRatioPlayManageAct: 0.144
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

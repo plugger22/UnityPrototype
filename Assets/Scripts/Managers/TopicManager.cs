@@ -2221,8 +2221,12 @@ public class TopicManager : MonoBehaviour
                                     { tagActorID = -1; }
                                 }
                                 //colourFormat textToDisplay -> special case first
-                                if (isPlayerGeneral == true && tagActorID < 0)
-                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, "Subordinate unavailable", colourEnd); }
+                                if (isPlayerGeneral == true)
+                                {
+                                    if (tagActorID < 0)
+                                    { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, "Subordinate unavailable", colourEnd); }
+                                    else { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
+                                }
                                 else
                                 { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
                             }
@@ -4170,7 +4174,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID); 
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[0]", actorID);
                                 /*actorID = arrayOfOptionInactiveIDs[0];
                                 if (actorID > -1)
                                 {
@@ -4205,7 +4209,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID); 
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[1]", actorID);
                                 /*actorID = arrayOfOptionInactiveIDs[1];
                                 if (actorID > -1)
                                 {
@@ -4240,7 +4244,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID); 
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[2]", actorID);
                                 /*actorID = arrayOfOptionInactiveIDs[2];
                                 if (actorID > -1)
                                 {
@@ -4275,7 +4279,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID); 
+                                Debug.LogWarningFormat("Invalid actorID \"{0}\" for arrayOfOptionActorIDs[3]", actorID);
                                 /*actorID = arrayOfOptionInactiveIDs[3];
                                 if (actorID > -1)
                                 {
@@ -4846,8 +4850,8 @@ public class TopicManager : MonoBehaviour
                     {
                         case "PlayerDistrict":
                         case "PlayerGeneral":
-                    turnSprite = GameManager.instance.playerScript.sprite;
-                    tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            turnSprite = GameManager.instance.playerScript.sprite;
+                            tagSpriteName = GameManager.instance.playerScript.PlayerName;
                             break;
                         case "PlayerStats":
                             //use actor sprite

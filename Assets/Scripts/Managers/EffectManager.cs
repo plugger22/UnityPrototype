@@ -212,7 +212,7 @@ public class EffectManager : MonoBehaviour
         }
     }
 
-
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -242,6 +242,7 @@ public class EffectManager : MonoBehaviour
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
+    #endregion
 
     #region CheckCriteria
     /// <summary>
@@ -1137,7 +1138,6 @@ public class EffectManager : MonoBehaviour
                                                     if (GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
                                                     { BuildString(result, "Insufficient Gear items acquired"); }
                                                 }
-                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: StatGearItemsMin PASSED{0}", "\n"); }
                                                 break;
                                             case "StatNodeActionsMin":
                                                 //auto success if testManager.cs -> testRatioPlayNodeAct != 0
@@ -1193,12 +1193,10 @@ public class EffectManager : MonoBehaviour
                                             case "RatioPlayGiveGearLow":
                                                 if (GameManager.instance.statScript.ratioPlayerGiveGear > ratioGiveGearLow)
                                                 { BuildString(result, "To many Give Gear actions for Low"); }
-                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: RatioPlayGiveGearLow PASSED{0}", "\n"); }
                                                 break;
                                             case "RatioPlayGiveGearHigh":
                                                 if (GameManager.instance.statScript.ratioPlayerGiveGear < ratioGiveGearHigh)
                                                 { BuildString(result, "Insufficient Give Gear actions for High"); }
-                                                else { Debug.LogFormat("[Tst] EffectManager.cs -> CheckCriteria: RatioPlayGiveGearHigh PASSED{0}", "\n"); }
                                                 break;
                                             case "RatioPlayManageActLow":
                                                 if (GameManager.instance.statScript.ratioPlayerManageActions > ratioPlayManageActLow)
@@ -1252,6 +1250,7 @@ public class EffectManager : MonoBehaviour
     }
     #endregion
 
+    #region BuildString
     /// <summary>
     /// subMethod to handle stringbuilder admin for CheckEffectCriteria()
     /// </summary>
@@ -1266,7 +1265,9 @@ public class EffectManager : MonoBehaviour
             builder.Append(text1);
         }
     }
+    #endregion
 
+    #region ComparisonCheck
     /// <summary>
     /// returns null if all O.K and a tool tip string if not giving criteria, eg. "< 1"
     /// </summary>
@@ -1298,6 +1299,7 @@ public class EffectManager : MonoBehaviour
         }
         return result;
     }
+    #endregion
 
 
     /// <summary>

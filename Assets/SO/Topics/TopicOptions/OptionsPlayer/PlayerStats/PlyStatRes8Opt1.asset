@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: PlyStatRes8Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res8 option 1
-  tag: Pleasure
+  tag: Generous
   text: I take no pleasure in being so
   topic: {fileID: 11400000, guid: 02eb606c2706d234683af0545f49d7fd, type: 2}
   isPreferredByHQ: 0
@@ -26,9 +26,11 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Pleasure</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>
+    All Subordinates<br>Renown -2</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Player
+    Renown -1</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I take no pleasure in being so</color>
   optionNumber: 1
