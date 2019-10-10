@@ -2184,7 +2184,9 @@ public class TopicManager : MonoBehaviour
                             isProceed = false;
                         }
                     }
-                    //options
+                    //
+                    // - - - options
+                    //
                     if (isProceed == true)
                     {
                         isProceed = false;
@@ -2195,7 +2197,8 @@ public class TopicManager : MonoBehaviour
                             if (option != null)
                             {
                                 colourOption = colourNeutral;
-                                //check any criteria
+
+                                /*//check any criteria
                                 if (CheckOptionCriteria(option) == true)
                                 {
                                     //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
@@ -2228,7 +2231,58 @@ public class TopicManager : MonoBehaviour
                                     else { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
                                 }
                                 else
-                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
+                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }*/
+
+
+                                if (isPlayerGeneral == true)
+                                {
+                                    if (option.optionNumber > -1)
+                                    {
+                                        tagActorID = arrayOfOptionActorIDs[option.optionNumber];
+                                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: optionNumber {0}, tagActorID {1}{2}", option.optionNumber, tagActorID, "\n");
+                                        if (tagActorID > -1)
+                                        {
+                                            if (CheckOptionCriteria(option) == true)
+                                            {
+                                                //initialise option tooltips
+                                                if (InitialiseOptionTooltip(option) == true)
+                                                {
+                                                    isProceed = true;
+                                                    option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //create option unavailable tooltip
+                                            InitialiseOptionUnavailableTooltip(option);
+                                            //option text
+                                            option.textToDisplay = string.Format("{0}{1}{2}", colourGrey, "Subordinate unavailable", colourEnd);
+                                            isProceed = true;
+                                        }                                        
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", option.optionNumber, option.name); }
+                                }
+                                else
+                                {
+                                    ///Normal -> check any criteria
+                                    if (CheckOptionCriteria(option) == true)
+                                    {
+                                        //initialise option tooltips
+                                        if (InitialiseOptionTooltip(option) == true)
+                                        { isProceed = true; }
+                                    }
+                                    else
+                                    {
+                                        //criteria checked failed
+                                        isProceed = true;
+                                        colourOption = colourGrey;
+                                    }
+                                    //colourFormat textToDisplay
+                                    option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
+                                }
+
+
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -3739,6 +3793,18 @@ public class TopicManager : MonoBehaviour
             else { option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd); }
         }
         return option.isValid;
+    }
+    #endregion
+
+    #region InitialiseOptionUnavailableTooltip
+    /// <summary>
+    /// Used specifically for Player General option unavailable tooltips
+    /// </summary>
+    private void InitialiseOptionUnavailableTooltip(TopicOption option)
+    {
+        option.tooltipHeader = string.Format("{0}OPTION UNAVAILABLE{1}", "<mark=#FFFFFF4D>", "</mark>");
+        option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, "Subordinate Unavailable", colourEnd);
+        option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd);
     }
     #endregion
 
