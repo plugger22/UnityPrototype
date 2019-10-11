@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Scum Bot
   m_EditorClassIdentifier: 
   descriptor: A stealthy humaniod droid that is designed to find and frame it's target
-    with a view to discrediting them.
+    in order to discredit them.
   movement: 1
   searchRating: 2
   stealthRating: 2

@@ -1497,6 +1497,41 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
     }
 
+    /// <summary>
+    /// Player captured and ransomed off, eg. Bounty Hunter nemesis. All gear and all renown lost
+    /// </summary>
+    public void RansomPlayer()
+    {
+        int numOfGear;
+        string gearName;
+        switch (GameManager.instance.sideScript.resistanceOverall)
+        {
+            case SideState.Human:
+                //gear -> remove all, reverse loop
+                numOfGear = listOfGear.Count;
+                if (numOfGear > 0)
+                {
+                    for (int i = numOfGear - 1; i >= 0 ; i--)
+                    {
+                        gearName = listOfGear[i];
+                        if (string.IsNullOrEmpty(gearName) == false)
+                        { RemoveGear(gearName, true); }
+                        else { Debug.LogWarningFormat("Invalid gearName (Null or Empty) for listOfGear[{0}]", i); }
+                    }
+                }
+                //renown -> remove all
+                Renown = 0;
+                break;
+            case SideState.AI:
+                //renown
+                GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, 0);
+                //gear
+                GameManager.instance.aiRebelScript.ResetGearPool();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised resistanceOverall sideState \"{0}\"", GameManager.instance.sideScript.resistanceOverall); break;
+        }
+    }
+
 
     //
     // - - - Debug 
@@ -1695,31 +1730,31 @@ public class PlayerManager : MonoBehaviour
         bool isResult = false;
         if (status == ActorStatus.Active)
         {
-                switch (check)
-                {
-                    case PlayerCheck.NodeActionsNOTZero:
-                        //Player with listOfNodeActions.Count > 0 && the player's most recent NodeActivity has valid topics present
-                        if (CheckNumOFNodeActions() != 0)
+            switch (check)
+            {
+                case PlayerCheck.NodeActionsNOTZero:
+                    //Player with listOfNodeActions.Count > 0 && the player's most recent NodeActivity has valid topics present
+                    if (CheckNumOFNodeActions() != 0)
+                    {
+                        NodeActionData data = GetMostRecentNodeAction();
+                        if (data != null)
                         {
-                            NodeActionData data = GetMostRecentNodeAction();
-                            if (data != null)
+                            //get relevant subType topic list
+                            TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
+                            if (subSubType != null)
                             {
-                                //get relevant subType topic list
-                                TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
-                                if (subSubType != null)
-                                {
-                                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subSubType.subType);
-                                    //check that Players most recent node Action has at least one Live topic of correct subSubType on the list
-                                    if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
-                                    { isResult = true; }
-                                }
-                                else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }
+                                List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subSubType.subType);
+                                //check that Players most recent node Action has at least one Live topic of correct subSubType on the list
+                                if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
+                                { isResult = true; }
                             }
-                            else { Debug.LogError("Invalid NodeActionData (Null)"); }
+                            else { Debug.LogErrorFormat("Invalid subSubType (Null) for nodeAction \"{0}\"", data.nodeAction); }
                         }
-                        break;
-                    default: Debug.LogWarningFormat("Unrecognised PlayerCheck \"{0}\"", check); break;
-                }
+                        else { Debug.LogError("Invalid NodeActionData (Null)"); }
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised PlayerCheck \"{0}\"", check); break;
+            }
         }
         return isResult;
     }

@@ -1114,7 +1114,7 @@ public class NemesisManager : MonoBehaviour
                     GameManager.instance.aiRebelScript.status, GameManager.instance.aiRebelScript.inactiveStatus, "\n");*/
 
                 //cause damage / message
-                ProcessPlayerDamage(isPlayerMove);
+                ProcessPlayerDamage(/*isPlayerMove*/);
                 hasActed = true;
                 //Nemesis has done their job, new nemesis arrives?
                 if (isFirstNemesis == true)
@@ -1459,7 +1459,7 @@ public class NemesisManager : MonoBehaviour
     /// <summary>
     /// called whenever Nemesis spots and catches player. Both assumed to be at the same node. 'isModalOutcomeNormal' set false (auto) only if end of turn check and tweaks outcome window modal setting
     /// </summary>
-    private void ProcessPlayerDamage(bool isOutcomeModalNormal)
+    private void ProcessPlayerDamage(/*bool isOutcomeModalNormal*/)
     {
         StringBuilder builder = new StringBuilder();
         Damage damage = nemesis.damage;
@@ -1468,8 +1468,8 @@ public class NemesisManager : MonoBehaviour
             Condition condition;
             switch (damage.name)
             {
-                case "Capture":
-
+                case "Ransom":
+                    GameManager.instance.playerScript.RansomPlayer();
                     break;
                 case "Discredit":
                     condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
@@ -1547,12 +1547,12 @@ public class NemesisManager : MonoBehaviour
                 side = sideWho
             };
             //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-            if (isOutcomeModalNormal == false)
-            {
+            /*if (isOutcomeModalNormal == false)
+            {*/
                 outcomeDetails.type = MsgPipelineType.Nemesis;
                 if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
-            }
+            /*}*/
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }
     }

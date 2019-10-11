@@ -3520,7 +3520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 92301aebd41bda442a4e088837006bcb, type: 2}
+  debugTopicPool: {fileID: 0}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -3531,8 +3531,8 @@ MonoBehaviour:
   testRatioPlayTargetAtt: 0
   testRatioPlayMoveAct: 0
   testRatioPlayLieLow: 0
-  testRatioPlayGiveGear: 0.892
-  testRatioPlayManageAct: 0.903
+  testRatioPlayGiveGear: 0
+  testRatioPlayManageAct: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

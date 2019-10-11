@@ -810,6 +810,9 @@ public class ValidationManager : MonoBehaviour
                             }
                             //check topic text tags
                             GameManager.instance.topicScript.CheckTopicText(topic.text, false, true, topicName);
+                            //check topic disabled
+                            if (topic.isDisabled == true)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" is Disabled{1}", topic.name, "\n"); }
                             //listOfOptions
                             if (topic.listOfOptions != null)
                             {

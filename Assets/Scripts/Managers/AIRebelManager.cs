@@ -4616,6 +4616,15 @@ public class AIRebelManager : MonoBehaviour
     public int GetGearPoints()
     { return gearPool; }
 
+    /// <summary>
+    /// Sets gear pool to Zero, used when AI resistance player caught by Bounty Hunter nemesis
+    /// </summary>
+    public void ResetGearPool()
+    {
+        gearPool = 0;
+        Debug.LogFormat("[Rim] AIRebelManager.cs -> ResetGearPool: Gear Pool reset, now ZERO{0}", "\n");
+    }
+
     //
     // - - - Tidy up - - -
     //

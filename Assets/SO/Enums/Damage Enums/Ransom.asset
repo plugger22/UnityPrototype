@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd13ce1c6d43cec45be4363250c12eeb, type: 3}
-  m_Name: Capture
+  m_Name: Ransom
   m_EditorClassIdentifier: 
   descriptor: Target is captured and ransomed off
-  tag: Captured
-  effectResistance: You have been captured and your fate is uncertain
-  effectAuthority: They have been captured
+  tag: Ransomed
+  effectResistance: All Gear and Renown lost
+  effectAuthority: They have been ransomed
