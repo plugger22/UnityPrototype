@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: My [who] thinks that the AI has a plan for we humans. Hope that they're right,
+    says [npc], [job] of [node]
+  tooltipHeader: <color=#FFFFE0>The Best</color>
+  tooltipMain: <color=#98FB98> All Subordinates<br>Motivation +1</color>
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>You all deserve the best</color>
   optionNumber: 3

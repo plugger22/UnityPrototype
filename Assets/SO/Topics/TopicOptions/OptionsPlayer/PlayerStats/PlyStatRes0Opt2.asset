@@ -24,7 +24,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I'm feeling that joining the Resistance is like trying to stop the tide coming
+    in, says [npc], [job] of [node]. What's the point of it all?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

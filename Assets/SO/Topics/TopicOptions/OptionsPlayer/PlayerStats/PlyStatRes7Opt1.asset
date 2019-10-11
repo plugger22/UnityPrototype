@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: My [who] thinks that humans and AI can happily coexist, says [npc], [job]
+    of [node]. They also believe in fairies
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

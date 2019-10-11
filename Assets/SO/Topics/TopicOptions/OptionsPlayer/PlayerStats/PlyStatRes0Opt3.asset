@@ -24,7 +24,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Forget about the Resistance, says [npc], [job] of [node]. They're nothing
+    more than a road bump for the Authority. Irrelevant
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

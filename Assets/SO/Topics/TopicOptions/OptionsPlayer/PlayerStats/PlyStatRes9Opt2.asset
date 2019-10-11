@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: 'Back in my days you could have a conversation with the police ''cause they
+    were human, says [npc] of [node]. '
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

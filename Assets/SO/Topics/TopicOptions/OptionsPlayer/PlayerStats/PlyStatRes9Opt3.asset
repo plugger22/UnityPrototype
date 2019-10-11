@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Where's the fun in a future full of robots and AI, asks [npc], [job] of [node]?
+    I'd really like there to be some fun
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

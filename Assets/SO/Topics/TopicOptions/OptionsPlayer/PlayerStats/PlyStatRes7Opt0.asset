@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: My [who] reckons we have been out evolved by the AI and their robot minions,
+    says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

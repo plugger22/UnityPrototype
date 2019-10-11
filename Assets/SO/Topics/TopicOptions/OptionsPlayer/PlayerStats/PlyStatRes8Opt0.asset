@@ -23,10 +23,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: My kids are taught be an AI at school. What hope is there for us, asks [npc],
+    [job] of [node]?
+  tooltipHeader: <color=#FFFFE0>Charity</color>
+  tooltipMain: <color=#98FB98>BLOGGER Motivation +3</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Charity begins at home</color>
   optionNumber: 0

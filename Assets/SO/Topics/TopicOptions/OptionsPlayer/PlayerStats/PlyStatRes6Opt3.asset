@@ -24,7 +24,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Is there a future for us humans here on Earth? Maybe, but I can't see it myself,
+    says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

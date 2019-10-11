@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b0e077df9a540e4fa5050ea3f4a240c, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Should the AI run the world? Can't do a worse job than our sleazy, grubby
+    politicians, if you ask me, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

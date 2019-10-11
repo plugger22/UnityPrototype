@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: You can't give up. You have to keep fighting. That's why I support the Resistance,
+    says [npc], [job] of [node]. They are carrying the flag
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

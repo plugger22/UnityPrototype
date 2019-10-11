@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5180cb32faecb064e87709922ef94364, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Religion? It's the Resistance that you've got to believe in, says [npc], [job]
+    of [node]. Besides, the AI's run most religions now
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

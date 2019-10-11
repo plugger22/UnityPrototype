@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: The robots answer to the AI and we poor sorry humans answer to them both,
+    says [npc], [job] of [node]. At least that's how it seems
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

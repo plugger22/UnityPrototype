@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c0f81d5b6aef0a94ebd9ac3b22ebefd5, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Whoever programmed the robots forgot the bit about them not being able to
+    take your job, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

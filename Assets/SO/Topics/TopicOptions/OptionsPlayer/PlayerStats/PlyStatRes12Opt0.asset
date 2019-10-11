@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] is convinced that the filthy rich let the AI gene splice their children
+    into super kids. It's a scary thought, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

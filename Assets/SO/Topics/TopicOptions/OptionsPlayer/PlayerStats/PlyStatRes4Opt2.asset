@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: When I was younger my parents told me that I was smarter than any robot around,
+    says [npc] of [node]. Not the case now
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: No Mood effect

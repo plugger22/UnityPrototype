@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Life is pretty simple these days, says [npc] of [node]. There's the filthy
+    rich, the AI, the robots. Plus us but we don't count
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

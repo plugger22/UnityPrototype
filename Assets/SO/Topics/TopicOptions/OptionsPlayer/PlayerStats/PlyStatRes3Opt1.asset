@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: I tell my children stories about the Resistance so that they can grow up in
+    a world where there is hope, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

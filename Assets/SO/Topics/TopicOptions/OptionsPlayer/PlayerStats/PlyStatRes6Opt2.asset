@@ -24,7 +24,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: My [who] wants to mate with a robot. I told them that they can already do
+    that, it just costs money, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Qualities</color>
   tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     Renown +3</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>OBSERVER

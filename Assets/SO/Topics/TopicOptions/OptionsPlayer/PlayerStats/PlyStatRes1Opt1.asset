@@ -23,7 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I think that the Resistance ought to down tools and surrender, says [npc],
+    [job] of [node]. They are all going to get caught anyway
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] thinks that the filthy rich steal children so that their kids can
+    learn how to hunt. Doesn't sound right to me, says [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Best</color>
   tooltipMain: <color=#98FB98>BLOGGER Renown +2</color>
   tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>

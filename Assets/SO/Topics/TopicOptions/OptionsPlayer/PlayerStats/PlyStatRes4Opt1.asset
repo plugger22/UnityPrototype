@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I remember back when the only time you saw a robot was in the movies, says
+    [npc] of [node]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: No Mood effect

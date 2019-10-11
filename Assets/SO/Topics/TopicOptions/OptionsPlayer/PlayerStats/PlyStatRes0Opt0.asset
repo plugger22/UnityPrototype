@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Is there any point to the Resistance, asks [npc], [job] of [node]? I'm too
+    busy with dealing with my [handicap] to worry about it
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

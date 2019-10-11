@@ -23,7 +23,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I thought that the robots were supposed to work for us and not the other way
+    around, asks [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

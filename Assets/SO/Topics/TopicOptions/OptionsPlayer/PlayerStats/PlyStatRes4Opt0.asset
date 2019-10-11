@@ -24,7 +24,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Back in my days Robots were toys that you gave to your kids, says [npc] of
+    [node]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: No Mood effect
