@@ -16,6 +16,7 @@ public class StatisticManager : MonoBehaviour
     [HideInInspector] public float ratioPlayerLieLowDays;
     [HideInInspector] public float ratioPlayerGiveGear;
     [HideInInspector] public float ratioPlayerManageActions;
+    [HideInInspector] public float ratioPlayerDoNothing;
     #endregion
 
     public void InitialiseEarly(GameState state)
@@ -181,6 +182,16 @@ public class StatisticManager : MonoBehaviour
             else { ratioPlayerManageActions = 0; }
         }
         else { ratioPlayerManageActions = GameManager.instance.testScript.testRatioPlayManageAct; }
+        //PlayerDoNothing
+        if (isAutoRun == false && GameManager.instance.testScript.testRatioDoNothing == 0)
+        {
+            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing);
+            dataBottom = turn;
+            if (dataTop != 0 && dataBottom != 0)
+            { ratioPlayerDoNothing = dataTop / dataBottom; }
+            else { ratioPlayerDoNothing = 0; }
+        }
+        else { ratioPlayerManageActions = GameManager.instance.testScript.testRatioDoNothing; }
     }
     #endregion
 
@@ -220,6 +231,7 @@ public class StatisticManager : MonoBehaviour
         builder.AppendFormat(" ratioPlayerLieLowDays: {0}{1}", ratioPlayerLieLowDays, "\n");
         builder.AppendFormat(" ratioPlayerGiveGear: {0}{1}", ratioPlayerGiveGear, "\n");
         builder.AppendFormat(" ratioPlayerManageActions: {0}{1}", ratioPlayerManageActions, "\n");
+        builder.AppendFormat(" ratioPlayerDoNothing: {0}{1}", ratioPlayerDoNothing, "\n");
 
         return builder.ToString();
     }

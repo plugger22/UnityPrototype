@@ -47,7 +47,8 @@ public class TestManager : MonoBehaviour
     [Range(0, 1)] public float testRatioPlayGiveGear = 0;
     [Tooltip("Any value other than zero will override calculated ratio each turn")]
     [Range(0, 1)] public float testRatioPlayManageAct = 0;
-
+    [Tooltip("Any value other than zero will override calculated ratio each turn")]
+    [Range(0, 1)] public float testRatioDoNothing = 0;
 
     Stopwatch timer;
 

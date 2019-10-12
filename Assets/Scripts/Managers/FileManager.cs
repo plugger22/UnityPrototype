@@ -1538,6 +1538,7 @@ public class FileManager : MonoBehaviour
         write.statisticsData.ratioPlayerLieLowDays = GameManager.instance.statScript.ratioPlayerLieLowDays;
         write.statisticsData.ratioPlayerGiveGear = GameManager.instance.statScript.ratioPlayerGiveGear;
         write.statisticsData.ratioPlayerManageActions = GameManager.instance.statScript.ratioPlayerManageActions;
+        write.statisticsData.ratioPlayerDoNothing = GameManager.instance.statScript.ratioPlayerDoNothing;
     }
     #endregion
 
@@ -3281,6 +3282,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.statScript.ratioPlayerLieLowDays = read.statisticsData.ratioPlayerLieLowDays;
         GameManager.instance.statScript.ratioPlayerGiveGear = read.statisticsData.ratioPlayerGiveGear;
         GameManager.instance.statScript.ratioPlayerManageActions = read.statisticsData.ratioPlayerManageActions;
+        GameManager.instance.statScript.ratioPlayerDoNothing = read.statisticsData.ratioPlayerDoNothing;
     }
     #endregion
 

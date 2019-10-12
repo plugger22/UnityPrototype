@@ -458,6 +458,7 @@ public class SaveStatisticsData
     public float ratioPlayerLieLowDays;
     public float ratioPlayerGiveGear;
     public float ratioPlayerManageActions;
+    public float ratioPlayerDoNothing;
 }
 #endregion
 

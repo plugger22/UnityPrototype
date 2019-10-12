@@ -51,6 +51,10 @@ public class EffectManager : MonoBehaviour
     [Range(0, 1)] public float ratioPlayManageActLow = 0.15f;
     [Tooltip("This number or More of ManageActions / Turns  to trigger criteria")]
     [Range(0, 1)] public float ratioPlayManageActHigh = 0.45f;
+    [Tooltip("This number or Less of Do Nothing actions / Turn to trigger criteria")]
+    [Range(0, 1)] public float ratioPlayDoNothingLow = 0.3f;
+    [Tooltip("This number or More of Do Nothing actions / Turns  to trigger criteria")]
+    [Range(0, 1)] public float ratioPlayDoNothingHigh = 0.7f;
 
     //hard coded renown amounts that correspond to effect Criteria equivalents (1/2/3/5)
     private int renownLow = 1;
@@ -1205,6 +1209,14 @@ public class EffectManager : MonoBehaviour
                                             case "RatioPlayManageActHigh":
                                                 if (GameManager.instance.statScript.ratioPlayerManageActions < ratioPlayManageActHigh)
                                                 { BuildString(result, "Insufficient Player Manage actions for High"); }
+                                                break;
+                                            case "RatioPlayDoNothingLow":
+                                                if (GameManager.instance.statScript.ratioPlayerDoNothing > ratioPlayDoNothingLow)
+                                                { BuildString(result, "To many Player Do Nothing actions for Low"); }
+                                                break;
+                                            case "RatioPlayDoNothingHigh":
+                                                if (GameManager.instance.statScript.ratioPlayerDoNothing < ratioPlayDoNothingHigh)
+                                                { BuildString(result, "Insufficient Player Do Nothing actions for High"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
