@@ -6961,7 +6961,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// reset all Level based stats to zero (ProcesMetaGame reset)
+    /// reset all Level based stats to zero (ProcesMetaGame reset). Also resets all ratios back to zero by recalculating them
     /// </summary>
     public void StatisticReset()
     {
@@ -6972,6 +6972,8 @@ public class DataManager : MonoBehaviour
             { dictOfStatisticsLevel[statType] = 0; }
             else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
         }
+        //reset all ratios by recalculating
+        GameManager.instance.statScript.UpdateRatios();
     }
 
 

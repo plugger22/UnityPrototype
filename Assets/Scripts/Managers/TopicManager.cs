@@ -4735,6 +4735,16 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("stat9", dictOfTags); }
                         break;
+                    case "stat10":
+                        //Statistics -> Player Do Nothing actions
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing), colourEnd); }
+                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing).ToString(); }
+                        }
+                        else { CountTextTag("stat10", dictOfTags); }
+                        break;
                     case "turn":
                         //Turn (number of days)
                         if (isValidate == false)
