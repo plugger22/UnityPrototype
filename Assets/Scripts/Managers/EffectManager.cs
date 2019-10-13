@@ -769,6 +769,40 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionStar (Null)"); errorFlag = true; }
                                                 break;
+                                            case "ConditionAddictedNo":
+                                                if (conditionAddicted != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        if (actor.CheckConditionPresent(conditionAddicted) == true)
+                                                        { BuildString(result, string.Format(" {0} already {1}ADDICTED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already {0}ADDICTED{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionAddicted (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionAddictedYes":
+                                                if (conditionAddicted != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        if (actor.CheckConditionPresent(conditionAddicted) == false)
+                                                        { BuildString(result, string.Format(" {0} isn't {1}ADDICTED{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    {
+                                                        //player
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == false)
+                                                        { BuildString(result, string.Format(" Player isn't a {0}ADDICTED{1}", colourNeutral, colourEnd)); }
+                                                    }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionAddicted (Null)"); errorFlag = true; }
+                                                break;
                                             case "ConditionBlackmailerNo":
                                                 //actor only  does NOT have the 'Blackmailer' condition
                                                 if (conditionBlackmailer != null)

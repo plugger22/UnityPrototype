@@ -89,6 +89,8 @@ public class ActorManager : MonoBehaviour
     [Range(0, 10)] public int traitorActiveChance = 5;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
     [Range(1, 10)] public int playerDoomTimerValue = 5;
+    [Tooltip("Chance of an Addicted Player/Actor needing to spend renown to buy supplies of Dust to feed their addiction, % per turn")]
+    [Range(0, 100)] public int playerAddictedChance = 20;
 
     [Header("Stress Leave")]
     [Tooltip("Renown cost for Authority player or actor to take stress leave")]
@@ -148,6 +150,7 @@ public class ActorManager : MonoBehaviour
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
     private Condition conditionImaged;
+    private Condition conditionAddicted;
     private TraitCategory actorCategory;
     private Action actionAnyTeam;
     private int secretBaseChance = -1;
@@ -284,6 +287,7 @@ public class ActorManager : MonoBehaviour
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+        conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
         maxNumOfGear = GameManager.instance.gearScript.maxNumOfGear;
@@ -301,6 +305,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+        Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
         Debug.Assert(maxNumOfGear > 0, "Invalid maxNumOfGear (zero)");
@@ -6169,7 +6174,7 @@ public class ActorManager : MonoBehaviour
                             rnd = Random.Range(0, 100);
                             if (rnd < breakdownChance)
                             {
-                                //player Breakdown
+                                // - - - BREAKDOWN
                                 GameManager.instance.playerScript.status = ActorStatus.Inactive;
                                 GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
                                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
@@ -6197,14 +6202,14 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (GameManager.instance.playerScript.numOfSuperStress < 1)
                                 {
-                                    //failed roll, no breakdown
+                                    // - - - NO Breakdown
                                     Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerStartlate: Stress check FAILED -> need < {0}, rolled {1}{2}",
                                         breakdownChance, rnd, "\n");
                                     GameManager.instance.messageScript.GeneralRandom("Player Stress check FAILED", "Stress Breakdown", breakdownChance, rnd, true);
                                 }
                                 else
                                 {
-                                    //player SuperStressed, FORCE a Breakdown
+                                    // - - - FORCE a Breakdown, player SuperStressed
                                     GameManager.instance.playerScript.status = ActorStatus.Inactive;
                                     GameManager.instance.playerScript.inactiveStatus = ActorInactive.Breakdown;
                                     GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
@@ -6235,6 +6240,19 @@ public class ActorManager : MonoBehaviour
                         }
                         else { GameManager.instance.playerScript.isBreakdown = false; }
                     }
+                    //
+                    // - - - ADDICTED condition - - - 
+                    //
+                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == true)
+                    {
+                        //chance of having to spend renown to buy supplies
+                        rnd = Random.Range(0, 100);
+                        if (rnd < playerAddictedChance)
+                        {
+                            //need to spend renown
+                        }
+                    }
+
                     //
                     // - - - IMAGED condition - - -
                     //

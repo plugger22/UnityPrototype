@@ -896,12 +896,16 @@ public class PlayerManager : MonoBehaviour
             {
                 if (listOfConditions.Count > 0)
                 {
-                    foreach (Condition checkCondition in listOfConditions)
+                    /*foreach (Condition checkCondition in listOfConditions)
                     {
                         if (checkCondition.tag.Equals(condition.tag, System.StringComparison.Ordinal) == true)
                         { return true; }
-                    }
+                    }*/
+
+                    if (listOfConditions.Exists(x => x.tag.Equals(condition.tag, System.StringComparison.Ordinal)) == true)
+                    { return true; }
                 }
+
             }
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
         }
