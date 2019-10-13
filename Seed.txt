@@ -3062,3 +3062,11 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	
+Dev seed 32011 -> Sunday, 13 October 2019 2:11 PM
+WARNING [Val] ValidateSO: MISMATCH on Condition, array 11, assets 12 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Condition[]) (at Assets/Scripts/Managers/ValidationManager.cs:1577)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1454)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:748)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:344)
+	City seed 5678 -> London, United Kingdom

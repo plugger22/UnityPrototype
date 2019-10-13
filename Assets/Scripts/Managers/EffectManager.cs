@@ -93,6 +93,7 @@ public class EffectManager : MonoBehaviour
     private Condition conditionBlackmailer;
     private Condition conditionStar;
     private Condition conditionTagged;
+    private Condition conditionAddicted;
 
 
     //colour palette for Modal Outcome
@@ -156,6 +157,7 @@ public class EffectManager : MonoBehaviour
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
+        conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -163,6 +165,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(conditionBlackmailer != null, "(Invalid conditionBlackmailer (Null)");
         Debug.Assert(conditionStar != null, "Invalid conditionStar (Null)");
         Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
+        Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
         teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
@@ -3559,6 +3562,7 @@ public class EffectManager : MonoBehaviour
             case "ConditionQuestionable":
             case "ConditionBlackmailer":
             case "ConditionStar":
+            case "ConditionAddicted":
                 if (node != null)
                 { effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
@@ -4386,6 +4390,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "ConditionStar":
                     condition = conditionStar;
+                    break;
+                case "ConditionAddicted":
+                    condition = conditionAddicted;
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", outcome.name);

@@ -1083,6 +1083,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0776f949a52c3404f81ee967cd7cb74f, type: 2}
   - {fileID: 11400000, guid: 3e923ac93d7be1b4aa9422e51be98ae6, type: 2}
   - {fileID: 11400000, guid: a56dea972e70b174fab9203730e6c5c1, type: 2}
+  - {fileID: 11400000, guid: c8c5c2f39401c0a4bbeb11e4f2478918, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1191,6 +1192,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b, type: 2}
   - {fileID: 11400000, guid: f788716890cc6cb45ad92d15e7207a05, type: 2}
   - {fileID: 11400000, guid: 95c716c635b9cc5438a8e737e366e310, type: 2}
+  - {fileID: 11400000, guid: 041062843896e6a43b6435a880449b7c, type: 2}
   arrayOfCures:
   - {fileID: 11400000, guid: c7c79d64d6dbdfe47b76bacfb19b799b, type: 2}
   - {fileID: 11400000, guid: 64401b82b36456c45bd73a06d7108400, type: 2}
@@ -1701,6 +1703,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
   - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
+  - {fileID: 11400000, guid: bce008bb794519f4889c52ae137ac7e5, type: 2}
+  - {fileID: 11400000, guid: 8644fd8b89d25ab4783988aac4d4e120, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
