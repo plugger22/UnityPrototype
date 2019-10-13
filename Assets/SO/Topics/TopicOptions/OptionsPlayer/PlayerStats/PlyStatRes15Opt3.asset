@@ -12,20 +12,24 @@ MonoBehaviour:
   m_Name: PlyStatRes15Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res15 option 3
-  tag: 
-  text: 
+  tag: Breaks
+  text: I take my regulation breaks, no more
   topic: {fileID: 11400000, guid: a52b35dcdc4774946a1b8920ea164fea, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  - {fileID: 11400000, guid: 5b0e077df9a540e4fa5050ea3f4a240c, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: I like that the AI's know all about me. They have my back, says [npc], [job]
+    of [node]. What's the Resistance going to do for me?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

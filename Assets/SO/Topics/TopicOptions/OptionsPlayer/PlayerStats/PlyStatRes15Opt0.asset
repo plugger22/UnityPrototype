@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Name: PlyStatRes15Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res15 option 0
-  tag: 
-  text: 
+  tag: Do More
+  text: You're right, I need to do more
   topic: {fileID: 11400000, guid: a52b35dcdc4774946a1b8920ea164fea, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f3ef2b941ab349a4a8f70614a3aea8ac, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: If the Resistance kills of the AI who is going to do our thinking for us,
+    asks [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

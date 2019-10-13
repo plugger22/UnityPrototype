@@ -191,7 +191,7 @@ public class StatisticManager : MonoBehaviour
             { ratioPlayerDoNothing = dataTop / dataBottom; }
             else { ratioPlayerDoNothing = 0; }
         }
-        else { ratioPlayerManageActions = GameManager.instance.testScript.testRatioDoNothing; }
+        else { ratioPlayerDoNothing = GameManager.instance.testScript.testRatioDoNothing; }
     }
     #endregion
 

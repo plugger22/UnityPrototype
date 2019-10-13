@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: PlyStatRes14Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res14 option 0
-  tag: 
-  text: 
+  tag: Workaholic
+  text: What can I say, I'm a workaholic?
   topic: {fileID: 11400000, guid: 257b0e16638d6244287b63b262e9ee76, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Aren't the robots the ones making all the food, asks [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

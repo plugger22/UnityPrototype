@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes14Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res14 option 1
-  tag: 
-  text: 
+  tag: Bored
+  text: If I didn't work I'd be bored
   topic: {fileID: 11400000, guid: 257b0e16638d6244287b63b262e9ee76, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 37edc5ac74530a04db1d3f9798698a57, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: How are we going to live if the Resistance gets rid of all the robots, asks
+    [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

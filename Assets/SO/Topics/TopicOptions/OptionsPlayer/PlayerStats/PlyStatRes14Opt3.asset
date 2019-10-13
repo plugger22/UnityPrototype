@@ -12,20 +12,22 @@ MonoBehaviour:
   m_Name: PlyStatRes14Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res14 option 3
-  tag: 
-  text: 
+  tag: Forced
+  text: I work because I have to
   topic: {fileID: 11400000, guid: 257b0e16638d6244287b63b262e9ee76, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1d33e57c153f79e4d978c2b2368f2645, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I don't know if the Resistance has thought things through, says [npc], [job]
+    of [node]. What will we do once all the robots are gone?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

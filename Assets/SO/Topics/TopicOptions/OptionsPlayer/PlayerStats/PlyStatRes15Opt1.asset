@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Name: PlyStatRes15Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Stats Res15 option 1
-  tag: 
-  text: 
+  tag: Master Plan
+  text: I'm working on the Master Plan
   topic: {fileID: 11400000, guid: a52b35dcdc4774946a1b8920ea164fea, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
-  news: 
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: ea4176f2c41413e4d97b15905e6e0a68, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: e1ffb3f430d5ecc40a98b3e882c877a8, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: The Resistance tells us that AI is evil but aren't they the ones that give
+    me serialFlix, asks [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
