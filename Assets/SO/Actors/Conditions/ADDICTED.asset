@@ -14,9 +14,9 @@ MonoBehaviour:
   descriptor: Player is addicted to an off-Planet drug
   tag: ADDICTED
   resignTag: 
-  topText: has developed an addiction for Moon Dust
+  topText: has become addicted to an illegal drug
   bottomTextActor: 
-  bottomTextPlayer: Keeping up a supply of Dust will cost Renown
+  bottomTextPlayer: Keeping up a supply of the drug will cost Renown
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f,
     type: 2}

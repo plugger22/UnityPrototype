@@ -6271,6 +6271,8 @@ public class ActorManager : MonoBehaviour
                         //random message
                         text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check FAILED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
                         GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check FAILED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
+                        //stats
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysAddicted);
                     }
 
                     //
@@ -6354,7 +6356,7 @@ public class ActorManager : MonoBehaviour
                         case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextPlayer, colourEnd); break;
                         default: detailsBottom = "Unknown"; break;
                     }
-                    GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID);
+                    GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.instance.playerScript.sprite, GameManager.instance.playerScript.actorID, null, condition);
                 }
                 else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName, GameManager.instance.playerScript.actorID); }
             }

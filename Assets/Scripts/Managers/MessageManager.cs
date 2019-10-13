@@ -955,34 +955,7 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 0;
-            if (condition != null)
-            {
-                //tooltip
-                switch (condition.tag)
-                {
-                    case "QUESTIONABLE":
-                        data.help = 1;
-                        data.tag0 = "questionable_0";
-                        data.tag1 = "questionable_1";
-                        data.tag2 = "questionable_2";
-                        data.tag3 = "questionable_3";
-                        break;
-                    case "STRESSED":
-                        data.help = 1;
-                        data.tag0 = "stress_0";
-                        data.tag1 = "stress_1";
-                        data.tag2 = "stress_2";
-                        data.tag3 = "stress_3";
-                        break;
-                    case "ADDICTED":
-                        data.help = 1;
-                        data.tag0 = "addict_0";
-                        data.tag1 = "addict_1";
-                        data.tag2 = "addict_2";
-                        data.tag3 = "addict_3";
-                        break;
-                }
-            }
+            SetConditionHelp(condition, data);
             //data depends on whether an actor or player
             if (actorID == playerActorID)
             {
@@ -3657,7 +3630,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null)
+    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null, Condition condition = null)
     {
         Debug.Assert(sprite != null, "Invalid spirte (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -3684,7 +3657,9 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             if (node != null)
             { data.nodeID = node.nodeID; }
-            data.help = 1;
+            data.help = 0;
+            if (condition != null)
+            { SetConditionHelp(condition, data); }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -4053,6 +4028,52 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+
+    //
+    // - - - Utilities
+    //
+
+    /// <summary>
+    /// Sets help for various conditions for ActorCondition and ActiveEffect
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <param name="data"></param>
+    private void SetConditionHelp(Condition condition, ItemData data)
+    {
+        if (data != null)
+        {
+            if (condition != null)
+            {
+                //tooltip
+                switch (condition.tag)
+                {
+                    case "QUESTIONABLE":
+                        data.help = 1;
+                        data.tag0 = "questionable_0";
+                        data.tag1 = "questionable_1";
+                        data.tag2 = "questionable_2";
+                        data.tag3 = "questionable_3";
+                        break;
+                    case "STRESSED":
+                        data.help = 1;
+                        data.tag0 = "stress_0";
+                        data.tag1 = "stress_1";
+                        data.tag2 = "stress_2";
+                        data.tag3 = "stress_3";
+                        break;
+                    case "ADDICTED":
+                        data.help = 1;
+                        data.tag0 = "addict_0";
+                        data.tag1 = "addict_1";
+                        data.tag2 = "addict_2";
+                        data.tag3 = "addict_3";
+                        break;
+                }
+            }
+            else { Debug.LogWarning("Invalid condition (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid ItemData (Null)"); }
+    }
 
     //new methods above here
 }
