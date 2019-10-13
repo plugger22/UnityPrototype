@@ -3544,7 +3544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 92301aebd41bda442a4e088837006bcb, type: 2}
+  debugTopicPool: {fileID: 0}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -3557,7 +3557,7 @@ MonoBehaviour:
   testRatioPlayLieLow: 0
   testRatioPlayGiveGear: 0
   testRatioPlayManageAct: 0
-  testRatioDoNothing: 0.863
+  testRatioDoNothing: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3644,7 +3644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e7ea69722671640b489cd99a41db47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tagAIName: GOLIATH
+  tagGlobalAIName: GOLIATH
+  tagGlobalDrug: Moon Dust
   metaBottom: {fileID: 0}
   metaMiddle: {fileID: 0}
   metaTop: {fileID: 0}
@@ -3765,6 +3766,8 @@ MonoBehaviour:
   actorResignChance: 5
   traitorActiveChance: 5
   playerDoomTimerValue: 5
+  playerAddictedChance: 20
+  playerAddictedRenownCost: 1
   stressLeaveRenownCostAuthority: 2
   stressLeaveRenownCostResistance: 2
   stressLeaveHQApproval: 1

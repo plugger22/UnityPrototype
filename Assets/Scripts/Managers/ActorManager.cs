@@ -91,6 +91,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int playerDoomTimerValue = 5;
     [Tooltip("Chance of an Addicted Player/Actor needing to spend renown to buy supplies of Dust to feed their addiction, % per turn")]
     [Range(0, 100)] public int playerAddictedChance = 20;
+    [Tooltip("Amount of Renown player needs to spend to feed their addiction every time chance comes up true. If not enough renown available then -1 HQ support")]
+    [Range(1, 10)] public int playerAddictedRenownCost = 1;
 
     [Header("Stress Leave")]
     [Tooltip("Renown cost for Authority player or actor to take stress leave")]
@@ -6249,8 +6251,26 @@ public class ActorManager : MonoBehaviour
                         rnd = Random.Range(0, 100);
                         if (rnd < playerAddictedChance)
                         {
+                            //random message
+                            text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check SUCCEEDED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
+                            GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check SUCCEEDED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
                             //need to spend renown
+                            int renown = GameManager.instance.playerScript.Renown;
+                            if (renown < playerAddictedRenownCost)
+                            {
+                                //insufficient renown, HQ support -1
+                                GameManager.instance.factionScript.ChangeFactionApproval(-1, playerSide, "Player Addiction");
+                            }
+                            else
+                            {
+                                //enough renown, lose some to pay for addiction
+                                renown -= playerAddictedRenownCost;
+                                GameManager.instance.playerScript.Renown = renown;
+                            }
                         }
+                        //random message
+                        text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check FAILED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
+                        GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check FAILED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
                     }
 
                     //

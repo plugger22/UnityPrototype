@@ -10,7 +10,9 @@ public class GlobalManager : MonoBehaviour
 {
     [Header("Global strings")]
     [Tooltip("Name of overarching AI Protagonist that drives the Authority side. Player's main enemy")]
-    public string tagAIName = "GOLIATH";
+    public string tagGlobalAIName = "GOLIATH";
+    [Tooltip("Name of drug that the ADDICTED Condition refers to, eg. 'Player addicted to ...'")]
+    public string tagGlobalDrug = "Moon Dust";
 
     //used for quick reference -> Meta Levels where metaBottom is the lowest level and metaTop is the highest
     [HideInInspector] public GlobalMeta metaBottom;
@@ -41,8 +43,13 @@ public class GlobalManager : MonoBehaviour
     [HideInInspector] public TraitCategory categoryActor;
     [HideInInspector] public TraitCategory categoryMayor;
 
+    #region Initialise
     public void Initialise(GameState state)
     {
+        //field checks
+        Debug.Assert(string.IsNullOrEmpty(tagGlobalAIName) == false, "Invalid tagGlobalAIName (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(tagGlobalDrug) == false, "Invalid tagGlobalDrug (Null or Empty)");
+        //main
         int num;
         GlobalMeta[] arrayOfGlobalMeta = GameManager.instance.loadScript.arrayOfGlobalMeta;
         num = arrayOfGlobalMeta.Length;
@@ -267,7 +274,7 @@ public class GlobalManager : MonoBehaviour
         Debug.Assert(categoryActor != null, "Invalid categoryActor");
         Debug.Assert(categoryMayor != null, "Invalid categoryMayor");
     }
-
+    #endregion
 
     //new methods above here
 }

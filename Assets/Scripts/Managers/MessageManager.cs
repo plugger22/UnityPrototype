@@ -38,7 +38,7 @@ public class MessageManager : MonoBehaviour
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalBoth = GameManager.instance.globalScript.sideBoth;
-        tagAIName = GameManager.instance.globalScript.tagAIName;
+        tagAIName = GameManager.instance.globalScript.tagGlobalAIName;
 
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -973,6 +973,13 @@ public class MessageManager : MonoBehaviour
                         data.tag1 = "stress_1";
                         data.tag2 = "stress_2";
                         data.tag3 = "stress_3";
+                        break;
+                    case "ADDICTED":
+                        data.help = 1;
+                        data.tag0 = "addict_0";
+                        data.tag1 = "addict_1";
+                        data.tag2 = "addict_2";
+                        data.tag3 = "addict_3";
                         break;
                 }
             }

@@ -157,7 +157,7 @@ public class AIDisplayUI : MonoBehaviour
         cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
         proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
         //top text
-        tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
+        tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagGlobalAIName, "\n");
         //active
         isActive = true;
         //set all sub compoponents

@@ -2901,7 +2901,7 @@ public class AIManager : MonoBehaviour
                             break;
                     }
                     //other data
-                    data.aiDetails = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagAIName, "\n");
+                    data.aiDetails = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagGlobalAIName, "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }

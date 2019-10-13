@@ -51,7 +51,7 @@ public class HelpManager : MonoBehaviour
         }
     }
 
-
+    #region SetColours
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -61,7 +61,9 @@ public class HelpManager : MonoBehaviour
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region GetHelpData
     /// <summary>
     /// Get help data (generic). Returns listOfHelp, empty list if a problem. Max four topics, Min ONE topic required
     /// </summary>
@@ -107,6 +109,7 @@ public class HelpManager : MonoBehaviour
         }
         return listOfHelp;
     }
+    #endregion
 
 
     /// <summary>
@@ -151,6 +154,15 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
         builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd, 
             colourAlert, colourEnd, approval, approval * 10);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Addiction check
+        data = new HelpData();
+        data.tag = "rand_2";
+        data.header = string.Format("{0}Addiction Check{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert, 
+            GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
@@ -536,6 +548,39 @@ public class HelpManager : MonoBehaviour
         data.header = "Removing Stress";
         data.text = string.Format("{0}Lying Low and Stress Leave{1} both remove the Stressed Condition. Certain {2}stimulants{3} (Persuasion Gear) can also do so (Personal Use)",
             colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Addicted Condition
+        //
+        // - - - Addicted Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "addict_0";
+        data.header = "Addicted Condition";
+        data.text = string.Format("You have become addicted to the drug {0}{1}{2} and at periodic intervals will need to {3}feed your addiction{4}",
+            colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns
+        data = new HelpData();
+        data.tag = "addict_1";
+        data.header = "Feeding your Habit";
+        data.text = string.Format("If you fail your Addiction Check you will need to spend {0}{1} Renown{2} to obtain enough {3}{4}{5} to feed your Addiction. ",
+            colourAlert, GameManager.instance.actorScript.playerAddictedRenownCost, colourEnd, colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+        listOfHelp.Add(data);
+        //Chance of Breakdowns
+        data = new HelpData();
+        data.tag = "addict_2";
+        data.header = "Insufficient Renown";
+        data.text = string.Format("If you don't have enough Renown on hand you are assumed to suffer {0}withdrawal symptoms{1}. HQ will notice and express their disapproval ({2}Approval -1{3})",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Addiction
+        data = new HelpData();
+        data.tag = "addict_3";
+        data.header = "Overcoming your Addiction";
+        data.text = string.Format("You'll need to find somewhere, or somebody, that offers a {0}cure{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
