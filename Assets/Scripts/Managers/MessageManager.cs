@@ -783,6 +783,51 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Addicted player has to feed their need with either renown or HQ Approval
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="renownCost"></param>
+    /// <param name="hqApprovalCost"></param>
+    /// <returns></returns>
+    public Message PlayerAddicted(string text, int renownCost, int hqApprovalCost, int currentImmuneDays)
+    {
+        Debug.Assert(renownCost > 0)
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Addicted;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = renownCost;
+            message.data1 = hqApprovalCost;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "You FEED your drug ADDICTION";
+            data.topText = "Feed the Need";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
+            data.priority = ItemPriority.Medium;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "addict_0";
+            data.tag1 = "addict_1";
+            data.tag2 = "addict_2";
+            data.tag3 = "addict_3";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //

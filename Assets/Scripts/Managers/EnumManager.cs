@@ -219,6 +219,7 @@
         Plyr_Betrayed,
         Plyr_Mood,
         Plyr_Immune,
+        Plyr_Addicted,
         //Team
         Team_Add,
         Team_Deploy,

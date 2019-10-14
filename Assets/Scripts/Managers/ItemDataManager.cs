@@ -333,6 +333,25 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player is addicted and has had to feed their need
+    /// </summary>
+    /// <param name="renownCost"></param>
+    /// <param name="approvalCost"></param>
+    /// <param name="currentDays"></param>
+    /// <returns></returns>
+    public string GetPlayerAddictedDetails(int renownCost, int approvalCost, int currentDays)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3}continues unabated</b>{4}{5}", colourNeutral, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
+        if (renownCost > 0)
+        { builder.AppendFormat("<b>{0}You spend {1} Renown{2}{3}to buy more drugs</b>{4}{5}", colourBad, renownCost, colourEnd, "\n", "\n", "\n"); }
+        else { builder.AppendFormat("<b>{0}You did not have enough Renown ({1}){2}{3}to buy more drugs{4}{5}HQ Approval -{6}</b>{7}{8}", colourAlert, renownCost, colourEnd, "\n", "\n", colourBad, 
+            colourEnd, "\n", "\n"); }
+        builder.AppendFormat("<b>{0}You have Immunity from Stress{1}{2}for {3}{4} day{5}{6}", colourGood, colourEnd, "\n", colourNeutral, currentDays, currentDays != 1 ? "s" : "", colourEnd);
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -
