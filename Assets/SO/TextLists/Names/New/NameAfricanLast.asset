@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: African last names
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Sirleaf
   - Goodluck
@@ -23,4 +25,5 @@ MonoBehaviour:
   - Dowah
   - Waqa
   - Chomba
-  isTestForDuplicates: 1
+  - Wine
+  index: 2

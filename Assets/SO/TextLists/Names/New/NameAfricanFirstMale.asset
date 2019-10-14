@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Male first names, African
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Innocent
   - Idriss
@@ -27,4 +29,5 @@ MonoBehaviour:
   - Isaac
   - Baron
   - Stephen
-  isTestForDuplicates: 1
+  - Bobi
+  index: 5
