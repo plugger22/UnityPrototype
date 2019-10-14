@@ -6254,6 +6254,8 @@ public class ActorManager : MonoBehaviour
                         //immunity period must be zero, eg. effect of previous dose has worn off
                         if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
                         {
+                            int renownCost = 0;
+                            int approvalCost = 0;
                             //chance of having to spend renown to buy supplies
                             rnd = Random.Range(0, 100);
                             if (rnd < playerAddictedChance)
@@ -6267,17 +6269,31 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //insufficient renown, HQ support -1
                                     GameManager.instance.factionScript.ChangeFactionApproval(-1, playerSide, "Player Addiction");
+                                    //feed the need text
+                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED, Insufficient Renown, -1 HQ Approval{0}", "\n");
+                                    approvalCost = 1;
                                 }
                                 else
                                 {
                                     //enough renown, lose some to pay for addiction
                                     renown -= playerAddictedRenownCost;
                                     GameManager.instance.playerScript.Renown = renown;
+                                    //feed the need text
+                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED and pays {0} Renown (now {1}) for drugs{2}", playerAddictedRenownCost,
+                                        renown, "\n");
+                                    renownCost = playerAddictedRenownCost;
                                 }
+                                //take the drugs
+                                GameManager.instance.playerScript.TakeDrugs();
+                                //feed the need message
+                                GameManager.instance.messageScript.PlayerAddicted(text, renownCost, approvalCost, GameManager.instance.playerScript.stressImmunityCurrent);
                             }
-                            //random message
-                            text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check FAILED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
-                            GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check FAILED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
+                            else
+                            {
+                                //random message
+                                text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check FAILED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
+                                GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check FAILED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
+                            }
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysAddicted);
                         }

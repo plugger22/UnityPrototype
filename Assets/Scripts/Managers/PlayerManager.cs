@@ -819,6 +819,7 @@ public class PlayerManager : MonoBehaviour
     public void AddCondition(Condition condition, GlobalSide side, string reason)
     {
         bool isResistance = true;
+        bool isProceed = true;
         if (side.level == 1) { isResistance = false; }
         if (condition != null)
         {
@@ -834,43 +835,50 @@ public class PlayerManager : MonoBehaviour
                 //check that condition isn't already present
                 if (CheckConditionPresent(condition, side) == false)
                 {
-                    listOfConditions.Add(condition);
-                    //special conditions
-                    switch (condition.tag)
+                    //special case -> Stressed, player may have immunity
+                    if (condition.tag.Equals("STRESSED", StringComparison.Ordinal) == true)
                     {
-                        case "DOOMED":
-                            GameManager.instance.actorScript.SetDoomTimer();
-                            GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
-                            break;
-                        case "TAGGED":
-                            GameManager.instance.nodeScript.AddCureNode(conditionTagged.cure);
-                            break;
-                        case "WOUNDED":
-                            GameManager.instance.nodeScript.AddCureNode(conditionWounded.cure);
-                            break;
-                        case "IMAGED":
-                            GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
-                            break;
-                        case "ADDICTED":
-                            isAddicted = true;
-                            //DEBUG
-                            TakeDrugs();
-                            break;
-                        case "STRESSED":
-                            mood = 0;
-                            isStressed = true;
-                            //update UI
-                            GameManager.instance.actorPanelScript.SetPlayerMoodUI(0, isStressed);
-                            //stats
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
-                            break;
+                        if (stressImmunityCurrent > 0)
+                        { isProceed = false; }
                     }
-                    Debug.LogFormat("[Cnd] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
-                    if (GameManager.instance.sideScript.PlayerSide.level == side.level)
+                    if (isProceed == true)
                     {
-                        //message
-                        string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.tag);
-                        GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
+                        listOfConditions.Add(condition);
+                        //special conditions
+                        switch (condition.tag)
+                        {
+                            case "DOOMED":
+                                GameManager.instance.actorScript.SetDoomTimer();
+                                GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
+                                break;
+                            case "TAGGED":
+                                GameManager.instance.nodeScript.AddCureNode(conditionTagged.cure);
+                                break;
+                            case "WOUNDED":
+                                GameManager.instance.nodeScript.AddCureNode(conditionWounded.cure);
+                                break;
+                            case "IMAGED":
+                                GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
+                                break;
+                            case "ADDICTED":
+                                isAddicted = true;
+                                break;
+                            case "STRESSED":
+                                mood = 0;
+                                isStressed = true;
+                                //update UI
+                                GameManager.instance.actorPanelScript.SetPlayerMoodUI(0, isStressed);
+                                //stats
+                                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
+                                break;
+                        }
+                        Debug.LogFormat("[Cnd] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
+                        if (GameManager.instance.sideScript.PlayerSide.level == side.level)
+                        {
+                            //message
+                            string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.tag);
+                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
+                        }
                     }
                 }
                 else
@@ -1012,6 +1020,8 @@ public class PlayerManager : MonoBehaviour
         stressImmunityStart--;
         //minCap
         stressImmunityStart = Mathf.Max(GameManager.instance.actorScript.playerAddictedImmuneMin, stressImmunityStart);
+        //remove stress if present
+        RemoveCondition(conditionStressed, GameManager.instance.sideScript.PlayerSide, "Took Drugs");
     }
 
     /// <summary>

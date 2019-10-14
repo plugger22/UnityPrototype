@@ -346,8 +346,8 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3}continues unabated</b>{4}{5}", colourNeutral, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
         if (renownCost > 0)
         { builder.AppendFormat("<b>{0}You spend {1} Renown{2}{3}to buy more drugs</b>{4}{5}", colourBad, renownCost, colourEnd, "\n", "\n", "\n"); }
-        else { builder.AppendFormat("<b>{0}You did not have enough Renown ({1}){2}{3}to buy more drugs{4}{5}HQ Approval -{6}</b>{7}{8}", colourAlert, renownCost, colourEnd, "\n", "\n", colourBad, 
-            colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
+            GameManager.instance.actorScript.playerAddictedRenownCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n"); }
         builder.AppendFormat("<b>{0}You have Immunity from Stress{1}{2}for {3}{4} day{5}{6}", colourGood, colourEnd, "\n", colourNeutral, currentDays, currentDays != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }

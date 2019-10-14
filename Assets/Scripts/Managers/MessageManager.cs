@@ -792,7 +792,8 @@ public class MessageManager : MonoBehaviour
     /// <returns></returns>
     public Message PlayerAddicted(string text, int renownCost, int hqApprovalCost, int currentImmuneDays)
     {
-        Debug.Assert(renownCost > 0)
+        Debug.Assert(renownCost > 0 || hqApprovalCost > 0, "Invalid renownCost and hqApprovalCost (one must be > Zero)");
+        Debug.AssertFormat(currentImmuneDays > -1, "Invalid currentImmuneDays {0} (should be Zero or above)", currentImmuneDays);
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
