@@ -166,10 +166,13 @@ public class SavePlayerData
     public ActorSex sex;
     public bool isBreakdown;
     public bool isEndOfTurnGearCheck;
-    public bool isLieLowFirstturn;   
+    public bool isLieLowFirstturn;
+    public bool isAddicted;
     public bool isStressLeave;
     public bool isStressed;
     public int numOfSuperStress;
+    public int stressImmunityCurrent;
+    public int stressImmunityStart;
     public string profile;
     public string profileDescriptor;
     public string profileExplanation;

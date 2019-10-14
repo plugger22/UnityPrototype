@@ -655,6 +655,134 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player is immune to stress due to taking a dose of illegal drugs (shown when player takes drug). May, or may not, be addicted
+    /// </summary>
+    /// <param name="details"></param>
+    /// <param name="immunePeriodCurrent"></param>
+    /// <param name="immunePeriodStart"></param>
+    /// <returns></returns>
+    public Message PlayerImmuneStart(string text, int immunePeriodCurrent, int immunePeriodStart, bool isAddicted)
+    {
+        Debug.AssertFormat(immunePeriodCurrent == immunePeriodStart, "Mismatch between immunePeriodCurrent {0} and immunePeriodStart {1} (should be equal)", immunePeriodCurrent, immunePeriodStart);
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Immune;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = immunePeriodCurrent;
+            message.data1 = immunePeriodStart;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Taking drugs has given you an IMMUNITY to Stress";
+            data.topText = "Stress Immunity";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneStartDetails(immunePeriodCurrent, isAddicted);
+            data.priority = ItemPriority.Medium;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "immune_0";
+            data.tag1 = "immune_1";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    /// <summary>
+    /// Player did NOT become stressed due to taking a dose of illegal drugs. May, or may not, be addicted
+    /// </summary>
+    /// <param name="details"></param>
+    /// <param name="immunePeriodCurrent"></param>
+    /// <param name="immunePeriodStart"></param>
+    /// <returns></returns>
+    public Message PlayerImmuneStress(string text, int immunePeriodCurrent, int immunePeriodStart, bool isAddicted)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Immune;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = immunePeriodCurrent;
+            message.data1 = immunePeriodStart;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Drugs prevented you from becoming STRESSED";
+            data.topText = "Stress Resistance";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneStressDetails(immunePeriodCurrent, isAddicted);
+            data.priority = ItemPriority.Medium;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "immune_0";
+            data.tag1 = "immune_1";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Effects tab for immunity from stress period for Player. May, or may not, be addicted
+    /// </summary>
+    /// <param name="details"></param>
+    /// <param name="immunePeriodCurrent"></param>
+    /// <param name="immunePeriodStart"></param>
+    /// <returns></returns>
+    public Message PlayerImmuneEffect(string text, int immunePeriodCurrent, int immunePeriodStart, bool isAddicted)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Immune;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = immunePeriodCurrent;
+            message.data1 = immunePeriodStart;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "You are IMMUNE to STRESS";
+            data.topText = "Stress Immunity";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneEffectDetails(immunePeriodCurrent, isAddicted);
+            data.priority = ItemPriority.Low;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.Effects;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "immune_0";
+            data.tag1 = "immune_1";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //

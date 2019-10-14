@@ -284,6 +284,55 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Player immune to stress (start of immune period) due to taking illegal drugs. May or may not be addicted
+    /// </summary>
+    /// <param name="currentPeriod"></param>
+    /// <param name="isAddicted"></param>
+    /// <returns></returns>
+    public string GetPlayerImmuneStartDetails(int currentPeriod, bool isAddicted)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>Taking a dose of {0}makes you {1}Immune to Stress{2}</b>{3}{4}", "\n", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
+        if (isAddicted == true)
+        { builder.AppendFormat("{0}{1}<b>{2}You are ADDICTED{3}</b>", "\n", "\n", colourBad, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Player did NOT get stressed due to taking illegal drugs. May or may not be addicted
+    /// </summary>
+    /// <param name="currentPeriod"></param>
+    /// <param name="isAddicted"></param>
+    /// <returns></returns>
+    public string GetPlayerImmuneStressDetails(int currentPeriod, bool isAddicted)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0}You did NOT get STRESSED{1}{2}due to taking {3}{4}{5}</b>{6}{7}", colourGood, colourEnd, "\n", colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Your Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
+        if (isAddicted == true)
+        { builder.AppendFormat("{0}{1}{2}You are ADDICTED{3}", "\n", "\n", colourBad, colourEnd); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Player immune to stress (start of immune period) due to taking illegal drugs. May or may not be addicted
+    /// </summary>
+    /// <param name="currentPeriod"></param>
+    /// <param name="isAddicted"></param>
+    /// <returns></returns>
+    public string GetPlayerImmuneEffectDetails(int currentPeriod, bool isAddicted)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>Taking a dose of {0}{1}{2}{3}makes you {4}Immune to Stress{5}</b>{6}{7}", colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", 
+            colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
+        if (isAddicted == true)
+        { builder.AppendFormat("{0}{1}<b>{2}You are ADDICTED{3}</b>", "\n", "\n", colourBad, colourEnd); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Actor - - -
@@ -1825,9 +1874,9 @@ public class ItemDataManager : MonoBehaviour
         }
         //details
         if (string.IsNullOrEmpty(detailsTop) == false)
-        { builder.Append(detailsTop); }
+        { builder.AppendFormat("<b>{0}</b>", detailsTop); }
         if (string.IsNullOrEmpty(detailsBottom) == false)
-        { builder.AppendFormat("{0}{1}{2}", "\n", "\n", detailsBottom); }
+        { builder.AppendFormat("{0}{1}<b>{2}</b>", "\n", "\n", detailsBottom); }
         return builder.ToString();
     }
 

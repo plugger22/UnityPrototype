@@ -34,7 +34,9 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
     [HideInInspector] public bool isStressed;                                       //true if player stressed
     [HideInInspector] public int numOfSuperStress;                                  //increments whenever the player gets stressed when already stressed
-
+    [HideInInspector] public bool isAddicted;                                       //true if player addicted
+    [HideInInspector] public int stressImmunityStart;                               //starting value of stressImmunityCurrent (decreases each time drug used)
+    [HideInInspector] public int stressImmunityCurrent;                             //dynamic number of turns player is immune from stress (due to drug)
     //collections
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
@@ -213,6 +215,8 @@ public class PlayerManager : MonoBehaviour
         personality.SetFactors(arrayOfFactors);
         //sex -> DEBUG (placeholder)
         sex = ActorSex.Male;
+        //set initial default value for drug stress immunity
+        stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
     }
     #endregion
 
@@ -847,6 +851,11 @@ public class PlayerManager : MonoBehaviour
                         case "IMAGED":
                             GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
                             break;
+                        case "ADDICTED":
+                            isAddicted = true;
+                            //DEBUG
+                            TakeDrugs();
+                            break;
                         case "STRESSED":
                             mood = 0;
                             isStressed = true;
@@ -972,6 +981,12 @@ public class PlayerManager : MonoBehaviour
                                     //change UI mood sprite
                                     GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
                                     break;
+                                case "ADDICTED":
+                                    //reset drug immunity period back to default value
+                                    stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
+                                    stressImmunityCurrent = 0;
+                                    isAddicted = false;
+                                    break;
                             }
                             return true;
                         }
@@ -982,6 +997,21 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid condition (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// Player takes illegal drugs (GlobalManager.cs -> tagGlobalDrug) and gains immunity from Stress for a number of turns/days
+    /// </summary>
+    public void TakeDrugs()
+    {
+        stressImmunityCurrent = stressImmunityStart;
+        //message
+        string text = string.Format("[Msg] Player takes drugs, current immunity {0} days, start {1} days, addicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
+        GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+        //decrease immunity period after every addiction episode
+        stressImmunityStart--;
+        //minCap
+        stressImmunityStart = Mathf.Max(GameManager.instance.actorScript.playerAddictedImmuneMin, stressImmunityStart);
     }
 
     /// <summary>
@@ -1395,6 +1425,7 @@ public class PlayerManager : MonoBehaviour
     /// <param name="factor"></param>
     public void ChangeMood(int change, string reason, string factor)
     {
+        string text = "Unknown";
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //check player isn't currently stressed
         if (isStressed == false)
@@ -1415,9 +1446,15 @@ public class PlayerManager : MonoBehaviour
             mood += change;
             if (mood < 0)
             {
-                //player gains stressed condition
-                AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
-                isStressed = true;
+                //player immune to stress
+                if (stressImmunityCurrent > 0)
+                {
+                    //player gains stressed condition
+                    AddCondition(conditionStressed, playerSide, "Mood drops below Zero");
+                    isStressed = true;
+                }
+                text = string.Format("[Msg] Player did NOT become STRESSED due to drugs, currentImmunity {0}, startImmunity {1}, isAddicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
+                GameManager.instance.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
             //change sprite
@@ -1431,8 +1468,10 @@ public class PlayerManager : MonoBehaviour
                 factor = factor,
                 isStressed = isStressed
             };
-            //colour Code descriptor
-            string text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : "");
+            //colour coded descriptor
+            if (isAddicted == true)
+            { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", IMMUNE" : ""); }
+            else { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : ""); }
             if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
             else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText); } }
             else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralText); }
@@ -1609,6 +1648,8 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
         builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
         builder.AppendFormat(" numOfSuperStressed {0}{1}", numOfSuperStress, "\n");
+        builder.AppendFormat(" stressImmunityStart {0}{1}", stressImmunityStart, "\n");
+        builder.AppendFormat(" stressImmunityCurrent {0}{1}", stressImmunityCurrent, "\n");
         builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
         builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");

@@ -3767,7 +3767,9 @@ MonoBehaviour:
   traitorActiveChance: 5
   playerDoomTimerValue: 5
   playerAddictedChance: 20
-  playerAddictedRenownCost: 1
+  playerAddictedRenownCost: 2
+  playerAddictedImmuneStart: 6
+  playerAddictedImmuneMin: 1
   stressLeaveRenownCostAuthority: 2
   stressLeaveRenownCostResistance: 2
   stressLeaveHQApproval: 1
@@ -3856,6 +3858,9 @@ MonoBehaviour:
   isStressLeave: 0
   isStressed: 0
   numOfSuperStress: 0
+  isAddicted: 0
+  stressImmunityStart: 0
+  stressImmunityCurrent: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

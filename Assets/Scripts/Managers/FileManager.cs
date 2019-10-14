@@ -272,9 +272,12 @@ public class FileManager : MonoBehaviour
         write.playerData.isBreakdown = GameManager.instance.playerScript.isBreakdown;
         write.playerData.isEndOfTurnGearCheck = GameManager.instance.playerScript.isEndOfTurnGearCheck;
         write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
+        write.playerData.isAddicted = GameManager.instance.playerScript.isAddicted;
         write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
         write.playerData.isStressed = GameManager.instance.playerScript.isStressed;
         write.playerData.numOfSuperStress = GameManager.instance.playerScript.numOfSuperStress;
+        write.playerData.stressImmunityCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
+        write.playerData.stressImmunityStart = GameManager.instance.playerScript.stressImmunityStart;       
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
         {
@@ -1612,9 +1615,12 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.isBreakdown = read.playerData.isBreakdown;
         GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
         GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
+        GameManager.instance.playerScript.isAddicted = read.playerData.isAddicted;
         GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
         GameManager.instance.playerScript.isStressed = read.playerData.isStressed;
         GameManager.instance.playerScript.numOfSuperStress = read.playerData.numOfSuperStress;
+        GameManager.instance.playerScript.stressImmunityCurrent = read.playerData.stressImmunityCurrent;
+        GameManager.instance.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if ( personality != null)
         {

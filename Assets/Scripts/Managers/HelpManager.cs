@@ -584,6 +584,27 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Immunity to Stress
+        //
+        // - - - Immune to Stress
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "immune_0";
+        data.header = "Stress Immunity";
+        data.text = string.Format("You've taken a dose of {0}{1}{2} and have developed an immunity from stress for a set number of days",
+            colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+        listOfHelp.Add(data);
+        //Decreasing effect
+        data = new HelpData();
+        data.tag = "immune_1";
+        data.header = "Diminishing Returns";
+        int immuneMin = GameManager.instance.actorScript.playerAddictedImmuneMin;
+        data.text = string.Format("Every time you take a dose of {0}{1}{2} your period of immunity {3}decreases by one day{4} down to a minimum of {5}{6}{7} day{8}", colourAlert,
+            GameManager.instance.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd, colourAlert, immuneMin, colourEnd, immuneMin != 1 ? "s" : "");           
+        listOfHelp.Add(data);
+        #endregion
+
         #region Stress Leave
         //
         // - - - Stress Leave
@@ -821,9 +842,9 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "contact_8";
-        string tag1 = "contact_9";
-        string tag2 = "contact_10";
+        string tag0 = "immune_0";
+        string tag1 = "immune_1";
+        string tag2 = null;
         string tag3 = null;
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
