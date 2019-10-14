@@ -951,13 +951,18 @@ public class PersonalityManager : MonoBehaviour
             //Player stressed, show mood change in grey to indicate that effect will have no impact
             if (GameManager.instance.playerScript.isStressed == false)
             {
-                text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : "");
+                //player may be immune to stress (drugs)
+                if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
+                { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : ""); }
+                else { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", IMMUNE" : ""); }
                 builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText));
             }
             else
             {
                 //already stressed prior to becoming stressed again -> Super Stressed!
-                text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "SUPER STRESSED" : "");
+                if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
+                { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "SUPER STRESSED" : ""); }
+                else { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "IMMUNE" : ""); }
                 builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText));
             }
         }

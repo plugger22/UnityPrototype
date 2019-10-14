@@ -4180,7 +4180,7 @@ public class MessageManager : MonoBehaviour
                 ItemData data = new ItemData();
                 if (topicData.optionName.Equals("Ignored", System.StringComparison.Ordinal) == false)
                 { data.itemText = "Decision taken"; }
-                else { data.itemText = "Decision Ignored"; }
+                else { data.itemText = "Event Ignored"; }
                 data.topText = topicData.topicName;
                 data.bottomText = string.Format("<b>{0}</b>{1}{2}<b>{3}</b>", topicData.optionName, "\n", "\n", topicData.outcome);
                 data.priority = ItemPriority.Low;

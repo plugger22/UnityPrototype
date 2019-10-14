@@ -2362,8 +2362,8 @@ public class TopicManager : MonoBehaviour
                     if (turnOption.listOfGoodEffects != null) { listOfEffects.AddRange(turnOption.listOfGoodEffects); }
                     builderBottom.AppendFormat("{0}SUCCESS{1}", colourNeutral, colourEnd);
                     //random message
-                    string text = string.Format("\'{0}\' decision, \'{1}\' option, SUCCEEDS", turnTopic.tag, turnOption.tag);
-                    GameManager.instance.messageScript.GeneralRandom(text, "Decision Option", threshold, rnd);
+                    string text = string.Format("\'{0}\' event, \'{1}\' option, SUCCEEDS", turnTopic.tag, turnOption.tag);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
                 }
                 else
                 {
@@ -2371,8 +2371,8 @@ public class TopicManager : MonoBehaviour
                     if (turnOption.listOfBadEffects != null) { listOfEffects.AddRange(turnOption.listOfBadEffects); }
                     builderBottom.AppendFormat("{0}FAILED{1}", colourCancel, colourEnd);
                     //random message
-                    string text = string.Format("\'{0}\' decision, \'{1}\' option, FAILS", turnTopic.tag, turnOption.tag);
-                    GameManager.instance.messageScript.GeneralRandom(text, "Decision Option", threshold, rnd);
+                    string text = string.Format("\'{0}\' event, \'{1}\' option, FAILS", turnTopic.tag, turnOption.tag);
+                    GameManager.instance.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
                 }
             }
             //check valid effects present
@@ -2421,8 +2421,6 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                /*builderTop.AppendLine();
-                                builderTop.Append("Error");*/
                                 builderBottom.AppendLine();
                                 builderBottom.Append("Error");
                                 effectReturn.errorFlag = true;
@@ -2837,7 +2835,7 @@ public class TopicManager : MonoBehaviour
                 }
                 else
                 {
-                    data.optionName = string.Format("{0}Decision IGNORED{1}", colourAlert, colourEnd);
+                    data.optionName = string.Format("{0}Event IGNORED{1}", colourAlert, colourEnd);
                     data.text = string.Format("Topic \'{0}\', option IGNORED, actorID {1}, nodeID {2}", turnTopic.tag, tagActorID, tagNodeID);
                 }
                 GameManager.instance.messageScript.Topic(data);

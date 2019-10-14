@@ -1457,7 +1457,7 @@ public class PlayerManager : MonoBehaviour
             if (mood < 0)
             {
                 //player immune to stress
-                if (stressImmunityCurrent > 0)
+                if (stressImmunityCurrent <= 0)
                 {
                     //player gains stressed condition
                     AddCondition(conditionStressed, playerSide, "Mood drops below Zero");

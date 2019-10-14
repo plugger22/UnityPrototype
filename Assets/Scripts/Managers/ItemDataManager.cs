@@ -312,7 +312,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>{0}You did NOT get STRESSED{1}{2}due to taking {3}{4}{5}</b>{6}{7}", colourGood, colourEnd, "\n", colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Your Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
         if (isAddicted == true)
-        { builder.AppendFormat("{0}{1}{2}You are ADDICTED{3}", "\n", "\n", colourBad, colourEnd); }
+        { builder.AppendFormat("{0}{1}<b>{2}You are ADDICTED{3}</b>", "\n", "\n", colourBad, colourEnd); }
         return builder.ToString();
     }
 
@@ -1296,9 +1296,9 @@ public class ItemDataManager : MonoBehaviour
     public string GetActorRevealSecretDetails(Actor actor, Secret secret, string reason)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        builder.AppendFormat("<b>{0}, {1}{2}</b>{3}", actor.actorName, colourAlert, actor.arc.name, colourEnd);
         if (string.IsNullOrEmpty(reason) == false)
-        { builder.AppendFormat("{0}{1}{2}{3}", "\n", colourBad, reason, colourEnd); }
+        { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, reason, colourEnd); }
         builder.AppendFormat("{0}{1}<b>Secret Revealed</b>", "\n", "\n");
         GetSecretEffects(builder, secret);
         return builder.ToString();
