@@ -2550,6 +2550,27 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Activates a cure already in listOfCureNodes. Returns true if so, false otherwise
+    /// </summary>
+    /// <param name="cure"></param>
+    /// <returns></returns>
+    public bool ActivateCureNode(Cure cure)
+    {
+        Node node = listOfCureNodes.Find(x => x.cure.name.Equals(cure.name, StringComparison.Ordinal) == true);
+        if (node != null)
+        {
+            //activate cure
+            cure.isActive = true;
+            //message
+            Debug.LogFormat("[Cnd] DataManager.cs -> ActivateCureNode: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+            string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+            GameManager.instance.messageScript.PlayerCure(text, node, cure.condition);
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Switch all onMap cures (at nodes) to isActive 'true'
     /// </summary>
     public void DebugActivateAllCures()

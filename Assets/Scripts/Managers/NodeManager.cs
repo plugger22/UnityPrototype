@@ -2741,6 +2741,7 @@ public class NodeManager : MonoBehaviour
             else { Debug.LogError("Invalid PathData (Null)"); }
         }
         else { Debug.LogError("Invalid cure (Null)"); }
+        //return
         return cureNodeID;
     }
 

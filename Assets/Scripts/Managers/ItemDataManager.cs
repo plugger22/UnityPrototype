@@ -353,6 +353,22 @@ public class ItemDataManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// A cure has arisen for the Player's condition
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    public string GetPlayerCureDetails(Node node, Condition condition)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, condition.cure.name, colourEnd, "\n");
+        builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}{1}{2}", colourAlert, condition.cure.tooltipText, colourEnd);
+        return builder.ToString();
+    }
+
+
     //
     // - - - Actor - - -
     //

@@ -836,10 +836,10 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="conditionName"></param>
     /// <returns></returns>
-    public Message PlayerCure(string text, Node node, string conditionName)
+    public Message PlayerCure(string text, Node node, Condition condition)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
-        Debug.Assert(string.IsNullOrEmpty(conditionName) == false, "Invalid conditionName (Null or Empty)");
+        Debug.Assert(condition != null, "Invalid condition (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -849,12 +849,12 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
-            message.dataName = conditionName;
+            message.dataName = condition.name;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = "You FEED your drug ADDICTION";
-            data.topText = "Feed the Need";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
+            data.itemText = string.Format("Cure available for your {0} condition", condition.name);
+            data.topText = string.Format("{0} Cure", condition.name);
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerCureDetails(node, condition);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -863,10 +863,10 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
-            data.tag0 = "addict_0";
-            data.tag1 = "addict_1";
-            data.tag2 = "addict_2";
-            data.tag3 = "addict_3";
+            data.tag0 = "cure_0";
+            data.tag1 = "cure_1";
+            data.tag2 = "cure_2";
+            data.tag3 = "cure_3";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

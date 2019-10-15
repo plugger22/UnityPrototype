@@ -640,6 +640,38 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Cure
+        //
+        // - - - Cure (condition)
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "cure_0";
+        data.header = "Cure";
+        data.text = string.Format("Certain conditions have cures available that allow the {0}condition to be removed{1}. Cures apply {2}only{3} to the Player", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //How to
+        data = new HelpData();
+        data.tag = "cure_1";
+        data.header = "How To";
+        data.text = string.Format("To use a cure {0}move{1} to the specified district, {2}Right Click{3} for the Action Menu, Select {4}Cure{5}", colourAlert, colourEnd, colourAlert, colourEnd, 
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Details
+        data = new HelpData();
+        data.tag = "cure_2";
+        data.header = "Details";
+        data.text = string.Format("There is {0}no Renown or Invisibilty penalty{1} for a cure but an {2}Action{3} will be used. Cures, once available, do not {4}time out{5}", colourAlert, colourEnd, 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "cure_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = "If HQ, or others, have found a way to provide a cure, get to that district no matter what";
+        listOfHelp.Add(data);
+        #endregion
+
         #region Lying Low
         //
         // - - - Lying Low
@@ -842,10 +874,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "immune_0";
-        string tag1 = "immune_1";
-        string tag2 = null;
-        string tag3 = null;
+        string tag0 = "cure_0";
+        string tag1 = "cure_1";
+        string tag2 = "cure_2";
+        string tag3 = "cure_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
