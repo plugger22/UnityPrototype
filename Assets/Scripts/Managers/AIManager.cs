@@ -5203,7 +5203,7 @@ public class AIManager : MonoBehaviour
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
                 text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.name.ToUpper());
-                itemText = string.Format("AI Security countermeasure {0} in force", decisionCrackdown.name.ToUpper());
+                itemText = string.Format("{0} in force", decisionCrackdown.tag);
                 detailsTop = decisionCrackdown.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);

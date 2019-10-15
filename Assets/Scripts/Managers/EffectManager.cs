@@ -55,6 +55,10 @@ public class EffectManager : MonoBehaviour
     [Range(0, 1)] public float ratioPlayDoNothingLow = 0.3f;
     [Tooltip("This number or More of Do Nothing actions / Turns  to trigger criteria")]
     [Range(0, 1)] public float ratioPlayDoNothingHigh = 0.7f;
+    [Tooltip("This number or Less of Player Addicted Days / Turns to trigger criteria")]
+    [Range(0, 1)] public float ratioPlayAddictLow = 0.2f;
+    [Tooltip("This number or More of Player Addicted Days / Turns to trigger criteria")]
+    [Range(0, 1)] public float ratioPlayAddictHigh = 0.7f;
 
     //hard coded renown amounts that correspond to effect Criteria equivalents (1/2/3/5)
     private int renownLow = 1;
@@ -1254,6 +1258,14 @@ public class EffectManager : MonoBehaviour
                                             case "RatioPlayDoNothingHigh":
                                                 if (GameManager.instance.statScript.ratioPlayerDoNothing < ratioPlayDoNothingHigh)
                                                 { BuildString(result, "Insufficient Player Do Nothing actions for High"); }
+                                                break;
+                                            case "RatioPlayAddictLow":
+                                                if (GameManager.instance.statScript.ratioPlayerAddictedDays > ratioPlayAddictLow)
+                                                { BuildString(result, "To many Player Addicted Days for Low"); }
+                                                break;
+                                            case "RatioPlayAddictHigh":
+                                                if (GameManager.instance.statScript.ratioPlayerAddictedDays < ratioPlayAddictHigh)
+                                                { BuildString(result, "Insufficient Player Addicted Days for High"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

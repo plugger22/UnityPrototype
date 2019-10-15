@@ -829,6 +829,52 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// A cure is available (shown when first occurs) for a condition that the Player has
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="conditionName"></param>
+    /// <returns></returns>
+    public Message PlayerCure(string text, Node node, string conditionName)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(string.IsNullOrEmpty(conditionName) == false, "Invalid conditionName (Null or Empty)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Cure;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = node.nodeID;
+            message.dataName = conditionName;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "You FEED your drug ADDICTION";
+            data.topText = "Feed the Need";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
+            data.priority = ItemPriority.Medium;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "addict_0";
+            data.tag1 = "addict_1";
+            data.tag2 = "addict_2";
+            data.tag3 = "addict_3";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Actors - - -
     //
@@ -4179,7 +4225,7 @@ public class MessageManager : MonoBehaviour
                 //ItemData
                 ItemData data = new ItemData();
                 if (topicData.optionName.Equals("Ignored", System.StringComparison.Ordinal) == false)
-                { data.itemText = "Decision taken"; }
+                { data.itemText = "Event"; }
                 else { data.itemText = "Event Ignored"; }
                 data.topText = topicData.topicName;
                 data.bottomText = string.Format("<b>{0}</b>{1}{2}<b>{3}</b>", topicData.optionName, "\n", "\n", topicData.outcome);

@@ -17,6 +17,7 @@ public class StatisticManager : MonoBehaviour
     [HideInInspector] public float ratioPlayerGiveGear;
     [HideInInspector] public float ratioPlayerManageActions;
     [HideInInspector] public float ratioPlayerDoNothing;
+    [HideInInspector] public float ratioPlayerAddictedDays;
     #endregion
 
     public void InitialiseEarly(GameState state)
@@ -122,6 +123,11 @@ public class StatisticManager : MonoBehaviour
         float dataTop, dataBottom;
         bool isAutoRun = GameManager.instance.turnScript.CheckIsAutoRun();
         int turn = GameManager.instance.turnScript.Turn;
+        //adjust turn to take into account lie low, captured and breakdown days for the Player
+        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
+        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerCapturedDays);
+        turn = Mathf.Max(1, turn);
         //PlayerNodeActions
         if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayNodeAct == 0)
         {
@@ -192,6 +198,16 @@ public class StatisticManager : MonoBehaviour
             else { ratioPlayerDoNothing = 0; }
         }
         else { ratioPlayerDoNothing = GameManager.instance.testScript.testRatioDoNothing; }
+        //PlayerAddictedDays
+        if (isAutoRun == false && GameManager.instance.testScript.testRatioAddictedDays == 0)
+        {
+            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerAddictedDays);
+            dataBottom = turn;
+            if (dataTop != 0 && dataBottom != 0)
+            { ratioPlayerAddictedDays = dataTop / dataBottom; }
+            else { ratioPlayerAddictedDays = 0; }
+        }
+        else { ratioPlayerAddictedDays = GameManager.instance.testScript.testRatioAddictedDays; }
     }
     #endregion
 
@@ -223,8 +239,13 @@ public class StatisticManager : MonoBehaviour
     /// <returns></returns>
     public string DebugShowRatios()
     {
+        int turn = GameManager.instance.turnScript.Turn;
+        //adjust turn to take into account lie low and breakdown days for the Player
+        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
+        turn = Mathf.Max(1, turn);
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- Ratios{0}{1}", "\n", "\n");
+        builder.AppendFormat("- Ratios (turns {0}){1}{2}", turn, "\n", "\n");
         builder.AppendFormat(" ratioPlayerNodeActions: {0}{1}", ratioPlayerNodeActions, "\n");
         builder.AppendFormat(" ratioPlayerTargetAttempts: {0}{1}", ratioPlayerTargetAttempts, "\n");
         builder.AppendFormat(" ratioPlayerMoveActions: {0}{1}", ratioPlayerMoveActions, "\n");
@@ -232,7 +253,7 @@ public class StatisticManager : MonoBehaviour
         builder.AppendFormat(" ratioPlayerGiveGear: {0}{1}", ratioPlayerGiveGear, "\n");
         builder.AppendFormat(" ratioPlayerManageActions: {0}{1}", ratioPlayerManageActions, "\n");
         builder.AppendFormat(" ratioPlayerDoNothing: {0}{1}", ratioPlayerDoNothing, "\n");
-
+        builder.AppendFormat(" ratioPlayerAddictedDays: {0}{1}", ratioPlayerAddictedDays, "\n");
         return builder.ToString();
     }
 

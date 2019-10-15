@@ -5090,8 +5090,11 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
         //lie low timer message (InfoApp 'Effects' tab)
-        text = string.Format("Lie Low Timer {0}", lieLowTimer);
-        GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+        if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
+        {
+            text = string.Format("Lie Low Timer {0}", lieLowTimer);
+            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+        }
     }
 
 
@@ -5223,8 +5226,11 @@ public class ActorManager : MonoBehaviour
         if (isPlayer == true)
         {
             //lie low timer message (InfoApp 'Effects' tab)
-            text = string.Format("Lie Low Timer {0}", lieLowTimer);
-            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
+            {
+                text = string.Format("Lie Low Timer {0}", lieLowTimer);
+                GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+            }
         }
     }
 
@@ -5445,8 +5451,11 @@ public class ActorManager : MonoBehaviour
         if (isPlayer == true)
         {
             //lie low timer message (InfoApp 'Effects' tab)
-            text = string.Format("Lie Low Timer {0}", lieLowTimer);
-            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
+            {
+                text = string.Format("Lie Low Timer {0}", lieLowTimer);
+                GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+            }
         }
     }
 
@@ -6065,7 +6074,7 @@ public class ActorManager : MonoBehaviour
         }
         //Stats -> check for Stress Condition (do now as it encompasses both breakdown and stressed case statements below)
         if (GameManager.instance.playerScript.isStressed == true)
-        { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysStressed); }
+        { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerStressedDays); }
         //check for Status -> both sides
         switch (GameManager.instance.playerScript.status)
         {
@@ -6074,6 +6083,8 @@ public class ActorManager : MonoBehaviour
                 captureTimer--;
                 if (captureTimer <= 0)
                 { GameManager.instance.captureScript.ReleasePlayer(); }
+                else
+                { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
                 break;
             case ActorStatus.Inactive:
                 //
@@ -6295,7 +6306,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom("Player ADDICTION check FAILED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
                             }
                             //stats
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDaysAddicted);
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerAddictedDays);
                         }
                     }
                     //
@@ -6488,6 +6499,8 @@ public class ActorManager : MonoBehaviour
                 captureTimer--;
                 if (captureTimer <= 0)
                 { GameManager.instance.captureScript.ReleasePlayer(); }
+                else
+                { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
                 break;
             case ActorStatus.Inactive:
                 switch (GameManager.instance.aiRebelScript.inactiveStatus)

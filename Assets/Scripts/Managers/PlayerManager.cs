@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionWounded;
     private Condition conditionImaged;
     private Condition conditionStressed;
+    private Condition conditionAddicted;
 
 
 
@@ -244,6 +245,7 @@ public class PlayerManager : MonoBehaviour
         conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
         conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
         conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -256,6 +258,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
+        Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
     }
     #endregion
 
@@ -305,12 +308,17 @@ public class PlayerManager : MonoBehaviour
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
         tooltipStatus = ActorTooltip.None;
-        //remove any conditions, Player starts followOn level with a clean slate
-        RemoveAllConditions(GameManager.instance.sideScript.PlayerSide);
+
+        /*//remove any conditions, Player starts followOn level with a clean slate
+        RemoveAllConditions(GameManager.instance.sideScript.PlayerSide);*/
+
         //reset mood to default
         SetMood(moodStart);
         //clear out mood history
         listOfMoodHistory.Clear();
+        //if immunity to stress > 0, set to max allowed
+        if (stressImmunityCurrent > 0)
+        { stressImmunityCurrent = stressImmunityStart; }
         //empty out gear list
         listOfGear.Clear();
     }
@@ -862,6 +870,7 @@ public class PlayerManager : MonoBehaviour
                                 break;
                             case "ADDICTED":
                                 isAddicted = true;
+                                GameManager.instance.nodeScript.AddCureNode(conditionAddicted.cure);
                                 break;
                             case "STRESSED":
                                 mood = 0;
@@ -994,6 +1003,7 @@ public class PlayerManager : MonoBehaviour
                                     stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
                                     stressImmunityCurrent = 0;
                                     isAddicted = false;
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionAddicted.cure);
                                     break;
                             }
                             return true;

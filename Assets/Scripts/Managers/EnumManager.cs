@@ -173,8 +173,8 @@
     public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)
     {
         StressLeaveResistance, StressLeaveAuthority,  
-        PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerBetrayed, PlayerTimesStressed, PlayerDaysStressed, PlayerSuperStressed, PlayerDoNothing,
-        PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerDaysAddicted,
+        PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
+        PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
@@ -220,6 +220,7 @@
         Plyr_Mood,
         Plyr_Immune,
         Plyr_Addicted,
+        Plyr_Cure,
         //Team
         Team_Add,
         Team_Deploy,
