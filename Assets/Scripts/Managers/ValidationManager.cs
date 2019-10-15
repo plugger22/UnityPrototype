@@ -74,6 +74,8 @@ public class ValidationManager : MonoBehaviour
     public TopicSubType playerGeneralSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType playerStatsSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType playerConditionsSubType;
 
     [Header("City.SO Pool Criteria")]
     [Tooltip("TopicType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
@@ -319,6 +321,13 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerStatsSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerStatsSubType.name, playerType.name, "\n"); }
             }
             else { Debug.LogError("Invalid playerStatsSubType (Null)"); }
+            //player Conditions
+            if (playerConditionsSubType != null)
+            {
+                if (playerType.listOfSubTypes.Exists(x => x.name.Equals(playerConditionsSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerConditionsSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerConditionsSubType.name, playerType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid playerConditionsSubType (Null)"); }
         }
         else
         { Debug.LogError("Invalid playerType (Null)"); }
@@ -1195,6 +1204,9 @@ public class ValidationManager : MonoBehaviour
                         //Player Stats Pool
                         if (campaign.playerStatsPool != null)
                         { CheckCampaignPool(campaign, campaign.playerStatsPool, playerStatsSubType); }
+                        //Player Conditions Pool
+                        if (campaign.playerConditionsPool != null)
+                        { CheckCampaignPool(campaign, campaign.playerConditionsPool, playerConditionsSubType); }
                         //
                         // - - - Scenario side and City pools (topics in pool correct side check only)
                         //
