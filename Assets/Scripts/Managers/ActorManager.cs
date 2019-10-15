@@ -6408,6 +6408,8 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, Player, ID {1}", playerName, GameManager.instance.playerScript.actorID); }
             }
+            //cures
+            GameManager.instance.dataScript.CheckCures();
         }
         //
         // - - - Action Adjustments

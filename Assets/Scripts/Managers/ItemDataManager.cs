@@ -272,7 +272,7 @@ public class ItemDataManager : MonoBehaviour
    /// <param name="change"></param>
    /// <param name="isStressed"></param>
    /// <returns></returns>
-   public string GetPlayerMoodChangeDetails(string details, int change, bool isStressed)
+   public string GetPlayerMoodChangeDetails(string details, int change, int current, bool isStressed)
     {
         StringBuilder builder = new StringBuilder();
         string colourMood = colourGood;
@@ -281,6 +281,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}<b>Mood {1}{2}</b>{3}", colourMood, change > 0 ? "+" : "", change, colourEnd);
         if (isStressed == true)
         { builder.AppendFormat("{0}{1}{2}Gains gains STRESSED Condition{1}", "\n", "\n", colourBad, colourEnd); }
+        builder.AppendFormat("{0}{1}<b>Mood is now {2}</b>", "\n", "\n", current);
         return builder.ToString();
     }
 
@@ -364,7 +365,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, condition.cure.name, colourEnd, "\n");
         builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}{1}{2}", colourAlert, condition.cure.tooltipText, colourEnd);
+        builder.AppendFormat("{0}<b>{1}</b>{2}", colourAlert, condition.cure.tooltipText, colourEnd);
         return builder.ToString();
     }
 
@@ -1905,7 +1906,7 @@ public class ItemDataManager : MonoBehaviour
         else if (node != null)
         {
             //node
-            builder.AppendFormat("{0}, {1}<b>{2}</b>{3}, district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         }
         //details
         if (string.IsNullOrEmpty(detailsTop) == false)

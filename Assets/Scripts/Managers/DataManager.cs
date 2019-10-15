@@ -292,7 +292,7 @@ public class DataManager : MonoBehaviour
         TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
         if (arrayOfTextLists != null)
         {
-            foreach(TextList textList in arrayOfTextLists)
+            foreach (TextList textList in arrayOfTextLists)
             {
                 if (textList != null)
                 { textList.InitialiseIndex(); }
@@ -2571,12 +2571,50 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Generates InfoApp Effect messages for all active cures. Called by ActorManager.cs -> CheckPlayerHuman each turn
+    /// </summary>
+    public void CheckCures()
+    {
+        for (int i = 0; i < listOfCureNodes.Count; i++)
+        {
+            Node node = listOfCureNodes[i];
+            if (node != null)
+            {
+                if (node.cure.isActive == true)
+                {
+                    Condition condition = node.cure.condition;
+                    if (condition != null)
+                    {
+                        //message
+                        string text = string.Format("Cure available for {0} condition", condition.name);
+                        string header = string.Format("{0} Cure", condition.name);
+                        string detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText);
+                        string detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText);
+                        Sprite sprite = GameManager.instance.guiScript.infoSprite;
+                        GameManager.instance.messageScript.ActiveEffect(text, header, detailsTop, detailsBottom, sprite, -1, node);
+                    }
+                    else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) for listOfCureNodes[{0}]", i); }
+            }
+        }
+    }
+
+    /// <summary>
     /// Switch all onMap cures (at nodes) to isActive 'true'
     /// </summary>
     public void DebugActivateAllCures()
     {
-        for (int i = 0; i < listOfCureNodes.Count; i++)
-        { listOfCureNodes[i].cure.isActive = true; }
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(GameManager.instance.sideScript.PlayerSide);
+        if (listOfConditions != null)
+        {
+            foreach (Condition condition in listOfConditions)
+            {
+                if (condition.cure != null)
+                { ActivateCureNode(condition.cure); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
     }
 
     public List<Node> GetListOfDecisionNodes()
@@ -3691,7 +3729,7 @@ public class DataManager : MonoBehaviour
             //update status
             actor.statusHQ = ActorHQ.LeftHQ;
             //remove from actorHQPool
-            if(actorHQPool.Exists(x => x == hqID) == true)
+            if (actorHQPool.Exists(x => x == hqID) == true)
             { actorHQPool.Remove(hqID); }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for hqID {0}", hqID); }
@@ -4928,7 +4966,7 @@ public class DataManager : MonoBehaviour
                     else
                     {
                         builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7} {8}{9}", actor.hqID, actor.arc.name, actor.level,
-                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), 
+                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2),
                             actor.unhappyTimer, actor.Status, actor.sex, "\n"));
                     }
                 }
@@ -7539,7 +7577,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Belief Frequency Count in Topic Options{0}", "\n");
         int count = 0;
-        foreach(var belief in dictOfBeliefs)
+        foreach (var belief in dictOfBeliefs)
         {
             count++;
             if (count == 3) { builder.AppendLine(); count = 1; }
@@ -7548,7 +7586,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
-    public Dictionary<string, int>  GetDictOfTags()
+    public Dictionary<string, int> GetDictOfTags()
     { return dictOfTags; }
 
 
@@ -7565,7 +7603,7 @@ public class DataManager : MonoBehaviour
             select string.Format("{0}   {1}", tag.Key, tag.Value);
         List<string> listOfSortedTags = sorted.ToList();
         builder.AppendFormat("- Text Tag Frequency Count in topics and topicOptions{0}", "\n");
-        foreach(string tag in listOfSortedTags)
+        foreach (string tag in listOfSortedTags)
         { builder.AppendFormat("{0}{1}", "\n", tag); }
         return builder.ToString();
     }

@@ -622,8 +622,8 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(change != 0, "Invalid change (Zero)");
         string text = "Unknown";
         string topText = "Unknown";
-        if (change > 0) { text = string.Format("Player's MOOD has IMPROVED, now {0}", moodAfterChange); topText = "Mood Improves"; }
-        else { text = string.Format("Player's MOOD has WORSENED, now {0}", moodAfterChange); topText = "Mood Worsens"; }
+        if (change > 0) { text = "Player's MOOD has IMPROVED"; topText = "Mood Improves"; }
+        else { text = "Player's MOOD has WORSENED"; topText = "Mood Worsens"; }
         Message message = new Message();
         message.text = text;
         message.type = MessageType.PLAYER;
@@ -636,7 +636,7 @@ public class MessageManager : MonoBehaviour
         ItemData data = new ItemData();
         data.itemText = text;
         data.topText = topText;
-        data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoodChangeDetails(details, change, isStressed);
+        data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoodChangeDetails(details, change, moodAfterChange, isStressed);
         data.priority = ItemPriority.Low;
         data.sprite = playerSprite;
         data.spriteName = data.sprite.name;
@@ -862,6 +862,7 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
+            data.nodeID = node.nodeID;
             data.help = 1;
             data.tag0 = "cure_0";
             data.tag1 = "cure_1";
