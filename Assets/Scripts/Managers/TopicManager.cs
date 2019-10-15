@@ -578,6 +578,19 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "PlayerConditions":
+                                                        if (campaign.playerConditionsPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.playerConditionsPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.playerConditionsPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerConditionsPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.playerConditionsPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     case "AuthorityCampaign":
                                                         if (campaign.authorityCampaignPool != null)
                                                         {
@@ -1436,8 +1449,12 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetPlayerGeneralTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "PlayerStats":
-                        //based on Statistics
+                        //based on player Mood
                         listOfPotentialTopics = GetPlayerStatsTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "PlayerConditions":
+                        //based on player Mood
+                        listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -1924,6 +1941,72 @@ public class TopicManager : MonoBehaviour
     /// <param name="subTypeName"></param>
     /// <returns></returns>
     private List<Topic> GetPlayerStatsTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        List<int> listOfActors = new List<int>();
+        //All topics based on current actor line up
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //must be active
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            //add actorID to list
+                            listOfActors.Add(actor.actorID);
+                        }
+                    }
+                }
+            }
+            //default NO nodeID so that 'Show Me' button not enabled for topic UI
+            tagNodeID = -1;
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //choose a random actor
+        if (listOfActors.Count > 0)
+        {
+            tagActorID = listOfActors[Random.Range(0, listOfActors.Count)];
+            if (tagActorID > -1)
+            {
+                //group based on Actor Motivation
+                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                //if no entries use entire list by default
+                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);
+                listOfTopics.Clear();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetPlayerConditionTopics
+    /// <summary>
+    /// subType PlayerConditions template topics selected by player based on player Mood. Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// arrayOfOptionActorIDs is initialised with actorID's (active, OnMap actors), -1 if none, where array index corresponds to option index, eg. actorID for index 0 is for option 0
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerConditionTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();

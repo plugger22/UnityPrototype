@@ -41,4 +41,6 @@ MonoBehaviour:
   playerDistrictPool: {fileID: 11400000, guid: 34965ba51d609b940a15a66396e85d92, type: 2}
   playerGeneralPool: {fileID: 11400000, guid: 34044eb3938bac54f9fba0c4b9e73aa4, type: 2}
   playerStatsPool: {fileID: 11400000, guid: 92301aebd41bda442a4e088837006bcb, type: 2}
+  playerConditionsPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2,
+    type: 2}
   hqPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
