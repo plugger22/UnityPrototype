@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES1
   m_EditorClassIdentifier: 
   tag: Stressed
-  text: Unknown
+  text: You need [drug], insists your [actor]. They can source some, no questions
+    asked. It might be expensive but what price for a stress free life?
   designNotes: 'Player Condition Stressed Resistance 1, Bad event
 
 
@@ -46,6 +47,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 17
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

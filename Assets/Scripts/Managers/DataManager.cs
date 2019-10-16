@@ -2566,22 +2566,35 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Activates a cure already in listOfCureNodes. Returns true if so, false otherwise
+    /// Activates (isActivateCure true)/Deactivates (isActivateCure false) a cure already in listOfCureNodes. Returns true if so, false otherwise
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
-    public bool ActivateCureNode(Cure cure)
+    public bool SetCureNodeStatus(Cure cure, bool isActivateCure)
     {
         Node node = listOfCureNodes.Find(x => x.cure.name.Equals(cure.name, StringComparison.Ordinal) == true);
         if (node != null)
         {
             //activate cure
-            cure.isActive = true;
-            //message
-            Debug.LogFormat("[Cnd] DataManager.cs -> ActivateCureNode: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-            string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-            GameManager.instance.messageScript.PlayerCure(text, node, cure.condition);
-            return true;
+            if (isActivateCure == true)
+            {
+                cure.isActive = true;
+                //message
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
+                return true;
+            }
+            else
+            {
+                //deactivate cure
+                cure.isActive = false;
+                //message
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} Deactivated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                string text = string.Format("[Msg] Cure Deactivated for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
+                return true;
+            }
         }
         return false;
     }
@@ -2627,7 +2640,7 @@ public class DataManager : MonoBehaviour
             foreach (Condition condition in listOfConditions)
             {
                 if (condition.cure != null)
-                { ActivateCureNode(condition.cure); }
+                { SetCureNodeStatus(condition.cure, true); }
             }
         }
         else { Debug.LogError("Invalid listOfConditions (Null)"); }

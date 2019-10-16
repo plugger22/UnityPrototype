@@ -360,12 +360,14 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="node"></param>
     /// <param name="condition"></param>
     /// <returns></returns>
-    public string GetPlayerCureDetails(Node node, Condition condition)
+    public string GetPlayerCureDetails(Node node, Condition condition, bool isActivated)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}", colourNeutral, condition.cure.name, colourEnd, "\n");
         builder.AppendFormat("<b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}<b>{1}</b>{2}", colourAlert, condition.cure.tooltipText, colourEnd);
+        if (isActivated == true)
+        { builder.AppendFormat("{0}<b>{1}</b>{2}", colourAlert, condition.cure.tooltipText, colourEnd); }
+        else { builder.AppendFormat("{0}NO LONGER AVAILABLE{1}", colourBad, colourEnd); }
         return builder.ToString();
     }
 

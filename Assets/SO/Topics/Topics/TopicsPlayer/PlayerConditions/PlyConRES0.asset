@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES0
   m_EditorClassIdentifier: 
   tag: Stressed
-  text: Unknown
+  text: One of your [actors] contacts has access to high grade [drug] and they wondered
+    if you'd like some? You're looking a bit peaky, says your [actor]
   designNotes: 'Player Condition Stressed Resistance 0, Good event
 
 
@@ -46,6 +47,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 17
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

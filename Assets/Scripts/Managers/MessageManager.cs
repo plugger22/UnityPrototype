@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -836,7 +837,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="nodeID"></param>
     /// <param name="conditionName"></param>
     /// <returns></returns>
-    public Message PlayerCure(string text, Node node, Condition condition)
+    public Message PlayerCureStatus(string text, Node node, Condition condition, bool isActivated)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(condition != null, "Invalid condition (Null)");
@@ -849,12 +850,15 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
+            message.data1 = Convert.ToInt32(isActivated);
             message.dataName = condition.name;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("Cure available for your {0} condition", condition.name);
+            if (isActivated == true)
+            { data.itemText = string.Format("Cure available for your {0} condition", condition.name); }
+            else { data.itemText = string.Format("{0} Cure NO LONGER available", condition.name); }
             data.topText = string.Format("{0} Cure", condition.name);
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerCureDetails(node, condition);
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerCureDetails(node, condition, isActivated);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;

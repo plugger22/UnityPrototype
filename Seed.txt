@@ -2163,3 +2163,5 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:355)
 	
+Dev seed 42797 -> Wednesday, 16 October 2019 4:46 PM
+City seed 5678 -> London, United Kingdom

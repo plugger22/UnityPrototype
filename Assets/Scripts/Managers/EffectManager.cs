@@ -1276,6 +1276,7 @@ public class EffectManager : MonoBehaviour
                                         break;
                                     //
                                     // - - - Special - - -
+                                    //
                                     case "Special":
                                         switch (criteria.effectCriteria.name)
                                         {
@@ -3630,6 +3631,12 @@ public class EffectManager : MonoBehaviour
                 { effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
+            case "CureAddicted":
+                effectResolve.bottomText = ExecutePlayerCure(effect, dataInput);
+                break;
+            case "TakeDrugs":
+                effectResolve.bottomText = ExecutePlayerTakeDrugs(effect, dataInput);
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
         return effectResolve;
@@ -4340,6 +4347,63 @@ public class EffectManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name); }
         return bottomText;
+    }
+
+    /// <summary>
+    /// Activate or Deactivate a cure
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private string ExecutePlayerCure(Effect effect, EffectDataInput dataInput)
+    {
+        string bottomText = "Unknown";
+        //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
+        string colourEffect = colourDefault;
+        Condition condition = null;
+        colourEffect = GetColourEffect(effect.typeOfEffect);
+        //get correct condition
+        switch (effect.outcome.name)
+        {
+            case "CureAddicted":
+                condition = conditionAddicted;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+        }
+        if (condition != null)
+        {
+            //Turn cure on / off
+            switch (effect.operand.name)
+            {
+                case "Add":
+                    //activate cure
+                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true) == true)
+                    { bottomText = string.Format("{0}Cure for {1} Active{2}", colourEffect, condition.tag, colourEnd); }
+                    break;
+                case "Subtract":
+                    //deactivate cure
+                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, false) == true)
+                    { bottomText = string.Format("{0}Cure for {1} gone{2}", colourEffect, condition.tag, colourEnd); }
+                    break;
+                default:
+                    Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
+                    break;
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid condition (Null) for effect.outcome \"{0}\"", effect.outcome.name); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Player takes drugs (may, or may not, be Addicted). Removes stress and provides immunity
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private string ExecutePlayerTakeDrugs(Effect effect, EffectDataInput dataInput)
+    {
+        GameManager.instance.playerScript.TakeDrugs();
+        return string.Format("{0}You take {1}{2}", colourGood, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
     }
 
     /// <summary>

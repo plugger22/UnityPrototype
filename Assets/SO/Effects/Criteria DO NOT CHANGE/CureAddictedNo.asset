@@ -14,4 +14,4 @@ MonoBehaviour:
   description: No cure present for Addicted
   effectCriteria: {fileID: 11400000, guid: b82abf83956d1b04b8f43c2b7fed2154, type: 2}
   comparison: {fileID: 0}
-  apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
+  apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}

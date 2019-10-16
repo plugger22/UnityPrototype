@@ -4836,6 +4836,16 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("turn", dictOfTags); }
                         break;
+                    case "drug":
+                        //Addicted drug name
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.globalScript.tagGlobalDrug, colourEnd); }
+                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                        }
+                        else { CountTextTag("drug", dictOfTags); }
+                        break;
                     case "manP":
                         //man or woman -> Player
                         if (isValidate == false)
