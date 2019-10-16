@@ -1274,6 +1274,23 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                         }
                                         break;
+                                    //
+                                    // - - - Special - - -
+                                    case "Special":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "CureAddictedNo":
+                                                //No active cure is present OnMap for Addicted Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionAddicted.cure) == false)
+                                                { BuildString(result, "Addicted Cure unavailable"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        break;
                                     default:
                                         BuildString(result, "Error!");
                                         Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));

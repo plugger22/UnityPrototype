@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: PlyConRES3
+  m_EditorClassIdentifier: 
+  tag: Addiction Cure
+  text: Unknown
+  designNotes: 'Player Condition Addicted Resistance 2, Bad event
+
+
+    Chance of Cure for addiction'
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: a80f97b49bf3d1a4ba5bd7454b54a50f, type: 2}
+  - {fileID: 11400000, guid: 6e0e00a6f85c2a14ea2400cc9161d321, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 9e414ebf5e9d56f4e8a4190353e8f786, type: 2}
+  - {fileID: 11400000, guid: 275f151d8fffc1241a66f550010d4fab, type: 2}
+  - {fileID: 11400000, guid: b49d996298c7fba46bd436182f169145, type: 2}
+  - {fileID: 11400000, guid: b72bacb5fbefe0946b7e3951b699405f, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 1
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 8
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 17
+  turnsLive: 0
+  turnsDone: 0

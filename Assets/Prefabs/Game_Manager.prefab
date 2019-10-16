@@ -895,6 +895,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a80f97b49bf3d1a4ba5bd7454b54a50f, type: 2}
   - {fileID: 11400000, guid: f130a4bbb2686b843b0e6d7eb467f663, type: 2}
   - {fileID: 11400000, guid: eca587c0033d9294182caaa2fe750db6, type: 2}
+  - {fileID: 11400000, guid: 6e0e00a6f85c2a14ea2400cc9161d321, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1020,6 +1021,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2cb404585bcf12c409de6625162f7810, type: 2}
   - {fileID: 11400000, guid: 907c54c2b7c50534aac854b6e7532ffd, type: 2}
   - {fileID: 11400000, guid: 52027038287d0a5448be473767d5061b, type: 2}
+  - {fileID: 11400000, guid: b82abf83956d1b04b8f43c2b7fed2154, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -1094,6 +1096,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e923ac93d7be1b4aa9422e51be98ae6, type: 2}
   - {fileID: 11400000, guid: a56dea972e70b174fab9203730e6c5c1, type: 2}
   - {fileID: 11400000, guid: c8c5c2f39401c0a4bbeb11e4f2478918, type: 2}
+  - {fileID: 11400000, guid: c269720687797ad4ab084e81ded06243, type: 2}
+  - {fileID: 11400000, guid: 7eacb67e66414b94a9504e300eedcf61, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1716,6 +1720,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
   - {fileID: 11400000, guid: bce008bb794519f4889c52ae137ac7e5, type: 2}
   - {fileID: 11400000, guid: 8644fd8b89d25ab4783988aac4d4e120, type: 2}
+  - {fileID: 11400000, guid: 3b5fb2eeb4e0a1b4e8c637ea6611fa2f, type: 2}
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -2155,6 +2161,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a4e294a28c260c41bc33ef23e196f1a, type: 2}
   - {fileID: 11400000, guid: 257b0e16638d6244287b63b262e9ee76, type: 2}
   - {fileID: 11400000, guid: a52b35dcdc4774946a1b8920ea164fea, type: 2}
+  - {fileID: 11400000, guid: 0718926c4761d594fb0ed234aa270ecb, type: 2}
+  - {fileID: 11400000, guid: 8492d8cd877fd9f4bb98b85d6ca8185c, type: 2}
+  - {fileID: 11400000, guid: d3cad132692b2b0489876dc307a59f70, type: 2}
+  - {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2497,6 +2507,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7697bb153727c40438e2114491292d71, type: 2}
   - {fileID: 11400000, guid: 4ac6875b69fa2a34bba8d39e5649556c, type: 2}
   - {fileID: 11400000, guid: faec220b1ada0674ba516d61c77bbf4f, type: 2}
+  arrayOfOptionsPlayerConditions:
+  - {fileID: 11400000, guid: aca794847c3aceb4e921af0c22015c1f, type: 2}
+  - {fileID: 11400000, guid: 6f08e206829a7ce46b3de15eafa6bdd3, type: 2}
+  - {fileID: 11400000, guid: a4cff406d1d805f4290e34d351f3229a, type: 2}
+  - {fileID: 11400000, guid: 999a8f841bc68364a962325094cf789e, type: 2}
+  - {fileID: 11400000, guid: 585b46be6a0261344baaf67de911ca1b, type: 2}
+  - {fileID: 11400000, guid: 527dc37fb376c254ca4b819f76450412, type: 2}
+  - {fileID: 11400000, guid: fe0c679a066873544acb5795e78bd833, type: 2}
+  - {fileID: 11400000, guid: e106d576a5a93c64cb024a4fd1f07977, type: 2}
+  - {fileID: 11400000, guid: 6916075ce4bb2f14c8e48649853ef219, type: 2}
+  - {fileID: 11400000, guid: d99fe611827d56c42b1394eacbc9265a, type: 2}
+  - {fileID: 11400000, guid: 2dc42a707cd1f4b43b90ea027c0fe479, type: 2}
+  - {fileID: 11400000, guid: 564576834689fd846ac8f080a00628c4, type: 2}
+  - {fileID: 11400000, guid: 9e414ebf5e9d56f4e8a4190353e8f786, type: 2}
+  - {fileID: 11400000, guid: 275f151d8fffc1241a66f550010d4fab, type: 2}
+  - {fileID: 11400000, guid: b49d996298c7fba46bd436182f169145, type: 2}
+  - {fileID: 11400000, guid: b72bacb5fbefe0946b7e3951b699405f, type: 2}
   arrayOfOptionsPlayerDistrict:
   - {fileID: 11400000, guid: a124e4174ec758e43a83a5859ecd3f43, type: 2}
   - {fileID: 11400000, guid: fe1759f08eafbae40ad0f861a5567802, type: 2}

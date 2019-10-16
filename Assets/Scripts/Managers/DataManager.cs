@@ -2522,6 +2522,22 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns true if Condition Cure is present OnMap (activated). False otherwise
+    /// </summary>
+    /// <param name="cure"></param>
+    /// <returns></returns>
+    public bool CheckCurePresent(Cure cure)
+    {
+        if (cure != null)
+        {
+            if (listOfCureNodes.Exists(x => x.cure.cureID == cure.cureID) == true)
+            { return cure.isActive; }
+        }
+        else { Debug.LogError("Invalid Cure (Null)"); }
+        return false;
+    }
+
+    /// <summary>
     /// returns Node for a specified cure provided it is OnMap (Does NOT check if isActive true/false). Returns Null otherwise
     /// </summary>
     /// <param name="cure"></param>
