@@ -2042,7 +2042,7 @@ public class TopicManager : MonoBehaviour
             tagActorID = listOfActors[Random.Range(0, listOfActors.Count)];
             if (tagActorID > -1)
             {
-                //group based on Actor Motivation
+                //group based on Player Mood
                 group = GetGroupMood(GameManager.instance.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
@@ -2417,7 +2417,7 @@ public class TopicManager : MonoBehaviour
             StringBuilder builderBottom = new StringBuilder();
             //process outcome effects / rolls / messages / etc.
             List<Effect> listOfEffects = new List<Effect>();
-            //mood effects always apply
+            //mood effects always apply (needs to come first)
             if (turnOption.moodEffect != null) { listOfEffects.Add(turnOption.moodEffect); }
             //check if probability option
             if (turnOption.chance == null)
@@ -5170,6 +5170,7 @@ public class TopicManager : MonoBehaviour
                 case "PlayerDistrict":
                 case "PlayerGeneral":
                 case "PlayerStats":
+                case "PlayerConditions":
                 case "ActorMatch":
                     //info on whether topic is good or bad and why
                     switch (turnTopic.group.name)
@@ -5197,9 +5198,6 @@ public class TopicManager : MonoBehaviour
                     if (mood < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
                     else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
                     textDetails = builder.ToString();
-                    break;
-                case "PlayerConditions":
-
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType.name);

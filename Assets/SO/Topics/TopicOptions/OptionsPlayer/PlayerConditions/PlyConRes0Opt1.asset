@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res0 Opt 1
   tag: Double Dose
-  text: Double it up, I'm feeling lucky
+  text: Double the dose
   topic: {fileID: 11400000, guid: 0718926c4761d594fb0ed234aa270ecb, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -28,9 +28,10 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Double Dose</color>
+  tooltipMain: "<color=#98FB98>Player Remove STRESSED condition<br>Gain Immunity</color>\r\n<color=#FF4500>Player
+    Renown -2</color>\r\n<color=#FF4500>Player ADDICTED Medium chance</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Double it up, I'm feeling lucky</color>
   optionNumber: 1

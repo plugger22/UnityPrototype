@@ -3494,14 +3494,6 @@ public class EffectManager : MonoBehaviour
                         break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
-                /*//colour  EDIT -> Do in subMethods
-                switch (effect.typeOfEffect.name)
-                {
-                    case "Good": text = string.Format("{0}{1}{2}", colourGood, text, colourEnd); break;
-                    case "Neutral": text = string.Format("{0}{1}{2}", colourNeutral, text, colourEnd); break;
-                    case "Bad": text = string.Format("{0}{1}{2}", colourBad, text, colourEnd); break;
-                    default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
-                }*/
             }
             else
             {
@@ -3559,7 +3551,7 @@ public class EffectManager : MonoBehaviour
             case "ConditionBlackmailer":
             case "ConditionStar":
                 if (node != null)
-                { effectResolve.bottomText = ExecuteActorCondition(effect, dataInput, actor, node); }
+                { effectResolve.bottomText = ExecuteActorCondition(effect, dataInput, actor); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
                 break;
             case "Secret":
@@ -3625,11 +3617,12 @@ public class EffectManager : MonoBehaviour
             case "ConditionCorrupt":
             case "ConditionQuestionable":
             case "ConditionBlackmailer":
-            case "ConditionStar":
             case "ConditionAddicted":
-                if (node != null)
+            case "ConditionStar":
+                /*if (node != null)
                 { effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput, node); }
-                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }*/
+                effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput);
                 break;
             case "CureAddicted":
                 effectResolve.bottomText = ExecutePlayerCure(effect, dataInput);
@@ -4309,7 +4302,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="dataInput"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    private string ExecutePlayerCondition(Effect effect, EffectDataInput dataInput, Node node)
+    private string ExecutePlayerCondition(Effect effect, EffectDataInput dataInput/*, Node node*/)
     {
         string bottomText = "Unknown";
         //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
@@ -4321,9 +4314,10 @@ public class EffectManager : MonoBehaviour
         //resolve effect outcome
         if (condition != null)
         {
-            //assign condition to player if at their node, otherwise actor
+            /*//assign condition to player if at their node, otherwise actor
             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-            {
+            {*/
+
                 //Player Condition
                 switch (effect.operand.name)
                 {
@@ -4348,7 +4342,7 @@ public class EffectManager : MonoBehaviour
                         break;
                 }
 
-            }
+            /*}*/
         }
         else { Debug.LogErrorFormat("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name); }
         return bottomText;
@@ -4408,7 +4402,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerTakeDrugs(Effect effect)
     {
         GameManager.instance.playerScript.TakeDrugs();
-        return string.Format("{0}You take {1}{2}", colourGood, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}", colourGood, GameManager.instance.globalScript.tagGlobalDrug,"\n", colourEnd);
     }
 
     /// <summary>
@@ -4419,7 +4413,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private string ExecutePlayerChanceAddicted(Effect effect, EffectDataInput dataInput)
     {
-        string bottomText = "Player Not Addicted";
+        string bottomText = string.Format("{0}Player Not Addicted{1}", colourNeutral, colourEnd);
         int numNeeded = 0;
         int rnd = Random.Range(0, 100);
         switch (effect.outcome.name)
@@ -4439,13 +4433,13 @@ public class EffectManager : MonoBehaviour
             }
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: SUCEEDED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
-            GameManager.instance.messageScript.GeneralRandom("Addiction Check SUCCEEDED", "Addiciton", numNeeded, rnd, true);
+            GameManager.instance.messageScript.GeneralRandom("Addiction Check SUCCEEDED", "Addiciton", numNeeded, rnd, true, "rand_3");
         }
         else
         {
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: FAILED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
-            GameManager.instance.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true);
+            GameManager.instance.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true, "rand_3");
         }
 
         //return
@@ -4459,7 +4453,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="dataInput"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    private string ExecuteActorCondition(Effect effect, EffectDataInput dataInput, Actor actor, Node node)
+    private string ExecuteActorCondition(Effect effect, EffectDataInput dataInput, Actor actor/*, Node node*/)
     {
         string bottomText = "Unknown";
         //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)

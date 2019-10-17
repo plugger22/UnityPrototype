@@ -156,13 +156,21 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, approval, approval * 10);
         data.text = builder.ToString();
         listOfHelp.Add(data);
-        //Addiction check
+        //Addiction Feed the need check
         data = new HelpData();
         data.tag = "rand_2";
-        data.header = string.Format("{0}Addiction Check{1}", colourTip, colourEnd);
+        data.header = string.Format("{0}Addiction Need Check{1}", colourTip, colourEnd);
         builder = new StringBuilder();
         builder.AppendFormat("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert, 
             GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Take Drugs check
+        data = new HelpData();
+        data.tag = "rand_3";
+        data.header = string.Format("{0}Addicted Check{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion

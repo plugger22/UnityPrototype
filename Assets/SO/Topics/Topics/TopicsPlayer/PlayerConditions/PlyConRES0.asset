@@ -13,16 +13,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Stressed
   text: One of your [actors] contacts has access to high grade [drug] and they wondered
-    if you'd like some? You're looking a bit peaky, says your [actor]
+    if you'd like some? You're looking a bit peaky, notes your [actor]
   designNotes: 'Player Condition Stressed Resistance 0, Good event
 
+    Set as BAD topic as player mood is always 0 when stressed
 
     Offered drug, chance of becoming addicted'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
@@ -41,12 +42,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 18
-  turnsLive: 0
+  turnsActive: 16
+  turnsLive: 1
   turnsDone: 0

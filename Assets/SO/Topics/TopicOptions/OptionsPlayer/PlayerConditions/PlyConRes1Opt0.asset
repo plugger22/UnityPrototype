@@ -22,15 +22,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: cef86638ef23f204faf268b5269d5d3a, type: 2}
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: <color=#FFE4B5>Player STRESSED</color>
+  tooltipHeader: <color=#FFFFE0>Little</color>
+  tooltipMain: <color=#98FB98>Player loses STRESSED Condition</color>
   tooltipDetails: '<color=#FF4500>Player Mood -2
 
     SUPER STRESSED</color>'
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>That much? Just a little</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>That much? Just a little</color>
   optionNumber: 0
