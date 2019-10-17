@@ -3853,10 +3853,13 @@ public class TopicManager : MonoBehaviour
         }
         else
         {
-            //Player stressed, random chance option unavailable
-            int rnd = Random.Range(0, 100);
-            if (rnd < chanceStressedNoOption)
-            { effectCriteria = "Player STRESSED"; }
+            //Player stressed, random chance option unavailable (can be bypassed)
+            if (option.isIgnoreStressEffect == false)
+            {
+                int rnd = Random.Range(0, 100);
+                if (rnd < chanceStressedNoOption)
+                { effectCriteria = "Player STRESSED"; }
+            }
         }
         if (string.IsNullOrEmpty(effectCriteria) == false)
         {
@@ -5021,6 +5024,7 @@ public class TopicManager : MonoBehaviour
                             tagSpriteName = GameManager.instance.playerScript.PlayerName;
                             break;
                         case "PlayerStats":
+                        case "PlayerConditions":
                             //use actor sprite
                             if (tagActorID > -1)
                             {
@@ -5193,6 +5197,9 @@ public class TopicManager : MonoBehaviour
                     if (mood < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
                     else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
                     textDetails = builder.ToString();
+                    break;
+                case "PlayerConditions":
+
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType.name);

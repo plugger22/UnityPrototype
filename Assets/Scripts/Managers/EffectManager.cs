@@ -3634,8 +3634,13 @@ public class EffectManager : MonoBehaviour
             case "CureAddicted":
                 effectResolve.bottomText = ExecutePlayerCure(effect, dataInput);
                 break;
-            case "TakeDrugs":
-                effectResolve.bottomText = ExecutePlayerTakeDrugs(effect, dataInput);
+            case "Drugs":
+                effectResolve.bottomText = ExecutePlayerTakeDrugs(effect);
+                break;
+            case "ChanceAddictedLow":
+            case "ChanceAddictedMed":
+            case "ChanceAddictedHigh":
+                effectResolve.bottomText = ExecutePlayerChanceAddicted(effect, dataInput);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -4400,10 +4405,51 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
     /// <returns></returns>
-    private string ExecutePlayerTakeDrugs(Effect effect, EffectDataInput dataInput)
+    private string ExecutePlayerTakeDrugs(Effect effect)
     {
         GameManager.instance.playerScript.TakeDrugs();
         return string.Format("{0}You take {1}{2}", colourGood, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+    }
+
+    /// <summary>
+    /// chance (L/M/H) of Player becoming addicted and gaining ADDICTED condition
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private string ExecutePlayerChanceAddicted(Effect effect, EffectDataInput dataInput)
+    {
+        string bottomText = "Player Not Addicted";
+        int numNeeded = 0;
+        int rnd = Random.Range(0, 100);
+        switch (effect.outcome.name)
+        {
+            case "ChanceAddictedLow": numNeeded = 25; break;
+            case "ChanceAddictedMed": numNeeded = 50; break;
+            case "ChanceAddictedHigh": numNeeded = 75; break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+        }
+        if (rnd < numNeeded)
+        {
+            //add Addicted Condition -> check not already present
+            if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, dataInput.side) == false)
+            {
+                GameManager.instance.playerScript.AddCondition(conditionAddicted, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                bottomText = string.Format("{0}Player becomes {1}{2}", colourBad, conditionAddicted.name, colourEnd);
+            }
+            //random message
+            Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: SUCEEDED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
+            GameManager.instance.messageScript.GeneralRandom("Addiction Check SUCCEEDED", "Addiciton", numNeeded, rnd, true);
+        }
+        else
+        {
+            //random message
+            Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: FAILED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
+            GameManager.instance.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true);
+        }
+
+        //return
+        return bottomText;
     }
 
     /// <summary>

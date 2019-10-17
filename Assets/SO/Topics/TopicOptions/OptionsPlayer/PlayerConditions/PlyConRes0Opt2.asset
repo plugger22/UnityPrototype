@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Name: PlyConRes0Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res0 Opt 2
-  tag: 
-  text: 
+  tag: Sample
+  text: A free sample would be nice
   topic: {fileID: 11400000, guid: 0718926c4761d594fb0ed234aa270ecb, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  isIgnoreStressEffect: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: cef86638ef23f204faf268b5269d5d3a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 9bfdfae0b54b7ca49bc49c0f5e6e90cc, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -12,20 +12,25 @@ MonoBehaviour:
   m_Name: PlyConRes1Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res1 Opt 0
-  tag: 
-  text: 
+  tag: Little
+  text: That much? Just a little
   topic: {fileID: 11400000, guid: 8492d8cd877fd9f4bb98b85d6ca8185c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
+  isIgnoreStressEffect: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: cef86638ef23f204faf268b5269d5d3a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Player STRESSED</color>
+  tooltipDetails: '<color=#FF4500>Player Mood -2
+
+    SUPER STRESSED</color>'
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>That much? Just a little</color>
   optionNumber: 0

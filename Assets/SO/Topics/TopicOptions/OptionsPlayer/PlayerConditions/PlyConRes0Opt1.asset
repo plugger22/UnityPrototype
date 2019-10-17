@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Name: PlyConRes0Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res0 Opt 1
-  tag: 
-  text: 
+  tag: Double Dose
+  text: Double it up, I'm feeling lucky
   topic: {fileID: 11400000, guid: 0718926c4761d594fb0ed234aa270ecb, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  isIgnoreStressEffect: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 3b5fb2eeb4e0a1b4e8c637ea6611fa2f, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  - {fileID: 11400000, guid: ee8aed12e0a78ad4da3de06322d8cc9b, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +33,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

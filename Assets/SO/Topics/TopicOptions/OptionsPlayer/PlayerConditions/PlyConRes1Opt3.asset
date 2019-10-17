@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Name: PlyConRes1Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res1 Opt 3
-  tag: 
-  text: 
+  tag: To Risky
+  text: Sounds risky, no thanks
   topic: {fileID: 11400000, guid: 8492d8cd877fd9f4bb98b85d6ca8185c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
+  isIgnoreStressEffect: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1d33e57c153f79e4d978c2b2368f2645, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Player STRESSED</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 0
-  textToDisplay: 
-  optionNumber: 2
+  textToDisplay: <color=#BDC3C7>Sounds risky, no thanks</color>
+  optionNumber: 3
