@@ -3874,9 +3874,23 @@ public class TopicManager : MonoBehaviour
             //main -> criteria feedback
             option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
             //Details -> derived from option mood Effect
-            if (option.moodEffect != null && option.isIgnoreMood == false)
-            { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-            else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+            if (option.moodEffect != null)
+            {
+                if (option.isIgnoreMood == false)
+                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                else
+                {
+                    //ignoreMood only applies if player is Stressed
+                    if (GameManager.instance.playerScript.isStressed == false)
+                    { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                    else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+                }
+            }
+            else
+            {
+                option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+                Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
+            }
         }
         return option.isValid;
     }
@@ -3936,9 +3950,23 @@ public class TopicManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
-        if (option.moodEffect != null && option.isIgnoreMood == false)
-        { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-        else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+        if (option.moodEffect != null)
+        {
+            if (option.isIgnoreMood == false)
+            { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+            else
+            {
+                //ignoreMood only applies if player is Stressed
+                if (GameManager.instance.playerScript.isStressed == false)
+                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+            }
+        }
+        else
+        {
+            option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+            Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
+        }
         return isSucceed;
     }
     #endregion

@@ -3356,8 +3356,18 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //dataInput.Data is topic.option.isIgnoreMood
-        if (effect.belief != null && dataInput.data == 0)
-        { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
+        if (effect.belief != null)
+        {
+            if (dataInput.data == 0)
+            { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
+            else
+            {
+                //topic.option.isIgnoreMood only applies if Player is Stressed
+                if (GameManager.instance.playerScript.isStressed == false)
+                { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
+                else { effectResolve.bottomText = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+            }
+        }
         else { effectResolve.bottomText = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
         return effectResolve;
     }

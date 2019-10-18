@@ -812,5 +812,24 @@ namespace packageAPI
 
     }
 
+    /// <summary>
+    /// used to pass data to ActiveEffect message
+    /// </summary>
+    public class ActiveEffectData
+    {
+        public string text;
+        public string topText;
+        public string detailsTop;
+        public string detailsBottom;
+        public Sprite sprite;
+        public int actorID = 1;
+        public Node node = null;
+        public Condition condition = null;
+        public string help0;                                                //NOTE: help not needed for condition, EffectManager.cs -> SetConditionHelp handles this
+        public string help1;
+        public string help2;
+        public string help3;
+    }
+
     //new classes above here
 }

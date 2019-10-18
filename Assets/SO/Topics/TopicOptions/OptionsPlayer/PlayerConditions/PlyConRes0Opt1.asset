@@ -28,12 +28,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee8aed12e0a78ad4da3de06322d8cc9b, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: '<color=#FFE4B5>Not enough Renown
-
-    (need 2)</color>'
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>Double the dose</color>
+  news: Is [drug] illegal? My [who] takes it all the time and tells me that it isn't
+    but they are totally spaced so who knows, asks [actor] of [node]
+  tooltipHeader: <color=#FFFFE0>Double Dose</color>
+  tooltipMain: "<color=#98FB98>Player loses STRESSED condition<br>Gain Stress Immunity</color>\r\n<color=#FF4500>Player
+    Renown -2</color>\r\n<color=#FF4500>Player medium chance of<br>becoming ADDICTED</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Double the dose</color>
   optionNumber: 1

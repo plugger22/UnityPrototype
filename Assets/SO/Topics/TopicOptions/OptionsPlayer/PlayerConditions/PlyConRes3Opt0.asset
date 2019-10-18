@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Name: PlyConRes3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res3 Opt 0
-  tag: fdg
-  text: 
+  tag: Pay
+  text: Agree to pay
   topic: {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

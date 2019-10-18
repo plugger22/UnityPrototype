@@ -15,7 +15,6 @@ MonoBehaviour:
   text: Your [actor] knows where to find somebody who can cure your [drug] Addiction
   designNotes: 'Player Condition Addicted Resistance 2, Good event
 
-    Set as BAD topic as player mood is always 0 when stresse
 
     Chance of Cure for addiction'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
@@ -41,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 17
-  turnsLive: 1
+  turnsLive: 2
   turnsDone: 0

@@ -12,22 +12,25 @@ MonoBehaviour:
   m_Name: PlyConRes3Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res3 Opt 3
-  tag: dfg
-  text: 
+  tag: Threaten
+  text: Threaten [actor] with violence
   topic: {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Threaten</color>
+  tooltipMain: "<color=#98FB98>Player find Cure for Addiction</color>\r\n<color=#FF4500>FIXER
+    Motivation -2</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Threaten them with violence</color>
   optionNumber: 3

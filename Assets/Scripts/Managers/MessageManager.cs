@@ -3847,15 +3847,16 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Special message used for InfoApp active 'Effects' tab. Usually either actor (actorID 999 for player) OR node based. Itemtext is text.
+    /// Special message used for InfoApp active 'Effects' tab. Usually either actor (actorID 999 for player) OR node based. Itemtext is text. Old version, being phased out. Use new one below.
     /// </summary>
     /// <param name="itemData"></param>
     /// <param name="detailsTop"></param>
     /// <param name="detailsBottom"></param>
     /// <param name="actor"></param>
+    /// <param name="listOfHelp">Provide a list of help strings, eg. 'cure_1' to be displayed</param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null, Condition condition = null)
+    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite,  int actorID = -1, Node node = null, Condition condition = null)
     {
         Debug.Assert(sprite != null, "Invalid spirte (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -3885,6 +3886,73 @@ public class MessageManager : MonoBehaviour
             data.help = 0;
             if (condition != null)
             { SetConditionHelp(condition, data); }
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// New version of Active Effect (uses data package and allows for help). 
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="topText"></param>
+    /// <param name="detailsTop"></param>
+    /// <param name="detailsBottom"></param>
+    /// <param name="sprite"></param>
+    /// <param name="actorID"></param>
+    /// <param name="node"></param>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    public Message ActiveEffect(ActiveEffectData dataEffect)
+    {
+        Debug.Assert(dataEffect.sprite != null, "Invalid spirte (Null)");
+        if (string.IsNullOrEmpty(dataEffect.text) == false)
+        {
+            Message message = new Message();
+            message.text = dataEffect.text;
+            message.type = MessageType.ACTIVE;
+            message.subType = MessageSubType.Active_Effect;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            if (dataEffect.node != null) { message.data0 = dataEffect.node.nodeID; }
+            if (dataEffect.actorID > -1) { message.data1 = dataEffect.actorID; }
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = dataEffect.text;
+            data.topText = dataEffect.topText;
+            data.bottomText = GameManager.instance.itemDataScript.GetActiveEffectDetails(dataEffect.detailsTop, dataEffect.detailsBottom, dataEffect.actorID, dataEffect.node);
+            data.priority = ItemPriority.Low;
+            data.sprite = dataEffect.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.Effects;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            if (dataEffect.node != null)
+            { data.nodeID = dataEffect.node.nodeID; }
+            //help (NOT for conditions, subMethod below handles this)
+            if (string.IsNullOrEmpty(dataEffect.help0) == true)
+            { data.help = 0; }
+            else
+            {
+                data.help = 1;
+                data.tag0 = dataEffect.help0;
+                if (string.IsNullOrEmpty(dataEffect.help1) == false)
+                {
+                    data.tag1 = dataEffect.help1;
+                    if (string.IsNullOrEmpty(dataEffect.help2) == false)
+                    {
+                        data.tag2 = dataEffect.help2;
+                        if (string.IsNullOrEmpty(dataEffect.help3) == false)
+                        { data.tag3 = dataEffect.help3; }
+                    }
+                }
+            }
+            if (dataEffect.condition != null)
+            { SetConditionHelp(dataEffect.condition, data); }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

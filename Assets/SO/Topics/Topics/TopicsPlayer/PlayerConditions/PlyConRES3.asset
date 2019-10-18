@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES3
   m_EditorClassIdentifier: 
   tag: Addiction Cure
-  text: Your [actor] knows where to find somebody who can cure your [drug] Addiction
-    but it's going to cost
+  text: Your [actor] has heard of somebody who might be able to cure your [drug] Addiction
+    but it won't be cheap
   designNotes: 'Player Condition Addicted Resistance 2, Bad event
 
 
@@ -37,16 +37,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 275f151d8fffc1241a66f550010d4fab, type: 2}
   - {fileID: 11400000, guid: b49d996298c7fba46bd436182f169145, type: 2}
   - {fileID: 11400000, guid: b72bacb5fbefe0946b7e3951b699405f, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 17
+  turnsActive: 16
   turnsLive: 1
   turnsDone: 0

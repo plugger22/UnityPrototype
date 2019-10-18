@@ -2583,6 +2583,26 @@ public class DataManager : MonoBehaviour
                 Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
+                //effect tab
+                Condition condition = cure.condition;
+                if (condition != null)
+                {
+                    //message
+                    ActiveEffectData data = new ActiveEffectData()
+                    {
+                        text = string.Format("Cure available for {0} condition", condition.tag),
+                        topText = string.Format("{0} Cure", condition.tag),
+                        detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText),
+                        detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
+                        sprite = GameManager.instance.guiScript.infoSprite,
+                        help0 = "cure_0",
+                        help1 = "cure_1",
+                        help2 = "cure_2",
+                        help3 = "cure_3"
+                    };
+                    GameManager.instance.messageScript.ActiveEffect(data);
+                }
+                else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 return true;
             }
             else
@@ -2615,12 +2635,19 @@ public class DataManager : MonoBehaviour
                     if (condition != null)
                     {
                         //message
-                        string text = string.Format("Cure available for {0} condition", condition.tag);
-                        string header = string.Format("{0} Cure", condition.tag);
-                        string detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText);
-                        string detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText);
-                        Sprite sprite = GameManager.instance.guiScript.infoSprite;
-                        GameManager.instance.messageScript.ActiveEffect(text, header, detailsTop, detailsBottom, sprite, -1, node);
+                        ActiveEffectData data = new ActiveEffectData()
+                        {
+                            text = string.Format("Cure available for {0} condition", condition.tag),
+                            topText = string.Format("{0} Cure", condition.tag),
+                            detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText),
+                            detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
+                            sprite = GameManager.instance.guiScript.infoSprite,
+                            help0 = "cure_0",
+                            help1 = "cure_1",
+                            help2 = "cure_2",
+                            help3 = "cure_3"
+                        };
+                        GameManager.instance.messageScript.ActiveEffect(data);
                     }
                     else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 }

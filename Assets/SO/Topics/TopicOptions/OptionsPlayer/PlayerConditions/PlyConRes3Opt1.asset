@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Name: PlyConRes3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res3 Opt 1
-  tag: dfg
-  text: 
+  tag: Roll Dice
+  text: Roll dice for the information
   topic: {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

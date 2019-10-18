@@ -27,11 +27,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9bfdfae0b54b7ca49bc49c0f5e6e90cc, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: They say that once you're addicted to [drug] it's worse than having a nanoBot
+    go rogue in your guts, says [actor] of [node]
   tooltipHeader: <color=#FFFFE0>Order</color>
-  tooltipMain: "<color=#98FB98>Player loses STRESSED Condition</color>\r\n<color=#FF4500>OPERATOR
+  tooltipMain: "<color=#98FB98>Player loses STRESSED Condition</color>\r\n<color=#FF4500>PLANNER
     Motivation -1</color>\r\n<color=#FF4500>Player low chance of<br>becoming ADDICTED</color>"
-  tooltipDetails: No Mood effect
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Order OPERATOR to give you a dose</color>
+  textToDisplay: <color=#EEFB73>Order PLANNER to give you a dose</color>
   optionNumber: 2
