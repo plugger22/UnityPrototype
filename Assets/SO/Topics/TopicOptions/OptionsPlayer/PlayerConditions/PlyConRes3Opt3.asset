@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Down deep in the carbon mines, that's where [drug] comes from, says [actor],
+    [job] of [node]. The Corps control it all
   tooltipHeader: <color=#FFFFE0>Threaten</color>
   tooltipMain: "<color=#98FB98>Player find Cure for Addiction</color>\r\n<color=#FF4500>FIXER
     Motivation -2</color>"

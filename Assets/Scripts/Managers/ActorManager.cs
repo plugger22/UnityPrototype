@@ -97,6 +97,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int playerAddictedImmuneStart = 6;
     [Tooltip("Minimum amount of time (# of turns) that taking the drug will provide immunity from stress for")]
     [Range(1, 3)] public int playerAddictedImmuneMin = 1;
+    [Tooltip("Number of turns when a player first becomes Addicted that they are exempt from Feeding their addiction")]
+    [Range(0, 5)] public int playerAddictedExempt = 1;
 
     [Header("Stress Leave")]
     [Tooltip("Renown cost for Authority player or actor to take stress leave")]
@@ -6262,8 +6264,10 @@ public class ActorManager : MonoBehaviour
                     //
                     if (GameManager.instance.playerScript.isAddicted == true)
                     {
-                        //immunity period must be zero, eg. effect of previous dose has worn off
-                        if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
+                        //days addicted (this instance)
+                        GameManager.instance.playerScript.addictedTally++;
+                        //immunity period must be zero, eg. effect of previous dose has worn off (there is an initial 2 turn buffer after becoming addicted)
+                        if (GameManager.instance.playerScript.stressImmunityCurrent == 0 && GameManager.instance.playerScript.addictedTally > playerAddictedExempt)
                         {
                             int renownCost = 0;
                             int approvalCost = 0;
@@ -6307,6 +6311,11 @@ public class ActorManager : MonoBehaviour
                             }
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerAddictedDays);
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Tst] ActorManager.cs -> CheckPlayerHuman: Addiction Feed the Need EXEMPT (immunity {0}, addictedTally {1}){2}",
+                                GameManager.instance.playerScript.stressImmunityCurrent, GameManager.instance.playerScript.addictedTally, "\n");
                         }
                     }
                     //

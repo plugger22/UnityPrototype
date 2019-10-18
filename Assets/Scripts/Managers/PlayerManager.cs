@@ -37,6 +37,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isAddicted;                                       //true if player addicted
     [HideInInspector] public int stressImmunityStart;                               //starting value of stressImmunityCurrent (decreases each time drug used)
     [HideInInspector] public int stressImmunityCurrent;                             //dynamic number of turns player is immune from stress (due to drug)
+    [HideInInspector] public int addictedTally;                                     //starts from 0 whenever player becomes addicted (needed to provide a buffer before feed the need kicks in)
     //collections
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
@@ -870,6 +871,7 @@ public class PlayerManager : MonoBehaviour
                                 break;
                             case "ADDICTED":
                                 isAddicted = true;
+                                addictedTally = 0;
                                 GameManager.instance.nodeScript.AddCureNode(conditionAddicted.cure);
                                 break;
                             case "STRESSED":
@@ -1003,6 +1005,7 @@ public class PlayerManager : MonoBehaviour
                                     stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
                                     stressImmunityCurrent = 0;
                                     isAddicted = false;
+                                    addictedTally = 0;
                                     GameManager.instance.nodeScript.RemoveCureNode(conditionAddicted.cure);
                                     break;
                             }
@@ -1026,7 +1029,9 @@ public class PlayerManager : MonoBehaviour
         //message
         string text = string.Format("[Msg] Player takes drugs, current immunity {0} days, start {1} days, addicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
         GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
-        GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+        //effect tab only if right at start of addiction period (messages double up otherwise)
+        if (addictedTally == 0)
+        { GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted); }
         //decrease immunity period after every addiction episode
         stressImmunityStart--;
         //minCap
@@ -1671,6 +1676,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" numOfSuperStressed {0}{1}", numOfSuperStress, "\n");
         builder.AppendFormat(" stressImmunityStart {0}{1}", stressImmunityStart, "\n");
         builder.AppendFormat(" stressImmunityCurrent {0}{1}", stressImmunityCurrent, "\n");
+        builder.AppendFormat(" addictedTally {0}{1}", addictedTally, "\n");
         builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
         builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");

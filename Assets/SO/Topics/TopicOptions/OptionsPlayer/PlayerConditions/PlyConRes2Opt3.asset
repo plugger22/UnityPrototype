@@ -26,12 +26,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Threaten</color>
+  news: You know what happens when the Authority catches you taking [drug], asks [actor]
+    of [node]? They use you as a MedTest dummy
+  tooltipHeader: <color=#FFFFE0>Discipline</color>
   tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
-    find Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>RECRUITER
+    find Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>ANARCHIST
     Motivation -2</color>"
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Threaten violence</color>
+  textToDisplay: <color=#EEFB73>Threaten disciplinary action</color>
   optionNumber: 3

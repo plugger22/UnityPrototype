@@ -4389,7 +4389,7 @@ public class EffectManager : MonoBehaviour
                 case "Add":
                     //activate cure
                     if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true) == true)
-                    { bottomText = string.Format("{0}Cure for {1} Active{2}", colourEffect, condition.tag, colourEnd); }
+                    { bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd); }
                     break;
                 case "Subtract":
                     //deactivate cure
