@@ -1284,7 +1284,7 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "CureAddictedNo":
                                                 //No active cure is present OnMap for Addicted Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionAddicted.cure) == false)
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionAddicted.cure) == true)
                                                 { BuildString(result, "Addicted Cure unavailable"); }
                                                 break;
                                             default:

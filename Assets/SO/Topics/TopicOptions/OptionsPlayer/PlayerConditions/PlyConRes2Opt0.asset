@@ -12,20 +12,27 @@ MonoBehaviour:
   m_Name: PlyConRes2Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res2 Opt 0
-  tag: 
-  text: 
+  tag: Tell Me
+  text: Tell me all about it
   topic: {fileID: 11400000, guid: d3cad132692b2b0489876dc307a59f70, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>Tell me all about it</color>
   optionNumber: 0

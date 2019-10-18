@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Name: PlyConRes3Opt3
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res3 Opt 3
-  tag: 
+  tag: dfg
   text: 
   topic: {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects: []
@@ -28,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

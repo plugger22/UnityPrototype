@@ -3396,3 +3396,8 @@ UnityEngine.Debug:LogWarning(Object)
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:369)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:376)
 	
+Dev seed 35865 -> Friday, 18 October 2019 12:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39692 -> Friday, 18 October 2019 12:20 PM
+City seed 5678 -> London, United Kingdom

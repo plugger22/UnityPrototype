@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Name: PlyConRes2Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res2 Opt 1
-  tag: 
-  text: 
+  tag: Favour
+  text: Could you do me a favour?
   topic: {fileID: 11400000, guid: d3cad132692b2b0489876dc307a59f70, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  listOfCriteria: []
-  listOfGoodEffects: []
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -28,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
