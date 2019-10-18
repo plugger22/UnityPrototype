@@ -17,7 +17,8 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 8492d8cd877fd9f4bb98b85d6ca8185c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  isIgnoreStressEffect: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria:
   - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects:
@@ -29,9 +30,9 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>The Goods</color>
-  tooltipMain: "<color=#98FB98>Player takes illegal Drugs</color>\r\n<color=#FF4500>Player
-    Renown -3</color>\r\n<color=#FF4500>Player ADDICTED Medium chance</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  tooltipMain: "<color=#98FB98>Player loses STRESSED condition<br>Gain Stress Immunity</color>\r\n<color=#FF4500>Player
+    Renown -3</color>\r\n<color=#FF4500>Player medium chance of<br>becoming ADDICTED</color>"
+  tooltipDetails: No Mood effect
   isValid: 1
   textToDisplay: <color=#EEFB73>Wow, give me the goods!</color>
   optionNumber: 1

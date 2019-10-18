@@ -2580,8 +2580,8 @@ public class DataManager : MonoBehaviour
             {
                 cure.isActive = true;
                 //message
-                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
                 return true;
             }
@@ -2590,8 +2590,8 @@ public class DataManager : MonoBehaviour
                 //deactivate cure
                 cure.isActive = false;
                 //message
-                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} Deactivated at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                string text = string.Format("[Msg] Cure Deactivated for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} Deactivated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                string text = string.Format("[Msg] Cure Deactivated for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
                 return true;
             }
@@ -2615,8 +2615,8 @@ public class DataManager : MonoBehaviour
                     if (condition != null)
                     {
                         //message
-                        string text = string.Format("Cure available for {0} condition", condition.name);
-                        string header = string.Format("{0} Cure", condition.name);
+                        string text = string.Format("Cure available for {0} condition", condition.tag);
+                        string header = string.Format("{0} Cure", condition.tag);
                         string detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText);
                         string detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText);
                         Sprite sprite = GameManager.instance.guiScript.infoSprite;
@@ -2624,8 +2624,8 @@ public class DataManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 }
-                else { Debug.LogWarningFormat("Invalid node (Null) for listOfCureNodes[{0}]", i); }
             }
+            else { Debug.LogWarningFormat("Invalid node (Null) for listOfCureNodes[{0}]", i); }
         }
     }
 

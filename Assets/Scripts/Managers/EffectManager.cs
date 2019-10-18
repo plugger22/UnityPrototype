@@ -109,6 +109,7 @@ public class EffectManager : MonoBehaviour
     private string colourNormal;
     private string colourDefault;
     private string colourAlert;
+    private string colourGrey;
     private string colourActor;
     private string colourEnd;
 
@@ -251,6 +252,7 @@ public class EffectManager : MonoBehaviour
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
     #endregion
@@ -2780,7 +2782,7 @@ public class EffectManager : MonoBehaviour
                                 //only add condition if NOT already present
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                                 {
-                                    GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                                    GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
@@ -2788,7 +2790,7 @@ public class EffectManager : MonoBehaviour
                                 //only remove  condition if present
                                 if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                                 {
-                                    GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                                    GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
@@ -2808,7 +2810,7 @@ public class EffectManager : MonoBehaviour
                                     //only add condition if NOT already present
                                     if (actor.CheckConditionPresent(condition) == false)
                                     {
-                                        actor.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                                        actor.AddCondition(condition, string.Format("due to {0}", dataInput.originText));
                                         effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.tag, colourEnd);
                                     }
                                     break;
@@ -2816,7 +2818,7 @@ public class EffectManager : MonoBehaviour
                                     //only remove  condition if present
                                     if (actor.CheckConditionPresent(condition) == true)
                                     {
-                                        actor.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                                        actor.RemoveCondition(condition, string.Format("due to {0}", dataInput.originText));
                                         effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.tag, colourEnd);
                                     }
                                     break;
@@ -2871,7 +2873,7 @@ public class EffectManager : MonoBehaviour
                                         conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                         if (conditionRandom != null)
                                         {
-                                            GameManager.instance.playerScript.AddCondition(conditionRandom, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                                            GameManager.instance.playerScript.AddCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -2883,7 +2885,7 @@ public class EffectManager : MonoBehaviour
                                         if (conditionRandom != null)
                                         {
                                             //remove condition
-                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -2956,7 +2958,7 @@ public class EffectManager : MonoBehaviour
                                             conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                             if (conditionRandom != null)
                                             {
-                                                actor.AddCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
+                                                actor.AddCondition(conditionRandom, string.Format("due to {0}", dataInput.originText));
                                                 effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                             }
                                             else
@@ -2968,7 +2970,7 @@ public class EffectManager : MonoBehaviour
                                             if (conditionRandom != null)
                                             {
                                                 //remove condition
-                                                actor.RemoveCondition(conditionRandom, string.Format("Due to {0}", dataInput.originText));
+                                                actor.RemoveCondition(conditionRandom, string.Format("due to {0}", dataInput.originText));
                                                 effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                             }
                                             else
@@ -3353,10 +3355,10 @@ public class EffectManager : MonoBehaviour
     {
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-        /*effectResolve.topText = "Your beliefs are tested by this action";*/
-        if (effect.belief != null)
+        //dataInput.Data is topic.option.isIgnoreMood
+        if (effect.belief != null && dataInput.data == 0)
         { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
-        else { Debug.LogWarningFormat("Invalid belief (Null) for effect \"{0}\" (not processed)", effect.name); }
+        else { effectResolve.bottomText = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
         return effectResolve;
     }
 
@@ -4325,16 +4327,16 @@ public class EffectManager : MonoBehaviour
                         //only add condition if NOT already present
                         if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                         {
-                            GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
-                            bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.tag, colourEnd);
+                            GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
                         }
                         break;
                     case "Subtract":
                         //only remove condition if present
                         if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                         {
-                            GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("Due to {0}", dataInput.originText));
-                            bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
+                            GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                            bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
                         }
                         break;
                     default:
@@ -4402,7 +4404,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerTakeDrugs(Effect effect)
     {
         GameManager.instance.playerScript.TakeDrugs();
-        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}", colourGood, GameManager.instance.globalScript.tagGlobalDrug,"\n", colourEnd);
+        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.instance.globalScript.tagGlobalDrug,"\n", "\n", colourEnd);
     }
 
     /// <summary>
@@ -4413,7 +4415,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private string ExecutePlayerChanceAddicted(Effect effect, EffectDataInput dataInput)
     {
-        string bottomText = string.Format("{0}Player Not Addicted{1}", colourNeutral, colourEnd);
+        string bottomText = string.Format("{0}Player Not Addicted{1}", colourGood, colourEnd);
         int numNeeded = 0;
         int rnd = Random.Range(0, 100);
         switch (effect.outcome.name)
@@ -4474,7 +4476,7 @@ public class EffectManager : MonoBehaviour
                         //only add condition if NOT already present
                         if (actor.CheckConditionPresent(condition) == false)
                         {
-                            actor.AddCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                            actor.AddCondition(condition, string.Format("due to {0}", dataInput.originText));
                             bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.tag, colourEnd);
                         }
                         break;
@@ -4482,7 +4484,7 @@ public class EffectManager : MonoBehaviour
                         //only remove  condition if present
                         if (actor.CheckConditionPresent(condition) == true)
                         {
-                            actor.RemoveCondition(condition, string.Format("Due to {0}", dataInput.originText));
+                            actor.RemoveCondition(condition, string.Format("due to {0}", dataInput.originText));
                             bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.tag, colourEnd);
                         }
                         break;

@@ -344,7 +344,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerAddictedDetails(int renownCost, int approvalCost, int currentDays)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3}continues unabated</b>{4}{5}", colourNeutral, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
+        builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3} rages unabated</b>{4}{5}", colourNeutral, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
         if (renownCost > 0)
         { builder.AppendFormat("<b>{0}You spend {1} Renown{2}{3}to buy more drugs</b>{4}{5}", colourBad, renownCost, colourEnd, "\n", "\n", "\n"); }
         else { builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",

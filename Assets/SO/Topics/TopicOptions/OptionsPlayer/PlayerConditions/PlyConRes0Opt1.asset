@@ -17,7 +17,8 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 0718926c4761d594fb0ed234aa270ecb, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
-  isIgnoreStressEffect: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria:
   - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects:
@@ -28,10 +29,11 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <color=#FFFFE0>Double Dose</color>
-  tooltipMain: "<color=#98FB98>Player Remove STRESSED condition<br>Gain Immunity</color>\r\n<color=#FF4500>Player
-    Renown -2</color>\r\n<color=#FF4500>Player ADDICTED Medium chance</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +1</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Double it up, I'm feeling lucky</color>
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Double the dose</color>
   optionNumber: 1

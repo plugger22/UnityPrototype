@@ -583,7 +583,7 @@ public class PersonalityManager : MonoBehaviour
 
     /// <summary>
     /// subMethod which returns amount of change, name of determining factor, whether factor needs to be good/bad to have a positive effect and a reason (self contained short summary of the game action)
-    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition
+    /// the Player's equivalent factor and it's strength, eg. 'Openness ++' and whether the mood change did, or will, result in the player gaining the STRESSED condition 
     /// NOTE: method doesn't change player's mood or apply any conditions
     /// </summary>
     /// <param name="type"></param>

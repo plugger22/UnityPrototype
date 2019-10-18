@@ -855,9 +855,9 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             if (isActivated == true)
-            { data.itemText = string.Format("Cure available for your {0} condition", condition.name); }
-            else { data.itemText = string.Format("{0} Cure NO LONGER available", condition.name); }
-            data.topText = string.Format("{0} Cure", condition.name);
+            { data.itemText = string.Format("Cure available for your {0} condition", condition.tag); }
+            else { data.itemText = string.Format("{0} Cure NO LONGER available", condition.tag); }
+            data.topText = string.Format("{0} Cure", condition.tag);
             data.bottomText = GameManager.instance.itemDataScript.GetPlayerCureDetails(node, condition, isActivated);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
@@ -4230,7 +4230,7 @@ public class MessageManager : MonoBehaviour
                 //ItemData
                 ItemData data = new ItemData();
                 if (topicData.optionName.Equals("Ignored", System.StringComparison.Ordinal) == false)
-                { data.itemText = "Event"; }
+                { data.itemText = string.Format("Event '{0}'", topicData.topicName); }
                 else { data.itemText = "Event Ignored"; }
                 data.topText = topicData.topicName;
                 data.bottomText = string.Format("<b>{0}</b>{1}{2}<b>{3}</b>", topicData.optionName, "\n", "\n", topicData.outcome);

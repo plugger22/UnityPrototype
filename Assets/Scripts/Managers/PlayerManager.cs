@@ -1026,6 +1026,7 @@ public class PlayerManager : MonoBehaviour
         //message
         string text = string.Format("[Msg] Player takes drugs, current immunity {0} days, start {1} days, addicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
         GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+        GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
         //decrease immunity period after every addiction episode
         stressImmunityStart--;
         //minCap

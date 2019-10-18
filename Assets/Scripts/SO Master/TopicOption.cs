@@ -26,8 +26,10 @@ public class TopicOption : ScriptableObject
     public bool isPreferredByHQ;
     [Tooltip("Select this if the option is irrelevant to HQ. Doing so will override the HQ Boss's personality preferences and give a 'no opinion' result")]
     public bool isIgnoredByHQ;
-    [Tooltip("If true the random option unavailable due to Player being Sressed effect does NOT apply. Optional (default false, effect applies")]
-    public bool isIgnoreStressEffect;
+    [Tooltip("If true the random option disabled, due to Player being Stressed, effect is unavailable. Optional (default false, effect applies")]
+    public bool isIgnoreStress;
+    [Tooltip("If true Player Mood effects will be ignore and tooltip will show 'No Effect On Player Mood' (default false, effects apply)")]
+    public bool isIgnoreMood;
 
     [Header("Criteria")]
     [Tooltip("Option will show as Greyed text if criteria check fails. At least one option from each topic needs to have Zero criteria so an option is always available. Optional")]

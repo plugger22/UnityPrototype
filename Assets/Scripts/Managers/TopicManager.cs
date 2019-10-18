@@ -2342,7 +2342,7 @@ public class TopicManager : MonoBehaviour
                                             //option text
                                             option.textToDisplay = string.Format("{0}{1}{2}", colourGrey, "Subordinate unavailable", colourEnd);
                                             isProceed = true;
-                                        }                                        
+                                        }
                                     }
                                     else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", option.optionNumber, option.name); }
                                 }
@@ -2467,6 +2467,7 @@ public class TopicManager : MonoBehaviour
                 EffectDataInput dataInput = new EffectDataInput();
                 dataInput.originText = string.Format("Event \'{0}\', {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
+                dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
@@ -3818,7 +3819,8 @@ public class TopicManager : MonoBehaviour
     #region CheckOptionCriteria
     /// <summary>
     /// Check's option criteria (if any) and sets option flag for isValid (passed criteria) or not. If not, option tooltip is set here explaining why it failed criteria check
-    /// Returns true if criteria (if any) passes, false if not. If player STRESSED then a random chance that option will be unavailable
+    /// Returns true if criteria (if any) passes, false if not 
+    /// If player STRESSED then a random chance that option will be unavailable (doesn't apply to options that failed normal check, or if isIgnoreStressCheck true)
     /// NOTE: Option checked for Null by parent method (InitialiseTopicUI)
     /// </summary>
     /// <param name="option"></param>
@@ -3828,37 +3830,37 @@ public class TopicManager : MonoBehaviour
         //determines whether option if viable and can be selected or is greyed out.
         option.isValid = true;
         string effectCriteria = null;
-        //Player NOT stressed, proceed as normal
-        if (GameManager.instance.playerScript.isStressed == false)
+        if (option.listOfCriteria?.Count > 0)
         {
-            if (option.listOfCriteria?.Count > 0)
+            //pass actor to effect criteria check if a valid actorID
+            int actorCurrentSlotID = -1;
+            if (tagActorID > -1)
             {
-
-                //pass actor to effect criteria check if a valid actorID
-                int actorCurrentSlotID = -1;
-                if (tagActorID > -1)
-                {
-                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                    if (actor != null)
-                    { actorCurrentSlotID = actor.slotID; }
-                    else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
-                }
-                CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                {
-                    listOfCriteria = option.listOfCriteria,
-                    actorSlotID = actorCurrentSlotID
-                };
-                effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                if (actor != null)
+                { actorCurrentSlotID = actor.slotID; }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
             }
-        }
-        else
-        {
-            //Player stressed, random chance option unavailable (can be bypassed)
-            if (option.isIgnoreStressEffect == false)
+            CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
-                int rnd = Random.Range(0, 100);
-                if (rnd < chanceStressedNoOption)
-                { effectCriteria = "Player STRESSED"; }
+                listOfCriteria = option.listOfCriteria,
+                actorSlotID = actorCurrentSlotID
+            };
+            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+        }
+        //if no criteria has yet failed
+        if (string.IsNullOrEmpty(effectCriteria) == true)
+        {
+            //player stressed
+            if (GameManager.instance.playerScript.isStressed == true)
+            {
+                //Player stressed, random chance option unavailable (can be bypassed)
+                if (option.isIgnoreStress == false)
+                {
+                    int rnd = Random.Range(0, 100);
+                    if (rnd < chanceStressedNoOption)
+                    { effectCriteria = "Player STRESSED"; }
+                }
             }
         }
         if (string.IsNullOrEmpty(effectCriteria) == false)
@@ -3872,9 +3874,9 @@ public class TopicManager : MonoBehaviour
             //main -> criteria feedback
             option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
             //Details -> derived from option mood Effect
-            if (option.moodEffect != null)
+            if (option.moodEffect != null && option.isIgnoreMood == false)
             { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-            else { option.tooltipDetails = string.Format("{0}No Mood effect{1}", colourGrey, colourEnd); }
+            else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
         }
         return option.isValid;
     }
@@ -3934,9 +3936,9 @@ public class TopicManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
-        if (option.moodEffect != null)
+        if (option.moodEffect != null && option.isIgnoreMood == false)
         { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-        else { option.tooltipDetails = "No Mood effect"; }
+        else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
         return isSucceed;
     }
     #endregion

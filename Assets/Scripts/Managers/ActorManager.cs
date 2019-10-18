@@ -6312,12 +6312,13 @@ public class ActorManager : MonoBehaviour
                     //
                     // - - - On Drugs (may, or may not, be addicted) - - -
                     //
-                    int immuneCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
-                    if (immuneCurrent > 0)
+
+                    if (GameManager.instance.playerScript.stressImmunityCurrent > 0)
                     {
                         //decrement immune period
                         GameManager.instance.playerScript.stressImmunityCurrent--;
                         //message
+                        int immuneCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
                         int immuneStart = GameManager.instance.playerScript.stressImmunityStart;
                         bool isAddicted = GameManager.instance.playerScript.isAddicted;
                         text = string.Format("[Msg] Player Immune to stress for {0} more days, isAddicted {1}{2}", immuneCurrent, immuneStart, isAddicted, "\n");
