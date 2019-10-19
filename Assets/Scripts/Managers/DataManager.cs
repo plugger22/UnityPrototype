@@ -131,6 +131,9 @@ public class DataManager : MonoBehaviour
     private List<string> listOfLostGear = new List<string>();
     private List<string> listOfCurrentGear = new List<string>();                                          //gear held by OnMap resistance player or actors
 
+    //organisations current for campaign
+    private List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
+
     //secret lists
     private List<Secret> listOfPlayerSecrets = new List<Secret>();
     private List<Secret> listOfRevealedSecrets = new List<Secret>();
@@ -6681,6 +6684,25 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, Organisation> GetDictOfOrganisations()
     { return dictOfOrganisations; }
+
+
+    public List<Organisation> GetListOfCurrentOrganisations()
+    { return listOfCurrentOrganisations; }
+
+
+    /// <summary>
+    /// Debug display of all current campaign Organisations
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCurrentOrganisations()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
+        foreach(Organisation org in listOfCurrentOrganisations)
+        { builder.AppendFormat(" {0}, relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Mayors - - -

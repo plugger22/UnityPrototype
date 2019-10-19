@@ -558,6 +558,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = factionScript.Initialise;
         startMethod.className = "FactionManager";
         listOfLevelMethods.Add(startMethod);
+        //Organisation Manager
+        startMethod.handler = orgScript.Initialise;
+        startMethod.className = "OrganisationManager";
+        listOfLevelMethods.Add(startMethod);
         //AI Manager -> after factionScript, before CampaignManager -> InitialiseLate
         startMethod.handler = aiScript.Initialise;
         startMethod.className = "AIManager";

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,6 +13,115 @@ public class OrganisationManager : MonoBehaviour
     [Range(0, 100)] public int baseCityChance = 20;
     [Tooltip("Chance of org in city -> baseCityChance + perNodeChance x number of preferred nodes in city")]
     [Range(0, 10)] public int perNodeChance = 5;
+
+
+    /// <summary>
+    /// Not for GameState.LoadGame
+    /// </summary>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                //SubInitialiseSessionStart();
+                SubInitialiseLevelStart();
+                //SubInitialiseFastAccess();
+                //SubInitialiseLevelAll();
+                break;
+            case GameState.FollowOnInitialisation:
+                //SubInitialiseFollowOn();
+                break;
+            case GameState.LoadAtStart:
+                //SubInitialiseLevelStart();
+                //SubInitialiseFastAccess();
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
+
+    }
+    #endregion
+
+    #region SubInitialiseLevelStart
+    private void SubInitialiseLevelStart()
+    {
+        //get list of all Orgs involved in campaign
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        //empty list just to be sure
+        listOfOrgs.Clear();
+        //load all campaign organisations into list
+        if (listOfOrgs != null)
+        {
+            //cure
+            Organisation org = GameManager.instance.campaignScript.campaign.orgCure;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgCure (Null)"); }
+            //contract
+            org = GameManager.instance.campaignScript.campaign.orgContract;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgContract (Null)"); }
+            //HQ
+            org = GameManager.instance.campaignScript.campaign.orgHQ;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgHQ (Null)"); }
+            //Emergency
+            org = GameManager.instance.campaignScript.campaign.orgEmergency;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgEmergency (Null)"); }
+            //Info
+            org = GameManager.instance.campaignScript.campaign.orgInfo;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgInfo (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+        //initialise orgs in list
+        foreach(Organisation org in listOfOrgs)
+        {
+            org.maxStat = GameManager.instance.actorScript.maxStatValue;
+            org.SetRelationship(2);
+            org.SetDebt(3);
+            org.isContact = false;
+            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n");
+        }
+    }
+    #endregion
+
+    #region SubInitialiseLevelAll
+    private void SubInitialiseLevelAll()
+    {
+
+    }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+
+
+    }
+    #endregion
+
+    #region SubInitialiseFollowOn
+    private void SubInitialiseFollowOn()
+    {
+
+    }
+    #endregion
+
+    #endregion
 
 
     /// <summary>

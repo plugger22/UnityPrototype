@@ -440,6 +440,16 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
+
+            //twentySeventh button
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 25 + button_height * 25, button_width, button_height), "Organisation Data"))
+            {
+                Debug.Log("[Dbg] Button -> Organisation Data");
+                if (debugDisplay != 78)
+                { debugDisplay = 78; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Options (second box)
             //
@@ -1617,6 +1627,12 @@ public class DebugGUI : MonoBehaviour
                     case 77:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.statScript.DebugShowRatios();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Organisation Data
+                    case 78:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayCurrentOrganisations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

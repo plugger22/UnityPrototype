@@ -80,6 +80,9 @@ public class SaveDataData
     public List<string> listOfRevealedSecrets = new List<string>();
     public List<string> listOfDeletedSecrets = new List<string>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
+    //organisations
+    public List<string> listOfCurrentOrganisations = new List<string>();
+    public List<SaveOrganisation> listOfSaveOrganisations = new List<SaveOrganisation>();
     //contacts
     public int contactCounter;
     public List<int> listOfContactPool = new List<int>();
@@ -699,6 +702,21 @@ public class SaveTeam
     public int turnDeployed;
 }
 #endregion
+
+
+#region SaveOrganisation
+/// <summary>
+/// Organisation.SO
+/// </summary>
+[System.Serializable]
+public class SaveOrganisation
+{
+    public string name;
+    public bool isContact;
+    public int reputation;
+    public int debt;
+    public int maxStat;
+}
 
 
 #region SaveTarget

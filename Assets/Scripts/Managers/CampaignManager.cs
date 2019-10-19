@@ -254,6 +254,24 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }*/
         count = 0;
         Array.ForEach(arrayOfStoryStatus, status => builder.AppendFormat(" {0} status: {1}{2}", count++, status, "\n"));
+        //organisations
+        builder.AppendFormat("{0} Organisations{1}", "\n", "\n");
+        Organisation org = campaign.orgCure;
+        if (org != null)
+        { builder.AppendFormat(" orgCure: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        org = campaign.orgContract;
+        if (org != null)
+        { builder.AppendFormat(" orgContract: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        org = campaign.orgHQ;
+        if (org != null)
+        { builder.AppendFormat(" orgHQ: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        org = campaign.orgEmergency;
+        if (org != null)
+        { builder.AppendFormat(" orgEmergency: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        org = campaign.orgInfo;
+        if (org != null)
+        { builder.AppendFormat(" orgInfo: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+
         return builder.ToString();
     }
 

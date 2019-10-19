@@ -444,6 +444,30 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
         #endregion
 
+        #region Organisations
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            foreach(Organisation org in listOfOrgs)
+            {
+                if (org != null)
+                {
+                    write.dataData.listOfCurrentOrganisations.Add(org.name);
+                    SaveOrganisation saveOrg = new SaveOrganisation();
+                    saveOrg.name = org.name;
+                    saveOrg.isContact = org.isContact;
+                    saveOrg.reputation = org.GetRelationship();
+                    saveOrg.debt = org.GetDebt();
+                    saveOrg.maxStat = org.maxStat;
+                    //add to list
+                    write.dataData.listOfSaveOrganisations.Add(saveOrg);
+                }
+                else { Debug.LogError("Invalid org (Null) in listOfCurrentOrganisations"); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+        #endregion
+
         #region contacts
         //
         // - - - Contacts
