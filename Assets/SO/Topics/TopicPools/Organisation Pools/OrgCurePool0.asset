@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
+  m_Name: OrgCurePool0
+  m_EditorClassIdentifier: 
+  tag: Org Cure Pool 0
+  descriptor: 
+  type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
+  subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
+  subSubType: {fileID: 0}
+  listOfTopics:
+  - {fileID: 11400000, guid: 4e08c5768d700fe4dab58a8816c895b1, type: 2}
+  - {fileID: 11400000, guid: 5c1492770336bb44d84a6d92e994af3a, type: 2}
+  listOfSubSubTypePools: []

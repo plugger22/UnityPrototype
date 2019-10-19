@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Name: PlayerStatsPool0
   m_EditorClassIdentifier: 
   tag: Player Stats topic pool 0
-  descriptor: Placeholder pool needed to allow consolidation of subSubType pools into
-    one at session start for validation and operational purposes. The topics within
-    this pool will be removed and serve no purpose other than placeholders (or more
-    likely show topics that were populated into list during the previous session which
-    is handy for debugging)
+  descriptor: 
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   subSubType: {fileID: 0}

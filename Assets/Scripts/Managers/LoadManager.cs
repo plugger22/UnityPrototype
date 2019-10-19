@@ -120,6 +120,11 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsPlayerStats;
     public TopicOption[] arrayOfOptionsResistanceCampaign;
     public TopicOption[] arrayOfOptionsResistanceGeneral;
+    public TopicOption[] arrayOfOptionsOrgCure;
+    public TopicOption[] arrayOfOptionsOrgContract;
+    public TopicOption[] arrayOfOptionsOrgHQ;
+    public TopicOption[] arrayOfOptionsOrgEmergency;
+    public TopicOption[] arrayOfOptionsOrgInfo;
 
     [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
@@ -257,6 +262,11 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsPlayerStats);
         listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
         listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
+        listOfOptions.AddRange(arrayOfOptionsOrgCure);
+        listOfOptions.AddRange(arrayOfOptionsOrgContract);
+        listOfOptions.AddRange(arrayOfOptionsOrgHQ);
+        listOfOptions.AddRange(arrayOfOptionsOrgEmergency);
+        listOfOptions.AddRange(arrayOfOptionsOrgInfo);
         arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - GlobalMeta (not stored in a collection)

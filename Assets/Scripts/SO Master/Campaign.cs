@@ -78,6 +78,18 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool for HQ decisions")]
     public TopicPool hqPool;
 
+    [Header("Organisation Topic Pools")]
+    [Tooltip("Topic pool for Org Cure decisions")]
+    public TopicPool orgCurePool;
+    [Tooltip("Topic pool for Org Contract decisions")]
+    public TopicPool orgContractPool;
+    [Tooltip("Topic pool for Org HQ decisions")]
+    public TopicPool orgHQPool;
+    [Tooltip("Topic pool for Org Emergency decisions")]
+    public TopicPool orgEmergencyPool;
+    [Tooltip("Topic pool for Org Info decisions")]
+    public TopicPool orgInfoPool;
+
     [Header("Organisations")]
     [Tooltip("Org that provides Cures for any condition that needs them")]
     public Organisation orgCure;
