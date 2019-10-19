@@ -294,7 +294,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerImmuneStartDetails(int currentPeriod, bool isAddicted)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>Taking a dose of {0}makes you {1}Immune to Stress{2}</b>{3}{4}", "\n", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Taking a dose of {0}{1}makes you {2}Immune to Stress{3}</b>{4}{5}", GameManager.instance.globalScript.tagGlobalDrug, "\n", colourGood, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
         if (isAddicted == true)
         { builder.AppendFormat("{0}{1}<b>{2}You are ADDICTED{3}</b>", "\n", "\n", colourBad, colourEnd); }

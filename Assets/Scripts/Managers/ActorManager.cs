@@ -98,7 +98,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Minimum amount of time (# of turns) that taking the drug will provide immunity from stress for")]
     [Range(1, 3)] public int playerAddictedImmuneMin = 1;
     [Tooltip("Number of turns when a player first becomes Addicted that they are exempt from Feeding their addiction")]
-    [Range(0, 5)] public int playerAddictedExempt = 1;
+    [Range(0, 5)] public int playerAddictedExempt = 2;
 
     [Header("Stress Leave")]
     [Tooltip("Renown cost for Authority player or actor to take stress leave")]
@@ -6301,7 +6301,7 @@ public class ActorManager : MonoBehaviour
                                 //take the drugs
                                 GameManager.instance.playerScript.TakeDrugs();
                                 //feed the need message
-                                GameManager.instance.messageScript.PlayerAddicted(text, renownCost, approvalCost, GameManager.instance.playerScript.stressImmunityCurrent);
+                                GameManager.instance.messageScript.PlayerAddicted(text, renownCost, approvalCost, GameManager.instance.playerScript.stressImmunityCurrent - 1);
                             }
                             else
                             {
@@ -6323,15 +6323,19 @@ public class ActorManager : MonoBehaviour
                     //
 
                     if (GameManager.instance.playerScript.stressImmunityCurrent > 0)
-                    {
+                    { 
                         //decrement immune period
                         GameManager.instance.playerScript.stressImmunityCurrent--;
                         //message
                         int immuneCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
                         int immuneStart = GameManager.instance.playerScript.stressImmunityStart;
                         bool isAddicted = GameManager.instance.playerScript.isAddicted;
-                        text = string.Format("[Msg] Player Immune to stress for {0} more days, isAddicted {1}{2}", immuneCurrent, immuneStart, isAddicted, "\n");
-                        GameManager.instance.messageScript.PlayerImmuneEffect(text, immuneCurrent, immuneStart, isAddicted);
+                        if (GameManager.instance.playerScript.stressImmunityCurrent > 0)
+                        {
+                            text = string.Format("[Msg] Player Immune to stress for {0} more days, isAddicted {1}{2}", immuneCurrent, immuneStart, isAddicted, "\n");
+                            GameManager.instance.messageScript.PlayerImmuneEffect(text, immuneCurrent, immuneStart, isAddicted);
+                        }
+
                     }
                     //
                     // - - - IMAGED condition - - -

@@ -3811,6 +3811,7 @@ MonoBehaviour:
   playerAddictedRenownCost: 2
   playerAddictedImmuneStart: 6
   playerAddictedImmuneMin: 1
+  playerAddictedExempt: 2
   stressLeaveRenownCostAuthority: 2
   stressLeaveRenownCostResistance: 2
   stressLeaveHQApproval: 1
@@ -3902,6 +3903,7 @@ MonoBehaviour:
   isAddicted: 0
   stressImmunityStart: 0
   stressImmunityCurrent: 0
+  addictedTally: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

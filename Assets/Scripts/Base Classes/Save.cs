@@ -173,6 +173,7 @@ public class SavePlayerData
     public int numOfSuperStress;
     public int stressImmunityCurrent;
     public int stressImmunityStart;
+    public int addictedTally;
     public string profile;
     public string profileDescriptor;
     public string profileExplanation;

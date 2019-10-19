@@ -822,7 +822,7 @@ namespace packageAPI
         public string detailsTop;
         public string detailsBottom;
         public Sprite sprite;
-        public int actorID = 1;
+        public int actorID = -1;
         public Node node = null;
         public Condition condition = null;
         public string help0;                                                //NOTE: help not needed for condition, EffectManager.cs -> SetConditionHelp handles this

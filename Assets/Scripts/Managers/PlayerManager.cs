@@ -1026,12 +1026,19 @@ public class PlayerManager : MonoBehaviour
     public void TakeDrugs()
     {
         stressImmunityCurrent = stressImmunityStart;
-        //message
         string text = string.Format("[Msg] Player takes drugs, current immunity {0} days, start {1} days, addicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
-        GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
-        //effect tab only if right at start of addiction period (messages double up otherwise)
+
+        //message (only if not Addicted)
+        if (isAddicted == false)
+        {
+            GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+            GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+        }
+
+        /*//effect tab only if right at start of addiction period (messages double up otherwise) -> not possible as there is now an exempt period
         if (addictedTally == 0)
-        { GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted); }
+        { GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted); }*/
+
         //decrease immunity period after every addiction episode
         stressImmunityStart--;
         //minCap
