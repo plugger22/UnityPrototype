@@ -705,6 +705,7 @@ public class SaveTeam
 
 
 #region SaveOrganisation
+
 /// <summary>
 /// Organisation.SO
 /// </summary>
@@ -713,10 +714,11 @@ public class SaveOrganisation
 {
     public string name;
     public bool isContact;
-    public int reputation;
-    public int debt;
+    public int relationship;
+    public int freedom;
     public int maxStat;
 }
+#endregion
 
 
 #region SaveTarget

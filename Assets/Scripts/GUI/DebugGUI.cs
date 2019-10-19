@@ -678,11 +678,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Recruit Authority"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Toggle Orgs"))
             {
-                Debug.Log("[Dbg] Button -> Authority Recruit Actor");
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { GameManager.instance.actorScript.RecruitActor(2); }
+                Debug.Log("[Dbg] Button -> Toggle All Organisations (isContact)");
+                GameManager.instance.orgScript.DebugToggleAllOrganisations();
             }
 
             /*//second button

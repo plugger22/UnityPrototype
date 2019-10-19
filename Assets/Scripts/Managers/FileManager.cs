@@ -456,8 +456,8 @@ public class FileManager : MonoBehaviour
                     SaveOrganisation saveOrg = new SaveOrganisation();
                     saveOrg.name = org.name;
                     saveOrg.isContact = org.isContact;
-                    saveOrg.reputation = org.GetRelationship();
-                    saveOrg.debt = org.GetDebt();
+                    saveOrg.relationship = org.GetRelationship();
+                    saveOrg.freedom = org.GetFreedom();
                     saveOrg.maxStat = org.maxStat;
                     //add to list
                     write.dataData.listOfSaveOrganisations.Add(saveOrg);
@@ -1884,6 +1884,45 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
+        #endregion
+
+        #region organisations
+        Dictionary<string, Organisation> dictOfOrgs = GameManager.instance.dataScript.GetDictOfOrganisations();
+        if (dictOfOrgs != null)
+        {
+            string orgName;
+            List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
+            for (int i = 0; i < read.dataData.listOfCurrentOrganisations.Count; i++)
+            {
+                orgName = read.dataData.listOfCurrentOrganisations[i];
+                if (string.IsNullOrEmpty(orgName) == false)
+                {
+                    //get org from dict
+                    Organisation org = GameManager.instance.dataScript.GetOrganisaiton(orgName);
+                    if (org != null)
+                    {
+                        //get dynamic data
+                        SaveOrganisation saveOrg = read.dataData.listOfSaveOrganisations.Find(x => x.name.Equals(orgName, StringComparison.Ordinal));
+                        if (saveOrg != null)
+                        {
+                            //copy across dynamic data
+                            org.isContact = saveOrg.isContact;
+                            org.maxStat = saveOrg.maxStat;
+                            org.SetRelationship(saveOrg.relationship);
+                            org.SetFreedom(saveOrg.freedom);
+                            //add org to list
+                            listOfCurrentOrganisations.Add(org);
+                        }
+                        else { Debug.LogWarningFormat("Invalid saveOrg in listOfSaveOrganisations for orgName \"{0}\"", orgName); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid org (Null) for orgName \"{0}\"", orgName); }
+                }
+                else { Debug.LogWarningFormat("Invalid orgName (Null or Empty) for listOfCurrentOrganisations[{0}]", i); }
+            }
+            //update DM -> listOfCurrentOrganisations
+            GameManager.instance.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
+        }
+        else { Debug.LogError("Invalid dictOfOrganisations (Null)"); }
         #endregion
 
         #region contacts

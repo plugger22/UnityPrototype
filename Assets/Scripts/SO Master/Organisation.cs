@@ -22,7 +22,7 @@ public class Organisation : ScriptableObject
     [HideInInspector] public bool isContact;                //have you made contact with the org?
     [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
     private int relationship;                               //relationship with you (0 to 3)
-    private int debt;                                       //how much debt you are in (0 to 3 where 3 is no debt and 0 is lots of debt)
+    private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)
     
     #endregion
 
@@ -40,8 +40,8 @@ public class Organisation : ScriptableObject
     public int GetRelationship()
     { return relationship; }
 
-    public int GetDebt()
-    {return debt; }
+    public int GetFreedom()
+    {return freedom; }
 
     /// <summary>
     /// Set relationship to a specific value, range checks made and Log msg generated
@@ -56,15 +56,15 @@ public class Organisation : ScriptableObject
     }
 
     /// <summary>
-    /// Set Debt to a specific value, range checks made and Log msg generated
+    /// Set Freedom to a specific value, range checks made and Log msg generated
     /// </summary>
     /// <param name="value"></param>
-    public void SetDebt(int value)
+    public void SetFreedom(int value)
     {
-        int orginalValue = debt;
-        debt = value;
-        debt = Mathf.Clamp(debt, 0, GameManager.instance.actorScript.maxStatValue);
-        Debug.LogFormat("[Org] Organisation.cs -> SetDebt: Debt now {0}, was {1}{2}", debt, orginalValue, "\n");
+        int orginalValue = freedom;
+        freedom = value;
+        freedom = Mathf.Clamp(freedom, 0, GameManager.instance.actorScript.maxStatValue);
+        Debug.LogFormat("[Org] Organisation.cs -> SetFreedom: Freedom now {0}, was {1}{2}", freedom, orginalValue, "\n");
     }
 
     /// <summary>
@@ -80,15 +80,15 @@ public class Organisation : ScriptableObject
     }
 
     /// <summary>
-    /// Change Debt value by an amount, eg. +2, -2, range checks made and Log msg generated
+    /// Change Freedom value by an amount, eg. +2, -2, range checks made and Log msg generated
     /// </summary>
     /// <param name="value"></param>
-    public void ChangeDebt(int change)
+    public void ChangeFreedom(int change)
     {
-        int orginalValue = debt;
-        debt += change;
-        debt = Mathf.Clamp(debt, 0, GameManager.instance.actorScript.maxStatValue);
-        Debug.LogFormat("[Org] Organisation.cs -> ChangeDebt: Debt now {0}, was {1} (change {2}{3}){4}", debt, orginalValue, change > 0 ? "+" : "", change, "\n");
+        int orginalValue = freedom;
+        freedom += change;
+        freedom = Mathf.Clamp(freedom, 0, GameManager.instance.actorScript.maxStatValue);
+        Debug.LogFormat("[Org] Organisation.cs -> ChangeFreedom: Freedom now {0}, was {1} (change {2}{3}){4}", freedom, orginalValue, change > 0 ? "+" : "", change, "\n");
     }
 
     //new methods above here

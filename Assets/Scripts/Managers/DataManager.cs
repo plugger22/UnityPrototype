@@ -6689,6 +6689,40 @@ public class DataManager : MonoBehaviour
     public List<Organisation> GetListOfCurrentOrganisations()
     { return listOfCurrentOrganisations; }
 
+    /// <summary>
+    /// returns Organisation, null if not found
+    /// </summary>
+    /// <param name="orgName"></param>
+    /// <returns></returns>
+    public Organisation GetOrganisaiton(string orgName)
+    {
+        if (string.IsNullOrEmpty(orgName) == false)
+        {
+            if (dictOfOrganisations.ContainsKey(orgName) == true)
+            { return dictOfOrganisations[orgName]; }
+        }
+        else { Debug.LogError("Invalid orgName (Null or Empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Resets listOfCurrentOrganisations to new data. Used for save/load
+    /// </summary>
+    /// <param name="listOfOrgs"></param>
+    public void SetListOfCurrentOrganisation(List<Organisation> listOfOrgs)
+    {
+        if (listOfOrgs != null)
+        {
+            if (listOfOrgs.Count > 0)
+            {
+                if (listOfCurrentOrganisations.Count > 0)
+                { listOfCurrentOrganisations.Clear(); }
+                listOfCurrentOrganisations.AddRange(listOfOrgs);
+            }
+            else { Debug.LogWarning("Invalid listOfOrgs (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfOrgs (Null)"); }
+    }
 
     /// <summary>
     /// Debug display of all current campaign Organisations
@@ -6699,7 +6733,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach(Organisation org in listOfCurrentOrganisations)
-        { builder.AppendFormat(" {0}, relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n"); }
+        { builder.AppendFormat(" {0}, relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
         return builder.ToString();
     }
 

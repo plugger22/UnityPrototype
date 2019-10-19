@@ -92,9 +92,10 @@ public class OrganisationManager : MonoBehaviour
         {
             org.maxStat = GameManager.instance.actorScript.maxStatValue;
             org.SetRelationship(2);
-            org.SetDebt(3);
+            org.SetFreedom(3);
             org.isContact = false;
-            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetDebt(), org.isContact, "\n");
+            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", relationship {1}, freedom {2}, isContact {3}{4}", 
+                org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n");
         }
     }
     #endregion
@@ -162,6 +163,25 @@ public class OrganisationManager : MonoBehaviour
         else { Debug.LogError("Invalid city (Null)"); }
     }
 
-
+    /// <summary>
+    /// Debug method to toggle (eg. isContact = true/false) all current organisations
+    /// </summary>
+    public void DebugToggleAllOrganisations()
+    {
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            foreach (Organisation org in listOfOrgs)
+            {
+                if (org != null)
+                {
+                    if (org.isContact == false)
+                    { org.isContact = true; }
+                    else { org.isContact = false; }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+    }
 
 }
