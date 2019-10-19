@@ -78,6 +78,18 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool for HQ decisions")]
     public TopicPool hqPool;
 
+    [Header("Organisations")]
+    [Tooltip("Org that provides Cures for any condition that needs them")]
+    public Organisation orgCure;
+    [Tooltip("Org that provides Elimination Contracts to permanently remove your subordinates")]
+    public Organisation orgContract;
+    [Tooltip("Org that provides special HQ services such as shutting down investigations")]
+    public Organisation orgHQ;
+    [Tooltip("Org that provides Emergency services such as get out of jail and safe houses during a crackdown")]
+    public Organisation orgEmergency;
+    [Tooltip("Org that provides Information services such as location of Nemesis and the cleansing of secret evidence")]
+    public Organisation orgInfo;
+
 
     public void OnEnable()
     {
