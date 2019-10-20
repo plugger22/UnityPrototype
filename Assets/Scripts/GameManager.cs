@@ -8,6 +8,7 @@ using delegateAPI;
 using System.IO;
 using System.Globalization;
 using modalAPI;
+using System.Text;
 
 public struct StartMethod
 {
@@ -329,6 +330,12 @@ public class GameManager : MonoBehaviour
     #region Start method
     private void Start()
     {
+        //Debug
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 6000; i++)
+        { builder.Append(Random.Range(0, 2)); }
+        File.AppendAllText("Digital.txt", builder.ToString());
+
         inputScript.GameState = GameState.StartUp;
         //global methods
         if (isPerformanceLog == false)
