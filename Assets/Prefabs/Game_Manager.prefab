@@ -896,6 +896,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f130a4bbb2686b843b0e6d7eb467f663, type: 2}
   - {fileID: 11400000, guid: eca587c0033d9294182caaa2fe750db6, type: 2}
   - {fileID: 11400000, guid: 6e0e00a6f85c2a14ea2400cc9161d321, type: 2}
+  - {fileID: 11400000, guid: 0d516ffa1f5a5df4482fe8dad50e51a4, type: 2}
+  - {fileID: 11400000, guid: e02f228956e18384f8aec6c5eeb489ff, type: 2}
+  - {fileID: 11400000, guid: 7571aa3dc6cc0ab40a75833810712a77, type: 2}
+  - {fileID: 11400000, guid: ca5de455bd731ba4fb71ae5018174366, type: 2}
+  - {fileID: 11400000, guid: daa2f0f0273aaea4b9ed981af12aaa6b, type: 2}
+  - {fileID: 11400000, guid: 555494b004899184295d9437a4c3409a, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -918,6 +924,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   - {fileID: 11400000, guid: 00cda76d6950a004982fd85fb714112a, type: 2}
   - {fileID: 11400000, guid: 2552e4d12f1d43443843ac2cf1cde56c, type: 2}
+  - {fileID: 11400000, guid: 1a5c2021038cc5e4a89125af9d18b1a7, type: 2}
   arrayOfEffectCriteria:
   - {fileID: 11400000, guid: 4156867dcd5429d44b2bce2d0e57ba17, type: 2}
   - {fileID: 11400000, guid: cf045b96e0c2b72428e4ded964a3b2af, type: 2}
@@ -1022,6 +1029,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907c54c2b7c50534aac854b6e7532ffd, type: 2}
   - {fileID: 11400000, guid: 52027038287d0a5448be473767d5061b, type: 2}
   - {fileID: 11400000, guid: b82abf83956d1b04b8f43c2b7fed2154, type: 2}
+  - {fileID: 11400000, guid: 1b9e5292687febf4cb7e821a6db0cd34, type: 2}
+  - {fileID: 11400000, guid: c9b5517a4f69a5b46963d68c64523722, type: 2}
+  - {fileID: 11400000, guid: abaa8673bff83a942a4780158fe76253, type: 2}
+  - {fileID: 11400000, guid: 3c77df686565634479870306d270d6c6, type: 2}
+  - {fileID: 11400000, guid: f3ab876179e69704eb1463e25fddb603, type: 2}
+  - {fileID: 11400000, guid: 1cbb44d6360453242b4486cc25e9bd52, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -3651,7 +3664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4479,6 +4492,13 @@ MonoBehaviour:
   playerStatsSubType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
   playerConditionsSubType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0,
     type: 2}
+  organisationType: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
+  orgCureSubType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
+  orgContractSubType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
+  orgHQSubType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
+  orgEmergencySubType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64,
+    type: 2}
+  orgInfoSubType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
   cityType: {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
   citySubType: {fileID: 11400000, guid: ad400c096a7931d47abb21235b048db5, type: 2}
   normalProfile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}

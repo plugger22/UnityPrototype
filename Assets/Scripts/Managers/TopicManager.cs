@@ -5302,30 +5302,33 @@ public class TopicManager : MonoBehaviour
                 case "HQ":
                     break;
                 case "Organisation":
+                    Organisation org = null;
                     switch (turnTopicSubType.name)
                     {
-                        case "OrgCure":
-                            turnSprite = GameManager.instance.campaignScript.campaign.orgCure.sprite;
-                            tagSpriteName = tagOrganisation;
-                            break;
-                        case "OrgContract":
-                            turnSprite = GameManager.instance.campaignScript.campaign.orgContract.sprite;
-                            tagSpriteName = tagOrganisation;
-                            break;
-                        case "OrgHQ":
-                            turnSprite = GameManager.instance.campaignScript.campaign.orgHQ.sprite;
-                            tagSpriteName = tagOrganisation;
-                            break;
-                        case "OrgEmergency":
-                            turnSprite = GameManager.instance.campaignScript.campaign.orgEmergency.sprite;
-                            tagSpriteName = tagOrganisation;
-                            break;
-                        case "OrgInfo":
-                            turnSprite = GameManager.instance.campaignScript.campaign.orgInfo.sprite;
-                            tagSpriteName = tagOrganisation;
-                            break;
+                        case "OrgCure": org = GameManager.instance.campaignScript.campaign.orgCure;  break;
+                        case "OrgContract": org = GameManager.instance.campaignScript.campaign.orgContract; break;
+                        case "OrgHQ": org = GameManager.instance.campaignScript.campaign.orgHQ; break;
+                        case "OrgEmergency": org = GameManager.instance.campaignScript.campaign.orgEmergency; break;
+                        case "OrgInfo": org = GameManager.instance.campaignScript.campaign.orgInfo; break;
                         default: Debug.LogWarningFormat("Unrecognised turnTopicSubType.name \"{0}\"", turnTopicSubType.name); break;
                     }
+                    if (org != null)
+                    {
+                        turnSprite = org.sprite;
+                        tagSpriteName = org.tag;
+                        //tooltip
+                        Tuple<string, string> resultsOrg = GetOrgTooltip(org);
+                        if (string.IsNullOrEmpty(resultsOrg.Item1) == false)
+                        {
+                            //tooltipMain
+                            data.imageTooltipMain = resultsOrg.Item1;
+                            //main present -> Add tooltip header (Org name)
+                            data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tagOrganisation, colourEnd);
+                        }
+                        if (string.IsNullOrEmpty(resultsOrg.Item2) == false)
+                        { data.imageTooltipDetails = resultsOrg.Item2; }
+                    }
+                    else { Debug.LogWarningFormat("Invalid org (Null) for {0}", turnTopicSubType.name); }
                     break;
                 case "Player":
                     string tooltipName = GameManager.instance.playerScript.PlayerName;
@@ -5518,6 +5521,48 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid turnTopicSubType (Null)"); }
+        return new Tuple<string, string>(textMain, textDetails);
+    }
+    #endregion
+
+    #region GetOrgTooltip
+    /// <summary>
+    /// Returns tooltip main and details for various org subTypes (Relationship). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// NOTE: Organisation checked for null by parent method
+    /// </summary>
+    /// <param name="org"></param>
+    /// <returns></returns>
+    Tuple<string, string> GetOrgTooltip(Organisation org)
+    {
+        string textMain = "";
+        string textDetails = "";
+        StringBuilder builder = new StringBuilder();
+        //info on whether topic is good or bad and why
+        switch (turnTopic.group.name)
+        {
+            case "Good":
+                textMain = string.Format("{0}<size=115%>GOOD{1}{2}{3}Event</size>{4}", colourGood, colourEnd, "\n", colourNormal, colourEnd);
+                break;
+            case "Bad":
+                textMain = string.Format("{0}<size=115%>BAD{1}{2}{3}Event</size>{4}", colourBad, colourEnd, "\n", colourNormal, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
+        }
+        //details
+        int relationship = org.GetRelationship();
+        int oddsGood = chanceNeutralGood;
+        int oddsBad = 100 - chanceNeutralGood;
+        builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Relationship</size>{6}{7}", "\n", colourAlert, org.tag, colourEnd, "\n", colourNeutral, colourEnd, "\n");
+        //highlight current reputation band, grey out the rest
+        if (relationship == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+        else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
+
+        if (relationship == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+        else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
+
+        if (relationship < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
+        else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
+        textDetails = builder.ToString();
         return new Tuple<string, string>(textMain, textDetails);
     }
     #endregion

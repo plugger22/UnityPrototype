@@ -1075,7 +1075,7 @@ public class DebugGUI : MonoBehaviour
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.playerScript.DebugDisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 700), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:
@@ -1536,7 +1536,7 @@ public class DebugGUI : MonoBehaviour
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.topicScript.DebugDisplayTopicTypes();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 750), analysis, customBackground);
                         break;
                     //Topic Type lists
                     case 63:

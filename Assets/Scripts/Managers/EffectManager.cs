@@ -1153,6 +1153,9 @@ public class EffectManager : MonoBehaviour
                                             case "TopicPlayer":
                                                 isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.playerType, turn);
                                                 break;
+                                            case "TopicOrganisation":
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.organisationType, turn);
+                                                break;
                                             default:
                                                 Debug.LogWarning(string.Format("Topic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
                                                 errorFlag = true;
@@ -1268,6 +1271,39 @@ public class EffectManager : MonoBehaviour
                                             case "RatioPlayAddictHigh":
                                                 if (GameManager.instance.statScript.ratioPlayerAddictedDays < ratioPlayAddictHigh)
                                                 { BuildString(result, "Insufficient Player Addicted Days for High"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        break;
+                                    //
+                                    // - - - Organisation - - -
+                                    //
+                                    case "Organisation":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "OrgCureKnown":
+                                                if (GameManager.instance.campaignScript.campaign.orgCure.isContact == false)
+                                                { BuildString(result, "No contact with Organisation"); }
+                                                break;
+                                            case "OrgContractKnown":
+                                                if (GameManager.instance.campaignScript.campaign.orgContract.isContact == false)
+                                                { BuildString(result, "No contact with Organisation"); }
+                                                break;
+                                            case "OrgHQKnown":
+                                                if (GameManager.instance.campaignScript.campaign.orgHQ.isContact == false)
+                                                { BuildString(result, "No contact with Organisation"); }
+                                                break;
+                                            case "OrgEmergencyKnown":
+                                                if (GameManager.instance.campaignScript.campaign.orgEmergency.isContact == false)
+                                                { BuildString(result, "No contact with Organisation"); }
+                                                break;
+                                            case "OrgInfoKnown":
+                                                if (GameManager.instance.campaignScript.campaign.orgInfo.isContact == false)
+                                                { BuildString(result, "No contact with Organisation"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
@@ -4330,29 +4366,29 @@ public class EffectManager : MonoBehaviour
             if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
             {*/
 
-                //Player Condition
-                switch (effect.operand.name)
-                {
-                    case "Add":
-                        //only add condition if NOT already present
-                        if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
-                        {
-                            GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
-                            bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
-                        }
-                        break;
-                    case "Subtract":
-                        //only remove condition if present
-                        if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
-                        {
-                            GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
-                            bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
-                        }
-                        break;
-                    default:
-                        Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
-                        break;
-                }
+            //Player Condition
+            switch (effect.operand.name)
+            {
+                case "Add":
+                    //only add condition if NOT already present
+                    if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
+                    {
+                        GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                        bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
+                    }
+                    break;
+                case "Subtract":
+                    //only remove condition if present
+                    if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
+                    {
+                        GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                        bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
+                    }
+                    break;
+                default:
+                    Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
+                    break;
+            }
 
             /*}*/
         }
@@ -4414,7 +4450,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerTakeDrugs(Effect effect)
     {
         GameManager.instance.playerScript.TakeDrugs();
-        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.instance.globalScript.tagGlobalDrug,"\n", "\n", colourEnd);
+        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.instance.globalScript.tagGlobalDrug, "\n", "\n", colourEnd);
     }
 
     /// <summary>

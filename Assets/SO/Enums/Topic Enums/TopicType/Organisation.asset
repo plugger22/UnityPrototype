@@ -21,5 +21,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
   - {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0d516ffa1f5a5df4482fe8dad50e51a4, type: 2}
   minInterval: 0

@@ -77,6 +77,19 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType playerConditionsSubType;
 
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType organisationType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType orgCureSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType orgContractSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType orgHQSubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType orgEmergencySubType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType orgInfoSubType;
+
     [Header("City.SO Pool Criteria")]
     [Tooltip("TopicType for City.SO pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType cityType;
@@ -371,6 +384,45 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid actorPoliticSubType (Null)"); }
         }
         else { Debug.LogError("Invalid actorType (Null)"); }
+        //subType checks -> Organisation
+        if (organisationType != null)
+        {
+            //orgCure
+            if (orgCureSubType != null)
+            {
+                if (organisationType.listOfSubTypes.Exists(x => x.name.Equals(orgCureSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: orgCureSubType \"{0}\" Does Not Match organisationType \"{1}\"{2}", orgCureSubType.name, organisationType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid orgCureSubType (Null)"); }
+            //orgContract
+            if (orgContractSubType != null)
+            {
+                if (organisationType.listOfSubTypes.Exists(x => x.name.Equals(orgContractSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: orgContractSubType \"{0}\" Does Not Match organisationType \"{1}\"{2}", orgContractSubType.name, organisationType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid orgContractSubType (Null)"); }
+            //orgHQ
+            if (orgHQSubType != null)
+            {
+                if (organisationType.listOfSubTypes.Exists(x => x.name.Equals(orgHQSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: orgHQSubType \"{0}\" Does Not Match organisationType \"{1}\"{2}", orgHQSubType.name, organisationType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid orgHQSubType (Null)"); }
+            //orgEmergency
+            if (orgEmergencySubType != null)
+            {
+                if (organisationType.listOfSubTypes.Exists(x => x.name.Equals(orgEmergencySubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: orgEmergencySubType \"{0}\" Does Not Match organisationType \"{1}\"{2}", orgEmergencySubType.name, organisationType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid orgEmergencySubType (Null)"); }
+            //orgInfo
+            if (orgInfoSubType != null)
+            {
+                if (organisationType.listOfSubTypes.Exists(x => x.name.Equals(orgInfoSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: orgInfoSubType \"{0}\" Does Not Match organisationType \"{1}\"{2}", orgInfoSubType.name, organisationType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid orgInfoSubType (Null)"); }
+        }
     }
     #endregion
 
@@ -1207,6 +1259,21 @@ public class ValidationManager : MonoBehaviour
                         //Player Conditions Pool
                         if (campaign.playerConditionsPool != null)
                         { CheckCampaignPool(campaign, campaign.playerConditionsPool, playerConditionsSubType); }
+                        //OrgCure Pool
+                        if (campaign.orgCurePool != null)
+                        { CheckCampaignPool(campaign, campaign.orgCurePool, orgCureSubType); }
+                        //OrgContract Pool
+                        if (campaign.orgContractPool != null)
+                        { CheckCampaignPool(campaign, campaign.orgContractPool, orgContractSubType); }
+                        //OrgHQ Pool
+                        if (campaign.orgHQPool != null)
+                        { CheckCampaignPool(campaign, campaign.orgHQPool, orgHQSubType); }
+                        //OrgEmergency Pool
+                        if (campaign.orgEmergencyPool != null)
+                        { CheckCampaignPool(campaign, campaign.orgEmergencyPool, orgEmergencySubType); }
+                        //OrgInfo Pool
+                        if (campaign.orgInfoPool != null)
+                        { CheckCampaignPool(campaign, campaign.orgInfoPool, orgInfoSubType); }
                         //
                         // - - - Scenario side and City pools (topics in pool correct side check only)
                         //
