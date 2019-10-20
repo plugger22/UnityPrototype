@@ -23,7 +23,7 @@ public class Organisation : ScriptableObject
     #region Save Data compatible
     [HideInInspector] public bool isContact;                //have you made contact with the org?
     [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
-    private int relationship;                               //relationship with you (0 to 3)
+    private int reputation;                                 //reputation with you (0 to 3)
     private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)   
     #endregion
 
@@ -39,22 +39,22 @@ public class Organisation : ScriptableObject
     }
 
 
-    public int GetRelationship()
-    { return relationship; }
+    public int GetReputation()
+    { return reputation; }
 
     public int GetFreedom()
     {return freedom; }
 
     /// <summary>
-    /// Set relationship to a specific value, range checks made and Log msg generated
+    /// Set reputation to a specific value, range checks made and Log msg generated
     /// </summary>
     /// <param name="value"></param>
-    public void SetRelationship(int value)
+    public void SetReputation(int value)
     {
-        int orginalValue = relationship;
-        relationship = value;
-        relationship = Mathf.Clamp(relationship, 0, GameManager.instance.actorScript.maxStatValue);
-        Debug.LogFormat("[Org] Organisation.cs -> SetRelationship: Relationship now {0}, was {1}{2}", relationship, orginalValue, "\n");
+        int orginalValue = reputation;
+        reputation = value;
+        reputation = Mathf.Clamp(reputation, 0, GameManager.instance.actorScript.maxStatValue);
+        Debug.LogFormat("[Org] Organisation.cs -> SetReputation: Reputation now {0}, was {1}{2}", reputation, orginalValue, "\n");
     }
 
     /// <summary>
@@ -70,15 +70,15 @@ public class Organisation : ScriptableObject
     }
 
     /// <summary>
-    /// Change Relationship value by an amount, eg. +2, -2, range checks and Log msg generated
+    /// Change Reputation value by an amount, eg. +2, -2, range checks and Log msg generated
     /// </summary>
     /// <param name="change"></param>
-    public void ChangeRelationship(int change)
+    public void ChangeReputation(int change)
     {
-        int orginalValue = relationship;
-        relationship += change;
-        relationship = Mathf.Clamp(relationship, 0, GameManager.instance.actorScript.maxStatValue);
-        Debug.LogFormat("[Org] Organisation.cs -> ChangeRelationship: Relationship now {0}, was {1} (change {2}{3}){4}", relationship, orginalValue, change > 0 ? "+" : "", change, "\n");
+        int orginalValue = reputation;
+        reputation += change;
+        reputation = Mathf.Clamp(reputation, 0, GameManager.instance.actorScript.maxStatValue);
+        Debug.LogFormat("[Org] Organisation.cs -> ChangeReputation: Reputation now {0}, was {1} (change {2}{3}){4}", reputation, orginalValue, change > 0 ? "+" : "", change, "\n");
     }
 
     /// <summary>

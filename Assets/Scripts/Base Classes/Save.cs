@@ -714,7 +714,7 @@ public class SaveOrganisation
 {
     public string name;
     public bool isContact;
-    public int relationship;
+    public int reputation;
     public int freedom;
     public int maxStat;
 }

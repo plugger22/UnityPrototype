@@ -456,7 +456,7 @@ public class FileManager : MonoBehaviour
                     SaveOrganisation saveOrg = new SaveOrganisation();
                     saveOrg.name = org.name;
                     saveOrg.isContact = org.isContact;
-                    saveOrg.relationship = org.GetRelationship();
+                    saveOrg.reputation = org.GetReputation();
                     saveOrg.freedom = org.GetFreedom();
                     saveOrg.maxStat = org.maxStat;
                     //add to list
@@ -1908,7 +1908,7 @@ public class FileManager : MonoBehaviour
                             //copy across dynamic data
                             org.isContact = saveOrg.isContact;
                             org.maxStat = saveOrg.maxStat;
-                            org.SetRelationship(saveOrg.relationship);
+                            org.SetReputation(saveOrg.reputation);
                             org.SetFreedom(saveOrg.freedom);
                             //add org to list
                             listOfCurrentOrganisations.Add(org);

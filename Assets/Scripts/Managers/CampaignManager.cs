@@ -258,19 +258,19 @@ public class CampaignManager : MonoBehaviour
         builder.AppendFormat("{0} Organisations{1}", "\n", "\n");
         Organisation org = campaign.orgCure;
         if (org != null)
-        { builder.AppendFormat(" orgCure: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" orgCure: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         org = campaign.orgContract;
         if (org != null)
-        { builder.AppendFormat(" orgContract: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" orgContract: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         org = campaign.orgHQ;
         if (org != null)
-        { builder.AppendFormat(" orgHQ: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" orgHQ: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         org = campaign.orgEmergency;
         if (org != null)
-        { builder.AppendFormat(" orgEmergency: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" orgEmergency: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         org = campaign.orgInfo;
         if (org != null)
-        { builder.AppendFormat(" orgInfo: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" orgInfo: {0}, rel {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
 
         return builder.ToString();
     }

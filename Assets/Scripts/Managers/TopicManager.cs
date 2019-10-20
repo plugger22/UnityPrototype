@@ -1524,23 +1524,23 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "OrgCure":
-                        //based on your Relationship with Organisation
+                        //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgCureTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "OrgContract":
-                        //based on your Relationship with Organisation
+                        //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgContractTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "OrgHQ":
-                        //based on your Relationship with Organisation
+                        //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgHQTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "OrgEmergency":
-                        //based on your Relationship with Organisation
+                        //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgEmergencyTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "OrgInfo":
-                        //based on your Relationship with Organisation
+                        //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgInfoTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
@@ -2151,7 +2151,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgCureTopics
     /// <summary>
-    /// subType orgCure templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// subType orgCure templates selected based on player Reputation with org. Returns a list of suitable Live topics. Returns Empty if none found
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2167,8 +2167,8 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrganisation = org.tag;
-            //group based on player's relationship with Organisation
-            group = GetGroupMood(org.GetRelationship());
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -2183,7 +2183,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgContractTopics
     /// <summary>
-    /// subType orgContract templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// subType orgContract templates selected based on player Reputation with org. Returns a list of suitable Live topics. Returns Empty if none found
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2199,8 +2199,8 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrganisation = org.tag;
-            //group based on player's relationship with Organisation
-            group = GetGroupMood(org.GetRelationship());
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -2215,7 +2215,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgHQTopics
     /// <summary>
-    /// subType orgHQ templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// subType orgHQ templates selected based on player Reputation with org. Returns a list of suitable Live topics. Returns Empty if none found
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2231,8 +2231,8 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrganisation = org.tag;
-            //group based on player's relationship with Organisation
-            group = GetGroupMood(org.GetRelationship());
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -2247,7 +2247,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgEmergencyTopics
     /// <summary>
-    /// subType orgEmergency templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// subType orgEmergency templates selected based on player Reputation with org. Returns a list of suitable Live topics. Returns Empty if none found
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2263,8 +2263,8 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrganisation = org.tag;
-            //group based on player's relationship with Organisation
-            group = GetGroupMood(org.GetRelationship());
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -2279,7 +2279,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgInfoTopics
     /// <summary>
-    /// subType orgInfo templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// subType orgInfo templates selected based on player Reputation with org. Returns a list of suitable Live topics. Returns Empty if none found
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2295,8 +2295,8 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrganisation = org.tag;
-            //group based on player's relationship with Organisation
-            group = GetGroupMood(org.GetRelationship());
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -5527,7 +5527,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetOrgTooltip
     /// <summary>
-    /// Returns tooltip main and details for various org subTypes (Relationship). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// Returns tooltip main and details for various org subTypes (Reputation). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
     /// NOTE: Organisation checked for null by parent method
     /// </summary>
     /// <param name="org"></param>
@@ -5549,18 +5549,18 @@ public class TopicManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
         }
         //details
-        int relationship = org.GetRelationship();
+        int reputation = org.GetReputation();
         int oddsGood = chanceNeutralGood;
         int oddsBad = 100 - chanceNeutralGood;
-        builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Relationship</size>{6}{7}", "\n", colourAlert, org.tag, colourEnd, "\n", colourNeutral, colourEnd, "\n");
+        builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Reputation</size>{6}{7}", "\n", colourAlert, org.tag, colourEnd, "\n", colourNeutral, colourEnd, "\n");
         //highlight current reputation band, grey out the rest
-        if (relationship == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+        if (reputation == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
         else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
 
-        if (relationship == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+        if (reputation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
         else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
 
-        if (relationship < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
+        if (reputation < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
         else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
         textDetails = builder.ToString();
         return new Tuple<string, string>(textMain, textDetails);

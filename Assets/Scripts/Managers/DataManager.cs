@@ -6733,7 +6733,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach(Organisation org in listOfCurrentOrganisations)
-        { builder.AppendFormat(" {0}, relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetRelationship(), org.GetFreedom(), org.isContact, "\n"); }
+        { builder.AppendFormat(" {0}, relationship {1}, debt {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
         return builder.ToString();
     }
 
