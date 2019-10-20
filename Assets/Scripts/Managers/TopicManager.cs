@@ -783,6 +783,71 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "OrgCure":
+                                                        if (campaign.orgCurePool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.orgCurePool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.orgCurePool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgCurePool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.orgCurePool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
+                                                    case "OrgContract":
+                                                        if (campaign.orgContractPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.orgContractPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.orgContractPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgContractPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.orgContractPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
+                                                    case "OrgHQ":
+                                                        if (campaign.orgHQPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.orgHQPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.orgHQPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgHQPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.orgHQPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
+                                                    case "OrgEmergency":
+                                                        if (campaign.orgEmergencyPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.orgEmergencyPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.orgEmergencyPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgEmergencyPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.orgEmergencyPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
+                                                    case "OrgInfo":
+                                                        if (campaign.orgInfoPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.orgInfoPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.orgInfoPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgInfoPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.orgInfoPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     default:
                                                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topicType \"{1}\"", topicSubType.name, topicType.name);
                                                         break;
@@ -1456,6 +1521,26 @@ public class TopicManager : MonoBehaviour
                         //based on player Mood
                         listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
+                    case "OrgCure":
+                        //based on your Relationship with Organisation
+                        listOfPotentialTopics = GetOrgCureTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "OrgContract":
+                        //based on your Relationship with Organisation
+                        listOfPotentialTopics = GetOrgContractTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "OrgHQ":
+                        //based on your Relationship with Organisation
+                        listOfPotentialTopics = GetOrgHQTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "OrgEmergency":
+                        //based on your Relationship with Organisation
+                        listOfPotentialTopics = GetOrgEmergencyTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "OrgInfo":
+                        //based on your Relationship with Organisation
+                        listOfPotentialTopics = GetOrgInfoTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
                         break;
@@ -2062,16 +2147,32 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region GetAuthorityTeamTopics
     /// <summary>
-    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
-    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// subType orgCure templates selected based on player Relationship with org
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
     /// <param name="playerSide"></param>
     /// <param name="subTypeName"></param>
     /// <returns></returns>
-    private List<Topic> GetAuthorityTeamTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    #region GetOrgCureTopics
+    private List<Topic> GetOrgCureTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        return listOfTopics;
+    }
+
+        #region GetAuthorityTeamTopics
+        /// <summary>
+        /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+        /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+        /// </summary>
+        /// <param name="listOfSubTypeTopics"></param>
+        /// <param name="playerSide"></param>
+        /// <param name="subTypeName"></param>
+        /// <returns></returns>
+        private List<Topic> GetAuthorityTeamTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         int count;
         GroupType group = GroupType.Neutral;
@@ -2143,6 +2244,8 @@ public class TopicManager : MonoBehaviour
         return listOfTopics;
     }
     #endregion
+
+
 
     #endregion
 
