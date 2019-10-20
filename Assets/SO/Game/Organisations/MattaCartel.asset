@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: International synth drug cartel
   tag: Matta Cartel
+  sprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
   nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+  isContact: 0
+  maxStat: 3

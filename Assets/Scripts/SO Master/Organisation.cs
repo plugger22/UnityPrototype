@@ -13,6 +13,8 @@ public class Organisation : ScriptableObject
     public string descriptor;
     [Tooltip("In game name")]
     public string tag;
+    [Tooltip("Sprite")]
+    public Sprite sprite;
 
     [Tooltip("Preferred node type for this Organisation. The more of this type of node the greater the chance of an organisation being present in a city")]
     public NodeArc nodeArc;
@@ -22,8 +24,7 @@ public class Organisation : ScriptableObject
     [HideInInspector] public bool isContact;                //have you made contact with the org?
     [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
     private int relationship;                               //relationship with you (0 to 3)
-    private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)
-    
+    private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)   
     #endregion
 
 
@@ -34,6 +35,7 @@ public class Organisation : ScriptableObject
         Debug.Assert(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty)");
         Debug.Assert(nodeArc != null, "Invalid nodeArc (Null)");
+        Debug.Assert(sprite != null, "Invalid sprite (Null)");
     }
 
 

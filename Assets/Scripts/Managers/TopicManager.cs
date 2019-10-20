@@ -162,6 +162,7 @@ public class TopicManager : MonoBehaviour
     private string tagSpriteName;
     private string tagOptionText;           //option.text after CheckTopicText
     private string tagOutcome;
+    private string tagOrganisation;         //name of organisation
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1290,6 +1291,7 @@ public class TopicManager : MonoBehaviour
         tagTarget = "";
         tagTeam = "";
         tagOutcome = "";
+        tagOrganisation = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -2147,32 +2149,176 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region GetOrgCureTopics
     /// <summary>
-    /// subType orgCure templates selected based on player Relationship with org
+    /// subType orgCure templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
     /// <param name="playerSide"></param>
     /// <param name="subTypeName"></param>
     /// <returns></returns>
-    #region GetOrgCureTopics
     private List<Topic> GetOrgCureTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
+        Organisation org = GameManager.instance.campaignScript.campaign.orgCure;
+        if (org != null)
+        {
+            tagOrganisation = org.tag;
+            //group based on player's relationship with Organisation
+            group = GetGroupMood(org.GetRelationship());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgCure (Null)");
+            listOfTopics.Clear();
+        }
         return listOfTopics;
     }
+    #endregion
 
-        #region GetAuthorityTeamTopics
-        /// <summary>
-        /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
-        /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
-        /// </summary>
-        /// <param name="listOfSubTypeTopics"></param>
-        /// <param name="playerSide"></param>
-        /// <param name="subTypeName"></param>
-        /// <returns></returns>
-        private List<Topic> GetAuthorityTeamTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    #region GetOrgContractTopics
+    /// <summary>
+    /// subType orgContract templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetOrgContractTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        Organisation org = GameManager.instance.campaignScript.campaign.orgContract;
+        if (org != null)
+        {
+            tagOrganisation = org.tag;
+            //group based on player's relationship with Organisation
+            group = GetGroupMood(org.GetRelationship());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgContract (Null)");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetOrgHQTopics
+    /// <summary>
+    /// subType orgHQ templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetOrgHQTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        Organisation org = GameManager.instance.campaignScript.campaign.orgHQ;
+        if (org != null)
+        {
+            tagOrganisation = org.tag;
+            //group based on player's relationship with Organisation
+            group = GetGroupMood(org.GetRelationship());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgHQ (Null)");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetOrgEmergencyTopics
+    /// <summary>
+    /// subType orgEmergency templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetOrgEmergencyTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        Organisation org = GameManager.instance.campaignScript.campaign.orgEmergency;
+        if (org != null)
+        {
+            tagOrganisation = org.tag;
+            //group based on player's relationship with Organisation
+            group = GetGroupMood(org.GetRelationship());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgEmergency (Null)");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetOrgInfoTopics
+    /// <summary>
+    /// subType orgInfo templates selected based on player Relationship with org. Returns a list of suitable Live topics. Returns Empty if none found
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetOrgInfoTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        if (org != null)
+        {
+            tagOrganisation = org.tag;
+            //group based on player's relationship with Organisation
+            group = GetGroupMood(org.GetRelationship());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgInfo (Null)");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetAuthorityTeamTopics
+    /// <summary>
+    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetAuthorityTeamTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         int count;
         GroupType group = GroupType.Neutral;
@@ -2244,8 +2390,6 @@ public class TopicManager : MonoBehaviour
         return listOfTopics;
     }
     #endregion
-
-
 
     #endregion
 
@@ -4843,6 +4987,16 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("target", dictOfTags); }
                         break;
+                    case "org":
+                        //organisation name
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrganisation, colourEnd); }
+                            else { replaceText = tagOrganisation; }
+                        }
+                        else { CountTextTag("org", dictOfTags); }
+                        break;
                     case "who":
                         //My '[best friend]'s [crazy] [sister]' 
                         if (isValidate == false)
@@ -5146,6 +5300,32 @@ public class TopicManager : MonoBehaviour
                 case "Family":
                     break;
                 case "HQ":
+                    break;
+                case "Organisation":
+                    switch (turnTopicSubType.name)
+                    {
+                        case "OrgCure":
+                            turnSprite = GameManager.instance.campaignScript.campaign.orgCure.sprite;
+                            tagSpriteName = tagOrganisation;
+                            break;
+                        case "OrgContract":
+                            turnSprite = GameManager.instance.campaignScript.campaign.orgContract.sprite;
+                            tagSpriteName = tagOrganisation;
+                            break;
+                        case "OrgHQ":
+                            turnSprite = GameManager.instance.campaignScript.campaign.orgHQ.sprite;
+                            tagSpriteName = tagOrganisation;
+                            break;
+                        case "OrgEmergency":
+                            turnSprite = GameManager.instance.campaignScript.campaign.orgEmergency.sprite;
+                            tagSpriteName = tagOrganisation;
+                            break;
+                        case "OrgInfo":
+                            turnSprite = GameManager.instance.campaignScript.campaign.orgInfo.sprite;
+                            tagSpriteName = tagOrganisation;
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised turnTopicSubType.name \"{0}\"", turnTopicSubType.name); break;
+                    }
                     break;
                 case "Player":
                     string tooltipName = GameManager.instance.playerScript.PlayerName;

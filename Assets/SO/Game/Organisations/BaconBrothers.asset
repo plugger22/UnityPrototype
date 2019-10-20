@@ -13,4 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Loosely networked urban gangs
   tag: Bacon Brothers
+  sprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
   nodeArc: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
+  isContact: 0
+  maxStat: 3
