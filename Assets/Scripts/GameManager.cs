@@ -331,10 +331,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //Debug
-        StringBuilder builder = new StringBuilder();
+        /*StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 6000; i++)
         { builder.Append(Random.Range(0, 2)); }
-        File.AppendAllText("Digital.txt", builder.ToString());
+        File.AppendAllText("Digital.txt", builder.ToString());*/
 
         inputScript.GameState = GameState.StartUp;
         //global methods
