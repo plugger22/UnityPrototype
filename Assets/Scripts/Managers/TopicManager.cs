@@ -4078,7 +4078,8 @@ public class TopicManager : MonoBehaviour
             nodeID = tagNodeID,
             teamID = tagTeamID,
             contactID = tagContactID,
-            secret = tagSecretName
+            secret = tagSecretName,
+            organisation = tagOrganisation
         };
         return data;
     }

@@ -782,7 +782,8 @@ namespace packageAPI
         public int nodeID;
         public int teamID;
         public int contactID;
-        public string secret;       //name of secret, not tag
+        public string secret;               //name of secret, not tag
+        public string organisation;         //name of organisation, not tag
     }
 
     /// <summary>

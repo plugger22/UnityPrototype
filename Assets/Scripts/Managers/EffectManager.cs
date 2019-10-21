@@ -1449,7 +1449,7 @@ public class EffectManager : MonoBehaviour
     }
     #endregion
 
-
+    #region ProcessEffect
     /// <summary>
     /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect (Invisibility, Renown etc. auto checks node for Player being present, so can provide Actor)
     /// Use player node if an issue but check to see if node is used (often to determine who is affected, player or actor)
@@ -1998,6 +1998,7 @@ public class EffectManager : MonoBehaviour
         }
         return effectReturn;
     }
+    #endregion
 
     /// <summary>
     /// Formats string for details.TopText (Authority), returns "unknown" if a problem. Also used by ModalTeamPicker.cs -> ProcessTeamChoice and TeamNanager.cs
@@ -3563,6 +3564,10 @@ public class EffectManager : MonoBehaviour
                         //City
                         effectResolve = ResolveTopicCityEffect(effect, dataInput, data);
                         break;
+                    case 'O':
+                        //Organisation
+                        effectResolve = ResolveTopicOrganisation(effect, dataInput, data);
+                        break;
                     case 'H':
                         //HQ (Faction)
                         effectResolve = ResolveTopicHQEffect(effect, dataInput, data);
@@ -3855,6 +3860,43 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "HQApproval":
+                switch (effect.operand.name)
+                {
+                    case "Add":
+                        GameManager.instance.factionScript.ChangeFactionApproval(1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval +1{1}", colourGood, colourEnd);
+                        break;
+                    case "Subtract":
+                        GameManager.instance.factionScript.ChangeFactionApproval(-1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all Organisation effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicOrganisationEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        //outcome
+        switch (effect.outcome.name)
+        {
+            case "OrgFreedom":
                 switch (effect.operand.name)
                 {
                     case "Add":
