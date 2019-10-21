@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: The [org] says that they might be able to help with your [drug] addiction.
-    Maybe. If you're willing to help them when needed
+  text: The [org] has helped you in the past and they expect something in return.
+    Something special
   designNotes: 'Org Cure RES 3 bad event
 
     Payback, applies to all cures'
@@ -32,10 +32,10 @@ MonoBehaviour:
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   listOfOptions:
-  - {fileID: 11400000, guid: 2253bef25b6c352418d3fcec8ad16158, type: 2}
-  - {fileID: 11400000, guid: 99c50b0264611e540b90d7ec18862b16, type: 2}
-  - {fileID: 11400000, guid: 120877ea041c66c42a0a7ff3ba207b9b, type: 2}
-  - {fileID: 11400000, guid: e2c6fbb43bb63304486b7c0301638bac, type: 2}
+  - {fileID: 11400000, guid: 5e2960ce0e336f1449ee0de7667b6e35, type: 2}
+  - {fileID: 11400000, guid: 34091db59bbf9ef4fa385e4495833a22, type: 2}
+  - {fileID: 11400000, guid: 45e1d5870b30c8e45ae0bb0d2bd29d6a, type: 2}
+  - {fileID: 11400000, guid: 8057df39ef917ac4cb1df5038fa25c57, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

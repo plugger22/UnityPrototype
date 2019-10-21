@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: You've been contacted by the [org]. They're offering to provide you with the
-    name of someone who can fix your [drug] addiction
+  text: The [org] has helped you in the past and the time has come for you to repay
+    the favour
   designNotes: 'Org Cure RES 2 good event
 
     Payback, applies to all cures'
@@ -31,10 +31,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 53b10eeae35caf54aa104fff8aff4029, type: 2}
-  - {fileID: 11400000, guid: b2cd8cb82fb04df4189d945c4aeba2b3, type: 2}
-  - {fileID: 11400000, guid: 0fa90bb6f25e792429c6a716a29a7cf2, type: 2}
-  - {fileID: 11400000, guid: 296263c60290e85438235a38770a175c, type: 2}
+  - {fileID: 11400000, guid: 64159b3f46a7b77438372a6500c770c9, type: 2}
+  - {fileID: 11400000, guid: fd8398c331983c9459934a91b278615e, type: 2}
+  - {fileID: 11400000, guid: e4ff3d1c4009476468f45d34fc634788, type: 2}
+  - {fileID: 11400000, guid: 6c487134575d73e4ea056ba7b2ef7694, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
