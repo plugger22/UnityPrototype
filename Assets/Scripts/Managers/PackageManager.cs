@@ -88,6 +88,7 @@ namespace packageAPI
         public int nodeID;                          //optional
         public int actorSlotID;                     //optional
         public int teamArcID;                       //optional
+        public string orgName;                      //optional (Organisation Name)
         public List<Criteria> listOfCriteria;
 
         public CriteriaDataInput()

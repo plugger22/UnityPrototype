@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: OrgCureKnown
+  m_Name: OrganisationKnown
   m_EditorClassIdentifier: 
-  description: Organisation is known
-  effectCriteria: {fileID: 11400000, guid: abaa8673bff83a942a4780158fe76253, type: 2}
+  description: Organisation Known
+  effectCriteria: {fileID: 11400000, guid: 939f236b8b20dfb4b8e066e190686b3c, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 1a5c2021038cc5e4a89125af9d18b1a7, type: 2}

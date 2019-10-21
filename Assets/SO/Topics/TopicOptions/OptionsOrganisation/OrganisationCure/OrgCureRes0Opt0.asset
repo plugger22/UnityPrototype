@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: OrgCureRes0Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 0 Option 0
-  tag: dd
-  text: dd
+  tag: Agree
+  text: Yes, that'd be appreciated
   topic: {fileID: 11400000, guid: 4e08c5768d700fe4dab58a8816c895b1, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
+  listOfBadEffects:
+  - {fileID: 0}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: -1
+  tooltipHeader: <color=#FFFFE0>Agree</color>
+  tooltipMain: <color=#98FB98>Player finds Cure for Addiction</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
+  optionNumber: 0

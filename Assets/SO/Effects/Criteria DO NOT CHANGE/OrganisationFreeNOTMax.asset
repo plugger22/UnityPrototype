@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: OrgInfoKnown
+  m_Name: OrganisationFreeNOTMax
   m_EditorClassIdentifier: 
-  description: Organisation is known
-  effectCriteria: {fileID: 11400000, guid: 1cbb44d6360453242b4486cc25e9bd52, type: 2}
+  description: Organisation Freedom Not MAX
+  effectCriteria: {fileID: 11400000, guid: 9e9deccabecc64547bd8991cc1a74b2d, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 1a5c2021038cc5e4a89125af9d18b1a7, type: 2}

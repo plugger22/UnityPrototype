@@ -2766,21 +2766,24 @@ public class TopicManager : MonoBehaviour
             else
             { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
             //hq boss's opinion
-            Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
-            if (actorHQ != null)
+            if (turnTopicSubType.isBoss == true)
             {
-                int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
-                if (opinionChange != 0)
+                Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+                if (actorHQ != null)
                 {
-                    int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
-                    bossOpinion += opinionChange;
-                    GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
-                    builderBottom.AppendLine();
-                    if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
-                    else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                    int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
+                    if (opinionChange != 0)
+                    {
+                        int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+                        bossOpinion += opinionChange;
+                        GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
+                        builderBottom.AppendLine();
+                        if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
+                        else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                    }
                 }
+                else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
             }
-            else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
             //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
             {
@@ -3344,7 +3347,10 @@ public class TopicManager : MonoBehaviour
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
-            { listOfCriteria = topic.listOfCriteria };
+            {
+                listOfCriteria = topic.listOfCriteria,
+                orgName = tagOrganisation
+            };
             string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck == null)
             {
@@ -3461,9 +3467,24 @@ public class TopicManager : MonoBehaviour
         if (subType.listOfCriteria != null && subType.listOfCriteria.Count > 0)
         {
             string criteriaCheck;
+            //special case of Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
+            if (subType.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
+            {
+                switch (subType.name)
+                {
+                    case "OrgCure": tagOrganisation = GameManager.instance.campaignScript.campaign.orgCure.name; break;
+                    case "OrgContract": tagOrganisation = GameManager.instance.campaignScript.campaign.orgContract.name; break;
+                    case "OrgHQ": tagOrganisation = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
+                    case "OrgEmergency": tagOrganisation = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
+                    case "OrgInfo": tagOrganisation = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                }
+            }
             //check individual topicSubType criteria
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
-            { listOfCriteria = subType.listOfCriteria };
+            {
+                listOfCriteria = subType.listOfCriteria,
+                orgName = tagOrganisation
+            };
             criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
             {
@@ -5305,7 +5326,7 @@ public class TopicManager : MonoBehaviour
                     Organisation org = null;
                     switch (turnTopicSubType.name)
                     {
-                        case "OrgCure": org = GameManager.instance.campaignScript.campaign.orgCure;  break;
+                        case "OrgCure": org = GameManager.instance.campaignScript.campaign.orgCure; break;
                         case "OrgContract": org = GameManager.instance.campaignScript.campaign.orgContract; break;
                         case "OrgHQ": org = GameManager.instance.campaignScript.campaign.orgHQ; break;
                         case "OrgEmergency": org = GameManager.instance.campaignScript.campaign.orgEmergency; break;

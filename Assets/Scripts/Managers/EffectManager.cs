@@ -89,6 +89,7 @@ public class EffectManager : MonoBehaviour
     //fast access -> assorted
     private int maxTargetInfo = -1;
     private int neutralStatValue = -1;
+    private int maxStatValue = -1;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -180,6 +181,7 @@ public class EffectManager : MonoBehaviour
         teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         maxTargetInfo = GameManager.instance.targetScript.maxTargetInfo;
+        maxStatValue = GameManager.instance.actorScript.maxStatValue;
         neutralStatValue = GameManager.instance.actorScript.neutralStatValue;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
@@ -189,6 +191,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(teamArcDamage > -1, "Invalid teamArcDamage (-1)");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(maxTargetInfo > -1, "Invalid maxTargetInfo (-1)");
+        Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(neutralStatValue > -1, "Invalid neutralStatValue (-1)");
     }
     #endregion
@@ -273,6 +276,7 @@ public class EffectManager : MonoBehaviour
         bool errorFlag = false;
         Actor actor = null;
         TeamArc teamArc = null;
+        Organisation org = null;
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         if (data.listOfCriteria != null && data.listOfCriteria.Count > 0)
         {
@@ -305,6 +309,17 @@ public class EffectManager : MonoBehaviour
                 if (teamArc == null)
                 {
                     Debug.LogError(string.Format("Invalid TeamArc (null) for teamArcID \"{0}\" -> Criteria check cancelled", data.teamArcID));
+                    errorFlag = true;
+                }
+            }
+            //Get Organisation if required
+            if (string.IsNullOrEmpty(data.orgName) == false)
+            {
+                //get org
+                org = GameManager.instance.dataScript.GetOrganisaiton(data.orgName);
+                if (org == null)
+                {
+                    Debug.LogErrorFormat("Invalid Organisation (Null) for orgName \"{0}\"", data.orgName);
                     errorFlag = true;
                 }
             }
@@ -1285,26 +1300,42 @@ public class EffectManager : MonoBehaviour
                                     case "Organisation":
                                         switch (criteria.effectCriteria.name)
                                         {
-                                            case "OrgCureKnown":
-                                                if (GameManager.instance.campaignScript.campaign.orgCure.isContact == false)
-                                                { BuildString(result, "No contact with Organisation"); }
+                                            //Organisation Known to Player?
+                                            case "OrganisationKnown":
+                                                if (org != null)
+                                                {
+                                                    if (org.isContact == false)
+                                                    { { BuildString(result, "No contact with Organisation"); } }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
                                                 break;
-                                            case "OrgContractKnown":
-                                                if (GameManager.instance.campaignScript.campaign.orgContract.isContact == false)
-                                                { BuildString(result, "No contact with Organisation"); }
+                                            //Freedom Not MIN
+                                            case "OrganisationFreeNOTMin":
+                                                if (org != null)
+                                                {
+                                                    if (org.GetFreedom() == 0)
+                                                    { BuildString(result, "Freedom is Zero"); }
+                                                }
                                                 break;
-                                            case "OrgHQKnown":
-                                                if (GameManager.instance.campaignScript.campaign.orgHQ.isContact == false)
-                                                { BuildString(result, "No contact with Organisation"); }
+                                            //Freedom Not MAX
+                                            case "OrganisationFreeNOTMax":
+                                                if (org != null)
+                                                {
+                                                    if (org.GetFreedom() == maxStatValue)
+                                                    { BuildString(result, "Freedom is MAX"); }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
                                                 break;
-                                            case "OrgEmergencyKnown":
-                                                if (GameManager.instance.campaignScript.campaign.orgEmergency.isContact == false)
-                                                { BuildString(result, "No contact with Organisation"); }
-                                                break;
-                                            case "OrgInfoKnown":
-                                                if (GameManager.instance.campaignScript.campaign.orgInfo.isContact == false)
-                                                { BuildString(result, "No contact with Organisation"); }
-                                                break;
+                                            
+                                            //Reputation MIN
+                                            case "OrganisationRepMin":
+                                                if (org != null)
+                                                {
+                                                    if (org.GetReputation() > 0)
+                                                    { BuildString(result, "Reputation Not MIN"); }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                break;                                            
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

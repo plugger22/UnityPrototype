@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRes0Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 0 Option 1
-  tag: dd
-  text: dd
+  tag: Free
+  text: Can you do it for free?
   topic: {fileID: 11400000, guid: 4e08c5768d700fe4dab58a8816c895b1, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -25,9 +25,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: 0
+  tooltipHeader: <color=#FFFFE0>Free</color>
+  tooltipMain: No Effects present
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Can you do it for free?</color>
+  optionNumber: 1
