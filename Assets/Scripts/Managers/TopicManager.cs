@@ -162,7 +162,7 @@ public class TopicManager : MonoBehaviour
     private string tagSpriteName;
     private string tagOptionText;           //option.text after CheckTopicText
     private string tagOutcome;
-    private string tagOrganisation;         //name of organisation
+    private string tagOrgName;          //name of organisation, eg. 'Blue Angel Cult'
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1291,7 +1291,7 @@ public class TopicManager : MonoBehaviour
         tagTarget = "";
         tagTeam = "";
         tagOutcome = "";
-        tagOrganisation = "";
+        tagOrgName = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -2166,7 +2166,7 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgCure;
         if (org != null)
         {
-            tagOrganisation = org.tag;
+            tagOrgName = org.name;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2198,7 +2198,7 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgContract;
         if (org != null)
         {
-            tagOrganisation = org.tag;
+            tagOrgName = org.name;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2230,7 +2230,7 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgHQ;
         if (org != null)
         {
-            tagOrganisation = org.tag;
+            tagOrgName = org.name;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2262,7 +2262,7 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgEmergency;
         if (org != null)
         {
-            tagOrganisation = org.tag;
+            tagOrgName = org.name;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2294,7 +2294,7 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
         if (org != null)
         {
-            tagOrganisation = org.tag;
+            tagOrgName = org.name;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -3349,7 +3349,7 @@ public class TopicManager : MonoBehaviour
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
-                orgName = tagOrganisation
+                orgName = tagOrgName
             };
             string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck == null)
@@ -3472,18 +3472,18 @@ public class TopicManager : MonoBehaviour
             {
                 switch (subType.name)
                 {
-                    case "OrgCure": tagOrganisation = GameManager.instance.campaignScript.campaign.orgCure.name; break;
-                    case "OrgContract": tagOrganisation = GameManager.instance.campaignScript.campaign.orgContract.name; break;
-                    case "OrgHQ": tagOrganisation = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
-                    case "OrgEmergency": tagOrganisation = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
-                    case "OrgInfo": tagOrganisation = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                    case "OrgCure": tagOrgName = GameManager.instance.campaignScript.campaign.orgCure.name; break;
+                    case "OrgContract": tagOrgName = GameManager.instance.campaignScript.campaign.orgContract.name; break;
+                    case "OrgHQ": tagOrgName = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
+                    case "OrgEmergency": tagOrgName = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
+                    case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
                 }
             }
             //check individual topicSubType criteria
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = subType.listOfCriteria,
-                orgName = tagOrganisation
+                orgName = tagOrgName
             };
             criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
@@ -4079,7 +4079,7 @@ public class TopicManager : MonoBehaviour
             teamID = tagTeamID,
             contactID = tagContactID,
             secret = tagSecretName,
-            organisation = tagOrganisation
+            orgName = tagOrgName
         };
         return data;
     }
@@ -4499,6 +4499,9 @@ public class TopicManager : MonoBehaviour
                     break;
                 case 'N':
                     //Node
+                    break;
+                case 'O':
+                    //Organisation
                     break;
                 default: Debug.LogWarningFormat("Unrecognised effect.name first character \"{0}\" for effect \"{1}\"", key, effect.name); break;
             }
@@ -5014,8 +5017,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrganisation, colourEnd); }
-                            else { replaceText = tagOrganisation; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrgName, colourEnd); }
+                            else { replaceText = tagOrgName; }
                         }
                         else { CountTextTag("org", dictOfTags); }
                         break;
@@ -5345,7 +5348,7 @@ public class TopicManager : MonoBehaviour
                             //tooltipMain
                             data.imageTooltipMain = resultsOrg.Item1;
                             //main present -> Add tooltip header (Org name)
-                            data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tagOrganisation, colourEnd);
+                            data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tagOrgName, colourEnd);
                         }
                         if (string.IsNullOrEmpty(resultsOrg.Item2) == false)
                         { data.imageTooltipDetails = resultsOrg.Item2; }

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgCureRES1
+  m_Name: OrgCureRES4
   m_EditorClassIdentifier: 
-  tag: Cure for Addiction
+  tag: Disown
   text: The [org] says that they might be able to help with your [drug] addiction.
     Maybe. If you're willing to help them when needed
-  designNotes: 'Org Cure RES 1 bad event
+  designNotes: 'Org Cure RES 4 bad event
 
-    Addicted cure'
+    Org about to Disown Player, applies to all'
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
   subSubType: {fileID: 0}
@@ -28,11 +28,8 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: a80f97b49bf3d1a4ba5bd7454b54a50f, type: 2}
-  - {fileID: 11400000, guid: 6e0e00a6f85c2a14ea2400cc9161d321, type: 2}
-  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
-  listOfIgnoreEffects:
-  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
+  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 2253bef25b6c352418d3fcec8ad16158, type: 2}
   - {fileID: 11400000, guid: 99c50b0264611e540b90d7ec18862b16, type: 2}

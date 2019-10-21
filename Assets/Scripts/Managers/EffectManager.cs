@@ -3566,7 +3566,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case 'O':
                         //Organisation
-                        effectResolve = ResolveTopicOrganisation(effect, dataInput, data);
+                        effectResolve = ResolveTopicOrganisationEffect(effect, dataInput, data);
                         break;
                     case 'H':
                         //HQ (Faction)
@@ -3893,24 +3893,48 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
-        //outcome
-        switch (effect.outcome.name)
+        //Organisation
+        Organisation org = GameManager.instance.dataScript.GetOrganisaiton(dataTopic.orgName);
+        if (org != null)
         {
-            case "OrgFreedom":
-                switch (effect.operand.name)
-                {
-                    case "Add":
-                        GameManager.instance.factionScript.ChangeFactionApproval(1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
-                        effectResolve.bottomText = string.Format("{0}HQ Approval +1{1}", colourGood, colourEnd);
-                        break;
-                    case "Subtract":
-                        GameManager.instance.factionScript.ChangeFactionApproval(-1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
-                        effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
-                        break;
-                    default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
-                }
-                break;
-            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+            //outcome
+            switch (effect.outcome.name)
+            {
+                case "OrgFreedom":
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            org.ChangeFreedom(effect.value);
+                            effectResolve.bottomText = string.Format("{0}{1} Freedom +{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            break;
+                        case "Subtract":
+                            org.ChangeFreedom(effect.value * -1);
+                            effectResolve.bottomText = string.Format("{0}{1} Freedom -{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                case "OrgReputation":
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            org.ChangeReputation(effect.value);
+                            effectResolve.bottomText = string.Format("{0}{1} Reputation +{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            break;
+                        case "Subtract":
+                            org.ChangeReputation(effect.value * -1);
+                            effectResolve.bottomText = string.Format("{0}{1} Reputation -{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+            }
+        }
+        else
+        {
+            Debug.LogErrorFormat("Invalid organisation (Null) for orgName \"{0}\"", dataTopic.orgName);
+            effectResolve.isError = true;
         }
         return effectResolve;
     }

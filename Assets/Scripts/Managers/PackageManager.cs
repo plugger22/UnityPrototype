@@ -783,7 +783,7 @@ namespace packageAPI
         public int teamID;
         public int contactID;
         public string secret;               //name of secret, not tag
-        public string organisation;         //name of organisation, not tag
+        public string orgName;              //name of organisation, not tag, eg. Blue Angel Cult
     }
 
     /// <summary>
