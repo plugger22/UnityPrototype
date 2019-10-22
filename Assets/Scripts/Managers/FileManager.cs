@@ -426,6 +426,22 @@ public class FileManager : MonoBehaviour
             { write.dataData.listOfPlayerSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
+        //secret list -> DesperateSecrets
+        listOfSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
+        if (listOfSecrets != null)
+        {
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            { write.dataData.listOfDesperateSecrets.Add(listOfSecrets[i].name); }
+        }
+        else { Debug.LogError("Invalid listOfDesperateSecrets (Null)"); }
+        //secret list -> StorySecrets
+        listOfSecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
+        if (listOfSecrets != null)
+        {
+            for (int i = 0; i < listOfSecrets.Count; i++)
+            { write.dataData.listOfStorySecrets.Add(listOfSecrets[i].name); }
+        }
+        else { Debug.LogError("Invalid listOfStorySecrets (Null)"); }
         //secret list -> RevealSecrets
         listOfSecrets = GameManager.instance.dataScript.GetListOfRevealedSecrets();
         if (listOfSecrets != null)
@@ -459,6 +475,7 @@ public class FileManager : MonoBehaviour
                     saveOrg.reputation = org.GetReputation();
                     saveOrg.freedom = org.GetFreedom();
                     saveOrg.maxStat = org.maxStat;
+                    saveOrg.isSecretKnown = org.isSecretKnown;
                     //add to list
                     write.dataData.listOfSaveOrganisations.Add(saveOrg);
                 }
@@ -1866,6 +1883,24 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.dataScript.SetListOfPlayerSecrets(listOfSecrets);
+        //Secrets List -> DesperateSecrets
+        listOfSecrets.Clear();
+        for (int i = 0; i < read.dataData.listOfDesperateSecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfDesperateSecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.dataScript.SetListOfDesperateSecrets(listOfSecrets);
+        //Secrets List -> Storysecrets
+        listOfSecrets.Clear();
+        for (int i = 0; i < read.dataData.listOfStorySecrets.Count; i++)
+        {
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfStorySecrets[i]);
+            if (secret != null)
+            { listOfSecrets.Add(secret); }
+        }
+        GameManager.instance.dataScript.SetListOfStorySecrets(listOfSecrets);
         //Secrets List -> RevealedSecrets
         listOfSecrets = new List<Secret>();
         for (int i = 0; i < read.dataData.listOfRevealedSecrets.Count; i++)
@@ -1910,6 +1945,7 @@ public class FileManager : MonoBehaviour
                             org.maxStat = saveOrg.maxStat;
                             org.SetReputation(saveOrg.reputation);
                             org.SetFreedom(saveOrg.freedom);
+                            org.isSecretKnown = saveOrg.isSecretKnown;
                             //add org to list
                             listOfCurrentOrganisations.Add(org);
                         }

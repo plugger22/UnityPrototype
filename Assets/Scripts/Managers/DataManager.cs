@@ -5166,6 +5166,34 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Resets Desperate Secrets list to new data. Used for Load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetListOfDesperateSecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            listOfDesperateSecrets.Clear();
+            listOfDesperateSecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfDesperateSecrets (Null)"); }
+    }
+
+    /// <summary>
+    /// Resets Story Secrets list to new data. Used for Load save game
+    /// </summary>
+    /// <param name="listOfSecrets"></param>
+    public void SetListOfStorySecrets(List<Secret> listOfSecrets)
+    {
+        if (listOfSecrets != null)
+        {
+            listOfStorySecrets.Clear();
+            listOfStorySecrets.AddRange(listOfSecrets);
+        }
+        else { Debug.LogError("Invalid listOfStorySecrets (Null)"); }
+    }
+
+    /// <summary>
     /// Resets Revealed Secrets list to new data. Used for Load save game
     /// </summary>
     /// <param name="listOfSecrets"></param>

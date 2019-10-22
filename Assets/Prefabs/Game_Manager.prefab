@@ -294,6 +294,7 @@ MonoBehaviour:
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
   secretTypeDesperate: {fileID: 0}
+  secretTypeStory: {fileID: 0}
 --- !u!114 &114200138194279740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2954,13 +2955,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d90f29c52221e6b418b3a1528cda5319, type: 2}
   - {fileID: 11400000, guid: 38bac9cb2697b6642ab952c5d8453a47, type: 2}
   arrayOfSecrets:
+  - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
   - {fileID: 11400000, guid: 04b9ee5bb7fec574da9b94d9986aefba, type: 2}
   - {fileID: 11400000, guid: 54fb900087124a442bf806fd7bbe7974, type: 2}
   - {fileID: 11400000, guid: cd8650d2b5edc2d4f9593e2a6b082ad9, type: 2}
   - {fileID: 11400000, guid: d4246d7f5aa157a44a7bf87fc02dcc06, type: 2}
-  - {fileID: 11400000, guid: 7a10539a44e230540b1aa07788159c35, type: 2}
   - {fileID: 11400000, guid: 393e717d538c90743ab029faffc63bbd, type: 2}
-  - {fileID: 11400000, guid: 9a46c226ee2b1dc49bfaa1a81c4505b0, type: 2}
+  - {fileID: 11400000, guid: 7a10539a44e230540b1aa07788159c35, type: 2}
+  - {fileID: 11400000, guid: 029c9ae0652eacb46b5aa584c7908437, type: 2}
+  - {fileID: 11400000, guid: bed62aab8c6244a40bc77dde8b4c2eb2, type: 2}
+  - {fileID: 11400000, guid: 5dfe93c276dab67418ac1d6ad145c226, type: 2}
+  - {fileID: 11400000, guid: 98d27052c6e43c84790c0c04a19f3626, type: 2}
   arrayOfFactions:
   - {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
   - {fileID: 11400000, guid: fa8015dfe3e3b7a4cb14490effb1a8ee, type: 2}

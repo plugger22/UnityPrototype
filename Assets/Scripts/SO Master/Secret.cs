@@ -14,11 +14,11 @@ public class Secret : ScriptableObject
     public string tag;
     [Tooltip("Which side does the secret apply to")]
     public GlobalSide side;
-
-    [Tooltip("Effects that happen if secret is revealed")]
-    public List<Effect> listOfEffects;
     [Tooltip("What category does the secret belong to")]
     public SecretType type;
+    [Tooltip("Effects that happen if secret is revealed")]
+    public List<Effect> listOfEffects;
+
 
     #region Save Data Compatible
     [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 

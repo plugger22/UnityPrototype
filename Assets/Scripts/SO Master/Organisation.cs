@@ -16,6 +16,14 @@ public class Organisation : ScriptableObject
     [Tooltip("Sprite")]
     public Sprite sprite;
 
+    [Header("Demands")]
+    [Tooltip("What the org wants when Rep 0 topic hits, in format '[wants you to]....' Keep short as possible")]
+    [TextArea] public string textWant;
+    [Tooltip("Secret that is given to Player if they do what the org wants at Rep 0")]
+    public Secret secret;
+   
+
+    [Header("Archived")]
     [Tooltip("Preferred node type for this Organisation. The more of this type of node the greater the chance of an organisation being present in a city")]
     public NodeArc nodeArc;
 
@@ -23,6 +31,7 @@ public class Organisation : ScriptableObject
     #region Save Data compatible
     [HideInInspector] public bool isContact;                //have you made contact with the org?
     [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
+    [HideInInspector] public bool isSecretKnown;            //if true, player has secret, false otherwise
     private int reputation;                                 //reputation with you (0 to 3)
     private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)   
     #endregion
@@ -32,10 +41,12 @@ public class Organisation : ScriptableObject
     public void OnEnable()
     {
         //field asserts
-        Debug.Assert(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty)");
-        Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty)");
-        Debug.Assert(nodeArc != null, "Invalid nodeArc (Null)");
-        Debug.Assert(sprite != null, "Invalid sprite (Null)");
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        Debug.AssertFormat(nodeArc != null, "Invalid nodeArc (Null) for {0}", name);
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
+        Debug.AssertFormat(secret != null, "Invalid secret (Null) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(textWant) == false, "Invalid textWant (Null or Empty) for {0}", name);
     }
 
 
