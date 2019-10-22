@@ -1236,7 +1236,7 @@ public class DebugGUI : MonoBehaviour
                     case 25:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.secretScript.DebugDisplaySecretData();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                     //Node Crisis Data Display
                     case 26:
