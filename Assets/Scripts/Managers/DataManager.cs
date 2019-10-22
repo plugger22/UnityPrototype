@@ -136,6 +136,8 @@ public class DataManager : MonoBehaviour
 
     //secret lists
     private List<Secret> listOfPlayerSecrets = new List<Secret>();
+    private List<Secret> listOfDesperateSecrets = new List<Secret>();
+    private List<Secret> listOfStorySecrets = new List<Secret>();
     private List<Secret> listOfRevealedSecrets = new List<Secret>();
     private List<Secret> listOfDeletedSecrets = new List<Secret>();                                 //secrets that have been scrubbed without being revealed
 
@@ -5136,6 +5138,12 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<Secret> GetListOfPlayerSecrets()
     { return listOfPlayerSecrets; }
+
+    public List<Secret> GetListOfDesperateSecrets()
+    { return listOfDesperateSecrets; }
+
+    public List<Secret> GetListOfStorySecrets()
+    { return listOfStorySecrets; }
 
     public List<Secret> GetListOfRevealedSecrets()
     { return listOfRevealedSecrets; }

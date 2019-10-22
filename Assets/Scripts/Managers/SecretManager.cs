@@ -21,6 +21,7 @@ public class SecretManager : MonoBehaviour
     //globals
     [HideInInspector] public SecretType secretTypePlayer;
     [HideInInspector] public SecretType secretTypeDesperate;
+    [HideInInspector] public SecretType secretTypeStory;
     /*[HideInInspector] public SecretStatus secretStatusActive;
     [HideInInspector] public SecretStatus secretStatusInactive;
     [HideInInspector] public SecretStatus secretStatusRevealed;
@@ -90,6 +91,10 @@ public class SecretManager : MonoBehaviour
                         secretType.Value.level = 1;
                         secretTypeDesperate = secretType.Value;
                         break;
+                    case "Story":
+                        secretType.Value.level = 2;
+                        secretTypeStory = secretType.Value;
+                        break;
                     default:
                         Debug.LogWarningFormat("Invalid secretType \"{0}\"", secretType.Key);
                         break;
@@ -145,34 +150,53 @@ public class SecretManager : MonoBehaviour
         //
         Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfDesperateSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
+        List<Secret> listOfStorySecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
+
         int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
         if (dictOfSecrets != null)
         {
             if (listOfPlayerSecrets != null)
             {
-                //add to appropriate lists
-                foreach (var secret in dictOfSecrets)
+                if (listOfDesperateSecrets != null)
                 {
-                    if (secret.Value != null)
+                    if (listOfStorySecrets != null)
                     {
-                        //set all key secret data to default settings (otherwise will carry over data between sessions)
-                        secret.Value.Initialise();
-                        //Only add those of the same side as the player)
-                        if (secret.Value.side.level == playerLevel)
+                        //add to appropriate lists
+                        foreach (var secret in dictOfSecrets)
                         {
-                            switch (secret.Value.type.level)
+                            if (secret.Value != null)
                             {
-                                case 0:
-                                    //Player secrets
-                                    listOfPlayerSecrets.Add(secret.Value);
-                                    break;
+                                //set all key secret data to default settings (otherwise will carry over data between sessions)
+                                secret.Value.Initialise();
+                                //Only add those of the same side as the player)
+                                if (secret.Value.side.level == playerLevel)
+                                {
+                                    switch (secret.Value.type.level)
+                                    {
+                                        case 0:
+                                            //Player secrets
+                                            listOfPlayerSecrets.Add(secret.Value);
+                                            break;
+                                        case 1:
+                                            //Desperate measures secrets (orgs)
+                                            listOfDesperateSecrets.Add(secret.Value);
+                                            break;
+                                        case 2:
+                                            //Story secrets
+                                            listOfStorySecrets.Add(secret.Value);
+                                            break;
+                                    }
+                                }
                             }
+                            else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
                         }
+                        Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
+                        Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
                     }
-                    else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
+                    else { Debug.LogWarning("Invalid listOfStorySecrets (Null)"); }
                 }
-                Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
-                Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
+                else { Debug.LogWarning("Invalid listOfDesperateSecrets (Null)"); }
             }
             else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
         }
@@ -393,6 +417,12 @@ public class SecretManager : MonoBehaviour
         //player secrets data
         builder.AppendFormat("{0}{1}- listOfPlayerSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfPlayerSecrets()));
+        //desperate secrets data
+        builder.AppendFormat("{0}{1}- listOfDesperateSecrets", "\n", "\n");
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfDesperateSecrets()));
+        //story secrets data
+        builder.AppendFormat("{0}{1}- listOfStorySecrets", "\n", "\n");
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfStorySecrets()));
         //revealed secrets data
         builder.AppendFormat("{0}{1}- listOfRevealedSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfRevealedSecrets()));
