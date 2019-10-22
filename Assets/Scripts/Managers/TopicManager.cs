@@ -162,7 +162,8 @@ public class TopicManager : MonoBehaviour
     private string tagSpriteName;
     private string tagOptionText;           //option.text after CheckTopicText
     private string tagOutcome;
-    private string tagOrgName;          //name of organisation, eg. 'Blue Angel Cult'
+    private string tagOrgName;          //name of organisation, eg. 'BlueAngelCult'
+    private string tagOrgTag;           //tag of organisation, eg. 'Blue Angel Cult'
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1292,6 +1293,7 @@ public class TopicManager : MonoBehaviour
         tagTeam = "";
         tagOutcome = "";
         tagOrgName = "";
+        tagOrgTag = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -2167,6 +2169,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrgName = org.name;
+            tagOrgTag = org.tag;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2199,6 +2202,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrgName = org.name;
+            tagOrgTag = org.tag;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2231,6 +2235,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrgName = org.name;
+            tagOrgTag = org.tag;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2263,6 +2268,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrgName = org.name;
+            tagOrgTag = org.tag;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2295,6 +2301,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
             tagOrgName = org.name;
+            tagOrgTag = org.tag;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2863,9 +2870,12 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid listOfEffects (Null or Empty) for topic \"{0}\", IGNORE", turnTopic.name); }
         //boss opinion -> player notification only if there is already an outcome dialogue
-        ProcessIgnoreBossOpinion();
-        builderBottom.AppendLine();
-        builderBottom.AppendFormat("{0}{1}Your Boss Disapproves of your inability to make a decision{2}", "\n", colourBad, colourEnd);
+        if (turnTopicSubType.isBoss == true)
+        {
+            ProcessIgnoreBossOpinion();
+            builderBottom.AppendLine();
+            builderBottom.AppendFormat("{0}{1}Your Boss Disapproves of your inability to make a decision{2}", "\n", colourBad, colourEnd);
+        }
         //stats
         GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsIgnored);
         //outcome dialogue
@@ -4364,14 +4374,20 @@ public class TopicManager : MonoBehaviour
                 }
                 if (builder.Length == 0)
                 {
-                    builder.AppendFormat("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
-                        colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                    if (turnTopicSubType.isBoss == true)
+                    {
+                        builder.AppendFormat("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
+                          colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                    }
+                    else
+                    { builder.AppendFormat("{0}Nothing happens{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd); }
                     Debug.LogWarningFormat("Invalid Ignore Effects (None showing) for topic \"{0}\"", turnTopic.name);
                 }
                 else
                 {
                     //boss
-                    builder.AppendFormat("{0}{1}Boss will Disapprove{2}", "\n", colourBad, colourEnd);
+                    if (turnTopicSubType.isBoss == true)
+                    { builder.AppendFormat("{0}{1}Boss will Disapprove{2}", "\n", colourBad, colourEnd); }
                     //keyboard shortcut
                     builder.AppendFormat("{0}{1}ESC shortcut{2}", "\n", colourNeutral, colourEnd);
                 }
@@ -5013,12 +5029,12 @@ public class TopicManager : MonoBehaviour
                         else { CountTextTag("target", dictOfTags); }
                         break;
                     case "org":
-                        //organisation name
+                        //organisation tag
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrgName, colourEnd); }
-                            else { replaceText = tagOrgName; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrgTag, colourEnd); }
+                            else { replaceText = tagOrgTag; }
                         }
                         else { CountTextTag("org", dictOfTags); }
                         break;

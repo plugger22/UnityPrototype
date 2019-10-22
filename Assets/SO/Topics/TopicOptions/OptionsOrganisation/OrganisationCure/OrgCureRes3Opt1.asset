@@ -12,23 +12,26 @@ MonoBehaviour:
   m_Name: OrgCureRes3Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 3 Option 1
-  tag: m
-  text: pp
+  tag: I'm Broke
+  text: Broke is me, it's all I've got
   topic: {fileID: 11400000, guid: 5bdec9398295fe64d994587dae175ed5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
-  tooltipHeader: <color=#FFFFE0>Agree</color>
-  tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
-    Freedom from Org -1</color>"
+  tooltipHeader: <color=#FFFFE0>m</color>
+  tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 0
+  textToDisplay: <color=#EEFB73>pp</color>
+  optionNumber: 1

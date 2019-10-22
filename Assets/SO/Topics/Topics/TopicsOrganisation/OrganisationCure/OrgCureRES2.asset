@@ -29,7 +29,8 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 64159b3f46a7b77438372a6500c770c9, type: 2}
   - {fileID: 11400000, guid: fd8398c331983c9459934a91b278615e, type: 2}
@@ -45,6 +46,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 15
+  turnsActive: 22
   turnsLive: 0
   turnsDone: 0

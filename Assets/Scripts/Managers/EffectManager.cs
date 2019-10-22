@@ -1326,7 +1326,7 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { BuildString(result, "Invalid Organisation"); }
                                                 break;
-                                            
+
                                             //Reputation MIN
                                             case "OrganisationRepMin":
                                                 if (org != null)
@@ -1335,7 +1335,7 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "Reputation Not MIN"); }
                                                 }
                                                 else { BuildString(result, "Invalid Organisation"); }
-                                                break;                                            
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
@@ -3346,9 +3346,11 @@ public class EffectManager : MonoBehaviour
                     //single or ongoing
                     ActionAdjustment actionAdjustment = new ActionAdjustment();
                     actionAdjustment.sideLevel = side.level;
+                    string appliesWhen = "NEXT TURN";
                     switch (effect.duration.name)
                     {
                         case "Single":
+
                             //once off effect -> Note: timer is 2 because it will be immediately knocked down to 1 at the end of this turn
                             actionAdjustment.timer = 2;
                             actionAdjustment.descriptor = dataInput.originText;
@@ -3357,14 +3359,14 @@ public class EffectManager : MonoBehaviour
                                 case "Add":
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
-                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}{9}{10}", colourEffect, colourEnd,
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, appliesWhen, colourEnd);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} {7}{8}NEXT TURN{9}", colourEffect, colourEnd,
-                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} action{6} {7}{8}{9}{10}", colourEffect, colourEnd,
+                                        colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, appliesWhen, colourEnd);
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid effect.operand \"{0}\"", effect.operand.name));
@@ -3381,18 +3383,18 @@ public class EffectManager : MonoBehaviour
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     actionAdjustment.value = effect.value;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
+                                    effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}{14}{15}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
-                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
+                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, appliesWhen, colourEnd);
 
                                     break;
                                 case "Subtract":
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
                                     actionAdjustment.value = effect.value * -1;
                                     GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
-                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}NEXT TURN{14}",
+                                    effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}{14}{15}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
-                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, colourEnd);
+                                        actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, appliesWhen, colourEnd);
 
                                     break;
                                 default:
@@ -3693,8 +3695,13 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Invisibility":
                 if (node != null)
+                {
+                    //get a random node for a general loss of invisibility effect, if none present (this also avoids the 'Show Me' button displaying). NOTE: Spider may be present at random node
+                    node = GameManager.instance.dataScript.GetRandomNode();
+                }
+                if (node != null)
                 { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
-                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }
+                else { Debug.LogError("Invalid node (Null)"); }
                 break;
             case "ConditionStressed":
             case "ConditionIncompetent":
@@ -3713,6 +3720,10 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Drugs":
                 effectResolve.bottomText = ExecutePlayerTakeDrugs(effect);
+                break;
+            case "PlayerActions":
+                //player gains or loses and action next turn
+                effectResolve = ResolvePlayerData(effect, dataInput);
                 break;
             case "ChanceAddictedLow":
             case "ChanceAddictedMed":
@@ -3909,7 +3920,7 @@ public class EffectManager : MonoBehaviour
                             break;
                         case "Subtract":
                             org.ChangeFreedom(effect.value * -1);
-                            effectResolve.bottomText = string.Format("{0}{1} Freedom -{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Freedom -{2}{3}", colourBad, org.tag, effect.value, colourEnd);
                             break;
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }
@@ -3923,7 +3934,7 @@ public class EffectManager : MonoBehaviour
                             break;
                         case "Subtract":
                             org.ChangeReputation(effect.value * -1);
-                            effectResolve.bottomText = string.Format("{0}{1} Reputation -{2}{3}", colourGood, org.tag, effect.value, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}{1} Reputation -{2}{3}", colourBad, org.tag, effect.value, colourEnd);
                             break;
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }

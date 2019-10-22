@@ -12,23 +12,26 @@ MonoBehaviour:
   m_Name: OrgCureRes3Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 3 Option 2
-  tag: m
-  text: pp
+  tag: Christmas
+  text: Your Christmas fund looks empty
   topic: {fileID: 11400000, guid: 5bdec9398295fe64d994587dae175ed5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8b8017c4a8f2f6241ad13c8505ece11d, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
+  - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f305c9949e3c6ae41b9cbc85f7057452, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <color=#FFFFE0>Agree</color>
-  tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
-    Freedom from Org -1</color>"
+  tooltipHeader: <color=#FFFFE0>m</color>
+  tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 1
+  textToDisplay: <color=#EEFB73>pp</color>
+  optionNumber: 2

@@ -277,7 +277,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         string colourMood = colourGood;
         if (change < 0) { colourMood = colourBad; }
-        builder.AppendFormat("<b>{0}</b>{1}{2}", details, "\n", "\n");
+        builder.AppendFormat("<b>{0}{1}{2}</b>{3}{4}", colourAlert, details, colourEnd, "\n", "\n");
         builder.AppendFormat("{0}<b>Mood {1}{2}</b>{3}", colourMood, change > 0 ? "+" : "", change, colourEnd);
         if (isStressed == true)
         { builder.AppendFormat("{0}{1}{2}Gains gains STRESSED Condition{1}", "\n", "\n", colourBad, colourEnd); }

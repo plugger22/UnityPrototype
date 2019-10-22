@@ -213,7 +213,7 @@ namespace packageAPI
         public int sideLevel;                                           //GlobalSide.level
         public string descriptor;                                       //short (two word) text descriptor used in Turn tooltip
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
-        public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous
+        public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous (use intended value +1, starts next turn)
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
         public int ongoingID = -1;                                      //ongoing effects only, ignore otherwise, default -1
     }

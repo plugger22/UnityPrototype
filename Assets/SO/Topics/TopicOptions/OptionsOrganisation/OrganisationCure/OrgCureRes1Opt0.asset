@@ -23,14 +23,14 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
+  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Agree</color>
   tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
     Reputation with Org -2</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Sounds dubious, but O.K</color>
   optionNumber: 0
