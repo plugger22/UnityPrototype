@@ -4236,22 +4236,26 @@ public class TopicManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
-        if (option.moodEffect != null)
+
+        if (option.isIgnoreMood == false)
         {
-            if (option.isIgnoreMood == false)
-            { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
-            else
+            if (option.moodEffect != null)
             {
                 //ignoreMood only applies if player is Stressed
                 if (GameManager.instance.playerScript.isStressed == false)
                 { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
                 else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
             }
+            else
+            {
+                option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+                Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
+            }
         }
         else
         {
+            //option switch to ignore mood
             option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
-            Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
         }
         return isSucceed;
     }

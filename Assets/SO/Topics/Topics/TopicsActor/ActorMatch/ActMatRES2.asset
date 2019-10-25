@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActMatRES2
   m_EditorClassIdentifier: 
   tag: High Standard
-  text: Your [actor] is impressed with the high level of Professonalism that you bring
-    to your position
+  text: Your [actor] is impressed with the high level of Professionalism that you
+    bring to your position
   designNotes: positive actor Match event (actor -> player relationship)
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: e4b98b9eb2153794e80d0ba3f5f6db9d, type: 2}
@@ -33,15 +33,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36bdfc8b8cdb90040ae97f293bf3f3f2, type: 2}
   - {fileID: 11400000, guid: 345efa99e9c1d1f4887c9df838505f19, type: 2}
   - {fileID: 11400000, guid: 52a9e2ebe7ee10c4f918aa8c71a01025, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   status: 0
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
-  turnsActive: 1
-  turnsLive: 17
+  turnsActive: 15
+  turnsLive: 3
   turnsDone: 0

@@ -3989,6 +3989,39 @@ public class EffectManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }
                     break;
+                case "OrgContact":
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            //Org makes contact with Player
+                            org.isContact = true;
+                            effectResolve.bottomText = string.Format("{0}{1} Contact made{2}", colourGood, org.tag, colourEnd);
+                            Debug.LogFormat("[Org] EffectManager.cs -> ResolveTopicOrganisationEffect: {0} makes contact{1}", org.tag, "\n");
+                            break;
+                        case "Subtract":
+                            //Org cuts player off from all contact
+                            org.isContact = false;
+                            effectResolve.bottomText = string.Format("{0}{1} ends Contact{2}", colourBad, org.tag, colourEnd);
+                            Debug.LogFormat("[Org] EffectManager.cs -> ResolveTopicOrganisationEffect: {0} ends all contact{1}", org.tag, "\n");
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
+                    }
+                    break;
+                case "OrgSecretGain":
+                    //Player gains org secret
+                    if (org.secret != null)
+                    {
+                        if (GameManager.instance.playerScript.AddSecret(org.secret) == true)
+                        { effectResolve.bottomText = string.Format("{0}You gain the{1}{2} Secret{3}", colourBad, "\n", org.secret.tag, colourEnd); }
+                    }
+                    else { Debug.LogWarning("Invalid org.Secret (Null)"); }
+                    break;
+                case "OrgSecretReveal":
+                    //Player's org secret revealed
+                    if (org.secret != null)
+                    { effectResolve.bottomText = ExecuteRevealOrgSecret(org.secret, org.tag); }
+                    else { Debug.LogWarning("Invalid org.Secret (Null)"); }
+                    break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
             }
         }
@@ -4650,6 +4683,65 @@ public class EffectManager : MonoBehaviour
 
         //return
         return bottomText;
+    }
+
+    /// <summary>
+    /// Reveals one of Player's secrets, eg. Org
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private string ExecuteRevealOrgSecret(Secret secret, string OrgName)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (secret != null)
+        {
+            if (string.IsNullOrEmpty(OrgName) == true) { OrgName = "Unknown"; }
+            //check Player has secret (revealWho is the player 'casue they didn't meet org's demand)
+            if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
+            {
+                secret.revealedWho = GameManager.instance.playerScript.actorID;
+                secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                secret.status = gameAPI.SecretStatus.Revealed;
+                //carry out effects
+                if (secret.listOfEffects != null)
+                {
+                    //data packages
+                    EffectDataReturn effectReturn = new EffectDataReturn();
+                    EffectDataInput effectInput = new EffectDataInput();
+                    effectInput.originText = "Org Reveals Secret";
+                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    if (node != null)
+                    {
+                        if (secret.listOfEffects.Count > 0)
+                        { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, OrgName, colourEnd); }
+                        //loop effects
+                        foreach (Effect effect in secret.listOfEffects)
+                        {
+                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.Append(effectReturn.bottomText);
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid player node (Null)"); }
+
+                }
+                //remove secret from all actors and player
+                GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid Org Secret {0} (Player doesn't have secret)");
+                builder.Append("Secret NOT FOUND");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid Secret (Null) -> Not revealed");
+            builder.Append("Secret INVALID");
+        }
+        return builder.ToString();
     }
 
     /// <summary>

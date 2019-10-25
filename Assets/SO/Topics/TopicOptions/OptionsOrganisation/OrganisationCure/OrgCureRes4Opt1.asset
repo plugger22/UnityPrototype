@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Name: OrgCureRes4Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 4 Option 1
-  tag: m
-  text: pp
+  tag: Decline
+  text: Go jump!
   topic: {fileID: 11400000, guid: 30a790a3ac2d72040be0ac89e5fa1398, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
@@ -31,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 0
+  optionNumber: 1

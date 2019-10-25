@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Actor / Secret / Secret")]
 public class Secret : ScriptableObject
 {
-    [Tooltip("General purpose descriptor with no ingame use")]
+    [Tooltip("General purpose descriptor. Used for 'You Gain Secret' message RHS header")]
     public string descriptor;
     [Tooltip("Used in tooltips, etc. Keep short. Three words max")]
     public string tag;

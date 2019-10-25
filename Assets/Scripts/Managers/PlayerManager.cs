@@ -1144,6 +1144,13 @@ public class PlayerManager : MonoBehaviour
     public int CheckNumOfSecrets()
     { return listOfSecrets.Count; }
 
+    /// <summary>
+    /// returns true if secret present in Player's list of secrets, false otherwise
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    public bool CheckSecretPresent(Secret secret)
+    { return listOfSecrets.Exists(x => x.name.Equals(secret.name, StringComparison.Ordinal) == true); }
 
     /// <summary>
     /// Initialise the listOfSecrets (overwrites existing list). Used for load save game
@@ -1160,10 +1167,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add a new secret, checks for duplicates and won't add if one found (warning msg)
+    /// Add a new secret, checks for duplicates and won't add if one found (warning msg). Returns true if successful, false otherwise
     /// </summary>
     /// <param name="secret"></param>
-    public void AddSecret(Secret secret)
+    public bool AddSecret(Secret secret)
     {
         if (secret != null)
         {
@@ -1181,11 +1188,13 @@ public class PlayerManager : MonoBehaviour
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
                     Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.name, "\n");
+                    return true;
                 }
                 else { Debug.LogWarning("Secret NOT added as not enough space"); }
             }
             else { Debug.LogWarningFormat("Duplicate secret already in list, secretID {0}", secret.name); }
         }
+        return false;
     }
 
     /// <summary>

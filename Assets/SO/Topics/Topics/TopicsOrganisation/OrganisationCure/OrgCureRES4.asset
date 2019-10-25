@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: OrgCureRES4
   m_EditorClassIdentifier: 
-  tag: Disown
-  text: Your reputation with the [org] is in taters. They are asking you to [orgWant].
-    Help them or they will abandon you
+  tag: The Big Ask
+  text: The [org] has had enough. They are demanding that you [orgWant]. Help them
+    or they will break off all contact
   designNotes: 'Org Cure RES 4 bad event
 
     Org about to Disown Player, applies to all
@@ -33,22 +33,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
   - {fileID: 11400000, guid: 1b092729a10dd374c8e621bb9c862f6a, type: 2}
   - {fileID: 11400000, guid: cf204c78310ad774fac94387a0c38b99, type: 2}
-  listOfIgnoreEffects: []
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 587f27eab9cea674a8058c405d6d6e2b, type: 2}
   - {fileID: 11400000, guid: 80a94a06d5f4a17469e59c8d7fef896e, type: 2}
-  - {fileID: 11400000, guid: 9f0287d63478ad945b280278430dda3e, type: 2}
-  - {fileID: 11400000, guid: a229b6bb84856404e8a98057f445f684, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 18
-  turnsLive: 0
+  turnsLive: 1
   turnsDone: 0

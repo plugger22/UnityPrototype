@@ -29,6 +29,7 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  - {fileID: 11400000, guid: cf204c78310ad774fac94387a0c38b99, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
@@ -36,7 +37,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 34091db59bbf9ef4fa385e4495833a22, type: 2}
   - {fileID: 11400000, guid: 45e1d5870b30c8e45ae0bb0d2bd29d6a, type: 2}
   - {fileID: 11400000, guid: 8057df39ef917ac4cb1df5038fa25c57, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -46,6 +47,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 22
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0
