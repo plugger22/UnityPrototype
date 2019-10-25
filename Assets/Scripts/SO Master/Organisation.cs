@@ -11,6 +11,8 @@ public class Organisation : ScriptableObject
 {
     [Tooltip("Short text description (3 words max)")]
     public string descriptor;
+    [Tooltip("Type of org, eg. OrgCure, dev purposes only")]
+    public string typeOfOrg;
     [Tooltip("In game name")]
     public string tag;
     [Tooltip("Sprite")]

@@ -2815,3 +2815,24 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 42315 -> Tuesday, 22 October 2019 5:32 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 64666 -> Friday, 25 October 2019 10:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32457 -> Friday, 25 October 2019 10:55 AM
+WARNING [Val] ValidateSO: MISMATCH on Criteria, array 111, assets 117 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Criteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1656)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1513)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	WARNING [Val] ValidateSO: MISMATCH on EffectCriteria, array 108, assets 114 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectCriteria[]) (at Assets/Scripts/Managers/ValidationManager.cs:1656)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1517)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 3569 -> Friday, 25 October 2019 11:37 AM
+City seed 5678 -> London, United Kingdom

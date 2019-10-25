@@ -164,6 +164,7 @@ public class TopicManager : MonoBehaviour
     private string tagOutcome;
     private string tagOrgName;          //name of organisation, eg. 'BlueAngelCult'
     private string tagOrgTag;           //tag of organisation, eg. 'Blue Angel Cult'
+    private string tagOrgWant;          //what the org wants you to do (org.textWant)
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1294,6 +1295,7 @@ public class TopicManager : MonoBehaviour
         tagOutcome = "";
         tagOrgName = "";
         tagOrgTag = "";
+        tagOrgWant = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -2170,6 +2172,7 @@ public class TopicManager : MonoBehaviour
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2203,6 +2206,7 @@ public class TopicManager : MonoBehaviour
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2236,6 +2240,7 @@ public class TopicManager : MonoBehaviour
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2269,6 +2274,7 @@ public class TopicManager : MonoBehaviour
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -2302,6 +2308,7 @@ public class TopicManager : MonoBehaviour
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -5037,6 +5044,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = tagOrgTag; }
                         }
                         else { CountTextTag("org", dictOfTags); }
+                        break;
+                    case "orgWant":
+                        //organisation wants you to...
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrgWant, colourEnd); }
+                            else { replaceText = tagOrgWant; }
+                        }
+                        else { CountTextTag("orgWant", dictOfTags); }
                         break;
                     case "who":
                         //My '[best friend]'s [crazy] [sister]' 

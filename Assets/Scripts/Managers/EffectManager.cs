@@ -90,6 +90,7 @@ public class EffectManager : MonoBehaviour
     private int maxTargetInfo = -1;
     private int neutralStatValue = -1;
     private int maxStatValue = -1;
+    private int maxSecretsAllowed = -1;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -182,6 +183,7 @@ public class EffectManager : MonoBehaviour
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
         maxTargetInfo = GameManager.instance.targetScript.maxTargetInfo;
         maxStatValue = GameManager.instance.actorScript.maxStatValue;
+        maxSecretsAllowed = GameManager.instance.secretScript.secretMaxNum;
         neutralStatValue = GameManager.instance.actorScript.neutralStatValue;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
@@ -192,6 +194,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(maxTargetInfo > -1, "Invalid maxTargetInfo (-1)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
+        Debug.Assert(maxSecretsAllowed > -1, "Invalid maxSecretsAllowed (-1)");
         Debug.Assert(neutralStatValue > -1, "Invalid neutralStatValue (-1)");
     }
     #endregion
@@ -943,13 +946,21 @@ public class EffectManager : MonoBehaviour
                                                 if (val == 0)
                                                 { BuildString(result, "Invisibility Zero"); }
                                                 break;
-                                            case "SecretsNOTZero":
+                                            case "SecretsNOTMin":
                                                 //check num of secrets greater than Zero -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.CheckNumOfSecrets(); }
                                                 else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
                                                 if (val == 0)
                                                 { BuildString(result, "Secrets Zero"); }
+                                                break;
+                                            case "SecretsNOTMax":
+                                                //check num of secrets less than Max allowed -> Actor / Player
+                                                if (actor != null)
+                                                { val = actor.CheckNumOfSecrets(); }
+                                                else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
+                                                if (val >= maxSecretsAllowed)
+                                                { BuildString(result, "Secrets MAX"); }
                                                 break;
                                             case "ActiveActorSlot0":
                                                 //check there is an active actor present onMap at slot 0
@@ -1333,6 +1344,45 @@ public class EffectManager : MonoBehaviour
                                                 {
                                                     if (org.GetReputation() > 0)
                                                     { BuildString(result, "Reputation Not MIN"); }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                break;
+                                            //Player knows Organisation secret
+                                            case "SecretOrgCureYes":
+                                            case "SecretOrgContYes":
+                                            case "SecretOrgHQYes":
+                                            case "SecretOrgEmerYes":
+                                            case "SecretOrgInfoYes":
+                                                if (org != null)
+                                                {
+                                                    if (org.isSecretKnown == false)
+                                                    { BuildString(result, string.Format("Secret NOT known")); }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                break;
+                                            //Player DOESN'T knows Organisation secret
+                                            case "SecretOrgCureNo":
+                                            case "SecretOrgContNo":
+                                            case "SecretOrgHQNo":
+                                            case "SecretOrgEmerNo":
+                                            case "SecretOrgInfoNo":
+                                                if (org != null)
+                                                {
+                                                    if (org.isSecretKnown == true)
+                                                    { BuildString(result, string.Format("Secret IS known")); }
+                                                }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                break;
+                                            //Player knows Org secret and secret is status Active (hasn't yet been Revealed)
+                                            case "SecretOrgCureActive":
+                                            case "SecretOrgContActive":
+                                            case "SecretOrgHQActive":
+                                            case "SecretOrgEmerActive":
+                                            case "SecretOrgInfoActive":
+                                                if (org != null)
+                                                {
+                                                    if (org.secret.status != gameAPI.SecretStatus.Active)
+                                                    { BuildString(result, string.Format("Secret Revealed")); }
                                                 }
                                                 else { BuildString(result, "Invalid Organisation"); }
                                                 break;
