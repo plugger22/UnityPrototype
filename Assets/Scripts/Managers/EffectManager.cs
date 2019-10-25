@@ -4707,6 +4707,7 @@ public class EffectManager : MonoBehaviour
                 //carry out effects
                 if (secret.listOfEffects != null)
                 {
+                    Debug.LogFormat("[Sec] EffectManager.cs -> ExecuteRevealSecret: secret \"{0}\" revealed by {1}{2}", secret.tag, OrgName, "\n");
                     //data packages
                     EffectDataReturn effectReturn = new EffectDataReturn();
                     EffectDataInput effectInput = new EffectDataInput();
