@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: OrgCureRes4Opt2
+  m_Name: OrgCureRes6Opt0
   m_EditorClassIdentifier: 
-  descriptor: Org Cure Res 4 Option 2
+  descriptor: Org Cure Res 6 Option 0
   tag: m
   text: pp
-  topic: {fileID: 11400000, guid: 30a790a3ac2d72040be0ac89e5fa1398, type: 2}
+  topic: {fileID: 11400000, guid: 1875524e6e5732d4eaf34553565c79cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
@@ -31,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 1
+  optionNumber: 2

@@ -9,19 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgCureRES5
+  m_Name: OrgCureRES6
   m_EditorClassIdentifier: 
   tag: Blackmail
-  text: The [org] asks that you make a 'donation' and in return they promise not to
-    mention what you've done for them to HQ
-  designNotes: 'Org Cure RES 5 good event
+  text: The [org] demands that you pay them a retainer otherwise they will have no
+    choice but to inform HQ what you've done
+  designNotes: 'Org Cure RES 6 bad event
 
     Org blackmails player, applies to all cures'
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
@@ -33,10 +33,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc4b2ceb9d1b2fa4bb1fb35b81fe1d1a, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 9f2e7ecc316a4c6409718770ab9acb08, type: 2}
-  - {fileID: 11400000, guid: 4f7e138ccc5766f4cb0ec1283da025d0, type: 2}
-  - {fileID: 11400000, guid: 10a63ce5a3e22004b855418a90b2dd4c, type: 2}
-  - {fileID: 11400000, guid: 2c79884532b5fe945be480089340d04d, type: 2}
+  - {fileID: 11400000, guid: 9f0287d63478ad945b280278430dda3e, type: 2}
+  - {fileID: 11400000, guid: a229b6bb84856404e8a98057f445f684, type: 2}
+  - {fileID: 11400000, guid: 25aaab5c0377f494ea766648dea959ad, type: 2}
+  - {fileID: 11400000, guid: 2859fd289f7699446848a31f402f2ae6, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

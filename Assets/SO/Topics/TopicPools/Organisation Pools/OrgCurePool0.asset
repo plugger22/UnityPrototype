@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
   m_Name: OrgCurePool0
   m_EditorClassIdentifier: 
-  tag: Org Cure Pool 0
+  tag: Org Cure Pool 6
   descriptor: 
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
@@ -23,4 +23,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5bdec9398295fe64d994587dae175ed5, type: 2}
   - {fileID: 11400000, guid: 30a790a3ac2d72040be0ac89e5fa1398, type: 2}
   - {fileID: 11400000, guid: 88e453a1dcd30df429424fc94a161b37, type: 2}
+  - {fileID: 11400000, guid: 1875524e6e5732d4eaf34553565c79cf, type: 2}
   listOfSubSubTypePools: []
