@@ -4733,56 +4733,56 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
     /// <returns></returns>
-    private string ExecuteRevealOrgSecret(Secret secret, string orgName)
+    private string ExecuteRevealOrgSecret(Secret secret, Organisation org)
     {
         StringBuilder builder = new StringBuilder();
         if (secret != null)
         {
-            if (string.IsNullOrEmpty(orgName) == true) { orgName = "Unknown"; }
-            //check Player has secret (revealWho is the player 'casue they didn't meet org's demand)
-            if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
+            if (org != null)
             {
-                secret.revealedWho = orgName;
-                secret.revealedWhen = GameManager.instance.turnScript.Turn;
-                secret.status = gameAPI.SecretStatus.Revealed;
-                //carry out effects
-                if (secret.listOfEffects != null)
+                //check Player has secret (revealWho is the player 'casue they didn't meet org's demand)
+                if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
                 {
-                    Debug.LogFormat("[Sec] EffectManager.cs -> ExecuteRevealSecret: secret \"{0}\" revealed by {1}{2}", secret.tag, orgName, "\n");
-                    //data packages
-                    EffectDataReturn effectReturn = new EffectDataReturn();
-                    EffectDataInput effectInput = new EffectDataInput();
-                    effectInput.originText = "Org Reveals Secret";
-                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                    if (node != null)
+                    secret.revealedWho = org.tag;
+                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                    secret.status = gameAPI.SecretStatus.Revealed;
+                    //carry out effects
+                    if (secret.listOfEffects != null)
                     {
-                        if (secret.listOfEffects.Count > 0)
-                        { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, orgName, colourEnd); }
-                        //loop effects
-                        foreach (Effect effect in secret.listOfEffects)
+                        Debug.LogFormat("[Sec] EffectManager.cs -> ExecuteRevealSecret: secret \"{0}\" revealed by {1}{2}", secret.tag, org.tag, "\n");
+                        //data packages
+                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        EffectDataInput effectInput = new EffectDataInput();
+                        effectInput.originText = "Org Reveals Secret";
+                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        if (node != null)
                         {
-                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                            if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.Append(effectReturn.bottomText);
-                        }
-                    }
-                    else { Debug.LogWarning("Invalid player node (Null)"); }
+                            if (secret.listOfEffects.Count > 0)
+                            { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, org.tag, colourEnd); }
+                            //loop effects
+                            foreach (Effect effect in secret.listOfEffects)
+                            {
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                builder.Append(effectReturn.bottomText);
+                            }
+                            //message
 
+                            GameManager.instance.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");
+                        }
+                        else { Debug.LogWarning("Invalid player node (Null)"); }
+
+                    }
+                    //remove secret from all actors and player
+                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                 }
-                //remove secret from all actors and player
-                GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
+                else
+                { Debug.LogWarningFormat("Invalid Org Secret {0} (Player doesn't have secret)"); builder.Append("Secret NOT FOUND"); }
             }
             else
-            {
-                Debug.LogWarningFormat("Invalid Org Secret {0} (Player doesn't have secret)");
-                builder.Append("Secret NOT FOUND");
-            }
+            { Debug.LogWarning("Invalid org (Null)"); builder.Append("Invalid Organisation"); }
         }
-        else
-        {
-            Debug.LogWarning("Invalid Secret (Null) -> Not revealed");
-            builder.Append("Secret INVALID");
-        }
+        else { Debug.LogWarning("Invalid secret (Null)"); builder.Append("Invalid Secret"); }
         return builder.ToString();
     }
 

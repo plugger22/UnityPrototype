@@ -4321,6 +4321,48 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Organisation reveals secret
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="orgName"></param>
+    /// <param name="secret"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public Message OrganisationRevealSecret(string text, Organisation org, Secret secret, string reason)
+    {
+        Debug.Assert(org != null, "Invalid organisation (Null)");
+        Debug.Assert(secret != null, "Invalid secret (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ORGANISATION;
+            message.subType = MessageSubType.Org_Secret;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.dataName = org.name;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = secret.tag;
+            data.bottomText = GameManager.instance.itemDataScript.GetOrgRevealSecretDetails(org.tag, secret, reason);
+            data.itemText = string.Format("{0} reveals your SECRET", org.tag);
+            data.priority = ItemPriority.High;
+            data.sprite = org.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     //
     // - - - Utilities

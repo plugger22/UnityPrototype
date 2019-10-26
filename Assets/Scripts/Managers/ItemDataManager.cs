@@ -26,7 +26,7 @@ public class ItemDataManager : MonoBehaviour
     private string colourRebel;
     //private string colourAuthority;
     private string colourNeutral;
-    //private string colourNormal;
+    private string colourNormal;
     private string colourGood;
     private string colourBad;
     //private string colourGrey;
@@ -91,7 +91,7 @@ public class ItemDataManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
@@ -2092,6 +2092,28 @@ public class ItemDataManager : MonoBehaviour
         }
         //reason
         builder.AppendFormat("{0}<b>Due to {1}{2}</b>{3}", "\n", colourAlert, reason, colourEnd);
+        return builder.ToString();
+    }
+
+    //
+    // - - - Organisations
+    //
+
+    /// <summary>
+    /// Whenever Org secret revealed, shows reason why and specific effects
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="secret"></param>
+    /// <param name="secretEffect"></param>
+    /// <returns></returns>
+    public string GetOrgRevealSecretDetails(string orgName, Secret secret, string reason)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, orgName, colourEnd);
+        if (string.IsNullOrEmpty(reason) == false)
+        { builder.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourBad, reason, colourEnd); }
+        builder.AppendFormat("{0}{1}<b>Secret Revealed</b>", "\n", "\n");
+        GetSecretEffects(builder, secret);
         return builder.ToString();
     }
 
