@@ -94,6 +94,7 @@ public class OrganisationManager : MonoBehaviour
             org.SetReputation(0);
             org.SetFreedom(2);
             org.isContact = false;
+            org.isSecretKnown = false;
             Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}", 
                 org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n");
         }
