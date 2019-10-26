@@ -3929,11 +3929,11 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         GameManager.instance.factionScript.ChangeFactionApproval(effect.value, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
-                        effectResolve.bottomText = string.Format("{0}HQ Approval +1{1}", colourGood, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
                         break;
                     case "Subtract":
                         GameManager.instance.factionScript.ChangeFactionApproval(effect.value * -1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
-                        effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
+                        effectResolve.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }
@@ -4026,7 +4026,7 @@ public class EffectManager : MonoBehaviour
                 case "OrgSecretReveal":
                     //Player's org secret revealed
                     if (org.secret != null)
-                    { effectResolve.bottomText = ExecuteRevealOrgSecret(org.secret, org.tag); }
+                    { effectResolve.bottomText = ExecuteRevealOrgSecret(org.secret, org); }
                     else { Debug.LogWarning("Invalid org.Secret (Null)"); }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4767,7 +4767,7 @@ public class EffectManager : MonoBehaviour
                                 builder.Append(effectReturn.bottomText);
                             }
                             //message
-
+                            string text = string.Format("{0} revealed \"{1}\" secret{2}", org.tag, secret.tag, "\n");
                             GameManager.instance.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
