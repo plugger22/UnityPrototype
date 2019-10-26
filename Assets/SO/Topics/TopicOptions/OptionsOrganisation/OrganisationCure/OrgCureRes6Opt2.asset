@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: OrgCureRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 6 Option 2
-  tag: m
-  text: pp
+  tag: Tell HQ
+  text: I'll tell HQ what great people you are
   topic: {fileID: 11400000, guid: 1875524e6e5732d4eaf34553565c79cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Agree</color>
@@ -31,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 0
+  optionNumber: 2

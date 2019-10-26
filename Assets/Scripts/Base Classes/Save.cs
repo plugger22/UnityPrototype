@@ -488,7 +488,8 @@ public class SaveSecret
 {
     public string secretName;
     public int gainedWhen;
-    public int revealedWho;
+    public int revealedID;
+    public string revealedWho;
     public int revealedWhen;
     public int deleteWhen;
     public gameAPI.SecretStatus status;

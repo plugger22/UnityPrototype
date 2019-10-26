@@ -3771,6 +3771,9 @@ public class EffectManager : MonoBehaviour
             case "Drugs":
                 effectResolve.bottomText = ExecutePlayerTakeDrugs(effect);
                 break;
+            case "Gear":
+                effectResolve.bottomText = ExecutePlayerLoseGear(effect);
+                break;
             case "PlayerActions":
                 //player gains or loses and action next turn
                 effectResolve = ResolvePlayerData(effect, dataInput);
@@ -3921,14 +3924,15 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "HQApproval":
+                //adjusts by value amount
                 switch (effect.operand.name)
                 {
                     case "Add":
-                        GameManager.instance.factionScript.ChangeFactionApproval(1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.instance.factionScript.ChangeFactionApproval(effect.value, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval +1{1}", colourGood, colourEnd);
                         break;
                     case "Subtract":
-                        GameManager.instance.factionScript.ChangeFactionApproval(-1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.instance.factionScript.ChangeFactionApproval(effect.value * -1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval -1{1}", colourBad, colourEnd);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4012,7 +4016,10 @@ public class EffectManager : MonoBehaviour
                     if (org.secret != null)
                     {
                         if (GameManager.instance.playerScript.AddSecret(org.secret) == true)
-                        { effectResolve.bottomText = string.Format("{0}You gain the{1}{2} Secret{3}", colourBad, "\n", org.secret.tag, colourEnd); }
+                        {
+                            org.isSecretKnown = true;
+                            effectResolve.bottomText = string.Format("{0}You gain the {1} Secret{2}", colourBad, org.secret.tag, colourEnd);
+                        }
                     }
                     else { Debug.LogWarning("Invalid org.Secret (Null)"); }
                     break;
@@ -4645,6 +4652,40 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Player loses a Random piece of gear from inventory
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
+    private string ExecutePlayerLoseGear(Effect effect)
+    {
+        string gearName = "Unknown";
+        //Player loses a random piece of Gear
+        List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        if (listOfGear != null)
+        {
+            int count = listOfGear.Count;
+            if (count > 0)
+            {
+                gearName = listOfGear[Random.Range(0, count)];
+                if (string.IsNullOrEmpty(gearName) == false)
+                {
+                    //remove gear (lost forever)
+                    GameManager.instance.playerScript.RemoveGear(gearName, true);
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid gearName (Null or Empty)");
+                    gearName = "Unknown";
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfGear (Empty)"); }
+        }
+        else
+        { Debug.LogWarning("Invalid listOFGear (Null)"); }
+        return string.Format("{0}Player loses {1} gear{2}", colourBad, gearName, colourEnd);
+    }
+
+    /// <summary>
     /// chance (L/M/H) of Player becoming addicted and gaining ADDICTED condition
     /// </summary>
     /// <param name="effect"></param>
@@ -4692,22 +4733,22 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
     /// <returns></returns>
-    private string ExecuteRevealOrgSecret(Secret secret, string OrgName)
+    private string ExecuteRevealOrgSecret(Secret secret, string orgName)
     {
         StringBuilder builder = new StringBuilder();
         if (secret != null)
         {
-            if (string.IsNullOrEmpty(OrgName) == true) { OrgName = "Unknown"; }
+            if (string.IsNullOrEmpty(orgName) == true) { orgName = "Unknown"; }
             //check Player has secret (revealWho is the player 'casue they didn't meet org's demand)
             if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
             {
-                secret.revealedWho = GameManager.instance.playerScript.actorID;
+                secret.revealedWho = orgName;
                 secret.revealedWhen = GameManager.instance.turnScript.Turn;
                 secret.status = gameAPI.SecretStatus.Revealed;
                 //carry out effects
                 if (secret.listOfEffects != null)
                 {
-                    Debug.LogFormat("[Sec] EffectManager.cs -> ExecuteRevealSecret: secret \"{0}\" revealed by {1}{2}", secret.tag, OrgName, "\n");
+                    Debug.LogFormat("[Sec] EffectManager.cs -> ExecuteRevealSecret: secret \"{0}\" revealed by {1}{2}", secret.tag, orgName, "\n");
                     //data packages
                     EffectDataReturn effectReturn = new EffectDataReturn();
                     EffectDataInput effectInput = new EffectDataInput();
@@ -4716,7 +4757,7 @@ public class EffectManager : MonoBehaviour
                     if (node != null)
                     {
                         if (secret.listOfEffects.Count > 0)
-                        { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, OrgName, colourEnd); }
+                        { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, orgName, colourEnd); }
                         //loop effects
                         foreach (Effect effect in secret.listOfEffects)
                         {

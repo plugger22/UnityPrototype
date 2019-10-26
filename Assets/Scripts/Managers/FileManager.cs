@@ -407,6 +407,7 @@ public class FileManager : MonoBehaviour
                     saveSecret.secretName = secret.Key;
                     saveSecret.gainedWhen = secret.Value.gainedWhen;
                     saveSecret.revealedWho = secret.Value.revealedWho;
+                    saveSecret.revealedID = secret.Value.revealedID;
                     saveSecret.revealedWhen = secret.Value.revealedWhen;
                     saveSecret.deleteWhen = secret.Value.deletedWhen;
                     saveSecret.status = secret.Value.status;
@@ -1861,6 +1862,7 @@ public class FileManager : MonoBehaviour
                             secret.status = secretData.status;
                             secret.gainedWhen = secretData.gainedWhen;
                             secret.revealedWho = secretData.revealedWho;
+                            secret.revealedID = secretData.revealedID;
                             secret.revealedWhen = secretData.revealedWhen;
                             secret.deletedWhen = secretData.deleteWhen;
                             secret.SetListOfActors(secretData.listOfActors);

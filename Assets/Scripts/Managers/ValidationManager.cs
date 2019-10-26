@@ -976,7 +976,10 @@ public class ValidationManager : MonoBehaviour
 
                                             }
                                             else
-                                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
+                                            {
+                                                if (option.isIgnoreMood == false)
+                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" for topic \"{1}\" has missing Mood effect{2}", option.name, topicName, "\n"); }
+                                            }
                                             //News snippet (check text tags are valid), only if a news snippet is present
                                             if (string.IsNullOrEmpty(option.news) == false)
                                             {
@@ -2356,7 +2359,7 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                     case gameAPI.SecretStatus.Revealed:
                         CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
                         CheckDictRange(secret.Value.revealedWhen, 0, highestTurn, "revealedWhen (turn)", tag, key);
-                        CheckDictRange(secret.Value.revealedWho, 0, highestActorID, "revealedWho (actor)", tag, key);
+                        CheckDictString(secret.Value.revealedWho, "secret.revealedWho", tag, key);
                         break;
                     case gameAPI.SecretStatus.Deleted:
                         CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);

@@ -466,13 +466,9 @@ public class SecretManager : MonoBehaviour
             {
                 foreach (Secret secret in tempList)
                 {
-                    if (secret.revealedWho > -1)
-                    {
-                        builderTemp.AppendFormat("{0} {1} ({2}), {3} turn {4}, {5}", "\n", secret.name, secret.tag,
-                            GameManager.instance.dataScript.GetActor(secret.revealedWho).arc.name, secret.revealedWhen, secret.status);
-                    }
-                    else
-                    { builderTemp.AppendFormat("{0} {1} ({2}) {3}", "\n", secret.name, secret.tag, secret.status ); }
+                    if (string.IsNullOrEmpty(secret.revealedWho) == false)
+                    { builderTemp.AppendFormat("{0} {1} ({2}), {3} turn {4}, {5}", "\n", secret.name, secret.tag, secret.revealedWho, secret.revealedWhen, secret.status); }
+                    else { builderTemp.AppendFormat("{0} {1} ({2}) {3}", "\n", secret.name, secret.tag, secret.status ); }
                 }
             }
             else { builderTemp.AppendFormat("{0} No records", "\n"); }

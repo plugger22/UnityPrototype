@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Name: OrgCureRes6Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 6 Option 1
-  tag: m
-  text: pp
+  tag: Indifferent
+  text: Just as well I don't care
   topic: {fileID: 11400000, guid: 1875524e6e5732d4eaf34553565c79cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Agree</color>
@@ -31,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Yes, that'd be appreciated</color>
-  optionNumber: 3
+  optionNumber: 1

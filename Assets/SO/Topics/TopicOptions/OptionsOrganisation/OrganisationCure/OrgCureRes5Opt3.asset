@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: OrgCureRes5Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 5 Option 3
-  tag: m
-  text: pp
+  tag: Help Cause
+  text: I'll promote your cause with HQ
   topic: {fileID: 11400000, guid: 88e453a1dcd30df429424fc94a161b37, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Agree</color>

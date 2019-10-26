@@ -26,12 +26,12 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  profile: {fileID: 11400000, guid: 48f5f246e56aa0a4a867f9186b8c640c, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
-  - {fileID: 11400000, guid: e013ef5c54f397641954eadb3b6e7224, type: 2}
   - {fileID: 11400000, guid: bc4b2ceb9d1b2fa4bb1fb35b81fe1d1a, type: 2}
-  listOfIgnoreEffects: []
+  - {fileID: 11400000, guid: e013ef5c54f397641954eadb3b6e7224, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 1234805234c36e0429fb1281e887af2f, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 9f0287d63478ad945b280278430dda3e, type: 2}
   - {fileID: 11400000, guid: a229b6bb84856404e8a98057f445f684, type: 2}
@@ -44,9 +44,9 @@ MonoBehaviour:
   status: 1
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 16
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 15
+  turnsActive: 20
   turnsLive: 0
   turnsDone: 0

@@ -23,7 +23,8 @@ public class Secret : ScriptableObject
     #region Save Data Compatible
     [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 
     [HideInInspector] public int gainedWhen;                //turn player gains secret
-    [HideInInspector] public int revealedWho;               //actorID of person who revealed the secret
+    [HideInInspector] public string revealedWho;            //actor/org who revealed the secret (actor name + arc name / org name)
+    [HideInInspector] public int revealedID;                //actorID who revealed (optional, ignore if org (-1))
     [HideInInspector] public int revealedWhen;              //turn revealed
     [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
@@ -44,7 +45,8 @@ public class Secret : ScriptableObject
     public void Initialise()
     {
         status = gameAPI.SecretStatus.Inactive;
-        revealedWho = -1;
+        revealedWho = "";
+        revealedID = -1;
         revealedWhen = -1;
         deletedWhen = -1;
         listOfActors.Clear();
@@ -63,7 +65,8 @@ public class Secret : ScriptableObject
     /// </summary>
     public void ResetFollowOnLevel()
     {
-        revealedWho = -1;
+        revealedWho = "";
+        revealedID = -1;
         revealedWhen = -1;
         deletedWhen = -1;
         listOfActors.Clear();

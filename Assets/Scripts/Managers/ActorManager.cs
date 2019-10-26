@@ -5634,7 +5634,8 @@ public class ActorManager : MonoBehaviour
                 Secret secret = actor.GetSecret();
                 if (secret != null)
                 {
-                    secret.revealedWho = actor.actorID;
+                    secret.revealedID = actor.actorID;
+                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
                     secret.revealedWhen = GameManager.instance.turnScript.Turn;
                     secret.status = gameAPI.SecretStatus.Revealed;
                     /*StringBuilder builder = new StringBuilder();*/
@@ -7046,7 +7047,8 @@ public class ActorManager : MonoBehaviour
                 Secret secret = actor.GetSecret();
                 if (secret != null)
                 {
-                    secret.revealedWho = actor.actorID;
+                    secret.revealedID = actor.actorID;
+                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
                     secret.revealedWhen = GameManager.instance.turnScript.Turn;
                     secret.status = gameAPI.SecretStatus.Revealed;
                     //carry out effects

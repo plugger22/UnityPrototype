@@ -12,17 +12,21 @@ MonoBehaviour:
   m_Name: OrgCureRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Cure Res 5 Option 1
-  tag: m
-  text: pp
+  tag: Leave Me Alone
+  text: Take it, I don't want to know
   topic: {fileID: 11400000, guid: 88e453a1dcd30df429424fc94a161b37, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Agree</color>

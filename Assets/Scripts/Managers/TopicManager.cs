@@ -5385,7 +5385,7 @@ public class TopicManager : MonoBehaviour
                             //tooltipMain
                             data.imageTooltipMain = resultsOrg.Item1;
                             //main present -> Add tooltip header (Org name)
-                            data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tagOrgName, colourEnd);
+                            data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tagOrgTag, colourEnd);
                         }
                         if (string.IsNullOrEmpty(resultsOrg.Item2) == false)
                         { data.imageTooltipDetails = resultsOrg.Item2; }
