@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: Didn't the [org] come from those old nunneries, asks [npc], [job] of [node]?
   tooltipHeader: <color=#FFFFE0>m</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

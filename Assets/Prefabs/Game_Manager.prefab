@@ -1797,6 +1797,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d0059a61fc81dd4e93a67e3fd207cb8, type: 2}
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
   - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
+  - {fileID: 11400000, guid: 5250a46387347f24cb78ec677511d32c, type: 2}
+  - {fileID: 11400000, guid: fe086d275f54c3241a3967428b1a0ce1, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}

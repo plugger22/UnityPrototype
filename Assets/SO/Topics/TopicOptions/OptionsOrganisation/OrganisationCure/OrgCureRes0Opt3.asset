@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] thinks that the [org] are an evil religious cabal that should be
+    eradicated. Me, I don't know, says [npc], [job] of [node]?
   tooltipHeader: <color=#FFFFE0>No</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>

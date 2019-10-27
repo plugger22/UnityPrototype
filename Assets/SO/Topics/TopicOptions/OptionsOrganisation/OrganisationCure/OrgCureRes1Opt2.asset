@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: My [who] knows somebody who used to be in the [org]. They forced him to have
+    sex with a goat, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Crooks</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     finds Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>

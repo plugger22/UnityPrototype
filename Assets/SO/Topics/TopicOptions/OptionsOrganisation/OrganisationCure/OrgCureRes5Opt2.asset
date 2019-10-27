@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] thinks that the [org] are waiting for the end of the world so that
+    they can elope, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Generous</color>
   tooltipMain: "<color=#98FB98> Reputation with Org +1</color>\r\n<color=#98FB98>
     Freedom from Org +2</color>\r\n<color=#FF4500>Player Renown -3</color>"

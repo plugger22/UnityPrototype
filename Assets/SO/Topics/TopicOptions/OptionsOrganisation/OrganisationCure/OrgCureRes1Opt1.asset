@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [org]? Religious crazies but aren't all religions the same, says [npc],
+    [job] of [node]? At least they help people
   tooltipHeader: <color=#FFFFE0>Pay Now</color>
   tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>Player
     Renown -3</color>"

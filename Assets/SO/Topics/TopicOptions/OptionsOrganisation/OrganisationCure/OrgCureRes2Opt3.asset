@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I've heard that the [org] originally derived from the Knights Hospitaller
+    way back in the middle ages, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>m</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

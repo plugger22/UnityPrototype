@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: It's said that the [org] are the direct descendants of some crazy twentieth
+    century jungle juice guzzlers, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>m</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

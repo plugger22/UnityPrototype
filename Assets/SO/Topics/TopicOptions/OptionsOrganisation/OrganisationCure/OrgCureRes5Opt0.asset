@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] was helped by the [org] and now they have a [handicap], says [npc],
+    [job] of [node]
   tooltipHeader: <color=#FFFFE0>Agree</color>
   tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
     Freedom from Org -1</color>"

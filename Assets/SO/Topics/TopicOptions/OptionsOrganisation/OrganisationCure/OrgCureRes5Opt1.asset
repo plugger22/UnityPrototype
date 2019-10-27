@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Does the [org] really roast young children alive and eat them? Maybe, says
+    [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Agree</color>
   tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
     Freedom from Org -1</color>"
