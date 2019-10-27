@@ -4456,3 +4456,48 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
 	City seed 5678 -> London, United Kingdom
+
+Dev seed 53724 -> Sunday, 27 October 2019 4:35 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicProfile, array 10, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicProfile[]) (at Assets/Scripts/Managers/ValidationManager.cs:1659)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1610)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 54088 -> Sunday, 27 October 2019 4:36 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicProfile, array 10, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicProfile[]) (at Assets/Scripts/Managers/ValidationManager.cs:1659)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1610)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 22752 -> Sunday, 27 October 2019 4:37 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicProfile, array 10, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicProfile[]) (at Assets/Scripts/Managers/ValidationManager.cs:1659)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1610)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 1024 -> Sunday, 27 October 2019 4:54 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicProfile, array 10, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicProfile[]) (at Assets/Scripts/Managers/ValidationManager.cs:1659)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1610)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 15567 -> Sunday, 27 October 2019 4:55 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicProfile, array 10, assets 11 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicProfile[]) (at Assets/Scripts/Managers/ValidationManager.cs:1659)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1610)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
