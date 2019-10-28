@@ -163,7 +163,7 @@ public class CaptureManager : MonoBehaviour
     {
         //PLAYER CAPTURED
         string text = string.Format("Player Captured at {0}{1}{2}, {3}{4}{5} district by {6}{7}{8} {9}", colourAlert, details.node.nodeName, colourEnd, 
-            colourAlert, details.node.Arc.name, colourEnd, colourAlert, details.team.arc.name, colourEnd, details.team.teamName);
+            colourAlert, details.node.Arc.name, colourEnd, colourBad, details.team.arc.name, details.team.teamName, colourEnd);
         //AutoRun (both sides)
         if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
         {

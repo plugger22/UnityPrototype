@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Where does the [org] get all their spit to put in their fridge, asks [npc],
+    [job] of [node]? Do people give it to them for free?
   tooltipHeader: <color=#FFFFE0>Agree</color>
   tooltipMain: "<color=#98FB98>Player finds Cure for Addiction</color>\r\n<color=#FF4500>
     Freedom from Org -1</color>\r\n<color=#FF4500>Player loses 1 Action</color>"

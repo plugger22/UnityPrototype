@@ -3864,10 +3864,10 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerRenown(effect);
                 break;
             case "Invisibility":
-                if (node != null)
+                if (node == null)
                 {
-                    //get a random node for a general loss of invisibility effect, if none present (this also avoids the 'Show Me' button displaying). NOTE: Spider may be present at random node
-                    node = GameManager.instance.dataScript.GetRandomNode();
+                    //get player node for a general loss of invisibility effect, if none present
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                 }
                 if (node != null)
                 { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
@@ -3886,6 +3886,10 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput);
                 break;
             case "CureAddicted":
+            case "CureTagged":
+            case "CureWounded":
+            case "CureImaged":
+            case "CureDoomed":
                 effectResolve.bottomText = ExecutePlayerCure(effect, dataInput);
                 break;
             case "Drugs":
@@ -4730,9 +4734,11 @@ public class EffectManager : MonoBehaviour
         //get correct condition
         switch (effect.outcome.name)
         {
-            case "CureAddicted":
-                condition = conditionAddicted;
-                break;
+            case "CureAddicted": condition = conditionAddicted; break;
+            case "CureWounded": condition = conditionWounded; break;
+            case "CureTagged": condition = conditionTagged; break;
+            case "CureImaged": condition = conditionImaged; break;
+            case "CureDoomed": condition = conditionDoomed; break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
         }
         if (condition != null)

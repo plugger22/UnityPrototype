@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: What's up with the [org]? If I had a huge fridge, like they say they do, I
+    wouldn't fill it up with other peoples spit, says [npc]
   tooltipHeader: <color=#FFFFE0>No</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>

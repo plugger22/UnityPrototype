@@ -676,7 +676,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "cure_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = "If a cure is available you generally don't want to waste anytime making use of it. Who knows if it'll still be there tomorrow?";
+        data.text = "If a cure is available you generally don't want to waste time making use of it. Who knows if it'll still be there tomorrow?";
         listOfHelp.Add(data);
         #endregion
 
