@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
+  m_Name: CureDoomedNo
+  m_EditorClassIdentifier: 
+  description: No cure present for Doomed
+  effectCriteria: {fileID: 11400000, guid: 03f245a77c0775e4eb3699e48ef4742e, type: 2}
+  comparison: {fileID: 0}
+  apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}

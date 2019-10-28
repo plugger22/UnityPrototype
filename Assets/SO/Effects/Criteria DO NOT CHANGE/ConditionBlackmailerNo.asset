@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
   m_Name: ConditionBlackmailerNo
   m_EditorClassIdentifier: 
-  description: doesn't have BLACKMAILER condition
+  description: not a BLACKMAILER
   effectCriteria: {fileID: 11400000, guid: 66ba9847ba68cce4cbfe0eb31887e3eb, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}

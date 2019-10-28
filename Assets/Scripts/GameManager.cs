@@ -332,7 +332,7 @@ public class GameManager : MonoBehaviour
     {
         //Debug
         /*StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 6000; i++)
+        for (int i = 0; i < 4510; i++)
         { builder.Append(Random.Range(0, 2)); }
         File.AppendAllText("Digital.txt", builder.ToString());*/
 

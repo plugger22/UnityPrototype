@@ -9,11 +9,18 @@ public class ScrollingBackground : MonoBehaviour
 {
 
     public float scrollSpeed;
-    public Renderer renderer;
-	
-	// Update is called once per frame
-	void Update ()
+    //public Renderer renderer;
+    private Material material;
+
+    public void OnEnable()
     {
-        renderer.material.mainTextureOffset += new Vector2(0f, scrollSpeed * Time.deltaTime);
+        //material derived from objects renderer
+        material = GetComponent<Renderer>().material;
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        material.mainTextureOffset += new Vector2(0f, scrollSpeed * Time.deltaTime);
 	}
 }

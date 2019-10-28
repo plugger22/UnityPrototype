@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
   m_Name: ConditionAddictedNo
   m_EditorClassIdentifier: 
-  description: Player hasn't got ADDICTED condition
+  description: Player not ADDICTED
   effectCriteria: {fileID: 11400000, guid: dfd2c3124439a1e41a747f3f73e62275, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}

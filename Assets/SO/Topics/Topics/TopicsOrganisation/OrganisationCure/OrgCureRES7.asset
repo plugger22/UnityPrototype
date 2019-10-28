@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: OrgCureRES7
+  m_EditorClassIdentifier: 
+  tag: Tracker Removal
+  text: You've been contacted by the [org]. They can point you in the direction of
+    somebody who can remove your subdermal Tracker
+  designNotes: 'Org Cure RES 7 good event
+
+    Tagged cure'
+  type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
+  subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 88369c70e1cdc9d4caf5cd908274ddfe, type: 2}
+  - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
+  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: ff860ab2fa7ca724a8013ddafc08eacb, type: 2}
+  - {fileID: 11400000, guid: 9782af40e6664844c9d6d755479bfb4b, type: 2}
+  - {fileID: 11400000, guid: 1f66fc94e22f9f049b498dd87abca4ae, type: 2}
+  - {fileID: 11400000, guid: c6e98a2bbc831684bbfbbb90bc6b277a, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 1
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 17
+  turnsLive: 0
+  turnsDone: 0

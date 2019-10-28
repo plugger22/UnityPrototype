@@ -99,6 +99,9 @@ public class EffectManager : MonoBehaviour
     private Condition conditionBlackmailer;
     private Condition conditionStar;
     private Condition conditionTagged;
+    private Condition conditionWounded;
+    private Condition conditionImaged;
+    private Condition conditionDoomed;
     private Condition conditionAddicted;
 
 
@@ -164,6 +167,9 @@ public class EffectManager : MonoBehaviour
         conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
         conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
         conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
+        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
         conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
@@ -172,6 +178,9 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(conditionBlackmailer != null, "(Invalid conditionBlackmailer (Null)");
         Debug.Assert(conditionStar != null, "Invalid conditionStar (Null)");
         Debug.Assert(conditionTagged != null, "Invalid conditionTagged (Null)");
+        Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+        Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+        Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
         //fast access -> teams
         teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
@@ -840,7 +849,22 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     { Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
                                                 }
-                                                else { Debug.LogWarning("Invalid conditionStressed (Null)"); errorFlag = true; }
+                                                else { Debug.LogWarning("Invalid conditionBlackmailer (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionBlackmailerYes":
+                                                //actor only  has the 'Blackmailer' condition
+                                                if (conditionBlackmailer != null)
+                                                {
+                                                    if (actor != null)
+                                                    {
+                                                        //actor
+                                                        if (actor.CheckConditionPresent(conditionBlackmailer) == false)
+                                                        { BuildString(result, string.Format(" {0} doesn't have {1}BLACKMAILING{2}", actor.actorName, colourNeutral, colourEnd)); }
+                                                    }
+                                                    else
+                                                    { Debug.LogWarning("Invalid actor (Null) for ConditionBlackmailerNo"); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionBlackmailer (Null)"); errorFlag = true; }
                                                 break;
                                             case "TraitBlackmailNoneNo":
                                                 if (actor != null)
@@ -995,6 +1019,78 @@ public class EffectManager : MonoBehaviour
                                     case "Player":
                                         switch (criteria.effectCriteria.name)
                                         {
+                                            case "ConditionTaggedNo":
+                                                //player only  does NOT have the 'Tagged' condition
+                                                if (conditionTagged != null)
+                                                {
+                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == true)
+                                                        { BuildString(result, string.Format(" Player already {0}TAGGED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionTagged (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionTaggedYes":
+                                                //player only has the 'Tagged' condition
+                                                if (conditionTagged != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == false)
+                                                    { BuildString(result, string.Format(" Player not {0}TAGGED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionTagged (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionWoundedNo":
+                                                //player only  does NOT have the 'Wounded' condition
+                                                if (conditionWounded != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, playerSide) == true)
+                                                    { BuildString(result, string.Format(" Player already {0}WOUNDED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionWounded (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionWoundedYes":
+                                                //player only has the 'Blackmailer' condition
+                                                if (conditionWounded != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, playerSide) == false)
+                                                    { BuildString(result, string.Format(" Player not {0}WOUNDED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionWounded (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionImagedNo":
+                                                //player only  does NOT have the 'Imaged' condition
+                                                if (conditionImaged != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, playerSide) == true)
+                                                    { BuildString(result, string.Format(" Player already {0}IMAGED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionImaged (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionImagedYes":
+                                                //player only has the 'Imaged' condition
+                                                if (conditionImaged != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, playerSide) == false)
+                                                    { BuildString(result, string.Format(" Player not {0}IMAGED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionImaged (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionDoomedNo":
+                                                //player only  does NOT have the 'Doomed' condition
+                                                if (conditionDoomed != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == true)
+                                                    { BuildString(result, string.Format(" Player already {0}DOOMED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionDoomed (Null)"); errorFlag = true; }
+                                                break;
+                                            case "ConditionDoomedYes":
+                                                //player only has the 'Doomed' condition
+                                                if (conditionDoomed != null)
+                                                {
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == false)
+                                                    { BuildString(result, string.Format(" Player not {0}DOOMED{1}", colourNeutral, colourEnd)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid conditionDoomed (Null)"); errorFlag = true; }
+                                                break;
                                             case "NodeActionsNOTZero":
                                                 //player has listOfNodeActions.Count > 0
                                                 if (GameManager.instance.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
@@ -1403,6 +1499,26 @@ public class EffectManager : MonoBehaviour
                                                 //No active cure is present OnMap for Addicted Condition
                                                 if (GameManager.instance.dataScript.CheckCurePresent(conditionAddicted.cure) == true)
                                                 { BuildString(result, "Addicted Cure unavailable"); }
+                                                break;
+                                            case "CureTaggedNo":
+                                                //No active cure is present OnMap for Tagged Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionTagged.cure) == true)
+                                                { BuildString(result, "Tagged Cure unavailable"); }
+                                                break;
+                                            case "CureWoundedNo":
+                                                //No active cure is present OnMap for Wounded Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionWounded.cure) == true)
+                                                { BuildString(result, "Wounded Cure unavailable"); }
+                                                break;
+                                            case "CureImagedNo":
+                                                //No active cure is present OnMap for Imaged Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionImaged.cure) == true)
+                                                { BuildString(result, "Imaged Cure unavailable"); }
+                                                break;
+                                            case "CureDoomedNo":
+                                                //No active cure is present OnMap for Doomed Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
+                                                { BuildString(result, "Doomed Cure unavailable"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
@@ -2050,6 +2166,7 @@ public class EffectManager : MonoBehaviour
     }
     #endregion
 
+    #region SetTopTeamText
     /// <summary>
     /// Formats string for details.TopText (Authority), returns "unknown" if a problem. Also used by ModalTeamPicker.cs -> ProcessTeamChoice and TeamNanager.cs
     /// Can be used for both Inserting and Recalling a team
@@ -2087,7 +2204,9 @@ public class EffectManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region SetBottomTeamText
     /// <summary>
     /// Formats string for details.BottomText (Authority), returns "unknown" if parameter is null. Also used by ModalTeamPicker.cs -> ProcessTeamChoice
     /// </summary>
@@ -2109,6 +2228,7 @@ public class EffectManager : MonoBehaviour
             return "Unknown";
         }
     }
+    #endregion
 
     /// <summary>
     /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise

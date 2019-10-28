@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
   m_Name: ConditionStarNo
   m_EditorClassIdentifier: 
-  description: Actor hasn't got STAR condition
+  description: not a STAR
   effectCriteria: {fileID: 11400000, guid: 5275f21d3a5390b45966eea981717e0d, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
