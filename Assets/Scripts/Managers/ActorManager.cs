@@ -88,7 +88,9 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Base chance of a traitor revealing the Player's location each turn (could be RebelHQ or Actors). Actual chance -> base chance * # of traitors")]
     [Range(0, 10)] public int traitorActiveChance = 5;
     [Tooltip("Initial value of counterdown doomTimer for Nemesis Kill damage -> DOOM condition")]
-    [Range(1, 10)] public int playerDoomTimerValue = 5;
+    [Range(1, 10)] public int playerDoomTimerValue = 8;
+    [Tooltip("Doom timer value when a cure will automatically be provided, if none already")]
+    [Range(1, 10)] public int playerDoomFailSafeValue = 4;
     [Tooltip("Chance of an Addicted Player/Actor needing to spend renown to buy supplies of Dust to feed their addiction, % per turn")]
     [Range(0, 100)] public int playerAddictedChance = 20;
     [Tooltip("Amount of Renown player needs to spend to feed their addiction every time chance comes up true. If not enough renown available then -1 HQ support")]
@@ -157,6 +159,7 @@ public class ActorManager : MonoBehaviour
     private Condition conditionCorrupt;
     private Condition conditionIncompetent;
     private Condition conditionQuestionable;
+    private Condition conditionDoomed;
     private Condition conditionImaged;
     private Condition conditionAddicted;
     private TraitCategory actorCategory;
@@ -295,6 +298,7 @@ public class ActorManager : MonoBehaviour
         conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
         conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
+        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
         conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
         actorCategory = GameManager.instance.dataScript.GetTraitCategory("Actor");
         secretBaseChance = GameManager.instance.secretScript.secretLearnBaseChance;
@@ -313,6 +317,7 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
         Debug.Assert(conditionQuestionable != null, "Invalid conditionQuestionable (Null)");
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
+        Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
         Debug.Assert(actorCategory != null, "Invalid actorCategory (Null)");
         Debug.Assert(secretBaseChance > -1, "Invalid secretBaseChance");
@@ -6073,6 +6078,14 @@ public class ActorManager : MonoBehaviour
                     detailsBottom = string.Format("{0}You win{1}", colourBad, colourEnd);
                 }
                 GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
+            }
+            else if (doomTimer == playerDoomFailSafeValue)
+            {
+                if (conditionDoomed.cure.isActive == false)
+                {
+                    //fail safe code to provide a cure automatically for doomed condition at a certain point
+                    GameManager.instance.dataScript.SetCureNodeStatus(conditionDoomed.cure, true);
+                }
             }
         }
         //Stats -> check for Stress Condition (do now as it encompasses both breakdown and stressed case statements below)
