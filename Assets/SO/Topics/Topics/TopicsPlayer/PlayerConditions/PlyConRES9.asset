@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: PlyConRES5
+  m_Name: PlyConRES9
   m_EditorClassIdentifier: 
-  tag: Tracker Removal
-  text: You're being tracked! Your [actor] has heard of a person who can surgically
-    remove the subdermal chip. It might cost a bit
-  designNotes: 'Player Condition Tagged Resistance 5, Bad event
+  tag: Facial Makeover
+  text: It's a shame that your face is splashed all over the city databases, says
+    your [actor]. Maybe I know someone who can help
+  designNotes: 'Player Condition Imaged Resistance 9, Bad event
 
 
-    Chance of Cure for Tagged'
+    Chance of Cure for Imaged'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0, type: 2}
   subSubType: {fileID: 0}
@@ -29,14 +29,14 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 88369c70e1cdc9d4caf5cd908274ddfe, type: 2}
-  - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
+  - {fileID: 11400000, guid: fa0c7a6c429fb0f43aef7d96469b3923, type: 2}
+  - {fileID: 11400000, guid: 64ec3fc307965da45afe1d3b815ce755, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: d00526e8b1802c84aa260a3e00efe558, type: 2}
-  - {fileID: 11400000, guid: ca809313029688e429760eda1e33fc98, type: 2}
-  - {fileID: 11400000, guid: e4786ba63b9224643990ae3af4b97074, type: 2}
-  - {fileID: 11400000, guid: 889815a9bb4bad849a024bac94b168f6, type: 2}
+  - {fileID: 11400000, guid: d27b4d8ff42137c45b0220b6b14127df, type: 2}
+  - {fileID: 11400000, guid: 2b5d807fa6ec01948949a98f085be1a7, type: 2}
+  - {fileID: 11400000, guid: f84a578ef3d46d44c883dacab3644fbb, type: 2}
+  - {fileID: 11400000, guid: 0dd4d32514b32374da53cb18ce122a1d, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES7
   m_EditorClassIdentifier: 
   tag: Medical Assistance
-  text: 
+  text: You're not looking too perky, are you, observes your [actor]? I can make arrangements
+    for somebody to take a look at that wound
   designNotes: 'Player Condition Wounded Resistance 7, Bad event
 
 
@@ -32,10 +33,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 39acceaf5fc8d334b98fcda1155bb188, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 585b46be6a0261344baaf67de911ca1b, type: 2}
-  - {fileID: 11400000, guid: 527dc37fb376c254ca4b819f76450412, type: 2}
-  - {fileID: 11400000, guid: fe0c679a066873544acb5795e78bd833, type: 2}
-  - {fileID: 11400000, guid: e106d576a5a93c64cb024a4fd1f07977, type: 2}
+  - {fileID: 11400000, guid: ec43dfc9932209f478deac91edb7ca7f, type: 2}
+  - {fileID: 11400000, guid: d1cdc384edb654e4c9558732292d4641, type: 2}
+  - {fileID: 11400000, guid: d2a8e0ac4f23c4140952496ee659693b, type: 2}
+  - {fileID: 11400000, guid: 48e247af71628d641b74d67a2ab4ea5e, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

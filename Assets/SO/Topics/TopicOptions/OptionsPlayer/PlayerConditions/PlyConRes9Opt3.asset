@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: PlyConRes9Opt3
+  m_EditorClassIdentifier: 
+  descriptor: Player Conditions Res9 Opt 3
+  tag: Threaten
+  text: Threaten [actor] with violence
+  topic: {fileID: 11400000, guid: b995b8428866ffc49a8d2dadd497b997, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 9b05a74105e20ee4ea5d40b190137864, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 0}
+  news: '
+
+'
+  tooltipHeader: <color=#FFFFE0>Threaten</color>
+  tooltipMain: "<color=#98FB98>Player find Cure for Addiction</color>\r\n<color=#FF4500>FIXER
+    Motivation -2</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Threaten them with violence</color>
+  optionNumber: 3

@@ -2312,6 +2312,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2dd92217d42b49f4386db44ba2dcef6c, type: 2}
   - {fileID: 11400000, guid: 35e1e292e2e438f45bb8cb847edeb004, type: 2}
   - {fileID: 11400000, guid: 61e35791bc771ea42aab76e335ecf65b, type: 2}
+  - {fileID: 11400000, guid: fe8887f8c8571e24fa929cb324167df4, type: 2}
+  - {fileID: 11400000, guid: 47e940d2ab56a7d47ad84f8e689921cc, type: 2}
+  - {fileID: 11400000, guid: 12ccbf3138d264142a92f563dbe58bc2, type: 2}
+  - {fileID: 11400000, guid: a089614f7da77c449b44fe7bea338d25, type: 2}
+  - {fileID: 11400000, guid: 52467e965a7ecfe40ab99bd49e6b6dc2, type: 2}
+  - {fileID: 11400000, guid: b995b8428866ffc49a8d2dadd497b997, type: 2}
+  - {fileID: 11400000, guid: b232fdfd70190b945882815c5548a84c, type: 2}
+  - {fileID: 11400000, guid: 98669b136a8d5ae4396449e5909b2189, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2671,6 +2679,38 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 275f151d8fffc1241a66f550010d4fab, type: 2}
   - {fileID: 11400000, guid: b49d996298c7fba46bd436182f169145, type: 2}
   - {fileID: 11400000, guid: b72bacb5fbefe0946b7e3951b699405f, type: 2}
+  - {fileID: 11400000, guid: 5e3bf150af7a9ea4ab8300f04b76b3da, type: 2}
+  - {fileID: 11400000, guid: 7b993ae9477a931459a70a2fdd713506, type: 2}
+  - {fileID: 11400000, guid: 68e15d24ab786af4d9ac6bf82b9a00c1, type: 2}
+  - {fileID: 11400000, guid: 376ab3303a61d4b498553e2ff5a02d85, type: 2}
+  - {fileID: 11400000, guid: d00526e8b1802c84aa260a3e00efe558, type: 2}
+  - {fileID: 11400000, guid: ca809313029688e429760eda1e33fc98, type: 2}
+  - {fileID: 11400000, guid: e4786ba63b9224643990ae3af4b97074, type: 2}
+  - {fileID: 11400000, guid: 889815a9bb4bad849a024bac94b168f6, type: 2}
+  - {fileID: 11400000, guid: 5985ee8e93cedb543991e4158fa8d687, type: 2}
+  - {fileID: 11400000, guid: 842f877dad290974da4d88580f31397f, type: 2}
+  - {fileID: 11400000, guid: a2c4ae3e13999bd468a8674fc2fc82c7, type: 2}
+  - {fileID: 11400000, guid: 15720164507a20143bee6ea813b851b5, type: 2}
+  - {fileID: 11400000, guid: ec43dfc9932209f478deac91edb7ca7f, type: 2}
+  - {fileID: 11400000, guid: d1cdc384edb654e4c9558732292d4641, type: 2}
+  - {fileID: 11400000, guid: d2a8e0ac4f23c4140952496ee659693b, type: 2}
+  - {fileID: 11400000, guid: 48e247af71628d641b74d67a2ab4ea5e, type: 2}
+  - {fileID: 11400000, guid: 2b3d8a24ca86eb64dae37530b421220b, type: 2}
+  - {fileID: 11400000, guid: 19e127dd64409f3439cc3a441a768623, type: 2}
+  - {fileID: 11400000, guid: 15dace7c1a17e184eb8904df8a03af7a, type: 2}
+  - {fileID: 11400000, guid: 3d88c24ca55d17b4b8b17c26709b6efc, type: 2}
+  - {fileID: 11400000, guid: d27b4d8ff42137c45b0220b6b14127df, type: 2}
+  - {fileID: 11400000, guid: 2b5d807fa6ec01948949a98f085be1a7, type: 2}
+  - {fileID: 11400000, guid: f84a578ef3d46d44c883dacab3644fbb, type: 2}
+  - {fileID: 11400000, guid: 0dd4d32514b32374da53cb18ce122a1d, type: 2}
+  - {fileID: 11400000, guid: b5fd593051a7a01459b98a80a62ed3a5, type: 2}
+  - {fileID: 11400000, guid: 7f8c5343a16c8d74b9ac201c6157b97b, type: 2}
+  - {fileID: 11400000, guid: db77d7054d5f0754991f81bdcaeb8790, type: 2}
+  - {fileID: 11400000, guid: 1ae9a5d67ee12974f821ce6a5a32a734, type: 2}
+  - {fileID: 11400000, guid: 92ba75a4bc9b6d147a01e0fe7db79f08, type: 2}
+  - {fileID: 11400000, guid: 48f5076e9b66ee64e8bb58216189bbe3, type: 2}
+  - {fileID: 11400000, guid: bcab6b5728d92bb43a5ed3f9848de998, type: 2}
+  - {fileID: 11400000, guid: 99d4cc5b71cf60440bb38cfdb9242e92, type: 2}
   arrayOfOptionsPlayerDistrict:
   - {fileID: 11400000, guid: a124e4174ec758e43a83a5859ecd3f43, type: 2}
   - {fileID: 11400000, guid: fe1759f08eafbae40ad0f861a5567802, type: 2}
@@ -4049,6 +4089,7 @@ MonoBehaviour:
   actorResignChance: 5
   traitorActiveChance: 5
   playerDoomTimerValue: 8
+  playerDoomFailSafeValue: 4
   playerAddictedChance: 20
   playerAddictedRenownCost: 2
   playerAddictedImmuneStart: 6

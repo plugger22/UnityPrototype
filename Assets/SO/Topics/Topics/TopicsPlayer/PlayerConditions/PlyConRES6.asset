@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES6
   m_EditorClassIdentifier: 
   tag: Medical Assistance
-  text: 
+  text: You're bleeding! You need help, urges your [actor]. I know somebody reliable
+    who can patch you up
   designNotes: 'Player Condition Wounded Resistance 6, Good event
 
 
@@ -32,10 +33,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 39acceaf5fc8d334b98fcda1155bb188, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: aca794847c3aceb4e921af0c22015c1f, type: 2}
-  - {fileID: 11400000, guid: 6f08e206829a7ce46b3de15eafa6bdd3, type: 2}
-  - {fileID: 11400000, guid: a4cff406d1d805f4290e34d351f3229a, type: 2}
-  - {fileID: 11400000, guid: 999a8f841bc68364a962325094cf789e, type: 2}
+  - {fileID: 11400000, guid: 5985ee8e93cedb543991e4158fa8d687, type: 2}
+  - {fileID: 11400000, guid: 842f877dad290974da4d88580f31397f, type: 2}
+  - {fileID: 11400000, guid: a2c4ae3e13999bd468a8674fc2fc82c7, type: 2}
+  - {fileID: 11400000, guid: 15720164507a20143bee6ea813b851b5, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

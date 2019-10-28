@@ -8514,7 +8514,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 0.025
-  renderer: {fileID: 329507962}
 --- !u!1 &329787128
 GameObject:
   m_ObjectHideFlags: 0

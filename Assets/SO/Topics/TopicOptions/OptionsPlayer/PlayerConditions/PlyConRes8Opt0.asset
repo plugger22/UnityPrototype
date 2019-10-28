@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: PlyConRes8Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Player Conditions Res8 Opt 0
+  tag: Tell Me
+  text: Tell me all about it
+  topic: {fileID: 11400000, guid: 52467e965a7ecfe40ab99bd49e6b6dc2, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 9b05a74105e20ee4ea5d40b190137864, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 0}
+  news: '
+
+'
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 1)</color>'
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Tell me all about it</color>
+  optionNumber: 0
