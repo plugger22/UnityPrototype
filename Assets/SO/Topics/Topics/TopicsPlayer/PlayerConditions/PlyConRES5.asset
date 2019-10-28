@@ -9,16 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgCureRES3
+  m_Name: PlyConRES5
   m_EditorClassIdentifier: 
-  tag: Payback
-  text: The [org] has helped you in the past and they expect something in return.
-    Something special
-  designNotes: 'Org Cure RES 3 bad event
+  tag: Tracker Removal
+  text: You're being tracked! Your [actor] has heard of a person who can surgically
+    remove the subdermal chip. It might cost a bit
+  designNotes: 'Player Condition Tagged Resistance 5, Bad event
 
-    Payback, applies to all cures'
-  type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
-  subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
+
+    Chance of Cure for Tagged'
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
@@ -28,15 +29,14 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
-  - {fileID: 11400000, guid: cf204c78310ad774fac94387a0c38b99, type: 2}
-  listOfIgnoreEffects:
-  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
+  - {fileID: 11400000, guid: 88369c70e1cdc9d4caf5cd908274ddfe, type: 2}
+  - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
+  listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 5e2960ce0e336f1449ee0de7667b6e35, type: 2}
-  - {fileID: 11400000, guid: 34091db59bbf9ef4fa385e4495833a22, type: 2}
-  - {fileID: 11400000, guid: 45e1d5870b30c8e45ae0bb0d2bd29d6a, type: 2}
-  - {fileID: 11400000, guid: 8057df39ef917ac4cb1df5038fa25c57, type: 2}
+  - {fileID: 11400000, guid: 9e414ebf5e9d56f4e8a4190353e8f786, type: 2}
+  - {fileID: 11400000, guid: 275f151d8fffc1241a66f550010d4fab, type: 2}
+  - {fileID: 11400000, guid: b49d996298c7fba46bd436182f169145, type: 2}
+  - {fileID: 11400000, guid: b72bacb5fbefe0946b7e3951b699405f, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
@@ -47,6 +47,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 21
+  turnsActive: 17
   turnsLive: 0
   turnsDone: 0
