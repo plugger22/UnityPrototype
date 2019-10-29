@@ -26,9 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: '
-
-'
+  news: Nobody that I know can afford to see a Medic. Not a proper one, anyway. Ripperdocs
+    are cheaper, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Promise</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     find Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>FIXER

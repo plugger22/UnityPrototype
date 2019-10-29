@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res8 Opt 0
   tag: Tell Me
-  text: Tell me all about it
+  text: I'm all ears
   topic: {fileID: 11400000, guid: 52467e965a7ecfe40ab99bd49e6b6dc2, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,9 +25,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9b05a74105e20ee4ea5d40b190137864, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'Those reskin shops, I don''t know. Who wants a new face anyway? What''s wrong
+    with the one you''ve got, asks [npc] of [node]?
 
 '
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res11 Opt 0
   tag: Pay
-  text: Agree to pay
+  text: Sounds reasonable
   topic: {fileID: 11400000, guid: 98669b136a8d5ae4396449e5909b2189, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,11 +25,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: feb171adbf9e3a44fb3f309d093f6e43, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: '
-
-'
+  news: Geneticistics have caused my [handicap], I'm sure of it. One of those custom
+    made bugs did it, says [npc], [job] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 

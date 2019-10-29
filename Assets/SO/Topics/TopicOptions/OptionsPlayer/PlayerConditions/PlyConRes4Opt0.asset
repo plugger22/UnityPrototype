@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res4 Opt 0
   tag: Tell Me
-  text: Tell me all about it
+  text: I'm all ears
   topic: {fileID: 11400000, guid: fe8887f8c8571e24fa929cb324167df4, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,9 +25,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68b15429eed230448a6f50106a138cef, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'Those Ripperdocs are one of a kind. Not the sort of people you want anything
+    to do with, says [npc], [job] of [node]
 
 '
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

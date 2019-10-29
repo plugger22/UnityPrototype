@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'Do those reskin shops use vat grown skin or that slimy plant stuff? Is there
+    any way to tell, asks [npc], [job] of [node]?
 
 '
   tooltipHeader: <color=#FFFFE0>Threaten</color>

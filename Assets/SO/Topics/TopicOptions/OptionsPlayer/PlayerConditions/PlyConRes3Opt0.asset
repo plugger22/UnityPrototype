@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res3 Opt 0
   tag: Pay
-  text: Agree to pay
+  text: Sounds reasonable
   topic: {fileID: 11400000, guid: 4e10858d0d39002429894c2ac21527fa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60183ade1bfe6ff48877534f5a845352, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: I've heard that the [mayor] is on [drug]. Has it for breakfast, says [actor],
     [job] of [node]. That's why their so scary

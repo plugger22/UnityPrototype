@@ -26,9 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: '
-
-'
+  news: My [who] visited a Ripperdoc once and have been a mess ever since. Their own
+    fault if you ask me, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Favour</color>
   tooltipMain: <color=#98FB98>Player find Cure for Addiction</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>

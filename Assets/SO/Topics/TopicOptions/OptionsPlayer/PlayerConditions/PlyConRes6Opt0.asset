@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'The problem with Medics is that they have to report everything and everyone,
+    says [npc], [job] of [node]. It''s a pain
 
 '
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

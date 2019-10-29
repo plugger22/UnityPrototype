@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: '
+  news: 'My [who] badly needs to see a Medic but can''t afford to. They''re asking
+    me to help but what with, says [npc], [job] of [node]?
 
 '
   tooltipHeader: <color=#FFFFE0>Discipline</color>

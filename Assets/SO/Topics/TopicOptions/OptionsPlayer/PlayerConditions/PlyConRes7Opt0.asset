@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res7 Opt 0
   tag: Pay
-  text: Agree to pay
+  text: Sounds reasonable
   topic: {fileID: 11400000, guid: a089614f7da77c449b44fe7bea338d25, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,11 +25,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 18db94f1ff6c6fd4dac620bee36c2993, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: '
-
-'
+  news: Why does seeing a Medic cost so much. I haven't seen one since I got my [handicap],
+    can't afford it, says [npc] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 

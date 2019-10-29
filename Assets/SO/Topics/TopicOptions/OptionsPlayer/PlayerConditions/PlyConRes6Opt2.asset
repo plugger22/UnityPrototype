@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'I like Medics because they wash their hands and their instruments. Ripperdocs
+    don''t, says [npc], [job] of [node]
 
 '
   tooltipHeader: <color=#FFFFE0>Order</color>

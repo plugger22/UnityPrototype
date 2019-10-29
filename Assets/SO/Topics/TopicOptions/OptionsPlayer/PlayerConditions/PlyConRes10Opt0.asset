@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res10 Opt 0
   tag: Tell Me
-  text: Tell me all about it
+  text: I'm all ears
   topic: {fileID: 11400000, guid: b232fdfd70190b945882815c5548a84c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -25,9 +25,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: feb171adbf9e3a44fb3f309d093f6e43, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: '
+  news: 'Would I let a stranger inject an antidote into me, asks [npc], [job] of [node]?
+    I would if I was dying
 
 '
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>

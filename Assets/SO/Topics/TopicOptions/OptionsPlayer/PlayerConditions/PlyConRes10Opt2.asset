@@ -26,9 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: '
-
-'
+  news: My [who] thinks that all geneticists should be rounded up and fed to the pigs.
+    Can't disagree, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Order</color>
   tooltipMain: "<color=#98FB98>Player find Cure for Addiction</color>\r\n<color=#FF4500>ANARCHIST
     Motivation -1</color>"

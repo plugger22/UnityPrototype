@@ -26,9 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: '
-
-'
+  news: It's not easy finding a Medic that doesn't feel obliged to tell the Authority
+    all about you and your problems, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Favour</color>
   tooltipMain: <color=#98FB98>Player find Cure for Addiction</color>
   tooltipDetails: <color=#98FB98>Player Mood +2</color>
