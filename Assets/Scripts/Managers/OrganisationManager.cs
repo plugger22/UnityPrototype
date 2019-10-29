@@ -91,8 +91,8 @@ public class OrganisationManager : MonoBehaviour
         foreach(Organisation org in listOfOrgs)
         {
             org.maxStat = GameManager.instance.actorScript.maxStatValue;
-            org.SetReputation(2);
-            org.SetFreedom(3);
+            org.SetReputation(GameManager.instance.testScript.orgReputation);
+            org.SetFreedom(GameManager.instance.testScript.orgFreedom);
             org.isContact = false;
             org.isSecretKnown = false;
             Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}", 

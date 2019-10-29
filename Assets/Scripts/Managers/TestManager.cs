@@ -34,6 +34,12 @@ public class TestManager : MonoBehaviour
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
 
+    [Header("Organisations")]
+    [Tooltip("Default starting Organisation Reputation (Player's rep with Org)")]
+    public int orgReputation = 2;
+    [Tooltip("Default starting Organisation Freedom (Player's freedom from debt)")]
+    public int orgFreedom = 3;
+
     [Header("Player Ratios")]
     [Tooltip("Any value other than zero will override calculated ratio each turn")]
     [Range(0, 1)] public float testRatioPlayNodeAct = 0;

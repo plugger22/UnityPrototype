@@ -1675,7 +1675,10 @@ public class PlayerManager : MonoBehaviour
             if (listOfCures.Count > 0)
             {
                 for (int i = 0; i < listOfCures.Count; i++)
-                { builder.AppendFormat(" {0} at {1}, {2}, ID {3}{4}", listOfCures[i].cure.cureName, listOfCures[i].nodeName, listOfCures[i].Arc.name, listOfCures[i].nodeID, "\n"); }
+                {
+                    builder.AppendFormat(" {0} at {1}, {2}, ID {3}{4}", listOfCures[i].cure.cureName, listOfCures[i].nodeName, listOfCures[i].Arc.name, listOfCures[i].nodeID, "\n");
+                    builder.AppendFormat("  isActive {0}, isOrgActivated {1}{2}", listOfCures[i].cure.isActive, listOfCures[i].cure.isOrgActivated, "\n");
+                }
             }
             else { builder.AppendFormat(" None{0}", "\n"); }
         }
