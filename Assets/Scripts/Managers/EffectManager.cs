@@ -1023,8 +1023,8 @@ public class EffectManager : MonoBehaviour
                                                 //player only  does NOT have the 'Tagged' condition
                                                 if (conditionTagged != null)
                                                 {
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == true)
-                                                        { BuildString(result, string.Format(" Player already {0}TAGGED{1}", colourNeutral, colourEnd)); }
+                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == true)
+                                                    { BuildString(result, string.Format(" Player already {0}TAGGED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionTagged (Null)"); errorFlag = true; }
                                                 break;
@@ -1521,13 +1521,9 @@ public class EffectManager : MonoBehaviour
                                                 { BuildString(result, "Doomed Cure unavailable"); }
                                                 break;
                                             case "CureOrgActivatedYes":
-                                                //Organisation activated cure
-                                                if (node != null)
-                                                {
-                                                    if (node.cure.isOrgActivated == false)
-                                                    { BuildString(result, "Cure not activated by Org"); }
-                                                }
-                                                else { BuildString(result, "Cure not activated by Org"); }
+                                                //Organisation activated cure (true if ANY current cure has been activated by an org)
+                                                if (GameManager.instance.playerScript.isOrgActivatedCurePresent == false)
+                                                { BuildString(result, "No Cures activated by Org"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

@@ -51,6 +51,8 @@ public class PlayerManager : MonoBehaviour
 
     private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
 
+    [HideInInspector] public bool isOrgActivatedCurePresent; 
+
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
     private int _renownAuthority;
@@ -391,6 +393,11 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
+        //checks if any condition cures have been activated by an Organisation (used for topic criteria checks)
+        if (CheckForOrgCure(GameManager.instance.sideScript.PlayerSide) == true)
+        { isOrgActivatedCurePresent = true; }
+        else { isOrgActivatedCurePresent = false; }
+
         /*DebugCreateMoodHistory();*/
     }
 
@@ -1132,6 +1139,33 @@ public class PlayerManager : MonoBehaviour
             default: Debug.LogErrorFormat("Invalid side \"{0}\" (must be Authority or Resistance regardless of whether AI or not)", side.name); break;
         }
         return listOfConditions;
+    }
+
+    /// <summary>
+    /// returns true if any current condition has a cure activated by an Org
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public bool CheckForOrgCure(GlobalSide side)
+    {
+        if (side != null)
+        {
+            List<Condition> listOfConditions = GetListOfConditionForSide(side);
+            if (listOfConditions != null)
+            {
+                if (listOfConditions.Count > 0)
+                {
+                    foreach(Condition condition in listOfConditions)
+                    {
+                        if (condition.cure.isOrgActivated == true)
+                        { return true; }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfConditions (Null)"); }
+        }
+        else { Debug.LogError("Invalid side (Null)"); }
+        return false;
     }
 
     //

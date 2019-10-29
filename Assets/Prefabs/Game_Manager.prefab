@@ -3868,13 +3868,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
   conditionTurnResistance: -1
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
+  orgReputation: 2
+  orgFreedom: 2
   testRatioPlayNodeAct: 0
   testRatioPlayTargetAtt: 0
   testRatioPlayMoveAct: 0
@@ -4184,6 +4186,7 @@ MonoBehaviour:
   stressImmunityStart: 0
   stressImmunityCurrent: 0
   addictedTally: 0
+  isOrgActivatedCurePresent: 0
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1
