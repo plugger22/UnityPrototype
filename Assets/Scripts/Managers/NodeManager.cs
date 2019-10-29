@@ -2578,7 +2578,7 @@ public class NodeManager : MonoBehaviour
     {
         if (cure != null)
         {
-            int nodeID = GetCureNode(cure);
+            int nodeID = GetCureNodeRandom(cure);
             if (nodeID > -1)
             {
                 //set
@@ -2622,7 +2622,7 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("{0}, {1}, ID {2}, NOT REMOVED from listOfCureNodes", node.nodeName, node.Arc.name, node.nodeID); }
             }
-            else { Debug.LogErrorFormat("Invalid node (Null) for \"{0}\", ID {1} cure", cure.cureName, cure.cureID); }
+            else { Debug.LogErrorFormat("Invalid node (Null) for \"{0}\" cure", cure.cureName); }
         }
         else { Debug.LogError("Invalid cure (Null)"); }
     }
@@ -2632,7 +2632,7 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    private int GetCureNode(Cure cure)
+    private int GetCureNodeRandom(Cure cure)
     {
         int cureNodeID = -1;
         int requiredDistance = cure.distance;
@@ -2672,7 +2672,7 @@ public class NodeManager : MonoBehaviour
                             //not on exclusion list
                             if (listOfExclusion.Exists(x => x == index) == false)
                             {
-                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
+                                Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNodeRandom: Straight Match for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
                                     cure.cureName, index, cure.distance, actualDistance, "\n");
                                 cureNodeID = index;
                                 break;
@@ -2697,7 +2697,7 @@ public class NodeManager : MonoBehaviour
                                         //not on exclusion list
                                         if (listOfExclusion.Exists(x => x == index) == false)
                                         {
-                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
+                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNodeRandom: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
                                                 cure.cureName, index, cure.distance, tempDistance, "\n");
                                             cureNodeID = index;
                                             break;

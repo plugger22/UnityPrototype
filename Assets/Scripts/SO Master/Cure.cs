@@ -19,10 +19,14 @@ public class Cure : ScriptableObject
     [Tooltip("Outcome message details text")]
     [TextArea] public string outcomeText;
 
-    [HideInInspector] public int cureID;                        //assigned a zero based ID at time of import. Max ID num is LoadManager.cs -> arrayOfCures.Length - 1
+    #region Save Compatible Data
     [HideInInspector] public bool isActive;                     //cure only useable if active (can be present but not yet active, eg. awaiting HQ approval)
-
     [HideInInspector] public int timesCured;                    //number of times cure has been used
+    [HideInInspector] public bool isOrgActivated;               //true if org activated cure, false other
+    #endregion
+
+    /*[HideInInspector] public int cureID;                        //assigned a zero based ID at time of import. Max ID num is LoadManager.cs -> arrayOfCures.Length - 1*/
+
 
 
     /// <summary>

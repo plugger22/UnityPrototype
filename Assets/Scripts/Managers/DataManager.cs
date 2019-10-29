@@ -2517,9 +2517,9 @@ public class DataManager : MonoBehaviour
         {
             if (node.cure != null)
             {
-                if (listOfCureNodes.Exists(x => x.cure.cureID == node.cure.cureID) == false)
+                if (listOfCureNodes.Exists(x => x.cure.name.Equals(node.cure.name, StringComparison.Ordinal)) == false)
                 { listOfCureNodes.Add(node); }
-                else { Debug.LogWarningFormat("Invalid {0} cure (Duplicate) in listOfCures", node.cure.cureName); }
+                else { Debug.LogWarningFormat("Invalid {0} cure (Duplicate) in listOfCures for node {1}, {2}, ID {3}", node.cure.cureName, node.nodeName, node.Arc.name, node.nodeID); }
             }
             else { Debug.LogWarningFormat("Invalid cure (Null) for node {0}, {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID); }
         }
@@ -2535,7 +2535,7 @@ public class DataManager : MonoBehaviour
     {
         if (cure != null)
         {
-            if (listOfCureNodes.Exists(x => x.cure.cureID == cure.cureID) == true)
+            if (listOfCureNodes.Exists(x => x.cure.name.Equals(cure.name, StringComparison.Ordinal)))
             { return cure.isActive; }
         }
         else { Debug.LogError("Invalid Cure (Null)"); }
@@ -2551,7 +2551,7 @@ public class DataManager : MonoBehaviour
     {
         Node node = null;
         if (cure != null)
-        { node = listOfCureNodes.Find(x => x.cure.cureID == cure.cureID); }
+        { node = listOfCureNodes.Find(x => x.cure.name.Equals(cure.name, StringComparison.Ordinal)); }
         else { Debug.LogError("Invalid cure (Null)"); }
         return node;
     }
@@ -2571,11 +2571,11 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Activates (isActivateCure true)/Deactivates (isActivateCure false) a cure already in listOfCureNodes. Returns true if so, false otherwise
+    /// Activates (isActivateCure true)/Deactivates (isActivateCure false) a cure already in listOfCureNodes. 'isOrgCure' true if org provided cure. Returns true if so, false otherwise
     /// </summary>
     /// <param name="cure"></param>
     /// <returns></returns>
-    public bool SetCureNodeStatus(Cure cure, bool isActivateCure)
+    public bool SetCureNodeStatus(Cure cure, bool isActivateCure, bool isOrgCure)
     {
         Node node = listOfCureNodes.Find(x => x.cure.name.Equals(cure.name, StringComparison.Ordinal) == true);
         if (node != null)
@@ -2584,8 +2584,10 @@ public class DataManager : MonoBehaviour
             if (isActivateCure == true)
             {
                 cure.isActive = true;
+                cure.isOrgActivated = isOrgCure;
                 //message
-                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}, orgCure: {4}{5}", cure.condition.tag, node.nodeName, node.Arc.name, 
+                    node.nodeID, isOrgCure, "\n");
                 string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
                 //effect tab
@@ -2615,6 +2617,7 @@ public class DataManager : MonoBehaviour
             {
                 //deactivate cure
                 cure.isActive = false;
+                cure.isOrgActivated = false; ;
                 //message
                 Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} Deactivated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 string text = string.Format("[Msg] Cure Deactivated for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
@@ -2674,7 +2677,7 @@ public class DataManager : MonoBehaviour
             foreach (Condition condition in listOfConditions)
             {
                 if (condition.cure != null)
-                { SetCureNodeStatus(condition.cure, true); }
+                { SetCureNodeStatus(condition.cure, true, false); }
             }
         }
         else { Debug.LogError("Invalid listOfConditions (Null)"); }
@@ -6504,7 +6507,6 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Get Cure from dictionary, returns Null if a problem
     /// </summary>
-    /// <param name="cureID"></param>
     /// <returns></returns>
     public Cure GetCure(string cureName)
     {
@@ -6515,6 +6517,31 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid cureName (Null or Empty)"); }
         return null;
+    }
+
+
+    /// <summary>
+    /// loads saved cure game dynamic data back into dictOfCures
+    /// </summary>
+    /// <param name="saveCure"></param>
+    public void LoadCureData(SaveCure saveCure)
+    {
+        if (saveCure != null)
+        {
+            if (string.IsNullOrEmpty(saveCure.cureName) == false)
+            {
+                Cure cure = GetCure(saveCure.cureName);
+                if (cure != null)
+                {
+                    cure.isActive = saveCure.isActive;
+                    cure.timesCured = saveCure.timesCured;
+                    cure.isOrgActivated = saveCure.isOrgCure;
+                }
+                else { Debug.LogWarningFormat("Invalid cure (Null) for \"{0}\"", saveCure.cureName); }
+            }
+            else { Debug.LogError("Invalid saveCure.cureName (Null or Empty)"); }
+        }
+        else { Debug.LogError("Invalid saveCure (Null)"); }
     }
 
     //

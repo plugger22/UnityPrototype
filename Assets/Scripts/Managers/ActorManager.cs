@@ -6084,7 +6084,7 @@ public class ActorManager : MonoBehaviour
                 if (conditionDoomed.cure.isActive == false)
                 {
                     //fail safe code to provide a cure automatically for doomed condition at a certain point
-                    GameManager.instance.dataScript.SetCureNodeStatus(conditionDoomed.cure, true);
+                    GameManager.instance.dataScript.SetCureNodeStatus(conditionDoomed.cure, true, false);
                 }
             }
         }

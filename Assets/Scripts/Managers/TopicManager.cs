@@ -2174,6 +2174,7 @@ public class TopicManager : MonoBehaviour
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
             tagNodeID = -1;
+            tagActorID = -1;
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default

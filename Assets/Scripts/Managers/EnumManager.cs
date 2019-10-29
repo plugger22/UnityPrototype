@@ -166,7 +166,6 @@
     }
     public enum PlayerCheck { None, NodeActionsNOTZero }
 
-
     //
     // - - - Statistics - - - 
     //

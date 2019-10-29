@@ -299,7 +299,7 @@ public class FileManager : MonoBehaviour
         }
         //mood history
         List<HistoryMood> listOfHistory = GameManager.instance.playerScript.GetListOfMoodHistory();
-        foreach(HistoryMood history in listOfHistory)
+        foreach (HistoryMood history in listOfHistory)
         {
             if (history != null)
             { write.playerData.listOfMoodHistory.Add(history); }
@@ -465,7 +465,7 @@ public class FileManager : MonoBehaviour
         List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
-            foreach(Organisation org in listOfOrgs)
+            foreach (Organisation org in listOfOrgs)
             {
                 if (org != null)
                 {
@@ -484,6 +484,29 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+        #endregion
+
+        #region Cures
+        Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+        if (dictOfCures != null)
+        {
+            foreach (var record in dictOfCures)
+            {
+                if (record.Value != null)
+                {
+                    SaveCure saveCure = new SaveCure()
+                    {
+                        cureName = record.Value.name,
+                        isActive = record.Value.isActive,
+                        timesCured = record.Value.timesCured,
+                        isOrgCure = record.Value.isOrgActivated
+                    };
+                    write.dataData.listOfCures.Add(saveCure);
+                }
+                else { Debug.LogWarningFormat("Invalid cure (Null) in dictOfCures for key \"{0}\"", record.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfCures (Null)"); }
         #endregion
 
         #region contacts
@@ -1031,13 +1054,13 @@ public class FileManager : MonoBehaviour
         write.actorData.resistanceActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance));
         write.actorData.resistanceActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance));
         write.actorData.resistanceActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance));
-       
+
         write.actorData.authorityActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalAuthority));
         write.actorData.authorityActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalAuthority));
         write.actorData.authorityActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalAuthority));
         write.actorData.authorityActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalAuthority));
         write.actorData.authorityActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalAuthority));
-        
+
         write.actorData.resistanceActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalResistance));
         write.actorData.resistanceActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalResistance));
         write.actorData.resistanceActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance));
@@ -1170,7 +1193,7 @@ public class FileManager : MonoBehaviour
                     else { Debug.LogErrorFormat("Invalid listOfOngoingEffects (Null) for nodeID {0}, nodeID {1}", record.Key, saveNode.nodeID); }
                     //add to list
                     write.nodeData.listOfNodes.Add(saveNode);
-                    
+
                 }
                 else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0} in dictOfNodes", record.Key); }
             }
@@ -1182,14 +1205,14 @@ public class FileManager : MonoBehaviour
         List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
         if (listOfCrisisNodes != null)
         {
-                //save nodeID's
-                for (int i = 0; i < listOfCrisisNodes.Count; i++)
-                {
-                    Node node = listOfCrisisNodes[i];
-                    if (node != null)
-                    { write.nodeData.listOfCrisisNodes.Add(node.nodeID); }
-                    else { Debug.LogWarningFormat("Invalid node (Null) in listOfCrisisNodes[{0}]", i); }
-                }
+            //save nodeID's
+            for (int i = 0; i < listOfCrisisNodes.Count; i++)
+            {
+                Node node = listOfCrisisNodes[i];
+                if (node != null)
+                { write.nodeData.listOfCrisisNodes.Add(node.nodeID); }
+                else { Debug.LogWarningFormat("Invalid node (Null) in listOfCrisisNodes[{0}]", i); }
+            }
         }
         else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
         //
@@ -1221,7 +1244,7 @@ public class FileManager : MonoBehaviour
         Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
-            foreach(var conn in dictOfConnections)
+            foreach (var conn in dictOfConnections)
             {
                 if (conn.Value != null)
                 {
@@ -1254,7 +1277,7 @@ public class FileManager : MonoBehaviour
         Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
-            foreach(var gear in dictOfGear)
+            foreach (var gear in dictOfGear)
             {
                 if (gear.Value != null)
                 {
@@ -1320,7 +1343,7 @@ public class FileManager : MonoBehaviour
         Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
-            foreach(var topic in dictOfTopics)
+            foreach (var topic in dictOfTopics)
             {
                 //only save data for current topics used in level, ignore the rest
                 if (topic.Value.isCurrent == true)
@@ -1376,7 +1399,7 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-        
+
     }
     #endregion
 
@@ -1439,7 +1462,7 @@ public class FileManager : MonoBehaviour
         //AIRebelManager -> Nemesis Reports
         List<AITracker> tempListNemesis = GameManager.instance.aiRebelScript.GetListOfNemesisReports();
         if (tempListNemesis != null)
-        { write.aiData.listOfNemesisReports.AddRange(tempListNemesis);}
+        { write.aiData.listOfNemesisReports.AddRange(tempListNemesis); }
         else { Debug.LogError("Invalid listOfNemesisReports (Null)"); }
         //AIRebelManager -> Erasure Reports
         List<AITracker> tempListErasure = GameManager.instance.aiRebelScript.GetListOfErasureReports();
@@ -1632,7 +1655,7 @@ public class FileManager : MonoBehaviour
         { GameManager.instance.debugScript.optionFogOfWar = "Fog Of War OFF"; }
         if (read.optionData.connectorTooltips == true)
         { GameManager.instance.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
-        if (read.optionData.debugData  == true)
+        if (read.optionData.debugData == true)
         { GameManager.instance.debugScript.optionDebugData = "Debug Data OFF"; }
         if (read.optionData.showRenown == false)
         { GameManager.instance.debugScript.optionRenownUI = "Renown UI ON"; }
@@ -1666,7 +1689,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;
         GameManager.instance.playerScript.addictedTally = read.playerData.addictedTally;
         Personality personality = GameManager.instance.playerScript.GetPersonality();
-        if ( personality != null)
+        if (personality != null)
         {
             personality.SetFactors(read.playerData.listOfPersonalityFactors.ToArray());
             personality.SetDescriptors(read.playerData.listOfDescriptors);
@@ -1963,6 +1986,21 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfOrganisations (Null)"); }
         #endregion
 
+        #region cures
+        if (read.dataData.listOfCures != null)
+        {
+            for (int i = 0; i < read.dataData.listOfCures.Count; i++)
+            {
+                //copy across dynamic data
+                SaveCure saveCure = read.dataData.listOfCures[i];
+                if (saveCure != null)
+                { GameManager.instance.dataScript.LoadCureData(saveCure); }
+                else { Debug.LogWarningFormat("Invalid saveCure in listOfCures[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfCures (Null)"); }
+        #endregion
+
         #region contacts
         //
         // - - - Contacts
@@ -2181,7 +2219,7 @@ public class FileManager : MonoBehaviour
             //clear array & copy data across
             Array.Clear(arrayOfAIResources, 0, lengthOfArray);
             Debug.AssertFormat(lengthOfArray == read.dataData.listOfArrayOfAIResources.Count, "Mismatch on size, array {0}, list {1}", lengthOfArray, read.dataData.listOfArrayOfAIResources.Count);
-            for (int i = 0;  i < lengthOfArray;  i++)
+            for (int i = 0; i < lengthOfArray; i++)
             { arrayOfAIResources[i] = read.dataData.listOfArrayOfAIResources[i]; }
         }
         else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
@@ -2980,7 +3018,7 @@ public class FileManager : MonoBehaviour
                             else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoingEffects[{0}] for nodeID {1}", j, saveNode.nodeID); }
                         }
                     }
-                 }
+                }
                 else { Debug.LogWarningFormat("Invalid node (Null) for saveNode.nodeID {0}", saveNode.nodeID); }
             }
             else { Debug.LogWarningFormat("Invalid saveNode in read.nodeData.listOfNodes[{0}]", i); }
@@ -3040,7 +3078,7 @@ public class FileManager : MonoBehaviour
     /// Connection.SO dynamic data
     /// </summary>
     private void ReadConnectionData()
-    {       
+    {
         for (int i = 0; i < read.connData.listOfConnectionData.Count; i++)
         {
             SaveConnection save = new SaveConnection();
@@ -3114,7 +3152,7 @@ public class FileManager : MonoBehaviour
         { GameManager.instance.dataScript.SetGearList(read.gearData.listOfCommonGear, rarity); }
         else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
         //list -> Rare gear
-         rarity = GameManager.instance.gearScript.gearRare;
+        rarity = GameManager.instance.gearScript.gearRare;
         tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
         if (tempList != null)
         { GameManager.instance.dataScript.SetGearList(read.gearData.listOfRareGear, rarity); }
@@ -3232,7 +3270,7 @@ public class FileManager : MonoBehaviour
         GameState controlState = GameManager.instance.controlScript.GetExistingGameState();
         //resistance player only
         if (controlState == GameState.PlayGame && GameManager.instance.sideScript.PlayerSide.level == 2)
-        { 
+        {
             GameManager.instance.aiScript.UpdateTaskDisplayData();
             GameManager.instance.aiScript.UpdateSideTabData();
             GameManager.instance.aiScript.UpdateBottomTabData();
@@ -3427,7 +3465,7 @@ public class FileManager : MonoBehaviour
             //secondary field doesn't match primary. Revert all to primary state.
             if (tooltipStatus == ActorTooltip.None || inactiveStatus == ActorInactive.None)
             {
-                Debug.LogWarningFormat("Player INACTIVE -> tooltipStatus \"{0}\" Or inactiveStatus \"{1}\" invalid,   PlayerStatus changed to 'Active'{2}", 
+                Debug.LogWarningFormat("Player INACTIVE -> tooltipStatus \"{0}\" Or inactiveStatus \"{1}\" invalid,   PlayerStatus changed to 'Active'{2}",
                     tooltipStatus, inactiveStatus, "\n");
                 GameManager.instance.playerScript.status = ActorStatus.Active;
                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
@@ -3680,7 +3718,7 @@ public class FileManager : MonoBehaviour
             saveActor.profileExplanation = personality.GetProfileExplanation();
         }
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", saveActor.actorName, saveActor.actorID); }
-       
+
         Trait trait = actor.GetTrait();
         if (trait != null)
         { saveActor.traitName = trait.name; }

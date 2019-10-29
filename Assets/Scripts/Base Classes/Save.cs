@@ -138,6 +138,8 @@ public class SaveDataData
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
     //moving
     public List<int> listOfMoveNodes = new List<int>();
+    //cures
+    public List<SaveCure> listOfCures = new List<SaveCure>();
     //MainInfo App data
     public SaveMainInfo currentInfo = new SaveMainInfo();
     public List<SavePriorityInfo> listOfPriorityData = new List<SavePriorityInfo>();
@@ -725,6 +727,7 @@ public class SaveOrganisation
 
 
 #region SaveTarget
+
 /// <summary>
 /// Target.SO dynamic data
 /// </summary>
@@ -748,6 +751,21 @@ public class SaveTarget
     public int timerHardLimit;
     public int timerWindow;
     public List<int> listOfRumourContacts = new List<int>();
+}
+#endregion
+
+
+#region SaveCure
+/// <summary>
+/// Cure.SO dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveCure
+{
+    public string cureName;
+    public bool isActive;
+    public int timesCured;
+    public bool isOrgCure;
 }
 #endregion
 

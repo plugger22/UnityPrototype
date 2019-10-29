@@ -1520,6 +1520,15 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
                                                 { BuildString(result, "Doomed Cure unavailable"); }
                                                 break;
+                                            case "CureOrgActivatedYes":
+                                                //Organisation activated cure
+                                                if (node != null)
+                                                {
+                                                    if (node.cure.isOrgActivated == false)
+                                                    { BuildString(result, "Cure not activated by Org"); }
+                                                }
+                                                else { BuildString(result, "Cure not activated by Org"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
@@ -3890,7 +3899,7 @@ public class EffectManager : MonoBehaviour
             case "CureWounded":
             case "CureImaged":
             case "CureDoomed":
-                effectResolve.bottomText = ExecutePlayerCure(effect, dataInput);
+                effectResolve.bottomText = ExecutePlayerCure(effect, dataInput, dataTopic);
                 break;
             case "Drugs":
                 effectResolve.bottomText = ExecutePlayerTakeDrugs(effect);
@@ -4724,7 +4733,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
     /// <returns></returns>
-    private string ExecutePlayerCure(Effect effect, EffectDataInput dataInput)
+    private string ExecutePlayerCure(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
     {
         string bottomText = "Unknown";
         //sort out colour based on type (which is effect benefit from POV of Resistance But is SAME for both sides when it comes to Conditions)
@@ -4743,17 +4752,20 @@ public class EffectManager : MonoBehaviour
         }
         if (condition != null)
         {
+            //who handled cure?
+            bool isOrgCure = false;
+            if (dataTopic.actorID < 0) { isOrgCure = true; }
             //Turn cure on / off
             switch (effect.operand.name)
             {
                 case "Add":
                     //activate cure
-                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true) == true)
+                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true, isOrgCure) == true)
                     { bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd); }
                     break;
                 case "Subtract":
                     //deactivate cure
-                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, false) == true)
+                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, false, isOrgCure) == true)
                     { bottomText = string.Format("{0}Cure for {1} gone{2}", colourEffect, condition.tag, colourEnd); }
                     break;
                 default:
