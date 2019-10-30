@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
 
-    [HideInInspector] public bool isOrgActivatedCurePresent; 
+    [HideInInspector] public bool isOrgActivatedCurePresent;
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -324,6 +324,8 @@ public class PlayerManager : MonoBehaviour
         { stressImmunityCurrent = stressImmunityStart; }
         //empty out gear list
         listOfGear.Clear();
+        //add cures for any existing conditions
+        SetCures();
     }
     #endregion
 
@@ -1155,7 +1157,7 @@ public class PlayerManager : MonoBehaviour
             {
                 if (listOfConditions.Count > 0)
                 {
-                    foreach(Condition condition in listOfConditions)
+                    foreach (Condition condition in listOfConditions)
                     {
                         if (condition.cure.isOrgActivated == true)
                         { return true; }
@@ -1166,6 +1168,33 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid side (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// Follow on level -> if player has any existing conditions, new cures are created
+    /// </summary>
+    private void SetCures()
+    {
+        //if player has any conditions that require a cure you need to set up nodes for the cures
+        List<Condition> listOfConditions = GetListOfConditions(GameManager.instance.sideScript.PlayerSide);
+        if (listOfConditions != null)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                foreach (Condition condition in listOfConditions)
+                {
+                    if (condition.cure != null)
+                    {
+                        //reset doom timer to starting value, if required
+                        if (condition.tag.Equals("DOOMED", StringComparison.Ordinal) == true)
+                        { GameManager.instance.actorScript.SetDoomTimer(); }
+                        //add cure to a node (cure isn't activated yet)
+                        GameManager.instance.nodeScript.AddCureNode(condition.cure);
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
     }
 
     //
@@ -1630,7 +1659,7 @@ public class PlayerManager : MonoBehaviour
                 numOfGear = listOfGear.Count;
                 if (numOfGear > 0)
                 {
-                    for (int i = numOfGear - 1; i >= 0 ; i--)
+                    for (int i = numOfGear - 1; i >= 0; i--)
                     {
                         gearName = listOfGear[i];
                         if (string.IsNullOrEmpty(gearName) == false)

@@ -1111,7 +1111,7 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.Renown < renownHigh)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownHigh)); }
                                                 break;
-                                            case "RenownPlayerExtreme":
+                                            case "RenownPlayerExt":
                                                 //Player has Renown Low or better
                                                 if (GameManager.instance.playerScript.Renown < renownExtreme)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownExtreme)); }
