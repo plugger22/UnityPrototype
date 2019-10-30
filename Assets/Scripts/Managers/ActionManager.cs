@@ -1376,6 +1376,8 @@ public class ActionManager : MonoBehaviour
                 Cure cure = node.cure;
                 if (cure != null)
                 {
+                    //statistics
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesCured);
                     //remove condition
                     string reason = string.Format("Cure {0}{1}{2} condition", colourBad, cure.cureName, colourEnd);
                     if (GameManager.instance.playerScript.RemoveCondition(cure.condition, details.side, reason) == true)
