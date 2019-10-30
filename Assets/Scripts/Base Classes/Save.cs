@@ -764,7 +764,6 @@ public class SaveCure
 {
     public string cureName;
     public bool isActive;
-    public int timesCured;
     public bool isOrgCure;
 }
 #endregion

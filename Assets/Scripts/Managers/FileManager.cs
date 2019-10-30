@@ -498,7 +498,6 @@ public class FileManager : MonoBehaviour
                     {
                         cureName = record.Value.name,
                         isActive = record.Value.isActive,
-                        timesCured = record.Value.timesCured,
                         isOrgCure = record.Value.isOrgActivated
                     };
                     write.dataData.listOfCures.Add(saveCure);

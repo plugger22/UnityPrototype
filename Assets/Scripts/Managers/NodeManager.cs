@@ -2615,7 +2615,6 @@ public class NodeManager : MonoBehaviour
             {
                 if (GameManager.instance.dataScript.RemoveCureNode(node) == true)
                 {
-                    cure.timesCured++;
                     cure.isActive = false;
                     node.cure = null;
                     Debug.LogFormat("[Nod] NodeManager.cs -> RemoveCureNode: {0} cure REMOVED at {1}, {2}, ID {3}{4}", cure.cureName, node.nodeName, node.Arc.name, node.nodeID, "\n");

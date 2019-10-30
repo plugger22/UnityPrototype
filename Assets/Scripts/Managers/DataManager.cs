@@ -6535,7 +6535,6 @@ public class DataManager : MonoBehaviour
                 if (cure != null)
                 {
                     cure.isActive = saveCure.isActive;
-                    cure.timesCured = saveCure.timesCured;
                     cure.isOrgActivated = saveCure.isOrgCure;
                 }
                 else { Debug.LogWarningFormat("Invalid cure (Null) for \"{0}\"", saveCure.cureName); }
@@ -6543,6 +6542,37 @@ public class DataManager : MonoBehaviour
             else { Debug.LogError("Invalid saveCure.cureName (Null or Empty)"); }
         }
         else { Debug.LogError("Invalid saveCure (Null)"); }
+    }
+
+    /// <summary>
+    /// MetaManager.cs -> ProcessMetaGame resets all cure data to default prior to a new level
+    /// </summary>
+    public void ProcessMetaCures()
+    {
+        //reset dynamic data for all cures
+        foreach(var cure in dictOfCures)
+        {
+            if (cure.Value != null)
+            { cure.Value.Reset(); }
+            else { Debug.LogWarning("Invalid cure (Null) in dictOfCures"); }
+        }
+        //if player has any conditions that require a cure you need to set up nodes for the cures
+        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(GameManager.instance.sideScript.PlayerSide);
+        if (listOfConditions != null)
+        {
+            if (listOfConditions.Count > 0)
+            {
+                foreach(Condition condition in listOfConditions)
+                {
+                    if (condition.cure != null)
+                    {
+                        //note that the cure won't be from an Org
+                        SetCureNodeStatus(condition.cure, false, false);
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfConditions (Null)"); }
     }
 
     //

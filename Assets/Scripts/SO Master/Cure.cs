@@ -21,7 +21,6 @@ public class Cure : ScriptableObject
 
     #region Save Compatible Data
     [HideInInspector] public bool isActive;                     //cure only useable if active (can be present but not yet active, eg. awaiting HQ approval)
-    [HideInInspector] public int timesCured;                    //number of times cure has been used
     [HideInInspector] public bool isOrgActivated;               //true if org activated cure, false other
     #endregion
 
@@ -38,11 +37,13 @@ public class Cure : ScriptableObject
     }
 
     /// <summary>
-    /// reset fields
+    /// reset fields, new session
     /// </summary>
     public void Reset()
     {
         isActive = false;
-        timesCured = 0;
+        isOrgActivated = false;
     }
+
+
 }

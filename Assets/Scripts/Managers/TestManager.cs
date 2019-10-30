@@ -15,6 +15,8 @@ public class TestManager : MonoBehaviour
     public TestPersonality testPersonality;
     [Tooltip("Test campaign to run")]
     public Campaign campaign;
+
+    [Header("Topics")]
     [Tooltip("If there is a topic pool specified here then a topic will be randomly chosen from that pool overriding any normally selected topic. Ignored for autoRuns")]
     public TopicPool debugTopicPool;
 
