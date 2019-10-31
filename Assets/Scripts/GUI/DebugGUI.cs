@@ -726,11 +726,11 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Remove Ongoing"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), ""))
             {
-                //removes connection Security ongoing effects (first entry in register dict)
+                /*//removes connection Security ongoing effects (first entry in register dict)
                 Debug.Log("[Dbg] Button -> Remove Ongoing");
-                GameManager.instance.dataScript.DebugRemoveOngoingEffects();
+                GameManager.instance.dataScript.DebugRemoveOngoingEffects();*/
             }
 
 

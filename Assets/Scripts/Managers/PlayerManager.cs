@@ -523,14 +523,14 @@ public class PlayerManager : MonoBehaviour
     /// update listOfGear with loaded save game data. Existing data is cleared out prior to updating.
     /// </summary>
     /// <param name="listOfGear"></param>
-    public void SetListOfGear(List<string> listOfGear)
+    public void SetListOfGear(List<string> listOfSavedGear)
     {
-        if (listOfGear != null)
+        if (listOfSavedGear != null)
         {
             listOfGear.Clear();
-            listOfGear.AddRange(listOfGear);
+            listOfGear.AddRange(listOfSavedGear);
         }
-        else { Debug.LogError("Invalid listOfGear (Null)"); }
+        else { Debug.LogError("Invalid listOfSavedGear (Null)"); }
     }
 
     /// <summary>
@@ -1159,8 +1159,12 @@ public class PlayerManager : MonoBehaviour
                 {
                     foreach (Condition condition in listOfConditions)
                     {
-                        if (condition.cure.isOrgActivated == true)
-                        { return true; }
+                        //only check conditions with valid cures
+                        if (condition.cure != null)
+                        {
+                            if (condition.cure.isOrgActivated == true)
+                            { return true; }
+                        }
                     }
                 }
             }

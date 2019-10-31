@@ -1701,9 +1701,6 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //gear
-        /*List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
-        listOfGear.Clear();
-        listOfGear.AddRange(read.playerData.listOfGear);*/
         GameManager.instance.playerScript.SetListOfGear(read.playerData.listOfGear);
         //secrets
         List<Secret> listOfSecrets = new List<Secret>();
