@@ -2117,4 +2117,19 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// Player reputation with Org at Zero, no more help until it improves
+    /// </summary>
+    /// <param name="orgName"></param>
+    /// <returns></returns>
+    public string GetOrgReputationDetails(string orgName)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>{0}{1}{2}</b>", colourNormal, orgName, colourEnd);
+        builder.AppendFormat("{0}{1}<b>Reputation at Zero</b>{2}", "\n", colourBad, colourEnd);
+        builder.AppendFormat("{0}{1}<b>Organisation will do {2}{3}NO MORE FAVOURS{4}{5}until your reputation with them improves</b>", "\n", "\n", "\n", colourBad, colourEnd, "\n");
+        return builder.ToString();
+    }
+
 }

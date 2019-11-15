@@ -4363,6 +4363,45 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Player reputation with Org at Zero, can't do anymore favours for them until it improves
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="org"></param>
+    /// <returns></returns>
+    public Message OrganisationReputation(string text, Organisation org)
+    {
+        Debug.Assert(org != null, "Invalid organisation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ORGANISATION;
+            message.subType = MessageSubType.Org_Reputation;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.dataName = org.name;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Lost Patience";
+            data.bottomText = GameManager.instance.itemDataScript.GetOrgReputationDetails(org.tag);
+            data.itemText = string.Format("POOR REPUTATION with {0}", org.tag);
+            data.priority = ItemPriority.Low;
+            data.sprite = org.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.Effects;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     //
     // - - - Utilities

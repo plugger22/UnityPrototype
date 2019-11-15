@@ -303,7 +303,8 @@
         //Topic
         Topic_Record,
         //Organisation
-        Org_Secret
+        Org_Secret,
+        Org_Reputation
 
     }
 

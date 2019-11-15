@@ -27,6 +27,7 @@ public class OrganisationManager : MonoBehaviour
                 SubInitialiseLevelStart();
                 //SubInitialiseFastAccess();
                 //SubInitialiseLevelAll();
+                SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
                 //SubInitialiseFollowOn();
@@ -34,6 +35,7 @@ public class OrganisationManager : MonoBehaviour
             case GameState.LoadAtStart:
                 //SubInitialiseLevelStart();
                 //SubInitialiseFastAccess();
+                SubInitialiseEvents();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -123,7 +125,61 @@ public class OrganisationManager : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register event listeners
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "OrganisationManager.cs");
+    }
     #endregion
+
+    #endregion
+
+
+
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.StartTurnLate:
+                StartTurnLate();
+                break;
+            default:
+                Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
+                break;
+        }
+    }
+
+
+    private void StartTurnLate()
+    {
+        //poll all active orgs
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            string text;
+            foreach(Organisation org in listOfOrgs)
+            {
+                if (org.isContact == true)
+                {
+                    if (org.GetReputation() == 0)
+                    {
+                        //rep 0, generate warning message
+                        text = string.Format("Poor Reputation (Zero) with {0}", org.name);
+                        GameManager.instance.messageScript.OrganisationReputation(text, org);
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfOrgs (Null)"); }
+    }
 
 
     /// <summary>
