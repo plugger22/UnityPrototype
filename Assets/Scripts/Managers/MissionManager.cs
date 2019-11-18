@@ -64,6 +64,7 @@ public class MissionManager : MonoBehaviour
         if (mission.vip != null)
         {
             Node startNode = null;
+            Node endNode = null;
             //if either start or end VipNodes are null assign random values
             if (mission.vip.nodeStart == null)
             {
@@ -73,20 +74,21 @@ public class MissionManager : MonoBehaviour
             else
             {
                 //assign start node
-
                 startNode = GetVipNode(mission.vip.nodeStart);
-
+                //catch all
                 if (startNode == null)
                 { startNode = GameManager.instance.dataScript.GetRandomNode(); }
             }
             //End node
             if (mission.vip.nodeEnd == null)
-            {
-
-            }
+            { endNode = GetRandomNode(startNode); }
             else
             {
                 //assign end node
+                endNode = GetVipNode(mission.vip.nodeEnd);
+                //catch all
+                if (endNode == null)
+                { endNode = GetRandomNode(startNode); }
             }
         }
     }
@@ -100,17 +102,47 @@ public class MissionManager : MonoBehaviour
     {
         Node node = null;
         int nodeID = -1;
-                switch (vipNode.name)
+        switch (vipNode.name)
+        {
+            case "Airport":
+                nodeID = GameManager.instance.cityScript.airportDistrictID;
+                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (node == null) { Debug.LogWarningFormat("Invalid Airport node (Null) for nodeID {0}", nodeID); }
+                break;
+            case "Harbour":
+                nodeID = GameManager.instance.cityScript.harbourDistrictID;
+                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (node == null) { Debug.LogWarningFormat("Invalid Harbour node (Null) for nodeID {0}", nodeID); }
+                break;
+            case "City Hall":
+                nodeID = GameManager.instance.cityScript.cityHallDistrictID;
+                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (node == null) { Debug.LogWarningFormat("Invalid City Hall node (Null) for nodeID {0}", nodeID); }
+                break;
+            case "Icon":
+                nodeID = GameManager.instance.cityScript.iconDistrictID;
+                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (node == null) { Debug.LogWarningFormat("Invalid Icon node (Null) for nodeID {0}", nodeID); }
+                break;
+            case "arcCORPORATE":
+            case "arcGATED":
+            case "arcGOVERNMENT":
+            case "arcINDUSTRIAL":
+            case "arcRESEARCH":
+            case "arcSPRAWL":
+            case "arcUTILITY":
+                NodeArc arc = vipNode.nodeArc;
+                if (arc != null)
                 {
-                    case "Airport":
-                        nodeID = GameManager.instance.cityScript.airportDistrictID;
-                        node = GameManager.instance.dataScript.GetNode(nodeID);
-                        if (node == null) { Debug.LogWarning("Invalid Airport node (Null) for nodeID {0}", nodeID); }
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Unrecognised VipNode \"{0}\"", vipNode.name);
-                        break;
+                    node = GameManager.instance.dataScript.GetRandomNode(arc.nodeArcID);
+                    if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for \"{0}\"", vipNode.name); }
                 }
+                else { Debug.LogWarningFormat("Invalid nodeArc (Null) for \"{0}\"", vipNode.name); }
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised VipNode \"{0}\"", vipNode.name);
+                break;
+        }
 
         return node;
     }
