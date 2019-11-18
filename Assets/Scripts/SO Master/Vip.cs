@@ -48,5 +48,14 @@ public class Vip : ScriptableObject
     [HideInInspector] public bool isFrozen;                 //once VIP has been found by player they become frozen in place for a set time to allow player to interact with them
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
-    
+
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(nodeStart != null, "Invalid nodeStart (Null) for {0}", name);
+        Debug.AssertFormat(nodeEnd != null, "Invalid nodeEnd (Null) for {0}", name);
+        Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);
+    }
 }

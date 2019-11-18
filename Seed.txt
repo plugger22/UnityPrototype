@@ -802,3 +802,50 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 25906 -> Monday, 18 November 2019 5:31 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 40981 -> Monday, 18 November 2019 7:33 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised VipNode "Random Long"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetVipNode(VipNode, Node) (at Assets/Scripts/Managers/MissionManager.cs:165)
+	MissionManager:InitialiseVIP() (at Assets/Scripts/Managers/MissionManager.cs:87)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:51)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:25)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:109)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:67)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:813)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:360)
+	ERROR Invalid random end node (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetRandomNodeExclude(Node) (at Assets/Scripts/Managers/DataManager.cs:2448)
+	MissionManager:InitialiseVIP() (at Assets/Scripts/Managers/MissionManager.cs:90)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:51)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:25)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:109)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:67)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:813)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:360)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetRandomNodeExclude (Node notThisNode) (at Assets/Scripts/Managers/DataManager.cs:2456)
+	MissionManager.InitialiseVIP () (at Assets/Scripts/Managers/MissionManager.cs:90)
+	MissionManager.SubInitialiseAll () (at Assets/Scripts/Managers/MissionManager.cs:51)
+	MissionManager.Initialise () (at Assets/Scripts/Managers/MissionManager.cs:25)
+	CampaignManager.SubInitialiseAllLate () (at Assets/Scripts/Managers/CampaignManager.cs:109)
+	CampaignManager.InitialiseLate (gameAPI.GameState state) (at Assets/Scripts/Managers/CampaignManager.cs:67)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:759)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:813)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:360)
+	
+Dev seed 38105 -> Monday, 18 November 2019 7:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58406 -> Monday, 18 November 2019 7:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20511 -> Monday, 18 November 2019 7:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34407 -> Monday, 18 November 2019 7:50 PM
+City seed 5678 -> London, United Kingdom

@@ -352,12 +352,12 @@ public class CampaignManager : MonoBehaviour
             builder.AppendFormat(" Start VipNode: {0}{1}", mission.vip.nodeStart.name, "\n");
             Node node = mission.vip.currentStartNode;
             if (node != null)
-            { builder.AppendFormat(" currentStartNode: {0}, {1}, ID {2}{3}", node.name, node.Arc.name, node.nodeID, "\n"); }
+            { builder.AppendFormat(" currentStartNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { builder.AppendFormat(" currentStartNode: Invalid{0}", "\n"); }
             builder.AppendFormat(" End VipNode: {0}{1}", mission.vip.nodeEnd.name, "\n");
             node = mission.vip.currentEndNode;
             if (node != null)
-            { builder.AppendFormat(" currentEndNode: {0}, {1}, ID {2}{3}", node.name, node.Arc.name, node.nodeID, "\n"); }
+            { builder.AppendFormat(" currentEndNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { builder.AppendFormat(" currentEndNode: Invalid{0}", "\n"); }
         }
             return builder.ToString();

@@ -47,10 +47,8 @@ public class MissionManager : MonoBehaviour
         GameManager.instance.targetScript.Initialise();
         GameManager.instance.targetScript.AssignTargets(mission);
         //Human Resistance Player
-        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
-        {
-            InitialiseVIP();
-        }
+        if (GameManager.instance.campaignScript.campaign.side.level == 2)
+        { InitialiseVIP(); }
     }
     #endregion
 
@@ -116,17 +114,33 @@ public class MissionManager : MonoBehaviour
                 break;
             case "Harbour":
                 nodeID = GameManager.instance.cityScript.harbourDistrictID;
-                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (nodeID > -1)
+                { node = GameManager.instance.dataScript.GetNode(nodeID); }
+                else
+                {
+                    Debug.LogWarning("No Harbour district present (nodeID -1)");
+                    if (sourceNode != null)
+                    { node = GameManager.instance.dataScript.GetRandomNodeExclude(sourceNode); }
+                    else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                }
                 if (node == null) { Debug.LogWarningFormat("Invalid Harbour node (Null) for nodeID {0}", nodeID); }
                 break;
-            case "City Hall":
+            case "CityHall":
                 nodeID = GameManager.instance.cityScript.cityHallDistrictID;
                 node = GameManager.instance.dataScript.GetNode(nodeID);
                 if (node == null) { Debug.LogWarningFormat("Invalid City Hall node (Null) for nodeID {0}", nodeID); }
                 break;
             case "Icon":
                 nodeID = GameManager.instance.cityScript.iconDistrictID;
-                node = GameManager.instance.dataScript.GetNode(nodeID);
+                if (nodeID > -1)
+                { node = GameManager.instance.dataScript.GetNode(nodeID); }
+                else
+                {
+                    Debug.LogWarning("No Icon district present (nodeID -1)");
+                    if (sourceNode != null)
+                    { node = GameManager.instance.dataScript.GetRandomNodeExclude(sourceNode); }
+                    else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                }
                 if (node == null) { Debug.LogWarningFormat("Invalid Icon node (Null) for nodeID {0}", nodeID); }
                 break;
             case "arcCORPORATE":
