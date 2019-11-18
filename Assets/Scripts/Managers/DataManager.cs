@@ -2430,6 +2430,35 @@ public class DataManager : MonoBehaviour
         return node;
     }
 
+    /// <summary>
+    /// Gets a random node that isn't 'notThisNode'. Returns null if a problem
+    /// </summary>
+    /// <param name="notThisNode"></param>
+    /// <returns></returns>
+    public Node GetRandomNodeExclude(Node notThisNode)
+    {
+        Node node = null;
+        if (notThisNode != null)
+        {
+            //get a random end node, any will do provided it is different to the exclusion node
+            int counter = 0;
+            do
+            {
+                GetRandomNode();
+                if (node == null) { Debug.LogError("Invalid random end node (Null)"); }
+                counter++;
+                if (counter > 10)
+                {
+                    Debug.LogWarningFormat("Counter has timed out (now {0})", counter);
+                    break;
+                }
+            }
+            while (node.nodeID == notThisNode.nodeID);
+        }
+        else { Debug.LogError("Invalid notThisNode (Null)"); }
+        return node;
+    }
+
     public List<int> GetListOfMoveNodes()
     { return listOfMoveNodes; }
 

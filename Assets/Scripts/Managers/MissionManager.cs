@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,24 +82,28 @@ public class MissionManager : MonoBehaviour
             }
             //End node
             if (mission.vip.nodeEnd == null)
-            { endNode = GetRandomNode(startNode); }
+            { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
             else
             {
                 //assign end node
-                endNode = GetVipNode(mission.vip.nodeEnd);
+                endNode = GetVipNode(mission.vip.nodeEnd, startNode);
                 //catch all
                 if (endNode == null)
-                { endNode = GetRandomNode(startNode); }
+                { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
             }
+            //assign
+            mission.vip.currentStartNode = startNode;
+            mission.vip.currentEndNode = endNode;
         }
     }
 
     /// <summary>
-    /// Gets a start or end VipNode Node. Returns null if a problem
+    /// Gets a start or end VipNode Node. Returns null if a problem. If random then will use source node as starting point for separation calc, if source node null then will choose any random node
+    /// sourceNode is only used for randomClose/Med/Long calc's, ignored for all other
     /// </summary>
     /// <param name="vipNode"></param>
     /// <returns></returns>
-    private Node GetVipNode(VipNode vipNode)
+    private Node GetVipNode(VipNode vipNode, Node sourceNode = null)
     {
         Node node = null;
         int nodeID = -1;
@@ -139,42 +144,32 @@ public class MissionManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid nodeArc (Null) for \"{0}\"", vipNode.name); }
                 break;
+            case "RandomClose":
+            case "RandomMedium":
+            case "RandomLong":
+                if (sourceNode == null)
+                { sourceNode = GameManager.instance.dataScript.GetRandomNode(); }
+                else
+                {
+                    int distance = 0;
+                    switch (vipNode.name)
+                    {
+                        case "RandomClose": distance = 2; break;
+                        case "RandomMedium": distance = 4; break;
+                        case "RandomLong": distance = 6; break;
+                    }
+                    //valid source node, get path data
+                    node = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(sourceNode, distance);
+                    if (node == null) { Debug.LogWarningFormat("Invalid Random node (Null) for SourceNodeID {0}, distance {1}", sourceNode.nodeID, distance); }
+                }
+                break;
             default:
                 Debug.LogWarningFormat("Unrecognised VipNode \"{0}\"", vipNode.name);
                 break;
         }
-
         return node;
     }
 
-    /// <summary>
-    /// Gets a random node that isn't 'notThisNode'. Returns null
-    /// </summary>
-    /// <param name="notThisNode"></param>
-    /// <returns></returns>
-    private Node GetRandomNode(Node notThisNode)
-    {
-        Node node = null;
-        if (notThisNode != null)
-        {
-            //get a random end node, any will do provided it is different to the start node
-            int counter = 0;
-            do
-            {
-                node = GameManager.instance.dataScript.GetRandomNode();
-                if (node == null) { Debug.LogError("Invalid random end node (Null)"); }
-                counter++;
-                if (counter > 10)
-                {
-                    Debug.LogWarningFormat("Counter has timed out (now {0})", counter);
-                    break;
-                }
-            }
-            while (node.nodeID == notThisNode.nodeID);
-        }
-        else { Debug.LogError("Invalid notThisNode (Null)"); }
-        return node;
-    }
 
 
 }

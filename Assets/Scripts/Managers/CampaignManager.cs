@@ -345,7 +345,22 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
 
-        return builder.ToString();
+        if (mission.vip != null)
+        {
+            builder.AppendFormat("{0}{1}-V.I.P{2}", "\n", "\n", "\n");
+            builder.AppendFormat(" VIP Name: {0}{1}", mission.vip.tag, "\n");
+            builder.AppendFormat(" Start VipNode: {0}{1}", mission.vip.nodeStart.name, "\n");
+            Node node = mission.vip.currentStartNode;
+            if (node != null)
+            { builder.AppendFormat(" currentStartNode: {0}, {1}, ID {2}{3}", node.name, node.Arc.name, node.nodeID, "\n"); }
+            else { builder.AppendFormat(" currentStartNode: Invalid{0}", "\n"); }
+            builder.AppendFormat(" End VipNode: {0}{1}", mission.vip.nodeEnd.name, "\n");
+            node = mission.vip.currentEndNode;
+            if (node != null)
+            { builder.AppendFormat(" currentEndNode: {0}, {1}, ID {2}{3}", node.name, node.Arc.name, node.nodeID, "\n"); }
+            else { builder.AppendFormat(" currentEndNode: Invalid{0}", "\n"); }
+        }
+            return builder.ToString();
     }
 
     //new methods above here

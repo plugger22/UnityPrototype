@@ -46,5 +46,7 @@ public class Vip : ScriptableObject
 
     [HideInInspector] public bool isFound;
     [HideInInspector] public bool isFrozen;                 //once VIP has been found by player they become frozen in place for a set time to allow player to interact with them
+    [HideInInspector] public Node currentStartNode;
+    [HideInInspector] public Node currentEndNode;
     
 }
