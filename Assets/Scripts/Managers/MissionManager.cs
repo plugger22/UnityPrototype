@@ -58,10 +58,34 @@ public class MissionManager : MonoBehaviour
         //Human Resistance Player
         if (GameManager.instance.campaignScript.campaign.side.level == 2)
         { InitialiseVIP(); }
+        //register listener
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MissionManager");
     }
     #endregion
 
     #endregion
+
+
+    /// <summary>
+    /// event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //detect event type
+        switch (eventType)
+        {
+            case EventType.StartTurnLate:
+                if (mission.vip != null)
+                { ProcessVIP(mission.vip); }
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
 
 
     /// <summary>
@@ -101,6 +125,8 @@ public class MissionManager : MonoBehaviour
             //assign
             mission.vip.currentStartNode = startNode;
             mission.vip.currentEndNode = endNode;
+            //status
+            mission.vip.status = VipStatus.Standby;
         }
     }
 
@@ -193,6 +219,37 @@ public class MissionManager : MonoBehaviour
         return node;
     }
 
+    /// <summary>
+    /// master method to handle all VIP matters. 
+    /// NOTE: parent method checks for presence of VIP
+    /// </summary>
+    private void ProcessVIP(Vip vip)
+    {
+        switch (mission.vip.status)
+        {
+            case VipStatus.Standby:
+                CheckVipActive(vip);
+                break;
+            case VipStatus.Active:
 
+                break;
+            case VipStatus.Departed:
 
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised VIP status \"{0}\"", mission.vip.status);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// checks for VIP activating and being placed onMap
+    /// </summary>
+    private void CheckVipActive(Vip vip)
+    {
+        //check start turn
+        if (GameManager.instance.turnScript.Turn >= vip.startTurn)
+    }
+
+    //new methods above here
 }

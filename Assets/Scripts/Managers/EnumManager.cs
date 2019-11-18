@@ -128,6 +128,7 @@
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
+    public enum VipStatus { Standby, Active, Departed }
      
     //
     // - - - Secrets - - -

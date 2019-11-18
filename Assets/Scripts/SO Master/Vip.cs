@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,9 +44,12 @@ public class Vip : ScriptableObject
     public VipAction action;
 
 
-
-    [HideInInspector] public bool isFound;
+    [HideInInspector] public VipStatus status;              //current status
+    [HideInInspector] public bool isFound;                  //true if VIP has been found by Player
     [HideInInspector] public bool isFrozen;                 //once VIP has been found by player they become frozen in place for a set time to allow player to interact with them
+
+    [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
+
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
     [HideInInspector] public Node currentNode;              //where VIP is now
