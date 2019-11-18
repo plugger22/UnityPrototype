@@ -38,6 +38,9 @@ public class LoadManager : MonoBehaviour
     public Challenge[] arrayOfChallenges;
     public Nemesis[] arrayOfNemesis;
     public RebelLeader[] arrayOfRebelLeaders;
+    public Vip[] arrayOfVips;
+    public VipNode[] arrayOfVipNodes;
+    public VipAction[] arrayOfVipActions;
     
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -629,6 +632,27 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
+        //
+        // - - - V.I.P's (not stored in a collection)
+        //
+        numArray = arrayOfVips.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVips has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No V.I.P's present"); }
+        //
+        // - - - VipNodes (not stored in a collection)
+        //
+        numArray = arrayOfVipNodes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVipNodes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No VipNodes present"); }
+        //
+        // - - - VipActions (not stored in a collection)
+        //
+        numArray = arrayOfVipActions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVipActions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No VipActions present"); }
         //
         // - - - Mission (not stored in a collection)
         //

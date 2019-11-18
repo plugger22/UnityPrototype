@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e53b07ccb32ac2438596a112016110d, type: 3}
+  m_Name: Courier Delivery
+  m_EditorClassIdentifier: 
+  tag: Courier
+  descriptor: Has a package for you
+  devNotes: Courier has a package to deliver to the player
+  stealthRating: 0
+  startTurn: 0
+  startChance: 15
+  nodeStart: {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
+  nodeFinish: {fileID: 11400000, guid: 03ba7f3deb8501d43ad40db2901212bc, type: 2}
+  moveChance: 50
+  maxTurns: 20
+  isRepeat: 1
+  action: {fileID: 11400000, guid: f8b45eea7a6bee94981349a446981c51, type: 2}
+  isFound: 0
+  isFrozen: 0
