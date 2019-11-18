@@ -1632,7 +1632,12 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<TextList>(GameManager.instance.loadScript.arrayOfTextLists);
         //Target
         ValidateSOGeneric<Target>(GameManager.instance.loadScript.arrayOfTargets);
-
+        //VIP
+        ValidateSOGeneric<Vip>(GameManager.instance.loadScript.arrayOfVips);
+        //VIP Nodes
+        ValidateSOGeneric<VipNode>(GameManager.instance.loadScript.arrayOfVipNodes);
+        //VIP Actions
+        ValidateSOGeneric<VipAction>(GameManager.instance.loadScript.arrayOfVipActions);
     }
     #endregion
 

@@ -28,7 +28,7 @@ public class Vip : ScriptableObject
     [Tooltip("Start node")]
     public VipNode nodeStart;
     [Tooltip("Finish node (move from start node to here")]
-    public VipNode nodeFinish;
+    public VipNode nodeEnd;
 
     [Header("Move Profile")]
     [Tooltip("Percentage chance that, in any given turn, the VIP will move to the next node in it's path")]

@@ -18,7 +18,7 @@ MonoBehaviour:
   startTurn: 0
   startChance: 15
   nodeStart: {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
-  nodeFinish: {fileID: 11400000, guid: 03ba7f3deb8501d43ad40db2901212bc, type: 2}
+  nodeEnd: {fileID: 11400000, guid: 03ba7f3deb8501d43ad40db2901212bc, type: 2}
   moveChance: 50
   maxTurns: 20
   isRepeat: 1
