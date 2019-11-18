@@ -4,7 +4,6 @@ using packageAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -2626,7 +2625,7 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid cure (Null)"); }
     }
 
-    /// <summary>
+    /*/// <summary>  EDIT: Redundant code, replaced by code below and Dijkstra method, Nov '19
     /// finds a random node, 'x' distance links away from the Resistance Player's current location (may end up being less), one that doesn't already have a cure. Returns -1 if a problem
     /// </summary>
     /// <param name="distance"></param>
@@ -2738,6 +2737,46 @@ public class NodeManager : MonoBehaviour
                 else { Debug.LogError("Invalid distanceArray (Null)"); }
             }
             else { Debug.LogError("Invalid PathData (Null)"); }
+        }
+        else { Debug.LogError("Invalid cure (Null)"); }
+        //return
+        return cureNodeID;
+    }*/
+
+
+    /// <summary>
+    /// finds a random node, 'x' distance links away from the Resistance Player's current location (may end up being less), one that doesn't already have a cure. Returns -1 if a problem
+    /// </summary>
+    /// <param name="distance"></param>
+    /// <returns></returns>
+    private int GetCureNodeRandom(Cure cure)
+    {
+        int cureNodeID = -1;
+        int requiredDistance = cure.distance;
+        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
+        if (cure != null)
+        {
+            //get exclusion list of nodes currently with a cure
+            List<int> listOfExclusion = new List<int>();
+            List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+            if (listOfCureNodes != null)
+            {
+                for (int index = 0; index < listOfCureNodes.Count; index++)
+                {
+                    if (listOfCureNodes[index] != null)
+                    { listOfExclusion.Add(listOfCureNodes[index].nodeID); }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", index); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
+            //get cure node
+            Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
+            Node nodeCure = null;
+            if (listOfExclusion != null && listOfExclusion.Count > 0)
+            { nodeCure = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(node, requiredDistance, listOfExclusion); }
+            else { nodeCure = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(node, requiredDistance); }
+            if (nodeCure != null)
+            { cureNodeID = nodeCure.nodeID; }
         }
         else { Debug.LogError("Invalid cure (Null)"); }
         //return

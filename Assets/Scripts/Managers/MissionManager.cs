@@ -8,6 +8,15 @@ using UnityEngine;
 /// </summary>
 public class MissionManager : MonoBehaviour
 {
+
+    [Header("VIP Globals")]
+    [Tooltip("Desired node separation for RandomClose VipNode option")]
+    [Range(0, 10)] public int randomClose = 2;
+    [Tooltip("Desired node separation for RandomMedium VipNode option")]
+    [Range(0, 10)] public int randomMedium = 4;
+    [Tooltip("Desired node separation for RandomLong VipNode option")]
+    [Range(0, 10)] public int randomLong = 6;
+
     [HideInInspector] public Mission mission;
 
     /// <summary>
@@ -168,9 +177,9 @@ public class MissionManager : MonoBehaviour
                     int distance = 0;
                     switch (vipNode.name)
                     {
-                        case "RandomClose": distance = 2; break;
-                        case "RandomMedium": distance = 4; break;
-                        case "RandomLong": distance = 6; break;
+                        case "RandomClose": distance = randomClose; break;
+                        case "RandomMedium": distance = randomMedium; break;
+                        case "RandomLong": distance = randomLong; break;
                     }
                     //valid source node, get path data
                     node = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(sourceNode, distance);

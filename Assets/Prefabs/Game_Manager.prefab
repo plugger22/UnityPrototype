@@ -1279,6 +1279,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
   arrayOfVips:
   - {fileID: 11400000, guid: 97e02004a7e6eaa4d98396ccc988b984, type: 2}
+  - {fileID: 11400000, guid: c351c0b269caaeb4d895bbf54c3db561, type: 2}
+  - {fileID: 11400000, guid: 917c3b7a46582d246b849b44e3dc4fef, type: 2}
   arrayOfVipNodes:
   - {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
   - {fileID: 11400000, guid: afd56495b2c340a4e94a02cbaa365cd4, type: 2}
