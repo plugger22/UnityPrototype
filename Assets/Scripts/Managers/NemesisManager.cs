@@ -1296,7 +1296,6 @@ public class NemesisManager : MonoBehaviour
                                     //check nemesis stealth rating vs. contact effectiveness
                                     if (contact.effectiveness >= stealthRating)
                                     {
-                                        //check contact reliabiity -> if not use a random neighbouring node
                                         Node node = nemesisNode;
                                         //contact spots Nemesis
                                         string text = string.Format("Nemesis {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", nemesis.name, contact.nameFirst, contact.nameLast,

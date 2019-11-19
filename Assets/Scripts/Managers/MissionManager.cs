@@ -402,5 +402,78 @@ public class MissionManager : MonoBehaviour
         GameManager.instance.dataScript.AddHistoryVipMove(data);
     }
 
+    /// <summary>
+    /// Checks to see if V.I.P spotted by contact
+    /// </summary>
+    private void ProcessContactInteraction(Vip vip)
+    {
+        Actor actor;
+        Contact contact;
+        List<int> listOfActorsWithContactsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(vip.currentNode.nodeID);
+        if (listOfActorsWithContactsAtNode != null)
+        {
+            int numOfActors = listOfActorsWithContactsAtNode.Count;
+            if (numOfActors > 0)
+            {
+                //V.I.P stealthRating
+                int stealthRating = vip.stealthRating;
+                //loop actors with contacts
+                for (int i = 0; i < numOfActors; i++)
+                {
+                    actor = GameManager.instance.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
+                    if (actor != null)
+                    {
+                        //only active actors can work their contact network
+                        if (actor.Status == ActorStatus.Active)
+                        {
+                            contact = actor.GetContact(vip.currentNode.nodeID);
+                            if (contact != null)
+                            {
+                                //contact active
+                                if (contact.status == ContactStatus.Active)
+                                {
+                                    //check V.I.P stealth rating vs. contact effectiveness
+                                    if (contact.effectiveness >= stealthRating)
+                                    {
+                                        Node node = vip.currentNode;
+                                        //contact spots V.I.P
+                                        string text = string.Format("V.I.P {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", vip.tag, contact.nameFirst, contact.nameLast,
+                                            contact.job, node.nodeName, node.nodeID);
+                                        Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS V.I.P {2}, adj StealthRating {3} at node {4}, id {5}{6}",
+                                            contact.nameFirst, contact.effectiveness, vip.tag, stealthRating, node.nodeName, node.nodeID, "\n");
+                                        GameManager.instance.messageScript.ContactVipSpotted(text, actor, node, contact, vip);
+                                        //contact stats
+                                        contact.statsVip++;
+                                        //no need to check anymore as one sighting is enough
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //contact Fails to spot V.I.P
+                                        Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot V.I.P {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                            contact.nameFirst, contact.effectiveness, vip.tag, stealthRating, vip.currentNode.nodeID, "\n");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, vip.currentNode.nodeName,
+                                      vip.currentNode.Arc.name, vip.currentNode.nodeID);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                 actor.arc.name, actor.actorID, "\n");
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }
+    }
+
     //new methods above here
 }
