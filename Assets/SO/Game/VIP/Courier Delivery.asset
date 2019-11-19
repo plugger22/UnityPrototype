@@ -23,10 +23,10 @@ MonoBehaviour:
   maxTurns: 20
   isRepeat: 1
   action: {fileID: 11400000, guid: f8b45eea7a6bee94981349a446981c51, type: 2}
-  status: 2
+  status: 1
   isFound: 0
   isFrozen: 0
-  timerTurns: 12
+  timerTurns: 3
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
   currentNode: {fileID: 0}

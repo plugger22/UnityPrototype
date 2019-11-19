@@ -393,6 +393,20 @@ namespace packageAPI
     }
 
     /// <summary>
+    /// Tracks V.I.P movement. One entry per turn, only while VIP has Active status (OnMap)
+    /// </summary>
+    [System.Serializable]
+    public class HistoryVipMove
+    {
+        public int turn;
+        public int currentNodeID;
+        public int endNodeID;
+        public int timer;
+        public bool isKnown;
+        public bool isFrozen;
+    }
+
+    /// <summary>
     /// history of actor's motivational changes
     /// </summary>
     [System.Serializable]

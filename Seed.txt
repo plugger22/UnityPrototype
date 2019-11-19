@@ -894,3 +894,66 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 9199 -> Tuesday, 19 November 2019 3:10 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 8863 -> Tuesday, 19 November 2019 3:22 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Matching VIPrepe nodes (start ID 14, end ID 14) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:145)
+	MissionManager:UpdateActiveVip(Vip) (at Assets/Scripts/Managers/MissionManager.cs:318)
+	MissionManager:ProcessVIP(Vip) (at Assets/Scripts/Managers/MissionManager.cs:252)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:81)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	ERROR Invalid random end node (Null)
+UnityEngine.Debug:LogError(Object)
+	DataManager:GetRandomNodeExclude(Node) (at Assets/Scripts/Managers/DataManager.cs:2448)
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:146)
+	MissionManager:UpdateActiveVip(Vip) (at Assets/Scripts/Managers/MissionManager.cs:318)
+	MissionManager:ProcessVIP(Vip) (at Assets/Scripts/Managers/MissionManager.cs:252)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:81)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.GetRandomNodeExclude (Node notThisNode) (at Assets/Scripts/Managers/DataManager.cs:2456)
+	MissionManager.GetEndNode (Node startNode) (at Assets/Scripts/Managers/MissionManager.cs:146)
+	MissionManager.UpdateActiveVip (Vip vip) (at Assets/Scripts/Managers/MissionManager.cs:318)
+	MissionManager.ProcessVIP (Vip vip) (at Assets/Scripts/Managers/MissionManager.cs:252)
+	MissionManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/MissionManager.cs:81)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:362)
+	
+Dev seed 4911 -> Tuesday, 19 November 2019 3:23 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Matching VIPrepe nodes (start ID 14, end ID 14) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:145)
+	MissionManager:UpdateActiveVip(Vip) (at Assets/Scripts/Managers/MissionManager.cs:318)
+	MissionManager:ProcessVIP(Vip) (at Assets/Scripts/Managers/MissionManager.cs:252)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:81)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	
+Dev seed 7614 -> Tuesday, 19 November 2019 3:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46086 -> Tuesday, 19 November 2019 3:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1371 -> Tuesday, 19 November 2019 3:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14904 -> Tuesday, 19 November 2019 4:02 PM
+City seed 5678 -> London, United Kingdom

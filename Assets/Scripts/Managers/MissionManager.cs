@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -142,7 +143,7 @@ public class MissionManager : MonoBehaviour
         //fail safe
         if (endNode.nodeID == startNode.nodeID)
         {
-            Debug.LogWarningFormat("Invalid Matching VIP nodes (start ID {0}, end ID {1}) for GetEndNode", endNode.nodeID, startNode.nodeID);
+            Debug.LogWarningFormat("Invalid Matching VIPrepe nodes (start ID {0}, end ID {1}) for GetEndNode", endNode.nodeID, startNode.nodeID);
             endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode);
         }
         return endNode;
@@ -252,7 +253,6 @@ public class MissionManager : MonoBehaviour
                 UpdateActiveVip(vip);
                 break;
             case VipStatus.Departed:
-
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised VIP status \"{0}\"", mission.vip.status);
@@ -268,10 +268,10 @@ public class MissionManager : MonoBehaviour
         //check start turn
         if (GameManager.instance.turnScript.Turn >= vip.startTurn)
         {
-            //start?
             int rnd = Random.Range(0, 100);
             if (rnd < vip.startChance)
             {
+                //Start
                 if (vip.currentStartNode != null)
                 {
                     vip.status = VipStatus.Active;
@@ -280,6 +280,8 @@ public class MissionManager : MonoBehaviour
                     GameManager.instance.nodeScript.nodeVip = vip.currentStartNode.nodeID;
                     Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" OnMap (rnd {1}, needed < {2}) at {3}, {4}, ID {5}, timer {6}{7}", vip.tag, rnd, vip.startChance, 
                         vip.currentNode.nodeName, vip.currentNode.Arc.name, vip.currentNode.nodeID, vip.timerTurns, "\n");
+                    //tracker
+                    AddTrackerRecord(vip);
                 }
                 else { Debug.LogWarning("Invalid VIP currentStartNode (Null)"); }
             }
@@ -288,7 +290,7 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates Active onMap VIP
+    /// Updates Active onMap V.I.P
     /// </summary>
     /// <param name="vip"></param>
     private void UpdateActiveVip(Vip vip)
@@ -366,6 +368,8 @@ public class MissionManager : MonoBehaviour
             }
         }
         else { Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", vip.tag, rnd, vip.moveChance, vip.timerTurns, "\n"); }
+        //tracker
+        AddTrackerRecord(vip);
     }
 
     /// <summary>
@@ -377,6 +381,25 @@ public class MissionManager : MonoBehaviour
         vip.currentNode = null;
         GameManager.instance.nodeScript.nodeVip = -1;
         Debug.LogFormat("[Vip] MissionManager.cs -> ProcessVipDepart: VIP \"{0}\" Departed{1}", vip.tag, "\n");
+    }
+
+
+    /// <summary>
+    /// Add tracker data every turn
+    /// </summary>
+    /// <param name="vip"></param>
+    private void AddTrackerRecord(Vip vip)
+    {
+        HistoryVipMove data = new HistoryVipMove()
+        {
+            turn = GameManager.instance.turnScript.Turn,
+            currentNodeID = vip.currentNode.nodeID,
+            endNodeID = vip.currentEndNode.nodeID,
+            timer = vip.timerTurns,
+            isKnown = vip.isKnown,
+            isFrozen = vip.isFrozen
+        };
+        GameManager.instance.dataScript.AddHistoryVipMove(data);
     }
 
     //new methods above here

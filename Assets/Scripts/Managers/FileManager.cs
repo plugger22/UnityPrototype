@@ -924,6 +924,11 @@ public class FileManager : MonoBehaviour
         if (listOfHistoryNemesis != null)
         { write.dataData.listOfHistoryNemesis.AddRange(listOfHistoryNemesis); }
         else { Debug.LogError("Invalid listOfHistoryNemesisMove (Null)"); }
+        //VIP moves
+        List<HistoryVipMove> listOfHistoryVip = GameManager.instance.dataScript.GetListOfHistoryVipMove();
+        if (listOfHistoryVip != null)
+        { write.dataData.listOfHistoryVip.AddRange(listOfHistoryVip); }
+        else { Debug.LogError("Invalid listOfHistoryVipMove (Null)"); }
         #endregion
 
         #region newsFeed
@@ -2621,6 +2626,7 @@ public class FileManager : MonoBehaviour
         #region history
         GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
         GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
+        GameManager.instance.dataScript.SetListOfHistoryVipMove(read.dataData.listOfHistoryVip);
         #endregion
 
         #region News

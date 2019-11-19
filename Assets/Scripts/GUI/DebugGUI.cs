@@ -425,7 +425,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 44; trackerToggle = 1; break;
                     case 1: debugDisplay = 45; trackerToggle = 2; break;
-                    case 2: debugDisplay = 0; trackerToggle = 0; break;
+                    case 2: debugDisplay = 79; trackerToggle = 3; break;
+                    case 3: debugDisplay = 0; trackerToggle = 0; break;
                 }
             }
 
@@ -1632,6 +1633,12 @@ public class DebugGUI : MonoBehaviour
                     case 78:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayCurrentOrganisations();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //V.I.P Tracker data
+                    case 79:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugShowVipMoves();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

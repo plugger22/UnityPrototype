@@ -111,8 +111,10 @@ public class SaveDataData
     public List<int> listOfArrayOfAIResources = new List<int>();
     public List<AITracker> listOfRecentNodes = new List<AITracker>();
     public List<AITracker> listOfRecentConnections = new List<AITracker>();
+    //History
     public List<HistoryRebelMove> listOfHistoryRebel = new List<HistoryRebelMove>();
     public List<HistoryNemesisMove> listOfHistoryNemesis = new List<HistoryNemesisMove>();
+    public List<HistoryVipMove> listOfHistoryVip = new List<HistoryVipMove>();
     //Messages
     public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();
