@@ -16,14 +16,17 @@ MonoBehaviour:
   devNotes: Capture with a view to ransom
   stealthRating: 1
   startTurn: 0
-  startChance: 5
+  startChance: 40
   nodeStart: {fileID: 11400000, guid: afd56495b2c340a4e94a02cbaa365cd4, type: 2}
   nodeEnd: {fileID: 11400000, guid: afd56495b2c340a4e94a02cbaa365cd4, type: 2}
-  moveChance: 50
+  moveChance: 60
   maxTurns: 20
   isRepeat: 1
   action: {fileID: 11400000, guid: 732fde5dbd4cac842a48f252411ffc3a, type: 2}
-  isFound: 0
+  status: 0
+  isKnown: 0
   isFrozen: 0
+  timerTurns: 0
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
+  currentNode: {fileID: 0}
