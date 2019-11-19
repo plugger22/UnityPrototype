@@ -1,5 +1,4 @@
 ﻿using gameAPI;
-using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -231,7 +230,7 @@ public class MissionManager : MonoBehaviour
                 CheckVipActive(vip);
                 break;
             case VipStatus.Active:
-
+                UpdateActiveVip(vip);
                 break;
             case VipStatus.Departed:
 
@@ -249,6 +248,95 @@ public class MissionManager : MonoBehaviour
     {
         //check start turn
         if (GameManager.instance.turnScript.Turn >= vip.startTurn)
+        {
+            //start?
+            int rnd = Random.Range(0, 100);
+            if (rnd < vip.startChance)
+            {
+                if (vip.currentStartNode != null)
+                {
+                    vip.status = VipStatus.Active;
+                    vip.currentNode = vip.currentStartNode;
+                    vip.timerTurns = vip.maxTurns;
+                    GameManager.instance.nodeScript.nodeVip = vip.currentStartNode.nodeID;
+                    Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" OnMap (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.startChance, "\n");
+                }
+                else { Debug.LogWarning("Invalid VIP currentStartNode (Null)"); }
+            }
+            else { Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" failed Activation roll (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.startChance, "\n"); }
+        }
+    }
+
+    /// <summary>
+    /// Updates Active onMap VIP
+    /// </summary>
+    /// <param name="vip"></param>
+    private void UpdateActiveVip(Vip vip)
+    {
+        //decrement timer
+        if (vip.timerTurns > 0) { vip.timerTurns--; }
+        //check if moves
+        int rnd = Random.Range(0, 100);
+        if (rnd < vip.moveChance)
+        {
+            Debug.LogFormat("[Vip] MissionManager.cs -> UpdateActiveVip: VIP \"{0}\" MOVED (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.moveChance, "\n");
+            //VIP at destination
+            if (vip.currentEndNode.nodeID == vip.currentNode.nodeID)
+            {
+                //no repeat
+                if (vip.isRepeat == false)
+                { ProcessVipDepart(vip); }
+                //repeat but timer has expired
+                else if (vip.timerTurns <= 0)
+                { ProcessVipDepart(vip); }
+            }
+            else
+            {
+                //Vip moves towards destination -> Get Path
+                List<Connection> listOfConnections = GameManager.instance.dijkstraScript.GetPath(vip.currentNode.nodeID, vip.currentEndNode.nodeID, false);
+                if (listOfConnections != null)
+                {
+                    int numOfLinks = listOfConnections.Count;
+                    int nextNodeID;
+                    if (numOfLinks > 0)
+                    {
+                        //move nemesis multiple links if allowed, stop moving immediately if nemesis spots Player at same node
+                        Connection connection = listOfConnections[0];
+                        if (connection != null)
+                        {
+                            //get the node to move to for this link
+                            nextNodeID = connection.GetNode1();
+                            if (nextNodeID == vip.currentNode.nodeID)
+                            { nextNodeID = connection.GetNode2(); }
+                            //move forward one link
+                            Node node = GameManager.instance.dataScript.GetNode(nextNodeID);
+                            if (node != null)
+                            {
+                                vip.currentNode = node;
+                                GameManager.instance.nodeScript.nodeVip = nextNodeID;
+                                Debug.LogFormat("[Vip] MissionManager.cs -> ProcessVipDepart: VIP \"{0}\" moved to {1}, {2}, nodeID {3}{4}", vip.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                            }
+                            else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
+                        }
+                        else { Debug.LogWarning("Invalid connection (Null) in listOfConnections[0]"); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid listOfConnections (Empty) between VIP currentNodeID {0} and currentEndNodeID {1}", vip.currentNode.nodeID, vip.currentEndNode.nodeID); }
+                }
+                else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
+            }
+        }
+        else { Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" didn't move (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.moveChance, "\n"); }
+    }
+
+    /// <summary>
+    /// handles all admin for VIP departing map (reached destination and no repeat or repeat but timer has run out)
+    /// </summary>
+    private void ProcessVipDepart(Vip vip)
+    {
+        vip.status = VipStatus.Departed;
+        vip.currentNode = null;
+        GameManager.instance.nodeScript.nodeVip = -1;
+        Debug.LogFormat("[Vip] MissionManager.cs -> ProcessVipDepart: VIP \"{0}\" Departed{1}", vip.tag, "\n");
     }
 
     //new methods above here
