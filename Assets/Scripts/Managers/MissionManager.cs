@@ -111,22 +111,41 @@ public class MissionManager : MonoBehaviour
                 { startNode = GameManager.instance.dataScript.GetRandomNode(); }
             }
             //End node
-            if (mission.vip.nodeEnd == null)
-            { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
-            else
-            {
-                //assign end node
-                endNode = GetVipNode(mission.vip.nodeEnd, startNode);
-                //catch all
-                if (endNode == null)
-                { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
-            }
+            endNode = GetEndNode(startNode);
             //assign
             mission.vip.currentStartNode = startNode;
             mission.vip.currentEndNode = endNode;
             //status
             mission.vip.status = VipStatus.Standby;
         }
+    }
+
+    /// <summary>
+    /// subMethod to get an end node given a start node. Returns null if a problem
+    /// NOTE: start node checked for null by parent method
+    /// </summary>
+    /// <param name="startNode"></param>
+    /// <returns></returns>
+    private Node GetEndNode(Node startNode)
+    {
+        Node endNode = null;
+        if (mission.vip.nodeEnd == null)
+        { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
+        else
+        {
+            //assign end node
+            endNode = GetVipNode(mission.vip.nodeEnd, startNode);
+            //catch all
+            if (endNode == null)
+            { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
+        }
+        //fail safe
+        if (endNode.nodeID == startNode.nodeID)
+        {
+            Debug.LogWarningFormat("Invalid Matching VIP nodes (start ID {0}, end ID {1}) for GetEndNode", endNode.nodeID, startNode.nodeID);
+            endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode);
+        }
+        return endNode;
     }
 
     /// <summary>
@@ -259,7 +278,8 @@ public class MissionManager : MonoBehaviour
                     vip.currentNode = vip.currentStartNode;
                     vip.timerTurns = vip.maxTurns;
                     GameManager.instance.nodeScript.nodeVip = vip.currentStartNode.nodeID;
-                    Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" OnMap (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.startChance, "\n");
+                    Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" OnMap (rnd {1}, needed < {2}) at {3}, {4}, ID {5}, timer {6}{7}", vip.tag, rnd, vip.startChance, 
+                        vip.currentNode.nodeName, vip.currentNode.Arc.name, vip.currentNode.nodeID, vip.timerTurns, "\n");
                 }
                 else { Debug.LogWarning("Invalid VIP currentStartNode (Null)"); }
             }
@@ -279,7 +299,7 @@ public class MissionManager : MonoBehaviour
         int rnd = Random.Range(0, 100);
         if (rnd < vip.moveChance)
         {
-            Debug.LogFormat("[Vip] MissionManager.cs -> UpdateActiveVip: VIP \"{0}\" MOVED (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.moveChance, "\n");
+            Debug.LogFormat("[Vip] MissionManager.cs -> UpdateActiveVip: VIP \"{0}\" MOVED (rnd {1}, needed < {2}), timer {3}{4}", vip.tag, rnd, vip.moveChance, vip.timerTurns, "\n");
             //VIP at destination
             if (vip.currentEndNode.nodeID == vip.currentNode.nodeID)
             {
@@ -287,8 +307,27 @@ public class MissionManager : MonoBehaviour
                 if (vip.isRepeat == false)
                 { ProcessVipDepart(vip); }
                 //repeat but timer has expired
-                else if (vip.timerTurns <= 0)
-                { ProcessVipDepart(vip); }
+                else
+                {
+                    if (vip.timerTurns <= 0)
+                    { ProcessVipDepart(vip); }
+                    else
+                    {
+                        //still going, create a new path (uses a move action to do so)
+                        vip.currentStartNode = vip.currentNode;
+                        vip.currentEndNode = GetEndNode(vip.currentNode);
+                        if (vip.currentEndNode != null)
+                        {
+                            Debug.LogFormat("[Vip] MissionManager.cs -> UpdateActiveVip: New path from {0}, {1}, ID {2} to {3}, {4}, ID {5}{6}", vip.currentStartNode.nodeName, vip.currentStartNode.Arc.name,
+                                vip.currentStartNode.nodeID, vip.currentEndNode.nodeName, vip.currentEndNode.Arc.name, vip.currentEndNode.nodeID, "\n");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Invalid currentEndNode (Null) for VIP when calculating new path");
+                            ProcessVipDepart(vip);
+                        }
+                    }
+                }
             }
             else
             {
@@ -314,7 +353,8 @@ public class MissionManager : MonoBehaviour
                             {
                                 vip.currentNode = node;
                                 GameManager.instance.nodeScript.nodeVip = nextNodeID;
-                                Debug.LogFormat("[Vip] MissionManager.cs -> ProcessVipDepart: VIP \"{0}\" moved to {1}, {2}, nodeID {3}{4}", vip.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                Debug.LogFormat("[Vip] MissionManager.cs -> ProcessVipDepart: VIP \"{0}\" moved to {1}, {2}, nodeID {3}, timer {4}{5}", 
+                                    vip.tag, node.nodeName, node.Arc.name, node.nodeID, vip.timerTurns, "\n");
                             }
                             else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
                         }
@@ -325,7 +365,7 @@ public class MissionManager : MonoBehaviour
                 else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
             }
         }
-        else { Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" didn't move (rnd {1}, needed < {2}){3}", vip.tag, rnd, vip.moveChance, "\n"); }
+        else { Debug.LogFormat("[Vip] MissionManager.cs -> CheckVipActive: VIP \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", vip.tag, rnd, vip.moveChance, vip.timerTurns, "\n"); }
     }
 
     /// <summary>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// local class used to pass results of dijkstra algo to the calling method (InitialiseNodeData)
@@ -575,13 +576,13 @@ public class DijkstraManager : MonoBehaviour
         return distance;
     }
 
-    /// <summary>
+    /*/// <summary>  -> EDIT: Wasn't random as the same input always gave the same path. New version below.
     /// Finds a random node, 'x' distance links away from the source Node (may end up being less). Returns null if a problem
     /// listOfExclusion is a list of NodeID's that are excluded from search (optional)
     /// </summary>
     /// <param name="distance"></param>
     /// <returns></returns>
-    public Node GetRandomNodeAtDistance(Node sourceNode, int requiredDistance, List<int> listOfExclusion = null)
+    public Node GetRandomNodeAtDistanceArchived(Node sourceNode, int requiredDistance, List<int> listOfExclusion = null)
     {
         int nodeID = -1;
         int furthestDistance = 0;
@@ -596,53 +597,17 @@ public class DijkstraManager : MonoBehaviour
                 if (data.distanceArray != null)
                 {
                     int[] arrayOfDistances = data.distanceArray;
-
-                    /*//get exclusion list of nodes currently with a cure
-                    List<int> listOfExclusion = new List<int>();
-                    List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
-                    if (listOfCureNodes != null)
-                    {
-                        for (int index = 0; index < listOfCureNodes.Count; index++)
-                        {
-                            if (listOfCureNodes[index] != null)
-                            { listOfExclusion.Add(listOfCureNodes[index].nodeID); }
-                            else { Debug.LogErrorFormat("Invalid node (Null) for listOfCureNodes[{0}]", index); }
-                        }
-                    }
-                    else { Debug.LogError("Invalid listOfCureNodes (Null)"); }*/
-
-
                     //get max distance possible from Resistance Player's current node
                     furthestDistance = arrayOfDistances.Max();
                     //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
                     actualDistance = Mathf.Min(furthestDistance, requiredDistance);
-                    //loop distance Array and find first node that is that distance, or greater, and one that doesn't currently have a cure location
+                    //loop distance Array and find first node that is that distance, or greater, and one that isn't on exclusion list
                     for (int index = 0; index < arrayOfDistances.Length; index++)
                     {
                         if (arrayOfDistances[index] == actualDistance)
                         {
-                            /*//valid exclusion list
-                            if (listOfExclusion != null)
-                            {
-                                //not on exclusion list
-                                if (listOfExclusion.Exists(x => x == index) == false)
-                                {
-                                    Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for exclusion nodeID {0}, distance {1}{2}", index, actualDistance, "\n");
-                                    nodeID = index;
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                //No exclusion list
-                                Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for nodeID {0}, distance {1}{2}", index, actualDistance, "\n");
-                                nodeID = index;
-                                break;
-                            }*/
-
                             nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
                             if (nodeID > -1) { break; }
-
                         }
                     }
                     //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
@@ -660,15 +625,6 @@ public class DijkstraManager : MonoBehaviour
                                 {
                                     if (arrayOfDistances[index] == tempDistance)
                                     {
-                                        /*//not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == index) == false)
-                                        {
-                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNodeRandom: SCALE UP for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, tempDistance, "\n");
-                                            nodeID = index;
-                                            break;
-                                        }*/
-
                                         nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
                                     }
                                 }
@@ -688,15 +644,6 @@ public class DijkstraManager : MonoBehaviour
                                 {
                                     if (arrayOfDistances[index] == tempDistance)
                                     {
-                                        /*//not on exclusion list
-                                        if (listOfExclusion.Exists(x => x == index) == false)
-                                        {
-                                            Debug.LogFormat("[Tst] NodeManager.cs -> GetCureNode: SCALE DOWN for {0} cure, nodeID {1}, distance {2} (actual {3}){4}",
-                                                cure.cureName, index, cure.distance, tempDistance, "\n");
-                                            nodeID = index;
-                                            break;
-                                        }*/
-
                                         nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
                                     }
                                 }
@@ -718,6 +665,99 @@ public class DijkstraManager : MonoBehaviour
             if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
         return node;
+    }*/
+
+
+    /// <summary>
+    /// new version that gets a true random node selected from all nodes that meet the distance criteria
+    /// </summary>
+    /// <param name="sourceNode"></param>
+    /// <param name="requiredDistance"></param>
+    /// <param name="listOfExclusion"></param>
+    /// <returns></returns>
+    public Node GetRandomNodeAtDistance(Node sourceNode, int requiredDistance, List<int> listOfExclusion = null)
+    {
+        int nodeID = -1;
+        int index;
+        int furthestDistance = 0;
+        int actualDistance = 0;
+        Node node = null;
+        List<int> selectionList = new List<int>();
+        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
+        if (sourceNode != null)
+        {
+            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);
+            if (data != null)
+            {
+                if (data.distanceArray != null)
+                {
+                    int[] arrayOfDistances = data.distanceArray;
+                    //get max distance possible from Resistance Player's current node
+                    furthestDistance = arrayOfDistances.Max();
+                    //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
+                    actualDistance = Mathf.Min(furthestDistance, requiredDistance);
+                    //loop distance Array and find first node that is that distance, or greater, and one that isn't on exclusion list
+                    for (index = 0; index < arrayOfDistances.Length; index++)
+                    {
+                        if (arrayOfDistances[index] == actualDistance)
+                        {
+                            nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
+                            if (nodeID > -1) { selectionList.Add(nodeID); }
+                        }
+                    }
+                    //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
+                    if (selectionList.Count == 0)
+                    {
+                        int tempDistance = actualDistance;
+                        if (actualDistance < furthestDistance)
+                        {
+                            //gradually increase distance until you find a suitable node
+                            do
+                            {
+                                tempDistance++;
+                                //search on new distance criteria
+                                for (index = 0; index < arrayOfDistances.Length; index++)
+                                {
+                                    if (arrayOfDistances[index] == tempDistance)
+                                    { nodeID = CheckForMatch(index, actualDistance, listOfExclusion); }
+                                }
+                                if (nodeID > -1) { selectionList.Add(nodeID); }
+                            }
+                            while (tempDistance < furthestDistance);
+                        }
+                        //if unsuccessful (or already maxxed out on distance) decrease distance until a suitable node is found
+                        if (selectionList.Count == 0)
+                        {
+                            tempDistance = actualDistance;
+                            do
+                            {
+                                tempDistance--;
+                                //search on new distance criteria
+                                for (index = 0; index < arrayOfDistances.Length; index++)
+                                {
+                                    if (arrayOfDistances[index] == tempDistance)
+                                    { nodeID = CheckForMatch(index, actualDistance, listOfExclusion); }
+                                }
+                                if (nodeID > -1) { selectionList.Add(nodeID); }
+                            }
+                            while (tempDistance > 0);
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid distanceArray (Null)"); }
+            }
+            else { Debug.LogError("Invalid PathData (Null)"); }
+        }
+        else { Debug.LogError("Invalid sourceNode (Null)"); }
+        //return
+        if (selectionList.Count > 0)
+        {
+            nodeID = selectionList[Random.Range(0, selectionList.Count)];
+            node = GameManager.instance.dataScript.GetNode(nodeID);
+            if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        }
+        else { Debug.LogWarning("Invalid selectionList (Empty)"); }
+        return node;
     }
 
     /// <summary>
@@ -735,14 +775,14 @@ public class DijkstraManager : MonoBehaviour
             //not on exclusion list
             if (listOfExclusion.Exists(x => x == index) == false)
             {
-                Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for exclusion nodeID {0}, distance {1}{2}", index, actualDistance, "\n");
+                /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for exclusion nodeID {0}, distance {1}{2}", index, actualDistance, "\n");*/
                 nodeID = index;
             }
         }
         else
         {
             //No exclusion list
-            Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for nodeID {0}, distance {1}{2}", index, actualDistance, "\n");
+            /*Debug.LogFormat("[Tst] DijkstraManager.cs -> GetRandomNodeAtDistance: Straight Match for nodeID {0}, distance {1}{2}", index, actualDistance, "\n");*/
             nodeID = index;
         }
         return nodeID;
