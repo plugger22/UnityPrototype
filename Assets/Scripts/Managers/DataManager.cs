@@ -157,7 +157,7 @@ public class DataManager : MonoBehaviour
     //Tracker data
     private List<HistoryRebelMove> listOfHistoryRebelMove = new List<HistoryRebelMove>();
     private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
-    private List<HistoryVipMove> listOfHistoryVipMove = new List<HistoryVipMove>();
+    private List<HistoryNpcMove> listOfHistoryNpcMove = new List<HistoryNpcMove>();
     private List<string> listOfHistoryAutoRun = new List<string>();
 
     //Topics
@@ -456,7 +456,7 @@ public class DataManager : MonoBehaviour
         //history lists
         listOfHistoryRebelMove.Clear();
         listOfHistoryNemesisMove.Clear();
-        listOfHistoryVipMove.Clear();
+        listOfHistoryNpcMove.Clear();
         listOfHistoryAutoRun.Clear();
         //nodes
         dictOfNodeObjects.Clear();
@@ -7063,8 +7063,8 @@ public class DataManager : MonoBehaviour
     public List<HistoryNemesisMove> GetListOfHistoryNemesisMove()
     { return listOfHistoryNemesisMove; }
 
-    public List<HistoryVipMove> GetListOfHistoryVipMove()
-    { return listOfHistoryVipMove; }
+    public List<HistoryNpcMove> GetListOfHistoryVipMove()
+    { return listOfHistoryNpcMove; }
 
     /// <summary>
     /// Resistance AI or Player moves
@@ -7109,12 +7109,12 @@ public class DataManager : MonoBehaviour
     /// Clear list and then copy across loaded save game data
     /// </summary>
     /// <param name="listOfHistory"></param>
-    public void SetListOfHistoryVipMove(List<HistoryVipMove> listOfHistory)
+    public void SetListOfHistoryNpcMove(List<HistoryNpcMove> listOfHistory)
     {
         if (listOfHistory != null)
         {
-            listOfHistoryVipMove.Clear();
-            listOfHistoryVipMove.AddRange(listOfHistory);
+            listOfHistoryNpcMove.Clear();
+            listOfHistoryNpcMove.AddRange(listOfHistory);
         }
         else { Debug.LogError("Invalid listOfHistory (Null)"); }
     }
@@ -7135,11 +7135,11 @@ public class DataManager : MonoBehaviour
     /// VIP moves
     /// </summary>
     /// <param name="data"></param>
-    public void AddHistoryVipMove(HistoryVipMove data)
+    public void AddHistoryNpcMove(HistoryNpcMove data)
     {
         if (data != null)
-        { listOfHistoryVipMove.Add(data); }
-        else { Debug.LogError("Invalid V.I.P Tracker data (Null)"); }
+        { listOfHistoryNpcMove.Add(data); }
+        else { Debug.LogError("Invalid Npc Tracker data (Null)"); }
     }
 
     /// <summary>
@@ -7211,33 +7211,32 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// debug display of V.I.P moves
+    /// debug display of Npc moves
     /// </summary>
     /// <returns></returns>
-    public string DebugShowVipMoves()
+    public string DebugShowNpcMoves()
     {
         StringBuilder builder = new StringBuilder();
-        Vip vip = GameManager.instance.campaignScript.scenario.missionResistance.vip;
-        if (vip != null)
+        Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
+        if (npc != null)
         {
-            builder.AppendFormat("-V.I.P Move History (start  nodeID {0}){1}{2}", vip.currentStartNode.nodeID, "\n", "\n");
-            int count = listOfHistoryVipMove.Count;
+            builder.AppendFormat("-Npc Move History (start  nodeID {0}){1}{2}", npc.currentStartNode.nodeID, "\n", "\n");
+            int count = listOfHistoryNpcMove.Count;
             if (count > 0)
             {
                 for (int index = 0; index < count; index++)
                 {
-                    HistoryVipMove history = listOfHistoryVipMove[index];
+                    HistoryNpcMove history = listOfHistoryNpcMove[index];
                     if (history != null)
                     {
-                        builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}, known {4}{5}", history.turn, history.currentNodeID, history.endNodeID, history.timer, 
-                            history.isKnown, "\n");
+                        builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}{4}", history.turn, history.currentNodeID, history.endNodeID, history.timer, "\n");
                     }
-                    else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryVipMoves[{0}]", index); }
+                    else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNpcMoves[{0}]", index); }
                 }
             }
             else { builder.Append(" No records present"); }
         }
-        else { builder.Append(" No Vip present"); }
+        else { builder.Append(" No Npc present"); }
         return builder.ToString();
     }
 

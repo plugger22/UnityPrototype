@@ -114,7 +114,7 @@ public class SaveDataData
     //History
     public List<HistoryRebelMove> listOfHistoryRebel = new List<HistoryRebelMove>();
     public List<HistoryNemesisMove> listOfHistoryNemesis = new List<HistoryNemesisMove>();
-    public List<HistoryVipMove> listOfHistoryVip = new List<HistoryVipMove>();
+    public List<HistoryNpcMove> listOfHistoryVip = new List<HistoryNpcMove>();
     //Messages
     public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();

@@ -345,31 +345,30 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
         //V.I.P
-        if (mission.vip != null)
+        if (mission.npc != null)
         {
             builder.AppendFormat("{0}{1}-V.I.P{2}", "\n", "\n", "\n");
-            builder.AppendFormat(" VIP Name: {0}{1}", mission.vip.tag, "\n");
-            builder.AppendFormat(" startTurn: {0}{1}", mission.vip.startTurn, "\n");
-            builder.AppendFormat(" startChance: {0}{1}", mission.vip.startChance, "\n");
-            builder.AppendFormat(" stealthRating: {0}{1}", mission.vip.stealthRating, "\n");
-            builder.AppendFormat(" Start VipNode: {0}{1}", mission.vip.nodeStart.name, "\n");
-            Node node = mission.vip.currentStartNode;
+            builder.AppendFormat(" VIP Name: {0}{1}", mission.npc.tag, "\n");
+            builder.AppendFormat(" startTurn: {0}{1}", mission.npc.startTurn, "\n");
+            builder.AppendFormat(" startChance: {0}{1}", mission.npc.startChance, "\n");
+            builder.AppendFormat(" stealthRating: {0}{1}", mission.npc.stealthRating, "\n");
+            builder.AppendFormat(" Start VipNode: {0}{1}", mission.npc.nodeStart.name, "\n");
+            Node node = mission.npc.currentStartNode;
             if (node != null)
             { builder.AppendFormat(" currentStartNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { builder.AppendFormat(" currentStartNode: Invalid{0}", "\n"); }
-            builder.AppendFormat(" End VipNode: {0}{1}", mission.vip.nodeEnd.name, "\n");
-            node = mission.vip.currentEndNode;
+            builder.AppendFormat(" End VipNode: {0}{1}", mission.npc.nodeEnd.name, "\n");
+            node = mission.npc.currentEndNode;
             if (node != null)
             { builder.AppendFormat(" currentEndNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { builder.AppendFormat(" currentEndNode: Invalid{0}", "\n"); }
-            builder.AppendFormat(" Status: {0}{1}", mission.vip.status, "\n");
-            if (mission.vip.status == VipStatus.Active)
+            builder.AppendFormat(" Status: {0}{1}", mission.npc.status, "\n");
+            if (mission.npc.status == NpcStatus.Active)
             {
-                builder.AppendFormat(" currentNode: {0}, {1}, ID {2}{3}", mission.vip.currentNode.nodeName, mission.vip.currentNode.Arc.name, mission.vip.currentNode.nodeID, "\n");
-                builder.AppendFormat(" timerTurns: {0} (start {1}){2}", mission.vip.timerTurns, mission.vip.maxTurns, "\n");
-                builder.AppendFormat(" moveChance: {0}{1}", mission.vip.moveChance, "\n");
-                builder.AppendFormat(" isRepeat: {0}{1}", mission.vip.isRepeat, "\n");
-                builder.AppendFormat(" isKnown: {0}{1}", mission.vip.isKnown, "\n");
+                builder.AppendFormat(" currentNode: {0}, {1}, ID {2}{3}", mission.npc.currentNode.nodeName, mission.npc.currentNode.Arc.name, mission.npc.currentNode.nodeID, "\n");
+                builder.AppendFormat(" timerTurns: {0} (start {1}){2}", mission.npc.timerTurns, mission.npc.maxTurns, "\n");
+                builder.AppendFormat(" moveChance: {0}{1}", mission.npc.moveChance, "\n");
+                builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
             }
         }
             return builder.ToString();

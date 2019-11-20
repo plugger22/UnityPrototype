@@ -66,7 +66,7 @@ public class NodeManager : MonoBehaviour
     [HideInInspector] public int nodeHighlight = -1;                //nodeID of currently highlighted node, if any, otherwise -1
     [HideInInspector] public int nodePlayer = -1;                   //nodeID of human Resistance/Authority player
     [HideInInspector] public int nodeNemesis = -1;                  //nodeID of nemesis
-    [HideInInspector] public int nodeVip = -1;                      //nodeID of VIP
+    [HideInInspector] public int nodeNpc = -1;                      //nodeID of Npc
     [HideInInspector] public int nodeCaptured = -1;                 //nodeID where player has been captured, -1 if not
     #endregion
 

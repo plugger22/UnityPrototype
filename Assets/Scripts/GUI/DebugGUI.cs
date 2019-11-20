@@ -1638,7 +1638,7 @@ public class DebugGUI : MonoBehaviour
                     //V.I.P Tracker data
                     case 79:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugShowVipMoves();
+                        analysis = GameManager.instance.dataScript.DebugShowNpcMoves();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }

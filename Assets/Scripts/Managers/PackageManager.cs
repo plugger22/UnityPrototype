@@ -393,17 +393,15 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// Tracks V.I.P movement. One entry per turn, only while VIP has Active status (OnMap)
+    /// Tracks Npc movement. One entry per turn, only while VIP has Active status (OnMap)
     /// </summary>
     [System.Serializable]
-    public class HistoryVipMove
+    public class HistoryNpcMove
     {
         public int turn;
         public int currentNodeID;
         public int endNodeID;
         public int timer;
-        public bool isKnown;
-        public bool isFrozen;
     }
 
     /// <summary>

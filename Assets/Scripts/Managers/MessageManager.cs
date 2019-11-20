@@ -1896,36 +1896,36 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// One of Resistance actors network of contacts spots the V.I.P
+    /// One of Resistance actors network of contacts spots the Npc
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actor"></param>
     /// <param name="node"></param>
     /// <param name="contact"></param>
-    /// <param name="vip"></param>
+    /// <param name="npc"></param>
     /// <returns></returns>
-    public Message ContactVipSpotted(string text, Actor actor, Node node, Contact contact, Vip vip)
+    public Message ContactNpcSpotted(string text, Actor actor, Node node, Contact contact, Npc npc)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(contact != null, "Invalid contact (Null)");
-        Debug.Assert(vip != null, "Invalid V.I.P (Null)");
+        Debug.Assert(npc != null, "Invalid Npc (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
             message.text = text;
             message.type = MessageType.CONTACT;
-            message.subType = MessageSubType.Contact_VIP_Spotted;
+            message.subType = MessageSubType.Contact_Npc_Spotted;
             message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
             message.data1 = node.nodeID;
             message.data2 = contact.contactID;
-            message.dataName = vip.tag;
+            message.dataName = npc.tag;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("One of {0}'s network of contacts spots the {1}", actor.arc.name, vip.tag);
+            data.itemText = string.Format("One of {0}'s network of contacts spots the {1}", actor.arc.name, npc.tag);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactVipSpottedDetails(actor, node, contact, vip);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactNpcSpottedDetails(actor, node, contact, npc);
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
@@ -1937,8 +1937,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "contact_11";
             data.tag1 = "contact_1";
-            data.tag2 = "vip_0";
-            data.tag3 = "vip_1";
+            data.tag2 = "npc_0";
+            data.tag3 = "npc_1";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

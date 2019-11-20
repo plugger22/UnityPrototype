@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// starting or finishing node type for a VIP movement path between two points on map
+/// starting or finishing node type for a Npc movement path between two points on map
 /// </summary>
-[CreateAssetMenu(menuName = "Game / VIP / VipNode")]
-public class VipNode : ScriptableObject
+[CreateAssetMenu(menuName = "Game / Npc / NpcNode")]
+public class NpcNode : ScriptableObject
 {
 
     [Tooltip("dev descriptor only")]

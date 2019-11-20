@@ -38,9 +38,9 @@ public class LoadManager : MonoBehaviour
     public Challenge[] arrayOfChallenges;
     public Nemesis[] arrayOfNemesis;
     public RebelLeader[] arrayOfRebelLeaders;
-    public Vip[] arrayOfVips;
-    public VipNode[] arrayOfVipNodes;
-    public VipAction[] arrayOfVipActions;
+    public Npc[] arrayOfNpcs;
+    public NpcNode[] arrayOfNpcNodes;
+    public NpcAction[] arrayOfNpcActions;
     
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -633,26 +633,26 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfRebelLeaders has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No RebelLeaders present"); }
         //
-        // - - - V.I.P's (not stored in a collection)
+        // - - - Npc's (not stored in a collection)
         //
-        numArray = arrayOfVips.Length;
+        numArray = arrayOfNpcs.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVips has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No V.I.P's present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNpcs has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Npc's present"); }
         //
-        // - - - VipNodes (not stored in a collection)
+        // - - - NpcNodes (not stored in a collection)
         //
-        numArray = arrayOfVipNodes.Length;
+        numArray = arrayOfNpcNodes.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVipNodes has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No VipNodes present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNpcNodes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NpcNodes present"); }
         //
-        // - - - VipActions (not stored in a collection)
+        // - - - NpcActions (not stored in a collection)
         //
-        numArray = arrayOfVipActions.Length;
+        numArray = arrayOfNpcActions.Length;
         if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfVipActions has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No VipActions present"); }
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNpcActions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NpcActions present"); }
         //
         // - - - Mission (not stored in a collection)
         //

@@ -33,7 +33,7 @@ public class Contact
     [HideInInspector] public int statsRumours;     //number of target rumours learnt
     [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
     [HideInInspector] public int statsTeams;       //number of times spotted Erasure Teams
-    [HideInInspector] public int statsVip;         //number of times spotted V.I.P
+    [HideInInspector] public int statsNpc;         //number of times spotted Npc
     #endregion
 
 

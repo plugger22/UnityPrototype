@@ -765,20 +765,20 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// One of actor's network of contacts spots the V.I.P
+    /// One of actor's network of contacts spots the Npc
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="node"></param>
     /// <param name="contact"></param>
-    /// <param name="vip"></param>
+    /// <param name="npc"></param>
     /// <returns></returns>
-    public string GetContactVipSpottedDetails(Actor actor, Node node, Contact contact, Vip vip)
+    public string GetContactNpcSpottedDetails(Actor actor, Node node, Contact contact, Npc npc)
     {
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} the{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
-        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, vip.tag, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, npc.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         return builder.ToString();
     }

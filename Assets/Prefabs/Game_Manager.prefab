@@ -749,6 +749,7 @@ MonoBehaviour:
   nodeHighlight: -1
   nodePlayer: 0
   nodeNemesis: -1
+  nodeNpc: -1
   nodeCaptured: -1
   outcomeNodeSecurity: {fileID: 0}
   outcomeNodeStability: {fileID: 0}
@@ -1277,31 +1278,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83135a0a144c8484e9cd286353bb1239, type: 2}
   arrayOfRebelLeaders:
   - {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
-  arrayOfVips:
-  - {fileID: 11400000, guid: 97e02004a7e6eaa4d98396ccc988b984, type: 2}
-  - {fileID: 11400000, guid: c351c0b269caaeb4d895bbf54c3db561, type: 2}
-  - {fileID: 11400000, guid: 917c3b7a46582d246b849b44e3dc4fef, type: 2}
-  arrayOfVipNodes:
-  - {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
-  - {fileID: 11400000, guid: afd56495b2c340a4e94a02cbaa365cd4, type: 2}
-  - {fileID: 11400000, guid: 873cfa24007c69f4b841fab60c11b363, type: 2}
-  - {fileID: 11400000, guid: 8311960066c1c264f8a4c5b79fd9527b, type: 2}
-  - {fileID: 11400000, guid: 12ce0099dc70d0a4b814a2fffde6c931, type: 2}
-  - {fileID: 11400000, guid: 1655aa78d16958b4eb252c847e966f45, type: 2}
-  - {fileID: 11400000, guid: 6b55e84e6e4a08644a9edbb5f6792ab0, type: 2}
-  - {fileID: 11400000, guid: 7fb85bd82da7a784e9e344a03c812f2a, type: 2}
-  - {fileID: 11400000, guid: 1fb540fadb80b5c4889cc4cf361fd1e9, type: 2}
-  - {fileID: 11400000, guid: b0aa64eea8ff3d142bcf8156ebab6e2e, type: 2}
-  - {fileID: 11400000, guid: a81788faa62b8004482af6cc045363f6, type: 2}
-  - {fileID: 11400000, guid: ec36da24f81accf418bffc5422f23a32, type: 2}
-  - {fileID: 11400000, guid: 03ba7f3deb8501d43ad40db2901212bc, type: 2}
-  - {fileID: 11400000, guid: 5a30fc6798be55e499d5542a3e731b29, type: 2}
-  arrayOfVipActions:
-  - {fileID: 11400000, guid: 732fde5dbd4cac842a48f252411ffc3a, type: 2}
-  - {fileID: 11400000, guid: f8b45eea7a6bee94981349a446981c51, type: 2}
-  - {fileID: 11400000, guid: 55416cecd11ded544af1ddec6eb20cfc, type: 2}
-  - {fileID: 11400000, guid: 9d169c87b9ec13540b5821a1a77c38f5, type: 2}
-  - {fileID: 11400000, guid: 454e955ad4493dd40a53dd9e4483f846, type: 2}
+  arrayOfNpcs: []
+  arrayOfNpcNodes: []
+  arrayOfNpcActions: []
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -3834,6 +3813,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c71d9a6edb582c4a8483af3b5ec5a38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomClose: 2
+  randomMedium: 4
+  randomLong: 6
   mission: {fileID: 11400000, guid: 8f15fcb51f62d404c96802aaf629bc6a, type: 2}
 --- !u!114 &114414509910123350
 MonoBehaviour:

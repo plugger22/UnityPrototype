@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// SO for V.I.P's who move around the map (abstracted) and with whom the player can interact with
+/// SO for Non Player Characters who move around the map (abstracted) and with whom the player can interact with
 /// </summary>
-[CreateAssetMenu(menuName = "Game / VIP / V.I.P")]
-public class Vip : ScriptableObject
+[CreateAssetMenu(menuName = "Game / Npc / Npc")]
+public class Npc : ScriptableObject
 {
     [Header("Texts")]
     public string tag;
@@ -19,42 +19,39 @@ public class Vip : ScriptableObject
     public Sprite sprite;
 
     [Header("Stealth")]
-    [Tooltip("A resistance contact in the same node will detect presence of VIP if it's effectiveness is >= VIP's stealth rating")]
+    [Tooltip("A resistance contact in the same node will detect presence of Npc if it's effectiveness is >= Npc's stealth rating")]
     [Range(0, 3)] public int stealthRating = 1;
 
     [Header("Entry")]
-    [Tooltip("Earliest possible turn that rolls will being to see if VIP enters map")]
+    [Tooltip("Earliest possible turn that rolls will being to see if Npc enters map")]
     [Range(0, 20)] public int startTurn;
-    [Tooltip("Percentage chance made each turn (from startTurn) to determine if VIP enters map (true if roll less than %)")]
+    [Tooltip("Percentage chance made each turn (from startTurn) to determine if Npc enters map (true if roll less than %)")]
     [Range(0, 100)] public int startChance;
 
     [Header("Pathing")]
     [Tooltip("Start node")]
-    public VipNode nodeStart;
+    public NpcNode nodeStart;
     [Tooltip("Finish node (move from start node to here")]
-    public VipNode nodeEnd;
+    public NpcNode nodeEnd;
 
     [Header("Move Profile")]
-    [Tooltip("Percentage chance that, in any given turn, the VIP will move to the next node in it's path")]
+    [Tooltip("Percentage chance that, in any given turn, the Npc will move to the next node in it's path")]
     [Range(1, 100)] public int moveChance;
-    [Tooltip("Max number of turns VIP will be on map (when expired it will finish it's current path and then leave (no more repeats)")]
+    [Tooltip("Max number of turns Npc will be on map (when expired it will finish it's current path and then leave (no more repeats)")]
     [Range(1, 50)] public int maxTurns;
-    [Tooltip("Will VIP generate a new path (based on start/finish nodes) on completion?")]
+    [Tooltip("Will Npc generate a new path (based on start/finish nodes) on completion?")]
     public bool isRepeat;
 
     [Header("Action")]
-    [Tooltip("Action taken once player in same node as VIP and has found them")]
-    public VipAction action;
+    [Tooltip("Action taken once player in same node as Npc and has found them")]
+    public NpcAction action;
 
 
-    [HideInInspector] public VipStatus status;              //current status
-    [HideInInspector] public bool isKnown;                  //true if VIP has been found by Player
-
+    [HideInInspector] public NpcStatus status;              //current status
     [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
-
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
-    [HideInInspector] public Node currentNode;              //where VIP is now
+    [HideInInspector] public Node currentNode;              //where Npc is now
 
 
     public void OnEnable()

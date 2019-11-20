@@ -128,7 +128,7 @@
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
-    public enum VipStatus { Standby, Active, Departed }
+    public enum NpcStatus { Standby, Active, Departed }
      
     //
     // - - - Secrets - - -
@@ -200,7 +200,7 @@
     //
     // - - - Messages - - -
     //
-    public enum MsgPipelineType { None, VIP, CompromisedGear, Nemesis, CapturePlayer, ReleasePlayer, WinLose, DebugTopic }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
+    public enum MsgPipelineType { None, Npc, CompromisedGear, Nemesis, CapturePlayer, ReleasePlayer, WinLose, DebugTopic }            //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order)
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
     public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION }
     public enum MessageSubType
@@ -271,7 +271,7 @@
         Contact_Target_Rumour,
         Contact_Nemesis_Spotted,
         Contact_Team_Spotted,
-        Contact_VIP_Spotted,
+        Contact_Npc_Spotted,
         Contact_Inactive,
         Contact_Active,
         Tracer_Nemesis_Spotted,

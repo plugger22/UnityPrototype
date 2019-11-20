@@ -756,31 +756,31 @@ public class HelpManager : MonoBehaviour
         data.tag = "nemesis_0";
         data.header = "Stealth Rating";
         builder = new StringBuilder();
-        builder.AppendFormat("Nemesis (and V.I.P) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("The rating changes depending on their mode{0}  * {1}Hunt{2} mode {3}-1{4} Stealth{5}  * {6}Ambush{7} mode {8}INVISIBLE{9}",
             "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
 
-        #region VIP
+        #region Npc
         //
-        // - - - VIP
+        // - - - Npc
         //
         //Stealth
         data = new HelpData();
-        data.tag = "vip_0";
+        data.tag = "npc_0";
         data.header = "Stealth";
         builder = new StringBuilder();
-        builder.AppendFormat("V.I.P's (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Non Player Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Movement
         data = new HelpData();
-        data.tag = "vip_1";
+        data.tag = "npc_1";
         data.header = "Movement";
         builder = new StringBuilder();
-        builder.AppendFormat("V.I.P's can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
+        builder.AppendFormat("Non Player Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion

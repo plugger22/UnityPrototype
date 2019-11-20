@@ -53,9 +53,9 @@ public class Mission : ScriptableObject
     [Tooltip("Targets that are connected to Objectives. Maximum ONE target per ONE objective")]
     public List<ObjectiveTarget> listOfObjectiveTargets;
 
-    [Header("VIP")]
-    [Tooltip("VIP (max one) who has a walk on role for this mission. Can be ignored")]
-    public Vip vip;
+    [Header("Npc")]
+    [Tooltip("Npc (max one) who has a walk on role for this mission. Can be ignored")]
+    public Npc npc;
 
 
     public void OnEnable()
