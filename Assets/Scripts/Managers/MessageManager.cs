@@ -1896,6 +1896,58 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// One of Resistance actors network of contacts spots the V.I.P
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="vip"></param>
+    /// <returns></returns>
+    public Message ContactVipSpotted(string text, Actor actor, Node node, Contact contact, Vip vip)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(contact != null, "Invalid contact (Null)");
+        Debug.Assert(vip != null, "Invalid V.I.P (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Contact_VIP_Spotted;
+            message.sideLevel = globalResistance.level;
+            message.data0 = actor.actorID;
+            message.data1 = node.nodeID;
+            message.data2 = contact.contactID;
+            message.dataName = vip.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("One of {0}'s network of contacts spots the {1}", actor.arc.name, vip.tag);
+            data.topText = string.Format("{0} gets a CALL", actor.actorName);
+            data.bottomText = GameManager.instance.itemDataScript.GetContactVipSpottedDetails(actor, node, contact, vip);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = node.nodeID;
+            data.help = 1;
+            data.tag0 = "contact_11";
+            data.tag1 = "contact_1";
+            data.tag2 = "vip_0";
+            data.tag3 = "vip_1";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// One of Resistance Actor's network of contacts spots an Authority Team (Erasure)
     /// </summary>
     /// <param name="text"></param>

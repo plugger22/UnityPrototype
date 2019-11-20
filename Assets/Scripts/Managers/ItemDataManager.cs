@@ -765,6 +765,25 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// One of actor's network of contacts spots the V.I.P
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="node"></param>
+    /// <param name="contact"></param>
+    /// <param name="vip"></param>
+    /// <returns></returns>
+    public string GetContactVipSpottedDetails(Actor actor, Node node, Contact contact, Vip vip)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} the{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, vip.tag, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// subMethod to determine a time of day (in 24HR notation) of a contact sighting where moveNumber '0' is a.m and '1' is p.m (to aid player in parsing multiple sightings in a single day)
     /// </summary>
     /// <param name="moveNumber"></param>

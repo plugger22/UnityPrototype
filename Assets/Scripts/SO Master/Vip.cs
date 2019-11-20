@@ -15,6 +15,9 @@ public class Vip : ScriptableObject
     public string descriptor;
     [TextArea] public string devNotes;
 
+    [Header("Sprite")]
+    public Sprite sprite;
+
     [Header("Stealth")]
     [Tooltip("A resistance contact in the same node will detect presence of VIP if it's effectiveness is >= VIP's stealth rating")]
     [Range(0, 3)] public int stealthRating = 1;
@@ -46,7 +49,6 @@ public class Vip : ScriptableObject
 
     [HideInInspector] public VipStatus status;              //current status
     [HideInInspector] public bool isKnown;                  //true if VIP has been found by Player
-    [HideInInspector] public bool isFrozen;                 //once VIP has been found by player they become frozen in place for a set time to allow player to interact with them
 
     [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
 
@@ -59,6 +61,7 @@ public class Vip : ScriptableObject
     {
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
         Debug.AssertFormat(nodeStart != null, "Invalid nodeStart (Null) for {0}", name);
         Debug.AssertFormat(nodeEnd != null, "Invalid nodeEnd (Null) for {0}", name);
         Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);

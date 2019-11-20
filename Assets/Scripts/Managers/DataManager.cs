@@ -7229,8 +7229,8 @@ public class DataManager : MonoBehaviour
                     HistoryVipMove history = listOfHistoryVipMove[index];
                     if (history != null)
                     {
-                        builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}, known {4}, frzn {5}{6}", history.turn, history.currentNodeID, history.endNodeID, history.timer, 
-                            history.isKnown, history.isFrozen, "\n");
+                        builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}, known {4}{5}", history.turn, history.currentNodeID, history.endNodeID, history.timer, 
+                            history.isKnown, "\n");
                     }
                     else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryVipMoves[{0}]", index); }
                 }

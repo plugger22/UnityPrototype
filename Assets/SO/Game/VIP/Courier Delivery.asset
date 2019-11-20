@@ -14,7 +14,8 @@ MonoBehaviour:
   tag: Courier
   descriptor: Has a package for you
   devNotes: Courier has a package to deliver to the player
-  stealthRating: 0
+  sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
+  stealthRating: 1
   startTurn: 0
   startChance: 50
   nodeStart: {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
@@ -25,7 +26,6 @@ MonoBehaviour:
   action: {fileID: 11400000, guid: f8b45eea7a6bee94981349a446981c51, type: 2}
   status: 1
   isKnown: 0
-  isFrozen: 0
   timerTurns: 2
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}

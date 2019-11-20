@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c065faad5ab8a64f9cda2d02e998465, type: 3}
   m_Name: Take Package
   m_EditorClassIdentifier: 
-  tag: Take Package
-  tooltip: Take Package from the Courier (uses an Action)
+  tag: takes the package from
+  outcome: blends into the crowd

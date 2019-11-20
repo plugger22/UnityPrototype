@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c065faad5ab8a64f9cda2d02e998465, type: 3}
   m_Name: Give Package
   m_EditorClassIdentifier: 
-  tag: Give Package
-  tooltip: Give Package to the V.I.P (uses an action)
+  tag: gives the package to
+  outcome: nods and departs

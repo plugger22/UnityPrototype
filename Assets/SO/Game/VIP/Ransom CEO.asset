@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e53b07ccb32ac2438596a112016110d, type: 3}
-  m_Name: Corporation Boss
+  m_Name: Ransom CEO
   m_EditorClassIdentifier: 
-  tag: Corporation CEO
+  tag: Chief Executive
   descriptor: High Value ransom target
   devNotes: Capture with a view to ransom
+  sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
   stealthRating: 1
   startTurn: 0
   startChance: 40
@@ -23,10 +24,9 @@ MonoBehaviour:
   maxTurns: 20
   isRepeat: 1
   action: {fileID: 11400000, guid: 732fde5dbd4cac842a48f252411ffc3a, type: 2}
-  status: 0
-  isKnown: 0
-  isFrozen: 0
-  timerTurns: 0
+  status: 1
+  isKnown: 1
+  timerTurns: 2
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
   currentNode: {fileID: 0}

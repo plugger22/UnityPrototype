@@ -680,7 +680,8 @@ public class ContactManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid target (Null) for listOfActiveTargets[{0}]", i); }
                 }
                 numOfTargets = listOfRumourTargets.Count;
-                Debug.LogFormat("[Cnt] ContactManager.cs -> CheckTargetRumours: {0} rumours triggered for Active Targets this turn", numOfTargets);
+                if (numOfTargets > 0)
+                { Debug.LogFormat("[Cnt] ContactManager.cs -> CheckTargetRumours: {0} rumours triggered for Active Targets this turn", numOfTargets); }
                 //have any rumours been triggered?
                 if (numOfTargets > 0)
                 {

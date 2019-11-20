@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c065faad5ab8a64f9cda2d02e998465, type: 3}
   m_Name: Capture
   m_EditorClassIdentifier: 
-  tag: Capture V.I.P
-  tooltip: Capture the V.I.P (uses an Action)
+  tag: sedates and captures the
+  outcome: is whisked away to Rebel HQ

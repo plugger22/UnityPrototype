@@ -366,11 +366,10 @@ public class CampaignManager : MonoBehaviour
             if (mission.vip.status == VipStatus.Active)
             {
                 builder.AppendFormat(" currentNode: {0}, {1}, ID {2}{3}", mission.vip.currentNode.nodeName, mission.vip.currentNode.Arc.name, mission.vip.currentNode.nodeID, "\n");
-                builder.AppendFormat(" timerTurns: {0} (max {1}){2}", mission.vip.timerTurns, mission.vip.maxTurns, "\n");
+                builder.AppendFormat(" timerTurns: {0} (start {1}){2}", mission.vip.timerTurns, mission.vip.maxTurns, "\n");
                 builder.AppendFormat(" moveChance: {0}{1}", mission.vip.moveChance, "\n");
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.vip.isRepeat, "\n");
                 builder.AppendFormat(" isKnown: {0}{1}", mission.vip.isKnown, "\n");
-                builder.AppendFormat(" isFrozen: {0}{1}", mission.vip.isFrozen, "\n");
             }
         }
             return builder.ToString();

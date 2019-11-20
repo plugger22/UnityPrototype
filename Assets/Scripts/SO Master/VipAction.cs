@@ -8,8 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game / VIP / VipAction")]
 public class VipAction : ScriptableObject
 {
-    [Tooltip("Action menu (Right click) item name")]
+    [Tooltip("In format '[Player] ... takes action ... [VIP]', eg. 'takes package from'")]
     public string tag;
-    [Tooltip("Action menu (Right click) item tooltip")]
-    public string tooltip;
+    [Tooltip("What happens now in format '[the] [VIP] ...', eg. 'is no more'")]
+    public string outcome;
 }

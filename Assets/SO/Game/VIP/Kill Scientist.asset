@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e53b07ccb32ac2438596a112016110d, type: 3}
-  m_Name: Important Scientist
+  m_Name: Kill Scientist
   m_EditorClassIdentifier: 
   tag: Scientist
   descriptor: Possesses critical knowledge
   devNotes: Need to take out scientist to set back development program
+  sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
   stealthRating: 1
   startTurn: 5
   startChance: 15
@@ -23,7 +24,9 @@ MonoBehaviour:
   maxTurns: 20
   isRepeat: 1
   action: {fileID: 11400000, guid: 9d169c87b9ec13540b5821a1a77c38f5, type: 2}
-  isFound: 0
-  isFrozen: 0
+  status: 0
+  isKnown: 0
+  timerTurns: 0
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
+  currentNode: {fileID: 0}

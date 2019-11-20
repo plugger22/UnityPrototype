@@ -756,9 +756,31 @@ public class HelpManager : MonoBehaviour
         data.tag = "nemesis_0";
         data.header = "Stealth Rating";
         builder = new StringBuilder();
-        builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Nemesis (and V.I.P) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("The rating changes depending on their mode{0}  * {1}Hunt{2} mode {3}-1{4} Stealth{5}  * {6}Ambush{7} mode {8}INVISIBLE{9}",
             "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
+        #region VIP
+        //
+        // - - - VIP
+        //
+        //Stealth
+        data = new HelpData();
+        data.tag = "vip_0";
+        data.header = "Stealth";
+        builder = new StringBuilder();
+        builder.AppendFormat("V.I.P's (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Movement
+        data = new HelpData();
+        data.tag = "vip_1";
+        data.header = "Movement";
+        builder = new StringBuilder();
+        builder.AppendFormat("V.I.P's can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
@@ -862,6 +884,15 @@ public class HelpManager : MonoBehaviour
         data.header = "Back on the Grid";
         builder = new StringBuilder();
         builder.AppendFormat("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //V.I.P
+        data = new HelpData();
+        data.tag = "contact_11";
+        data.header = "Spotting V.I.P";
+        builder = new StringBuilder();
+        builder.AppendFormat("If a V.I.P is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= V.I.P's Stealth rating{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
