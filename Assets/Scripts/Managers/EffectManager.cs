@@ -1917,7 +1917,7 @@ public class EffectManager : MonoBehaviour
                                         cityLoyalty += effect.value;
                                         cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
                                         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                        effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                        effectReturn.topText = string.Format("{0}The City grows closer to the Authority{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd);
                                         break;
                                     case 0:
@@ -1951,7 +1951,7 @@ public class EffectManager : MonoBehaviour
                                         cityLoyalty += effect.value;
                                         cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
                                         GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-                                        effectReturn.topText = string.Format("{0}The City grows closer to Authority{1}", colourText, colourEnd);
+                                        effectReturn.topText = string.Format("{0}The City grows closer to the Authority{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd);
                                         break;
                                     default:

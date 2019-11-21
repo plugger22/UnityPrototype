@@ -48,9 +48,9 @@ public class Npc : ScriptableObject
 
     [Header("Effects")]
     [Tooltip("Good effects that happen upon interacting with Npc")]
-    List<Effect> listOfGoodEffects;
+    public List<Effect> listOfGoodEffects;
     [Tooltip("Bad effects that happen if you fail to interact with Npc before they depart")]
-    List<Effect> listOfBadEffects;
+    public List<Effect> listOfBadEffects;
 
 
     [HideInInspector] public NpcStatus status;              //current status

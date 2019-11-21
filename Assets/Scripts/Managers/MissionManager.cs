@@ -2,6 +2,7 @@
 using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -388,10 +389,30 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// handles all admin for Npc departing map (reached destination and no repeat or repeat but timer has run out)
+    /// handles all admin for Npc departing map (reached destination and no repeat or repeat but timer has run out). isInteract true if player has interacted with Npc prior to departure
     /// </summary>
-    private void ProcessNpcDepart(Npc npc)
+    private void ProcessNpcDepart(Npc npc, bool isInteract = false)
     {
+        //outcome message for InfoPipeline if Player hasn't interacted with Npc
+        if (isInteract == false)
+        {
+            //bad effects
+            string effectText = ProcessEffects(npc, false);
+            string textTopString = GameManager.instance.colourScript.GetFormattedString(string.Format("The {0} catches a shuttle out of the city", npc.tag), ColourType.moccasinText);
+            string textBottomString = effectText;
+            //pipeline msg
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            {
+                textTop = textTopString,
+                textBottom = textBottomString,
+                sprite = npc.sprite,
+                isAction = false,
+                side = GameManager.instance.globalScript.sideResistance,
+                type = MsgPipelineType.Npc
+            };
+            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+            { Debug.LogWarningFormat("Npc departs with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
+        }
         npc.status = NpcStatus.Departed;
         npc.currentNode = null;
         GameManager.instance.nodeScript.nodeNpc = -1;
@@ -408,11 +429,16 @@ public class MissionManager : MonoBehaviour
         //Player interacts with Npc
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
+            //good effects
+            string effectText = ProcessEffects(npc, true);
+            string textTopString = GameManager.instance.colourScript.GetFormattedString(string.Format("You {0} the {1}", npc.action.tag, npc.tag), ColourType.moccasinText);
+            string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}", npc.tag, npc.action.outcome,
+                GameManager.instance.colourScript.GetFormattedString(npc.currentNode.nodeName, ColourType.salmonText), "\n", "\n", effectText);
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
-                textTop = GameManager.instance.colourScript.GetFormattedString(string.Format("You {0} the {1}", npc.action.tag, npc.tag), ColourType.moccasinText),
-                textBottom = string.Format("The {0} {1} at{2}{3}", npc.tag, npc.action.outcome, "\n", GameManager.instance.colourScript.GetFormattedString(npc.currentNode.nodeName, ColourType.salmonText)),
+                textTop = textTopString,
+                textBottom = textBottomString,
                 sprite = npc.sprite,
                 isAction = false,
                 side = GameManager.instance.globalScript.sideResistance,
@@ -424,7 +450,7 @@ public class MissionManager : MonoBehaviour
             Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
                                 npc.currentNode.nodeID, "\n");
             //Npc departs map
-            ProcessNpcDepart(npc);
+            ProcessNpcDepart(npc, true);
             isSuccess = true;
         }
         return isSuccess;
@@ -437,13 +463,20 @@ public class MissionManager : MonoBehaviour
     /// <param name="npc"></param>
     private void AddTrackerRecord(Npc npc)
     {
+        int npcCurrentNodeID = -1;
+        int npcEndNodeID = -1;
+        //handles departing Npc
+        if (npc.currentNode != null) { npcCurrentNodeID = npc.currentNode.nodeID; }
+        if (npc.currentEndNode != null) { npcEndNodeID = npc.currentEndNode.nodeID; }
+        //create record
         HistoryNpcMove data = new HistoryNpcMove()
         {
             turn = GameManager.instance.turnScript.Turn,
-            currentNodeID = npc.currentNode.nodeID,
-            endNodeID = npc.currentEndNode.nodeID,
+            currentNodeID = npcCurrentNodeID,
+            endNodeID = npcEndNodeID,
             timer = npc.timerTurns,
         };
+        //add record
         GameManager.instance.dataScript.AddHistoryNpcMove(data);
     }
 
@@ -518,6 +551,44 @@ public class MissionManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Empty)"); }
         }
         /*else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }  Edit -> if no contacts at node this will trigger. No need for warning */
+    }
+
+
+    /// <summary>
+    /// process good effects, if any, on interaction (isGood true) and bad effects, if any, on depart (isGood false) provided there was no interaction
+    /// </summary>
+    /// <param name="isGood"></param>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    private string ProcessEffects(Npc npc, bool isGood)
+    {
+        StringBuilder builder = new StringBuilder();
+        List<Effect> listOfEffects = new List<Effect>();
+        if (isGood == true) { listOfEffects = npc.listOfGoodEffects; }
+        else { listOfEffects = npc.listOfBadEffects; }
+        //valid effects
+        if (listOfEffects != null && listOfEffects.Count > 0)
+        {
+            //data packages
+            EffectDataReturn effectReturn = new EffectDataReturn();
+            EffectDataInput effectInput = new EffectDataInput();
+            effectInput.originText = npc.tag;
+            Node node = npc.currentNode;
+            if (node != null)
+            {
+                //loop effects
+                foreach (Effect effect in listOfEffects)
+                {
+                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                    { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
+                    else { builder.Append(effectReturn.bottomText); }
+                }
+            }
+        }
+        else { Debug.LogWarningFormat("No valid effects present for Npc \"{0}\", isGood {1}", npc.tag, isGood); }
+        return builder.ToString();
     }
 
     //new methods above here
