@@ -10,12 +10,12 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour
 {
 
-    [Header("VIP Globals")]
-    [Tooltip("Desired node separation for RandomClose VipNode option")]
+    [Header("Npc Globals")]
+    [Tooltip("Desired node separation for RandomClose NpcNode option")]
     [Range(0, 10)] public int randomClose = 2;
-    [Tooltip("Desired node separation for RandomMedium VipNode option")]
+    [Tooltip("Desired node separation for RandomMedium NpcNode option")]
     [Range(0, 10)] public int randomMedium = 4;
-    [Tooltip("Desired node separation for RandomLong VipNode option")]
+    [Tooltip("Desired node separation for RandomLong NpcNode option")]
     [Range(0, 10)] public int randomLong = 6;
 
     [HideInInspector] public Mission mission;
@@ -412,7 +412,7 @@ public class MissionManager : MonoBehaviour
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
                 textTop = GameManager.instance.colourScript.GetFormattedString(string.Format("You {0} the {1}", npc.action.tag, npc.tag), ColourType.moccasinText),
-                textBottom = string.Format("The {0} {1}", npc.tag, npc.action.outcome),
+                textBottom = string.Format("The {0} {1} at{2}{3}", npc.tag, npc.action.outcome, "\n", GameManager.instance.colourScript.GetFormattedString(npc.currentNode.nodeName, ColourType.salmonText)),
                 sprite = npc.sprite,
                 isAction = false,
                 side = GameManager.instance.globalScript.sideResistance,

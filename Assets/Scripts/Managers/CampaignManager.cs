@@ -344,20 +344,20 @@ public class CampaignManager : MonoBehaviour
         /*foreach(ObjectiveTarget objectiveTarget in mission.listOfObjectiveTargets)
         { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
-        //V.I.P
+        //Npc
         if (mission.npc != null)
         {
-            builder.AppendFormat("{0}{1}-V.I.P{2}", "\n", "\n", "\n");
-            builder.AppendFormat(" VIP Name: {0}{1}", mission.npc.tag, "\n");
+            builder.AppendFormat("{0}{1}-Npc{2}", "\n", "\n", "\n");
+            builder.AppendFormat(" Npc Name: {0}{1}", mission.npc.tag, "\n");
             builder.AppendFormat(" startTurn: {0}{1}", mission.npc.startTurn, "\n");
             builder.AppendFormat(" startChance: {0}{1}", mission.npc.startChance, "\n");
             builder.AppendFormat(" stealthRating: {0}{1}", mission.npc.stealthRating, "\n");
-            builder.AppendFormat(" Start VipNode: {0}{1}", mission.npc.nodeStart.name, "\n");
+            builder.AppendFormat(" Start NpcNode: {0}{1}", mission.npc.nodeStart.name, "\n");
             Node node = mission.npc.currentStartNode;
             if (node != null)
             { builder.AppendFormat(" currentStartNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { builder.AppendFormat(" currentStartNode: Invalid{0}", "\n"); }
-            builder.AppendFormat(" End VipNode: {0}{1}", mission.npc.nodeEnd.name, "\n");
+            builder.AppendFormat(" End NpcNode: {0}{1}", mission.npc.nodeEnd.name, "\n");
             node = mission.npc.currentEndNode;
             if (node != null)
             { builder.AppendFormat(" currentEndNode: {0}, {1}, ID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }

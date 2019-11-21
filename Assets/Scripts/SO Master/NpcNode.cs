@@ -9,9 +9,6 @@ using UnityEngine;
 public class NpcNode : ScriptableObject
 {
 
-    [Tooltip("dev descriptor only")]
-    [TextArea] public string devDescriptor;
-
     [Tooltip("If a specific node Arc specify here, ignore otherwise")]
     public NodeArc nodeArc;
 

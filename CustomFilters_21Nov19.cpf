@@ -4899,7 +4899,7 @@
         "useAndOpForSearchList": false,
         "searchList": [
             {
-                "searchString": "[Vip]",
+                "searchString": "[Npc]",
                 "searchType": "ExactCaseInsensitive",
                 "removeSearchStringFromLog": false,
                 "logTypeList": [

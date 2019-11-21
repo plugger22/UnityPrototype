@@ -46,6 +46,12 @@ public class Npc : ScriptableObject
     [Tooltip("Action taken once player in same node as Npc and has found them")]
     public NpcAction action;
 
+    [Header("Effects")]
+    [Tooltip("Good effects that happen upon interacting with Npc")]
+    List<Effect> listOfGoodEffects;
+    [Tooltip("Bad effects that happen if you fail to interact with Npc before they depart")]
+    List<Effect> listOfBadEffects;
+
 
     [HideInInspector] public NpcStatus status;              //current status
     [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
@@ -64,3 +70,4 @@ public class Npc : ScriptableObject
         Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);
     }
 }
+
