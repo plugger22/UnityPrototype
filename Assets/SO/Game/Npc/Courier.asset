@@ -21,10 +21,14 @@ MonoBehaviour:
   nodeStart: {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
   nodeEnd: {fileID: 11400000, guid: fc1acc0b0e373da4f9159a4e05fa3c40, type: 2}
   moveChance: 60
-  maxTurns: 20
+  maxTurns: 5
   isRepeat: 1
   action: {fileID: 11400000, guid: 74ed4f168170eba4b937e73568f669d9, type: 2}
-  status: 0
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 25b7aebe59e7bd341b8af9eaf6d133e2, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: e5c985772cc3cf840b26fc312a04abb8, type: 2}
+  status: 2
   timerTurns: 0
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}

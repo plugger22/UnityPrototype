@@ -21,6 +21,17 @@ public class MissionManager : MonoBehaviour
 
     [HideInInspector] public Mission mission;
 
+    //colour palette
+    private string colourGood;
+    private string colourBad;
+    private string colourNeutral;
+    private string colourNormal;
+    private string colourDefault;
+    private string colourAlert;
+    private string colourGrey;
+    private string colourCancel;
+    private string colourEnd;
+
     /// <summary>
     /// Initialisation called from CampaignManager.cs -> Initialise
     /// NOTE: Initialises TargetManager.cs
@@ -30,10 +41,12 @@ public class MissionManager : MonoBehaviour
         switch (GameManager.instance.inputScript.GameState)
         {
             case GameState.NewInitialisation:
-            case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseAll();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -60,7 +73,14 @@ public class MissionManager : MonoBehaviour
         //Human Resistance Player
         if (GameManager.instance.campaignScript.campaign.side.level == 2)
         { InitialiseNpc(); }
+    }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
         //register listener
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MissionManager");
     }
     #endregion
@@ -79,6 +99,9 @@ public class MissionManager : MonoBehaviour
         //detect event type
         switch (eventType)
         {
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             case EventType.StartTurnLate:
                 if (mission.npc != null)
                 {
@@ -92,6 +115,24 @@ public class MissionManager : MonoBehaviour
                 break;
         }
     }
+
+    #region SetColours
+    /// <summary>
+    /// set colour palette for modal Outcome Window
+    /// </summary>
+    public void SetColours()
+    {
+        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
+    }
+    #endregion
 
 
     /// <summary>
@@ -288,11 +329,57 @@ public class MissionManager : MonoBehaviour
                         npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, npc.timerTurns, "\n");
                     //tracker
                     AddTrackerRecord(npc);
+                    //outcome msg (infoPipeline)
+                    string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
+                    string badEffects = GetEffects(npc.listOfBadEffects, colourBad);
+                    string textTopString = string.Format("A {0}{1}{2} has arrived in the city. They have {3}{4}{5}", colourCancel, npc.tag, colourEnd, colourCancel, npc.item, colourEnd);
+                    string textBottomString = string.Format("We want you to {0}{1}{2} from them{3}{4}If successful{5}{6}{7}{8}If you fail{9}{10}", colourNeutral, npc.action.want, colourEnd, "\n", "\n",
+                        "\n", goodEffects, "\n", "\n", "\n", badEffects);
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                    {
+                        textTop = textTopString,
+                        textBottom = textBottomString,
+                        sprite = npc.sprite,
+                        isAction = false,
+                        side = GameManager.instance.globalScript.sideResistance,
+                        type = MsgPipelineType.Npc
+                    };
+                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    { Debug.LogWarningFormat("Npc arrives InfoPipeline message FAILED to be added to dictOfPipeline"); }
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
             }
             else { Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" failed Activation roll (rnd {1}, needed < {2}){3}", npc.tag, rnd, npc.startChance, "\n"); }
         }
+    }
+
+    /// <summary>
+    /// subMethod to return a colour formatted string to explain what a listOfEffects would do. ColourEffect is to differentiate between good and bad effects
+    /// </summary>
+    /// <param name="listOfEffects"></param>
+    /// <param name="colourEffect"></param>
+    /// <returns></returns>
+    private string GetEffects(List<Effect> listOfEffects, string colourEffect)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfEffects != null)
+        {
+            if (listOfEffects.Count > 0)
+            {
+                foreach (Effect effect in listOfEffects)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd);
+                }
+            }
+            else { builder.AppendFormat("{0}No Effect{1}", colourGrey, colourEnd); }
+        }
+        else
+        {
+            Debug.LogWarning("Invalid listOfEffects (Null)");
+            builder.AppendFormat("{0}No Effect{1}", colourGrey, colourEnd);
+        }
+        return builder.ToString();
     }
 
     /// <summary>
@@ -398,7 +485,7 @@ public class MissionManager : MonoBehaviour
         {
             //bad effects
             string effectText = ProcessEffects(npc, false);
-            string textTopString = GameManager.instance.colourScript.GetFormattedString(string.Format("The {0} catches a shuttle out of the city", npc.tag), ColourType.moccasinText);
+            string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of the city", colourCancel, npc.tag, colourEnd);
             string textBottomString = effectText;
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -431,9 +518,8 @@ public class MissionManager : MonoBehaviour
         {
             //good effects
             string effectText = ProcessEffects(npc, true);
-            string textTopString = GameManager.instance.colourScript.GetFormattedString(string.Format("You {0} the {1}", npc.action.tag, npc.tag), ColourType.moccasinText);
-            string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}", npc.tag, npc.action.outcome,
-                GameManager.instance.colourScript.GetFormattedString(npc.currentNode.nodeName, ColourType.salmonText), "\n", "\n", effectText);
+            string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourCancel, npc.action.tag, colourEnd, colourCancel, npc.tag, colourEnd);
+            string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}{6}{7}", npc.tag, npc.action.outcome, colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n", effectText);
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {

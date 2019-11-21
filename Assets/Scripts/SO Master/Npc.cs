@@ -13,7 +13,8 @@ public class Npc : ScriptableObject
     public string tag;
     [Tooltip("Ingame descriptor, keep short")]
     public string descriptor;
-    [TextArea] public string devNotes;
+    [Tooltip("Item in the format '[they have]...', keep short")]
+    public string item;
 
     [Header("Sprite")]
     public Sprite sprite;

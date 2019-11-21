@@ -10,6 +10,8 @@ public class NpcAction : ScriptableObject
 {
     [Tooltip("In format '[You] ... takes action ... [the][Npc]', eg. 'take the package from'")]
     public string tag;
+    [Tooltip("In format '[We want you to]...")]
+    public string want;
     [Tooltip("What happens now in format '[the] [Npc] ...', eg. 'is no more'")]
     public string outcome;
 }
