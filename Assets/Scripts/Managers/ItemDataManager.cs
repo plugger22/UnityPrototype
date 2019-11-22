@@ -2171,7 +2171,36 @@ public class ItemDataManager : MonoBehaviour
         if (string.IsNullOrEmpty(npc.nodeEnd.visiting) == false)
         { builder.AppendFormat("<b>We expect them to visit {0}{1}{2}</b>{3}{4}", colourNeutral, npc.nodeEnd.visiting, colourEnd, "\n", "\n"); }
         else { builder.AppendFormat("{0}<b>It's not clear where they will visit</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
-        builder.AppendFormat("<b>{0}</b>", GameManager.instance.missionScript.GetFormattedNpcEffects(npc));
+        builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsAll(npc));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Npc departs city without the Player interacting with them (timed out)
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetNpcDepartDetails(Npc npc)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>After {0}{1}{2} days, the {3}{4}{5} has caught a shuttle out of the city from {6}{7}{8}</b>{9}{10}", colourNeutral, npc.daysActive, colourEnd, colourAlert, npc.tag, colourEnd,
+            colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>You failed to {0}</b>{1}", npc.action.activity, "\n");
+        builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsGood(npc));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Npc interacts with Player then departs
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetNpcInteractDetails(Npc npc)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>After {0}{1}{2} days, you found the {3}{4}{5} at {6}</b>{7}{8}", colourNeutral, npc.daysActive, colourEnd, colourAlert, npc.tag, colourEnd, npc.currentNode.nodeID, "\n", "\n");
+        builder.AppendFormat("<b>You managed to {0}{1}{2}</b>{3}{4}", colourAlert, npc.action.activity, colourEnd, "\n", "\n");
+        builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsGood(npc));
         return builder.ToString();
     }
 

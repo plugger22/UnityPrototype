@@ -1978,7 +1978,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = string.Format("One of {0}'s contacts spots an {1} Team", actor.arc.name, team.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.instance.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
-            data.priority = ItemPriority.Medium;
+            data.priority = ItemPriority.High;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
@@ -4491,6 +4491,90 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
+            if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
+            { data.nodeID = npc.currentStartNode.nodeID; }
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Npc departs city without the Player interacting with them (timed out)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public Message NpcDepart(string text, Npc npc)
+    {
+        Debug.Assert(npc != null, "Invalid Npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.NPC;
+            message.subType = MessageSubType.Npc_Depart;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = npc.currentStartNode.nodeID;
+            message.dataName = npc.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = string.Format("{0} Departs", npc.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetNpcDepartDetails(npc);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.priority = ItemPriority.Medium;
+            data.sprite = npc.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = npc.currentNode.nodeID;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Player interacts with Npc who then departs
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public Message NpcInteract(string text, Npc npc)
+    {
+        Debug.Assert(npc != null, "Invalid Npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.NPC;
+            message.subType = MessageSubType.Npc_Interact;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = npc.currentStartNode.nodeID;
+            message.dataName = npc.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = string.Format("{0} Departs", npc.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetNpcInteractDetails(npc);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.priority = ItemPriority.Medium;
+            data.sprite = npc.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = npc.currentNode.nodeID;
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

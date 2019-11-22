@@ -59,6 +59,7 @@ public class Npc : ScriptableObject
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
     [HideInInspector] public Node currentNode;              //where Npc is now
+    [HideInInspector] public int daysActive;                //tally of days spent in City
 
 
     public void OnEnable()

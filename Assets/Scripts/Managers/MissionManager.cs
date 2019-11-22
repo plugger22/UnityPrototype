@@ -29,7 +29,7 @@ public class MissionManager : MonoBehaviour
     private string colourDefault;
     private string colourAlert;
     private string colourGrey;
-    private string colourCancel;
+    /*private string colourCancel;*/
     private string colourEnd;
 
     /// <summary>
@@ -128,7 +128,7 @@ public class MissionManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
+        /*colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
@@ -324,6 +324,7 @@ public class MissionManager : MonoBehaviour
                     npc.status = NpcStatus.Active;
                     npc.currentNode = npc.currentStartNode;
                     npc.timerTurns = npc.maxTurns;
+                    npc.daysActive = 1;
                     GameManager.instance.nodeScript.nodeNpc = npc.currentStartNode.nodeID;
                     Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" OnMap (rnd {1}, needed < {2}) at {3}, {4}, ID {5}, timer {6}{7}", npc.tag, rnd, npc.startChance,
                         npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, npc.timerTurns, "\n");
@@ -334,7 +335,7 @@ public class MissionManager : MonoBehaviour
                     //outcome msg (infoPipeline)
                     string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
                     string badEffects = GetEffects(npc.listOfBadEffects, colourBad);
-                    string textTopString = string.Format("A {0}{1}{2} has arrived in the city. They have {3}{4}{5}", colourCancel, npc.tag, colourEnd, colourCancel, npc.item, colourEnd);
+                    string textTopString = string.Format("A {0}{1}{2} has arrived in the city. They have {3}{4}{5}", colourAlert, npc.tag, colourEnd, colourAlert, npc.item, colourEnd);
                     string textBottomString = string.Format("We want you to {0}{1}{2} from them{3}{4}If successful{5}{6}{7}{8}If you fail{9}{10}", colourNeutral, npc.action.want, colourEnd, "\n", "\n",
                         "\n", goodEffects, "\n", "\n", "\n", badEffects);
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -391,11 +392,33 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     /// <param name="npc"></param>
     /// <returns></returns>
-    public string GetFormattedNpcEffects(Npc npc)
+    public string GetFormattedNpcEffectsAll(Npc npc)
     {
         string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
         string badEffects = GetEffects(npc.listOfBadEffects, colourBad);
-        return string.Format("If You Succeed{0}{1}{2}If You Fail{3}{4}", "\n", goodEffects, "\n", "\n", badEffects);
+        return string.Format("<b>If You Succeed{0}{1}{2}If You Fail{3}{4}</b>", "\n", goodEffects, "\n", "\n", badEffects);
+    }
+
+    /// <summary>
+    /// returns a success colour formatted string suitable for Npc Interact message. Auto handles no effect present
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetFormattedNpcEffectsGood(Npc npc)
+    {
+        string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
+        return string.Format("<b>{0}</b>", goodEffects);
+    }
+
+    /// <summary>
+    /// returns a fail colour formatted string suitable for Npc Depart message. Auto handles no effect present
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetFormattedNpcEffectsBad(Npc npc)
+    {
+        string BadEffects = GetEffects(npc.listOfBadEffects, colourGood);
+        return string.Format("<b>{0}</b>", BadEffects);
     }
 
     /// <summary>
@@ -404,6 +427,8 @@ public class MissionManager : MonoBehaviour
     /// <param name="npc"></param>
     private void UpdateActiveNpc(Npc npc)
     {
+        //update day tally regardless
+        npc.daysActive++;
         //check if in same district as Player
         if (npc.currentNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
         {
@@ -425,12 +450,18 @@ public class MissionManager : MonoBehaviour
                 {
                     //no repeat
                     if (npc.isRepeat == false)
-                    { ProcessNpcDepart(npc); }
+                    {
+                        GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
+                        ProcessNpcDepart(npc);
+                    }
                     //repeat but timer has expired
                     else
                     {
                         if (npc.timerTurns <= 0)
-                        { ProcessNpcDepart(npc); }
+                        {
+                            GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
+                            ProcessNpcDepart(npc);
+                        }
                         else
                         {
                             //still going, create a new path (uses a move action to do so)
@@ -446,6 +477,7 @@ public class MissionManager : MonoBehaviour
                             else
                             {
                                 Debug.LogWarning("Invalid currentEndNode (Null) for Npc when calculating new path");
+                                GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
                                 ProcessNpcDepart(npc);
                             }
                         }
@@ -510,7 +542,7 @@ public class MissionManager : MonoBehaviour
         {
             //bad effects
             string effectText = ProcessEffects(npc, false);
-            string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of the city", colourCancel, npc.tag, colourEnd);
+            string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of the city. You failed to {3}{4}{5}", colourNeutral, npc.tag, colourEnd, colourBad, npc.action.activity, colourEnd);
             string textBottomString = effectText;
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -543,7 +575,7 @@ public class MissionManager : MonoBehaviour
         {
             //good effects
             string effectText = ProcessEffects(npc, true);
-            string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourCancel, npc.action.tag, colourEnd, colourCancel, npc.tag, colourEnd);
+            string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourAlert, npc.action.tag, colourEnd, colourAlert, npc.tag, colourEnd);
             string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}{6}{7}", npc.tag, npc.action.outcome, colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n", effectText);
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -560,6 +592,7 @@ public class MissionManager : MonoBehaviour
             //messages (need to be BEFORE depart)
             Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
                                 npc.currentNode.nodeID, "\n");
+            GameManager.instance.messageScript.NpcInteract("Npc interacted with", npc);
             //Npc departs map
             ProcessNpcDepart(npc, true);
             isSuccess = true;
