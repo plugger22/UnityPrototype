@@ -2136,7 +2136,6 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
-
     /// <summary>
     /// Player reputation with Org at Zero, no more help until it improves
     /// </summary>
@@ -2150,5 +2149,52 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}{1}<b>Organisation will do {2}{3}NO MORE FAVOURS{4}{5}until your reputation with them improves</b>", "\n", "\n", "\n", colourBad, colourEnd, "\n");
         return builder.ToString();
     }
+
+
+    //
+    // - - - Npc
+    //
+    
+    /// <summary>
+    /// Npc arrives in city
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetNpcArrivalDetails(Npc npc)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>The {0}{1}{2} will be in {3} for at least {4}{5} days{6}</b>{7}{8}", colourAlert, npc.tag, colourEnd, GameManager.instance.cityScript.GetCity().tag, 
+            colourNeutral, npc.maxTurns, colourEnd, "\n", "\n");
+        if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
+        { builder.AppendFormat("<b>They will be arriving at {0}{1}{2}</b>{3}", colourNeutral, npc.nodeStart.arriving, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}<b>We don't know where they are arriving</b>{1}{2}", colourBad, colourEnd, "\n"); }
+        if (string.IsNullOrEmpty(npc.nodeEnd.visiting) == false)
+        { builder.AppendFormat("<b>We expect them to visit {0}{1}{2}</b>{3}{4}", colourNeutral, npc.nodeEnd.visiting, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0}<b>It's not clear where they will visit</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        builder.AppendFormat("<b>{0}</b>", GameManager.instance.missionScript.GetFormattedNpcEffects(npc));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Npc Ongoing effect status (displayed every turn Npc is onMap)
+    /// </summary>
+    /// <param name="nemesis"></param>
+    /// <returns></returns>
+    public string GetNpcOngoingEffectDetails(Npc npc)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (npc.timerTurns == 0)
+        { builder.AppendFormat("<b>The {0}{1}{2} is expected to leave the city {3}any day{4} now</b>{5}", colourAlert, npc.tag, colourEnd, colourBad, colourEnd, "\n"); }
+        else
+        {
+            builder.AppendFormat("<b>The {0}{1}{2} should remain in the city for at least another {3}{4} day{5}{6}{7}", colourAlert, npc.tag, colourEnd, colourNeutral, npc.timerTurns,
+                npc.timerTurns != 1 ? "s" : "", colourEnd, "\n");
+        }
+        builder.AppendFormat("{0}<b>Your subordinates Contacts will spot the {1}{2}{3} if their Effectiveness is {4}{5}, or higher{6}</b>{7}{8}", "\n", colourAlert, npc.tag, colourEnd, colourNeutral,
+            npc.stealthRating, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>You need to end your turn in the {0}same district{1} as the {2} to {3}{4}{5}</b>", colourNeutral, colourEnd, npc.tag, colourAlert, npc.action.activity, colourEnd);
+        return builder.ToString();
+    }
+
 
 }

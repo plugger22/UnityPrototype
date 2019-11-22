@@ -4454,6 +4454,95 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    //
+    // - - - Npc
+    //
+
+    /// <summary>
+    /// Npc has arrived in city
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public Message NpcArrival(string text, Npc npc)
+    {
+        Debug.Assert(npc != null, "Invalid Npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.NPC;
+            message.subType = MessageSubType.Npc_Arrival;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = npc.currentStartNode.nodeID;
+            message.data1 = npc.currentEndNode.nodeID;
+            message.data2 = npc.maxTurns;
+            message.dataName = npc.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = string.Format("{0} Arrives", npc.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetNpcArrivalDetails(npc);
+            data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.priority = ItemPriority.Medium;
+            data.sprite = npc.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Npc ongoing status for Effects tab
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="nodeID"></param>
+    /// <param name="nemesis"></param>
+    /// <returns></returns>
+    public Message NpcOngoing(string text, Npc npc)
+    {
+        Debug.Assert(npc != null, "Invalid npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.ONGOING;
+            message.subType = MessageSubType.Ongoing_Npc;
+            message.sideLevel = globalResistance.level;
+            message.data0 = npc.currentNode.nodeID;
+            message.data1 = npc.currentEndNode.nodeID;
+            message.data2 = npc.timerTurns;
+            message.data3 = npc.stealthRating;
+            message.dataName = npc.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("{0} current Status", npc.tag);
+            data.topText = string.Format("{0} Status", npc.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetNpcOngoingEffectDetails(npc);
+            data.priority = ItemPriority.High;
+            data.sprite = npc.sprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.Effects;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
 
     //
     // - - - Utilities

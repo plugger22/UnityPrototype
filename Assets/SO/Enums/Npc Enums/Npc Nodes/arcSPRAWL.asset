@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827b1c87eddbc284280015e57be9e627, type: 3}
   m_Name: arcSPRAWL
   m_EditorClassIdentifier: 
+  arriving: a SPRAWL District
+  visiting: SPRAWL Districts
   nodeArc: {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}

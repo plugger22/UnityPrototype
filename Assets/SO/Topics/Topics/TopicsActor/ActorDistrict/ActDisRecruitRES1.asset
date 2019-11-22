@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActDisRecruitRES1
   m_EditorClassIdentifier: 
   tag: False Promises
-  text: '[recruit] claims that they were recruited [daysAgo] with faise promises of
+  text: '[recruit] claims that they were recruited [daysAgo] with false promises of
     money, enough [money]'
   designNotes: negative recruiter event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -33,15 +33,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da7b5f241ddbbbd4f8a42d499d5a8dda, type: 2}
   - {fileID: 11400000, guid: 9a00cf0b04324a543acb84f9d862098f, type: 2}
   - {fileID: 11400000, guid: 3dc9ed13795f03945a8b41d92fcfe35e, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 2
+  timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 25
+  turnsLive: 7
   turnsDone: 0

@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827b1c87eddbc284280015e57be9e627, type: 3}
   m_Name: CityHall
   m_EditorClassIdentifier: 
-  devDescriptor: Airport
+  arriving: the City Hall
+  visiting: the City Hall
   nodeArc: {fileID: 0}

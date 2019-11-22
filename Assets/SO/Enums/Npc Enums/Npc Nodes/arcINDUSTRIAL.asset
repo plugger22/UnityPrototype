@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827b1c87eddbc284280015e57be9e627, type: 3}
   m_Name: arcINDUSTRIAL
   m_EditorClassIdentifier: 
+  arriving: an INDUSTRIAL District
+  visiting: INDUSTRIAL Districts
   nodeArc: {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}

@@ -327,6 +327,8 @@ public class MissionManager : MonoBehaviour
                     GameManager.instance.nodeScript.nodeNpc = npc.currentStartNode.nodeID;
                     Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" OnMap (rnd {1}, needed < {2}) at {3}, {4}, ID {5}, timer {6}{7}", npc.tag, rnd, npc.startChance,
                         npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, npc.timerTurns, "\n");
+                    string text = string.Format("{0} has arrived in City at {1}, {2}, ID {3}", npc.tag, npc.currentStartNode.nodeName, npc.currentStartNode.Arc.name, npc.currentStartNode.nodeID);
+                    GameManager.instance.messageScript.NpcArrival(text, npc);
                     //tracker
                     AddTrackerRecord(npc);
                     //outcome msg (infoPipeline)
@@ -346,6 +348,8 @@ public class MissionManager : MonoBehaviour
                     };
                     if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Npc arrives InfoPipeline message FAILED to be added to dictOfPipeline"); }
+                    //msg
+                    GameManager.instance.messageScript.NpcOngoing("Npc arrives onMap", npc);
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
             }
@@ -380,6 +384,18 @@ public class MissionManager : MonoBehaviour
             builder.AppendFormat("{0}No Effect{1}", colourGrey, colourEnd);
         }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a success/fail combined colour formatted string suitable for NpcArrival message
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetFormattedNpcEffects(Npc npc)
+    {
+        string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
+        string badEffects = GetEffects(npc.listOfBadEffects, colourBad);
+        return string.Format("If You Succeed{0}{1}{2}If You Fail{3}{4}", "\n", goodEffects, "\n", "\n", badEffects);
     }
 
     /// <summary>
@@ -424,6 +440,8 @@ public class MissionManager : MonoBehaviour
                             {
                                 Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: New path from {0}, {1}, ID {2} to {3}, {4}, ID {5}{6}", npc.currentStartNode.nodeName, npc.currentStartNode.Arc.name,
                                     npc.currentStartNode.nodeID, npc.currentEndNode.nodeName, npc.currentEndNode.Arc.name, npc.currentEndNode.nodeID, "\n");
+                                //msg
+                                GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
                             }
                             else
                             {
@@ -443,7 +461,7 @@ public class MissionManager : MonoBehaviour
                         int nextNodeID;
                         if (numOfLinks > 0)
                         {
-                            //move nemesis multiple links if allowed, stop moving immediately if nemesis spots Player at same node
+                            //move npc one link max
                             Connection connection = listOfConnections[0];
                             if (connection != null)
                             {
@@ -457,8 +475,10 @@ public class MissionManager : MonoBehaviour
                                 {
                                     npc.currentNode = node;
                                     GameManager.instance.nodeScript.nodeNpc = nextNodeID;
-                                    Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcDepart: Npc \"{0}\" moved to {1}, {2}, nodeID {3}, timer {4}{5}",
+                                    Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Npc \"{0}\" moved to {1}, {2}, nodeID {3}, timer {4}{5}",
                                         npc.tag, node.nodeName, node.Arc.name, node.nodeID, npc.timerTurns, "\n");
+                                    //msg
+                                    GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
                                 }
                                 else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
                             }
@@ -469,7 +489,12 @@ public class MissionManager : MonoBehaviour
                     else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
                 }
             }
-            else { Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", npc.tag, rnd, npc.moveChance, npc.timerTurns, "\n"); }
+            else
+            {
+                Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", npc.tag, rnd, npc.moveChance, npc.timerTurns, "\n");
+                //msg
+                GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+            }
             //tracker
             AddTrackerRecord(npc);
         }

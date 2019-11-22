@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Name: Take Package
   m_EditorClassIdentifier: 
   tag: take the package from
+  want: collect it
   outcome: quietly blends back into the crowd
+  activity: collect the package

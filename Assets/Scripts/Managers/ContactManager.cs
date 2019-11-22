@@ -817,7 +817,8 @@ public class ContactManager : MonoBehaviour
                                     }
                                     builder.AppendFormat(" Id {0}, {1} {2}, {3}, nodeID {4}, E {5}, {6}{7}", contact.Value.contactID, contact.Value.nameFirst, contact.Value.nameLast,
                                         contact.Value.job, contact.Value.nodeID, contact.Value.effectiveness, contact.Value.status, "\n");
-                                    builder.AppendFormat("          Rumors {0}, Nemesis {1}, Teams {2}{3}", contact.Value.statsRumours, contact.Value.statsNemesis, contact.Value.statsTeams, "\n");
+                                    builder.AppendFormat("          Rumors {0}, Nemesis {1}, Teams {2}, Npc {3}{4}", contact.Value.statsRumours, contact.Value.statsNemesis, contact.Value.statsTeams, 
+                                        contact.Value.statsNpc, "\n");
                                 }
                             }
                             else { builder.AppendFormat("No Contacts present{0}", "\n"); }
@@ -848,7 +849,7 @@ public class ContactManager : MonoBehaviour
                                 foreach (var contact in dictOfContacts)
                                 {
                                     Debug.Assert(contact.Value.actorID == actor.actorID, string.Format("Contact.actorID {0} doesn't match actorID {1}", contact.Value.contactID, actor.actorID));
-                                    builder.AppendFormat(" Id {0}, {1} {2}, {3}, nodeID {4}, E {5}, {6}{7}", contact.Value.contactID, contact.Value.nameFirst, contact.Value.nameLast,
+                                    builder.AppendFormat(" Id {0}, {1} {2}, {3}, nodeID {4}, Eff {5}, {6}{7}", contact.Value.contactID, contact.Value.nameFirst, contact.Value.nameLast,
                                         contact.Value.job, contact.Value.nodeID, contact.Value.effectiveness, contact.Value.status, "\n");
                                     builder.AppendFormat("          Rumors {0}, Nemesis {1}, Teams {2}{3}", contact.Value.statsRumours, contact.Value.statsNemesis, contact.Value.statsTeams, "\n");
                                 }

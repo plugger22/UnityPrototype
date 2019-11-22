@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827b1c87eddbc284280015e57be9e627, type: 3}
   m_Name: arcGOVERNMENT
   m_EditorClassIdentifier: 
+  arriving: a GOVERNMENT District
+  visiting: GOVERNMENT Districts
   nodeArc: {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}

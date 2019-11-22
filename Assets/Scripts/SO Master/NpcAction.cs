@@ -14,4 +14,6 @@ public class NpcAction : ScriptableObject
     public string want;
     [Tooltip("What happens now in format '[the] [Npc] ...', eg. 'is no more'")]
     public string outcome;
+    [Tooltip("In format '[You need to be in the Same District as the Npc to] ...', eg. 'steal their briefcase'")]
+    public string activity;
 }

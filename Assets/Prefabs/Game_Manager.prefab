@@ -4443,7 +4443,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 5
+  autoRunTurns: 2
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

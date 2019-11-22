@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827b1c87eddbc284280015e57be9e627, type: 3}
   m_Name: arcCORPORATE
   m_EditorClassIdentifier: 
+  arriving: a CORPORATE District
+  visiting: CORPORATE Districts
   nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
