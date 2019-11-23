@@ -1012,6 +1012,13 @@ public class DebugGUI : MonoBehaviour
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CureNodes, "DebugGUI.cs -> OnGUI");
             }
 
+            //eleventh button
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Show Contacts"))
+            {
+                Debug.Log("[Dbg] Button -> Show Contact Nodes");
+                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowContacts, "DebugGUI.cs -> OnGUI");
+            }
+
             //
             // - - - Analysis at Right Hand side of Screen - - -
             //

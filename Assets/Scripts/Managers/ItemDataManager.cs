@@ -917,7 +917,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>The {0}{1}{2}</b> has been detected by one of your {3}<b>Tracers</b>{4}{5}{6}", colourAlert, npc.tag, colourEnd, colourNeutral, colourEnd, "\n", "\n");
-        builder.AppendFormat("<b>Rebel HQ</b> remind you of the need to {0}{1}{2}</b>{3}{4}", colourNeutral, npc.action.activity, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Rebel HQ</b> remind you of the need to {0}<b>{1}</b>{2}{3}{4}", colourNeutral, npc.action.activity, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", npc.currentNode.nodeName, colourAlert, npc.currentNode.Arc.name, colourEnd);
         return builder.ToString();
     }

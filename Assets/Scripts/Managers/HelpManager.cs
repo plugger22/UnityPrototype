@@ -923,15 +923,6 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
-        //V.I.P
-        data = new HelpData();
-        data.tag = "contact_11";
-        data.header = "Spotting V.I.P";
-        builder = new StringBuilder();
-        builder.AppendFormat("If a V.I.P is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= V.I.P's Stealth rating{3}",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
         #endregion
 
 

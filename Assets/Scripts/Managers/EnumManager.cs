@@ -64,7 +64,7 @@
     {                                                            //parameter for NodeDisplay event
         None,
         Reset, Redraw, Move,
-        ShowTargets, ShowSpiders, ShowTracers, ShowTeams,
+        ShowTargets, ShowSpiders, ShowTracers, ShowTeams, ShowContacts,
         NodeArc0, NodeArc1, NodeArc2, NodeArc3, NodeArc4, NodeArc5, NodeArc6,
         MostConnected, Centre, NearNeighbours, DecisionNodes, CrisisNodes, LoiterNodes, CureNodes
     };

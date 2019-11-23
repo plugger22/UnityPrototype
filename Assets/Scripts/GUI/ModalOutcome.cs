@@ -142,7 +142,7 @@ public class ModalOutcome : MonoBehaviour
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
                 {
                     helpButton.gameObject.SetActive(true);
-                    help.SetHelpTooltip(listOfHelpData, 125, 260);
+                    help.SetHelpTooltip(listOfHelpData, 125, 280);
                 }
                 else { helpButton.gameObject.SetActive(false); }
                 //set modal true

@@ -332,6 +332,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.ShowSpiders:
                     case NodeUI.ShowTracers:
                     case NodeUI.ShowTeams:
+                    case NodeUI.ShowContacts:
                     case NodeUI.MostConnected:
                     case NodeUI.Centre:
                     case NodeUI.NearNeighbours:
@@ -567,7 +568,10 @@ public class NodeManager : MonoBehaviour
                 }
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodePlayer)); }
                 break;
-
+            //show all contacts with effectiveness (highest) on node face
+            case NodeUI.ShowContacts:
+                ShowAllContacts();
+                break;
             //show all nodes containng a spider
             case NodeUI.ShowSpiders:
                 List<Node> listOfSpiderNodes = GameManager.instance.dataScript.GetListOfAllNodes();
@@ -1258,6 +1262,41 @@ public class NodeManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
+    /// <summary>
+    /// displays all contacts with the highest contact at the node displaying their effectiveness on the node face. Called by event via ShowNodes
+    /// </summary>
+    private void ShowAllContacts()
+    {
+        int data;
+        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Contact> listOfContacts = new List<Contact>();
+        //loop nodes
+        foreach (Node node in listOfNodes)
+        {
+            if (node != null)
+            {
+                //contact at node
+                if (GameManager.instance.dataScript.CheckActiveContactAtNode(node.nodeID, globalResistance) == true)
+                {
+                    listOfContacts = GameManager.instance.dataScript.GetListOfNodeContacts(node.nodeID);
+                    data = 0;
+                    //loop contacts (could be more than one at the same node), get highest effectiveness
+                    for (int i = 0; i < listOfContacts.Count; i++)
+                    {
+                        Contact contact = listOfContacts[i];
+                        if (contact != null)
+                        {
+                            if (contact.effectiveness > data) { data = contact.effectiveness; }
+                        }
+                        else { Debug.LogErrorFormat("Invalid contact (Null) for listOfContacts[{0}], nodeID {1}", i, node.nodeID); }
+                    }
+                    node.faceText.text = data.ToString();
+                    node.faceText.color = Color.yellow;
+                }
+            }
+            else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
+        }
+    }
 
     /// <summary>
     /// returns a colour to display face Text on a node depending on value (which varies depending on activityUI)

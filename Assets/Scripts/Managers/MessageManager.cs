@@ -1935,10 +1935,9 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
-            data.tag0 = "contact_11";
+            data.tag0 = "npc_3";
             data.tag1 = "contact_1";
-            data.tag2 = "npc_3";
-            data.tag3 = "npc_5";
+            data.tag2 = "npc_5";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -3950,7 +3949,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="listOfHelp">Provide a list of help strings, eg. 'cure_1' to be displayed</param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite,  int actorID = -1, Node node = null, Condition condition = null)
+    public Message ActiveEffect(string text, string topText, string detailsTop, string detailsBottom, Sprite sprite, int actorID = -1, Node node = null, Condition condition = null)
     {
         Debug.Assert(sprite != null, "Invalid spirte (Null)");
         if (string.IsNullOrEmpty(text) == false)
