@@ -14,3 +14,4 @@ MonoBehaviour:
   arriving: at the Harbour
   visiting: the Harbour
   nodeArc: {fileID: 0}
+  isShowMe: 1

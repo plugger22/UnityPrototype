@@ -37,4 +37,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
   - {fileID: 11400000, guid: 9f16e63d837fd86418dfcb3cfb999a92, type: 2}
   - {fileID: 11400000, guid: 7424e5f517352b044b708f594b64db62, type: 2}
-  npc: {fileID: 11400000, guid: 6ac91bfc87439ec4abb6d51393dfbf41, type: 2}
+  npc: {fileID: 11400000, guid: 5da607571013278488ff0279adb90d07, type: 2}

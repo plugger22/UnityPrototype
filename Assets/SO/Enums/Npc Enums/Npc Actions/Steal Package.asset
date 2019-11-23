@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Name: Steal Package
   m_EditorClassIdentifier: 
   tag: violently steal the package from
-  want: steal it
   outcome: is left unconscious and bleeding
-  activity: steal the package
+  activity: steal the package from them

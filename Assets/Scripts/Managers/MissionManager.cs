@@ -336,7 +336,7 @@ public class MissionManager : MonoBehaviour
                     string goodEffects = GetEffects(npc.listOfGoodEffects, colourGood);
                     string badEffects = GetEffects(npc.listOfBadEffects, colourBad);
                     string textTopString = string.Format("A {0}{1}{2} has arrived in the city. They have {3}{4}{5}", colourAlert, npc.tag, colourEnd, colourAlert, npc.item, colourEnd);
-                    string textBottomString = string.Format("We want you to {0}{1}{2} from them{3}{4}If successful{5}{6}{7}{8}If you fail{9}{10}", colourNeutral, npc.action.want, colourEnd, "\n", "\n",
+                    string textBottomString = string.Format("We want you to {0}{1}{2}{3}{4}If successful{5}{6}{7}{8}If you fail{9}{10}", colourNeutral, npc.action.activity, colourEnd, "\n", "\n",
                         "\n", goodEffects, "\n", "\n", "\n", badEffects);
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                     {
@@ -345,7 +345,9 @@ public class MissionManager : MonoBehaviour
                         sprite = npc.sprite,
                         isAction = false,
                         side = GameManager.instance.globalScript.sideResistance,
-                        type = MsgPipelineType.Npc
+                        type = MsgPipelineType.Npc,
+                        help0 = "npc_0",
+                        help1 = "npc_1"
                     };
                     if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Npc arrives InfoPipeline message FAILED to be added to dictOfPipeline"); }
@@ -542,7 +544,8 @@ public class MissionManager : MonoBehaviour
         {
             //bad effects
             string effectText = ProcessEffects(npc, false);
-            string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of the city. You failed to {3}{4}{5}", colourNeutral, npc.tag, colourEnd, colourBad, npc.action.activity, colourEnd);
+            string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of {3}. You failed to {4}{5}{6}", colourNeutral, npc.tag, colourEnd,
+                GameManager.instance.cityScript.GetCity().tag, colourBad, npc.action.activity, colourEnd);
             string textBottomString = effectText;
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails

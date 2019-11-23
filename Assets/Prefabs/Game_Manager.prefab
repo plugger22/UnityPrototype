@@ -1280,6 +1280,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
   arrayOfNpcs:
   - {fileID: 11400000, guid: 6ac91bfc87439ec4abb6d51393dfbf41, type: 2}
+  - {fileID: 11400000, guid: 5da607571013278488ff0279adb90d07, type: 2}
   arrayOfNpcNodes:
   - {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
   - {fileID: 11400000, guid: 7f49a8d1d681a6149ba7e9eba581e4c3, type: 2}
@@ -1298,6 +1299,7 @@ MonoBehaviour:
   arrayOfNpcActions:
   - {fileID: 11400000, guid: 74ed4f168170eba4b937e73568f669d9, type: 2}
   - {fileID: 11400000, guid: 454e955ad4493dd40a53dd9e4483f846, type: 2}
+  - {fileID: 11400000, guid: e1d07140b53b6ec4fa0beb865ff5aa78, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}

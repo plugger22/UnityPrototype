@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e53b07ccb32ac2438596a112016110d, type: 3}
+  m_Name: Traitor
+  m_EditorClassIdentifier: 
+  tag: Traitor
+  descriptor: has betrayed the Resistance
+  item: important Resistance Intel
+  sprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
+  stealthRating: 2
+  startTurn: 3
+  startChance: 75
+  nodeStart: {fileID: 11400000, guid: 144be20947e7ca542acbac59a70b5134, type: 2}
+  nodeEnd: {fileID: 11400000, guid: 4e63e3d5038a4b24fa086ee54d899c76, type: 2}
+  moveChance: 60
+  maxTurns: 5
+  isRepeat: 0
+  action: {fileID: 11400000, guid: e1d07140b53b6ec4fa0beb865ff5aa78, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 3c2ae02ba9780e3458c74067367b8ec7, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 8597d4aca3acbf54ea7da6ea86d41ec4, type: 2}
+  status: 2
+  timerTurns: 1
+  currentStartNode: {fileID: 0}
+  currentEndNode: {fileID: 0}
+  currentNode: {fileID: 0}
+  daysActive: 6

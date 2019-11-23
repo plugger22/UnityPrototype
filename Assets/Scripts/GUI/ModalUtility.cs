@@ -123,6 +123,10 @@ namespace modalAPI
         public bool isAction;               //true if an action has been used
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
         public MsgPipelineType type;        //used for start of turn messages in message Queue (ignore for messages displayed during turn)
+        public string help0;                //if help0 specified a help icon will auto appear, otherwise invisible
+        public string help1;                //optional
+        public string help2;                //optional
+        public string help3;                //optional
 
         public ModalOutcomeDetails()
         {

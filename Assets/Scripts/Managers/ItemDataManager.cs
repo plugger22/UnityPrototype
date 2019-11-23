@@ -1256,12 +1256,13 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         if (change > 0)
-        { builder.AppendFormat("{0} faction{1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("{0} {1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
         else { builder.AppendFormat("{0} faction{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
         if (string.IsNullOrEmpty(reason) == false)
         {
+            builder.AppendFormat("<b>Because of</b>{0}", "\n");
             if (change > 0)
-            { builder.AppendFormat("{0}{1}{2}", colourGood, reason, colourEnd); }
+            { builder.AppendFormat("{0}<b>{1}</b>{2}", colourGood, reason, colourEnd); }
             else { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, reason, colourEnd); }
         }
         return builder.ToString();
@@ -2186,7 +2187,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>After {0}{1}{2} days, the {3}{4}{5} has caught a shuttle out of the city from {6}{7}{8}</b>{9}{10}", colourNeutral, npc.daysActive, colourEnd, colourAlert, npc.tag, colourEnd,
             colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>You failed to {0}</b>{1}", npc.action.activity, "\n");
-        builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsGood(npc));
+        builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsBad(npc));
         return builder.ToString();
     }
 

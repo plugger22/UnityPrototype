@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// Handles Modal Outcome window.
@@ -16,6 +17,8 @@ public class ModalOutcome : MonoBehaviour
     public TextMeshProUGUI bottomText;
     public Image outcomeImage;
     public Button confirmButton;
+    public Button helpButton;
+
 
     /*[Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
     public Sprite buttonSpriteAuthority;
@@ -30,7 +33,8 @@ public class ModalOutcome : MonoBehaviour
     private RectTransform rectTransform;
     private Image background;
     private CanvasGroup canvasGroup;
-    private float fadeInTime;
+    private GenericHelpTooltipUI help;
+    /*private float fadeInTime;*/
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
     private ModalSubState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
     private string reason;                               //reason outcome window is being used (passed on via CloseOutcomeWindow event to UseAction event for debugging
@@ -45,14 +49,20 @@ public class ModalOutcome : MonoBehaviour
         /*canvasGroup = modalOutcomeObject.GetComponent<CanvasGroup>();
         rectTransform = modalOutcomeObject.GetComponent<RectTransform>();*/
 
+        //Asserts
+        Debug.Assert(helpButton != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(confirmButton != null, "Invalid confirmButton (Null)");
+        //Assignments
         canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();
         rectTransform = modalOutcomeWindow.GetComponent<RectTransform>();
-
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
+        help = helpButton.GetComponent<GenericHelpTooltipUI>();
+        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
+        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         ButtonInteraction buttonInteract = confirmButton.GetComponent<ButtonInteraction>();
         if (buttonInteract != null)
         { buttonInteract.SetButton(EventType.CloseOutcomeWindow); }
         else { Debug.LogError("Invalid buttonInteract (Null)"); }
+
         //register a listener
         EventManager.instance.AddListener(EventType.OpenOutcomeWindow, OnEvent, "ModalOutcome");
         EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent, "ModalOutcome");
@@ -127,6 +137,14 @@ public class ModalOutcome : MonoBehaviour
                 GameManager.instance.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 GameManager.instance.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 reason = details.reason;
+                //set help
+                List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+                if (listOfHelpData != null && listOfHelpData.Count > 0)
+                {
+                    helpButton.gameObject.SetActive(true);
+                    help.SetHelpTooltip(listOfHelpData, 125, 260);
+                }
+                else { helpButton.gameObject.SetActive(false); }
                 //set modal true
                 GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
                 //open panel at start, the modal window is already active on the panel
@@ -193,7 +211,7 @@ public class ModalOutcome : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// fade in tooltip over time
     /// </summary>
     /// <returns></returns>
@@ -204,7 +222,7 @@ public class ModalOutcome : MonoBehaviour
             canvasGroup.alpha += Time.deltaTime / fadeInTime;
             yield return null;
         }
-    }
+    }*/
 
 
     /// <summary>
@@ -225,6 +243,8 @@ public class ModalOutcome : MonoBehaviour
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
         //modalOutcomeObject.SetActive(false);
         modalOutcomeWindow.SetActive(false);
+        //close tooltip
+        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");
         //set modal false
         GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
         //set game state

@@ -73,7 +73,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoItemHelp.cs -> OnPointerExit");
+            GameManager.instance.tooltipHelpScript.CloseTooltip("GenericHelpTooltipUI.cs -> OnPointerExit");
         }
     }
 

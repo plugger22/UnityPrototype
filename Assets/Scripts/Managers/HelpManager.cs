@@ -767,20 +767,38 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Npc
         //
-        //Stealth
+        //Overview
         data = new HelpData();
         data.tag = "npc_0";
-        data.header = "Stealth";
+        data.header = "Overview";
         builder = new StringBuilder();
-        builder.AppendFormat("Non Player Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by Contacts. ", colourAlert, colourEnd);        
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Interaction
+        data = new HelpData();
+        data.tag = "npc_1";
+        data.header = "Interacting";
+        builder = new StringBuilder();
+        builder.AppendFormat("You {0}automatically{1} find and interact with a Special Character if you {2}end your turn{3} in the {4}same district{5}", colourAlert, colourEnd, colourAlert, colourEnd,
+            colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Movement
         data = new HelpData();
-        data.tag = "npc_1";
+        data.tag = "npc_2";
         data.header = "Movement";
         builder = new StringBuilder();
-        builder.AppendFormat("Non Player Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
+        builder.AppendFormat("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Stealth
+        data = new HelpData();
+        data.tag = "npc_3";
+        data.header = "Stealth";
+        builder = new StringBuilder();
+        builder.AppendFormat("Special Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high){1}. ", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("A Contact will {0}spot them{1} if their Effectiveness is {2}Equal to or Greater{3} than the Character's Stealth Rating", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
@@ -913,10 +931,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "cure_0";
-        string tag1 = "cure_1";
-        string tag2 = "cure_2";
-        string tag3 = "cure_3";
+        string tag0 = "npc_0";
+        string tag1 = "npc_1";
+        string tag2 = "npc_2";
+        string tag3 = "npc_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

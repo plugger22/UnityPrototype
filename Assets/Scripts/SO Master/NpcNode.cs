@@ -14,5 +14,7 @@ public class NpcNode : ScriptableObject
     public string visiting;
     [Tooltip("If a specific node Arc specify here, ignore otherwise")]
     public NodeArc nodeArc;
+    [Tooltip("If true then any message will have a 'Show Me' button where appropriate")]
+    public bool isShowMe;
 
 }

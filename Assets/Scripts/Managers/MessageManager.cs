@@ -1937,8 +1937,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "contact_11";
             data.tag1 = "contact_1";
-            data.tag2 = "npc_0";
-            data.tag3 = "npc_1";
+            data.tag2 = "npc_3";
+            data.tag3 = "npc_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -4105,9 +4105,9 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             if (change > 0)
-            { data.itemText = string.Format("{0} faction Approval INCREASES", faction.tag); }
+            { data.itemText = string.Format("{0} Approval INCREASES", faction.tag); }
             else
-            { data.itemText = string.Format("{0} faction Approval DECREASES", faction.tag); }
+            { data.itemText = string.Format("{0} Approval DECREASES", faction.tag); }
             data.topText = "Approval Changes";
             data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
@@ -4491,8 +4491,11 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
+            //show start node, if appropriate, if not, end node, if appropriate
+            if (npc.nodeStart.isShowMe == true)
             { data.nodeID = npc.currentStartNode.nodeID; }
+            else if (npc.nodeEnd.isShowMe == true)
+            { data.nodeID = npc.currentEndNode.nodeID; }
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
