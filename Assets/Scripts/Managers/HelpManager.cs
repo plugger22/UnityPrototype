@@ -772,7 +772,8 @@ public class HelpManager : MonoBehaviour
         data.tag = "npc_0";
         data.header = "Overview";
         builder = new StringBuilder();
-        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by Contacts or Tracers. ", colourAlert, colourEnd);        
+        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by {2}Contacts or Tracers{3}.", 
+            colourAlert, colourEnd, colourAlert, colourEnd);        
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Interaction

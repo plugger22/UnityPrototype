@@ -15,22 +15,22 @@ MonoBehaviour:
   descriptor: has betrayed the Resistance
   item: important Resistance Intel
   sprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
-  stealthRating: 2
+  stealthRating: 1
   startTurn: 3
   startChance: 75
   nodeStart: {fileID: 11400000, guid: 144be20947e7ca542acbac59a70b5134, type: 2}
-  nodeEnd: {fileID: 11400000, guid: 4e63e3d5038a4b24fa086ee54d899c76, type: 2}
+  nodeEnd: {fileID: 11400000, guid: 52a8ea336fc16684494410d319efa9c2, type: 2}
   moveChance: 60
-  maxTurns: 5
-  isRepeat: 0
+  maxTurns: 8
+  isRepeat: 1
   action: {fileID: 11400000, guid: e1d07140b53b6ec4fa0beb865ff5aa78, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 3c2ae02ba9780e3458c74067367b8ec7, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 8597d4aca3acbf54ea7da6ea86d41ec4, type: 2}
-  status: 2
-  timerTurns: 1
+  status: 1
+  timerTurns: 3
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
   currentNode: {fileID: 0}
-  daysActive: 6
+  daysActive: 3
