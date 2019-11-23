@@ -772,7 +772,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "npc_0";
         data.header = "Overview";
         builder = new StringBuilder();
-        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by Contacts. ", colourAlert, colourEnd);        
+        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by Contacts or Tracers. ", colourAlert, colourEnd);        
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Interaction
@@ -799,6 +799,23 @@ public class HelpManager : MonoBehaviour
         builder = new StringBuilder();
         builder.AppendFormat("Special Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high){1}. ", colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("A Contact will {0}spot them{1} if their Effectiveness is {2}Equal to or Greater{3} than the Character's Stealth Rating", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Effects
+        data = new HelpData();
+        data.tag = "npc_4";
+        data.header = "Benefits and Penalties";
+        builder = new StringBuilder();
+        builder.AppendFormat("HQ will task you with interacting with Special Characters. Doing so {0}before they depart{1} generally grants a benefit and failing to do so incurs a penalty", 
+            colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Tracers
+        data = new HelpData();
+        data.tag = "npc_5";
+        data.header = "Tracers";
+        builder = new StringBuilder();
+        builder.AppendFormat("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating",  colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion

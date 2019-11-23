@@ -276,6 +276,7 @@
         Contact_Active,
         Tracer_Nemesis_Spotted,
         Tracer_Team_Spotted,
+        Tracer_Npc_Spotted,
         //Target
         Target_New,
         Target_Expired,

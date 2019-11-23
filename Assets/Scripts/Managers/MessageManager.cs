@@ -1938,7 +1938,7 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "contact_11";
             data.tag1 = "contact_1";
             data.tag2 = "npc_3";
-            data.tag3 = "npc_2";
+            data.tag3 = "npc_5";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -2204,7 +2204,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = "TRACER detects presence of an ERASURE Team";
             data.topText = "Threat Detected";
             data.bottomText = GameManager.instance.itemDataScript.GetTracerTeamSpottedDetails(node, team);
-            data.priority = ItemPriority.Medium;
+            data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
@@ -2213,6 +2213,48 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Tracer spots Npc
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public Message TracerNpcSpotted(string text, Npc npc)
+    {
+        Debug.Assert(npc != null, "Invalid npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.CONTACT;
+            message.subType = MessageSubType.Tracer_Npc_Spotted;
+            message.sideLevel = globalResistance.level;
+            message.data0 = npc.currentNode.nodeID;
+            message.dataName = npc.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("TRACER detects the {0}", npc.tag);
+            data.topText = string.Format("{0} Detected", npc.tag);
+            data.bottomText = GameManager.instance.itemDataScript.GetTracerNpcSpottedDetails(npc);
+            data.priority = ItemPriority.High;
+            data.sprite = npc.sprite;
+            data.spriteName = npc.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.nodeID = npc.currentNode.nodeID;
+            data.help = 1;
+            data.tag0 = "npc_5";
+            data.tag1 = "npc_3";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -4496,6 +4538,10 @@ public class MessageManager : MonoBehaviour
             { data.nodeID = npc.currentStartNode.nodeID; }
             else if (npc.nodeEnd.isShowMe == true)
             { data.nodeID = npc.currentEndNode.nodeID; }
+            data.tag0 = "npc_0";
+            data.tag1 = "npc_1";
+            data.tag2 = "npc_2";
+            data.tag3 = "npc_3";
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -4537,6 +4583,9 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.nodeID = npc.currentNode.nodeID;
+            data.tag0 = "npc_0";
+            data.tag1 = "npc_4";
+            data.tag2 = "npc_1";
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -4578,6 +4627,9 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.nodeID = npc.currentNode.nodeID;
+            data.tag0 = "npc_0";
+            data.tag1 = "npc_4";
+            data.tag2 = "npc_1";
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
@@ -4622,6 +4674,9 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.help = 1;
+            data.tag0 = "npc_0";
+            data.tag1 = "npc_4";
+            data.tag2 = "npc_1";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

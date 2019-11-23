@@ -353,6 +353,9 @@ public class MissionManager : MonoBehaviour
                     { Debug.LogWarningFormat("Npc arrives InfoPipeline message FAILED to be added to dictOfPipeline"); }
                     //msg
                     GameManager.instance.messageScript.NpcOngoing("Npc arrives onMap", npc);
+                    //tracer
+                    if (npc.currentNode.isTracer == true)
+                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
             }
@@ -475,6 +478,9 @@ public class MissionManager : MonoBehaviour
                                     npc.currentStartNode.nodeID, npc.currentEndNode.nodeName, npc.currentEndNode.Arc.name, npc.currentEndNode.nodeID, "\n");
                                 //msg
                                 GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                                //tracer
+                                if (npc.currentNode.isTracer == true)
+                                { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                             }
                             else
                             {
@@ -513,6 +519,9 @@ public class MissionManager : MonoBehaviour
                                         npc.tag, node.nodeName, node.Arc.name, node.nodeID, npc.timerTurns, "\n");
                                     //msg
                                     GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                                    //tracer
+                                    if (npc.currentNode.isTracer == true)
+                                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                                 }
                                 else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
                             }
@@ -528,6 +537,9 @@ public class MissionManager : MonoBehaviour
                 Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", npc.tag, rnd, npc.moveChance, npc.timerTurns, "\n");
                 //msg
                 GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                //tracer
+                if (npc.currentNode.isTracer == true)
+                { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
             }
             //tracker
             AddTrackerRecord(npc);

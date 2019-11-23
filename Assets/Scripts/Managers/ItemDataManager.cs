@@ -754,7 +754,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
-        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
+        builder.AppendFormat("<b>{0} {1}, {2}{3}{4},</b> {5} that they {6} a{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         //only add a time stamp if nemesis is capable of multiple moves within a single turn
@@ -777,7 +777,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
-        builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4} {5} that they {6} the{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
+        builder.AppendFormat("<b>{0} {1}, {2}{3}{4}</b>, {5} that they {6} the{7}{8}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, textAction, "\n", "\n");
         builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, npc.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
         return builder.ToString();
@@ -889,7 +889,6 @@ public class ItemDataManager : MonoBehaviour
         //only add a time stamp if nemesis is capable of multiple moves within a single turn
         if (nemesis.movement > 1)
         { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber)); }
-        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));*/
         return builder.ToString();
     }
 
@@ -904,8 +903,20 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>{0} Team</b> detected by {1}<b>Tracer</b>{2}{3}{4}", team.arc.name, colourNeutral, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Rebel HQ</b> warn of {0}<b>danger to yourself</b>{1} and advise that you avoid the district{2}{3}", colourBad, colourEnd, "\n", "\n");
-        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
-        /*builder.AppendFormat("<b>{0}</b>", GetConfidenceLevel(3));*/
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// A resistance tracer detectst the presence of an Npc
+    /// </summary>
+    /// <param name="npc"></param>
+    /// <returns></returns>
+    public string GetTracerNpcSpottedDetails(Npc npc)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>The {0}{1}{2}</b> detected by {3}<b>Tracer</b>{4}{5}{6}", colourAlert, npc.tag, colourEnd, colourNeutral, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", npc.currentNode.nodeName, colourAlert, npc.currentNode.Arc.name, colourEnd);
         return builder.ToString();
     }
 
@@ -2199,7 +2210,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetNpcInteractDetails(Npc npc)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>After {0}{1}{2} days, you found the {3}{4}{5} at {6}</b>{7}{8}", colourNeutral, npc.daysActive, colourEnd, colourAlert, npc.tag, colourEnd, npc.currentNode.nodeID, "\n", "\n");
+        builder.AppendFormat("<b>After {0}{1}{2} days, you found the {3}{4}{5} at {6}</b>{7}{8}", colourNeutral, npc.daysActive, colourEnd, colourAlert, npc.tag, colourEnd, npc.currentNode.nodeName, "\n", "\n");
         builder.AppendFormat("<b>You managed to {0}{1}{2}</b>{3}{4}", colourAlert, npc.action.activity, colourEnd, "\n", "\n");
         builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsGood(npc));
         return builder.ToString();
