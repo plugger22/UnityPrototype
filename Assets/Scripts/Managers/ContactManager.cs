@@ -895,8 +895,8 @@ public class ContactManager : MonoBehaviour
                         {
                             for (int i = 0; i < listOfContacts.Count; i++)
                             {
-                                builder.AppendFormat("   id {0}, {1} {2}, {3}, {4}, actID {5}{6}", listOfContacts[i].contactID, listOfContacts[i].nameFirst, listOfContacts[i].nameLast, listOfContacts[i].job,
-                                  listOfContacts[i].status, listOfContacts[i].actorID, "\n");
+                                builder.AppendFormat("   id {0}, {1} {2}, {3}, {4}, actID {5}, E {6}{7}", listOfContacts[i].contactID, listOfContacts[i].nameFirst, listOfContacts[i].nameLast, 
+                                    listOfContacts[i].job, listOfContacts[i].status, listOfContacts[i].actorID, listOfContacts[i].effectiveness, "\n");
                             }
                         }
                         else { builder.AppendFormat(" Invalid listOfContacts (Null){0}", "\n"); }

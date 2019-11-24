@@ -25,8 +25,8 @@ public class MissionManager : MonoBehaviour
     private string colourGood;
     private string colourBad;
     private string colourNeutral;
-    private string colourNormal;
-    private string colourDefault;
+    /*private string colourNormal;
+    private string colourDefault;*/
     private string colourAlert;
     private string colourGrey;
     /*private string colourCancel;*/
@@ -125,8 +125,8 @@ public class MissionManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);*/
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         /*colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
@@ -748,6 +748,43 @@ public class MissionManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("No valid effects present for Npc \"{0}\", isGood {1}", npc.tag, isGood); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// Load Saved Npc data
+    /// </summary>
+    /// <param name="npcSave"></param>
+    public void SetNpcLoadData(SaveNpc npc)
+    {
+        if (npc != null)
+        {
+            if (npc != null)
+            {
+                mission.npc.status = npc.status;
+                mission.npc.timerTurns = npc.timerTurns;
+                mission.npc.daysActive = npc.daysActive;
+                //Nodes -> if '-1' then values are null
+                if (npc.startNodeID > -1)
+                { mission.npc.currentStartNode = GameManager.instance.dataScript.GetNode(npc.startNodeID); }
+                else
+                {
+                    mission.npc.currentStartNode = null;
+                    Debug.LogWarning("Invalid Npc currentStartNode (Null)");
+                }
+                if (npc.endNodeID > -1)
+                { mission.npc.currentEndNode = GameManager.instance.dataScript.GetNode(npc.endNodeID); }
+                else
+                {
+                    mission.npc.currentEndNode = null;
+                    Debug.LogWarning("Invalid Npc currentEndNode (Null)");
+                }
+                //O.K for currentNode to be Null
+                if (npc.currentNodeID > -1)
+                { mission.npc.currentNode = GameManager.instance.dataScript.GetNode(npc.currentNodeID); }
+                else { mission.npc.currentNode = null; }
+            }
+            else { Debug.LogError("Invalid npcSave (Null)"); }
+        }
     }
 
     //new methods above here

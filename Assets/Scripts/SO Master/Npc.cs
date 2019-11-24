@@ -53,13 +53,14 @@ public class Npc : ScriptableObject
     [Tooltip("Bad effects that happen if you fail to interact with Npc before they depart")]
     public List<Effect> listOfBadEffects;
 
-
+    #region Save Compatible Data
     [HideInInspector] public NpcStatus status;              //current status
     [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
     [HideInInspector] public Node currentNode;              //where Npc is now
     [HideInInspector] public int daysActive;                //tally of days spent in City
+    #endregion
 
 
     public void OnEnable()
@@ -71,5 +72,6 @@ public class Npc : ScriptableObject
         Debug.AssertFormat(nodeEnd != null, "Invalid nodeEnd (Null) for {0}", name);
         Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);
     }
+
 }
 

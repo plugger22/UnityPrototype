@@ -188,6 +188,7 @@ public class FileManager : MonoBehaviour
                 GameManager.instance.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();
                 ReadNodeData();
+                ReadNpcData();
                 ReadConnectionData();
                 ReadNemesisData();
                 ReadGearData();
@@ -221,6 +222,26 @@ public class FileManager : MonoBehaviour
         write.campaignData.campaignName = GameManager.instance.campaignScript.campaign.name;
         write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
+        //Npc
+        Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
+        if (npc != null)
+        {
+            write.campaignData.npc = new SaveNpc();
+            write.campaignData.npc.status = npc.status;
+            write.campaignData.npc.timerTurns = npc.timerTurns;
+            write.campaignData.npc.daysActive = npc.daysActive;
+            //Nodes -> assign -1 if null (which is valid data)
+            if (npc.currentStartNode != null)
+            { write.campaignData.npc.startNodeID = npc.currentStartNode.nodeID; }
+            else { write.campaignData.npc.startNodeID = -1; }
+            if (npc.currentEndNode != null)
+            { write.campaignData.npc.endNodeID = npc.currentEndNode.nodeID; }
+            else { write.campaignData.npc.endNodeID = -1; }
+            if (npc.currentNode != null)
+            { write.campaignData.npc.currentNodeID = npc.currentNode.nodeID; }
+            else { write.campaignData.npc.currentNodeID = -1; }
+        }
+        else { write.campaignData.npc = null; }
     }
     #endregion
 
@@ -1634,6 +1655,21 @@ public class FileManager : MonoBehaviour
         GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
         //arrayOfStoryStatus
         GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
+        /*//mission
+        GameManager.instance.campaignScript.SetMission();*/
+    }
+    #endregion
+
+
+    #region Read Npc Data
+    /// <summary>
+    /// Separate from ReadCampaignData for sequencing issues (needs to be after ReadNodeData)
+    /// </summary>
+    private void ReadNpcData()
+    {
+        //npc
+        if (read.campaignData.npc != null)
+        { GameManager.instance.missionScript.SetNpcLoadData(read.campaignData.npc); }
     }
     #endregion
 

@@ -4522,7 +4522,7 @@ public class MessageManager : MonoBehaviour
             message.dataName = npc.tag;
             //ItemData
             ItemData data = new ItemData();
-            data.topText = string.Format("{0} Arrives", npc.tag);
+            data.topText = "HQ Notification";
             data.bottomText = GameManager.instance.itemDataScript.GetNpcArrivalDetails(npc);
             data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
             data.priority = ItemPriority.Medium;
@@ -4571,7 +4571,7 @@ public class MessageManager : MonoBehaviour
             message.dataName = npc.tag;
             //ItemData
             ItemData data = new ItemData();
-            data.topText = string.Format("{0} Departs", npc.tag);
+            data.topText = "HQ Notification";
             data.bottomText = GameManager.instance.itemDataScript.GetNpcDepartDetails(npc);
             data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
             data.priority = ItemPriority.Medium;

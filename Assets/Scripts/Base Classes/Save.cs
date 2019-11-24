@@ -45,6 +45,7 @@ public class SaveCampaignData
     public string campaignName;
     public int scenarioIndex;
     public int[] arrayOfStoryStatus;
+    public SaveNpc npc;
 }
 #endregion
 
@@ -767,6 +768,22 @@ public class SaveCure
     public string cureName;
     public bool isActive;
     public bool isOrgCure;
+}
+#endregion
+
+#region SaveNpc
+/// <summary>
+/// Npc.SO dynamic data (for single Npc in current mission)
+/// </summary>
+[System.Serializable]
+public class SaveNpc
+{
+    public NpcStatus status;
+    public int timerTurns;
+    public int startNodeID;
+    public int endNodeID;
+    public int currentNodeID;
+    public int daysActive;
 }
 #endregion
 

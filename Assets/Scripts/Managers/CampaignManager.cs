@@ -225,6 +225,30 @@ public class CampaignManager : MonoBehaviour
         else { Debug.LogError("Invalid storyArray parameter (Null)"); }
     }
 
+    /*/// <summary>
+    /// sets mission from loaded save data
+    /// </summary>
+    public void SetMission()
+    {
+        switch (campaign.side.level)
+        {
+            case 1:
+                //Authority mission
+                if (scenario.missionAuthority != null)
+                { GameManager.instance.missionScript.mission = scenario.missionAuthority; }
+                break;
+            case 2:
+                //Resistance mission
+                if (scenario.missionResistance != null)
+                { GameManager.instance.missionScript.mission = scenario.missionResistance; }
+                else { Debug.LogError("Invalid Resistance mission (Null) for scenario"); }
+                break;
+            default:
+                Debug.LogErrorFormat("Unrecognised campaign side {0}", campaign.side.name);
+                break;
+        }
+    }*/
+
 
     /// <summary>
     /// Debug display
@@ -345,7 +369,7 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
         //Npc
-        if (mission.npc != null)
+        if (GameManager.instance.missionScript.mission.npc != null)
         {
             builder.AppendFormat("{0}{1}-Npc{2}", "\n", "\n", "\n");
             builder.AppendFormat(" Npc Name: {0}{1}", mission.npc.tag, "\n");
@@ -371,7 +395,7 @@ public class CampaignManager : MonoBehaviour
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
             }
         }
-            return builder.ToString();
+        return builder.ToString();
     }
 
     //new methods above here
