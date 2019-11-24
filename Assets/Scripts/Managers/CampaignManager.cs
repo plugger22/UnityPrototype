@@ -225,7 +225,7 @@ public class CampaignManager : MonoBehaviour
         else { Debug.LogError("Invalid storyArray parameter (Null)"); }
     }
 
-    /*/// <summary>
+    /// <summary>
     /// sets mission from loaded save data
     /// </summary>
     public void SetMission()
@@ -247,7 +247,7 @@ public class CampaignManager : MonoBehaviour
                 Debug.LogErrorFormat("Unrecognised campaign side {0}", campaign.side.name);
                 break;
         }
-    }*/
+    }
 
 
     /// <summary>

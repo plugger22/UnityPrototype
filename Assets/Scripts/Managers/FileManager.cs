@@ -1655,8 +1655,8 @@ public class FileManager : MonoBehaviour
         GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
         //arrayOfStoryStatus
         GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
-        /*//mission
-        GameManager.instance.campaignScript.SetMission();*/
+        //mission
+        GameManager.instance.campaignScript.SetMission();
     }
     #endregion
 
