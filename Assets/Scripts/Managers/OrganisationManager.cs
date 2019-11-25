@@ -9,10 +9,10 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class OrganisationManager : MonoBehaviour
 {
-    [Tooltip("Base % chance of an organisation being present in a city")]
+    /*[Tooltip("Base % chance of an organisation being present in a city")] //redundant
     [Range(0, 100)] public int baseCityChance = 20;
-    [Tooltip("Chance of org in city -> baseCityChance + perNodeChance x number of preferred nodes in city")]
-    [Range(0, 10)] public int perNodeChance = 5;
+    [Tooltip("Chance of org in city -> baseCityChance + perNodeChance x number of preferred nodes in city")] //redundant
+    [Range(0, 10)] public int perNodeChance = 5;*/
 
 
     /// <summary>
@@ -182,7 +182,7 @@ public class OrganisationManager : MonoBehaviour
     }
 
 
-    /// <summary>
+    /*/// <summary>
     /// Initialises organisations in a city. 
     /// </summary>
     /// <param name="city"></param>
@@ -218,7 +218,7 @@ public class OrganisationManager : MonoBehaviour
             else { Debug.LogError("Invalid city.listOfDistrictTotals (Null)"); }
         }
         else { Debug.LogError("Invalid city (Null)"); }
-    }
+    }*/
 
     /// <summary>
     /// Debug method to toggle (eg. isContact = true/false) all current organisations

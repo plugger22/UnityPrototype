@@ -3750,6 +3750,7 @@ public class AIManager : MonoBehaviour
             {
                 isSuccess = actor.RemoveCondition(conditionStressed, "due to Stress Leave");
                 text = string.Format("{0}, {1}, takes Stress Leave", actor.actorName, actor.arc.name);
+                actor.numOfTimesStressLeave++;
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }

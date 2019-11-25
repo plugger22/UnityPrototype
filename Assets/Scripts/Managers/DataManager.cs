@@ -4709,6 +4709,11 @@ public class DataManager : MonoBehaviour
                                 if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
                                 { numOfActors++; }
                                 break;
+                            case ActorCheck.ActorConflictTimerNOTZero:
+                                //actor conflictTimer not Zero
+                                if (actor.conflictTimer > 0)
+                                { numOfActors++; }
+                                break;
                             case ActorCheck.NodeActionsNOTZero:
                                 //actor with listOfNodeActions.Count > 0 && the actors most recent NodeActivity has valid topics present
                                 if (actor.CheckNumOfNodeActions() != 0)
@@ -5032,6 +5037,50 @@ public class DataManager : MonoBehaviour
                             }
                         }
                         else { builder.AppendFormat("  no records present{0}", "\n"); }
+                        builder.AppendLine();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug method to display actor's details (OnMap actors only)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorDetails()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format(" Actor Details{0}{1}", "\n", "\n"));
+
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.AppendFormat("- {0}, {1}, ID {2}, slotID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                        builder.AppendFormat(" status: {0}{1}", actor.Status, "\n");
+                        builder.AppendFormat(" unhappyTimer: {0}{1}", actor.unhappyTimer, "\n");
+                        builder.AppendFormat(" blackmailTimer: {0}{1}", actor.blackmailTimer, "\n");
+                        builder.AppendFormat(" captureTimer: {0}{1}", actor.captureTimer, "\n");
+                        builder.AppendFormat(" conflictTimer: {0}{1}", actor.conflictTimer, "\n");
+                        builder.AppendFormat(" isTraitor: {0}{1}", actor.isTraitor, "\n");
+                        builder.AppendFormat(" isThreatening: {0}{1}", actor.isThreatening, "\n");
+                        builder.AppendFormat(" numOfTimesBullied: {0}{1}", actor.numOfTimesBullied, "\n");
+                        builder.AppendFormat(" numOfTimesCaptured: {0}{1}", actor.numOfTimesCaptured, "\n");
+                        builder.AppendFormat(" numOfTimesBreakdown: {0}{1}", actor.numOfTimesBreakdown, "\n");
+                        builder.AppendFormat(" numOfTimesStressLeave: {0}{1}", actor.numOfTimesStressLeave, "\n");
+                        builder.AppendFormat(" numOfDaysStressed: {0}{1}", actor.numOfDaysStressed, "\n");
+                        builder.AppendFormat(" numOfDaysLieLow: {0}{1}", actor.numOfDaysLieLow, "\n");
                         builder.AppendLine();
                     }
                 }

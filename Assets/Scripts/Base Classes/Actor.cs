@@ -20,12 +20,12 @@ namespace gameAPI
         [HideInInspector] public int hqID;                      //unique ID used for HQ actors, -1 default
         [HideInInspector] public int level;                     //1 (worst) to 3 (best). level 1 are start actors, level 2 are recruited, level 3 are special
         [HideInInspector] public int nodeCaptured;              //node where actor was captured (took an action), default '-1'
+        //timers
         [HideInInspector] public int unhappyTimer;              //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
         [HideInInspector] public int captureTimer;              //ticks down and determines how long an actor will be inactive while captured
-        [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
-        [HideInInspector] public int numOfTimesCaptured;        //chance of becoming a traitor increases for each time captured
-        [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
+        [HideInInspector] public int conflictTimer;             //Set to global value whenever a Relationship Conflict and ticks down each turn. Whilever > 0, Player assumed to be 'having trouble' with actor
+        //states
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
         [HideInInspector] public bool isReassured;              //true if actor has been reassured, false if not (can only be reassured once)
@@ -35,6 +35,7 @@ namespace gameAPI
         [HideInInspector] public bool isLieLowFirstturn;        //set true when lie low action, prevents invis incrementing on first turn
         [HideInInspector] public bool isStressLeave;            //set true to ensure actor spends one turn inactive on stress leave
         [HideInInspector] public bool isTraitor;                //set true to be a traitor (determined at time of release from captivity)
+        //other
         [HideInInspector] public string actorName;              //complete name
         [HideInInspector] public string firstName;              //first name
         [HideInInspector] public ActorArc arc;
@@ -42,6 +43,15 @@ namespace gameAPI
         [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive
         [HideInInspector] public ActorHQ statusHQ;               //status if in HQ, otherwise 'None'
         [HideInInspector] public ActorSex sex;
+        //stats
+        [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
+        [HideInInspector] public int numOfTimesCaptured;        //chance of becoming a traitor increases for each time captured
+        [HideInInspector] public int numOfTimesBreakdown;       //tally of times actor suffered a breakdown
+        [HideInInspector] public int numOfTimesStressLeave;     //tally of times actor took stress leave (one day duration)
+        [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
+        [HideInInspector] public int numOfDaysStressed;         //tally of days spent stressed (excludes breakdown & stress leave days)
+        [HideInInspector] public int numOfDaysLieLow;           //tally of days spent lying low
+
         //sprite
         [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
@@ -124,6 +134,8 @@ namespace gameAPI
             gearTimer = 0;
             gearTimesTaken = 0;
             blackmailTimer = 0;
+            conflictTimer = 0;
+            captureTimer = 0;
             numOfTimesBullied = 0;
             personality = new Personality();
             //call only if a new session
@@ -159,6 +171,7 @@ namespace gameAPI
             isReassured = false;
             isThreatening = false;
             isComplaining = false;
+            conflictTimer = 0;
         }
 
         //

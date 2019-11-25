@@ -99,7 +99,7 @@
     public enum ActorCheck {      //DataManager.cs -> CheckNumOfActiveActorsSpecial
         None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero,
         PersonalGearYes, PersonalGearNo,
-        ActorContactMin, ActorContactNOTMax,
+        ActorContactMin, ActorContactNOTMax, ActorConflictTimerNOTZero,
         RenownMore, RenownLess, KnowsSecret, KnowsNothing
     }
 

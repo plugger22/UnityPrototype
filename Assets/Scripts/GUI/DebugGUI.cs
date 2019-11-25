@@ -194,7 +194,8 @@ public class DebugGUI : MonoBehaviour
                     case 3: debugDisplay = 74; actorToggle = 4; break;
                     case 4: debugDisplay = 68; actorToggle = 5; break;
                     case 5: debugDisplay = 69; actorToggle = 6; break;
-                    case 6: debugDisplay = 0; actorToggle = 0; break;
+                    case 6: debugDisplay = 80; actorToggle = 7; break;
+                    case 7: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -1647,6 +1648,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugShowNpcMoves();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        break;
+                    //Actor (Current) Details
+                    case 80:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorDetails();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                 }
             }

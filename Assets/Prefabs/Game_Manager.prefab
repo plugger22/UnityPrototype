@@ -671,8 +671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6d8b7626270e748aa965e2da0298ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCityChance: 20
-  perNodeChance: 5
 --- !u!114 &114339811107641630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -933,6 +931,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
   - {fileID: 11400000, guid: 39acceaf5fc8d334b98fcda1155bb188, type: 2}
   - {fileID: 11400000, guid: 051d2ef9c807afc4b94aa9f11428435e, type: 2}
+  - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1095,6 +1094,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71944b8ccf0350e48b9c87951d838cb9, type: 2}
   - {fileID: 11400000, guid: b2739ef1aff07c643aa03048c5f34ae6, type: 2}
   - {fileID: 11400000, guid: 129c79ae6551dca44bc10cf7eeaeaaaf, type: 2}
+  - {fileID: 11400000, guid: dfcdcbab984a7834f84e9bf7d8ba7953, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -4114,6 +4114,7 @@ MonoBehaviour:
   motivationGainActiveDuty: 2
   dismissQuestionableChance: 15
   renownCostGear: 1
+  conflictTimerStart: 8
   breakdownChance: 20
   superStressChance: 80
   playerRecognisedChance: 20
@@ -4448,7 +4449,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 2
+  autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

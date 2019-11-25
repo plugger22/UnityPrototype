@@ -175,35 +175,35 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Faction Support
+        #region HQ Support
         //
-        // - - - Faction Support
+        // - - - HQ Support
         //
         //overview
         data = new HelpData();
-        data.tag = "fact_supp_0";
+        data.tag = "hq_supp_0";
         data.header = "Faction Support";
         builder = new StringBuilder();
-        builder.AppendFormat("At the start of each turn your Faction decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
-        builder.AppendFormat("The chance of it doing so depends on your level of {0}Faction Support{1}. ", colourAlert, colourEnd);
+        builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
+        builder.AppendFormat("The chance of it doing so depends on your level of {0}HQ Approval{1}. ", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //chance
         data = new HelpData();
-        data.tag = "fact_supp_1";
+        data.tag = "hq_supp_1";
         data.header = "Chance of Support";
         builder = new StringBuilder();
-        builder.AppendFormat("The better your {0}relationship{1} with your faction, the greater the chance of support. ", colourAlert, colourEnd);
-        builder.AppendFormat("Support is given if a ten sided die (1d10) is {0}less than{1} your level of Faction Approval (top centre)", colourAlert, colourEnd);
+        builder.AppendFormat("The better your {0}relationship{1} with your HQ, the greater the chance of support. ", colourAlert, colourEnd);
+        builder.AppendFormat("Support is given if a ten sided die (1d10) is {0}less than{1} your level of HQ Approval (top centre)", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //tip
         data = new HelpData();
-        data.tag = "fact_supp_2";
+        data.tag = "hq_supp_2";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         builder = new StringBuilder();
         builder.AppendFormat("Renown is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
-        builder.AppendFormat("Your main source of Renown is from the support of your Faction. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
+        builder.AppendFormat("Your main source of Renown is from the support of your HQ. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion

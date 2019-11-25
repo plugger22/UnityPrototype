@@ -71,6 +71,8 @@ public class ActorManager : MonoBehaviour
     [Header("Assorted")]
     [Tooltip("Renown cost for negating a bad gear use roll")]
     [Range(1, 3)] public int renownCostGear = 1;
+    [Tooltip("The duration of actor.conflictTimer once a Relationship Conflict is initiated (ticks down to zero on subsequent turns)")]
+    [Range(0, 10)] public int conflictTimerStart = 8;
 
     [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
@@ -4021,7 +4023,6 @@ public class ActorManager : MonoBehaviour
             //trait -> Team Player (avoids conflicts)
             if (actor.CheckTraitEffect(actorConflictNone) == false)
             {
-
                 GlobalType typeGood = GameManager.instance.globalScript.typeGood;
                 List<ActorConflict> listSelectionPool = new List<ActorConflict>();
                 Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
@@ -4158,6 +4159,10 @@ public class ActorManager : MonoBehaviour
                             }
                             //Statistics (counts conflict regardless of outcome of conflict)
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
+                            //set conflictTimer
+                            actor.conflictTimer = conflictTimerStart;
+                            Debug.LogFormat("[Sta] ActorManager.cs -> ProcessActorConflict: {0}, {1}, ID {2} conflictTimer set to {3}{4}", actor.actorName, actor.arc.name,
+                                actor.actorID, actor.conflictTimer, "\n");
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -4769,6 +4774,7 @@ public class ActorManager : MonoBehaviour
                                         {
                                             actor.SetDatapoint(ActorDatapoint.Invisibility2, invis);
                                             GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
+                                            actor.numOfDaysLieLow++;
                                         }
                                         break;
                                     case ActorInactive.Breakdown:
@@ -4791,6 +4797,7 @@ public class ActorManager : MonoBehaviour
                                             text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
                                             GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalResistance);
                                             actor.RemoveCondition(conditionStressed, "due to Stress Leave");
+                                            actor.numOfTimesStressLeave++;
                                         }
                                         else { actor.isStressLeave = false; }
                                         break;
@@ -4902,6 +4909,7 @@ public class ActorManager : MonoBehaviour
                                             actor.SetDatapoint(ActorDatapoint.Invisibility2, invis);
                                             //stats
                                             GameManager.instance.dataScript.StatisticIncrement(StatType.LieLowDaysTotal);
+                                            actor.numOfDaysLieLow++;
                                         }
                                         break;
                                     case ActorInactive.Breakdown:
@@ -5083,6 +5091,16 @@ public class ActorManager : MonoBehaviour
                                         }
                                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearName); }
                                     }
+                                }
+                                //
+                                // - - - Conflict timers
+                                //
+                                if (actor.conflictTimer > 0)
+                                {
+                                    //decrement timer
+                                    actor.conflictTimer--;
+                                    Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveResistanceActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
+                                        actor.actorID, actor.conflictTimer, "\n");
                                 }
                             }
                         }
@@ -5335,6 +5353,16 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
                                 }
+                                //
+                                // - - - Conflict timers
+                                //
+                                if (actor.conflictTimer > 0)
+                                {
+                                    //decrement timer
+                                    actor.conflictTimer--;
+                                    Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveAuthorityActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
+                                        actor.actorID, actor.conflictTimer, "\n");
+                                }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
@@ -5550,6 +5578,8 @@ public class ActorManager : MonoBehaviour
     /// <returns></returns>
     private void ProcessStress(Actor actor, int chance, bool isPlayer)
     {
+        //stats
+        actor.numOfDaysStressed++;
         //enforces a minimum one turn gap between successive breakdowns
         if (actor.isBreakdown == false)
         {
@@ -5993,6 +6023,7 @@ public class ActorManager : MonoBehaviour
                                         text = string.Format("{0}, {1}, has returned from their Stress Leave", actor.actorName, actor.arc.name);
                                         GameManager.instance.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", actor.actorID, globalAuthority);
                                         actor.RemoveCondition(conditionStressed, "due to Stress Leave");
+                                        actor.numOfTimesStressLeave++;
                                     }
                                     else { actor.isStressLeave = false; }
                                     break;
@@ -6018,6 +6049,7 @@ public class ActorManager : MonoBehaviour
             actor.inactiveStatus = ActorInactive.Breakdown;
             actor.tooltipStatus = ActorTooltip.Breakdown;
             actor.isBreakdown = true;
+            actor.numOfTimesBreakdown++;
             //change alpha of actor to indicate inactive status
             GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.instance.guiScript.alphaInactive);
             //message (public)
