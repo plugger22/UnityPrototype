@@ -3904,6 +3904,11 @@ MonoBehaviour:
   conditionTurnResistance: -1
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
+  actorSlotID: 1
+  actorType: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  actorDatapoint0: -1
+  actorDatapoint1: -1
+  actorDatapoint2: -1
   orgReputation: 2
   orgFreedom: 2
   testRatioPlayNodeAct: 0

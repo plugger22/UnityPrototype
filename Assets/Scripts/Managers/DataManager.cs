@@ -4390,6 +4390,42 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets an actor of the specified type from the specified pool (removes from recruit pool). Returns null if actor type not present or a problem
+    /// </summary>
+    /// <param name="arc"></param>
+    /// <param name="level"></param>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Actor GetActorFromRecruitPool(ActorArc arc, int level, GlobalSide side)
+    {
+        Debug.AssertFormat(level > 0 && level < 4, "Invalid level \"{0}\" (should be 1 to 3)", level);
+        Actor actor = null;
+        List<int> listOfRecruitPool = GetActorRecruitPool(level, side);
+        if (listOfRecruitPool != null)
+        {
+            //loop list looking for first instance of arc
+            for (int i = 0; i < listOfRecruitPool.Count; i++)
+            {
+                Actor actorCheck = GetActor(listOfRecruitPool[i]);
+                if (actorCheck != null)
+                {
+                    //correct arc?
+                    if (actorCheck.arc.name.Equals(arc.name, StringComparison.Ordinal) == true)
+                    {
+                        actor = actorCheck;
+                        //remove actor from pool
+                        RemoveActorFromPool(actorCheck.actorID, 1, side);
+                        break;
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}, index {1}", listOfRecruitPool[i], i); }
+            }
+        }
+        else { Debug.LogErrorFormat("Invalid recruit pool (Null) for level {0} and side {1}", level, side.name); }
+        return actor;
+    }
+
+    /// <summary>
     /// Get array of OnMap (active and inactive) actors for a specified side
     /// </summary>
     /// <returns></returns>

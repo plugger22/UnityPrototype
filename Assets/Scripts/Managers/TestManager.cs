@@ -36,6 +36,18 @@ public class TestManager : MonoBehaviour
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
 
+    [Header("Specify an Actor (Player Side)")]
+    [Tooltip("slotID (0 -3) of actor you want to specify. Leave as '-1' (default) for no effect. All changes made at start")]
+    [Range(-1, 3)] public int actorSlotID = -1;
+    [Tooltip("The type of actor you want them to be, leave as 'None' for random. If type not present existing actor will be placed in Reserves and a new actor of required type will replace them")]
+    public ActorArc actorType;
+    [Tooltip("Value you want for actor's datapoint0 -> Influence/Connections, leave as '-1' for random, normal, value")]
+    [Range(-1, 3)] public int actorDatapoint0 = -1;
+    [Tooltip("Value you want for actor's datapoint1 -> Motivation, leave as '-1' for random, normal, value")]
+    [Range(-1, 3)] public int actorDatapoint1 = -1;
+    [Tooltip("Value you want for actor's datapoint2 -> Ability/Invisibility, leave as '-1' for random, normal, value")]
+    [Range(-1, 3)] public int actorDatapoint2 = -1;
+
     [Header("Organisations")]
     [Tooltip("Default starting Organisation Reputation (Player's rep with Org)")]
     public int orgReputation = 2;

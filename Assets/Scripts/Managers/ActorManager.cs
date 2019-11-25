@@ -381,6 +381,8 @@ public class ActorManager : MonoBehaviour
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
         InitialisePoolActors();
+        //Debug settings
+        DebugTest();
         //set actor alpha to active for all onMap slots
         GameManager.instance.actorPanelScript.SetActorsAlphaActive();
     }
@@ -6369,7 +6371,7 @@ public class ActorManager : MonoBehaviour
                     //
 
                     if (GameManager.instance.playerScript.stressImmunityCurrent > 0)
-                    { 
+                    {
                         //decrement immune period
                         GameManager.instance.playerScript.stressImmunityCurrent--;
                         //message
@@ -7889,6 +7891,111 @@ public class ActorManager : MonoBehaviour
         //admin
         if (string.IsNullOrEmpty(reason) == true) { reason = "for reasons Unknown"; }
         Debug.LogFormat("[Act] ActorManager.cs -> AddActorToHQ: {0}, {1}, actID {2}, hqID {3}, moved to HQ {4}{5}", actor.actorName, actor.arc.name, actor.actorID, actor.hqID, reason, "\n");
+    }
+
+    /// <summary>
+    /// Checks TestManager.cs for any relevant debug test settings that may require changes to actors (PlayerSide only) at startUp
+    /// Can request a particular actor Arc type in the line up and/or a particular slotID actor having specified dataPoint settings
+    /// </summary>
+    private void DebugTest()
+    {
+        int slotID = GameManager.instance.testScript.actorSlotID;
+        if (slotID > -1)
+        {
+            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+            //Actor type specified
+            if (GameManager.instance.testScript.actorType != null)
+            {
+                ActorArc arc = GameManager.instance.testScript.actorType;
+                //check correct arc for playerSide
+                if (arc.side.level == playerSide.level)
+                {
+                    //check if that type of actor already exists in current line up
+                    if (GameManager.instance.dataScript.CheckActorArcPresent(arc, playerSide, true) == false)
+                    {
+                        //remove existing actor at specified slot. Place in Reserves
+                        if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, playerSide) == true)
+                        {
+                            Actor currentActor = GameManager.instance.dataScript.GetCurrentActor(slotID, playerSide);
+                            if (currentActor != null)
+                            {
+                                //place current actor in reserves
+                                if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, currentActor, ActorStatus.Reserve) == true)
+                                {
+                                    currentActor.unhappyTimer = 10;
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} moved to Reserves (Swap Actor){3}",
+                                        currentActor.actorName, currentActor.arc.name, currentActor.actorID, "\n");
+                                    //select a new actor from Recruit Pool of the specified type and put in OnMap lineUp
+                                    Actor actorNew = GameManager.instance.dataScript.GetActorFromRecruitPool(arc, 1, playerSide);
+                                    if (actorNew != null)
+                                    {
+                                        //place actor on Map (reset states and sets up contacts)
+                                        GameManager.instance.dataScript.AddCurrentActor(playerSide, actorNew, slotID);
+                                        Debug.LogFormat("[Tst] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} added to OnMap lineUp (Swap Actor){3}",
+                                            actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
+                                        //Authority Actor brings team with them (if space available)
+                                        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                                        {
+                                            //is there room available for another team?
+                                            if (GameManager.instance.aiScript.CheckNewTeamPossible() == true)
+                                            {
+                                                TeamArc teamArc = actorNew.arc.preferredTeam;
+                                                if (teamArc != null)
+                                                {
+                                                    if (teamArc.TeamArcID > -1)
+                                                    {
+                                                        //add new team to reserve pool
+                                                        int teamCount = GameManager.instance.dataScript.CheckTeamInfo(teamArc.TeamArcID, TeamInfo.Total);
+                                                        //update team info
+                                                        GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Reserve, +1);
+                                                        GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
+                                                    }
+                                                    else { Debug.LogWarningFormat("Invalid teamArcID {0} for {1}", teamArc.TeamArcID, teamArc.name); }
+                                                }
+                                                else
+                                                { Debug.LogWarningFormat("Invalid preferred team Arc (Null) for actorID {0}, {1}, \"{2}\"", actorNew.actorID, actorNew.arc.name, actorNew.actorName); }
+                                            }
+                                        }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid actorNew (Null) for arc {0}, level 1, side {1}", arc.name, playerSide.name); }
+                                }
+                                else { Debug.LogErrorFormat("Actor {0}, {1}, ID {2} unable to be removed successfully", currentActor.actorName, currentActor.arc.name, currentActor.actorID); }
+                            }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                        }
+                        else { Debug.LogErrorFormat("No actor present in slotID {0}", slotID); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid Arc \"{0}\" (Incorrect arc for playerSide {1})", arc.name, playerSide); }
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, playerSide);
+                if (actor != null)
+                {
+                    //adjust dataPoints if necessary. Note SetDatapointLoad is used, instead of SetDatapoint, to avoid actor Personality negating change
+                    int value = GameManager.instance.testScript.actorDatapoint0;
+                    if (value > -1)
+                    {
+                        actor.SetDatapointLoad(ActorDatapoint.Datapoint0, value);
+                        Debug.LogFormat("[Sta] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} {3} set to {4} for Testing{5}", actor.actorName, actor.arc.name, actor.actorID,
+                            GameManager.instance.dataScript.GetQuality(playerSide, 0), value, "\n");
+                    }
+                    value = GameManager.instance.testScript.actorDatapoint1;
+                    if (value > -1)
+                    {
+                        actor.SetDatapointLoad(ActorDatapoint.Datapoint1, value);
+                        Debug.LogFormat("[Sta] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} {3} set to {4} for Testing{5}", actor.actorName, actor.arc.name, actor.actorID,
+                            GameManager.instance.dataScript.GetQuality(playerSide, 1), value, "\n");
+                    }
+                    value = GameManager.instance.testScript.actorDatapoint2;
+                    if (value > -1)
+                    {
+                        actor.SetDatapointLoad(ActorDatapoint.Datapoint2, value);
+                        Debug.LogFormat("[Sta] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} {3} set to {4} for Testing{5}", actor.actorName, actor.arc.name, actor.actorID,
+                            GameManager.instance.dataScript.GetQuality(playerSide, 2), value, "\n");
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}, side {1}", slotID, playerSide.name); }
+            }
+        }
     }
 
     //new methods above here

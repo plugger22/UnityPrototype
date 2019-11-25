@@ -22303,3 +22303,87 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
 	
+Dev seed 34090 -> Tuesday, 26 November 2019 9:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63922 -> Tuesday, 26 November 2019 9:50 AM
+ERROR Invalid Status "RecruitPool" for OBSERVER, LeAnn Young, ID 1
+UnityEngine.Debug:LogError(Object)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3927)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:7921)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:385)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:813)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:360)
+	ERROR Actor LeAnn Young, OBSERVER, ID 1 unable to be removed successfully
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:7963)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:385)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:813)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:360)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 31392 -> Tuesday, 26 November 2019 10:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27482 -> Tuesday, 26 November 2019 10:01 AM
+City seed 5678 -> London, United Kingdom
+WARNING No valid effects present for Npc "Dealer", isGood False
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:ProcessEffects(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:752)
+	MissionManager:ProcessNpcDepart(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:561)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:471)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:303)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:109)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	
+Dev seed 59871 -> Tuesday, 26 November 2019 10:01 AM
+City seed 5678 -> London, United Kingdom
+WARNING No valid effects present for Npc "Dealer", isGood False
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:ProcessEffects(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:752)
+	MissionManager:ProcessNpcDepart(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:561)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:471)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:303)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:109)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	
+Dev seed 5083 -> Tuesday, 26 November 2019 10:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10934 -> Tuesday, 26 November 2019 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61956 -> Tuesday, 26 November 2019 10:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18073 -> Tuesday, 26 November 2019 10:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10089 -> Tuesday, 26 November 2019 10:24 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12433 -> Tuesday, 26 November 2019 10:26 AM
+WARNING Invalid Arc "ELITES" (Incorrect arc for playerSide Resistance (GlobalSide))
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:7995)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:385)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:813)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:360)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 8349 -> Tuesday, 26 November 2019 10:35 AM
+City seed 5678 -> London, United Kingdom
