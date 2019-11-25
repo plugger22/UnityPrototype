@@ -45,6 +45,7 @@ public class SaveCampaignData
     public string campaignName;
     public int scenarioIndex;
     public int[] arrayOfStoryStatus;
+    public bool isNpc;                 //set true if NPC present, false otherwise. Needed because unable to JSON SaveNpc as a Null
     public SaveNpc npc;
 }
 #endregion
@@ -770,6 +771,7 @@ public class SaveCure
     public bool isOrgCure;
 }
 #endregion
+
 
 #region SaveNpc
 /// <summary>

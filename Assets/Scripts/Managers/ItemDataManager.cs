@@ -2181,10 +2181,10 @@ public class ItemDataManager : MonoBehaviour
             colourNeutral, npc.maxTurns, colourEnd, "\n", "\n");
         if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
         { builder.AppendFormat("<b>They will be arriving at {0}{1}{2}</b>{3}", colourNeutral, npc.nodeStart.arriving, colourEnd, "\n"); }
-        else { builder.AppendFormat("{0}<b>We don't know where they are arriving</b>{1}{2}", colourBad, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}We don't know where they are arriving{1}{2}", colourBad, colourEnd, "\n"); }
         if (string.IsNullOrEmpty(npc.nodeEnd.visiting) == false)
         { builder.AppendFormat("<b>We expect them to visit {0}{1}{2}</b>{3}{4}", colourNeutral, npc.nodeEnd.visiting, colourEnd, "\n", "\n"); }
-        else { builder.AppendFormat("{0}<b>It's not clear where they will visit</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0}It's not clear where they will visit{1}{2}{3}", colourBad, colourEnd, "\n", "\n"); }
         builder.Append(GameManager.instance.missionScript.GetFormattedNpcEffectsAll(npc));
         return builder.ToString();
     }

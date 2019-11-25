@@ -412,6 +412,11 @@ public class DataManager : MonoBehaviour
         listOfTopicTypesLevel.Clear();
         dictOfTopicPools.Clear();
         dictOfTopicHistory.Clear();
+        if (currentInfoData != null)
+        {
+            currentInfoData = null;
+            currentInfoData = new MainInfoData();
+        }
         //actor lists
         authorityActorPoolLevelOne.Clear();
         authorityActorPoolLevelTwo.Clear();
@@ -2618,7 +2623,7 @@ public class DataManager : MonoBehaviour
                 cure.isActive = true;
                 cure.isOrgActivated = isOrgCure;
                 //message
-                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}, orgCure: {4}{5}", cure.condition.tag, node.nodeName, node.Arc.name, 
+                Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}, orgCure: {4}{5}", cure.condition.tag, node.nodeName, node.Arc.name,
                     node.nodeID, isOrgCure, "\n");
                 string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
@@ -6581,7 +6586,7 @@ public class DataManager : MonoBehaviour
     public void ProcessMetaCures()
     {
         //reset dynamic data for all cures
-        foreach(var cure in dictOfCures)
+        foreach (var cure in dictOfCures)
         {
             if (cure.Value != null)
             { cure.Value.Reset(); }
@@ -6840,7 +6845,7 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
-        foreach(Organisation org in listOfCurrentOrganisations)
+        foreach (Organisation org in listOfCurrentOrganisations)
         { builder.AppendFormat(" {0}, Rep {1}, Free {2}, Contact {3} Secret {4}{5}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, "\n"); }
         return builder.ToString();
     }

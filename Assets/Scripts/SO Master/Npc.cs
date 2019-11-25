@@ -10,6 +10,7 @@ using UnityEngine;
 public class Npc : ScriptableObject
 {
     [Header("Texts")]
+    [Tooltip("The name needs to be one that can handle '[A] ...' and NOT '[An] ...'")]
     public string tag;
     [Tooltip("Ingame descriptor, keep short")]
     public string descriptor;

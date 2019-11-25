@@ -226,6 +226,7 @@ public class FileManager : MonoBehaviour
         Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
         {
+            write.campaignData.isNpc = true;
             write.campaignData.npc = new SaveNpc();
             write.campaignData.npc.status = npc.status;
             write.campaignData.npc.timerTurns = npc.timerTurns;
@@ -241,7 +242,12 @@ public class FileManager : MonoBehaviour
             { write.campaignData.npc.currentNodeID = npc.currentNode.nodeID; }
             else { write.campaignData.npc.currentNodeID = -1; }
         }
-        else { write.campaignData.npc = null; }
+        else
+        {
+            //Note: that this creates a valid SaveNpc JSON object but with zero for all fields. isNpc set to false to handle this situation manually (workaround)
+            write.campaignData.npc = null;
+            write.campaignData.isNpc = false;
+        }
     }
     #endregion
 
@@ -1668,8 +1674,9 @@ public class FileManager : MonoBehaviour
     private void ReadNpcData()
     {
         //npc
-        if (read.campaignData.npc != null)
-        { GameManager.instance.missionScript.SetNpcLoadData(read.campaignData.npc); }
+        if (read.campaignData.isNpc == true)
+        { GameManager.instance.missionScript.SetNpcData(read.campaignData.npc); }
+        else { GameManager.instance.missionScript.SetNpcData(); }
     }
     #endregion
 

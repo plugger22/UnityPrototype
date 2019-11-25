@@ -47,6 +47,7 @@ public class MissionManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
+                SubInitialiseAll();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -165,6 +166,8 @@ public class MissionManager : MonoBehaviour
             mission.npc.currentEndNode = endNode;
             //status
             mission.npc.status = NpcStatus.Standby;
+            Debug.LogFormat("[Npc] MissionManager.cs -> InitialiseNpc: Npc \"{0}\" starts {1}, {2}, ID {3}, ends {4}, {5}, ID {6}{7}", mission.npc.tag, startNode.nodeName, startNode.Arc.name, startNode.nodeID,
+                endNode.nodeName, endNode.Arc.name, endNode.nodeID, "\n");
         }
     }
 
@@ -754,7 +757,7 @@ public class MissionManager : MonoBehaviour
     /// Load Saved Npc data
     /// </summary>
     /// <param name="npcSave"></param>
-    public void SetNpcLoadData(SaveNpc npc)
+    public void SetNpcData(SaveNpc npc = null)
     {
         if (npc != null)
         {
@@ -785,6 +788,7 @@ public class MissionManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid npcSave (Null)"); }
         }
+        else { mission.npc = null; }
     }
 
     //new methods above here

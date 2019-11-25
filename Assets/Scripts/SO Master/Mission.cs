@@ -61,8 +61,11 @@ public class Mission : ScriptableObject
     public void OnEnable()
     {
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Mission {0} has Invalid descriptor (Null or Empty)", name);
-        Debug.AssertFormat(side != null, "Mission {0} has Invalid side (Null)");
-        Debug.Assert(listOfObjectives.Count > 0, "Mission {0} has Invalid listOfObjectives (Empty)");
+        Debug.AssertFormat(side != null, "Mission {0} has Invalid side (Null)", name);
+        Debug.AssertFormat(listOfObjectives.Count > 0, "Mission {0} has Invalid listOfObjectives (Empty)", name);
+        Debug.AssertFormat(profileGenericLive != null, "Invalid profileGenericLive for {0}", name);
+        Debug.AssertFormat(profileGenericActive != null, "Invalid profileGenericActive for {0}", name);
+        Debug.AssertFormat(profileGenericFollowOn != null, "Invalid profileGenericFollowOn for {0}", name);
     }
 
 }

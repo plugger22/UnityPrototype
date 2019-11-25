@@ -28,8 +28,11 @@ MonoBehaviour:
   targetBaseVIP: {fileID: 11400000, guid: c8eb46511f48668418a2a1927eba8516, type: 2}
   targetBaseStory: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
   targetBaseGoal: {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
-  profileGenericLive: {fileID: 0}
-  profileGenericActive: {fileID: 0}
-  profileGenericFollowOn: {fileID: 0}
+  profileGenericLive: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
+  profileGenericActive: {fileID: 11400000, guid: 131a9a356ca29f54ab8e310c3e916f21,
+    type: 2}
+  profileGenericFollowOn: {fileID: 11400000, guid: 3303c423952b1084b933497cec06b30e,
+    type: 2}
   listOfObjectiveTargets:
   - {fileID: 11400000, guid: f06dede69d3430e468030d796787a9ae, type: 2}
+  npc: {fileID: 0}
