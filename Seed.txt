@@ -22287,3 +22287,19 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 21354 -> Monday, 25 November 2019 4:42 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 25042 -> Monday, 25 November 2019 4:52 PM
+City seed 5678 -> London, United Kingdom
+WARNING No valid effects present for Npc "Dealer", isGood False
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:ProcessEffects(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:752)
+	MissionManager:ProcessNpcDepart(Npc, Boolean) (at Assets/Scripts/Managers/MissionManager.cs:561)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:471)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:303)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:109)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:433)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:276)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:228)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:362)
+	

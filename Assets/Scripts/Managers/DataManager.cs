@@ -5069,10 +5069,7 @@ public class DataManager : MonoBehaviour
                     {
                         builder.AppendFormat("- {0}, {1}, ID {2}, slotID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                         builder.AppendFormat(" status: {0}{1}", actor.Status, "\n");
-                        builder.AppendFormat(" unhappyTimer: {0}{1}", actor.unhappyTimer, "\n");
-                        builder.AppendFormat(" blackmailTimer: {0}{1}", actor.blackmailTimer, "\n");
-                        builder.AppendFormat(" captureTimer: {0}{1}", actor.captureTimer, "\n");
-                        builder.AppendFormat(" conflictTimer: {0}{1}", actor.conflictTimer, "\n");
+                        builder.AppendFormat(" Timers: blackmail {0}, capture {1}, conflict {2}, unhappy {3}{4}", actor.blackmailTimer, actor.captureTimer, actor.conflictTimer, actor.unhappyTimer, "\n");
                         builder.AppendFormat(" isTraitor: {0}{1}", actor.isTraitor, "\n");
                         builder.AppendFormat(" isThreatening: {0}{1}", actor.isThreatening, "\n");
                         builder.AppendFormat(" numOfTimesBullied: {0}{1}", actor.numOfTimesBullied, "\n");
