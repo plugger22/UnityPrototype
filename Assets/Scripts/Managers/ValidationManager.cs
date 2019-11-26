@@ -660,6 +660,18 @@ public class ValidationManager : MonoBehaviour
                         }
 
                     }
+                    //
+                    // - - - Npc's
+                    //
+                    if (mission.npc != null)
+                    {
+                        //must have at least one good/bad effects
+                        List<Effect> listOfEffects = new List<Effect>();
+                        listOfEffects.AddRange(mission.npc.listOfGoodEffects);
+                        listOfEffects.AddRange(mission.npc.listOfBadEffects);
+                        if (listOfEffects.Count == 0)
+                        { Debug.LogFormat("[Val] ValidationMission: Mission \"{0}\", npc \"[1}\", has no effects (must have at least one){2}", mission.name, mission.npc.name, "\n"); }
+                    }
                 }
                 else { Debug.LogError("Invalid mission (Null) in arrayOfMissions"); }
             }

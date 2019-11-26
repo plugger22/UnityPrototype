@@ -4967,8 +4967,8 @@ public class ActorManager : MonoBehaviour
         string gearName;
         int numOfTraitors = 0;
         string text, topText, detailsTop, detailsBottom;
-        //no checks are made if AI player is not Active
-        if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
+        //no checks are made if player is not Active
+        if (GameManager.instance.playerScript.status == ActorStatus.Active)
         {
             Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
             if (arrayOfActors != null)
@@ -5049,7 +5049,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (condition != null)
                                         {
-                                            text = string.Format("{0}, {1} has the {2} condition", actor.actorName, actor.arc.name, condition.tag);
+                                            text = string.Format("{0} has the {1} condition", actor.arc.name, condition.tag);
                                             topText = "Condition present";
                                             switch (condition.type.level)
                                             {
@@ -5972,17 +5972,18 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Warning if actor Motivation Zero
+    /// Warning if actor Motivation Zero, InfoApp effects tab
     /// </summary>
     /// <param name="actor"></param>
     public void ProcessMotivationWarning(Actor actor)
     {
-        string msgText = string.Format("{0} Motivation Zero. Risk of a Relationship Conflict.", actor.arc.name);
+        string msgText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
         string itemText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string reason = string.Format("<b>{0}, {1}{2}{3}{4}Motivation at Zero</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
-        string warning = "Can develop a RELATIONSHIP CONFLICT";
+        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Motivation at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", 
+            colourNormal, colourEnd, colourNeutral, colourEnd, "\n");
+        string warning = string.Format("{0}<b>Can develop a RELATIONSHIP CONFLICT</b>{1}", colourBad, colourEnd);
         List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
-        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Motivation Zero", reason, warning, false, true, listOfHelp);
+        GameManager.instance.messageScript.ActorWarningOngoing(msgText, reason, warning, actor.sprite, actor.actorID, listOfHelp);
     }
 
     /// <summary>

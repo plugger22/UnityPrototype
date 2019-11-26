@@ -749,7 +749,7 @@ public class MissionManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogWarningFormat("No valid effects present for Npc \"{0}\", isGood {1}", npc.tag, isGood); }
+        else { /*Debug.LogWarningFormat("No valid effects present for Npc \"{0}\", isGood {1}", npc.tag, isGood); EDIT: O.K to have no effects*/ }
         return builder.ToString();
     }
 

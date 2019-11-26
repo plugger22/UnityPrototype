@@ -14,9 +14,8 @@ MonoBehaviour:
   descriptor: Authority declares a city wide Security Alert
   tag: Security Alert
   warning: Can be Captured in Adjacent Districts
-  tooltipDescriptor: ERASURE Teams will capture anyone with Invisibility 0 (normal)
-    in the same district and in all <b>ADJACENT districts</b>
+  tooltipDescriptor: <b>ERASURE</b> Teams will capture anyone with Invisibility 0
+    (normal) in the same district and in all <b>ADJACENT districts</b>
   type: {fileID: 11400000, guid: 6f4be2b8a57da9249b95c752414cbd66, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   cost: 2
-  aiDecID: 19

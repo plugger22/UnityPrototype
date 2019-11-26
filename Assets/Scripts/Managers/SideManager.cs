@@ -431,11 +431,12 @@ public class SideManager : MonoBehaviour
                                         // - - - Compatibility (Edit: cause duplicate msg)
                                         // - - - Invisibility Zero warning (Edit: causes duplicate msg)
 
-                                        //
-                                        // - - - Motivation Warning - - -
+                                        /*//
+                                        // - - - Motivation Warning - - -  EDIT -> Duplicate message
                                         //
                                         if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
-                                        { GameManager.instance.actorScript.ProcessMotivationWarning(actor); }
+                                        { GameManager.instance.actorScript.ProcessMotivationWarning(actor); }*/
+
                                         break;
                                     case ActorStatus.Captured:
                                         //change actor alpha to show inactive (sprite and text)

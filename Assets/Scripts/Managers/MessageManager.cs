@@ -1177,8 +1177,8 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             if (isGained == true)
-            { data.itemText = string.Format("{0}, {1}, is now {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
-            else { data.itemText = string.Format("{0}, {1}, is no longer {2}{3}", genericActorName, genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
+            { data.itemText = string.Format("{0}, is now {1}{2}", genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
+            else { data.itemText = string.Format("{0} is no longer {1}{2}", genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
             data.topText = "Condition Change";
             if (condition != null)
             { data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }
@@ -1598,6 +1598,8 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// warning, eg. Actor can be captured 'cause invisibility zero -> InfoApp effect
+    /// Provide colour formatting for top and bottom details
+    /// listOfHelpTags allows up to 4 help tags, eg. "info_1". Any more are ignored.
     /// </summary>
     /// <param name="text"></param>
     /// <param name="detailsTop"></param>
@@ -1606,7 +1608,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="actorID"></param>
     /// <param name="node"></param>
     /// <returns></returns>
-    public Message ActorWarningOngoing(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID)
+    public Message ActorWarningOngoing(string text, string detailsTop, string detailsBottom, Sprite sprite, int actorID, List<string> listOfHelpTags = null)
     {
         Debug.Assert(sprite != null, "Invalid spirte (Null)");
         Debug.Assert(actorID > -1, "Invalid actorID (less than Zero)");
@@ -1631,7 +1633,21 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            data.help = 1;
+            if (listOfHelpTags != null)
+            {
+                for (int i = 0; i < listOfHelpTags.Count; i++)
+                {
+                    switch (i)
+                    {
+                        case 0: data.tag0 = listOfHelpTags[i]; break;
+                        case 1: data.tag1 = listOfHelpTags[i]; break;
+                        case 2: data.tag2 = listOfHelpTags[i]; break;
+                        case 3: data.tag3 = listOfHelpTags[i]; break;
+                        default: Debug.LogWarningFormat("Invalid help tag \"{0}\" (can only have 4, there are {1})", listOfHelpTags[i], i); break;
+                    }
+                }
+                data.help = 1;
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

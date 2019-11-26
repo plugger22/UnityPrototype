@@ -5187,23 +5187,23 @@ public class AIManager : MonoBehaviour
         switch (GameManager.instance.turnScript.authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
-                text = string.Format("AI Security countermeasure {0} in place", decisionAPB.name.ToUpper());
-                itemText = string.Format("AI Security countermeasure {0} in force", decisionAPB.name.ToUpper());
+                text = string.Format("AI Security countermeasure {0} in place", decisionAPB.tag.ToUpper());
+                itemText = string.Format("Security countermeasure {0} in force", decisionAPB.tag.ToUpper());
                 detailsTop = decisionAPB.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionAPB.name);
                 break;
             case AuthoritySecurityState.SecurityAlert:
-                text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.name.ToUpper());
-                itemText = string.Format("AI Security countermeasure {0} in force", decisionSecAlert.name.ToUpper());
+                text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.tag.ToUpper());
+                itemText = string.Format("Security countermeasure {0} in force", decisionSecAlert.tag.ToUpper());
                 detailsTop = decisionSecAlert.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionSecAlert.name);
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
-                text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.name.ToUpper());
+                text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.tag.ToUpper());
                 itemText = string.Format("{0} in force", decisionCrackdown.tag);
                 detailsTop = decisionCrackdown.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
