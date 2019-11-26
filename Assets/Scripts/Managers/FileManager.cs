@@ -3778,6 +3778,11 @@ public class FileManager : MonoBehaviour
             saveActor.conflictTimer = actor.conflictTimer;
             saveActor.numOfTimesBullied = actor.numOfTimesBullied;
             saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
+            saveActor.numOfTimesConflict = actor.numOfTimesConflict;
+            saveActor.numOfTimesBreakdown = actor.numOfTimesBreakdown;
+            saveActor.numOfTimesStressLeave = actor.numOfTimesStressLeave;
+            saveActor.numOfDaysStressed = actor.numOfDaysStressed;
+            saveActor.numOfDaysLieLow = actor.numOfDaysLieLow;
             saveActor.departedNumOfSecrets = actor.departedNumOfSecrets;
             saveActor.isPromised = actor.isPromised;
             saveActor.isNewRecruit = actor.isNewRecruit;
@@ -3937,6 +3942,11 @@ public class FileManager : MonoBehaviour
             actor.conflictTimer = readActor.conflictTimer;
             actor.numOfTimesBullied = readActor.numOfTimesBullied;
             actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
+            actor.numOfTimesConflict = readActor.numOfTimesConflict;
+            actor.numOfTimesBreakdown = readActor.numOfTimesBreakdown;
+            actor.numOfTimesStressLeave = readActor.numOfTimesStressLeave;
+            actor.numOfDaysStressed = readActor.numOfDaysStressed;
+            actor.numOfDaysLieLow = readActor.numOfDaysLieLow;
             actor.departedNumOfSecrets = readActor.departedNumOfSecrets;
             actor.isPromised = readActor.isPromised;
             actor.isNewRecruit = readActor.isNewRecruit;

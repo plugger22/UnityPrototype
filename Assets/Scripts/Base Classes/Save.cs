@@ -591,6 +591,11 @@ public class SaveActor
     public int conflictTimer;
     public int numOfTimesBullied;
     public int numOfTimesCaptured;
+    public int numOfTimesConflict;
+    public int numOfTimesBreakdown;
+    public int numOfTimesStressLeave;
+    public int numOfDaysStressed;
+    public int numOfDaysLieLow;
     public int departedNumOfSecrets;
     public bool isPromised;
     public bool isNewRecruit;

@@ -11,7 +11,7 @@ using System;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle}
+    private enum GUIStatus { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict}
 
     public GUIStyle customBackground;
 
@@ -728,11 +728,13 @@ public class DebugGUI : MonoBehaviour
             }
 
             //sixth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Actor Conflict"))
             {
-                /*//removes connection Security ongoing effects (first entry in register dict)
-                Debug.Log("[Dbg] Button -> Remove Ongoing");
-                GameManager.instance.dataScript.DebugRemoveOngoingEffects();*/
+                //initiate an actor conflict
+                Debug.Log("[Dbg] Button -> Actor Conflict");
+                if (debugDisplay != 81)
+                { debugDisplay = 81; }
+                else { debugDisplay = 0; }
             }
 
 
@@ -1655,6 +1657,23 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DebugDisplayActorDetails();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
+                    //Initiate a Relationship conflict
+                    case 81:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 385, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 375, 70, 100, 20), textInput_0);
+                        status = GUIStatus.Conflict;
+                        textOutput = null;
+                        break;
+                    //Start relationship conflict
+                    case 82:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.actorScript.DebugCreateConflict(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 375, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1699,6 +1718,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.ContactToggle:
                         debugDisplay = 48;
+                        break;
+                    case GUIStatus.Conflict:
+                        debugDisplay = 82;
                         break;
                 }
                 break;

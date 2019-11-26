@@ -48,6 +48,7 @@ namespace gameAPI
         [HideInInspector] public int numOfTimesCaptured;        //chance of becoming a traitor increases for each time captured
         [HideInInspector] public int numOfTimesBreakdown;       //tally of times actor suffered a breakdown
         [HideInInspector] public int numOfTimesStressLeave;     //tally of times actor took stress leave (one day duration)
+        [HideInInspector] public int numOfTimesConflict;        //tally of number of relationship conflicts with the Player that the actor has had
         [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
         [HideInInspector] public int numOfDaysStressed;         //tally of days spent stressed (excludes breakdown & stress leave days)
         [HideInInspector] public int numOfDaysLieLow;           //tally of days spent lying low

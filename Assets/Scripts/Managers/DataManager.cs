@@ -5112,6 +5112,7 @@ public class DataManager : MonoBehaviour
                         builder.AppendFormat(" numOfTimesCaptured: {0}{1}", actor.numOfTimesCaptured, "\n");
                         builder.AppendFormat(" numOfTimesBreakdown: {0}{1}", actor.numOfTimesBreakdown, "\n");
                         builder.AppendFormat(" numOfTimesStressLeave: {0}{1}", actor.numOfTimesStressLeave, "\n");
+                        builder.AppendFormat(" numOfTimesConflict: {0}{1}", actor.numOfTimesConflict, "\n");
                         builder.AppendFormat(" numOfDaysStressed: {0}{1}", actor.numOfDaysStressed, "\n");
                         builder.AppendFormat(" numOfDaysLieLow: {0}{1}", actor.numOfDaysLieLow, "\n");
                         builder.AppendLine();

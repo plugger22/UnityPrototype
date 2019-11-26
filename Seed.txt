@@ -23244,3 +23244,50 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 12637 -> Tuesday, 26 November 2019 11:44 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 1883 -> Tuesday, 26 November 2019 2:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64842 -> Tuesday, 26 November 2019 2:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46806 -> Tuesday, 26 November 2019 2:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63919 -> Tuesday, 26 November 2019 2:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1802 -> Tuesday, 26 November 2019 2:28 PM
+ERROR Invalid ActorConflict (duplicate) "12" for "Steals"
+UnityEngine.Debug:LogError(Object)
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1652)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 42615 -> Tuesday, 26 November 2019 2:31 PM
+ERROR Invalid ActorConflict (duplicate) "12" for "Steals"
+UnityEngine.Debug:LogError(Object)
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1652)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 17832 -> Tuesday, 26 November 2019 2:34 PM
+ERROR Invalid ActorConflict (duplicate) "12" for "Steals"
+UnityEngine.Debug:LogError(Object)
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1652)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 38804 -> Tuesday, 26 November 2019 2:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59943 -> Tuesday, 26 November 2019 2:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9182 -> Tuesday, 26 November 2019 3:14 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom

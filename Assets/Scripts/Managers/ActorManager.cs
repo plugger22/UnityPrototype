@@ -4161,6 +4161,7 @@ public class ActorManager : MonoBehaviour
                             }
                             //Statistics (counts conflict regardless of outcome of conflict)
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
+                            actor.numOfTimesConflict++;
                             //set conflictTimer
                             actor.conflictTimer = conflictTimerStart;
                             Debug.LogFormat("[Sta] ActorManager.cs -> ProcessActorConflict: {0}, {1}, ID {2} conflictTimer set to {3}{4}", actor.actorName, actor.arc.name,
@@ -7998,6 +7999,48 @@ public class ActorManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}, side {1}", slotID, playerSide.name); }
             }
         }
+    }
+
+    /// <summary>
+    /// Debug initiate an immediate relationship conflict with the actor in the specified slotID (inputString)
+    /// </summary>
+    /// <param name="inputString"></param>
+    /// <returns></returns>
+    public string DebugCreateConflict(string inputString)
+    {
+        string result = "Unknown";
+        int slotID = -1;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        //convert input to slotID
+        if (string.IsNullOrEmpty(inputString) == false)
+        {
+            try
+            { slotID = Convert.ToInt32(inputString); }
+            catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", inputString); }
+        }
+        else { Debug.LogError("Invalid inputString (Null or Empty)"); }
+        //check actor at specified slot
+        if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, playerSide) == true)
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, playerSide);
+            if (actor != null)
+            {
+                //set motivation to Zero (if not already). Note use SetDatapointLoad to avoid personality interference
+                actor.SetDatapointLoad(ActorDatapoint.Motivation1, 0);
+                //conflict
+                string conflictText = ProcessActorConflict(actor);
+                result = string.Format("{0}, {1} initiates a Conflict", actor.actorName, actor.arc.name);
+                //outcome
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.side = playerSide;
+                outcomeDetails.textTop = string.Format("{0}, {1}{2}{3}, initiates a DEBUG Relationship Conflict", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                outcomeDetails.textBottom = conflictText;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActorManager.cs -> DebugCreateConflict");
+            }
+            else { result = string.Format("Invalid actor (Null) at slot {0}", slotID); }
+        }
+        else { result = string.Format("No actor is slot {0}", slotID); }
+        return result;
     }
 
     //new methods above here

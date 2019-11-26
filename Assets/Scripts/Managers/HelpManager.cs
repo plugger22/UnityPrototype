@@ -442,7 +442,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "conflict_2";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("Relationship conflicts can be {0}unpredictable{1} and are {2}best avoided{3} where possible.", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Relationship conflicts can be {0}unpredictable{1} and are {2}best avoided{3} wherever possible.", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

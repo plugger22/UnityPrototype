@@ -20,12 +20,16 @@ public class ActorConflict : ScriptableObject
     public GlobalChance chance;
     [Tooltip("Who does the effect apply to?")]
     public GlobalWho who;
-    [Tooltip("Criteria. NOTE: Separate from effect cause some effects don't have criteria when I want them. Any effect criteria are ignored. Criteria is for 'who' (Player or Actor")]
-    public List<Criteria> listOfCriteria;
     [Tooltip("Is it a good or bad outcome from the Player's POV")]
     public GlobalType type;
+
+    [Header("Effect and Criteria")]
     [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
     public Effect effect;
+    [Tooltip("Criteria. NOTE: Separate from effect cause some effects don't have criteria when I want them. Any effect criteria are ignored. Criteria is for 'who' (Player or Actor")]
+    public List<Criteria> listOfCriteria;
+
+    [Header("Testing")]
     [Tooltip("Used for testing purposes only. If ON the conflict is ignored (fails criteria check). Leave as OFF")]
     public bool isTestOff = false;
 
