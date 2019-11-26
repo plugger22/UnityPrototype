@@ -5978,9 +5978,10 @@ public class ActorManager : MonoBehaviour
     {
         string msgText = string.Format("{0} Motivation Zero. Risk of a Relationship Conflict.", actor.arc.name);
         string itemText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string reason = string.Format("{0}, {1}{2}{3}{4}Motivation at Zero", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
+        string reason = string.Format("<b>{0}, {1}{2}{3}{4}Motivation at Zero</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n");
         string warning = "Can develop a RELATIONSHIP CONFLICT";
-        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Motivation Zero", reason, warning, false);
+        List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
+        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Motivation Zero", reason, warning, false, true, listOfHelp);
     }
 
     /// <summary>
@@ -7922,7 +7923,8 @@ public class ActorManager : MonoBehaviour
                                 //place current actor in reserves
                                 if (GameManager.instance.dataScript.RemoveCurrentActor(playerSide, currentActor, ActorStatus.Reserve) == true)
                                 {
-                                    currentActor.unhappyTimer = 10;
+                                    //need to set manually as not going through normal processes. Make it large enough that you don't have to worry for a while
+                                    currentActor.unhappyTimer = 20;
                                     Debug.LogFormat("[Tst] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} moved to Reserves (Swap Actor){3}",
                                         currentActor.actorName, currentActor.arc.name, currentActor.actorID, "\n");
                                     //select a new actor from Recruit Pool of the specified type and put in OnMap lineUp

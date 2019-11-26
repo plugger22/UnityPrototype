@@ -251,12 +251,13 @@ public class MessageManager : MonoBehaviour
 
     /// <summary>
     /// General Warning message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained (shown Red is 'isBad' true, otherwise Green)
-    /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide
+    /// 'isHighPriority' if true, Medium priority othewise. 'topText' is RHS short tag. Default playerSide. 
+    /// ListOfHelpTags (optional) allows you to provide a list of helptag strings that will be used for RHS help, eg. "info_1", "conflict_0". Max of 4 tags allowed, rest ignored.
     /// NOTE: Don't put any formatting (colour or extra linefeeds) in 'warning'
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GeneralWarning(string text, string itemText, string topText, string reason, string warning, bool isHighPriority = true, bool isBad = true)
+    public Message GeneralWarning(string text, string itemText, string topText, string reason, string warning, bool isHighPriority = true, bool isBad = true, List<string> listOfHelpTags = null)
     {
         Debug.Assert(string.IsNullOrEmpty(itemText) == false, "Invalid itemText (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty");
@@ -284,7 +285,21 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            data.help = 1;
+            if (listOfHelpTags != null)
+            {
+                for (int i = 0; i < listOfHelpTags.Count; i++)
+                {
+                    switch(i)
+                    {
+                        case 0: data.tag0 = listOfHelpTags[i]; break;
+                        case 1: data.tag1 = listOfHelpTags[i]; break;
+                        case 2: data.tag2 = listOfHelpTags[i]; break;
+                        case 3: data.tag3 = listOfHelpTags[i]; break;
+                        default: Debug.LogWarningFormat("Invalid help tag \"{0}\" (can only have 4, there are {1})", listOfHelpTags[i], i); break;
+                    }
+                }
+                data.help = 1;
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -1415,6 +1430,9 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
+            data.tag0 = "conflict_0";
+            data.tag1 = "conflict_1";
+            data.tag2 = "conflict_3";
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);

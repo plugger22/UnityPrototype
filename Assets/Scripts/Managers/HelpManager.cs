@@ -414,7 +414,7 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Actor Conflic
+        #region Actor Conflicts
         //
         // - - - Actor Conflict
         //
@@ -423,10 +423,26 @@ public class HelpManager : MonoBehaviour
         data.tag = "conflict_0";
         data.header = "Conflict";
         builder = new StringBuilder();
-        builder.AppendFormat("Anytime one of your subordinates Motivation falls below Zero, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd);
+        builder.AppendFormat("Anytime one of your subordinates {0}Motivation{1} falls {2}below Zero{3}, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd,
+            colourAlert, colourEnd);
         builder.AppendFormat("Conflicts can have a {0}range of outcomes{1} such as your subordinate resigning, blackmailing you, becoming stressed, leaking against you or simply simmering away and doing nothing",
             colourAlert, colourEnd);
         data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Traits
+        data = new HelpData();
+        data.tag = "conflict_1";
+        data.header = "Traits";
+        builder = new StringBuilder();
+        builder.AppendFormat("Certain character traits can {0}add extra possibilities{1} to the pool of potential actions that a subordinate may take in a relationship conflict", colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "conflict_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("Relationship conflicts can be {0}unpredictable{1} and are {2}best avoided{3} where possible.", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
