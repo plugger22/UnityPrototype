@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Actor / Conflict")]
 public class ActorConflict : ScriptableObject
 {
+    [Header("Main")]
     [Tooltip("Not used in-game, descriptive only")]
     public string description;
     [Tooltip("What will happen in event of conflict (Message -> ItemData) in format '[Actor threatens to] ...'")]
@@ -18,16 +19,18 @@ public class ActorConflict : ScriptableObject
     public GlobalSide side;
     [Tooltip("Determines how many entries are placed in the selection pool for this actorConflict")]
     public GlobalChance chance;
-    [Tooltip("Who does the effect apply to?")]
-    public GlobalWho who;
     [Tooltip("Is it a good or bad outcome from the Player's POV")]
     public GlobalType type;
 
-    [Header("Effect and Criteria")]
-    [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
-    public Effect effect;
+    [Header("Criteria")]
     [Tooltip("Criteria. NOTE: Separate from effect cause some effects don't have criteria when I want them. Any effect criteria are ignored. Criteria is for 'who' (Player or Actor")]
     public List<Criteria> listOfCriteria;
+
+    [Header("Effect")]
+    [Tooltip("There can only be a single effect. Leave empty if for 'Nothing happens'")]
+    public Effect effect;
+    [Tooltip("Who does the effect apply to?")]
+    public GlobalWho who;
 
     [Header("Testing")]
     [Tooltip("Used for testing purposes only. If ON the conflict is ignored (fails criteria check). Leave as OFF")]
