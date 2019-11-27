@@ -1332,6 +1332,14 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "Insufficient Target Attempts"); }
                                                 }
                                                 break;
+                                            case "StatOrgCuresNOTZero":
+                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgCures) == 0)
+                                                    { BuildString(result, "Org has provided no cures"); }
+                                                break;
+                                            case "StatOrgContractsNOTZero":
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgContractHits) == 0)
+                                                { BuildString(result, "Org has provided no contract Hits"); }
+                                                break;
                                             //
                                             // - - - Ratios
                                             //
@@ -1524,16 +1532,6 @@ public class EffectManager : MonoBehaviour
                                                 //No active cure is present OnMap for Doomed Condition
                                                 if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
                                                 { BuildString(result, "Doomed Cure unavailable"); }
-                                                break;
-                                            case "CureOrgActivatedYes":
-                                                //Organisation activated cure (true if ANY current cure has been activated by an org)
-                                                if (GameManager.instance.playerScript.isOrgActivatedCurePresent == false)
-                                                { BuildString(result, "No Cures activated by Org"); }
-                                                break;
-                                            case "ContractOrgActivatedYes":
-                                                //Organisation has provided a contract hit on a subordinate (true if )
-                                                if (GameManager.instance.playerScript.isOrgActivatedCurePresent == false)
-                                                { BuildString(result, "No Cures activated by Org"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
@@ -4776,7 +4774,10 @@ public class EffectManager : MonoBehaviour
                 case "Add":
                     //activate cure
                     if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true, isOrgCure) == true)
-                    { bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd); }
+                    {
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.OrgCures);
+                        bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd);
+                    }
                     break;
                 case "Subtract":
                     //deactivate cure

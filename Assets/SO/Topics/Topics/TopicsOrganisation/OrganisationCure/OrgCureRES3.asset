@@ -28,7 +28,7 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 051d2ef9c807afc4b94aa9f11428435e, type: 2}
+  - {fileID: 11400000, guid: 57594726fb23b4d439c6b9e566650d84, type: 2}
   - {fileID: 11400000, guid: cf204c78310ad774fac94387a0c38b99, type: 2}
   - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
   listOfIgnoreEffects:
@@ -48,6 +48,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 19
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

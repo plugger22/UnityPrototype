@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
 
     private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
 
-    [HideInInspector] public bool isOrgActivatedCurePresent;
+    /*[HideInInspector] public bool isOrgActivatedCurePresent;*/
 
     //private backing fields, need to track separately to handle AI playing both sides
     private int _renownResistance;
@@ -395,10 +395,11 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
-        //checks if any condition cures have been activated by an Organisation (used for topic criteria checks)
+
+        /*//checks if any condition cures have been activated by an Organisation (used for topic criteria checks)
         if (CheckForOrgCure(GameManager.instance.sideScript.PlayerSide) == true)
         { isOrgActivatedCurePresent = true; }
-        else { isOrgActivatedCurePresent = false; }
+        else { isOrgActivatedCurePresent = false; }*/
 
         /*DebugCreateMoodHistory();*/
     }
@@ -1143,7 +1144,7 @@ public class PlayerManager : MonoBehaviour
         return listOfConditions;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns true if any current condition has a cure activated by an Org
     /// </summary>
     /// <param name="side"></param>
@@ -1172,7 +1173,7 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid side (Null)"); }
         return false;
-    }
+    }*/
 
     /// <summary>
     /// Follow on level -> if player has any existing conditions, new cures are created
