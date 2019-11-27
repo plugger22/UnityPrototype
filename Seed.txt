@@ -220,3 +220,9 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 39815 -> Tuesday, 26 November 2019 4:52 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 43295 -> Wednesday, 27 November 2019 12:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 898 -> Wednesday, 27 November 2019 12:34 PM
+City seed 5678 -> London, United Kingdom

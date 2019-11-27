@@ -1530,6 +1530,11 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.isOrgActivatedCurePresent == false)
                                                 { BuildString(result, "No Cures activated by Org"); }
                                                 break;
+                                            case "ContractOrgActivatedYes":
+                                                //Organisation has provided a contract hit on a subordinate (true if )
+                                                if (GameManager.instance.playerScript.isOrgActivatedCurePresent == false)
+                                                { BuildString(result, "No Cures activated by Org"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

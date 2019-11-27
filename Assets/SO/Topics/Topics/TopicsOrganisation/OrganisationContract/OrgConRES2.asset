@@ -9,30 +9,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgConRES1
+  m_Name: OrgConRES2
   m_EditorClassIdentifier: 
   tag: dd
   text: Unknown
-  designNotes: Org Contract RES 1  service bad event
+  designNotes: Org Contract RES 2 Payback good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
-  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  - {fileID: 0}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: b930b53c7860cf649a1c0231e89d5b5c, type: 2}
-  - {fileID: 11400000, guid: 68f1013457263c04ca0416efd6d15d6f, type: 2}
-  - {fileID: 11400000, guid: 248730ea597ec7a4f9a5e802206eece6, type: 2}
-  - {fileID: 11400000, guid: 14027b7319fb27749ae16b97f79918d4, type: 2}
+  - {fileID: 11400000, guid: d7aab59bbafe8e143bb212aac2fc0c11, type: 2}
+  - {fileID: 11400000, guid: e3872dd338904074bb569e2f898217b5, type: 2}
+  - {fileID: 11400000, guid: 1ce39daed58385d489d2f7a6a1f61d46, type: 2}
+  - {fileID: 11400000, guid: 4c14e035bd07a354c902caef6e640338, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
