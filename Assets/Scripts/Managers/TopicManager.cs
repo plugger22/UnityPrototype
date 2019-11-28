@@ -2206,13 +2206,30 @@ public class TopicManager : MonoBehaviour
         Organisation org = GameManager.instance.campaignScript.campaign.orgContract;
         if (org != null)
         {
-            tagOrgName = org.name;
-            tagOrgTag = org.tag;
-            tagOrgWant = org.textWant;
-            //group based on player's reputation with Organisation
-            group = GetGroupMood(org.GetReputation());
-            //if no entries use entire list by default
-            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+
+            //Select an Actor
+            List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide);
+            if (listOfActors != null)
+            {
+                if (listOfActors.Count > 0)
+                {
+                    Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
+                    if (actor != null)
+                    {
+                        tagActorID = actor.actorID;
+                        tagOrgName = org.name;
+                        tagOrgTag = org.tag;
+                        tagOrgWant = org.textWant;
+                        //group based on player's reputation with Organisation
+                        group = GetGroupMood(org.GetReputation());
+                        //if no entries use entire list by default
+                        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                    }
+                    else { Debug.LogWarning("Invalid actor (Null)"); }
+                }
+                else { Debug.LogWarning("Invalid list of actors (Empty)"); }
+            }
+            else { Debug.LogWarning("Invalid list of actors (Null)"); }
         }
         else
         {

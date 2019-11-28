@@ -930,9 +930,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64ec3fc307965da45afe1d3b815ce755, type: 2}
   - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
   - {fileID: 11400000, guid: 39acceaf5fc8d334b98fcda1155bb188, type: 2}
-  - {fileID: 11400000, guid: 051d2ef9c807afc4b94aa9f11428435e, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
-  - {fileID: 11400000, guid: 4bd5c6d4a38d80145b18f2bba7732393, type: 2}
+  - {fileID: 0}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -3925,7 +3925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: e01be89429dd3c5429cc0bc6bf9871cd, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

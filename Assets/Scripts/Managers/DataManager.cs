@@ -4745,7 +4745,7 @@ public class DataManager : MonoBehaviour
                                 if (actor.GetPersonality().GetCompatibilityWithPlayer() != 0)
                                 { numOfActors++; }
                                 break;
-                            case ActorCheck.ActorConflictTimerNOTZero:
+                            case ActorCheck.ActorConflictNOTZero:
                                 //actor conflictTimer not Zero
                                 if (actor.conflictTimer > 0)
                                 { numOfActors++; }
@@ -4897,6 +4897,10 @@ public class DataManager : MonoBehaviour
                             case ActorCheck.KnowsNothing:
                                 //At least one active actor knows at least one of the Player's secrets
                                 if (actor.CheckNumOfSecrets() == 0) { listOfActors.Add(actor); }
+                                break;
+                            case ActorCheck.ActorConflictNOTZero:
+                                //Actor has had at least one relationship conflict this level
+                                if (actor.numOfTimesConflict > 0) { listOfActors.Add(actor); }
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised ActorCheck \"{0}\"", check); break;
                         }

@@ -1141,7 +1141,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "ActiveActorsConflict":
                                                 //at least one active, OnMap actor with conflictTimer > 0
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorConflictTimerNOTZero, playerSide) == 0)
+                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with conflicts"); }
                                                 break;
                                             case "ActiveActorGear":

@@ -31,7 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 88202dcfd19eaf141a22285d6b2aa1a3, type: 2}
   - {fileID: 11400000, guid: 9bea4a6a15c5dc741ae66a6bb19d1cff, type: 2}
   - {fileID: 11400000, guid: d9b5ec4c7bcb2e847af037a2bdaa4ca3, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

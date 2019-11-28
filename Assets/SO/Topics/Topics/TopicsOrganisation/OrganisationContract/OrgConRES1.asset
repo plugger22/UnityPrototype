@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES1
   m_EditorClassIdentifier: 
   tag: Contract Hit
-  text: Unknown
+  text: So you have a problem with your [actor], asks a spokesperson for the [org]?
+    Perhaps we can fix that for you?
   designNotes: Org Contract RES 1  service bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
