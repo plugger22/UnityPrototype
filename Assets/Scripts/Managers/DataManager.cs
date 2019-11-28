@@ -133,6 +133,7 @@ public class DataManager : MonoBehaviour
 
     //organisations current for campaign
     private List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
+    //organisation pools that track services provided to the player
 
     //secret lists
     private List<Secret> listOfPlayerSecrets = new List<Secret>();

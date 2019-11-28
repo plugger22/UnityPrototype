@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Name: OrgConRES0
   m_EditorClassIdentifier: 
   tag: Contract Hit
-  text: We understand, whispers a spokesman for the [org], that your [actor] is giving
+  text: We understand, whispers a voice from the [org], that your [actor] is giving
     you trouble. Let us take care of them
   designNotes: Org Contract RES 0 service good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
   - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 732889f09a7fd3b45b19acf4b83ea7e6, type: 2}
   - {fileID: 11400000, guid: 652929940f3d1ad4e9ac185911518a20, type: 2}
@@ -38,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 16
-  turnsLive: 1
+  turnsActive: 17
+  turnsLive: 0
   turnsDone: 0

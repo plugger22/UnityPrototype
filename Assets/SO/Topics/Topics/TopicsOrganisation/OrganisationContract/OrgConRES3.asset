@@ -26,7 +26,10 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: ead440d41cf205f4d90385f96815030a, type: 2}
-  listOfIgnoreEffects: []
+  - {fileID: 11400000, guid: c00744892995a6f4497479a652a3205b, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 5be5d532214a7384c96ece77a9cb64b7, type: 2}
   - {fileID: 11400000, guid: 54e863ce635a99a4ea750ddc15dbaf56, type: 2}

@@ -13,22 +13,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Contract Hit
   text: So you have a problem with your [actor], asks a spokesperson for the [org]?
-    Perhaps we can fix that for you?
+    We ice for a price
   designNotes: Org Contract RES 1  service bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
   - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: b930b53c7860cf649a1c0231e89d5b5c, type: 2}
   - {fileID: 11400000, guid: 68f1013457263c04ca0416efd6d15d6f, type: 2}
@@ -44,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 21
-  turnsLive: 7
+  turnsActive: 17
+  turnsLive: 0
   turnsDone: 0

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: OrgConRES4
   m_EditorClassIdentifier: 
-  tag: dd
+  tag: The Big Ask
   text: Unknown
   designNotes: Org Contract RES 4 The Big Ask (bad)
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
@@ -24,8 +24,14 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
+  - {fileID: 11400000, guid: 1b092729a10dd374c8e621bb9c862f6a, type: 2}
+  - {fileID: 11400000, guid: c00744892995a6f4497479a652a3205b, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 084e6da8d6625ba4da78b9a85f8753ee, type: 2}
   - {fileID: 11400000, guid: 88202dcfd19eaf141a22285d6b2aa1a3, type: 2}

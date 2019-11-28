@@ -845,5 +845,16 @@ namespace packageAPI
         public string help3;
     }
 
+
+    /// <summary>
+    /// used to track services provided by Organisations to the Player during a level
+    /// </summary>
+    [System.Serializable]
+    public class OrgData
+    {
+        public string text;
+        public int turn;
+    }
+
     //new classes above here
 }

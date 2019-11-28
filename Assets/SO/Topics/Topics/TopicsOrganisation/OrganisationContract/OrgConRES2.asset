@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: Remember your [actor], whispers the voice from the [org]? We solved your problem,
+    didn't we? Now we need your help
   designNotes: Org Contract RES 2 Payback good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
@@ -26,7 +27,10 @@ MonoBehaviour:
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: ead440d41cf205f4d90385f96815030a, type: 2}
-  listOfIgnoreEffects: []
+  - {fileID: 11400000, guid: c00744892995a6f4497479a652a3205b, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: d7aab59bbafe8e143bb212aac2fc0c11, type: 2}
   - {fileID: 11400000, guid: e3872dd338904074bb569e2f898217b5, type: 2}

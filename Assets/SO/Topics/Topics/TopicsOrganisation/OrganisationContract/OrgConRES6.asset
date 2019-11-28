@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: OrgConRES6
   m_EditorClassIdentifier: 
-  tag: dd
+  tag: Blackmail
   text: Unknown
   designNotes: Org Contract RES 6 blackmail bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
@@ -23,9 +23,12 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  profile: {fileID: 11400000, guid: c7257cbc837fb5c41856960b02074915, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 58d69225ca0ba384aacc60e9bfb1f3aa, type: 2}
+  - {fileID: 11400000, guid: 01f9cfe2557b6984ba92d9f0fab5f87b, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 1234805234c36e0429fb1281e887af2f, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 29ba6ec7521d73449bcc2603b2d0f767, type: 2}
   - {fileID: 11400000, guid: 8669c82cca59d9a468c8d75fb211e16d, type: 2}
