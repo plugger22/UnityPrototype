@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: The [org] has helped you in the past and they expect something in return.
-    Something special
+  text: The man from the [org] is in your face asking if you can recall the [orgText]
+    that they found for you [daysAgo]. It's payback time
   designNotes: 'Org Cure RES 3 bad event
 
     Payback, applies to all cures'

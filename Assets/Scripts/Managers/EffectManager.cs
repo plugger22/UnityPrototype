@@ -4777,6 +4777,13 @@ public class EffectManager : MonoBehaviour
                     {
                         GameManager.instance.dataScript.StatisticIncrement(StatType.OrgCures);
                         bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd);
+                        //org data
+                        OrgData data = new OrgData()
+                        {
+                            text = condition.cure.cureName,
+                            turn = GameManager.instance.turnScript.Turn
+                        };
+                        GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Cure);
                     }
                     break;
                 case "Subtract":

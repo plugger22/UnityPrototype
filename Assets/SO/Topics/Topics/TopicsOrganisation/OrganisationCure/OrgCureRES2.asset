@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: The [org] has helped you in the past and the time has come for you to repay
-    the favour
+  text: Remember the [orgText] we found for you [daysAgo], asks the [org] representative?
+    We'd like something in return
   designNotes: 'Org Cure RES 2 good event
 
     Payback, applies to all cures'

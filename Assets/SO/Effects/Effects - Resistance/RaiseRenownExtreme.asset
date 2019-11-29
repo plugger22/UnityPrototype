@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: RaiseRenownExtreme
   m_EditorClassIdentifier: 
-  description: Renown +10
+  description: Renown +5
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}

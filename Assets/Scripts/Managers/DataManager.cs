@@ -6944,7 +6944,6 @@ public class DataManager : MonoBehaviour
     public List<OrgData> GetListOfOrgData(OrganisationType orgType)
     {
         List<OrgData> listOfOrgData = null;
-
         switch (orgType)
         {
             case OrganisationType.Cure: listOfOrgData = listOfOrgCureServices; break;
@@ -6955,6 +6954,24 @@ public class DataManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
         }
         return listOfOrgData;
+    }
+
+    /// <summary>
+    /// Gets random OrgData from relevant list, returns null if none
+    /// </summary>
+    /// <param name="orgType"></param>
+    /// <returns></returns>
+    public OrgData GetRandomOrgData(OrganisationType orgType)
+    {
+        OrgData data = null;
+        List<OrgData> listOfOrgData = GetListOfOrgData(orgType);
+        if (listOfOrgData != null)
+        {
+            if (listOfOrgData.Count > 0)
+            { data = listOfOrgData[Random.Range(0, listOfOrgData.Count)]; }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfOrgData (Null) for orgType \"{0}\"", orgType); }
+        return data;
     }
 
     /// <summary>
@@ -6988,7 +7005,7 @@ public class DataManager : MonoBehaviour
         {
             switch (orgType)
             {
-                case OrganisationType.Cure: listOfOrgCureServices.Clear(); listOfOrgCureServices.AddRange(listOfOrgData);  break;
+                case OrganisationType.Cure: listOfOrgCureServices.Clear(); listOfOrgCureServices.AddRange(listOfOrgData); break;
                 case OrganisationType.Contract: listOfOrgContractServices.Clear(); listOfOrgContractServices.AddRange(listOfOrgData); break;
                 case OrganisationType.Emergency: listOfOrgEmergencyServices.Clear(); listOfOrgEmergencyServices.AddRange(listOfOrgData); break;
                 case OrganisationType.HQ: listOfOrgHQServices.Clear(); listOfOrgHQServices.AddRange(listOfOrgData); break;
@@ -7009,6 +7026,39 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach (Organisation org in listOfCurrentOrganisations)
         { builder.AppendFormat(" {0}, Rep {1}, Free {2}, Contact {3} Secret {4}{5}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, "\n"); }
+        //OrgData lists
+        builder.AppendFormat("{0}{1}{2}", "\n", "\n", DebugDisplayOrgData(OrganisationType.Cure));
+        builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Contract));
+        builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Emergency));
+        builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.HQ));
+        builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Info));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Private submethod for DebugDisplayCurrentOrganisations to display individual OrgData file data
+    /// </summary>
+    /// <param name="orgType"></param>
+    /// <returns></returns>
+    private string DebugDisplayOrgData(OrganisationType orgType)
+    {
+        StringBuilder builder = new StringBuilder();
+        List<OrgData> listOfOrgData = GameManager.instance.dataScript.GetListOfOrgData(orgType);
+        builder.AppendFormat("-listOfOrg{0}Services{1}", orgType, "\n");
+        if (listOfOrgData != null)
+        {
+            if (listOfOrgData.Count > 0)
+            {
+                foreach (OrgData data in listOfOrgData)
+                {
+                    if (data != null)
+                    { builder.AppendFormat(" t {0}: {1}{2}", data.turn, data.text, "\n"); }
+                    else { builder.AppendFormat(" Invalid data (Null){0}", "\n"); }
+                }
+            }
+            else { builder.AppendFormat(" No records present{0}", "\n"); }
+        }
+        else { builder.AppendFormat("-NULL FILE for {0}", orgType); }
         return builder.ToString();
     }
 

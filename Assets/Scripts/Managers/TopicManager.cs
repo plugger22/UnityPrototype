@@ -165,6 +165,7 @@ public class TopicManager : MonoBehaviour
     private string tagOrgName;          //name of organisation, eg. 'BlueAngelCult'
     private string tagOrgTag;           //tag of organisation, eg. 'Blue Angel Cult'
     private string tagOrgWant;          //what the org wants you to do (org.textWant)
+    private string tagOrgText;          //previous service provided by Org (orgData.text)
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1296,6 +1297,7 @@ public class TopicManager : MonoBehaviour
         tagOrgName = "";
         tagOrgTag = "";
         tagOrgWant = "";
+        tagOrgText = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -2175,6 +2177,13 @@ public class TopicManager : MonoBehaviour
             tagOrgWant = org.textWant;
             tagNodeID = -1;
             tagActorID = -1;
+            //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
+            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Cure);
+            if (data != null)
+            {
+                tagOrgText = data.text;
+                tagTurn = data.turn;
+            }
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
