@@ -3841,6 +3841,15 @@ public class EffectManager : MonoBehaviour
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Reserve) == true)
                 { effectResolve.bottomText = string.Format("{0}{1}, {2}, moved to Reserves{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
                 break;
+            case "ActorKilled":
+                //OrgContract kills an actor
+                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
+                {
+                    effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed{3}", colourBad, actor.actorName, actor.arc.name, colourEnd);
+                    OrgData data = new OrgData() { text = actor.arc.name, turn = GameManager.instance.turnScript.Turn };
+                    GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Contract);
+                }
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
 

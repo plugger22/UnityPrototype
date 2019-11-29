@@ -168,3 +168,67 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 16598 -> Friday, 29 November 2019 3:38 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 42369 -> Friday, 29 November 2019 6:08 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid option.moodEffect (Null) for option OrgConRes1Opt0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4287)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2651)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	WARNING Invalid option.moodEffect (Null) for option OrgConRes1Opt1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4287)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2651)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	WARNING Invalid option.moodEffect (Null) for option OrgConRes1Opt2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4287)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2651)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	WARNING Invalid option.moodEffect (Null) for option OrgConRes1Opt3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4287)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2651)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2467)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	WARNING Not found, tag "conflict_3", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7268)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:97)
+	MainInfoUI:GetItemHelpList(ItemData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:1193)
+	MainInfoUI:ShowItemDetails(Int32) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:1143)
+	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:639)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:39)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid HelpData (Null) for tag2 "conflict_3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:100)
+	MainInfoUI:GetItemHelpList(ItemData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:1193)
+	MainInfoUI:ShowItemDetails(Int32) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:1143)
+	MainInfoUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:639)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:39)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

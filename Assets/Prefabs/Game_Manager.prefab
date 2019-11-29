@@ -1184,6 +1184,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62a36110f2afd944bb26dcc31c931f50, type: 2}
   - {fileID: 11400000, guid: eb507fdef1f99e1408cb12ba30e96b59, type: 2}
   - {fileID: 11400000, guid: 7627aa02bf08826429d8c73841f71708, type: 2}
+  - {fileID: 11400000, guid: 8ce5b07b1ac432d4caa063dd192bd7fa, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1869,6 +1870,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9b05a74105e20ee4ea5d40b190137864, type: 2}
   - {fileID: 11400000, guid: 68b15429eed230448a6f50106a138cef, type: 2}
   - {fileID: 11400000, guid: 18db94f1ff6c6fd4dac620bee36c2993, type: 2}
+  - {fileID: 11400000, guid: 4b0f2edeb98c0b64cb2a865c6a295352, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -3929,7 +3931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: e01be89429dd3c5429cc0bc6bf9871cd, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

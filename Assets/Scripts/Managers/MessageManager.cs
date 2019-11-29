@@ -1432,7 +1432,7 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.tag0 = "conflict_0";
             data.tag1 = "conflict_1";
-            data.tag2 = "conflict_3";
+            data.tag2 = "conflict_2";
             data.help = 1;
             //add
             GameManager.instance.dataScript.AddMessage(message);
