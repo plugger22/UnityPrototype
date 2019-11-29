@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRes1Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res1 option 1
-  tag: dd
-  text: dd
+  tag: Descretion
+  text: I'll take the Duluxe Package
   topic: {fileID: 11400000, guid: 90de9a706db662043b8bc69123869db6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

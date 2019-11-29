@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: OrgCureRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Remember the [orgText] we found for you [daysAgo], asks the [org] representative?
+  text: Remember that [orgText] we found for you [daysAgo], asks the [org] representative?
     We'd like something in return
   designNotes: 'Org Cure RES 2 good event
 
@@ -48,6 +48,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 18
+  turnsActive: 17
   turnsLive: 0
   turnsDone: 0

@@ -140,3 +140,31 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 29943 -> Friday, 29 November 2019 2:38 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 36261 -> Friday, 29 November 2019 3:26 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "OrgHQ"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1597)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:987)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:286)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	WARNING Unrecognised tag "orgText"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5281)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2671)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2460)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:288)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:178)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:276)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:383)
+	
+Dev seed 28243 -> Friday, 29 November 2019 3:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16598 -> Friday, 29 November 2019 3:38 PM
+City seed 5678 -> London, United Kingdom

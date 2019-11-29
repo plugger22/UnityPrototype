@@ -35,18 +35,16 @@ MonoBehaviour:
   listOfOptions:
   - {fileID: 11400000, guid: 084e6da8d6625ba4da78b9a85f8753ee, type: 2}
   - {fileID: 11400000, guid: 88202dcfd19eaf141a22285d6b2aa1a3, type: 2}
-  - {fileID: 11400000, guid: 9bea4a6a15c5dc741ae66a6bb19d1cff, type: 2}
-  - {fileID: 11400000, guid: d9b5ec4c7bcb2e847af037a2bdaa4ca3, type: 2}
   isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsActive: 17
+  turnsLive: 0
   turnsDone: 0

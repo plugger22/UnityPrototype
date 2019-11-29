@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRes0Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res0 option 1
-  tag: dd
-  text: dd
+  tag: Donation
+  text: I won't see any Blood, will I?
   topic: {fileID: 11400000, guid: 62ac6a0fb5e602f4eab4860b90f2639b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -2229,6 +2229,13 @@ public class TopicManager : MonoBehaviour
                         tagOrgName = org.name;
                         tagOrgTag = org.tag;
                         tagOrgWant = org.textWant;
+                        //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
+                        OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Contract);
+                        if (data != null)
+                        {
+                            tagOrgText = data.text;
+                            tagTurn = data.turn;
+                        }
                         //group based on player's reputation with Organisation
                         group = GetGroupMood(org.GetReputation());
                         //if no entries use entire list by default
@@ -5086,6 +5093,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = tagOrgWant; }
                         }
                         else { CountTextTag("orgWant", dictOfTags); }
+                        break;
+                    case "orgText":
+                        //OrgData.text, eg. service provided (use [daysAgo] for how many days back)
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagOrgText, colourEnd); }
+                            else { replaceText = tagOrgText; }
+                        }
+                        else { CountTextTag("orgText", dictOfTags); }
                         break;
                     case "who":
                         //My '[best friend]'s [crazy] [sister]' 

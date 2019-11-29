@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRes1Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res1 option 0
-  tag: dd
-  text: dd
+  tag: Hurt Them
+  text: Make sure they feel pain
   topic: {fileID: 11400000, guid: 90de9a706db662043b8bc69123869db6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

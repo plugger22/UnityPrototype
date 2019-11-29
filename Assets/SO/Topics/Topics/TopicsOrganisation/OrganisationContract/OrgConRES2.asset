@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Remember your [actor], whispers the voice from the [org]? We solved your problem,
-    didn't we? Now we need your help
+  text: Remember your [orgText] from [daysAgo] whispers the [org] voice? We solved
+    your problem and now we need your help
   designNotes: Org Contract RES 2 Payback good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
