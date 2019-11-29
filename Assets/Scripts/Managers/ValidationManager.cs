@@ -137,6 +137,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateCities();
                 ValidateTopics();
                 ValidateScenarios();
+                ValidateCampaigns();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -1504,6 +1505,52 @@ public class ValidationManager : MonoBehaviour
 
     #endregion
 
+    #region ValidateCampaigns
+    //runs checks on campaigns
+    private void ValidateCampaigns()
+    {
+        Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
+        if (arrayOfCampaigns != null)
+        {
+            //Check organisations are the correct type
+            foreach(Campaign campaign in arrayOfCampaigns)
+            {
+                //cure
+                if (campaign.orgCure != null)
+                {
+                    if (campaign.orgCure.orgType.name.Equals("Cure", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgCure is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgCure.orgType.name, "\n"); }
+                }
+                //contract
+                if (campaign.orgContract != null)
+                {
+                    if (campaign.orgContract.orgType.name.Equals("Contract", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgContract is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgContract.orgType.name, "\n"); }
+                }
+                //Emergency
+                if (campaign.orgEmergency != null)
+                {
+                    if (campaign.orgEmergency.orgType.name.Equals("Emergency", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgEmergency is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgEmergency.orgType.name, "\n"); }
+                }
+                //HQ
+                if (campaign.orgHQ != null)
+                {
+                    if (campaign.orgHQ.orgType.name.Equals("HQ", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgHQ is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgHQ.orgType.name, "\n"); }
+                }
+                //Info
+                if (campaign.orgInfo != null)
+                {
+                    if (campaign.orgInfo.orgType.name.Equals("Info", StringComparison.Ordinal) == false)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCampaigns: campaign \"{0}\", orgInfo is the wrong type (\"{1}\"){2}", campaign.name, campaign.orgInfo.orgType.name, "\n"); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfCampaigns (Null)"); }
+    }
+    #endregion
+
 
 #if (UNITY_EDITOR)
 
@@ -1634,6 +1681,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfObjectives);
         //Organisation
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfOrganisations);
+        //OrgTypes
+        ValidateSOGeneric<OrgType>(GameManager.instance.loadScript.arrayOfOrgTypes);
         //Mayor
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfMayors);
         //DecisionAI
@@ -1650,6 +1699,7 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<NpcNode>(GameManager.instance.loadScript.arrayOfNpcNodes);
         //VIP Actions
         ValidateSOGeneric<NpcAction>(GameManager.instance.loadScript.arrayOfNpcActions);
+
     }
     #endregion
 

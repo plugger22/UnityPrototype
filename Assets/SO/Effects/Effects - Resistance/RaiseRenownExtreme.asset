@@ -20,7 +20,7 @@ MonoBehaviour:
   operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
   typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
-  value: 10
+  value: 5
   ignoreEffect: 0
   isMoodEffect: 0
   belief: {fileID: 0}

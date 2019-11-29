@@ -134,6 +134,11 @@ public class DataManager : MonoBehaviour
     //organisations current for campaign
     private List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
     //organisation pools that track services provided to the player
+    private List<OrgData> listOfOrgCureServices = new List<OrgData>();
+    private List<OrgData> listOfOrgContractServices = new List<OrgData>();
+    private List<OrgData> listOfOrgEmergencyServices = new List<OrgData>();
+    private List<OrgData> listOfOrgHQServices = new List<OrgData>();
+    private List<OrgData> listOfOrgInfoServices = new List<OrgData>();
 
     //secret lists
     private List<Secret> listOfPlayerSecrets = new List<Secret>();
@@ -464,6 +469,12 @@ public class DataManager : MonoBehaviour
         listOfHistoryNemesisMove.Clear();
         listOfHistoryNpcMove.Clear();
         listOfHistoryAutoRun.Clear();
+        //organisation lists
+        listOfOrgCureServices.Clear();
+        listOfOrgContractServices.Clear();
+        listOfOrgEmergencyServices.Clear();
+        listOfOrgHQServices.Clear();
+        listOfOrgInfoServices.Clear();
         //nodes
         dictOfNodeObjects.Clear();
         dictOfNodes.Clear();
@@ -6923,6 +6934,69 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfOrgs (Empty)"); }
         }
         else { Debug.LogError("Invalid listOfOrgs (Null)"); }
+    }
+
+    /// <summary>
+    /// returns listOfOrgData (services provided by an Org) based on orgType.name, Null if a problem.
+    /// </summary>
+    /// <param name="orgType"></param>
+    /// <returns></returns>
+    public List<OrgData> GetListOfOrgData(OrganisationType orgType)
+    {
+        List<OrgData> listOfOrgData = null;
+
+        switch (orgType)
+        {
+            case OrganisationType.Cure: listOfOrgData = listOfOrgCureServices; break;
+            case OrganisationType.Contract: listOfOrgData = listOfOrgContractServices; break;
+            case OrganisationType.Emergency: listOfOrgData = listOfOrgEmergencyServices; break;
+            case OrganisationType.HQ: listOfOrgData = listOfOrgHQServices; break;
+            case OrganisationType.Info: listOfOrgData = listOfOrgInfoServices; break;
+            default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
+        }
+        return listOfOrgData;
+    }
+
+    /// <summary>
+    /// Adds an orgData record to the listOfOrganisationServices specified by the orgType
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="orgType"></param>
+    public void AddOrgData(OrgData data, OrganisationType orgType)
+    {
+        if (data != null)
+        {
+            switch (orgType)
+            {
+                case OrganisationType.Cure: listOfOrgCureServices.Add(data); break;
+                case OrganisationType.Contract: listOfOrgContractServices.Add(data); break;
+                case OrganisationType.Emergency: listOfOrgEmergencyServices.Add(data); break;
+                case OrganisationType.HQ: listOfOrgHQServices.Add(data); break;
+                case OrganisationType.Info: listOfOrgInfoServices.Add(data); break;
+                default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Resets lists of OrgData to save/Load data
+    /// </summary>
+    /// <param name="orgType"></param>
+    public void SetOrgData(List<OrgData> listOfOrgData, OrganisationType orgType)
+    {
+        if (listOfOrgData != null)
+        {
+            switch (orgType)
+            {
+                case OrganisationType.Cure: listOfOrgCureServices.Clear(); listOfOrgCureServices.AddRange(listOfOrgData);  break;
+                case OrganisationType.Contract: listOfOrgContractServices.Clear(); listOfOrgContractServices.AddRange(listOfOrgData); break;
+                case OrganisationType.Emergency: listOfOrgEmergencyServices.Clear(); listOfOrgEmergencyServices.AddRange(listOfOrgData); break;
+                case OrganisationType.HQ: listOfOrgHQServices.Clear(); listOfOrgHQServices.AddRange(listOfOrgData); break;
+                case OrganisationType.Info: listOfOrgInfoServices.Clear(); listOfOrgInfoServices.AddRange(listOfOrgData); break;
+                default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
+            }
+        }
+        else { Debug.LogError("Invalid listOfOrgData (Null)"); }
     }
 
     /// <summary>

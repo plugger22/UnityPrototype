@@ -509,6 +509,11 @@ public class FileManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid org (Null) in listOfCurrentOrganisations"); }
             }
+            write.dataData.listOfCureOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Cure));
+            write.dataData.listOfContractOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Contract));
+            write.dataData.listOfEmergencyOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Emergency));
+            write.dataData.listOfHQOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.HQ));
+            write.dataData.listOfInfoOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Info));
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
         #endregion
@@ -2026,6 +2031,12 @@ public class FileManager : MonoBehaviour
             }
             //update DM -> listOfCurrentOrganisations
             GameManager.instance.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
+            //OrgData lists
+            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfCureOrgData, OrganisationType.Cure);
+            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfContractOrgData, OrganisationType.Contract);
+            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
+            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
+            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
         }
         else { Debug.LogError("Invalid dictOfOrganisations (Null)"); }
         #endregion

@@ -87,6 +87,11 @@ public class SaveDataData
     //organisations
     public List<string> listOfCurrentOrganisations = new List<string>();
     public List<SaveOrganisation> listOfSaveOrganisations = new List<SaveOrganisation>();
+    public List<OrgData> listOfCureOrgData = new List<OrgData>();
+    public List<OrgData> listOfContractOrgData = new List<OrgData>();
+    public List<OrgData> listOfEmergencyOrgData = new List<OrgData>();
+    public List<OrgData> listOfHQOrgData = new List<OrgData>();
+    public List<OrgData> listOfInfoOrgData = new List<OrgData>();
     //contacts
     public int contactCounter;
     public List<int> listOfContactPool = new List<int>();

@@ -41,6 +41,7 @@ public class LoadManager : MonoBehaviour
     public Npc[] arrayOfNpcs;
     public NpcNode[] arrayOfNpcNodes;
     public NpcAction[] arrayOfNpcActions;
+    public OrgType[] arrayOfOrgTypes;
     
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -653,6 +654,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNpcActions has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NpcActions present"); }
+        //
+        // - - - OrgTypes (not stored in a collection)
+        //
+        numArray = arrayOfOrgTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfOrgTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No OrgTypes present"); }
         //
         // - - - Mission (not stored in a collection)
         //

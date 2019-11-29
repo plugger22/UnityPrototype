@@ -6,15 +6,18 @@ using gameAPI;
 /// <summary>
 /// SO for 3rd party Organisations. Name of SO is the name of the organisation, eg. "Mafia"
 /// </summary>
-[CreateAssetMenu(menuName = "Game / Organisation")]
+[CreateAssetMenu(menuName = "Game / Organisation / Organisation")]
 public class Organisation : ScriptableObject
 {
+    [Header("Texts")]
     [Tooltip("Short text description (3 words max)")]
     public string descriptor;
-    [Tooltip("Type of org, eg. OrgCure, dev purposes only")]
-    public string typeOfOrg;
     [Tooltip("In game name")]
     public string tag;
+
+    [Header("Vitals")]
+    [Tooltip("Type of org")]
+    public OrgType orgType;
     [Tooltip("Sprite")]
     public Sprite sprite;
 
@@ -24,7 +27,6 @@ public class Organisation : ScriptableObject
     [Tooltip("Secret that is given to Player if they do what the org wants at Rep 0")]
     public Secret secret;
    
-
     [Header("Archived")]
     [Tooltip("Preferred node type for this Organisation. The more of this type of node the greater the chance of an organisation being present in a city")]
     public NodeArc nodeArc;
@@ -45,6 +47,7 @@ public class Organisation : ScriptableObject
         //field asserts
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        Debug.AssertFormat(orgType != null, "Invalid orgType (Null)");
         Debug.AssertFormat(nodeArc != null, "Invalid nodeArc (Null) for {0}", name);
         Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
         Debug.AssertFormat(secret != null, "Invalid secret (Null) for {0}", name);

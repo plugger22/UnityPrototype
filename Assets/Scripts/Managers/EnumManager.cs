@@ -119,6 +119,11 @@
     public enum ContactStatus { Active, Inactive, ContactPool }
 
     //
+    // - - - Organisations - - -
+    //
+    public enum OrganisationType { None, Cure, Contract, Emergency, HQ, Info} //Maps to OrgType.SO
+
+    //
     // - - - AI - - -
     //
     public enum Priority { None, Low, Medium, High, Critical }
