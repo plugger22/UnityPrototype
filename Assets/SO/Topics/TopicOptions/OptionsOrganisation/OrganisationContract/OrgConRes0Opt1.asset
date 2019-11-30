@@ -13,16 +13,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res0 option 1
   tag: Donation
-  text: I won't see any Blood, will I?
+  text: I won't have to see any Blood, will I?
   topic: {fileID: 11400000, guid: 62ac6a0fb5e602f4eab4860b90f2639b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 4b0f2edeb98c0b64cb2a865c6a295352, type: 2}
-  listOfBadEffects: []
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
