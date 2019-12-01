@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: It's the empathy bypass requirement that prevents me from joining the [org],
+    insists [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

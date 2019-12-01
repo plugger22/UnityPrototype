@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d4afccfc4d7e4a41bb526c384c37f28, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If you don't have any empathy you can kill anyone, says [npc], [job] of [node].
+    That's why the [org] give everybody a bypass
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

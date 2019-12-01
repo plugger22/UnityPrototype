@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Name: OrgConRes4Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res4 option 0
-  tag: dd
-  text: dd
+  tag: Agree
+  text: I can do that
   topic: {fileID: 11400000, guid: 028e0aa8e1738c9458d883f2b78e1bd7, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0c3a0508bca57cc46b44fb70eafee41e, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Rumour has it that if [mayor] doesn't pay off the [org] they'll be next on
+    their list. Killers like that don't discriminate, says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

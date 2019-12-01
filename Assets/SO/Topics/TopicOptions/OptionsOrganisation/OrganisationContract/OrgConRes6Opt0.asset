@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Name: OrgConRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res6 option 0
-  tag: dd
-  text: dd
+  tag: Medium Donation
+  text: Take it and get out of my sight
   topic: {fileID: 11400000, guid: 41cd93d03043d8b4a892d49d51f99eaa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Is the empathy bypass you get when you join the [org] permanent? What if I
+    want to get a dog one day, asks [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

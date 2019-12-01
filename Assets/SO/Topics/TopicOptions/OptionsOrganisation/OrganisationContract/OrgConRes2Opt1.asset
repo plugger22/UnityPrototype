@@ -22,13 +22,14 @@ MonoBehaviour:
   listOfCriteria:
   - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: The [org]? Don't they insist that all members have an empathy bypass, asks
+    [npc], [job] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

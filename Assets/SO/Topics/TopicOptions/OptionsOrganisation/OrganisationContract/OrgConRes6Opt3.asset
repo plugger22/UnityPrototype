@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Name: OrgConRes6Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res6 option 3
-  tag: dd
-  text: dd
+  tag: Give Gear
+  text: Let's do a deal
   topic: {fileID: 11400000, guid: 41cd93d03043d8b4a892d49d51f99eaa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5f71194adb918384c8c90213d3627864, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] loves the [org] because they only kill bad people. Maybe, if having
+    a contract on your head makes you bad, says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

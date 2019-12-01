@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d4afccfc4d7e4a41bb526c384c37f28, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] has a friend who used to be [npcIs] until they joined the [org].
+    Not anymore, they aren't, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: Unknown
+  text: You've clocked up a debt with the [org]. They ask that you [orgWant]. Do so
+    or they'll break contact
   designNotes: Org Contract RES 4 The Big Ask (bad)
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
@@ -35,7 +36,7 @@ MonoBehaviour:
   listOfOptions:
   - {fileID: 11400000, guid: 084e6da8d6625ba4da78b9a85f8753ee, type: 2}
   - {fileID: 11400000, guid: 88202dcfd19eaf141a22285d6b2aa1a3, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -45,6 +46,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 17
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

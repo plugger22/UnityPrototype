@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Killers, that's what the [org] are. They are given an empathy bypass so that
+    they don't care, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

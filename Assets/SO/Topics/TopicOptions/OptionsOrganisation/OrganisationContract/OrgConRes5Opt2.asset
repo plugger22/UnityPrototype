@@ -12,22 +12,27 @@ MonoBehaviour:
   m_Name: OrgConRes5Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res5 option 2
-  tag: dd
-  text: dd
+  tag: Large Donation
+  text: Invest this in Moon Bonds
   topic: {fileID: 11400000, guid: ea365882025d8ec40b3140880ef3ddd5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Is it true that the bullets the [org] use can go around corners? My [who]
+    insists that they can, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -12,22 +12,25 @@ MonoBehaviour:
   m_Name: OrgConRes5Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res5 option 3
-  tag: dd
-  text: dd
+  tag: Promote
+  text: I'll speak well of you to HQ
   topic: {fileID: 11400000, guid: ea365882025d8ec40b3140880ef3ddd5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [org] have a saying, that the past is best forgotten. If I killed as many
+    people as they did I'd be having amnesia as well, says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

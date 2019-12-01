@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Name: OrgConRes5Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res5 option 0
-  tag: dd
-  text: dd
+  tag: Small Donation
+  text: Bloodsuckers, take this
   topic: {fileID: 11400000, guid: ea365882025d8ec40b3140880ef3ddd5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Has the [org] every missed a target, asks [npc], [job] of [node]? I slurp
+    speed pills, just to be on the safe side
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES6
   m_EditorClassIdentifier: 
   tag: Blackmail
-  text: Unknown
+  text: Your HQ, murmurs the [org] person in the shadows, doesn't need to know our
+    mutual secret. Perhaps we could help us?
   designNotes: Org Contract RES 6 blackmail bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}
@@ -34,16 +35,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8669c82cca59d9a468c8d75fb211e16d, type: 2}
   - {fileID: 11400000, guid: cb19659325834a84da4788f61fcf0fe7, type: 2}
   - {fileID: 11400000, guid: 8eb0384462366c14ea4fc16c4a5d4917, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 12
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsActive: 18
+  turnsLive: 0
   turnsDone: 0

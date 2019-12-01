@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: OrgConRes4Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res4 option 1
-  tag: dd
-  text: dd
+  tag: Decline
+  text: Close the Door on your Way Out
   topic: {fileID: 11400000, guid: 028e0aa8e1738c9458d883f2b78e1bd7, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Is [mayor] worried about the [org]? Isn't everybody, says [npc], [job] of
+    [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

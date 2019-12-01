@@ -29,7 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If only it wasn't for my [handicap], says [npc] of [node], I'd be join the
+    [org] in a flash. Who cares about the empathy bypass?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

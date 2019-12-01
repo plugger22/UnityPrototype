@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: What happens to the killers of the [org] when they get old? I bet they don't
+    cut their own throats from guilt, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

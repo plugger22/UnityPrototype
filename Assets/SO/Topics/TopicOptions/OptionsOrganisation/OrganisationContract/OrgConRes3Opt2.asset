@@ -27,7 +27,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Who gave the [org] a license to kill? The Authority? [mayor]? Somebody must
+    have, insists [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

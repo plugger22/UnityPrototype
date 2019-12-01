@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Did you hear what the [org] do to people who inform on them? They ram nanoRats
+    up their backside, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

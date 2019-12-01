@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Name: OrgConRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res6 option 2
-  tag: dd
-  text: dd
+  tag: Tell HQ
+  text: I'll insist that HQ calls you
   topic: {fileID: 11400000, guid: 41cd93d03043d8b4a892d49d51f99eaa, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Nobody tells you that the [org] killed their neighbour but you can always
+    tell that's what happened, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
