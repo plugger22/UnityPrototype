@@ -27,7 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4b249892692d6d4bb54365430700f5f, type: 2}
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
-  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: There are a lot of rumours about the [org] but I happen to know that they
     work for the Authority, says [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>m</color>

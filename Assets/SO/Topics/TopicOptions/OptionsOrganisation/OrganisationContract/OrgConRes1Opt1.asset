@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res1 option 1
   tag: Descretion
-  text: I'll take the Duluxe Package
+  text: I'll take the Deluxe Package
   topic: {fileID: 11400000, guid: 90de9a706db662043b8bc69123869db6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b0f2edeb98c0b64cb2a865c6a295352, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

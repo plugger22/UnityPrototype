@@ -232,3 +232,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:39)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 64512 -> Sunday, 1 December 2019 10:02 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47821 -> Sunday, 1 December 2019 10:13 AM
+City seed 5678 -> London, United Kingdom

@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Name: OrgConRes3Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res3 option 2
-  tag: dd
-  text: dd
+  tag: Generous
+  text: Who said I'm not Big Hearted?
   topic: {fileID: 11400000, guid: 3a2614ee639bf8a4b8e4802a44e16758, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8b8017c4a8f2f6241ad13c8505ece11d, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
+  - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +33,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2
