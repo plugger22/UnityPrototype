@@ -85,6 +85,7 @@ public class SaveDataData
     public List<string> listOfDeletedSecrets = new List<string>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
     //organisations
+    public List<bool> listOfOrgInfoData = new List<bool>();
     public List<string> listOfCurrentOrganisations = new List<string>();
     public List<SaveOrganisation> listOfSaveOrganisations = new List<SaveOrganisation>();
     public List<OrgData> listOfCureOrgData = new List<OrgData>();

@@ -122,6 +122,7 @@
     // - - - Organisations - - -
     //
     public enum OrganisationType { None, Cure, Contract, Emergency, HQ, Info} //Maps to OrgType.SO
+    public enum OrgInfoType { Nemesis, ErasureTeams, VIP, Count } //targets of orgInfo hacks (index for DataManager.cs -> arrayOfOrgInfo)
 
     //
     // - - - AI - - -
@@ -185,7 +186,7 @@
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,
-        OrgCures, OrgContractHits
+        OrgCures, OrgContractHits, OrgInfoHacks
     }
 
 

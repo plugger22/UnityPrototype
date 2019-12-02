@@ -29,6 +29,7 @@ public class DataManager : MonoBehaviour
     private Factor[] arrayOfFactors;                                                            //personality factors (indexes correspond to Actor/Player personality arrays)
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
     private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.StatusHQ (index 0 & last are Null as 'None' & 'Worker')
+    private bool[] arrayOfOrgInfo;                                                              //index maps to enum.OrgInfoType and if true, OrgInfo is currently providing player info on that type
 
     private Graph graph;
 
@@ -312,6 +313,8 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
+        //arrayOfOrgType
+        arrayOfOrgInfo = new bool[(int)OrgInfoType.Count];
     }
     #endregion
 
@@ -327,7 +330,8 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    #region SubInitialiseAll
+        #region SubInitialiseAll
+
     private void SubInitialiseAll()
     {
         Debug.Assert(listOfOneConnArcsDefault != null, "Invalid listOfOneConnArcsDefault (Null)");
@@ -349,7 +353,6 @@ public class DataManager : MonoBehaviour
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
         for (int i = 0; i < tempArray.Length; i++)
         { arrayOfNodes[i, 0] = tempArray[i]; }
-
         //List of Nodes by Types -> each index has a list of all nodes of that NodeArc type
         int limit = CheckNumOfNodeArcs();
         for (int i = 0; i < limit; i++)
@@ -400,6 +403,7 @@ public class DataManager : MonoBehaviour
         Array.Clear(arrayOfTeams, 0, arrayOfTeams.Length);
         Array.Clear(arrayOfActors, 0, arrayOfActors.Length);
         Array.Clear(arrayOfActorsPresent, 0, arrayOfActorsPresent.Length);
+        Array.Clear(arrayOfOrgInfo, 0, arrayOfOrgInfo.Length);
         if (arrayOfGenericTargets != null)
         { Array.Clear(arrayOfGenericTargets, 0, arrayOfGenericTargets.Length); }
         //Node lists
@@ -7016,6 +7020,48 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfOrgData (Null)"); }
     }
 
+    public bool[] GetArrayOfOrgInfo()
+    { return arrayOfOrgInfo; }
+
+    /// <summary>
+    /// Set bool values in arrayOfOrgInfo (if true then OrgInfo is currently tracking that type for the Player)
+    /// </summary>
+    /// <param name="orgInfoType"></param>
+    /// <param name="value"></param>
+    public void SetOrgInfoType(OrgInfoType orgInfoType, bool value)
+    {
+        if (orgInfoType != OrgInfoType.Count)
+        { arrayOfOrgInfo[(int)orgInfoType] = value; }
+        else { Debug.LogError("Invalid OrgInfoType ('Count')"); }
+    }
+
+    /// <summary>
+    /// returns true if an known OrgInfo is currently tracking that type on behalf of the Player, false otherwise
+    /// </summary>
+    /// <param name="orgInfoType"></param>
+    /// <returns></returns>
+    public bool CheckOrgInfoType(OrgInfoType orgInfoType)
+    {
+        if (orgInfoType != OrgInfoType.Count)
+        { return arrayOfOrgInfo[(int)orgInfoType];  }
+        else { Debug.LogWarning("Invalid OrgInfoType ('Count')"); return false; }
+    }
+
+    /// <summary>
+    /// Used to set load/save data back into the arrayOfOrgInfo
+    /// </summary>
+    /// <param name="listOfData"></param>
+    public void SetOrgInfoArray(List<bool> listOfData)
+    {
+        if (listOfData != null)
+        {
+            Debug.AssertFormat(listOfData.Count == arrayOfOrgInfo.Length, "Mismatch on array size, listOfData has {0} records, arrayOfOrgInfo has {1} records", listOfData.Count, arrayOfOrgInfo.Length);
+            for (int i = 0; i < listOfData.Count; i++)
+            { arrayOfOrgInfo[i] = listOfData[i]; }
+        }
+        else { Debug.LogError("Invalid listOfData (Null)"); }
+    }
+
     /// <summary>
     /// Debug display of all current campaign Organisations
     /// </summary>
@@ -7026,8 +7072,12 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach (Organisation org in listOfCurrentOrganisations)
         { builder.AppendFormat(" {0}, Rep {1}, Free {2}, Contact {3} Secret {4}{5}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, "\n"); }
+        //arrayOfOrgInfo
+        builder.AppendFormat("{0}{1}-ArrayOfOrgInfo{2}", "\n", "\n", "\n");
+        for (int i = 0; i < arrayOfOrgInfo.Length; i++)
+        { builder.AppendFormat("{0}: {1}{2}", (OrgInfoType)i, arrayOfOrgInfo[i], "\n"); }
         //OrgData lists
-        builder.AppendFormat("{0}{1}{2}", "\n", "\n", DebugDisplayOrgData(OrganisationType.Cure));
+        builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Cure));
         builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Contract));
         builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.Emergency));
         builder.AppendFormat("{0}{1}", "\n", DebugDisplayOrgData(OrganisationType.HQ));

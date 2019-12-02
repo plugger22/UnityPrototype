@@ -514,6 +514,8 @@ public class FileManager : MonoBehaviour
             write.dataData.listOfEmergencyOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Emergency));
             write.dataData.listOfHQOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.HQ));
             write.dataData.listOfInfoOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Info));
+            //OrgInfoArray
+            write.dataData.listOfOrgInfoData.AddRange(GameManager.instance.dataScript.GetArrayOfOrgInfo().ToList());
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
         #endregion
@@ -2037,6 +2039,8 @@ public class FileManager : MonoBehaviour
             GameManager.instance.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
             GameManager.instance.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
             GameManager.instance.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
+            //OrgInfoArray
+            GameManager.instance.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
         }
         else { Debug.LogError("Invalid dictOfOrganisations (Null)"); }
         #endregion
