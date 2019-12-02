@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Name: Nothing3
   m_EditorClassIdentifier: 
   description: Nothing happens
-  threatText: Sigh and Shrug (will DO NOTHING)
-  outcomeText: sighs and shakes their head
+  outcomeText: Sighs and shakes their head
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
   type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  effect: {fileID: 0}
   listOfCriteria: []
+  effect: {fileID: 0}
+  who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
   isTestOff: 0

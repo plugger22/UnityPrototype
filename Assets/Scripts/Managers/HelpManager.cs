@@ -281,9 +281,9 @@ public class HelpManager : MonoBehaviour
         //HQ Boss
         data = new HelpData();
         data.tag = "topicUI_3";
-        data.header = "HQ Boss";
+        data.header = "HQ Boss (if present)";
         builder = new StringBuilder();
-        builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss keeps track{3} of your choices. ", 
+        builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss remembers{3} your choices. ", 
             colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("{0}Ignoring{1} a decision will always earn your Boss's {2}disapproval{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();

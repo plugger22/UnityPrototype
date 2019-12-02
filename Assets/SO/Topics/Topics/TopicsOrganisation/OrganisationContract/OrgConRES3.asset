@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgConRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: The [org] is on the line. Talking about the [orgText] that they iced for you
-    [daysAgo]. Wanting something in return. Now.
+  text: The [org] is on the line. Reminding you of the [orgText] that they iced [daysAgo].
+    Wanting something in return. Now.
   designNotes: Org Contract RES 3 payback bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: a01f39e17abccd24983f506ce0249af0, type: 2}

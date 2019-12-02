@@ -1140,7 +1140,7 @@ public class EffectManager : MonoBehaviour
                                                 { BuildString(result, "Less than two active actors OnMap"); }
                                                 break;
                                             case "ActiveActorsConflict":
-                                                //at least one active, OnMap actor with conflictTimer > 0
+                                                //at least one active, OnMap actor who has had a relationship conflict with Player
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with conflicts"); }
                                                 break;
@@ -3848,6 +3848,7 @@ public class EffectManager : MonoBehaviour
                     effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed{3}", colourBad, actor.actorName, actor.arc.name, colourEnd);
                     OrgData data = new OrgData() { text = actor.arc.name, turn = GameManager.instance.turnScript.Turn };
                     GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Contract);
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgContractHits);
                 }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;

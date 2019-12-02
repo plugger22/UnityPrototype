@@ -24,7 +24,7 @@ namespace gameAPI
         [HideInInspector] public int unhappyTimer;              //used when in Reserves. Becomes 'Unhappy' once expires
         [HideInInspector] public int blackmailTimer;            //default 0 but set to new global value once actor gains Blackmailer condition
         [HideInInspector] public int captureTimer;              //ticks down and determines how long an actor will be inactive while captured
-        [HideInInspector] public int conflictTimer;             //Set to global value whenever a Relationship Conflict and ticks down each turn. Whilever > 0, Player assumed to be 'having trouble' with actor
+        /*[HideInInspector] public int conflictTimer;             //Set to global value whenever a Relationship Conflict and ticks down each turn. Whilever > 0, Player assumed to be 'having trouble' with actor*/
         //states
         [HideInInspector] public bool isPromised;               //When sent to reserves Player can promise to recall them within a certain time (true), otherwise false
         [HideInInspector] public bool isNewRecruit;             //true if actor has been recruited, false if has been OnMap
@@ -135,7 +135,7 @@ namespace gameAPI
             gearTimer = 0;
             gearTimesTaken = 0;
             blackmailTimer = 0;
-            conflictTimer = 0;
+            /*conflictTimer = 0;*/
             captureTimer = 0;
             numOfTimesBullied = 0;
             personality = new Personality();
@@ -172,7 +172,7 @@ namespace gameAPI
             isReassured = false;
             isThreatening = false;
             isComplaining = false;
-            conflictTimer = 0;
+            /*conflictTimer = 0;*/
         }
 
         //

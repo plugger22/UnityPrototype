@@ -4758,8 +4758,8 @@ public class DataManager : MonoBehaviour
                                 { numOfActors++; }
                                 break;
                             case ActorCheck.ActorConflictNOTZero:
-                                //actor conflictTimer not Zero
-                                if (actor.conflictTimer > 0)
+                                //actor has had at least one relationship conflict this level
+                                if (actor.numOfTimesConflict > 0)
                                 { numOfActors++; }
                                 break;
                             case ActorCheck.NodeActionsNOTZero:
@@ -5121,7 +5121,7 @@ public class DataManager : MonoBehaviour
                     {
                         builder.AppendFormat("- {0}, {1}, ID {2}, slotID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                         builder.AppendFormat(" status: {0}{1}", actor.Status, "\n");
-                        builder.AppendFormat(" Timers: blackmail {0}, capture {1}, conflict {2}, unhappy {3}{4}", actor.blackmailTimer, actor.captureTimer, actor.conflictTimer, actor.unhappyTimer, "\n");
+                        builder.AppendFormat(" Timers: blackmail {0}, capture {1}, unhappy {2}{3}", actor.blackmailTimer, actor.captureTimer, actor.unhappyTimer, "\n");
                         builder.AppendFormat(" isTraitor: {0}{1}", actor.isTraitor, "\n");
                         builder.AppendFormat(" isThreatening: {0}{1}", actor.isThreatening, "\n");
                         builder.AppendFormat(" numOfTimesBullied: {0}{1}", actor.numOfTimesBullied, "\n");

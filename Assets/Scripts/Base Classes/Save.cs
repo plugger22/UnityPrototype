@@ -593,7 +593,7 @@ public class SaveActor
     public int unhappyTimer;
     public int blackmailTimer;
     public int captureTimer;
-    public int conflictTimer;
+    /*public int conflictTimer;*/
     public int numOfTimesBullied;
     public int numOfTimesCaptured;
     public int numOfTimesConflict;

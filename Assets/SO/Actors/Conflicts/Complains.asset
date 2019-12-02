@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Name: Complains
   m_EditorClassIdentifier: 
   description: Actor complains to HQ about Player
-  threatText: Complain to HQ about your behaviour
-  outcomeText: complains about you to HQ
+  outcomeText: Complains about you to HQ
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  who: {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
-  listOfCriteria: []
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  listOfCriteria: []
   effect: {fileID: 11400000, guid: 019973585ea961f458ecefa6103cf5e6, type: 2}
+  who: {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
   isTestOff: 0

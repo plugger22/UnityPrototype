@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Name: Steals
   m_EditorClassIdentifier: 
   description: Actor steals from Player
-  threatText: Steals money from you
-  outcomeText: steals money from you
+  outcomeText: Steals money from you
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  who: {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
+  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 121d87e247acbdd468d033d690d5f214, type: 2}
-  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   effect: {fileID: 11400000, guid: 3e26cf5bc1d48a9498279626dc3248d7, type: 2}
+  who: {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
   isTestOff: 0

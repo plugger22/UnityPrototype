@@ -1660,9 +1660,10 @@ public class DebugGUI : MonoBehaviour
                     //Initiate a Relationship conflict
                     case 81:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        GUI.Box(new Rect(Screen.width / 2 - 385, 50, 200, 100), "", customBackground);
-                        GUI.Label(new Rect(Screen.width / 2 - 375, 100, 150, 20), "Input Actor (0 - 3)");
-                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 375, 70, 100, 20), textInput_0);
+                        GUI.Box(new Rect(Screen.width / 2 - 385, 50, 200, 90), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 60, 150, 20), "Create a Conflict");
+                        GUI.Label(new Rect(Screen.width / 2 - 375, 110, 150, 20), "Input Actor (0 - 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 375, 85, 100, 20), textInput_0);
                         status = GUIStatus.Conflict;
                         textOutput = null;
                         break;

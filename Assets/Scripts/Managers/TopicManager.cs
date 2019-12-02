@@ -2216,7 +2216,7 @@ public class TopicManager : MonoBehaviour
         if (org != null)
         {
 
-            //Select an Actor
+            //Select an Actor with numOfConflicts (For topics 0/1 -> offer service -> contract hit, ignore for rest)
             List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide);
             if (listOfActors != null)
             {
@@ -2226,26 +2226,29 @@ public class TopicManager : MonoBehaviour
                     if (actor != null)
                     {
                         tagActorID = actor.actorID;
-                        tagOrgName = org.name;
-                        tagOrgTag = org.tag;
-                        tagOrgWant = org.textWant;
-                        //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-                        OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Contract);
-                        if (data != null)
-                        {
-                            tagOrgText = data.text;
-                            tagTurn = data.turn;
-                        }
-                        //group based on player's reputation with Organisation
-                        group = GetGroupMood(org.GetReputation());
-                        //if no entries use entire list by default
-                        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     }
-                    else { Debug.LogWarning("Invalid actor (Null)"); }
+                    else { Debug.LogWarning("Invalid list of actors (Empty)"); }
                 }
-                else { Debug.LogWarning("Invalid list of actors (Empty)"); }
+                /*else { Debug.LogWarning("Invalid list of actors (Null)"); } -> EDIT: applies only to topic 0/1, so no problem if none present */
             }
-            else { Debug.LogWarning("Invalid list of actors (Null)"); }
+            else { Debug.LogWarning("Invalid actor (Null)"); }
+
+            //applies to all
+            tagOrgName = org.name;
+            tagOrgTag = org.tag;
+            tagOrgWant = org.textWant;
+            //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
+            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Contract);
+            if (data != null)
+            {
+                tagOrgText = data.text;
+                tagTurn = data.turn;
+            }
+            //group based on player's reputation with Organisation
+            group = GetGroupMood(org.GetReputation());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+
         }
         else
         {

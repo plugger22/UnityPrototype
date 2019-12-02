@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Name: Poisons
   m_EditorClassIdentifier: 
   description: Actor poisons your relationships with others
-  threatText: Poison your relationships with others
-  outcomeText: poisons your other relationships
+  outcomeText: Poisons your other relationships
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   chance: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
-  who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
+  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: ba1a9b8178a58d64ab3ea2e5103a7a87, type: 2}
-  type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   effect: {fileID: 11400000, guid: 4da3d34e0bfbaff43a8f0c78e754f041, type: 2}
+  who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
   isTestOff: 0
-  conflictID: 7

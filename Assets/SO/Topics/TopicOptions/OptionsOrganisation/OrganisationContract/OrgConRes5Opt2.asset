@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Contract Res5 option 2
   tag: Large Donation
-  text: Invest this in Moon Bonds
+  text: Buy a Moon Bond, on me
   topic: {fileID: 11400000, guid: ea365882025d8ec40b3140880ef3ddd5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -30,9 +30,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: Is it true that the bullets the [org] use can go around corners? My [who]
     insists that they can, says [npc], [job] of [node]
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Large Donation</color>
+  tooltipMain: "<color=#98FB98> Reputation with Org +1</color>\r\n<color=#98FB98>
+    Freedom from Org +2</color>\r\n<color=#FF4500>Player Renown -3</color>"
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Invest this in Moon Bonds</color>
   optionNumber: 2

@@ -4162,10 +4162,12 @@ public class ActorManager : MonoBehaviour
                             //Statistics (counts conflict regardless of outcome of conflict)
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
                             actor.numOfTimesConflict++;
-                            //set conflictTimer
+
+                            /*//set conflictTimer
                             actor.conflictTimer = conflictTimerStart;
                             Debug.LogFormat("[Sta] ActorManager.cs -> ProcessActorConflict: {0}, {1}, ID {2} conflictTimer set to {3}{4}", actor.actorName, actor.arc.name,
-                                actor.actorID, actor.conflictTimer, "\n");
+                                actor.actorID, actor.conflictTimer, "\n");*/
+
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -5095,7 +5097,7 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearName); }
                                     }
                                 }
-                                //
+                                /*//
                                 // - - - Conflict timers
                                 //
                                 if (actor.conflictTimer > 0)
@@ -5104,7 +5106,7 @@ public class ActorManager : MonoBehaviour
                                     actor.conflictTimer--;
                                     Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveResistanceActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
                                         actor.actorID, actor.conflictTimer, "\n");
-                                }
+                                }*/
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -5356,7 +5358,7 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
                                 }
-                                //
+                                /*//
                                 // - - - Conflict timers
                                 //
                                 if (actor.conflictTimer > 0)
@@ -5365,7 +5367,7 @@ public class ActorManager : MonoBehaviour
                                     actor.conflictTimer--;
                                     Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveAuthorityActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
                                         actor.actorID, actor.conflictTimer, "\n");
-                                }
+                                }*/
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
@@ -6886,7 +6888,7 @@ public class ActorManager : MonoBehaviour
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
-                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} Motivation -1", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
                                 //random message
@@ -6899,7 +6901,7 @@ public class ActorManager : MonoBehaviour
                                 //unhappy  warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is UNHAPPY", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
-                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                                 //random message
@@ -7007,7 +7009,7 @@ public class ActorManager : MonoBehaviour
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
-                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} <b>Motivation -1</b>", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
                                 //random message
@@ -7020,7 +7022,7 @@ public class ActorManager : MonoBehaviour
                                 //unhappy  warning
                                 msgText = string.Format("{0}, {1}, in Reserves, is UNHAPPY", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} is UNHAPPY", actor.arc.name);
-                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                                 warning = string.Format("{0} is threatening action", actor.actorName);
                                 GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                                 //random message
