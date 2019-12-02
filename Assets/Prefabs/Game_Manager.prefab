@@ -3954,7 +3954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: e01be89429dd3c5429cc0bc6bf9871cd, type: 2}
+  debugTopicPool: {fileID: 0}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -3962,9 +3962,9 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   actorSlotID: 0
-  actorType: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  actorType: {fileID: 0}
   actorDatapoint0: -1
-  actorDatapoint1: 0
+  actorDatapoint1: -1
   actorDatapoint2: -1
   orgReputation: 2
   orgFreedom: 1

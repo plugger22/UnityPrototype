@@ -3786,7 +3786,6 @@ public class FileManager : MonoBehaviour
             saveActor.unhappyTimer = actor.unhappyTimer;
             saveActor.blackmailTimer = actor.blackmailTimer;
             saveActor.captureTimer = actor.captureTimer;
-            /*saveActor.conflictTimer = actor.conflictTimer;*/
             saveActor.numOfTimesBullied = actor.numOfTimesBullied;
             saveActor.numOfTimesCaptured = actor.numOfTimesCaptured;
             saveActor.numOfTimesConflict = actor.numOfTimesConflict;
@@ -3950,7 +3949,6 @@ public class FileManager : MonoBehaviour
             actor.unhappyTimer = readActor.unhappyTimer;
             actor.blackmailTimer = readActor.blackmailTimer;
             actor.captureTimer = readActor.captureTimer;
-            /*actor.conflictTimer = readActor.conflictTimer;*/
             actor.numOfTimesBullied = readActor.numOfTimesBullied;
             actor.numOfTimesCaptured = readActor.numOfTimesCaptured;
             actor.numOfTimesConflict = readActor.numOfTimesConflict;

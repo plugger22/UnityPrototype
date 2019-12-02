@@ -139,7 +139,7 @@ public class NewsManager : MonoBehaviour
                         listOfNewsItems.RemoveAt(index);
                     }
                 }
-                Debug.LogFormat("[New] NewsManager.cs -> UpdateNewsItems: There are {0} newsItems available, {1} have been deleted (expired){2}", listOfNewsItems.Count, counter, "\n");
+                /*Debug.LogFormat("[New] NewsManager.cs -> UpdateNewsItems: There are {0} newsItems available, {1} have been deleted (expired){2}", listOfNewsItems.Count, counter, "\n");*/
             }
             else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         }

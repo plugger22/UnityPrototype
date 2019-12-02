@@ -71,8 +71,6 @@ public class ActorManager : MonoBehaviour
     [Header("Assorted")]
     [Tooltip("Renown cost for negating a bad gear use roll")]
     [Range(1, 3)] public int renownCostGear = 1;
-    [Tooltip("The duration of actor.conflictTimer once a Relationship Conflict is initiated (ticks down to zero on subsequent turns)")]
-    [Range(0, 10)] public int conflictTimerStart = 8;
 
     [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
@@ -4162,12 +4160,6 @@ public class ActorManager : MonoBehaviour
                             //Statistics (counts conflict regardless of outcome of conflict)
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
                             actor.numOfTimesConflict++;
-
-                            /*//set conflictTimer
-                            actor.conflictTimer = conflictTimerStart;
-                            Debug.LogFormat("[Sta] ActorManager.cs -> ProcessActorConflict: {0}, {1}, ID {2} conflictTimer set to {3}{4}", actor.actorName, actor.arc.name,
-                                actor.actorID, actor.conflictTimer, "\n");*/
-
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -5097,16 +5089,6 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogErrorFormat("Invalid gear (Null) for gearID {0}", gearName); }
                                     }
                                 }
-                                /*//
-                                // - - - Conflict timers
-                                //
-                                if (actor.conflictTimer > 0)
-                                {
-                                    //decrement timer
-                                    actor.conflictTimer--;
-                                    Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveResistanceActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
-                                        actor.actorID, actor.conflictTimer, "\n");
-                                }*/
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Resistance actor (Null), index {0}", i)); }
@@ -5358,16 +5340,6 @@ public class ActorManager : MonoBehaviour
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
                                 }
-                                /*//
-                                // - - - Conflict timers
-                                //
-                                if (actor.conflictTimer > 0)
-                                {
-                                    //decrement timer
-                                    actor.conflictTimer--;
-                                    Debug.LogFormat("[Sta] ActorManager.cs -> CheckActiveAuthorityActorsHuman: {0}, {1}, ID {2} conflictTimer decrements (now {3}){4}", actor.actorName, actor.arc.name,
-                                        actor.actorID, actor.conflictTimer, "\n");
-                                }*/
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
@@ -5980,8 +5952,7 @@ public class ActorManager : MonoBehaviour
     public void ProcessMotivationWarning(Actor actor)
     {
         string msgText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string itemText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Motivation at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", 
+        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Motivation at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n",
             colourNormal, colourEnd, colourNeutral, colourEnd, "\n");
         string warning = string.Format("{0}<b>Can develop a RELATIONSHIP CONFLICT</b>{1}", colourBad, colourEnd);
         List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
@@ -7901,6 +7872,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Checks TestManager.cs for any relevant debug test settings that may require changes to actors (PlayerSide only) at startUp
     /// Can request a particular actor Arc type in the line up and/or a particular slotID actor having specified dataPoint settings
+    /// NOTE: No need to deal with Authority preferrred actor teams as this is automatically taken care off by teamManager when teams are initialised (actors swapped before this happens)
     /// </summary>
     private void DebugTest()
     {
@@ -7939,29 +7911,6 @@ public class ActorManager : MonoBehaviour
                                         GameManager.instance.dataScript.AddCurrentActor(playerSide, actorNew, slotID);
                                         Debug.LogFormat("[Tst] ActorManager.cs -> DebugTest: {0}, {1}, ID {2} added to OnMap lineUp (Swap Actor){3}",
                                             actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
-                                        //Authority Actor brings team with them (if space available)
-                                        if (playerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                                        {
-                                            //is there room available for another team?
-                                            if (GameManager.instance.aiScript.CheckNewTeamPossible() == true)
-                                            {
-                                                TeamArc teamArc = actorNew.arc.preferredTeam;
-                                                if (teamArc != null)
-                                                {
-                                                    if (teamArc.TeamArcID > -1)
-                                                    {
-                                                        //add new team to reserve pool
-                                                        int teamCount = GameManager.instance.dataScript.CheckTeamInfo(teamArc.TeamArcID, TeamInfo.Total);
-                                                        //update team info
-                                                        GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Reserve, +1);
-                                                        GameManager.instance.dataScript.AdjustTeamInfo(teamArc.TeamArcID, TeamInfo.Total, +1);
-                                                    }
-                                                    else { Debug.LogWarningFormat("Invalid teamArcID {0} for {1}", teamArc.TeamArcID, teamArc.name); }
-                                                }
-                                                else
-                                                { Debug.LogWarningFormat("Invalid preferred team Arc (Null) for actorID {0}, {1}, \"{2}\"", actorNew.actorID, actorNew.arc.name, actorNew.actorName); }
-                                            }
-                                        }
                                     }
                                     else { Debug.LogErrorFormat("Invalid actorNew (Null) for arc {0}, level 1, side {1}", arc.name, playerSide.name); }
                                 }
