@@ -122,7 +122,7 @@
     // - - - Organisations - - -
     //
     public enum OrganisationType { None, Cure, Contract, Emergency, HQ, Info} //Maps to OrgType.SO
-    public enum OrgInfoType { Nemesis, ErasureTeams, VIP, Count } //targets of orgInfo hacks (index for DataManager.cs -> arrayOfOrgInfo)
+    public enum OrgInfoType { Nemesis, ErasureTeams, Npc, Count } //targets of orgInfo hacks (index for DataManager.cs -> arrayOfOrgInfo)
 
     //
     // - - - AI - - -

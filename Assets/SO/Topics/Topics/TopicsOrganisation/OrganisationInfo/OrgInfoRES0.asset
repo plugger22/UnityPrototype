@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES0
   m_EditorClassIdentifier: 
   tag: Info Service
-  text: Unknown
+  text: It's a message from the [org]. Would you like them to provide a direct feed
+    of the positions of any of the following?
   designNotes: Org Info RES 0 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -31,7 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d8515d794b3e75a4b894dc078101cf5d, type: 2}
   - {fileID: 11400000, guid: c4224e15436d2a24fb127bc06d8a2d73, type: 2}
   - {fileID: 11400000, guid: ee7adbfb46754c749b0d02eb963e9870, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +43,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 18
   turnsDone: 0

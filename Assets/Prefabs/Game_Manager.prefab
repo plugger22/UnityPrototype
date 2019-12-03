@@ -930,9 +930,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64ec3fc307965da45afe1d3b815ce755, type: 2}
   - {fileID: 11400000, guid: 0c4e0bead22ed084980e9e0c72b245e7, type: 2}
   - {fileID: 11400000, guid: 39acceaf5fc8d334b98fcda1155bb188, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f83113922217b7145bce7abb9056ef3d, type: 2}
   - {fileID: 11400000, guid: 5e4fd005cce9e5a4083c348c048ae739, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 5f5b0292da8920948bfbdb9f0cf08c2a, type: 2}
+  - {fileID: 11400000, guid: ead440d41cf205f4d90385f96815030a, type: 2}
+  - {fileID: 11400000, guid: 57594726fb23b4d439c6b9e566650d84, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1097,6 +1099,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 129c79ae6551dca44bc10cf7eeaeaaaf, type: 2}
   - {fileID: 11400000, guid: dfcdcbab984a7834f84e9bf7d8ba7953, type: 2}
   - {fileID: 11400000, guid: ca64db6732d799448a78552831b97d44, type: 2}
+  - {fileID: 11400000, guid: 617c4a73150269c4a9ad5f33136c2309, type: 2}
+  - {fileID: 11400000, guid: f949c1c952dcf0f4494b412799fa6ed9, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -1185,6 +1189,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb507fdef1f99e1408cb12ba30e96b59, type: 2}
   - {fileID: 11400000, guid: 7627aa02bf08826429d8c73841f71708, type: 2}
   - {fileID: 11400000, guid: 8ce5b07b1ac432d4caa063dd192bd7fa, type: 2}
+  - {fileID: 11400000, guid: 9a7c620bcb02bc244b45999b982cab7d, type: 2}
+  - {fileID: 11400000, guid: bd53aff4a13c6914a803cd0333c52b01, type: 2}
+  - {fileID: 11400000, guid: 8f601b8d31ca35b49a1baccfca221408, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1871,6 +1878,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68b15429eed230448a6f50106a138cef, type: 2}
   - {fileID: 11400000, guid: 18db94f1ff6c6fd4dac620bee36c2993, type: 2}
   - {fileID: 11400000, guid: 4b0f2edeb98c0b64cb2a865c6a295352, type: 2}
+  - {fileID: 11400000, guid: 3706d437e7f76324c888e1a7fac9067b, type: 2}
+  - {fileID: 11400000, guid: 2b709ce1728f7ee44a7368319ca8d282, type: 2}
+  - {fileID: 11400000, guid: 650f6dfcfaf335440bf19606d9c26fc6, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -3954,7 +3964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: c8ba3fea2d979644b8792f1c413d88a5, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4176,7 +4186,6 @@ MonoBehaviour:
   motivationGainActiveDuty: 2
   dismissQuestionableChance: 15
   renownCostGear: 1
-  conflictTimerStart: 8
   breakdownChance: 20
   superStressChance: 80
   playerRecognisedChance: 20

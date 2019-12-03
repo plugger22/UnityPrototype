@@ -1333,8 +1333,8 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 break;
                                             case "StatOrgCuresNOTZero":
-                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgCures) == 0)
-                                                    { BuildString(result, "Org has provided no cures"); }
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgCures) == 0)
+                                                { BuildString(result, "Org has provided no cures"); }
                                                 break;
                                             case "StatOrgContractsNOTZero":
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgContractHits) == 0)
@@ -1532,6 +1532,20 @@ public class EffectManager : MonoBehaviour
                                                 //No active cure is present OnMap for Doomed Condition
                                                 if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
                                                 { BuildString(result, "Doomed Cure unavailable"); }
+                                                break;
+                                            case "NemesisActive":
+                                                //Nemesis is present and active
+                                                if (GameManager.instance.nemesisScript.nemesis == null)
+                                                { BuildString(result, "Nemesis not present"); }
+                                                else if (GameManager.instance.nemesisScript.GetMode() == NemesisMode.Inactive)
+                                                { BuildString(result, "Nemesis inactive"); }
+                                                break;
+                                            case "NpcActive":
+                                                //Npc is present and active
+                                                if (GameManager.instance.missionScript.mission.npc == null)
+                                                { BuildString(result, "Special Character not present"); }
+                                                else if (GameManager.instance.missionScript.mission.npc.status != NpcStatus.Active)
+                                                { BuildString(result, "Special Character not Active"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
@@ -4174,6 +4188,24 @@ public class EffectManager : MonoBehaviour
                     { effectResolve.bottomText = ExecuteRevealOrgSecret(org.secret, org); }
                     else { Debug.LogWarning("Invalid org.Secret (Null)"); }
                     break;
+                case "OrgTrackNemesis":
+                    //OrgInfo provides a direct feed of Nemesis's location to Player
+                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
+                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked{1}", colourGood, colourEnd);
+                    break;
+                case "OrgTrackErasure":
+                    //OrgInfo provides a direct feed of Erasure teams locations to Player
+                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.ErasureTeams, true);
+                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked{1}", colourGood, colourEnd);
+                    break;
+                case "OrgTrackNpc":
+                    //OrgInfo provides a direct feed of Npc's location to Player
+                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Npc, true);
+                    string npcName = "Unknown";
+                    if (GameManager.instance.missionScript.mission.npc != null)
+                    { npcName = GameManager.instance.missionScript.mission.npc.tag; }
+                    effectResolve.bottomText = string.Format("{0}{1} will be tracked{2}", colourGood, npcName, colourEnd);
+                    break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
             }
         }
@@ -4469,7 +4501,7 @@ public class EffectManager : MonoBehaviour
             case "Subtract":
                 motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                 motivation -= effect.value;
-                
+
                 if (motivation < 0)
                 {
                     //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
@@ -4480,7 +4512,7 @@ public class EffectManager : MonoBehaviour
                     motivation = Mathf.Max(0, motivation);
                     bottomText = builder.ToString();
                 }
-                else { bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd);}
+                else { bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd); }
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
 
                 break;

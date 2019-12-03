@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: OrgInfoRes1Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Info Res1 Option 2
-  tag: hh
-  text: hh
+  tag: Character
+  text: '[vip]'
   topic: {fileID: 11400000, guid: a4bd2320415969c4380c3518642e7ffc, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5f5b0292da8920948bfbdb9f0cf08c2a, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 650f6dfcfaf335440bf19606d9c26fc6, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Npc not present</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 0
-  textToDisplay: 
-  optionNumber: 1
+  textToDisplay: <color=#BDC3C7>Tell me where the NPC is</color>
+  optionNumber: 2

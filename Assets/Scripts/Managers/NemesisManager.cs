@@ -63,7 +63,7 @@ public class NemesisManager : MonoBehaviour
     [Range(1, 10)] public int durationControlCoolDown = 3;
     [Tooltip("How much Renown it costs for the player to exercise control (per instance)")]
     [Range(0, 3)] public int controlRenownCost = 1;
-    
+
 
     [HideInInspector] public Nemesis nemesis;
     [HideInInspector] public bool isShown;        //Fog of War setting for Nemesis
@@ -193,7 +193,7 @@ public class NemesisManager : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
-    {       
+    {
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -343,7 +343,7 @@ public class NemesisManager : MonoBehaviour
                 Node controlNode = null;
                 if (isPlayerControl == true)
                 { controlNode = GameManager.instance.dataScript.GetNode(controlNodeID); }
-                GameManager.instance.messageScript.NemesisPlayerOngoing(text, nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode); 
+                GameManager.instance.messageScript.NemesisPlayerOngoing(text, nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode);
             }
         }
     }
@@ -497,7 +497,7 @@ public class NemesisManager : MonoBehaviour
                         int threshold = 100 - (turnDifference * 20);
                         int rndNum = Random.Range(0, 100);
                         Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: Recent ACTIVITY, roll {0} vs {1} (turnDifference {2}){3}", rndNum, threshold, turnDifference, "\n");
-                        if ( rndNum < threshold == true)
+                        if (rndNum < threshold == true)
                         {
                             //reset hunt mode and chase new target
                             Debug.LogFormat("[Nem] NemesisManager.cs -> isNewGoal True -> ProcessNemesisActivity: Recent ACTIVITY -> Chase New Target{0}", "\n");
@@ -529,7 +529,7 @@ public class NemesisManager : MonoBehaviour
                                 GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
                             }
                         }
-                        
+
                     }
                 }
                 else
@@ -557,7 +557,7 @@ public class NemesisManager : MonoBehaviour
     {
         //decrement timer
         if (controlTimer > 0)
-        { 
+        {
             //Player control
             controlTimer--;
             //is Nemesis at required Node?
@@ -644,7 +644,7 @@ public class NemesisManager : MonoBehaviour
                     //set normal target node to invalid number (otherwise hunt mode will automatically act)
                     targetNodeID = -1;
                     //log
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}, cost {3} Renown{4}", node.nodeName, node.Arc.name, 
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}, cost {3} Renown{4}", node.nodeName, node.Arc.name,
                         node.nodeID, controlRenownCost, "\n");
                 }
                 else { Debug.LogWarning("Insufficient Renown available to take control of Nemesis"); }
@@ -774,7 +774,7 @@ public class NemesisManager : MonoBehaviour
         {
             //get distance between nemesis and target (player activity) node
             targetDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
-            
+
             //immediate flag (confirmed Player activity) -> overrides current goal
             if (isImmediate == true)
             {
@@ -1065,15 +1065,22 @@ public class NemesisManager : MonoBehaviour
                         }
                         else
                         {
-                            //OrgInfo IS Involved and spots nemesis in lieu of a contact report
-                            j
+                            //OrgInfo provides a direct feed of Nemesis position to Player
+                            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                            if (node != null)
+                            {
+                                string text = string.Format("OrgInfo tracks {0} Nemesis at {1}, {2}, ID {3}", nemesis.name, node.nodeName, node.Arc.name, node.nodeID);
+                                GameManager.instance.messageScript.OrganisationNemesis(text, node, nemesis);
+                            }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                         }
                     }
                 }
             }
             else { Debug.LogWarningFormat("Invalid move node {Null) for nodeID {0}", nodeID); }
         }
-        else {
+        else
+        {
             Debug.LogWarningFormat("Invalid move nodeId (Doesn't match any of neighbours) for nodeID {0} and nemesisNode {1}, {2}, id {3}{4}", nodeID, nemesisNode.nodeName, nemesisNode.Arc.name,
          nemesisNode.nodeID, "\n");
         }
@@ -1094,10 +1101,10 @@ public class NemesisManager : MonoBehaviour
         int searchRating = GetSearchRatingAdjusted();
         if (searchRating >= GameManager.instance.playerScript.Invisibility)
         {
-            
+
             bool isValidPlayer = true;
             //can't be spotted if Lying Low or on Stress Leave (but can for breakdown) 
-            switch (resistancePlayer)  
+            switch (resistancePlayer)
             {
                 case SideState.AI:
                     if (GameManager.instance.aiRebelScript.status == ActorStatus.Inactive && GameManager.instance.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
@@ -1117,7 +1124,7 @@ public class NemesisManager : MonoBehaviour
                 //player SPOTTED
                 isSpotted = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: PLAYER SPOTTED at node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-                
+
                 /*Debug.LogFormat("[Tst] NemesisManager.cs -> ProcessPlayerInteraction: Human status {0} inactive {1}, AI status {2} inactive {3}{4}",
                     GameManager.instance.playerScript.status, GameManager.instance.playerScript.inactiveStatus,
                     GameManager.instance.aiRebelScript.status, GameManager.instance.aiRebelScript.inactiveStatus, "\n");*/
@@ -1211,8 +1218,11 @@ public class NemesisManager : MonoBehaviour
                     }
                 }
             }
-            else { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}, due to LYING LOW{3}", 
-                nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n"); }
+            else
+            {
+                Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: Player NOT Spotted at node {0}, {1}, id {2}, due to LYING LOW{3}",
+             nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
+            }
         }
         else
         {
@@ -1326,12 +1336,16 @@ public class NemesisManager : MonoBehaviour
                                 }
                             }
                             else
-                            { Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, nemesisNode.nodeName,
-                                    nemesisNode.Arc.name, nemesisNode.nodeID); }
+                            {
+                                Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, nemesisNode.nodeName,
+                                      nemesisNode.Arc.name, nemesisNode.nodeID);
+                            }
                         }
                         else
-                        {  Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
-                                actor.arc.name, actor.actorID, "\n"); }
+                        {
+                            Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                 actor.arc.name, actor.actorID, "\n");
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
                 }
@@ -1367,7 +1381,13 @@ public class NemesisManager : MonoBehaviour
                         else
                         {
                             //OrgInfo IS involved and provides info directly to player in lieu of contact report
-                            P
+                            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                            if (node != null)
+                            {
+                                string text = string.Format("OrgInfo tracks {0} Nemesis at {1}, {2}, ID {3}", nemesis.name, node.nodeName, node.Arc.name, node.nodeID);
+                                GameManager.instance.messageScript.OrganisationNemesis(text, node, nemesis);
+                            }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                         }
                     }
                     else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
@@ -1383,37 +1403,9 @@ public class NemesisManager : MonoBehaviour
     {
         if (nemesisNode.isTracer == true)
         {
-            /*bool isSpotted = false;
-            //nemesis stealthRating
-            int stealthRating = GetStealthRatingAdjusted();
-            stealthRating = Mathf.Max(stealthRating, 0);
-            int rndNum = Random.Range(0, 100);
-            int needNum = -1;
-            switch (stealthRating)
-            {
-                case 3: needNum = chanceTracerSpotHigh; break;
-                case 2: needNum = chanceTracerSpotMed;  break;
-                case 1: needNum = chanceTracerSpotLow;  break;
-                case 0: needNum = chanceTracerSpotZero; break;
-                default: needNum = 999; break;
-            }
-            //random check
-            if (rndNum <= needNum)
-            { isSpotted = true; }*/
-
-            /*//Spotted
-            if (isSpotted == true)
-            {
-                Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer SUCCEEDS, need < {0} rolled {1}{2}", needNum, rndNum, "\n");
-                Debug.LogFormat("[Nem] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer spots Nemesis at {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-                GameManager.instance.messageScript.GeneralRandom("Tracer spots Nemesis", "Tracer Sighting", needNum, rndNum);*/
-
-                //automatically SPOTTED -> node is always correct
-                string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
-                GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
-
-            /*}
-            else { Debug.LogFormat("[Rnd] NemesisManager.cs -> CheckNemesisTracerSighting: Tracer FAILED to spot, need < {0} rolled {1}{2}", needNum, rndNum, "\n"); }*/
+            //automatically SPOTTED -> node is always correct
+            string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
+            GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
         }
     }
 
@@ -1566,9 +1558,9 @@ public class NemesisManager : MonoBehaviour
             //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
             /*if (isOutcomeModalNormal == false)
             {*/
-                outcomeDetails.type = MsgPipelineType.Nemesis;
-                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-                { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
+            outcomeDetails.type = MsgPipelineType.Nemesis;
+            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+            { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
             /*}*/
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }

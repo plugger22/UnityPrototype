@@ -7031,7 +7031,10 @@ public class DataManager : MonoBehaviour
     public void SetOrgInfoType(OrgInfoType orgInfoType, bool value)
     {
         if (orgInfoType != OrgInfoType.Count)
-        { arrayOfOrgInfo[(int)orgInfoType] = value; }
+        {
+            arrayOfOrgInfo[(int)orgInfoType] = value;
+            Debug.LogFormat("[Org] DataManager.cs -> SetOrgInfoType: OrgInfoType \"{0}\" now {1}{2}", orgInfoType, value, "\n");
+        }
         else { Debug.LogError("Invalid OrgInfoType ('Count')"); }
     }
 

@@ -2164,11 +2164,33 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// InfoOrg tracks Nemesis on behalf of player
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="nemesis"></param>
+    /// <param name="org"></param>
+    /// <param name="moveNumber"></param>
+    /// <returns></returns>
+    public string GetOrgNemesisDetails(Node node, Nemesis nemesis, Organisation org, int moveNumber)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0}{1}{2}</b> info feed{3}has your{4}{5}", colourAlert, org.tag, colourEnd, "\n", "\n", "\n");
+        builder.AppendFormat("<b>{0}{1}{2} Nemesis</b>{3}{4}", colourNeutral, nemesis.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        //only add a time stamp if nemesis is capable of multiple moves within a single turn
+        if (nemesis.movement > 1)
+        { builder.AppendFormat(" at <b>{0}</b> hrs", GetContactTime(moveNumber)); }
+        return builder.ToString();
+    }
+
 
     //
     // - - - Npc
     //
-    
+
     /// <summary>
     /// Npc arrives in city
     /// </summary>

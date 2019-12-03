@@ -35,4 +35,4 @@ MonoBehaviour:
   listOfObjectiveTargets:
   - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
   - {fileID: 11400000, guid: f06dede69d3430e468030d796787a9ae, type: 2}
-  npc: {fileID: 0}
+  npc: {fileID: 11400000, guid: 0731c322af99e7c46bbe7efa6f2c94ff, type: 2}

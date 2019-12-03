@@ -4541,40 +4541,45 @@ public class MessageManager : MonoBehaviour
     /// <param name="contact"></param>
     /// <param name="isGained"></param>
     /// <returns></returns>
-    public Message OrganisationNemesis(string text, Node node, Nemesis nemesis, Organisation org, int moveNumber)
+    public Message OrganisationNemesis(string text, Node node, Nemesis nemesis, int moveNumber = 1)
     {
         Debug.Assert(node != null, "Invalid node (Null)");
-        Debug.Assert(org != null, "Invalid Organisation (Null)");
         Debug.Assert(nemesis != null, "Invalid nemesis (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
-            Message message = new Message();
-            message.text = text;
-            message.type = MessageType.ORGANISATION;
-            message.subType = MessageSubType.Org_Nemesis;
-            message.sideLevel = globalResistance.level;
-            message.data0 = node.nodeID;
-            message.data1 = moveNumber;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = string.Format("The {0} track your NEMESIS", org.tag);
-            data.topText = string.Format("{0} hack", org.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetorganisationNemesisDetails(node, nemesis, org, moveNumber);
-            data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
-            data.spriteName = data.sprite.name;
-            data.tab = ItemTab.ALERTS;
-            data.type = message.type;
-            data.subType = message.subType;
-            data.sideLevel = message.sideLevel;
-            data.nodeID = node.nodeID;
-            data.help = 1;
-            data.tag0 = "contact_6";
-            data.tag1 = "contact_1";
-            data.tag2 = "nemesis_0";
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            //get org info
+            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            if (org != null)
+                {
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.ORGANISATION;
+                message.subType = MessageSubType.Org_Nemesis;
+                message.sideLevel = globalResistance.level;
+                message.data0 = node.nodeID;
+                message.data1 = moveNumber;
+                //ItemData
+                ItemData data = new ItemData();
+                data.itemText = string.Format("The {0} track your NEMESIS", org.tag);
+                data.topText = string.Format("{0} Direct Feed", org.tag);
+                data.bottomText = GameManager.instance.itemDataScript.GetOrgNemesisDetails(node, nemesis, org, moveNumber);
+                data.priority = ItemPriority.High;
+                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.spriteName = data.sprite.name;
+                data.tab = ItemTab.ALERTS;
+                data.type = message.type;
+                data.subType = message.subType;
+                data.sideLevel = message.sideLevel;
+                data.nodeID = node.nodeID;
+                data.help = 0;
+                data.tag0 = "";
+                data.tag1 = "";
+                data.tag2 = "";
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.dataScript.AddItemData(data);
+            }
+            else { Debug.LogWarning("Invalid orgInfo (Null)"); }
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;

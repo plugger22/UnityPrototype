@@ -17,11 +17,11 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
   stealthRating: 1
   startTurn: 3
-  startChance: 75
+  startChance: 10
   nodeStart: {fileID: 11400000, guid: b0db31933393cd74baaaf83be2f32d8d, type: 2}
   nodeEnd: {fileID: 11400000, guid: fc1acc0b0e373da4f9159a4e05fa3c40, type: 2}
   moveChance: 80
-  maxTurns: 4
+  maxTurns: 20
   isRepeat: 1
   action: {fileID: 11400000, guid: 74ed4f168170eba4b937e73568f669d9, type: 2}
   listOfGoodEffects:
@@ -29,8 +29,8 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: e5c985772cc3cf840b26fc312a04abb8, type: 2}
   status: 2
-  timerTurns: 1
+  timerTurns: 0
   currentStartNode: {fileID: 0}
   currentEndNode: {fileID: 0}
   currentNode: {fileID: 0}
-  daysActive: 5
+  daysActive: 7

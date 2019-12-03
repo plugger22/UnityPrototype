@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: OrgInfoRes0Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Info Res0 Option 0
-  tag: hh
-  text: hh
+  tag: Nemesis
+  text: Nemesis
   topic: {fileID: 11400000, guid: cf4b0036e6dcb854788cb5facd86d9d3, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria:
+  - {fileID: 11400000, guid: f83113922217b7145bce7abb9056ef3d, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 2b709ce1728f7ee44a7368319ca8d282, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: -1
+  tooltipHeader: <color=#FFFFE0>Nemesis</color>
+  tooltipMain: <color=#98FB98> Tracks Nemesis</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Tell me where my Nemesis is</color>
+  optionNumber: 0

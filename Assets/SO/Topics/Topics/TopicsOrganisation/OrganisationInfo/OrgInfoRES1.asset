@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES1
   m_EditorClassIdentifier: 
   tag: Info Service
-  text: Unknown
+  text: The [org] contacts you. Offering let you know where one of the following are
+    on any given day. For a price
   designNotes: Org Info RES 1 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -31,7 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51931aaeb6f1cbd4e829e6ad44693f22, type: 2}
   - {fileID: 11400000, guid: b9d120919d942f042bb4b2766d862126, type: 2}
   - {fileID: 11400000, guid: 669e85f26fc34664abb1411d09a1b3ed, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +43,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 18
   turnsDone: 0

@@ -4198,7 +4198,20 @@ public class TopicManager : MonoBehaviour
             //main -> criteria feedback
             option.tooltipMain = string.Format("{0}{1}{2}", colourCancel, effectCriteria, colourEnd);
             //Details -> derived from option mood Effect
-            if (option.moodEffect != null)
+
+            if (option.isIgnoreMood == false)
+            {
+                if (option.moodEffect != null)
+                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                else
+                {
+                    option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+                    Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
+                }
+            }
+            else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
+
+            /*if (option.moodEffect != null)
             {
                 if (option.isIgnoreMood == false)
                 { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
@@ -4214,7 +4227,7 @@ public class TopicManager : MonoBehaviour
             {
                 option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
                 Debug.LogWarningFormat("Invalid option.moodEffect (Null) for option {0}", option.name);
-            }
+            }*/
         }
         return option.isValid;
     }
@@ -4990,6 +5003,16 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         { replaceText = textListGoodResistance.GetRandomRecord(); }
                         else { CountTextTag("goodRES", dictOfTags); }
+                        break;
+                    case "vip":
+                        //special character Npc, eg. courier (have to use 'vip' as 'npc' already taken)
+                        if (isValidate == false)
+                        {
+                            replaceText = "Unknown";
+                            if (GameManager.instance.missionScript.mission.npc != null)
+                            { replaceText = GameManager.instance.missionScript.mission.npc.tag; }
+                        }
+                        else { CountTextTag("vip", dictOfTags); }
                         break;
                     case "npc":
                         if (isValidate == false)
