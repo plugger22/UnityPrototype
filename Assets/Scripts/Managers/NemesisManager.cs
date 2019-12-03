@@ -1053,12 +1053,21 @@ public class NemesisManager : MonoBehaviour
                 {
                     if (mode != NemesisMode.Inactive)
                     {
-                        //check for Resistance contact at same node
-                        List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                        if (tempList != null)
-                        { ProcessContactInteraction(tempList, moveNumber); }
-                        //check for Tracer Sighting
-                        CheckNemesisTracerSighting(moveNumber);
+                        //OrgInfo NOT Involved
+                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
+                        {
+                            //check for Resistance contact at same node
+                            List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                            if (tempList != null)
+                            { ProcessContactInteraction(tempList, moveNumber); }
+                            //check for Tracer Sighting
+                            CheckNemesisTracerSighting(moveNumber);
+                        }
+                        else
+                        {
+                            //OrgInfo IS Involved and spots nemesis in lieu of a contact report
+                            j
+                        }
                     }
                 }
             }
@@ -1347,10 +1356,19 @@ public class NemesisManager : MonoBehaviour
                     int nodeID = GameManager.instance.nodeScript.nodeNemesis;
                     if (nodeID > -1)
                     {
-                        //check for Resistance contact at same node
-                        List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
-                        if (tempList != null)
-                        { ProcessContactInteraction(tempList); }
+                        //OrgInfo not involved
+                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
+                        {
+                            //check for Resistance contact at same node
+                            List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                            if (tempList != null)
+                            { ProcessContactInteraction(tempList); }
+                        }
+                        else
+                        {
+                            //OrgInfo IS involved and provides info directly to player in lieu of contact report
+                            P
+                        }
                     }
                     else { Debug.LogWarning("Invalid nodeNemesis (-1)"); }
                 }
