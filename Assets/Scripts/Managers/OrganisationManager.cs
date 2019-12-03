@@ -14,6 +14,10 @@ public class OrganisationManager : MonoBehaviour
     [Tooltip("Chance of org in city -> baseCityChance + perNodeChance x number of preferred nodes in city")] //redundant
     [Range(0, 10)] public int perNodeChance = 5;*/
 
+    [Header("OrgInfo")]
+    [Tooltip("How many turns a direct feed of the position of Nemesis/Erasure Teams/Npc last for")]
+    [Range(1, 10)] public int timerOrgInfoMax = 8;
+
 
     /// <summary>
     /// Not for GameState.LoadGame
@@ -30,7 +34,7 @@ public class OrganisationManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
-                //SubInitialiseFollowOn();
+                SubInitialiseFollowOn();
                 break;
             case GameState.LoadAtStart:
                 //SubInitialiseLevelStart();
@@ -97,6 +101,7 @@ public class OrganisationManager : MonoBehaviour
             org.SetFreedom(GameManager.instance.testScript.orgFreedom);
             org.isContact = false;
             org.isSecretKnown = false;
+            org.timer = 0;
             Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}", 
                 org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n");
         }
@@ -121,7 +126,15 @@ public class OrganisationManager : MonoBehaviour
     #region SubInitialiseFollowOn
     private void SubInitialiseFollowOn()
     {
-
+        //get list of all Orgs involved in campaign
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            //reset org values where needed
+            foreach (Organisation org in listOfOrgs)
+            { org.timer = 0; }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
     }
     #endregion
 
@@ -175,6 +188,9 @@ public class OrganisationManager : MonoBehaviour
                         text = string.Format("Poor Reputation (Zero) with {0}", org.name);
                         GameManager.instance.messageScript.OrganisationReputation(text, org);
                     }
+                    //decrement timers where appropriate
+                    if (org.timer > 0)
+                    { org.timer--; }
                 }
             }
         }

@@ -7024,7 +7024,7 @@ public class DataManager : MonoBehaviour
     { return arrayOfOrgInfo; }
 
     /// <summary>
-    /// Set bool values in arrayOfOrgInfo (if true then OrgInfo is currently tracking that type for the Player)
+    /// Set bool values in arrayOfOrgInfo (if true then OrgInfo is currently tracking that type for the Player). Auto sets InfoOrgs timer as appropriate
     /// </summary>
     /// <param name="orgInfoType"></param>
     /// <param name="value"></param>
@@ -7034,6 +7034,14 @@ public class DataManager : MonoBehaviour
         {
             arrayOfOrgInfo[(int)orgInfoType] = value;
             Debug.LogFormat("[Org] DataManager.cs -> SetOrgInfoType: OrgInfoType \"{0}\" now {1}{2}", orgInfoType, value, "\n");
+            //timer
+            if (GameManager.instance.campaignScript.campaign.orgInfo != null)
+            {
+                if (value == true)
+                { GameManager.instance.campaignScript.campaign.orgInfo.timer = GameManager.instance.orgScript.timerOrgInfoMax; }
+                else { GameManager.instance.campaignScript.campaign.orgInfo.timer = 0; }
+            }
+            else { Debug.LogError("Invalid orgInfo (Null). Unable to set timer"); }
         }
         else { Debug.LogError("Invalid OrgInfoType ('Count')"); }
     }
@@ -7074,7 +7082,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach (Organisation org in listOfCurrentOrganisations)
-        { builder.AppendFormat(" {0}, Rep {1}, Free {2}, Contact {3} Secret {4}{5}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, "\n"); }
+        { builder.AppendFormat(" {0}{1}  Rep {2}, Free {3}, Contact {4} Secret {5} Timer {6}{7}", org.tag, "\n", org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, org.timer, "\n"); }
         //arrayOfOrgInfo
         builder.AppendFormat("{0}{1}-ArrayOfOrgInfo{2}", "\n", "\n", "\n");
         for (int i = 0; i < arrayOfOrgInfo.Length; i++)

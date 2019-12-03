@@ -34,8 +34,9 @@ public class Organisation : ScriptableObject
 
     #region Save Data compatible
     [HideInInspector] public bool isContact;                //have you made contact with the org?
-    [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
     [HideInInspector] public bool isSecretKnown;            //if true, player has secret, false otherwise
+    [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
+    [HideInInspector] public int timer;                     //multipurpose timer depending on Org (optional)
     private int reputation;                                 //reputation with you (0 to 3)
     private int freedom;                                    //your freedom from obligation to the organisation (0 to 3)   
     #endregion

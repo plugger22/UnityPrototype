@@ -500,10 +500,11 @@ public class FileManager : MonoBehaviour
                     SaveOrganisation saveOrg = new SaveOrganisation();
                     saveOrg.name = org.name;
                     saveOrg.isContact = org.isContact;
+                    saveOrg.isSecretKnown = org.isSecretKnown;
                     saveOrg.reputation = org.GetReputation();
                     saveOrg.freedom = org.GetFreedom();
                     saveOrg.maxStat = org.maxStat;
-                    saveOrg.isSecretKnown = org.isSecretKnown;
+                    saveOrg.timer = org.timer;
                     //add to list
                     write.dataData.listOfSaveOrganisations.Add(saveOrg);
                 }
@@ -2018,10 +2019,11 @@ public class FileManager : MonoBehaviour
                         {
                             //copy across dynamic data
                             org.isContact = saveOrg.isContact;
+                            org.isSecretKnown = saveOrg.isSecretKnown;
                             org.maxStat = saveOrg.maxStat;
                             org.SetReputation(saveOrg.reputation);
                             org.SetFreedom(saveOrg.freedom);
-                            org.isSecretKnown = saveOrg.isSecretKnown;
+                            org.timer = saveOrg.timer;
                             //add org to list
                             listOfCurrentOrganisations.Add(org);
                         }

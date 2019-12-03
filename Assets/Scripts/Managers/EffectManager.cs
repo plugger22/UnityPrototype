@@ -4191,12 +4191,18 @@ public class EffectManager : MonoBehaviour
                 case "OrgTrackNemesis":
                     //OrgInfo provides a direct feed of Nemesis's location to Player
                     GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
-                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked{1}", colourGood, colourEnd);
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Nemesis", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax, 
+                        colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackErasure":
                     //OrgInfo provides a direct feed of Erasure teams locations to Player
                     GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.ErasureTeams, true);
-                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked{1}", colourGood, colourEnd);
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Erasure Teams", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax,
+                        colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackNpc":
                     //OrgInfo provides a direct feed of Npc's location to Player
@@ -4204,7 +4210,10 @@ public class EffectManager : MonoBehaviour
                     string npcName = "Unknown";
                     if (GameManager.instance.missionScript.mission.npc != null)
                     { npcName = GameManager.instance.missionScript.mission.npc.tag; }
-                    effectResolve.bottomText = string.Format("{0}{1} will be tracked{2}", colourGood, npcName, colourEnd);
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = npcName, turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}{1} will be tracked for {2}{3}{4}{5}{6} days{7}", colourGood, npcName, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax,
+                        colourEnd, colourGood, colourEnd);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
             }
