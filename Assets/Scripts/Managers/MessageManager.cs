@@ -4532,14 +4532,14 @@ public class MessageManager : MonoBehaviour
     }
 
 
+
     /// <summary>
-    /// OrgInfo tracks Nemesis on behalf of Player
+    /// OrgInfo tracks nemesis on behalf of player. Move number in case of nemesis who could make multiple moves in a turn and could have multiple sighting reports (they are time stamped to differentiate)
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="actor"></param>
     /// <param name="node"></param>
-    /// <param name="contact"></param>
-    /// <param name="isGained"></param>
+    /// <param name="nemesis"></param>
+    /// <param name="moveNumber"></param>
     /// <returns></returns>
     public Message OrganisationNemesis(string text, Node node, Nemesis nemesis, int moveNumber = 1)
     {
@@ -4563,6 +4563,57 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("The {0} track your NEMESIS", org.tag);
                 data.topText = string.Format("{0} Direct Feed", org.tag);
                 data.bottomText = GameManager.instance.itemDataScript.GetOrgNemesisDetails(node, nemesis, org, moveNumber);
+                data.priority = ItemPriority.High;
+                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.spriteName = data.sprite.name;
+                data.tab = ItemTab.ALERTS;
+                data.type = message.type;
+                data.subType = message.subType;
+                data.sideLevel = message.sideLevel;
+                data.nodeID = node.nodeID;
+                data.help = 0;
+                data.tag0 = "";
+                data.tag1 = "";
+                data.tag2 = "";
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.dataScript.AddItemData(data);
+            }
+            else { Debug.LogWarning("Invalid orgInfo (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// OrgInfo tracks Erasure Teams
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public Message OrganisationErasureTeam(string text, Node node, Team team)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(team != null, "Invalid team (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            //get org info
+            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            if (org != null)
+            {
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.ORGANISATION;
+                message.subType = MessageSubType.Org_Erasure;
+                message.sideLevel = globalResistance.level;
+                message.data0 = node.nodeID;
+                message.data1 = team.teamID;
+                //ItemData
+                ItemData data = new ItemData();
+                data.itemText = string.Format("The {0} track an ERASURE team", org.tag);
+                data.topText = string.Format("{0} Direct Feed", org.tag);
+                data.bottomText = GameManager.instance.itemDataScript.GetOrgErasureTeamDetails(node, team, org);
                 data.priority = ItemPriority.High;
                 data.sprite = GameManager.instance.guiScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;

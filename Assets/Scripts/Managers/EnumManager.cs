@@ -317,6 +317,8 @@
         Org_Secret,
         Org_Reputation,
         Org_Nemesis,
+        Org_Erasure,
+        Org_Npc,
         //Npc
         Npc_Arrival,
         Npc_Interact,

@@ -236,7 +236,6 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
-        int tally = 0;
         List<int> teamPool = new List<int>();
         //check InTransit pool -> move any teams here to the Reserve pool -> Note: do this BEFORE checking OnMap pool below
         teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
@@ -364,15 +363,16 @@ public class TeamManager : MonoBehaviour
                             //Check for erasure team sightings by contacts or tracers -> Resistance Player only
                             if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                             {
-                                /*if (tally < maxSpotTeam)
-                                {
-                                    if (ProcessContactInteraction(team, node) == true)
-                                    { tally++; }
-                                }*/
                                 if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                                 {
-                                    if (ProcessErasureTeamSighting(team, node) == true)
-                                    { tally++; }
+                                    //orgInfo not involved
+                                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.ErasureTeams) == false)
+                                    { ProcessErasureTeamSighting(team, node); }
+                                    else
+                                    {
+                                        //OrgInfo sighting (automatic)
+                                        ss
+                                    }
                                 }
                             }
                         }
