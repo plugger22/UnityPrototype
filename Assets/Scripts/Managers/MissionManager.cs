@@ -374,7 +374,11 @@ public class MissionManager : MonoBehaviour
                     GameManager.instance.messageScript.NpcOngoing("Npc arrives onMap", npc);
                     //tracer
                     if (npc.currentNode.isTracer == true)
-                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                    {
+                        //OrgInfo not involved
+                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                        { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                    }
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
             }
@@ -499,7 +503,11 @@ public class MissionManager : MonoBehaviour
                                 GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
                                 //tracer
                                 if (npc.currentNode.isTracer == true)
-                                { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                {
+                                    //OrgInfo not involved
+                                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                }
                             }
                             else
                             {
@@ -540,7 +548,11 @@ public class MissionManager : MonoBehaviour
                                     GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
                                     //tracer
                                     if (npc.currentNode.isTracer == true)
-                                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                    {
+                                        //OrgInfo not involved
+                                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                                        { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                    }
                                 }
                                 else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
                             }
@@ -558,7 +570,11 @@ public class MissionManager : MonoBehaviour
                 GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
                 //tracer
                 if (npc.currentNode.isTracer == true)
-                { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                {
+                    //OrgInfo not involved
+                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                }
             }
             //tracker
             AddTrackerRecord(npc);
