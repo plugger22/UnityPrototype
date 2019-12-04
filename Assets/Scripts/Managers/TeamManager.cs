@@ -371,7 +371,9 @@ public class TeamManager : MonoBehaviour
                                     else
                                     {
                                         //OrgInfo sighting (automatic)
-                                        ss
+                                        string text = string.Format("{0} tracks {1} {2} at {3}, {4}, ID {5}", GameManager.instance.campaignScript.campaign.orgInfo.tag, team.arc.name, team.teamName,
+                                            node.nodeName, node.Arc.name, node.nodeID);
+                                        GameManager.instance.messageScript.OrganisationErasureTeam(text, node, team);
                                     }
                                 }
                             }

@@ -108,7 +108,23 @@ public class MissionManager : MonoBehaviour
                 {
                     ProcessNpc(mission.npc);
                     if (mission.npc.status == NpcStatus.Active)
-                    { ProcessContactInteraction(mission.npc); }
+                    {
+                        //orgInfo not involved
+                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                        { ProcessContactInteraction(mission.npc); }
+                        else
+                        {
+                            //orgInfo automatically spots Npc
+                            Node node = mission.npc.currentNode;
+                            if (node != null)
+                            {
+                                string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.instance.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
+                                    node.nodeID);
+                                GameManager.instance.messageScript.OrganisationNpc(text, node, mission.npc);
+                            }
+                            else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
+                        }
+                    }
                 }
                 break;
             default:

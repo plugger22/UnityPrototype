@@ -2186,6 +2186,42 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// InfoOrg tracks Erasure Team on behalf of Player
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="team"></param>
+    /// <param name="org"></param>
+    /// <returns></returns>
+    public string GetOrgErasureTeamDetails(Node node, Team team, Organisation org)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0}{1}{2}</b> info feed{3}has{4}{5}", colourAlert, org.tag, colourEnd, "\n", "\n", "\n");
+        builder.AppendFormat("<b>{0}{1} {2}{3}</b>{4}{5}", colourNeutral, team.arc.name, team.teamName, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// InfoOrg tracks Npc on behalf of Player
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="npc"></param>
+    /// <param name="org"></param>
+    /// <returns></returns>
+    public string GetOrgNpcDetails(Node node, Npc npc, Organisation org)
+    {
+        StringBuilder builder = new StringBuilder();
+        string textAware = shortContactAware.GetRandomRecord(false);
+        string textAction = shortContactAction.GetRandomRecord(false);
+        builder.AppendFormat("<b>{0}{1}{2}</b> info feed{3}has the{4}{5}", colourAlert, org.tag, colourEnd, "\n", "\n", "\n");
+        builder.AppendFormat("<b>{0}{1}{2}</b>{3}{4}", colourNeutral, npc.tag, colourEnd, "\n", "\n");
+        builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        return builder.ToString();
+    }
+
 
     //
     // - - - Npc

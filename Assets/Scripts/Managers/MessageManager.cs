@@ -4636,6 +4636,51 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+
+    public Message OrganisationNpc(string text, Node node, Npc npc)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(npc != null, "Invalid npc (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            //get org info
+            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            if (org != null)
+            {
+                Message message = new Message();
+                message.text = text;
+                message.type = MessageType.ORGANISATION;
+                message.subType = MessageSubType.Org_Npc;
+                message.sideLevel = globalResistance.level;
+                message.data0 = node.nodeID;
+                message.dataName = npc.tag;
+                //ItemData
+                ItemData data = new ItemData();
+                data.itemText = string.Format("The {0} track the {1}", org.tag, npc.tag);
+                data.topText = string.Format("{0} Direct Feed", org.tag);
+                data.bottomText = GameManager.instance.itemDataScript.GetOrgNpcDetails(node, npc, org);
+                data.priority = ItemPriority.High;
+                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.spriteName = data.sprite.name;
+                data.tab = ItemTab.ALERTS;
+                data.type = message.type;
+                data.subType = message.subType;
+                data.sideLevel = message.sideLevel;
+                data.nodeID = node.nodeID;
+                data.help = 0;
+                data.tag0 = "";
+                data.tag1 = "";
+                data.tag2 = "";
+                //add
+                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.instance.dataScript.AddItemData(data);
+            }
+            else { Debug.LogWarning("Invalid orgInfo (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Npc
     //
