@@ -3909,47 +3909,6 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
-    /*/// <summary>
-    /// current ongoing effect Gear -> InfoApp 'Effect' tab
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="ongoing"></param>
-    public Message MessageOngoingEffectCurrentGear(EffectDataOngoing ongoing)
-    {
-        Debug.Assert(ongoing != null, "Invalid EffectDataOngoing (Null)");
-        if (string.IsNullOrEmpty(ongoing.text) == false)
-        {
-            Message message = new Message();
-            message.text = ongoing.text;
-            message.type = MessageType.ONGOING;
-            message.subType = MessageSubType.Ongoing_Current;
-            message.sideLevel = globalBoth.level;
-            message.data0 = ongoing.gearID;
-            message.data1 = ongoing.timer;
-            message.dataName = ongoing.gearName;
-            //ItemData
-            ItemData data = new ItemData();
-            data.itemText = string.Format("{0}, ONGOING EFFECT", ongoing.gearName);
-            data.topText = "Gear Ongoing Effect";
-            data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
-            data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
-            data.spriteName = data.sprite.name;
-            data.tab = ItemTab.Effects;
-            data.type = message.type;
-            data.subType = message.subType;
-            data.sideLevel = message.sideLevel;
-            data.nodeID = ongoing.nodeID;
-            data.help = 1;
-            //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
-        }
-        else { Debug.LogWarning("Invalid text (Null or empty)"); }
-        return null;
-    }*/
-
-
     /// <summary>
     /// Ongoing effect that timed out (expired) automatically or has been shut down
     /// </summary>
@@ -4571,10 +4530,10 @@ public class MessageManager : MonoBehaviour
                 data.subType = message.subType;
                 data.sideLevel = message.sideLevel;
                 data.nodeID = node.nodeID;
-                data.help = 0;
-                data.tag0 = "";
-                data.tag1 = "";
-                data.tag2 = "";
+                data.help = 1;
+                data.tag0 = "orgInfo_0";
+                data.tag1 = "orgInfo_1";
+                data.tag2 = "orgInfo_2";
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
                 GameManager.instance.dataScript.AddItemData(data);
@@ -4622,10 +4581,10 @@ public class MessageManager : MonoBehaviour
                 data.subType = message.subType;
                 data.sideLevel = message.sideLevel;
                 data.nodeID = node.nodeID;
-                data.help = 0;
-                data.tag0 = "";
-                data.tag1 = "";
-                data.tag2 = "";
+                data.help = 1;
+                data.tag0 = "orgInfo_0";
+                data.tag1 = "orgInfo_1";
+                data.tag2 = "orgInfo_2";
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
                 GameManager.instance.dataScript.AddItemData(data);
@@ -4667,10 +4626,10 @@ public class MessageManager : MonoBehaviour
                 data.subType = message.subType;
                 data.sideLevel = message.sideLevel;
                 data.nodeID = node.nodeID;
-                data.help = 0;
-                data.tag0 = "";
-                data.tag1 = "";
-                data.tag2 = "";
+                data.help = 1;
+                data.tag0 = "orgInfo_0";
+                data.tag1 = "orgInfo_1";
+                data.tag2 = "orgInfo_2";
                 //add
                 GameManager.instance.dataScript.AddMessage(message);
                 GameManager.instance.dataScript.AddItemData(data);

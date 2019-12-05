@@ -5008,7 +5008,7 @@ public class TopicManager : MonoBehaviour
                         //special character Npc, eg. courier (have to use 'vip' as 'npc' already taken)
                         if (isValidate == false)
                         {
-                            replaceText = "Unknown";
+                            replaceText = "Special Character";
                             if (GameManager.instance.missionScript.mission.npc != null)
                             { replaceText = GameManager.instance.missionScript.mission.npc.tag; }
                         }

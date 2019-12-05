@@ -25,8 +25,12 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8168a14cb231e034bbc01545650f6b94, type: 2}
+  - {fileID: 11400000, guid: c465a4bc3f0ec1344a894b2dc021c2d9, type: 2}
+  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 9152702b84baddf49a270c96f2eebd7d, type: 2}
   - {fileID: 11400000, guid: 51931aaeb6f1cbd4e829e6ad44693f22, type: 2}
@@ -36,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 20
   turnsDone: 0

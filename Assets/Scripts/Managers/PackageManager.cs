@@ -828,10 +828,12 @@ namespace packageAPI
 
     /// <summary>
     /// used to pass data to ActiveEffect message
+    /// NOTE: Handles actor and node details automatically
+    /// NOTE: Need to provide colour for test. Auto bold for top and bottom
     /// </summary>
     public class ActiveEffectData
     {
-        public string text;
+        public string text;                                                 //doubles up as item.text
         public string topText;
         public string detailsTop;
         public string detailsBottom;

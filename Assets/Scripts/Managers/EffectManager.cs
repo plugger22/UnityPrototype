@@ -112,6 +112,7 @@ public class EffectManager : MonoBehaviour
     private string colourBad;   //standard colour Bad
     private string colourNeutral; //used when node is EqualsTo, eg. reset, or for Team Names
     private string colourNormal;
+    private string colourCancel;
     private string colourDefault;
     private string colourAlert;
     private string colourGrey;
@@ -266,6 +267,7 @@ public class EffectManager : MonoBehaviour
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
         colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
@@ -1455,6 +1457,11 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "Reputation Not MIN"); }
                                                 }
                                                 else { BuildString(result, "Invalid Organisation"); }
+                                                break;
+                                            //OrgInfo not currently active (may or may not be known)
+                                            case "OrgInfoNOTActive":
+                                                if (GameManager.instance.dataScript.CheckOrgInfoActive() == true)
+                                                { BuildString(result, "Org providing Direct Feed"); }
                                                 break;
                                             //Player knows Organisation secret
                                             case "SecretOrgCureYes":
@@ -4193,7 +4200,7 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
                     GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
                     GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Nemesis", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax, 
+                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax, 
                         colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackErasure":
@@ -4201,7 +4208,7 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.ErasureTeams, true);
                     GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
                     GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Erasure Teams", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax,
+                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackNpc":
@@ -4212,7 +4219,7 @@ public class EffectManager : MonoBehaviour
                     { npcName = GameManager.instance.missionScript.mission.npc.tag; }
                     GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
                     GameManager.instance.dataScript.AddOrgData(new OrgData() { text = npcName, turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}{1} will be tracked for {2}{3}{4}{5}{6} days{7}", colourGood, npcName, colourEnd, colourNeutral, GameManager.instance.orgScript.timerOrgInfoMax,
+                    effectResolve.bottomText = string.Format("{0}{1} will be tracked for {2}{3}{4}{5}{6} days{7}", colourGood, npcName, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;

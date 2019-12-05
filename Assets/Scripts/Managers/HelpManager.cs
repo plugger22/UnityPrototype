@@ -941,6 +941,42 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region OrgInfo
+        //
+        // - - - OrgInfo
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "orgInfo_0";
+        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        if (org != null)
+        {
+            data.header = org.tag;
+            data.text = string.Format("The {0}{1}{2} will track your chosen target for {3}{4} days{5}. They will automatically find the target wherever they are {6}regardless of their stealth{7}", colourAlert,
+                org.tag, colourEnd, colourAlert, GameManager.instance.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
+        }
+        else
+        {
+            data.header = "Overview";
+            data.text = string.Format("The Organisation will track your chosen target for {0}{1} days{2}. They will automatically find the target wherever they are {3}regardless of their stealth{4}", colourAlert,
+                GameManager.instance.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
+        }
+        listOfHelp.Add(data);
+        //Limitations
+        data = new HelpData();
+        data.tag = "orgInfo_1";
+        data.header = "Limitations";
+        data.text = string.Format("Only {0}one target type{1} can be tracked at a time", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Other Sighting Reports
+        data = new HelpData();
+        data.tag = "orgInfo_2";
+        data.header = "Other Sighting Reports";
+        data.text = string.Format("Any {0}Contact or Tracer{1} sighting reports of the same target type are {2}suppressed{3} (they're redundant) while you are receiving a {4}Direct Feed{5} from the Organisation", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
 
         //
         // - - - Return
@@ -956,10 +992,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "npc_0";
-        string tag1 = "npc_1";
-        string tag2 = "npc_2";
-        string tag3 = "npc_3";
+        string tag0 = "orgInfo_0";
+        string tag1 = "orgInfo_1";
+        string tag2 = "orgInfo_2";
+        string tag3 = "orgInfo_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

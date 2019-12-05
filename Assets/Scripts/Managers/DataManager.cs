@@ -330,7 +330,7 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-        #region SubInitialiseAll
+    #region SubInitialiseAll
 
     private void SubInitialiseAll()
     {
@@ -7032,14 +7032,19 @@ public class DataManager : MonoBehaviour
     {
         if (orgInfoType != OrgInfoType.Count)
         {
-            arrayOfOrgInfo[(int)orgInfoType] = value;
-            Debug.LogFormat("[Org] DataManager.cs -> SetOrgInfoType: OrgInfoType \"{0}\" now {1}{2}", orgInfoType, value, "\n");
-            //timer
-            if (GameManager.instance.campaignScript.campaign.orgInfo != null)
+            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            if (org != null)
             {
+                arrayOfOrgInfo[(int)orgInfoType] = value;
+                Debug.LogFormat("[Org] DataManager.cs -> SetOrgInfoType: OrgInfoType \"{0}\" now {1}{2}", orgInfoType, value, "\n");
+                //timer
                 if (value == true)
-                { GameManager.instance.campaignScript.campaign.orgInfo.timer = GameManager.instance.orgScript.timerOrgInfoMax; }
-                else { GameManager.instance.campaignScript.campaign.orgInfo.timer = 0; }
+                {
+                    org.timer = GameManager.instance.orgScript.timerOrgInfoMax;
+                    //message (effect tab)
+                    GameManager.instance.orgScript.ProcessOrgInfoEffectMessage(org, orgInfoType);
+                }
+                else { org.timer = 0; }
             }
             else { Debug.LogError("Invalid orgInfo (Null). Unable to set timer"); }
         }
@@ -7054,8 +7059,49 @@ public class DataManager : MonoBehaviour
     public bool CheckOrgInfoType(OrgInfoType orgInfoType)
     {
         if (orgInfoType != OrgInfoType.Count)
-        { return arrayOfOrgInfo[(int)orgInfoType];  }
+        { return arrayOfOrgInfo[(int)orgInfoType]; }
         else { Debug.LogWarning("Invalid OrgInfoType ('Count')"); return false; }
+    }
+
+    /// <summary>
+    /// returns true if any of arrayOfOrgInfo is true, false otherwise, eg. true if OrgInfo currentlty tracking something on behalf of player
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckOrgInfoActive()
+    {
+        //loop array and return first true value
+        for (int i = 0; i < arrayOfOrgInfo.Length; i++)
+        {
+            if (arrayOfOrgInfo[i] == true)
+            { return true; }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// returns the active (can only be one) OrgInfoType, if any. 'Count' if none (acts as a default null value)
+    /// </summary>
+    /// <returns></returns>
+    public OrgInfoType GetOrgInfoType()
+    {
+        //loop array and return first true value
+        for (int i = 0; i < arrayOfOrgInfo.Length; i++)
+        {
+            if (arrayOfOrgInfo[i] == true)
+            { return (OrgInfoType)i; }
+        }
+        return OrgInfoType.Count;
+    }
+
+    /// <summary>
+    /// Resets arrayOfOrgInfo to a uniform true/false value
+    /// </summary>
+    /// <param name="value"></param>
+    public void ResetOrgInfoArray(bool value)
+    {
+        for (int i = 0; i < arrayOfOrgInfo.Length; i++)
+        { arrayOfOrgInfo[i] = value; }
+        Debug.LogFormat("[Org] DataManager.cs -> ResetOrgInfoType: OrgInfoType values reset to {0}{1}", value, "\n");
     }
 
     /// <summary>

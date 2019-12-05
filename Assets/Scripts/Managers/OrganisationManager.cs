@@ -1,8 +1,8 @@
 ﻿using gameAPI;
-using System.Collections;
+using packageAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all 3rd Pary Organisation matters
@@ -94,7 +94,7 @@ public class OrganisationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
         //initialise orgs in list
-        foreach(Organisation org in listOfOrgs)
+        foreach (Organisation org in listOfOrgs)
         {
             org.maxStat = GameManager.instance.actorScript.maxStatValue;
             org.SetReputation(GameManager.instance.testScript.orgReputation);
@@ -102,7 +102,7 @@ public class OrganisationManager : MonoBehaviour
             org.isContact = false;
             org.isSecretKnown = false;
             org.timer = 0;
-            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}", 
+            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}",
                 org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n");
         }
     }
@@ -178,7 +178,7 @@ public class OrganisationManager : MonoBehaviour
         if (listOfOrgs != null)
         {
             string text;
-            foreach(Organisation org in listOfOrgs)
+            foreach (Organisation org in listOfOrgs)
             {
                 if (org.isContact == true)
                 {
@@ -190,13 +190,82 @@ public class OrganisationManager : MonoBehaviour
                     }
                     //decrement timers where appropriate
                     if (org.timer > 0)
-                    { org.timer--; }
+                    {
+                        org.timer--;
+                        //timer hits zero
+                        ProcessOrgTimerAdmin(org);
+                    }
                 }
             }
         }
         else { Debug.LogError("Invalid listOfOrgs (Null)"); }
     }
 
+    /// <summary>
+    /// Org's timer has decremented. Messaging and admin
+    /// </summary>
+    /// <param name="org"></param>
+    private void ProcessOrgTimerAdmin(Organisation org)
+    {
+        switch (org.orgType.name)
+        {
+            case "Contract":
+            case "Cure":
+            case "Emergency":
+            case "HQ":
+                //none of the above currently have timers
+                break;
+            case "Info":
+                if (org.timer <= 0)
+                {
+                    //reset array to false (Not tracking anything)
+                    GameManager.instance.dataScript.ResetOrgInfoArray(false);
+                }
+                else
+                { ProcessOrgInfoEffectMessage(org); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", org.orgType.name); break;
+        }
+    }
+
+    /// <summary>
+    /// Generates an OrgInfo effects tab message
+    /// </summary>
+    /// <param name="org"></param>
+    public void ProcessOrgInfoEffectMessage(Organisation org, OrgInfoType orgType = OrgInfoType.Count)
+    {
+        //if default orginfoType.Count need to get correct type
+        orgType = GameManager.instance.dataScript.GetOrgInfoType();
+        string orgText = "";
+        switch (orgType)
+        {
+            case OrgInfoType.Nemesis:
+                orgText = string.Format("Reporting the position of your {0}", GameManager.instance.colourScript.GetFormattedString("Nemesis", ColourType.salmonText));
+                break;
+            case OrgInfoType.ErasureTeams:
+                orgText = string.Format("Reporting the position of any {0}", GameManager.instance.colourScript.GetFormattedString("Erasure Teams", ColourType.salmonText));
+                break;
+            case OrgInfoType.Npc:
+                if (GameManager.instance.missionScript.mission.npc != null)
+                { orgText = string.Format("Reporting the position of the {0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.missionScript.mission.npc.tag, ColourType.salmonText)); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
+        }
+        //effects tab message
+        ActiveEffectData data = new ActiveEffectData()
+        {
+            text = string.Format("{0} active", org.tag.ToUpper()),
+            topText = string.Format("{0} Direct Feed", org.tag),
+            detailsTop = string.Format("{0} will continue to provide a direct feed for", GameManager.instance.colourScript.GetFormattedString(org.tag, ColourType.neutralText)),
+            detailsBottom = string.Format("{0} days{1}", GameManager.instance.colourScript.GetFormattedString(Convert.ToString(org.timer), ColourType.neutralText), 
+                string.IsNullOrEmpty(orgText) == false ? string.Format("{0}{1}{2}", "\n", "\n", orgText) : ""),
+            sprite = org.sprite,
+            help0 = "orgInfo_0",
+            help1 = "orgInfo_1",
+            help2 = "orgInfo_2"
+        };
+        GameManager.instance.messageScript.ActiveEffect(data);
+    }
 
     /*/// <summary>
     /// Initialises organisations in a city. 
