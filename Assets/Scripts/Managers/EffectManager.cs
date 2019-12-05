@@ -1342,6 +1342,10 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgContractHits) == 0)
                                                 { BuildString(result, "Org has provided no contract Hits"); }
                                                 break;
+                                            case "StatOrgInfoNOTZero":
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgInfoHacks) == 0)
+                                                { BuildString(result, "Org has provided no Info Services"); }
+                                                break;
                                             //
                                             // - - - Ratios
                                             //

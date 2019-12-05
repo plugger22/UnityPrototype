@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: The [org] are on the line. Reminding you of the [orgText] direct feed they
+    provided [daysAgo]. Needing money for  chocolate dust
   designNotes: Org Info RES 3 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -24,23 +25,27 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: f5deffd0a211d764383b76189f351700, type: 2}
+  - {fileID: 11400000, guid: 88e34db069ceea343b09822c69c98f7e, type: 2}
+  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: d798f6284ec1ae84587ad230965a7d88, type: 2}
   - {fileID: 11400000, guid: 55b4ebe53a22ad047ac8d510cf3ea83d, type: 2}
   - {fileID: 11400000, guid: 4e5b0dd242fcad4468583de991c86f05, type: 2}
   - {fileID: 11400000, guid: 28dc6f1e386bbb84e9a307c339491816, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 17
   turnsDone: 0

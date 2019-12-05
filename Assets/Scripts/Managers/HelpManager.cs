@@ -958,7 +958,7 @@ public class HelpManager : MonoBehaviour
         string tag0 = "orgInfo_0";
         string tag1 = "orgInfo_1";
         string tag2 = "orgInfo_2";
-        string tag3 = "orgInfo_3";
+        string tag3 = "";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);

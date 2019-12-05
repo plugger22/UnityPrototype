@@ -4988,7 +4988,7 @@ public class TopicManager : MonoBehaviour
                         {
                             int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                             turnsAgo = Mathf.Max(1, turnsAgo);
-                            replaceText = string.Format("{0} day{1} ago", turnsAgo, turnsAgo != 1 ? "s" : "");
+                            replaceText = string.Format("{0}<b?{1}</b>{2} day{3} ago", colourAlert, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "");
                         }
                         else { CountTextTag("daysAgo", dictOfTags); }
                         break;

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: Remember your [orgText] direct feed from [daysAgo] asks the [org]? How do
+    you think we pay for our addiction?
   designNotes: Org Info RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -24,23 +25,27 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: f5deffd0a211d764383b76189f351700, type: 2}
+  - {fileID: 11400000, guid: 88e34db069ceea343b09822c69c98f7e, type: 2}
+  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 505881f498e598043939b87eb5825829, type: 2}
   - {fileID: 11400000, guid: 49e275db3404f1b4584296e9c4e763f8, type: 2}
   - {fileID: 11400000, guid: a5fe4fbb1a5291c438fd57a2806140bc, type: 2}
   - {fileID: 11400000, guid: 723e5178e2153f34b91fcb48896ab12d, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 17
   turnsDone: 0
