@@ -114,6 +114,7 @@ public class HelpManager : MonoBehaviour
 
     /// <summary>
     /// creates item Help data. Returns an empty list if none
+    /// NOTE: Use stringbuilder for help topics with multiple lines only, too much overhead for single lines
     /// </summary>
     /// <returns></returns>
     public List<HelpData> CreateItemDataHelp()
@@ -160,18 +161,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "rand_2";
         data.header = string.Format("{0}Addiction Need Check{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert, 
+        data.text = string.Format("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert, 
             GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Take Drugs check
         data = new HelpData();
         data.tag = "rand_3";
         data.header = string.Format("{0}Addicted Check{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -266,17 +263,13 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicUI_1";
         data.header = "Greyed out Options";
-        builder = new StringBuilder();
-        builder.AppendFormat("Options may be greyed out indicating that they {0}aren't available{1}. Their {2}tooltip{3} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Options may be greyed out indicating that they {0}aren't available{1}. Their {2}tooltip{3} will show why", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //more details
         data = new HelpData();
         data.tag = "topicUI_2";
         data.header = "More Information";
-        builder = new StringBuilder();
-        builder.AppendFormat("{0}Tooltip, image, top left{1} for more details", colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("{0}Tooltip, image, top left{1} for more details", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //HQ Boss
         data = new HelpData();
@@ -298,9 +291,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicMess_0";
         data.header = "Decision";
-        builder = new StringBuilder();
-        builder.AppendFormat("This item records the outcome of the decision that you have decided upon at the {0}start of this turn{1}", colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("This item records the outcome of the decision that you have decided upon at the {0}start of this turn{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -433,10 +424,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "conflict_1";
         data.header = "Traits";
-        builder = new StringBuilder();
-        builder.AppendFormat("Certain character traits can {0}add extra possibilities{1} to the pool of potential actions that a subordinate may take in a relationship conflict", colourAlert, colourEnd,
+        data.text = string.Format("Certain character traits can {0}add extra possibilities{1} to the pool of potential actions that a subordinate may take in a relationship conflict", colourAlert, colourEnd,
             colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Tip
         data = new HelpData();
@@ -801,7 +790,6 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "npc_2";
         data.header = "Movement";
-        builder = new StringBuilder();
         data.text = string.Format("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Stealth
@@ -824,7 +812,6 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "npc_5";
         data.header = "Tracers";
-        builder = new StringBuilder();
         data.text = string.Format("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating",  colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -856,10 +843,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "contact_2";
         data.header = "Contacts and the Authority";
-        builder = new StringBuilder();
-        builder.AppendFormat("Contacts can become {0}known{1} to the Authority (if a {2}Probe Team{3} is in the same district) and can, on occasion, be {4}Erased{5} (Erasure Team in same district)", 
+        data.text = string.Format("Contacts can become {0}known{1} to the Authority (if a {2}Probe Team{3} is in the same district) and can, on occasion, be {4}Erased{5} (Erasure Team in same district)", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Target Rumours
         data = new HelpData();
@@ -875,61 +860,47 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "contact_4";
         data.header = "New Contact";
-        builder = new StringBuilder();
-        builder.AppendFormat("Your subordinate will now be able to {0}carry out actions{1} in the new contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Your subordinate will now be able to {0}carry out actions{1} in the new contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Lost Contact
         data = new HelpData();
         data.tag = "contact_5";
         data.header = "Lost Contact";
-        builder = new StringBuilder();
-        builder.AppendFormat("Your subordinate will {0}No Longer{1} be able to carry out actions in their ex-contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Your subordinate will {0}No Longer{1} be able to carry out actions in their ex-contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Nemesis
         data = new HelpData();
         data.tag = "contact_6";
         data.header = "Spotting Nemesis";
-        builder = new StringBuilder();
-        builder.AppendFormat("If a Nemesis is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= Nemesis's Stealth rating{3}", 
+        data.text = string.Format("If a Nemesis is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= Nemesis's Stealth rating{3}", 
             colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Teams
         data = new HelpData();
         data.tag = "contact_7";
         data.header = "Spotting Teams";
-        builder = new StringBuilder();
-        builder.AppendFormat("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Inactive
         data = new HelpData();
         data.tag = "contact_8";
         data.header = "Gone Silent";
-        builder = new StringBuilder();
-        builder.AppendFormat("A Contact who has gone silent will {0}no longer{1} provide {2}information{3} or enable your subordinate to carry out {4}actions{5} in the Contact's district", 
+        data.text = string.Format("A Contact who has gone silent will {0}no longer{1} provide {2}information{3} or enable your subordinate to carry out {4}actions{5} in the Contact's district", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //How long Inactive
         data = new HelpData();
         data.tag = "contact_9";
         data.header = "For How Long?";
-        builder = new StringBuilder();
-        builder.AppendFormat("You can check the {0}Effects Tab{1} in the InfoApp {2}next turn{3} to see when your Contact will {4}return{5}", 
+        data.text = string.Format("You can check the {0}Effects Tab{1} in the InfoApp {2}next turn{3} to see when your Contact will {4}return{5}", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Return to Active
         data = new HelpData();
         data.tag = "contact_10";
         data.header = "Back on the Grid";
-        builder = new StringBuilder();
-        builder.AppendFormat("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
+        data.text = string.Format("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
             colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
 
