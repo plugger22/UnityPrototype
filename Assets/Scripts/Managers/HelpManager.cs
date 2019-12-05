@@ -787,27 +787,22 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "npc_0";
         data.header = "Overview";
-        builder = new StringBuilder();
-        builder.AppendFormat("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by {2}Contacts or Tracers{3}.", 
+        data.text = string.Format("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by {2}Contacts or Tracers{3}.", 
             colourAlert, colourEnd, colourAlert, colourEnd);        
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Interaction
         data = new HelpData();
         data.tag = "npc_1";
         data.header = "Interacting";
-        builder = new StringBuilder();
-        builder.AppendFormat("You {0}automatically{1} find and interact with a Special Character if you {2}end your turn{3} in the {4}same district{5}", colourAlert, colourEnd, colourAlert, colourEnd,
+        data.text = string.Format("You {0}automatically{1} find and interact with a Special Character if you {2}end your turn{3} in the {4}same district{5}", colourAlert, colourEnd, colourAlert, colourEnd,
             colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Movement
         data = new HelpData();
         data.tag = "npc_2";
         data.header = "Movement";
         builder = new StringBuilder();
-        builder.AppendFormat("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Stealth
         data = new HelpData();
@@ -822,18 +817,15 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "npc_4";
         data.header = "Benefits and Penalties";
-        builder = new StringBuilder();
-        builder.AppendFormat("HQ will task you with interacting with Special Characters. Doing so {0}before they depart{1} generally grants a benefit and failing to do so incurs a penalty", 
+        data.text = string.Format("HQ will task you with interacting with Special Characters. Doing so {0}before they depart{1} generally grants a benefit and failing to do so incurs a penalty", 
             colourAlert, colourEnd);
-        data.text = builder.ToString();
         listOfHelp.Add(data);
         //Tracers
         data = new HelpData();
         data.tag = "npc_5";
         data.header = "Tracers";
         builder = new StringBuilder();
-        builder.AppendFormat("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating",  colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
+        data.text = string.Format("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating",  colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
