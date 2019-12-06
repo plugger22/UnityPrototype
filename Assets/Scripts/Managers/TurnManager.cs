@@ -267,7 +267,6 @@ public class TurnManager : MonoBehaviour
             {
                 //pre-processing admin
                 haltExecution = false;
-                GameManager.instance.guiScript.InfoPipelineClear();
                 //end the current turn
                 EndTurnAI();
                 EndTurnEarly();

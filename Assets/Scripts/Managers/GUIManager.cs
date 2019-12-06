@@ -436,7 +436,7 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// Empties out dictOfPipeline. Called by TurnManager.cs NewTurn prior to any endOfTurn/NewTurn processing
     /// </summary>
-    public void InfoPipelineClear()
+    public void InfoPipelineDictClear()
     {
         Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineClear: Empty dictionary{0}", "\n");
         dictOfPipeline.Clear(); }
@@ -500,6 +500,7 @@ public class GUIManager : MonoBehaviour
             { yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType); }
             yield return new WaitForSecondsRealtime(pipelineWait);
         }
+        InfoPipelineDictClear();
         yield return StartCoroutine("Topic");
         yield return new WaitForSecondsRealtime(pipelineWait);
         yield return StartCoroutine("MainInfoApp", playerSide);
