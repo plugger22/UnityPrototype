@@ -267,6 +267,21 @@ public class OrganisationManager : MonoBehaviour
         GameManager.instance.messageScript.ActiveEffect(data);
     }
 
+    /// <summary>
+    /// Cancels a current tracking service due to target being no longer available
+    /// </summary>
+    /// <param name="infoType"></param>
+    public void CancelOrgInfoTracking()
+    {
+        //reset array to false (Not tracking anything)
+        GameManager.instance.dataScript.ResetOrgInfoArray(false);
+        //reset timer
+        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        if (org != null)
+        { org.timer = 0; }
+        else { Debug.LogError("Invalid orgInfo (Null)"); }
+    }
+
     /*/// <summary>
     /// Initialises organisations in a city. 
     /// </summary>
@@ -325,5 +340,8 @@ public class OrganisationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
     }
+
+
+
 
 }

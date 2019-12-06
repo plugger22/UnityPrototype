@@ -611,6 +611,9 @@ public class MissionManager : MonoBehaviour
         npc.currentNode = null;
         GameManager.instance.nodeScript.nodeNpc = -1;
         Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcDepart: Npc \"{0}\" Departed{1}", npc.tag, "\n");
+        //infoOrg reset
+        if (GameManager.instance.campaignScript.campaign.orgInfo != null)
+        { GameManager.instance.orgScript.CancelOrgInfoTracking(); }
     }
 
     /// <summary>

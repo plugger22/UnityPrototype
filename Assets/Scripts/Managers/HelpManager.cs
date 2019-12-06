@@ -921,7 +921,7 @@ public class HelpManager : MonoBehaviour
         else
         {
             data.header = "Overview";
-            data.text = string.Format("The Organisation will track your chosen target for {0}{1} days{2}. They will automatically find the target wherever they are {3}regardless of their stealth{4}", colourAlert,
+            data.text = string.Format("The Organisation will track your chosen target for {0}{1} days{2}. They will automatically find the target wherever they are {3}(ignores Stealth Rating){4}", colourAlert,
                 GameManager.instance.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
         }
         listOfHelp.Add(data);
