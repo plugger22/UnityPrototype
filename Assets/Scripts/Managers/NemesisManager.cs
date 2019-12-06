@@ -1556,10 +1556,10 @@ public class NemesisManager : MonoBehaviour
                 textBottom = builder.ToString(),
                 sprite = GameManager.instance.guiScript.aiAlertSprite,
                 isAction = false,
-                side = sideWho
+                side = sideWho,
+                type = MsgPipelineType.Nemesis
             };
             //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-            outcomeDetails.type = MsgPipelineType.Nemesis;
             if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
             { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
         }

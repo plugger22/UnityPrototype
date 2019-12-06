@@ -260,6 +260,7 @@ public class TurnManager : MonoBehaviour
         //only process new turn if a win State hasn't already been acheived
         if (isLevelOver == false)
         {
+            Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
             if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
@@ -282,6 +283,7 @@ public class TurnManager : MonoBehaviour
                 {
                     if (winStateLevel == WinState.None)
                     {
+                        Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
                         //select topic
                         GameManager.instance.topicScript.SelectTopic(playerSide);
                         //Debugging only (temporary) -> don't forget to switch on below and delete this
@@ -291,6 +293,7 @@ public class TurnManager : MonoBehaviour
                     //turn on info App (only if not autorunning)
                     if (isAutoRun == false)
                     {
+                        Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
 
@@ -308,6 +311,7 @@ public class TurnManager : MonoBehaviour
                 if (winStateLevel != WinState.None)
                 {
                     //There is a winner
+                    Debug.LogFormat("TurnManager.cs : - - - WINNER - - - turn {0}{1}", Turn, "\n");
                     isLevelOver = true;
                     ProcessLevelOver();
                 }

@@ -437,7 +437,9 @@ public class GUIManager : MonoBehaviour
     /// Empties out dictOfPipeline. Called by TurnManager.cs NewTurn prior to any endOfTurn/NewTurn processing
     /// </summary>
     public void InfoPipelineClear()
-    { dictOfPipeline.Clear(); }
+    {
+        Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineClear: Empty dictionary{0}", "\n");
+        dictOfPipeline.Clear(); }
 
     /// <summary>
     /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise
@@ -478,6 +480,7 @@ public class GUIManager : MonoBehaviour
             SetTooltipsOff();
             waitUntilDone = false;
             //process all messages in pipeline (waits until each message done)
+            Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineStart: start Pipeline - - - {0}", "\n");
             StartCoroutine("InfoPipeline", playerSide);
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -523,12 +526,14 @@ public class GUIManager : MonoBehaviour
         //find entry (if any) in dictionary
         if (dictOfPipeline.ContainsKey(type) == true)
         {
+            Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineProcess: dictionary contains key {0}{1}", type, "\n");
             ModalOutcomeDetails details = dictOfPipeline[type];
             if (details != null)
             {
                 waitUntilDone = true;
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
             }
+            else { Debug.LogWarningFormat("Invalid details (Null) for dictOfPipeline[{0}]", type); }
         }
     }
 

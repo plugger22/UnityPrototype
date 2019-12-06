@@ -3977,7 +3977,7 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
