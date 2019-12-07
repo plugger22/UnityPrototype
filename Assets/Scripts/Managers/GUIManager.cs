@@ -433,13 +433,17 @@ public class GUIManager : MonoBehaviour
     // - - - Start of Turn Information Pipeline
     //
 
+    public Dictionary<MsgPipelineType, ModalOutcomeDetails> GetDictOfPipeline()
+    { return dictOfPipeline; }
+
     /// <summary>
     /// Empties out dictOfPipeline. Called by TurnManager.cs NewTurn prior to any endOfTurn/NewTurn processing
     /// </summary>
     public void InfoPipelineDictClear()
     {
         Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineClear: Empty dictionary{0}", "\n");
-        dictOfPipeline.Clear(); }
+        dictOfPipeline.Clear();
+    }
 
     /// <summary>
     /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise
@@ -538,6 +542,7 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Sets up and displays Topic 
     /// </summary>
@@ -620,6 +625,15 @@ public class GUIManager : MonoBehaviour
             details.sprite = sprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
+    }
+
+    /// <summary>
+    /// Sets saved pipeline msg details (ModalOutcomeDetails) in dictOfPipeline for save/load data (needed 'cause Player can create some msgs during their turn, eg. move into same node as Nemesis
+    /// </summary>
+    /// <param name="listOfPipeLineDetails"></param>
+    public void SetDictOfPipeline(List<MsgPipelineType> listOfPipeLineDetails)
+    {
+
     }
 
     //

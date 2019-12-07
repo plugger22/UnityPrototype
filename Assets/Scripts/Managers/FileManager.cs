@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
@@ -851,7 +852,44 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
         #endregion
 
+        #region InfoPipeLine
+        Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = GameManager.instance.guiScript.GetDictOfPipeline();
+        if (dictOfPipeline != null)
+        {            
+            if (dictOfPipeline.Count > 0)
+            {
+                foreach(var record in dictOfPipeline)
+                {
+                    if (record.Value != null)
+                    {
+                        //create InfoPipelineDetails object and save to list
+                        InfoPipeLineDetails pipe = new InfoPipeLineDetails()
+                        {
+                            side = record.Value.side.name,
+                            spriteName = record.Value.sprite.name,
+                            textTop = record.Value.textTop,
+                            textBottom = record.Value.textBottom,
+                            modalLevel = record.Value.modalLevel,
+                            isAction = record.Value.isAction,
+                            reason = record.Value.reason,
+                            help0 = record.Value.help0,
+                            help1 = record.Value.help1,
+                            help2 = record.Value.help2,
+                            help3 = record.Value.help3,
+                            modalState = record.Value.modalState,
+                            type = record.Value.type
+                        };
+                        write.dataData.listOfInfoPipelineDetails.Add(pipe);
+                    }
+                    else { Debug.LogWarningFormat("Invalid dictOfPipeline[{0}] (Null)", record.Key); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfPipeline (Null)"); }
+        #endregion
+
         #region mainInfoApp
+
         //delayed itemData
         List<ItemData> listOfDelayed = GameManager.instance.dataScript.GetListOfDelayedItemData();
         if (listOfDelayed != null)
@@ -2563,6 +2601,11 @@ public class FileManager : MonoBehaviour
 
         #region moveNodes
         GameManager.instance.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
+        #endregion
+
+        #region infoPipeLine
+        if (read.dataData.listOfInfoPipelineDetails != null && read.dataData.listOfInfoPipelineDetails.Count > 0)
+        { GameManager.instance.guiScript.SetDictOfPipeline(read.dataData.listOfInfoPipelineDetails); }
         #endregion
 
         #region mainInfoApp
