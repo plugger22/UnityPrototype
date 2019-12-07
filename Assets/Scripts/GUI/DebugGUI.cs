@@ -46,6 +46,7 @@ public class DebugGUI : MonoBehaviour
     private int playerToggle = 0;
     private int contactToggle = 0;
     private int trackerToggle = 0;
+    private int messageToggle = 0;
     private int newsToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
@@ -283,13 +284,14 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Message Data");
                 //toggles sequentially through message dictionaries and then switches off
-                switch (msgStatus)
+                switch (messageToggle)
                 {
-                    case MessageCategory.None: debugDisplay = 9; msgStatus = MessageCategory.Pending; break;
-                    case MessageCategory.Pending: debugDisplay = 9; msgStatus = MessageCategory.Current; break;
-                    case MessageCategory.Current: debugDisplay = 9; msgStatus = MessageCategory.Archive; break;
-                    case MessageCategory.Archive: debugDisplay = 9; msgStatus = MessageCategory.AI; break;
-                    case MessageCategory.AI: debugDisplay = 0; msgStatus = MessageCategory.None; break;
+                    case 0: debugDisplay = 9; messageToggle = 1; break;
+                    case 1: debugDisplay = 9; messageToggle = 2; break;
+                    case 2: debugDisplay = 9; messageToggle = 3; break;
+                    case 3: debugDisplay = 9; messageToggle = 4; break;
+                    case 4: debugDisplay = 9; messageToggle = 5; break;
+                    case 5: debugDisplay = 0; messageToggle = 0; break;
                 }
             }
 
@@ -1092,20 +1094,18 @@ public class DebugGUI : MonoBehaviour
                     case 9:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = "Unknown";
-                        switch (msgStatus)
+                        switch (messageToggle)
                         {
-                            case MessageCategory.Pending:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Pending);
-                                break;
-                            case MessageCategory.Current:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Current);
-                                break;
-                            case MessageCategory.Archive:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Archive);
-                                break;
-                            case MessageCategory.AI:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.AI);
-                                break;
+                            case 1:
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Pending); break;
+                            case 2:
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Current); break;
+                            case 3:
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Archive); break;
+                            case 4:
+                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.AI); break;
+                            case 5:
+                                analysis = GameManager.instance.guiScript.DebugDisplayInfoPipeLine(); break;
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;

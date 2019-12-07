@@ -7693,7 +7693,7 @@ public class DataManager : MonoBehaviour
             if (dictOfSprites.ContainsKey(spriteName) == true)
             { sprite = dictOfSprites[spriteName]; }
         }
-        else { Debug.LogError("Invalid spriteName (Null or Empty)"); }
+        else { Debug.LogErrorFormat("Invalid spriteName (Null or Empty) for \"{0}\"", spriteName); }
         return sprite;
     }
 

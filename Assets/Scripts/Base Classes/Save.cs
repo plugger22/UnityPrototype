@@ -151,7 +151,7 @@ public class SaveDataData
     //cures
     public List<SaveCure> listOfCures = new List<SaveCure>();
     //InfoPipeline
-    public List<InfoPipeLineDetails> listOfInfoPipelineDetails = new List<InfoPipeLineDetails>();
+    public List<SaveInfoPipeLineInfo> listOfInfoPipelineDetails = new List<SaveInfoPipeLineInfo>();
     //MainInfo App data
     public SaveMainInfo currentInfo = new SaveMainInfo();
     public List<SavePriorityInfo> listOfPriorityData = new List<SavePriorityInfo>();
@@ -837,11 +837,11 @@ public class SavePriorityInfo
 /// ModalOutcomeDetails.cs (needed because there are certain outcome pipeline messages that are generated within a player's turn, eg. moving into a Nemesis district and suffering damage
 /// </summary>
 [System.Serializable]
-public class InfoPipeLineDetails
+public class SaveInfoPipeLineInfo
 {
     public int modalLevel;
     public bool isAction;
-    public string side;
+    public string sideName;
     public string spriteName;
     public string textTop;
     public string textBottom;

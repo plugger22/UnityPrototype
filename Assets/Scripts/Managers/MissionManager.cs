@@ -631,17 +631,20 @@ public class MissionManager : MonoBehaviour
             string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourAlert, npc.action.tag, colourEnd, colourAlert, npc.tag, colourEnd);
             string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}{6}{7}", npc.tag, npc.action.outcome, colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n", effectText);
             //pipeline msg
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
             {
-                textTop = textTopString,
-                textBottom = textBottomString,
-                sprite = npc.sprite,
-                isAction = false,
-                side = GameManager.instance.globalScript.sideResistance,
-                type = MsgPipelineType.Npc
-            };
-            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-            { Debug.LogWarningFormat("Npc interacts with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                {
+                    textTop = textTopString,
+                    textBottom = textBottomString,
+                    sprite = npc.sprite,
+                    isAction = false,
+                    side = GameManager.instance.globalScript.sideResistance,
+                    type = MsgPipelineType.Npc
+                };
+                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                { Debug.LogWarningFormat("Npc interacts with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
+            }
             //messages (need to be BEFORE depart)
             Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
                                 npc.currentNode.nodeID, "\n");

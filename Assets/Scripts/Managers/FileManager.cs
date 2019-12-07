@@ -863,9 +863,9 @@ public class FileManager : MonoBehaviour
                     if (record.Value != null)
                     {
                         //create InfoPipelineDetails object and save to list
-                        InfoPipeLineDetails pipe = new InfoPipeLineDetails()
+                        SaveInfoPipeLineInfo pipe = new SaveInfoPipeLineInfo()
                         {
-                            side = record.Value.side.name,
+                            sideName = record.Value.side.name,
                             spriteName = record.Value.sprite.name,
                             textTop = record.Value.textTop,
                             textBottom = record.Value.textBottom,

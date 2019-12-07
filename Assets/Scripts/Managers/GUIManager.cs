@@ -4,6 +4,7 @@ using packageAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -631,9 +632,40 @@ public class GUIManager : MonoBehaviour
     /// Sets saved pipeline msg details (ModalOutcomeDetails) in dictOfPipeline for save/load data (needed 'cause Player can create some msgs during their turn, eg. move into same node as Nemesis
     /// </summary>
     /// <param name="listOfPipeLineDetails"></param>
-    public void SetDictOfPipeline(List<MsgPipelineType> listOfPipeLineDetails)
+    public void SetDictOfPipeline(List<SaveInfoPipeLineInfo> listOfPipeLineDetails)
     {
-
+        if (listOfPipeLineDetails != null)
+        {
+            //clear dictionary
+            InfoPipelineDictClear();
+            for (int i = 0; i < listOfPipeLineDetails.Count; i++)
+            {
+                SaveInfoPipeLineInfo pipe = listOfPipeLineDetails[i];
+                if (pipe != null)
+                {
+                    ModalOutcomeDetails details = new ModalOutcomeDetails();
+                    if (string.IsNullOrEmpty(pipe.sideName) == false)
+                    { details.side = GameManager.instance.dataScript.GetGlobalSide(pipe.sideName); }
+                    if (string.IsNullOrEmpty(pipe.spriteName) == false)
+                    { details.sprite = GameManager.instance.dataScript.GetSprite(pipe.spriteName); }
+                    details.textTop = pipe.textTop;
+                    details.textBottom = pipe.textBottom;
+                    details.modalLevel = pipe.modalLevel;
+                    details.modalState = pipe.modalState;
+                    details.isAction = pipe.isAction;
+                    details.reason = pipe.reason;
+                    details.type = pipe.type;
+                    details.help0 = pipe.help0;
+                    details.help1 = pipe.help1;
+                    details.help2 = pipe.help2;
+                    details.help3 = pipe.help3;
+                    //add to dictionary
+                    InfoPipelineAdd(details);
+                }
+                else { Debug.LogErrorFormat("Invalid listOfPipeLineDetails[{0}] (Null)", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfPipeLineDetails (Null)"); }
     }
 
     //
@@ -658,6 +690,53 @@ public class GUIManager : MonoBehaviour
         string tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
         string tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
+    }
+
+
+    //
+    // - - - Debug - - -
+    //
+
+    /// <summary>
+    /// display details of dictOfPipeline
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayInfoPipeLine()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-dictOfPipeLine (infoPipeLine){0}", "\n");
+        int count = dictOfPipeline.Count;
+        if (count > 0)
+        {
+            foreach(var record in dictOfPipeline)
+            {
+                if (record.Value != null)
+                {
+                    builder.AppendFormat(" {0}{1}{2}", "\n", record.Key, "\n");
+                    if (record.Value.side != null)
+                    { builder.AppendFormat("  side: {0}{1}", record.Value.side.name, "\n"); }
+                    else { builder.AppendFormat("  side: Null{0}", "\n"); }
+                    builder.AppendFormat("  textTop: {0}{1}", record.Value.textTop, "\n");
+                    builder.AppendFormat("  textBottom: {0}{1}", record.Value.textBottom, "\n");
+                    if (record.Value.sprite != null)
+                    { builder.AppendFormat("  sprite: {0}{1}", record.Value.sprite.name, "\n"); }
+                    else { builder.AppendFormat("  sprite: Null{0}", "\n"); }
+                    builder.AppendFormat("  modalLevel: {0}{1}", record.Value.modalLevel, "\n");
+                    builder.AppendFormat("  modalState: {0}{1}", record.Value.modalState, "\n");
+                    builder.AppendFormat("  isAction: {0}{1}", record.Value.isAction, "\n");
+                    builder.AppendFormat("  reason: {0}{1}", record.Value.reason, "\n");
+                    builder.AppendFormat("  type: {0}{1}", record.Value.type, "\n");
+                    builder.AppendFormat("  help0: {0}{1}", record.Value.help0, "\n");
+                    builder.AppendFormat("  help1: {0}{1}", record.Value.help1, "\n");
+                    builder.AppendFormat("  help2: {0}{1}", record.Value.help2, "\n");
+                    builder.AppendFormat("  help3: {0}{1}", record.Value.help3, "\n");
+                }
+                else { builder.Append("Invalid record (Null)"); }
+            }
+        }
+        else { builder.Append(" No records"); }
+
+        return builder.ToString();
     }
 
 }
