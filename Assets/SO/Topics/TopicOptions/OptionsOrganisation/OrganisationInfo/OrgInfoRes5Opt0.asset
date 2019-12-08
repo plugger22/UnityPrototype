@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: OrgInfoRes5Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Info Res5 Option 0
-  tag: hh
-  text: hh
+  tag: Accept
+  text: Guilty as charged
   topic: {fileID: 11400000, guid: c4253aad72c58f548b1627b117ed837d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

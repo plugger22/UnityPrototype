@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: OrgInfoRes5Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Info Res5 Option 3
-  tag: hh
-  text: hh
+  tag: Help Cause
+  text: I'll ask HQ to send you Choc Dust
   topic: {fileID: 11400000, guid: c4253aad72c58f548b1627b117ed837d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

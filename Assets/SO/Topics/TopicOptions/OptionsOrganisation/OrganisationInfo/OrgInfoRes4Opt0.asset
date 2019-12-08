@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Name: OrgInfoRes4Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Info Res4 Option 0
-  tag: hh
-  text: hh
+  tag: Agree
+  text: Fair enough
   topic: {fileID: 11400000, guid: c05e2426c0a214b43b4de358d0e7420e, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0c3a0508bca57cc46b44fb70eafee41e, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

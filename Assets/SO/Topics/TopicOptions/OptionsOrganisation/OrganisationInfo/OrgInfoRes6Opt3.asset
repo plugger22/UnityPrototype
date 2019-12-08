@@ -17,7 +17,7 @@ MonoBehaviour:
   topic: {fileID: 11400000, guid: 3398539794a3a3148b2452bb42cc36cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
@@ -30,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3
