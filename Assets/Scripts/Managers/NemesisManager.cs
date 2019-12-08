@@ -1549,19 +1549,22 @@ public class NemesisManager : MonoBehaviour
             //AutoRun Event
             if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
             { GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun); }
-            //player damaged outcome window
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            else
             {
-                textTop = text,
-                textBottom = builder.ToString(),
-                sprite = GameManager.instance.guiScript.aiAlertSprite,
-                isAction = false,
-                side = sideWho,
-                type = MsgPipelineType.Nemesis
-            };
-            //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-            { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
+                //player damaged outcome window
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                {
+                    textTop = text,
+                    textBottom = builder.ToString(),
+                    sprite = GameManager.instance.guiScript.aiAlertSprite,
+                    isAction = false,
+                    side = sideWho,
+                    type = MsgPipelineType.Nemesis
+                };
+                //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
+                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
+            }
         }
         else { Debug.LogWarning("Invalid damage (Null)"); }
     }

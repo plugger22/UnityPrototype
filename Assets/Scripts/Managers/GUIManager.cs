@@ -447,26 +447,43 @@ public class GUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise
+    /// returns true if the specified pipeline type currently has a message sitting in the infopipeline (dictOfPipeline), false otherwise
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public bool CheckInfoPipeline(MsgPipelineType type)
+    {
+        if (dictOfPipeline.ContainsKey(type) == true)
+        { return true; }
+        return false;
+    }
+
+    /// <summary>
+    /// add a message to the pipeline. Note that only one message per MsgPipeLineType can be added to dict. Returns true if successful, false otherwise (true if failed because of AutoRun)
     /// </summary>
     /// <param name="details"></param>
     public bool InfoPipelineAdd(ModalOutcomeDetails details)
     {
         if (details != null)
         {
-            if (details.type != MsgPipelineType.None)
+            //don't add anything to the pipeline during an autorun
+            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
             {
-                //add to dictionary
-                try
+                if (details.type != MsgPipelineType.None)
                 {
-                    dictOfPipeline.Add(details.type, details);
-                    Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineAdd: \"{0}\" added{1}", details.type, "\n");
-                    return true;
+                    //add to dictionary
+                    try
+                    {
+                        dictOfPipeline.Add(details.type, details);
+                        Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineAdd: \"{0}\" added{1}", details.type, "\n");
+                        return true;
+                    }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid details (Duplicate) for \"{0}\"", details.type); }
                 }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid details (Duplicate) for \"{0}\"", details.type); }
+                else { Debug.LogWarning("Invalid ModalOutcomeDetails (type of None)"); }
             }
-            else { Debug.LogWarning("Invalid ModalOutcomeDetails (type of None)"); }
+            else { return true; }
         }
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
         return false;

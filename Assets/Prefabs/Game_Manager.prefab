@@ -3164,6 +3164,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0b6fc422b6b300f41a331c39ce6df459, type: 3}
   - {fileID: 21300000, guid: c0207b986c8f4e549a8978842d17e28e, type: 3}
   - {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
+  - {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
+  - {fileID: 21300000, guid: fa9fe64493a046d45822d6cce1cfba2f, type: 3}
+  - {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
+  - {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
   arrayOfTargetSprites:
   - {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   arrayOfTeamSprites:

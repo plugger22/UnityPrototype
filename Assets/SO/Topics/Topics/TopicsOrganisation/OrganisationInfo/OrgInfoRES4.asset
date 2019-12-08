@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: Unknown
+  text: The [org] has had enough. They are demanding that you [orgWant]. Help them
+    of they will break off all contact
   designNotes: Org Info RES 4 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -24,8 +25,14 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: f5deffd0a211d764383b76189f351700, type: 2}
+  - {fileID: 11400000, guid: 1b092729a10dd374c8e621bb9c862f6a, type: 2}
+  - {fileID: 11400000, guid: 88e34db069ceea343b09822c69c98f7e, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 00e91a22d3a6803468b15b40d32a6c4d, type: 2}
   - {fileID: 11400000, guid: 0a7d53cf50561fc489dca86a37ba6676, type: 2}
@@ -33,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 20
   turnsDone: 0

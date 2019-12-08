@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: f305c9949e3c6ae41b9cbc85f7057452, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
