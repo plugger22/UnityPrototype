@@ -1431,9 +1431,11 @@ public class EffectManager : MonoBehaviour
                                                 if (org != null)
                                                 {
                                                     if (org.isContact == false)
-                                                    { { BuildString(result, "No contact with Organisation"); } }
+                                                    { BuildString(result, "No contact with Organisation"); }
+                                                    if (org.isCutOff == true)
+                                                    { BuildString(result, "Org refuses to deal with you"); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, string.Format("Invalid Organisation - orgKnown, orgName \"{0}\"", data.orgName)); }
                                                 break;
                                             //Freedom Not MIN
                                             case "OrganisationFreeNOTMin":
@@ -1450,7 +1452,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.GetFreedom() == maxStatValue)
                                                     { BuildString(result, "Freedom is MAX"); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, "Invalid Organisation - OrgFreeNotMax"); }
                                                 break;
 
                                             //Reputation MIN
@@ -1460,7 +1462,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.GetReputation() > 0)
                                                     { BuildString(result, "Reputation Not MIN"); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, "Invalid Organisation - OrgRepMin"); }
                                                 break;
                                             //OrgInfo not currently active (may or may not be known)
                                             case "OrgInfoNOTActive":
@@ -1478,7 +1480,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.isSecretKnown == false)
                                                     { BuildString(result, string.Format("Secret NOT known")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, "Invalid Organisation - SecretOrgYes"); }
                                                 break;
                                             //Player DOESN'T knows Organisation secret
                                             case "SecretOrgCureNo":
@@ -1491,7 +1493,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.isSecretKnown == true)
                                                     { BuildString(result, string.Format("Secret IS known")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, "Invalid Organisation - SecretOrgNo"); }
                                                 break;
                                             //Player knows Org secret and secret is status Active (hasn't yet been Revealed)
                                             case "SecretOrgCureActive":
@@ -1504,7 +1506,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.secret.status != gameAPI.SecretStatus.Active)
                                                     { BuildString(result, string.Format("Secret Revealed")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation"); }
+                                                else { BuildString(result, "Invalid Organisation - SecretOrgActive"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
@@ -4175,6 +4177,7 @@ public class EffectManager : MonoBehaviour
                         case "Subtract":
                             //Org cuts player off from all contact
                             org.isContact = false;
+                            org.isCutOff = true;
                             effectResolve.bottomText = string.Format("{0}{1} ends Contact{2}", colourBad, org.tag, colourEnd);
                             Debug.LogFormat("[Org] EffectManager.cs -> ResolveTopicOrganisationEffect: {0} ends all contact{1}", org.tag, "\n");
                             break;
@@ -4204,7 +4207,7 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
                     GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
                     GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Nemesis", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax, 
+                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackErasure":

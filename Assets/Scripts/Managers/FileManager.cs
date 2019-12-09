@@ -501,6 +501,7 @@ public class FileManager : MonoBehaviour
                     SaveOrganisation saveOrg = new SaveOrganisation();
                     saveOrg.name = org.name;
                     saveOrg.isContact = org.isContact;
+                    saveOrg.isCutOff = org.isCutOff;
                     saveOrg.isSecretKnown = org.isSecretKnown;
                     saveOrg.reputation = org.GetReputation();
                     saveOrg.freedom = org.GetFreedom();
@@ -2057,6 +2058,7 @@ public class FileManager : MonoBehaviour
                         {
                             //copy across dynamic data
                             org.isContact = saveOrg.isContact;
+                            org.isCutOff = saveOrg.isCutOff;
                             org.isSecretKnown = saveOrg.isSecretKnown;
                             org.maxStat = saveOrg.maxStat;
                             org.SetReputation(saveOrg.reputation);

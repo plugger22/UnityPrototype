@@ -7128,7 +7128,8 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach (Organisation org in listOfCurrentOrganisations)
-        { builder.AppendFormat(" {0}{1}  Rep {2}, Free {3}, Contact {4} Secret {5} Timer {6}{7}", org.tag, "\n", org.GetReputation(), org.GetFreedom(), org.isContact, org.isSecretKnown, org.timer, "\n"); }
+        { builder.AppendFormat(" {0}{1}  Rep {2}, Free {3}, Contact {4} CutOff {5} Secret {6} Timer {7}{8}", org.tag, "\n", org.GetReputation(), org.GetFreedom(), org.isContact, 
+            org.isCutOff, org.isSecretKnown, org.timer, "\n"); }
         //arrayOfOrgInfo
         builder.AppendFormat("{0}{1}-ArrayOfOrgInfo{2}", "\n", "\n", "\n");
         for (int i = 0; i < arrayOfOrgInfo.Length; i++)

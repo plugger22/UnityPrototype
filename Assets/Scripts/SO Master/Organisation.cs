@@ -34,6 +34,7 @@ public class Organisation : ScriptableObject
 
     #region Save Data compatible
     [HideInInspector] public bool isContact;                //have you made contact with the org?
+    [HideInInspector] public bool isCutOff;                 //if true Organisation has cut off all contact with you for the campaign
     [HideInInspector] public bool isSecretKnown;            //if true, player has secret, false otherwise
     [HideInInspector] public int maxStat;                   //max stat value (can't initialise in OnEnable, done in OrganisationManager.cs instead
     [HideInInspector] public int timer;                     //multipurpose timer depending on Org (optional)

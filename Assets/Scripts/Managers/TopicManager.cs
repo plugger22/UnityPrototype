@@ -3423,9 +3423,8 @@ public class TopicManager : MonoBehaviour
             {
                 //criteria check FAILED
                 isCheck = false;
-
-                /*//generate message explaining why criteria failed -> debug only, spam otherwise
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");*/
+                //generate message explaining why criteria failed -> debug only, spam otherwise
+                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");
             }
         }
         else

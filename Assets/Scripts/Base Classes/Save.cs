@@ -735,6 +735,7 @@ public class SaveOrganisation
 {
     public string name;
     public bool isContact;
+    public bool isCutOff;
     public bool isSecretKnown;
     public int reputation;
     public int freedom;
