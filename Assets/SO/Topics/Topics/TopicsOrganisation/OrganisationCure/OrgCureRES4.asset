@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgCureRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: The [org] has had enough. They are demanding that you [orgWant]. Help them
-    or they will break off all contact
+  text: The [org] have had enough. They demand that you [orgWant]. Help them or they
+    will break off all contact
   designNotes: 'Org Cure RES 4 bad event
 
     Org about to Disown Player, applies to all
@@ -50,6 +50,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 18
+  turnsActive: 26
   turnsLive: 0
   turnsDone: 0

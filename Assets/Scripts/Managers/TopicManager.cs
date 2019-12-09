@@ -2347,6 +2347,8 @@ public class TopicManager : MonoBehaviour
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
+            tagNodeID = -1;
+            tagActorID = -1;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
             OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Info);
             if (data != null)
@@ -3408,18 +3410,6 @@ public class TopicManager : MonoBehaviour
         //topic criteria must pass checks
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
-
-            //temp workaround code
-            if (topic.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
-            {
-                if (string.IsNullOrEmpty(tagOrgName) == true)
-                {
-                    if (topic.subType.name.Equals("OrgInfo", StringComparison.Ordinal) == true)
-                    { tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; }
-                }
-            }
-            //end temp
-
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -3435,8 +3425,9 @@ public class TopicManager : MonoBehaviour
             {
                 //criteria check FAILED
                 isCheck = false;
-                //generate message explaining why criteria failed -> debug only, spam otherwise
-                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");
+
+                /*//generate message explaining why criteria failed -> debug only, spam otherwise
+                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");*/
             }
         }
         else

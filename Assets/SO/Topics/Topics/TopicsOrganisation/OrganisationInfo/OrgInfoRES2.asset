@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Payback
   text: Remember your [orgText] direct feed from [daysAgo] asks the [org]? How do
-    you think we pay for our addiction?
+    you think we pay for our Choc Dust addiction?
   designNotes: Org Info RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 4
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsDormant: 4
+  turnsActive: 21
+  turnsLive: 1
   turnsDone: 0

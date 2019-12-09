@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Payback
   text: The [org] are on the line. Reminding you of the [orgText] direct feed they
-    provided [daysAgo]. Needing money for  chocolate dust
+    provided [daysAgo]. Needing money for  Chocolate Dust
   designNotes: Org Info RES 3 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 5
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsDormant: 3
+  turnsActive: 21
+  turnsLive: 2
   turnsDone: 0

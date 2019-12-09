@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: The [org] has had enough. They are demanding that you [orgWant]. Help them
-    of they will break off all contact
+  text: The [org] have run out of patience. They demand that you [orgWant]. Help them
+    or they will break off all contact
   designNotes: Org Info RES 4 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 6
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 18
-  turnsLive: 0
+  turnsDormant: 2
+  turnsActive: 23
+  turnsLive: 1
   turnsDone: 0

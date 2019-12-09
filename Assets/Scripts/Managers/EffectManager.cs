@@ -1435,7 +1435,9 @@ public class EffectManager : MonoBehaviour
                                                     if (org.isCutOff == true)
                                                     { BuildString(result, "Org refuses to deal with you"); }
                                                 }
-                                                else { BuildString(result, string.Format("Invalid Organisation - orgKnown, orgName \"{0}\"", data.orgName)); }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                /*else { BuildString(result, string.Format("Invalid Organisation - orgKnown, orgName \"{0}\"", data.orgName)); }*/
+
                                                 break;
                                             //Freedom Not MIN
                                             case "OrganisationFreeNOTMin":
@@ -1444,6 +1446,7 @@ public class EffectManager : MonoBehaviour
                                                     if (org.GetFreedom() == 0)
                                                     { BuildString(result, "Freedom is Zero"); }
                                                 }
+                                                else { BuildString(result, "Invalid Organisation"); }
                                                 break;
                                             //Freedom Not MAX
                                             case "OrganisationFreeNOTMax":
@@ -1452,7 +1455,8 @@ public class EffectManager : MonoBehaviour
                                                     if (org.GetFreedom() == maxStatValue)
                                                     { BuildString(result, "Freedom is MAX"); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation - OrgFreeNotMax"); }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                /*else { BuildString(result, "Invalid Organisation - OrgFreeNotMax"); }*/
                                                 break;
 
                                             //Reputation MIN
@@ -1480,7 +1484,8 @@ public class EffectManager : MonoBehaviour
                                                     if (org.isSecretKnown == false)
                                                     { BuildString(result, string.Format("Secret NOT known")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation - SecretOrgYes"); }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                /*else { BuildString(result, "Invalid Organisation - SecretOrgYes"); }*/
                                                 break;
                                             //Player DOESN'T knows Organisation secret
                                             case "SecretOrgCureNo":
@@ -1493,7 +1498,8 @@ public class EffectManager : MonoBehaviour
                                                     if (org.isSecretKnown == true)
                                                     { BuildString(result, string.Format("Secret IS known")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation - SecretOrgNo"); }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                /*else { BuildString(result, "Invalid Organisation - SecretOrgNo"); }*/
                                                 break;
                                             //Player knows Org secret and secret is status Active (hasn't yet been Revealed)
                                             case "SecretOrgCureActive":
@@ -1506,7 +1512,8 @@ public class EffectManager : MonoBehaviour
                                                     if (org.secret.status != gameAPI.SecretStatus.Active)
                                                     { BuildString(result, string.Format("Secret Revealed")); }
                                                 }
-                                                else { BuildString(result, "Invalid Organisation - SecretOrgActive"); }
+                                                else { BuildString(result, "Invalid Organisation"); }
+                                                /*else { BuildString(result, "Invalid Organisation - SecretOrgActive"); }*/
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");
