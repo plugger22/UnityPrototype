@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: OrgInfoRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Info Res6 Option 0
-  tag: hh
-  text: hh
+  tag: Reluctant
+  text: I take no pleasure in doing so
   topic: {fileID: 11400000, guid: 3398539794a3a3148b2452bb42cc36cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

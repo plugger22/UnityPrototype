@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Info Res5 Option 2
   tag: Generous
-  text: I admire hardworkers
+  text: Money? Have some more
   topic: {fileID: 11400000, guid: c4253aad72c58f548b1627b117ed837d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

@@ -3408,6 +3408,18 @@ public class TopicManager : MonoBehaviour
         //topic criteria must pass checks
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
+
+            //temp workaround code
+            if (topic.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
+            {
+                if (string.IsNullOrEmpty(tagOrgName) == true)
+                {
+                    if (topic.subType.name.Equals("OrgInfo", StringComparison.Ordinal) == true)
+                    { tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; }
+                }
+            }
+            //end temp
+
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -3538,6 +3550,7 @@ public class TopicManager : MonoBehaviour
                     case "OrgHQ": tagOrgName = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
                     case "OrgEmergency": tagOrgName = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
                     case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                    default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", subType.name); break;
                 }
             }
             //check individual topicSubType criteria

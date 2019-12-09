@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Info Res5 Option 0
   tag: Accept
-  text: Guilty as charged
+  text: I understand my obligations
   topic: {fileID: 11400000, guid: c4253aad72c58f548b1627b117ed837d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

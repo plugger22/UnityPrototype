@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Info Res6 Option 2
-  tag: hh
-  text: hh
+  tag: Introduction
+  text: I'll introduce you to HQ
   topic: {fileID: 11400000, guid: 3398539794a3a3148b2452bb42cc36cf, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
