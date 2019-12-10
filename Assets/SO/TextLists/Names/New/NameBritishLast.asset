@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: British last names
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
   randomList:
   - Clarkson
   - May
@@ -21,4 +23,6 @@ MonoBehaviour:
   - Dent
   - Prefect
   - Cumberland
-  isTestForDuplicates: 1
+  - Fogh
+  - Fogg
+  index: 1

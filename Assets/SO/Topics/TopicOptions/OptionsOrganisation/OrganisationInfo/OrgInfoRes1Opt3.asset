@@ -24,11 +24,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: They shrink you, insists my [who]. The [org] does. So that you can fit in
-    their underground caves, says [npc], [job], of [node]
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: They shrink you, insists my [who]. The [org] do. So that you can fit in their
+    underground caves, says [npc], [job], of [node]
+  tooltipHeader: <color=#FFFFE0>No Thanks</color>
+  tooltipMain: No Effects present
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Don't bother, I can manage on my own</color>
   optionNumber: 3

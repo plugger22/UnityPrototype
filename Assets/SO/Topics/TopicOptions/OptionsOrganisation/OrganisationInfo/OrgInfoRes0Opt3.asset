@@ -25,10 +25,10 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: Those [org], they really know what's going on, says [npc], [job] or [node].
+  news: Those [org], they really know what's going on, says [npc], [job] of [node].
     They beaver away underground tapping into everything
   tooltipHeader: <color=#FFFFE0>No Thanks</color>
-  tooltipMain: No Effects present
+  tooltipMain: <color=#98FB98>Player Renown +1</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I'll figure it out on my own, thank you</color>

@@ -27,8 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: My [who] thinks that the [org] is in bed with the Authority but they have
-    it wrong. The [org] doesn't care who pays them, says [npc]
+  news: My [who] thinks that the [org] are in bed with the Authority but they have
+    it wrong. The [org] don't care who pays them, says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
