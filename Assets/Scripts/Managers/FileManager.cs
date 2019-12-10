@@ -2049,7 +2049,7 @@ public class FileManager : MonoBehaviour
                 if (string.IsNullOrEmpty(orgName) == false)
                 {
                     //get org from dict
-                    Organisation org = GameManager.instance.dataScript.GetOrganisaiton(orgName);
+                    Organisation org = GameManager.instance.dataScript.GetOrganisaton(orgName);
                     if (org != null)
                     {
                         //get dynamic data

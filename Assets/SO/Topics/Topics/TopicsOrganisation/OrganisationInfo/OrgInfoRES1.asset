@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgInfoRES1
   m_EditorClassIdentifier: 
   tag: Info Service
-  text: The [org] contacts you. Offering let you know where one of the following are
-    on any given day. For a price
+  text: The [org] contacts you. Offering to let you know where one of the following
+    are on any given day. For a price
   designNotes: Org Info RES 1 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 3a3d9a2d061245247bac979c89148af9, type: 2}
@@ -24,7 +24,7 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  profile: {fileID: 11400000, guid: 48f5f246e56aa0a4a867f9186b8c640c, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c465a4bc3f0ec1344a894b2dc021c2d9, type: 2}
   - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
@@ -39,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 16
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 19
-  turnsLive: 0
+  turnsActive: 0
+  turnsLive: 1
   turnsDone: 0

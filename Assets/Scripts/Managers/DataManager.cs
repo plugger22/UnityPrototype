@@ -6910,7 +6910,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="orgName"></param>
     /// <returns></returns>
-    public Organisation GetOrganisaiton(string orgName)
+    public Organisation GetOrganisaton(string orgName)
     {
         if (string.IsNullOrEmpty(orgName) == false)
         {

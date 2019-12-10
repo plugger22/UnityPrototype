@@ -330,7 +330,7 @@ public class EffectManager : MonoBehaviour
             if (string.IsNullOrEmpty(data.orgName) == false)
             {
                 //get org
-                org = GameManager.instance.dataScript.GetOrganisaiton(data.orgName);
+                org = GameManager.instance.dataScript.GetOrganisaton(data.orgName);
                 if (org == null)
                 {
                     Debug.LogErrorFormat("Invalid Organisation (Null) for orgName \"{0}\"", data.orgName);
@@ -4138,7 +4138,7 @@ public class EffectManager : MonoBehaviour
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
         //Organisation
-        Organisation org = GameManager.instance.dataScript.GetOrganisaiton(dataTopic.orgName);
+        Organisation org = GameManager.instance.dataScript.GetOrganisaton(dataTopic.orgName);
         if (org != null)
         {
             //outcome
@@ -4185,8 +4185,9 @@ public class EffectManager : MonoBehaviour
                             //Org cuts player off from all contact
                             org.isContact = false;
                             org.isCutOff = true;
-                            effectResolve.bottomText = string.Format("{0}{1} ends Contact{2}", colourBad, org.tag, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}The {1} will no longer deal with you{2}", colourBad, org.tag, colourEnd);
                             Debug.LogFormat("[Org] EffectManager.cs -> ResolveTopicOrganisationEffect: {0} ends all contact{1}", org.tag, "\n");
+                            GameManager.instance.dataScript.ResetOrgInfoArray(false);
                             break;
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }

@@ -3410,6 +3410,21 @@ public class TopicManager : MonoBehaviour
         //topic criteria must pass checks
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
+
+            //special case of Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
+            if (topic.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
+            {
+                switch (topic.subType.name)
+                {
+                    case "OrgCure": tagOrgName = GameManager.instance.campaignScript.campaign.orgCure.name; break;
+                    case "OrgContract": tagOrgName = GameManager.instance.campaignScript.campaign.orgContract.name; break;
+                    case "OrgHQ": tagOrgName = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
+                    case "OrgEmergency": tagOrgName = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
+                    case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                    default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
+                }
+            }
+
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -3426,8 +3441,9 @@ public class TopicManager : MonoBehaviour
                 //criteria check FAILED
                 isCheck = false;
 
-                /*//generate message explaining why criteria failed -> debug only, spam otherwise
-                Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n");*/
+                //generate message explaining why criteria failed -> debug only, spam otherwise
+                if (topic.subType.name.Equals("OrgCure", StringComparison.Ordinal) == true)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n"); }
             }
         }
         else
@@ -3555,6 +3571,7 @@ public class TopicManager : MonoBehaviour
             {
                 Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
                 return false;
+
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
         }
@@ -5763,7 +5780,7 @@ public class TopicManager : MonoBehaviour
             if (dictOfTopicSubTypes != null)
             {
                 GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-                builder.AppendFormat("- TopicTypeData for TopicTypes{0}{1}", "\n", "\n");
+                builder.AppendFormat("- TopicTypeData for TopicTypes ('*' topic/subType -> valid Criteria){0}{1}", "\n", "\n");
                 //used to print a '*' to indicate topic / subType is valid and ready to go
                 bool isValidType, isValidSubType;
                 //loop topic Types

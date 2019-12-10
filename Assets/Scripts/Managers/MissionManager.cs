@@ -613,7 +613,7 @@ public class MissionManager : MonoBehaviour
         Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcDepart: Npc \"{0}\" Departed{1}", npc.tag, "\n");
         //infoOrg reset
         if (GameManager.instance.campaignScript.campaign.orgInfo != null)
-        { GameManager.instance.orgScript.CancelOrgInfoTracking(); }
+        { GameManager.instance.orgScript.CancelOrgInfoTracking(OrgInfoType.Npc); }
     }
 
     /// <summary>

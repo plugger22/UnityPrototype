@@ -27,8 +27,8 @@ public class OrganisationManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
-                //SubInitialiseSessionStart();
                 SubInitialiseLevelStart();
+                SubInitialiseSessionStart();
                 //SubInitialiseFastAccess();
                 //SubInitialiseLevelAll();
                 SubInitialiseEvents();
@@ -52,7 +52,15 @@ public class OrganisationManager : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-
+        //get list of all Orgs involved in campaign
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            //reset isCutOff in case of a new Game
+            foreach (Organisation org in listOfOrgs)
+            { org.isCutOff = false; }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
     }
     #endregion
 
@@ -257,7 +265,7 @@ public class OrganisationManager : MonoBehaviour
             text = string.Format("{0} active", org.tag.ToUpper()),
             topText = string.Format("{0} Direct Feed", org.tag),
             detailsTop = string.Format("{0} will continue to provide a direct feed for", GameManager.instance.colourScript.GetFormattedString(org.tag, ColourType.neutralText)),
-            detailsBottom = string.Format("{0} days{1}", GameManager.instance.colourScript.GetFormattedString(Convert.ToString(org.timer), ColourType.neutralText), 
+            detailsBottom = string.Format("{0} days{1}", GameManager.instance.colourScript.GetFormattedString(Convert.ToString(org.timer), ColourType.neutralText),
                 string.IsNullOrEmpty(orgText) == false ? string.Format("{0}{1}{2}", "\n", "\n", orgText) : ""),
             sprite = org.sprite,
             help0 = "orgInfo_0",
@@ -271,10 +279,10 @@ public class OrganisationManager : MonoBehaviour
     /// Cancels a current tracking service due to target being no longer available
     /// </summary>
     /// <param name="infoType"></param>
-    public void CancelOrgInfoTracking()
+    public void CancelOrgInfoTracking(OrgInfoType orgInfoType)
     {
         //reset array to false (Not tracking anything)
-        GameManager.instance.dataScript.ResetOrgInfoArray(false);
+        GameManager.instance.dataScript.SetOrgInfoType(orgInfoType, false);
         //reset timer
         Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
         if (org != null)
