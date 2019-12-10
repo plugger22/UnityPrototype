@@ -5783,12 +5783,13 @@ public class TopicManager : MonoBehaviour
             List<Topic> listOfTopics = pool.listOfTopics;
             if (listOfTopics != null)
             {
+                int maxNodeID = GameManager.instance.nodeScript.maxNodeValue;
                 tagOrgTag = GameManager.instance.campaignScript.campaign.orgInfo.tag;
                 int count = listOfTopics.Count;
                 if (count > 0)
                 {
                     Sprite debugSprite = GameManager.instance.guiScript.topicDefaultSprite;
-                    coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite);
+                    coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite, maxNodeID);
                     StartCoroutine(coroutine);
                 }
                 else { Debug.LogErrorFormat("Invalid listOfTopics (Empty) for topicPool \"{0}\"", pool.name); }
@@ -5797,7 +5798,7 @@ public class TopicManager : MonoBehaviour
         }
     }
 
-    IEnumerator DisplayNews(List<Topic> listOfTopics, string newsSnippet, Sprite debugSprite)
+    IEnumerator DisplayNews(List<Topic> listOfTopics, string newsSnippet, Sprite debugSprite, int maxNodeID)
     {
         int count = listOfTopics.Count;
         //loop topics
@@ -5812,6 +5813,7 @@ public class TopicManager : MonoBehaviour
                 {
                     for (int j = 0; j < listOfOptions.Count; j++)
                     {
+                        tagNodeID = Random.Range(0, maxNodeID);
                         haltExecution = true;
                         newsSnippet = CheckTopicText(listOfOptions[j].news, false);
                         ModalOutcomeDetails details = new ModalOutcomeDetails()
