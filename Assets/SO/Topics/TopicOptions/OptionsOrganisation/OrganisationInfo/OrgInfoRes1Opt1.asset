@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Work for the [org] and you don't live long, says [npc], [job], of [node].
+    It's the Choc Dust. Fries your nervous system
   tooltipHeader: <color=#FFFFE0>Erasure Teams</color>
   tooltipMain: <color=#98FB98> Tracks Erasure Teams</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

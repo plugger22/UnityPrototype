@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Rumour has it that [mayor] has taken loans from the [org]. Risky business
+    if that's the case. You can't trust 'em, says [npc] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: <color=#FFE4B5>Npc not present</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

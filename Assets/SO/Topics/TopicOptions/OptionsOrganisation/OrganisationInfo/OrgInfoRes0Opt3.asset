@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Those [org], they really know what's going on, says [npc], [job] or [node].
+    They beaver away underground tapping into everything
   tooltipHeader: <color=#FFFFE0>No Thanks</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Do I want to work for the [org]? Who wants to live in a damp cave and snort
+    Choc Dust till they die, asks [npc] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

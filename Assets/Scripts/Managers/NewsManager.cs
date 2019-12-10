@@ -357,13 +357,6 @@ public class NewsManager : MonoBehaviour
                             if (data.isValidate == false)
                             { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
                             break;
-                        case "org":
-                            //organisation tag
-                            if (data.isValidate == false)
-                            {
-                              replaceText = data.;
-                            }
-                            break;
                         case "who":
                             //My '[best friend]'s [crazy] [sister]' 
                             if (data.isValidate == false)

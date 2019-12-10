@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Once you join the [org] your life becomes screens and Choc Dust. You need
+    one to work the other, says [npc], [job] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

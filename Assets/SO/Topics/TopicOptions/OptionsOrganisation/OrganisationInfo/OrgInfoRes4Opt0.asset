@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c3a0508bca57cc46b44fb70eafee41e, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: You can't trust the [org]. They'll get you in debt then sell all your information
+    to whoever wants it before you've finished shaking their hand
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Even if I didn't have my [handicap] I'm not sure that I'd want to join the
+    [org] and live underground, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

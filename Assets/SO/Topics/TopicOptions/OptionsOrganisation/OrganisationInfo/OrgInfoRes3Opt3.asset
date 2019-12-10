@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: The [org] are nothing but evil little dwarves hiding underground and messing
+    up the world's economy, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

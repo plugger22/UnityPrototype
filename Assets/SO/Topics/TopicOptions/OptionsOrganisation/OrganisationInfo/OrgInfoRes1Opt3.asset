@@ -24,7 +24,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: They shrink you, insists my [who]. The [org] does. So that you can fit in
+    their underground caves, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

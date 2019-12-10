@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Work for the [org]? Spend my life underground, chained to a terminal, hyped
+    on Choc Dust? Not me, says [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Character</color>
   tooltipMain: <color=#98FB98> Tracks V.I.P</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

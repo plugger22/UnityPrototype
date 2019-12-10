@@ -25,10 +25,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: '[who] insists that the [org] live under a mountain and never the see the
+    light of day, says [npc], [job] of [node]'
   tooltipHeader: <color=#FFFFE0>Erasure Teams</color>
-  tooltipMain: <color=#98FB98> Tracks Erasure Teams</color>
+  tooltipMain: <color=#98FB98> Tracks position of Erasure Teams</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Tell where the Erasure Teams are</color>
+  textToDisplay: <color=#EEFB73>Erasure Teams</color>
   optionNumber: 1

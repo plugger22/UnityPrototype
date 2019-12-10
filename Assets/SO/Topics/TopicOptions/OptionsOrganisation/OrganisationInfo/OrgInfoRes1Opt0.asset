@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: My [who] thinks that the [org] are spying on us all. Here I was thinking that
+    they were some kind of Swiss Bankers, says [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Nemesis</color>
   tooltipMain: <color=#98FB98> Tracks Nemesis</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

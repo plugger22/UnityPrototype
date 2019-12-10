@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: They say that the [org] pumps their workers full of Choc Dust so that they
+    forget about living in a cave, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

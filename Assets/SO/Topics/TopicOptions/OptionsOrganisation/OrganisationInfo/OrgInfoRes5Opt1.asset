@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [org]? We should flood their underground hidey holes with fuel oil and
+    burn them all, yells an angry [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

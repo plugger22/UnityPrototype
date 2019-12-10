@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Money and information, that's what the [org] are all about. That and snorting
+    huge amounts of Choc Dust, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

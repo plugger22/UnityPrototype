@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] once worked for the [org]. They're a mess, can't even slobber on
+    their own. Nerves are shot, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
