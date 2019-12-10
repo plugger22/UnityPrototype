@@ -712,11 +712,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Release Player"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "News Tester"))
             {
-                Debug.Log("[Dbg] Button -> Release Player");
-                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-                { GameManager.instance.captureScript.ReleasePlayer(); }
+                GameManager.instance.topicScript.DebugTestNews();
+                Debug.Log("[Dbg] Button -> News Tester");
             }
 
             //fifth button

@@ -2,6 +2,7 @@
 using modalAPI;
 using packageAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -143,6 +144,8 @@ public class TopicManager : MonoBehaviour
 
     //debugging (testManager.cs)
     private TopicPool debugTopicPool;
+    private IEnumerator coroutine;
+    private bool haltExecution;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -383,6 +386,7 @@ public class TopicManager : MonoBehaviour
     {
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TopicManager");
+        EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent, "TopicManager");
     }
     #endregion
 
@@ -401,6 +405,9 @@ public class TopicManager : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.CloseOutcomeWindow:
+                haltExecution = false;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -3410,7 +3417,6 @@ public class TopicManager : MonoBehaviour
         //topic criteria must pass checks
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
-
             //special case of Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
             if (topic.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
             {
@@ -3424,7 +3430,6 @@ public class TopicManager : MonoBehaviour
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
                 }
             }
-
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -5765,6 +5770,65 @@ public class TopicManager : MonoBehaviour
     //
     // - - - Debug - - -
     //
+
+    /// <summary>
+    /// displays news texts for each topic in debug topic pool to enable checking
+    /// </summary>
+    public void DebugTestNews()
+    {
+        string newsSnippet = "";
+        TopicPool pool = GameManager.instance.testScript.debugTopicPool;
+        if (pool != null)
+        {
+            List<Topic> listOfTopics = pool.listOfTopics;
+            if (listOfTopics != null)
+            {
+                tagOrgTag = GameManager.instance.campaignScript.campaign.orgInfo.tag;
+                int count = listOfTopics.Count;
+                if (count > 0)
+                {
+                    Sprite debugSprite = GameManager.instance.guiScript.topicDefaultSprite;
+                    coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite);
+                    StartCoroutine(coroutine);
+                }
+                else { Debug.LogErrorFormat("Invalid listOfTopics (Empty) for topicPool \"{0}\"", pool.name); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicPool \"{0}\"", pool.name); }
+        }
+    }
+
+    IEnumerator DisplayNews(List<Topic> listOfTopics, string newsSnippet, Sprite debugSprite)
+    {
+        int count = listOfTopics.Count;
+        //loop topics
+        for (int i = 0; i < count; i++)
+        {
+            Topic topic = listOfTopics[i];
+            if (topic != null)
+            {
+                //loop options within topic
+                List<TopicOption> listOfOptions = topic.listOfOptions;
+                if (listOfOptions != null)
+                {
+                    for (int j = 0; j < listOfOptions.Count; j++)
+                    {
+                        haltExecution = true;
+                        newsSnippet = CheckTopicText(listOfOptions[j].news, false);
+                        ModalOutcomeDetails details = new ModalOutcomeDetails()
+                        {
+                            textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}", colourNeutral, topic.name, colourEnd, "\n", colourAlert, listOfOptions[j].name, colourEnd),
+                            textBottom = newsSnippet,
+                            sprite = debugSprite
+                        };
+                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                        yield return new WaitUntil(() => haltExecution == false);
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
+        }
+    }
 
     /// <summary>
     /// Display's topic type data in a more user friendly manner (subTypes grouped by Types)
