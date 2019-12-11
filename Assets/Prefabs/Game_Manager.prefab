@@ -4280,6 +4280,10 @@ MonoBehaviour:
   moodMax: 3
   moodStart: 2
   moodReset: 3
+  maxInvestigations: 3
+  chanceInvestigation: 100
+  chanceEvidence: 5
+  timerInvestigationBase: 5
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
   actorID: 999
   status: 0

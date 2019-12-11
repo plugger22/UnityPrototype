@@ -349,6 +349,7 @@ public class SecretManager : MonoBehaviour
             //chance Investigation launched
             if (GameManager.instance.playerScript.CheckInvestigationPossible() == true)
             {
+                string text;
                 int rnd = Random.Range(0, 100);
                 int chance = GameManager.instance.playerScript.chanceInvestigation;
                 int gameTurn = GameManager.instance.turnScript.Turn;
@@ -365,6 +366,17 @@ public class SecretManager : MonoBehaviour
                     };
                     //add to player's list
                     GameManager.instance.playerScript.AddInvestigation(invest);
+                    //msgs
+                    Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                    text = "INVESTIGATION commences";
+                    GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
+                }
+                else
+                {
+                    //msgs
+                    Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: No Investigation, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                    text = "No INVESTIGATION";
+                    GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, false, "rand_4");
                 }
             }
             else { Debug.LogFormat("[Inv] SecretManager.cs -> RemoveSecretFromAll: Max number of investigations already, new Investigation not possible{0}", "\n"); }

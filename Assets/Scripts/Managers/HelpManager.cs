@@ -170,6 +170,13 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Addicted Check{1}", colourTip, colourEnd);
         data.text = string.Format("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Investigation check
+        data = new HelpData();
+        data.tag = "rand_4";
+        data.header = string.Format("{0}Investigation Check{1}", colourTip, colourEnd);
+        data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd, 
+            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region HQ Support

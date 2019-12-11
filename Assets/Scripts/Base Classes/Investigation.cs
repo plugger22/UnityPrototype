@@ -14,6 +14,7 @@ public class Investigation
     [HideInInspector] public string tag;                    //public display name
     [HideInInspector] public int turn;                      //turn investigation commenced
     [HideInInspector] public int evidence = 2;              //evidence is a standard 3 star setup with 0 (incriminating) being bad for the player and 3 being good (exonerating)
+    [HideInInspector] public int timer = -1;                //count down timer activated once evidence boundary exceeded. Investigation resolved when timer at zero, default -1
     [HideInInspector] public ActorHQ lead;                  //HQ actor position in charge of resolving the investigation
     #endregion
 

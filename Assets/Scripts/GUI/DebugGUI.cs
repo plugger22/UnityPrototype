@@ -121,13 +121,13 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 40), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 60), "Option Menu", customBackground);
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 240), "Info Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 240), "Action Menu", customBackground);
             //background box (Level)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Level Menu", customBackground);
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Map Menu", customBackground);
 
             //
             // - - - Info (first box)
@@ -233,7 +233,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 8; playerToggle = 1; break;
                     case 1: debugDisplay = 60; playerToggle = 2; break;
-                    case 2: debugDisplay = 0; playerToggle = 0; break;
+                    case 2: debugDisplay = 83; playerToggle = 3; break;
+                    case 3: debugDisplay = 0; playerToggle = 0; break;
                 }
             }
 
@@ -468,7 +469,18 @@ public class DebugGUI : MonoBehaviour
             }
 
             //second button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionAutoGear))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Colour Palette"))
+            {
+                Debug.Log("[Dbg] Button -> Colour Palette");
+                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
+                {
+                    //display outcome dialogue showing colour Palette
+                    GameManager.instance.colourScript.DebugDisplayColourPalette();
+                }
+            }
+
+            //second button
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), optionAutoGear))
             {
                 Debug.Log("[Dbg] Button -> Toggle OptionAutoGear");
                 if (GameManager.instance.optionScript.autoGearResolution == true)
@@ -484,7 +496,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //third button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), optionFogOfWar))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionFogOfWar))
             {
                 Debug.Log("[Dbg] Button -> Toggle Fog Of War");
                 if (GameManager.instance.optionScript.fogOfWar == true)
@@ -505,7 +517,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionConnectorTooltips))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), optionConnectorTooltips))
             {
                 Debug.Log("[Dbg] Button -> Toggle Connection Tooltips");
                 if (GameManager.instance.optionScript.connectorTooltips == true)
@@ -521,7 +533,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fifth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), optionDebugData))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionDebugData))
             {
                 Debug.Log("[Dbg] Button -> Toggle Debug Data");
                 if (GameManager.instance.optionScript.debugData == true)
@@ -539,7 +551,7 @@ public class DebugGUI : MonoBehaviour
             //sixth button
             if (GameManager.instance.turnScript.Turn > 0) { optionNoAI = "Unavailable"; }
             {
-                if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionNoAI))
+                if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionNoAI))
                 {
                     Debug.Log("[Dbg] Button -> Toggle NO AI");
                     //option only available on first turn
@@ -608,7 +620,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionRenownUI))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionRenownUI))
             {
                 Debug.Log("[Dbg] Button -> Toggle Renown UI Display");
                 if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
@@ -624,7 +636,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eleventh button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionContacts))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionContacts))
             {
                 Debug.Log("[Dbg] Button -> Toggle Show Contacts in Node tooltips");
                 if (GameManager.instance.optionScript.showContacts == true)
@@ -640,7 +652,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twelfth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionMoodInfo))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), optionMoodInfo))
             {
                 Debug.Log("[Dbg] Button -> Toggle Full Mood Info option");
                 if (GameManager.instance.optionScript.fullMoodInfo == true)
@@ -661,24 +673,14 @@ public class DebugGUI : MonoBehaviour
             //
 
             //first button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Colour Palette"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Remove Secret"))
             {
-                /*Debug.Log("[Dbg] Button -> Swap sides");
+                Debug.Log("[Dbg] Button -> Remove Random Secret");
                 if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
                 {
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                    { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideAuthority; }
-                    else { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; }
-                    //redraw nodes (player node shown/not shown depending on side)
-                    GameManager.instance.nodeScript.RedrawNodes();
-                }*/
-                Debug.Log("[Dbg] Button -> Colour Palette");
-                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
-                {
-                    //display outcome dialogue showing colour Palette
-                    GameManager.instance.colourScript.DebugDisplayColourPalette();
+                    //Remove a random secret from Player and anyone else
+                    GameManager.instance.playerScript.DebugRemoveRandomSecret();
                 }
-                
             }
 
             //second button
@@ -687,18 +689,6 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Toggle All Organisations (isContact)");
                 GameManager.instance.orgScript.DebugToggleAllOrganisations();
             }
-
-            /*//second button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), optionPlayerSide))
-            {
-                Debug.Log("[Dbg] Button -> Toggle Player Side");
-                //resistance -> change to authority
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideAuthority; optionPlayerSide = "AUTHORITY"; }
-                //both -> change to resistance
-                else if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-                { GameManager.instance.sideScript.PlayerSide = GameManager.instance.globalScript.sideResistance; optionPlayerSide = "RESISTANCE"; }
-            }*/
 
             //third button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
@@ -1673,6 +1663,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 375, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    //player stats -> investigations
+                    case 83:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.playerScript.DebugDisplayInvestigations();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

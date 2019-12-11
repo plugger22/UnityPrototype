@@ -406,13 +406,6 @@ public class PlayerManager : MonoBehaviour
     {
         //handles situation of no compromised gear checks and resets isEndOfTurnGearCheck
         ResetAllGear();
-
-        /*//checks if any condition cures have been activated by an Organisation (used for topic criteria checks)
-        if (CheckForOrgCure(GameManager.instance.sideScript.PlayerSide) == true)
-        { isOrgActivatedCurePresent = true; }
-        else { isOrgActivatedCurePresent = false; }*/
-
-        /*DebugCreateMoodHistory();*/
     }
 
 
@@ -1379,7 +1372,8 @@ public class PlayerManager : MonoBehaviour
             if (listOfInvestigations.Count < maxInvestigations)
             {
                 listOfInvestigations.Add(invest);
-                Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref {3}{4}", invest.tag, invest.lead, invest.evidence, invest.reference, "\n");
+                Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref \"{3}\"{4}", invest.tag, invest.lead, invest.evidence, 
+                    invest.reference, "\n");
                 return true;
             }
             else { Debug.LogWarning("ListOfInvestigations is Full (Maxxed out). Record not added"); }
@@ -1400,6 +1394,7 @@ public class PlayerManager : MonoBehaviour
             int index = listOfInvestigations.FindIndex(x => x.reference.Equals(reference, StringComparison.Ordinal));
             if (index > -1)
             {
+                Debug.LogFormat("[Inv] PlayerManager.cs -> RemoveInvestigation: Investigation \"{0}\", removed{1}}", reference, "\n");
                 listOfInvestigations.RemoveAt(index);
                 return true;
             }
@@ -1542,6 +1537,56 @@ public class PlayerManager : MonoBehaviour
             else { Debug.LogWarning("No entries in tempList of Secrets"); }
         }
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
+    }
+
+    /// <summary>
+    /// Removes a random secret from player, and anyone else who knows it. Handles all admin. Secret treated as deleted but effects are ignored
+    /// </summary>
+    public void DebugRemoveRandomSecret()
+    {
+        int count = listOfSecrets.Count;
+        if (count > 0)
+        {
+            Secret secret = listOfSecrets[Random.Range(0, count)];
+            if (secret != null)
+            {
+                secret.status = gameAPI.SecretStatus.Deleted;
+                secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
+            }
+            else { Debug.LogError("Invalid secret (Null)"); }
+        }
+    }
+
+    /// <summary>
+    /// Display contents of listOfInvestigations
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayInvestigations()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Investigations{0}", "\n");
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    builder.AppendFormat(" Investigating {0}{1}", invest.tag, "\n");
+                    builder.AppendFormat("  reference: {0}{1}", invest.reference, "\n");
+                    builder.AppendFormat("  evidence: {0}{1}", invest.evidence, "\n");
+                    builder.AppendFormat("  lead: {0}{1}", invest.lead, "\n");
+                    builder.AppendFormat("  turn: {0}{1}", invest.turn, "\n");
+                    builder.AppendFormat("  timer: {0}{1}", invest.timer, "\n");
+                }
+                else { builder.Append(" Invalid investigation (Null)"); }
+            }
+        }
+        else { builder.Append(" No current Investigations"); }
+        return builder.ToString();
     }
 
 
