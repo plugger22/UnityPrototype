@@ -295,6 +295,7 @@ public class PlayerManager : MonoBehaviour
     {
         //register event listeners
         EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "PlayerManager.cs");
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "PlayerManager.cs");
     }
 
     #endregion
@@ -390,6 +391,9 @@ public class PlayerManager : MonoBehaviour
         //select event type
         switch (eventType)
         {
+            case EventType.StartTurnLate:
+                ProcessInvestigations();
+                break;
             case EventType.EndTurnLate:
                 EndTurnFinal();
                 break;
@@ -1430,6 +1434,135 @@ public class PlayerManager : MonoBehaviour
             this.listOfInvestigations.AddRange(listOfInvestigations);
         }
         else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
+    }
+
+    /// <summary>
+    /// handles all turn based investigation matters
+    /// </summary>
+    public void ProcessInvestigations()
+    {
+        //any active investigations
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            int rnd;
+            int chance;
+            int motivation;
+            bool isGood;
+            //loop investigations
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    //timer active
+                    if (invest.timer > 0)
+                    {
+                        //decrement timer
+                        invest.timer--;
+                        //investigation complete
+                        if (invest.timer <= 0)
+                        {
+                            switch (invest.evidence)
+                            {
+                                case 3:
+                                    //player found innocent
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" resolved. Player found INNOCENT{1}", invest.tag, "\n");
+                                    break;
+                                case 0:
+                                    //player found guilty
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" resolved. Player found GUILTY{1}", invest.tag, "\n");
+                                    WinState winner = WinState.None;
+                                    switch (GameManager.instance.sideScript.PlayerSide.level)
+                                    {
+                                        case 1: winner = WinState.Resistance; break;
+                                        case 2: winner = WinState.Authority; break;
+                                        default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+                                    }
+                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation resolved", invest.tag));
+                                    break;
+                                default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
+                            }
+                            //end investigation
+                            RemoveInvestigation(invest.reference);
+                            //TO DO -> place in completed investigation list in DataManager.cs
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion{4}", invest.tag, invest.timer,
+                         invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", "\n");
+                        }
+                    }
+                    else
+                    {
+                        //No timer -> check for new evidence
+                        rnd = Random.Range(0, 100);
+                        isGood = false;
+                        if (rnd < chanceEvidence)
+                        {
+                            //good or bad evidence -> depends on HQ actor opinion of you
+                            Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                            if (actor != null)
+                            {
+                                rnd = Random.Range(0, 100);
+                                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                switch (motivation)
+                                {
+                                    case 3: chance = 80; break;
+                                    case 2: chance = 60; break;
+                                    case 1: chance = 40; break;
+                                    case 0: chance = 20; break;
+                                    default: Debug.LogWarningFormat("Unrecognised actor Motivation \"{0}\" for {1}", invest.lead); chance = 0; break;
+                                }
+                                if (rnd < chance)
+                                {
+                                    isGood = true;
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}{5}", invest.tag, chance, rnd,
+                                        invest.lead, motivation, "\n");
+                                }
+                                else
+                                {
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}{5}", invest.tag, chance, rnd,
+                                        invest.lead, motivation, "\n");
+                                }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid HQ Actor (Null) for investigation.lead {0}", invest.lead); }
+                            //apply evidence
+                            if (isGood == true)
+                            {
+                                //Xeonerating Evidence (good)
+                                invest.evidence++;
+                                //exceed max
+                                if (invest.evidence > 3)
+                                {
+                                    //start timer
+                                    invest.timer = timerInvestigationBase;
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found INNOCENT in {1} turn{2}",
+                                        invest.tag, invest.timer, "\n");
+                                }
+                            }
+                            else
+                            {
+                                //Incriminating Evidence (bad)
+                                invest.evidence--;
+                                //exceeds min
+                                if (invest.evidence < 0)
+                                {
+                                    //start timer
+                                    invest.timer = timerInvestigationBase;
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found GUILTY in {1} turn{2}",
+                                        invest.tag, invest.timer, "\n");
+                                }
+                            }
+                            //ensure value doesn't exceed boundary
+                            invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
+            }
+        }
     }
 
 
