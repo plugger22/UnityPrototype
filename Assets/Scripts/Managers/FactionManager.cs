@@ -703,6 +703,16 @@ public class FactionManager : MonoBehaviour
         return opinion;
     }
 
+    /// <summary>
+    /// returns a random ranking HQ position
+    /// </summary>
+    /// <returns></returns>
+    public ActorHQ GetRandomHQPosition()
+    {
+        List<ActorHQ> listOfHQPositions = new List<ActorHQ>() { ActorHQ.Boss, ActorHQ.SubBoss1, ActorHQ.SubBoss2, ActorHQ.SubBoss3 };
+        return listOfHQPositions[Random.Range(0, listOfHQPositions.Count)];
+    }
+
 
     //
     // - - - Debug - - -

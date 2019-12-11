@@ -346,6 +346,28 @@ public class SecretManager : MonoBehaviour
                     }
                 }
             }
+            //chance Investigation launched
+            if (GameManager.instance.playerScript.CheckInvestigationPossible() == true)
+            {
+                int rnd = Random.Range(0, 100);
+                int chance = GameManager.instance.playerScript.chanceInvestigation;
+                int gameTurn = GameManager.instance.turnScript.Turn;
+                if (rnd < chance)
+                {
+                    //create a new investigation
+                    Investigation invest = new Investigation()
+                    {
+                        reference = string.Format("{0}{1}", gameTurn, secret.name),
+                        tag = secret.investigationTag,
+                        evidence = secret.investigationEvidence,
+                        turn = gameTurn,
+                        lead = GameManager.instance.factionScript.GetRandomHQPosition()
+                    };
+                    //add to player's list
+                    GameManager.instance.playerScript.AddInvestigation(invest);
+                }
+            }
+            else { Debug.LogFormat("[Inv] SecretManager.cs -> RemoveSecretFromAll: Max number of investigations already, new Investigation not possible{0}", "\n"); }
         }
         else
         {

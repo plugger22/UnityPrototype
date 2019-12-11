@@ -19,6 +19,12 @@ public class Secret : ScriptableObject
     [Tooltip("Effects that happen if secret is revealed")]
     public List<Effect> listOfEffects;
 
+    [Header("Investigation")]
+    [Tooltip("Tag to be passed to Investigation.cs in event of a revealed secret initiating an investigation. Format '[Investigating your/Players] ...', e.g 'Personal hygiene'")]
+    public string investigationTag;
+    [Tooltip("The starting value of the evidence for the investigation. '1' indicates incriminating evidence, '2' indicates only ambivalent evidence")]
+    [Range(1, 2)] public int investigationEvidence = 2;
+
 
     #region Save Data Compatible
     [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 
@@ -34,6 +40,7 @@ public class Secret : ScriptableObject
     {
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(investigationTag) == false, "Invalid investigationTag (Null or Empty) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
         Debug.AssertFormat(listOfEffects != null, "Invalid listOfEffects (Null) for {0}", name);
         Debug.AssertFormat(type != null, "Invalid type (Null) for {0}", name);

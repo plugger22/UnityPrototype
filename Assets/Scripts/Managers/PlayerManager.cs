@@ -19,6 +19,16 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("Mood resets to this value once Player loses their Stressed Condition or completes Lying Low")]
     [Range(1, 3)] public int moodReset = 3;
 
+    [Header("Investigations")]
+    [Tooltip("Maximum number of investigations that can be active at a time")]
+    [Range(3, 3)] public int maxInvestigations = 3;
+    [Tooltip("Percentage chance of a revealed Secret resulting in an Investigation")]
+    [Range(0, 100)] public int chanceInvestigation = 50;
+    [Tooltip("Percentage chance of an investigation progressing (more evidence revealed) per turn")]
+    [Range(0, 100)] public int chanceEvidence = 5;
+    [Tooltip("Once an investigation reaches a boundary limit (> 3 or < 0) the timer kicks in and once it counts down to Zero the investigation is resolved (if evidence still at 0 or 3)")]
+    [Range(1, 20)] public int timerInvestigationBase = 5;
+
 
     public Sprite sprite;
 
@@ -43,6 +53,7 @@ public class PlayerManager : MonoBehaviour
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
     private List<Secret> listOfSecrets = new List<Secret>();                        //list of all secrets (skeletons in the closet)
+    private List<Investigation> listOfInvestigations = new List<Investigation>();   //list of all active investigations into Player's behaviour (both sides)
     private List<HistoryMood> listOfMoodHistory = new List<HistoryMood>();          //tracks all changes to player mood
     //personality
     private int mood;
@@ -1350,14 +1361,92 @@ public class PlayerManager : MonoBehaviour
         return secret;
     }
 
+    //
+    // - - - Investigations - - -
+    //
+
+    public List<Investigation> GetListOfInvestigations()
+    { return listOfInvestigations; }
+
+    /// <summary>
+    /// Adds an investigation to listOfInvestigations. Checks that list isn't already maxxed out. Returns true if successful, false otherwise
+    /// </summary>
+    /// <param name="invest"></param>
+    public bool AddInvestigation(Investigation invest)
+    {
+        if (invest != null)
+        {
+            if (listOfInvestigations.Count < maxInvestigations)
+            {
+                listOfInvestigations.Add(invest);
+                Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref {3}{4}", invest.tag, invest.lead, invest.evidence, invest.reference, "\n");
+                return true;
+            }
+            else { Debug.LogWarning("ListOfInvestigations is Full (Maxxed out). Record not added"); }
+        }
+        else { Debug.LogError("Invalid investigation (Null)"); }
+        return false;
+    }
+
+    /// <summary>
+    /// Removes an investigation from listOfInvestigation based on Investigation.reference (turn # + secret.name)
+    /// </summary>
+    /// <param name="reference"></param>
+    /// <returns></returns>
+    public bool RemoveInvestigation(string reference)
+    {
+        if (string.IsNullOrEmpty(reference) == false)
+        {
+            int index = listOfInvestigations.FindIndex(x => x.reference.Equals(reference, StringComparison.Ordinal));
+            if (index > -1)
+            {
+                listOfInvestigations.RemoveAt(index);
+                return true;
+            }
+            else { Debug.LogWarningFormat("Investigation reference \"{0}\" not found in listOfInvestigations", reference); }
+        }
+        else { Debug.LogError("Invalid reference (Null or Empty)"); }
+        return false;
+    }
+
+    public int CheckNumOfInvestigations()
+    { return listOfInvestigations.Count; }
+
+    /// <summary>
+    /// returns true if there is space in listOfInvestigations for another, false otherwise (eg. maxInvestigations already)
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckInvestigationPossible()
+    {
+        if (listOfInvestigations.Count < maxInvestigations)
+        { return true; }
+        return false;
+    }
+
+    /// <summary>
+    /// Initialise the listOfInvestigations (overwrites existing list). Used for load save game
+    /// </summary>
+    /// <param name="listOfInvestigations"></param>
+    public void SetInvestigations(List<Investigation> listOfInvestigations)
+    {
+        if (listOfInvestigations != null)
+        {
+            this.listOfInvestigations.Clear();
+            this.listOfInvestigations.AddRange(listOfInvestigations);
+        }
+        else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
+    }
 
 
+    //
+    // - - - Debug - - -
+    //
 
     /// <summary>
     /// DEBUG method to show players gear in lieu of a working UI element
     /// </summary>
     /// <returns></returns>
-    public string DisplayGear()
+    public string DebugDisplayGear()
     {
         StringBuilder builder = new StringBuilder();
         builder.Append(" Player's Gear");
