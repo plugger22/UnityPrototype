@@ -4851,7 +4851,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("Investigation into {0} launched", invest.tag);
             data.topText = "Under Investigation";
-            //data.bottomText = GameManager.instance.itemDataScript.GetNpcOngoingEffectDetails(npc);
+            data.bottomText = GameManager.instance.itemDataScript.GetInvestNewDetails(invest);
             data.priority = ItemPriority.High;
             data.sprite = GameManager.instance.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;

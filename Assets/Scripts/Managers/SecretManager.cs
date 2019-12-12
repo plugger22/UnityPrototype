@@ -375,6 +375,8 @@ public class SecretManager : MonoBehaviour
                     Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     text = "INVESTIGATION commences";
                     GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
+                    text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
+                    GameManager.instance.messageScript.InvestigationNew(text, invest);
                 }
                 else
                 {

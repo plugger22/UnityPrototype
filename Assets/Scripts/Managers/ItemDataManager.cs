@@ -2291,5 +2291,29 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    //
+    // - - - Investigations
+    //
+
+    /// <summary>
+    /// new Investigation launched
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestNewDetails(Investigation invest)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("An Investigation has been launched into your{0}{1}{2}<b>{3}</b>{4}{5}{6}", "\n", "\n", colourNeutral, invest.tag, colourEnd, "\n", "\n");
+        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+        if (actor != null)
+        { builder.AppendFormat("<b>{0}, {1}{2}{3}, will be leading the Investigation</b>", actor.actorName, colourAlert, actor.statusHQ, colourEnd);  }
+        else
+        {
+            Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
+            builder.AppendFormat("{0}It is not known who is leading the Investigation{1}", colourAlert, colourEnd);
+        }
+        return builder.ToString();
+    }
+
 
 }
