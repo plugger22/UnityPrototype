@@ -1437,6 +1437,26 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Investigation dropped, handles all admin
+    /// </summary>
+    /// <param name="invest"></param>
+    public void DropInvestigation(Investigation invest)
+    {
+        if (invest != null)
+        {
+            invest.status = InvestStatus.Completed;
+            invest.outcome = InvestOutcome.Dropped;
+            invest.turnFinish = GameManager.instance.turnScript.Turn;
+            GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
+            //remove from player
+            RemoveInvestigation(invest.reference);
+            //add to listOfCompleted
+            GameManager.instance.dataScript.AddInvestigationCompleted(invest);
+        }
+        else { Debug.LogError("Invalid investigation (Null)"); }
+    }
+
+    /// <summary>
     /// handles all turn based investigation matters
     /// </summary>
     public void ProcessInvestigations()
@@ -1463,15 +1483,19 @@ public class PlayerManager : MonoBehaviour
                         //investigation complete
                         if (invest.timer <= 0)
                         {
+                            invest.status = InvestStatus.Completed;
+                            GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
                             switch (invest.evidence)
                             {
                                 case 3:
                                     //player found innocent
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" resolved. Player found INNOCENT{1}", invest.tag, "\n");
+                                    invest.outcome = InvestOutcome.Innocent;
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
                                     break;
                                 case 0:
                                     //player found guilty
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" resolved. Player found GUILTY{1}", invest.tag, "\n");
+                                    invest.outcome = InvestOutcome.Guilty;
+                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found GUILTY{1}", invest.tag, "\n");
                                     WinState winner = WinState.None;
                                     switch (GameManager.instance.sideScript.PlayerSide.level)
                                     {
@@ -1479,7 +1503,7 @@ public class PlayerManager : MonoBehaviour
                                         case 2: winner = WinState.Authority; break;
                                         default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
                                     }
-                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation resolved", invest.tag));
+                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation completed", invest.tag));
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
@@ -1490,8 +1514,8 @@ public class PlayerManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion{4}", invest.tag, invest.timer,
-                         invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", "\n");
+                            Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion (evidence {4}{5}", invest.tag, invest.timer,
+                         invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
                         }
                     }
                     else
@@ -1539,6 +1563,7 @@ public class PlayerManager : MonoBehaviour
                                 {
                                     //start timer
                                     invest.timer = timerInvestigationBase;
+                                    invest.status = InvestStatus.Resolution;
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found INNOCENT in {1} turn{2}",
                                         invest.tag, invest.timer, "\n");
                                 }
@@ -1552,6 +1577,7 @@ public class PlayerManager : MonoBehaviour
                                 {
                                     //start timer
                                     invest.timer = timerInvestigationBase;
+                                    invest.status = InvestStatus.Resolution;
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found GUILTY in {1} turn{2}",
                                         invest.tag, invest.timer, "\n");
                                 }
@@ -1726,12 +1752,13 @@ public class PlayerManager : MonoBehaviour
                 if (invest != null)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
-                    builder.AppendFormat(" Investigating {0}{1}", invest.tag, "\n");
+                    builder.AppendFormat(" Investigating {0} at {1}{2}", invest.tag, invest.city, "\n");
                     builder.AppendFormat("  reference: {0}{1}", invest.reference, "\n");
                     builder.AppendFormat("  evidence: {0}{1}", invest.evidence, "\n");
                     builder.AppendFormat("  lead: {0}{1}", invest.lead, "\n");
-                    builder.AppendFormat("  turn: {0}{1}", invest.turnStart, "\n");
+                    builder.AppendFormat("  turns: start {0}, finish {1}{2}", invest.turnStart, invest.turnFinish, "\n");
                     builder.AppendFormat("  timer: {0}{1}", invest.timer, "\n");
+                    builder.AppendFormat("  status: {0}, outcome {1}{2}", invest.status, invest.outcome, "\n");
                 }
                 else { builder.Append(" Invalid investigation (Null)"); }
             }

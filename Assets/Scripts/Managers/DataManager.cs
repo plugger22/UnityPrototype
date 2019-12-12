@@ -5422,17 +5422,13 @@ public class DataManager : MonoBehaviour
     { return listOfCompletedInvestigations; }
 
     /// <summary>
-    /// Add investigation to list of completed. Checks timer is zero (should be only time investigation is considered completed)
+    /// Add investigation to list of completed
     /// </summary>
     /// <param name="invest"></param>
     public void AddInvestigationCompleted(Investigation invest)
     {
         if (invest != null)
-        {
-            if (invest.timer == 0)
-            { listOfCompletedInvestigations.Add(invest); }
-            else { Debug.LogWarningFormat("Invalid investigation (timer {0})", invest.timer); }
-        }
+        { listOfCompletedInvestigations.Add(invest); }
         else { Debug.LogError("Invalid Investigation (Null)"); }
     }
 

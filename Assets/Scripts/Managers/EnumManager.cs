@@ -143,6 +143,12 @@
     public enum SecretStatus {  Inactive, Active, Revealed, Deleted }
 
     //
+    // - - - Investigations - - -
+    //
+    public enum InvestStatus { None, Ongoing, Resolution, Completed }           //status of investigation
+    public enum InvestOutcome { None, Guilty, Innocent, Dropped}                //outcome of a completed investigation
+
+    //
     // - - - Dice - - -
     //
     public enum DiceOutcome { None, Ignore, Auto, Roll }
@@ -187,6 +193,7 @@
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,
+        InvestigationsLaunched, InvestigationsCompleted,
         OrgCures, OrgContractHits, OrgInfoHacks
     }
 
@@ -211,7 +218,7 @@
     //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order, make sure Compromised Gear is kept first as it's interactive)
     public enum MsgPipelineType { None, CompromisedGear, Npc, Nemesis, CapturePlayer, ReleasePlayer, WinLose, DebugTopic }  //see notes above
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC, INVESTIGATION }
     public enum MessageSubType
     {
         None,
@@ -324,7 +331,12 @@
         //Npc
         Npc_Arrival,
         Npc_Interact,
-        Npc_Depart
+        Npc_Depart,
+        //Investigations
+        Invest_New,
+        Invest_Evidence,
+        Invest_Resolution,
+        Invest_Completed
     }
 
 

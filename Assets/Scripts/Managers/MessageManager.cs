@@ -4831,6 +4831,49 @@ public class MessageManager : MonoBehaviour
 
 
     //
+    // - - - Investigations
+    //
+
+    public Message InvestigationNew(string text, Investigation invest)
+    {
+        Debug.Assert(invest != null, "Invalid Investigation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.INVESTIGATION;
+            message.subType = MessageSubType.Invest_New;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = invest.evidence;
+            message.data1 = invest.timer;
+            message.dataName = invest.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = string.Format("Investigation into {0} launched", invest.tag);
+            data.topText = "Under Investigation";
+            //data.bottomText = GameManager.instance.itemDataScript.GetNpcOngoingEffectDetails(npc);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 0;
+            /*data.tag0 = "npc_0";
+            data.tag1 = "npc_4";
+            data.tag2 = "npc_1";*/
+
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+
+    //
     // - - - Utilities
     //
 

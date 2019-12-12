@@ -4282,7 +4282,7 @@ MonoBehaviour:
   moodReset: 3
   maxInvestigations: 3
   chanceInvestigation: 100
-  chanceEvidence: 5
+  chanceEvidence: 50
   timerInvestigationBase: 5
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
   actorID: 999
@@ -4425,6 +4425,8 @@ MonoBehaviour:
   aiCountermeasureSprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789,
     type: 3}
   aiAlertSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
+  investigationSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6,
+    type: 3}
   ongoingEffectSprite: {fileID: 21300000, guid: c3ef60394b6a04c408365bc2a006231a,
     type: 3}
   nodeCrisisSprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}

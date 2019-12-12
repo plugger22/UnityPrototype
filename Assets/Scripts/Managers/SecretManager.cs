@@ -362,10 +362,15 @@ public class SecretManager : MonoBehaviour
                         tag = secret.investigationTag,
                         evidence = secret.investigationEvidence,
                         turnStart = gameTurn,
-                        lead = GameManager.instance.factionScript.GetRandomHQPosition()
+                        lead = GameManager.instance.factionScript.GetRandomHQPosition(),
+                        city = GameManager.instance.campaignScript.scenario.city.name,
+                        status = InvestStatus.Ongoing,
+                        outcome = InvestOutcome.None
                     };
                     //add to player's list
                     GameManager.instance.playerScript.AddInvestigation(invest);
+                    //stats
+                    GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsLaunched);
                     //msgs
                     Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     text = "INVESTIGATION commences";
