@@ -148,6 +148,9 @@ public class DataManager : MonoBehaviour
     private List<Secret> listOfRevealedSecrets = new List<Secret>();
     private List<Secret> listOfDeletedSecrets = new List<Secret>();                                 //secrets that have been scrubbed without being revealed
 
+    //investigations
+    private List<Investigation> listOfCompletedInvestigations = new List<Investigation>();
+
     //AI persistant data
     private int[] arrayOfAIResources = new int[3];                                                  //Global side index [0] none, [1] Authority, [2] Resistance
     private Queue<AITracker> queueRecentNodes = new Queue<AITracker>();
@@ -5410,6 +5413,29 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }
+
+    //
+    // - - - Investigations - - -
+    //
+
+    public List<Investigation> GetListOfCompletedInvestigations()
+    { return listOfCompletedInvestigations; }
+
+    /// <summary>
+    /// Add investigation to list of completed. Checks timer is zero (should be only time investigation is considered completed)
+    /// </summary>
+    /// <param name="invest"></param>
+    public void AddInvestigationCompleted(Investigation invest)
+    {
+        if (invest != null)
+        {
+            if (invest.timer == 0)
+            { listOfCompletedInvestigations.Add(invest); }
+            else { Debug.LogWarningFormat("Invalid investigation (timer {0})", invest.timer); }
+        }
+        else { Debug.LogError("Invalid Investigation (Null)"); }
+    }
+
 
     //
     // - - - Gear - - -

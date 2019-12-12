@@ -361,7 +361,7 @@ public class SecretManager : MonoBehaviour
                         reference = string.Format("{0}{1}", gameTurn, secret.name),
                         tag = secret.investigationTag,
                         evidence = secret.investigationEvidence,
-                        turn = gameTurn,
+                        turnStart = gameTurn,
                         lead = GameManager.instance.factionScript.GetRandomHQPosition()
                     };
                     //add to player's list

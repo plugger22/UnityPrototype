@@ -1484,6 +1484,7 @@ public class PlayerManager : MonoBehaviour
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
                             //end investigation
+                            invest.turnFinish = GameManager.instance.turnScript.Turn;
                             RemoveInvestigation(invest.reference);
                             //TO DO -> place in completed investigation list in DataManager.cs
                         }
@@ -1699,12 +1700,29 @@ public class PlayerManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Investigations{0}", "\n");
-        int count = listOfInvestigations.Count;
+        builder.Append(DebugDisplayInvestigationList(listOfInvestigations));
+        //completed investigations
+        builder.AppendFormat("{0}{1}-ListOfCompletedInvestigations{2}", "\n", "\n", "\n");
+        List<Investigation> listOfCompletedInvestigations = GameManager.instance.dataScript.GetListOfCompletedInvestigations();
+        if (listOfCompletedInvestigations != null)
+        { builder.Append(DebugDisplayInvestigationList(listOfCompletedInvestigations)); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Submethod for DebugDisplayInvestigations
+    /// </summary>
+    /// <param name="listOfInvest"></param>
+    /// <returns></returns>
+    private string DebugDisplayInvestigationList(List<Investigation> listOfInvest)
+    {
+        StringBuilder builder = new StringBuilder();
+        int count = listOfInvest.Count;
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
             {
-                Investigation invest = listOfInvestigations[i];
+                Investigation invest = listOfInvest[i];
                 if (invest != null)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
@@ -1712,13 +1730,13 @@ public class PlayerManager : MonoBehaviour
                     builder.AppendFormat("  reference: {0}{1}", invest.reference, "\n");
                     builder.AppendFormat("  evidence: {0}{1}", invest.evidence, "\n");
                     builder.AppendFormat("  lead: {0}{1}", invest.lead, "\n");
-                    builder.AppendFormat("  turn: {0}{1}", invest.turn, "\n");
+                    builder.AppendFormat("  turn: {0}{1}", invest.turnStart, "\n");
                     builder.AppendFormat("  timer: {0}{1}", invest.timer, "\n");
                 }
                 else { builder.Append(" Invalid investigation (Null)"); }
             }
         }
-        else { builder.Append(" No current Investigations"); }
+        else { builder.Append(" No Investigations present"); }
         return builder.ToString();
     }
 
