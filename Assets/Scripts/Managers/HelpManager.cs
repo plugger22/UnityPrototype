@@ -9,6 +9,8 @@ using UnityEngine;
 /// </summary>
 public class HelpManager : MonoBehaviour
 {
+    //bullet character for help topics
+    char bullet = '\u2022';
 
     //
     // - - - Colour Scheme - - -
@@ -946,6 +948,61 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
+
+        #region Investigations
+        //
+        // - - - Investigations
+        //
+        //Launched
+        data = new HelpData();
+        data.tag = "invest_0";
+        data.header = "Launched";
+        data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd,
+            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
+        listOfHelp.Add(data);
+        //Process
+        data = new HelpData();
+        data.tag = "invest_1";
+        data.header = "Process";
+        data.text = string.Format("Investigations continue until their is sufficient evidence to Incriminate you ({0}< 0 stars, found Guilty{1}) or be Exonerated ({2}> 3 stars, found Innocent{3})", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Evidence
+        data = new HelpData();
+        data.tag = "invest_2";
+        data.header = "Evidence";
+        data.text = string.Format("New evidence will come to light as time progresses through {0}events{1} or as a result of the work of the {2}Lead Investigator{3} (Good evidence more likely if they have a high {4}Motivation{5}, and vice versa)",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Outcome
+        data = new HelpData();
+        data.tag = "invest_3";
+        data.header = "Outcome";
+        data.text = string.Format("If an investigation concludes that you are {0}Guilty{1} you will be immediately fired. {2}GAME OVER{3}",
+            colourAlert, colourEnd, colourTip, colourEnd);
+        listOfHelp.Add(data);
+        //Lead Investigator
+        data = new HelpData();
+        data.tag = "invest_4";
+        data.header = "Lead Investigator";
+        data.text = new StringBuilder()
+        .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Motivation of the Lead{5}", 
+            colourAlert, GameManager.instance.playerScript.chanceEvidence, colourEnd, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Motivation 3, {1}Good 80%{2}, Bad 20%{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Motivation 2, {1}Good 60%{2}, Bad 40%{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Motivation 1, Good 40%, {1}Bad 60%{2}{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Motivation 0, Good 20%, {1}Bad 80%{2}", bullet, colourAlert, colourEnd)
+        .ToString();
+        listOfHelp.Add(data);
+        //Evidence Details
+        data = new HelpData();
+        data.tag = "invest_5";
+        data.header = "Evidence";
+        data.text = string.Format("Evidence is assessed at between {0}0{1} (Bad, {2}Guilty{3}) and {4}3{5} (Good, {6}Innocent{7}) stars", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
 
 
         //

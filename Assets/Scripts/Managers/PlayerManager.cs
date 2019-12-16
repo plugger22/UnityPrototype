@@ -1585,6 +1585,9 @@ public class PlayerManager : MonoBehaviour
                             //ensure value doesn't exceed boundary
                             invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
                         }
+                        //effects tab msg
+                        string text = string.Format("Ongoing investigation into your {0}", invest.tag);
+                        GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }

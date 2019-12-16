@@ -334,6 +334,7 @@
         Npc_Depart,
         //Investigations
         Invest_New,
+        Invest_Ongoing,
         Invest_Evidence,
         Invest_Resolution,
         Invest_Completed
