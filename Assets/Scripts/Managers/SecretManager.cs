@@ -377,7 +377,6 @@ public class SecretManager : MonoBehaviour
                     GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
                     text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
                     GameManager.instance.messageScript.InvestigationNew(text, invest);
-                    GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                 }
                 else
                 {
