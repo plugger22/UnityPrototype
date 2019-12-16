@@ -2344,7 +2344,7 @@ public class ItemDataManager : MonoBehaviour
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
             builder.AppendFormat("{0}It is not known who is leading the Investigation{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
         }
-        builder.AppendFormat("<b>Evidence {0}{1}{2}</b>{3}{4}", colourNeutral, invest.evidence, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Evidence level {0}{1}{2}</b>{3}{4}", colourNeutral, invest.evidence, colourEnd, "\n", "\n");
         switch (invest.evidence)
         {
             case 0: outcome = string.Format("{0}Guilty{1}", colourBad, colourEnd); break;
@@ -2354,6 +2354,26 @@ public class ItemDataManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised evidence \"{0}\"", invest.evidence); outcome = "Unclear"; break;
         }
         builder.AppendFormat("<b>Likely Outcome {0}</b>", outcome);        
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// New evidence has come forward
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestEvidenceDetails(Investigation invest, string source)
+    {
+        if (string.IsNullOrEmpty(source) == true)
+        { Debug.LogWarning("Invalid source (Null or Empty)"); source = "Unknown"; }
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>{1}{2} Investigation</b>{3}{4}", colourNeutral, invest.tag, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>New Evidence has come to light{0}{1}Evidence level now {2}{3}{4} (was {5}{6}{7})</b>{8}", "\n", "\n", 
+            colourAlert, invest.evidence, colourEnd, colourAlert, invest.previousEvidence, colourEnd, "\n");
+        if (invest.evidence > invest.previousEvidence)
+        { builder.AppendFormat("<b>Evidence {0}Helps{1} your case</b>{2}{3}", colourGood, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("This {0}<b>Harms</b>{1} your case{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        builder.AppendFormat("<b>Evidence Uncovered by{0}{1}{2}{3}</b>", "\n", colourNeutral, source, colourEnd);
         return builder.ToString();
     }
 }

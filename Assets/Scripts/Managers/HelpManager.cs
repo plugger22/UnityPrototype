@@ -179,6 +179,13 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd, 
             colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
         listOfHelp.Add(data);
+        //New Evidence
+        data = new HelpData();
+        data.tag = "rand_5";
+        data.header = string.Format("{0}Evidence Type{1}", colourTip, colourEnd);
+        data.text = string.Format("Each turn there is a chance that the Lead Investigator will {0}uncover new evidence{1}. The type of evidence will have a {2}higher chance{3} of being in your {4}favour{5} if the Lead has a high {6}Motivation{7}", 
+            colourAlert, colourEnd,  colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region HQ Support

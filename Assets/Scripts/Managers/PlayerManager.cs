@@ -392,7 +392,8 @@ public class PlayerManager : MonoBehaviour
         switch (eventType)
         {
             case EventType.StartTurnLate:
-                ProcessInvestigations();
+                if (status == ActorStatus.Active)
+                { ProcessInvestigations(); }
                 break;
             case EventType.EndTurnLate:
                 EndTurnFinal();
@@ -1376,7 +1377,7 @@ public class PlayerManager : MonoBehaviour
             if (listOfInvestigations.Count < maxInvestigations)
             {
                 listOfInvestigations.Add(invest);
-                Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref \"{3}\"{4}", invest.tag, invest.lead, invest.evidence, 
+                Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref \"{3}\"{4}", invest.tag, invest.lead, invest.evidence,
                     invest.reference, "\n");
                 return true;
             }
@@ -1457,7 +1458,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// handles all turn based investigation matters
+    /// handles all turn based investigation matters. Only does so if Player Active
     /// </summary>
     public void ProcessInvestigations()
     {
@@ -1469,6 +1470,7 @@ public class PlayerManager : MonoBehaviour
             int chance;
             int motivation;
             bool isGood;
+            string text;
             //loop investigations
             for (int i = 0; i < count; i++)
             {
@@ -1525,6 +1527,9 @@ public class PlayerManager : MonoBehaviour
                         isGood = false;
                         if (rnd < chanceEvidence)
                         {
+                            Debug.LogFormat("[Rnd] PlayerManager.cs -> ProcessInvestigations: {0} Investigation new EVIDENCE, need {1}, rolled {2}{3}", invest.tag, chanceEvidence, rnd, "\n");
+                            //previous
+                            invest.previousEvidence = invest.evidence;
                             //good or bad evidence -> depends on HQ actor opinion of you
                             Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
                             if (actor != null)
@@ -1550,6 +1555,8 @@ public class PlayerManager : MonoBehaviour
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}{5}", invest.tag, chance, rnd,
                                         invest.lead, motivation, "\n");
                                 }
+                                text = string.Format("{0} Evidence Uncovered", invest.tag);
+                                GameManager.instance.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");
                             }
                             else
                             { Debug.LogWarningFormat("Invalid HQ Actor (Null) for investigation.lead {0}", invest.lead); }
@@ -1584,9 +1591,12 @@ public class PlayerManager : MonoBehaviour
                             }
                             //ensure value doesn't exceed boundary
                             invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
+                            //evidence message
+                            text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
+                            GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
                         }
                         //effects tab msg
-                        string text = string.Format("Ongoing investigation into your {0}", invest.tag);
+                        text = string.Format("Ongoing investigation into your {0}", invest.tag);
                         GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                     }
                 }

@@ -4922,6 +4922,49 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// new evidence has come to light in an investigation. Source is a short text specifying where the evidence came in format '[Evidence uncovered by] ...', eg. 'your Lead Investigator'
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public Message InvestigationEvidence(string text, Investigation invest, string source)
+    {
+        Debug.Assert(invest != null, "Invalid Investigation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.INVESTIGATION;
+            message.subType = MessageSubType.Invest_Evidence;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = invest.evidence;
+            message.data1 = invest.timer;
+            message.dataName = invest.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Investigation EVIDENCE uncovered";
+            data.topText = "New Evidence";
+            data.bottomText = GameManager.instance.itemDataScript.GetInvestEvidenceDetails(invest, source);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "invest_1";
+            data.tag1 = "invest_5";
+            data.tag2 = "invest_4";
+            data.tag3 = "invest_3";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
 
     //
     // - - - Utilities
