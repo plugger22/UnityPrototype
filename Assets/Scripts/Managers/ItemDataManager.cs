@@ -265,14 +265,14 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
-   /// <summary>
-   /// Player's mood changed
-   /// </summary>
-   /// <param name="details"></param>
-   /// <param name="change"></param>
-   /// <param name="isStressed"></param>
-   /// <returns></returns>
-   public string GetPlayerMoodChangeDetails(string details, int change, int current, bool isStressed)
+    /// <summary>
+    /// Player's mood changed
+    /// </summary>
+    /// <param name="details"></param>
+    /// <param name="change"></param>
+    /// <param name="isStressed"></param>
+    /// <returns></returns>
+    public string GetPlayerMoodChangeDetails(string details, int change, int current, bool isStressed)
     {
         StringBuilder builder = new StringBuilder();
         string colourMood = colourGood;
@@ -326,7 +326,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetPlayerImmuneEffectDetails(int currentPeriod, bool isAddicted)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>Taking a dose of {0}{1}{2}{3}makes you {4}Immune to Stress{5}</b>{6}{7}", colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", 
+        builder.AppendFormat("<b>Taking a dose of {0}{1}{2}{3}makes you {4}Immune to Stress{5}</b>{6}{7}", colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n",
             colourGood, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>Immunity lasts for{0}{1}{2} day{3}</b>{4}", "\n", colourNeutral, currentPeriod, currentPeriod != 1 ? "s" : "", colourEnd);
         if (isAddicted == true)
@@ -347,8 +347,11 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3} rages unabated</b>{4}{5}", colourNeutral, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
         if (renownCost > 0)
         { builder.AppendFormat("<b>{0}You spend {1} Renown{2}{3}to buy more drugs</b>{4}{5}", colourBad, renownCost, colourEnd, "\n", "\n", "\n"); }
-        else { builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
-            GameManager.instance.actorScript.playerAddictedRenownCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n"); }
+        else
+        {
+            builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
+         GameManager.instance.actorScript.playerAddictedRenownCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+        }
         builder.AppendFormat("<b>{0}You have Immunity from Stress{1}{2}for {3}{4} day{5}{6}", colourGood, colourEnd, "\n", colourNeutral, currentDays, currentDays != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
@@ -777,7 +780,7 @@ public class ItemDataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         string textAware = shortContactAware.GetRandomRecord(false);
         string textAction = shortContactAction.GetRandomRecord(false);
-        builder.AppendFormat("<b>{0} {1}, {2}{3}{4}</b>, {5} that they {6} the {7}<b>{8}</b>{9}{10}{11}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware, 
+        builder.AppendFormat("<b>{0} {1}, {2}{3}{4}</b>, {5} that they {6} the {7}<b>{8}</b>{9}{10}{11}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, textAware,
             textAction, colourNeutral, npc.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         builder.AppendFormat("<b>{0} {1}, {2}</b>", contact.nameFirst, contact.nameLast, GameManager.instance.contactScript.GetEffectivenessFormatted(contact.effectiveness));
@@ -870,7 +873,7 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>{0} {1}, {2}{3}</b>{4}{5}{6}", contact.nameFirst, contact.nameLast, colourAlert, contact.job, colourEnd, "\n", "\n");
-        builder.AppendFormat("Will remain Silent for{0}<b>another {1}{2}{3} turn{4}</b>{5}{6}", "\n", colourNeutral, contact.timerInactive, colourEnd, contact.timerInactive != 1 ? "s" : "",  "\n", "\n");
+        builder.AppendFormat("Will remain Silent for{0}<b>another {1}{2}{3} turn{4}</b>{5}{6}", "\n", colourNeutral, contact.timerInactive, colourEnd, contact.timerInactive != 1 ? "s" : "", "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
         return builder.ToString();
     }
@@ -2229,7 +2232,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetNpcArrivalDetails(Npc npc)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>The {0}{1}{2} will be in {3} for at least {4}{5} days{6}</b>{7}{8}", colourAlert, npc.tag, colourEnd, GameManager.instance.cityScript.GetCity().tag, 
+        builder.AppendFormat("<b>The {0}{1}{2} will be in {3} for at least {4}{5} days{6}</b>{7}{8}", colourAlert, npc.tag, colourEnd, GameManager.instance.cityScript.GetCity().tag,
             colourNeutral, npc.maxTurns, colourEnd, "\n", "\n");
         if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
         { builder.AppendFormat("<b>They will be arriving at {0}{1}{2}</b>{3}", colourNeutral, npc.nodeStart.arriving, colourEnd, "\n"); }
@@ -2306,7 +2309,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>An Investigation has been launched into your{0}{1}{2}{3}</b>{4}{5}{6}", "\n", "\n", colourNeutral, invest.tag, colourEnd, "\n", "\n");
         Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
         if (actor != null)
-        { builder.AppendFormat("<b>{0}, {1}{2}{3}, will be leading the Investigation</b>", actor.actorName, colourAlert, actor.statusHQ, colourEnd);  }
+        { builder.AppendFormat("<b>{0}, {1}{2}{3}, will be leading the Investigation</b>", actor.actorName, colourAlert, actor.statusHQ, colourEnd); }
         else
         {
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
@@ -2323,7 +2326,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetInvestOngoingDetails(Investigation invest)
     {
         StringBuilder builder = new StringBuilder();
-        string outcome;
+        string outcome = "Unknown";
         Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
         if (actor != null)
         {
@@ -2344,7 +2347,7 @@ public class ItemDataManager : MonoBehaviour
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
             builder.AppendFormat("{0}It is not known who is leading the Investigation{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
         }
-        builder.AppendFormat("<b>Evidence level {0}{1}{2}</b>{3}{4}", colourNeutral, invest.evidence, colourEnd, "\n", "\n");
+        builder.AppendFormat("<b>Evidence level {0}{1}{2}, {3}</b>{4}{5}", colourNeutral, invest.evidence, colourEnd, outcome, "\n", "\n");
         switch (invest.evidence)
         {
             case 0: outcome = string.Format("{0}Guilty{1}", colourBad, colourEnd); break;
@@ -2353,7 +2356,7 @@ public class ItemDataManager : MonoBehaviour
             case 3: outcome = string.Format("{0}Innocent{1}", colourGood, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised evidence \"{0}\"", invest.evidence); outcome = "Unclear"; break;
         }
-        builder.AppendFormat("<b>Likely Outcome {0}</b>", outcome);        
+        builder.AppendFormat("<b>Likely Outcome {0}</b>", outcome);
         return builder.ToString();
     }
 
@@ -2368,11 +2371,31 @@ public class ItemDataManager : MonoBehaviour
         { Debug.LogWarning("Invalid source (Null or Empty)"); source = "Unknown"; }
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}{2} Investigation</b>{3}{4}", colourNeutral, invest.tag, colourEnd, "\n", "\n");
-        builder.AppendFormat("<b>New Evidence has come to light{0}{1}Evidence level now {2}{3}{4} (was {5}{6}{7})</b>{8}", "\n", "\n", 
-            colourAlert, invest.evidence, colourEnd, colourAlert, invest.previousEvidence, colourEnd, "\n");
-        if (invest.evidence > invest.previousEvidence)
-        { builder.AppendFormat("<b>Evidence {0}Helps{1} your case</b>{2}{3}", colourGood, colourEnd, "\n", "\n"); }
-        else { builder.AppendFormat("This {0}<b>Harms</b>{1} your case{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        if (invest.evidence != invest.previousEvidence)
+        {
+            builder.AppendFormat("<b>New Evidence has come to light{0}{1}Evidence level now {2}{3}{4} (was {5}{6}{7})</b>{8}", "\n", "\n",
+              colourAlert, invest.evidence, colourEnd, colourAlert, invest.previousEvidence, colourEnd, "\n");
+            if (invest.evidence > invest.previousEvidence)
+            { builder.AppendFormat("<b>This {0}Helps{1} your case</b>{2}{3}", colourGood, colourEnd, "\n", "\n"); }
+            else { builder.AppendFormat("This {0}<b>Harms</b>{1} your case{2}{3}", colourBad, colourEnd, "\n", "\n"); }
+        }
+        else
+        {
+            switch (invest.evidence)
+            {
+                case 3:
+                    builder.AppendFormat("<b>Evidence is Conclusive{0}{1}Innocent verdict imminent</b>{2}{3}", "\n", colourGood, colourEnd, "\n");
+                    builder.AppendFormat("in {0}<b>{1}</b>{2} more turns{3}{4}", colourNeutral, GameManager.instance.playerScript.timerInvestigationBase, colourEnd, "\n", "\n");
+                    break;
+                case 0:
+                    builder.AppendFormat("<b>Evidence is Conclusive{0}{1}Guilty verdict imminent</b>{2}{3}{4}", "\n", colourBad, colourEnd, "\n", "\n");
+                    builder.AppendFormat("in {0}<b>{1}{2} more turns</b>{3}{4}", colourNeutral, GameManager.instance.playerScript.timerInvestigationBase, colourEnd, "\n", "\n");
+                    break;
+                case 2:
+                case 1:
+                default: Debug.LogWarningFormat("Invalid invest.evidence \"{0}\"", invest.evidence); break;
+            }
+        }
         builder.AppendFormat("<b>Evidence Uncovered by{0}{1}{2}{3}</b>", "\n", colourNeutral, source, colourEnd);
         return builder.ToString();
     }

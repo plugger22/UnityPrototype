@@ -4899,7 +4899,7 @@ public class MessageManager : MonoBehaviour
             message.dataName = invest.tag;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} Investigation", invest.tag);
+            data.itemText = string.Format("{0} Investigation status", invest.tag);
             data.topText = "Ongoing Investigation";
             data.bottomText = GameManager.instance.itemDataScript.GetInvestOngoingDetails(invest);
             data.priority = ItemPriority.High;
