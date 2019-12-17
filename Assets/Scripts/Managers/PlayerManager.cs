@@ -242,6 +242,18 @@ public class PlayerManager : MonoBehaviour
     {
         GameManager.instance.personScript.SetDescriptors(personality);
         GameManager.instance.personScript.CheckPersonalityProfile(GameManager.instance.dataScript.GetDictOfProfiles(), personality);
+        //Debug -> testing purposes only
+        /*Investigation invest = new Investigation()
+        {
+            reference = "test",
+            city = GameManager.instance.campaignScript.scenario.city.name,
+            tag = "Bad Ted Collaboration",
+            turnStart = 1,
+            lead = ActorHQ.SubBoss1,
+            status = InvestStatus.Completed,
+            outcome = InvestOutcome.Innocent
+        };
+        GameManager.instance.dataScript.AddInvestigationCompleted(invest);*/
     }
     #endregion
 
@@ -1429,7 +1441,7 @@ public class PlayerManager : MonoBehaviour
     /// Initialise the listOfInvestigations (overwrites existing list). Used for load save game
     /// </summary>
     /// <param name="listOfInvestigations"></param>
-    public void SetInvestigations(List<Investigation> listOfInvestigations)
+    public void SetListOfInvestigations(List<Investigation> listOfInvestigations)
     {
         if (listOfInvestigations != null)
         {

@@ -5432,6 +5432,20 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid Investigation (Null)"); }
     }
 
+    /// <summary>
+    /// Sets listOfCompletedInvestigation with save/load data
+    /// </summary>
+    /// <param name="listOfInvestigations"></param>
+    public void SetListOfCompletedInvestigations(List<Investigation> listOfInvestigations)
+    {
+        if (listOfInvestigations != null)
+        {
+            listOfCompletedInvestigations.Clear();
+            listOfCompletedInvestigations.AddRange(listOfInvestigations);
+        }
+        else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
+    }
+
 
     //
     // - - - Gear - - -
@@ -7134,6 +7148,9 @@ public class DataManager : MonoBehaviour
     {
         if (listOfData != null)
         {
+            //may need to initialise array on Load At Start
+            if (arrayOfOrgInfo == null)
+            { arrayOfOrgInfo = new bool[(int)OrgInfoType.Count]; }
             Debug.AssertFormat(listOfData.Count == arrayOfOrgInfo.Length, "Mismatch on array size, listOfData has {0} records, arrayOfOrgInfo has {1} records", listOfData.Count, arrayOfOrgInfo.Length);
             for (int i = 0; i < listOfData.Count; i++)
             { arrayOfOrgInfo[i] = listOfData[i]; }

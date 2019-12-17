@@ -84,6 +84,8 @@ public class SaveDataData
     public List<string> listOfRevealedSecrets = new List<string>();
     public List<string> listOfDeletedSecrets = new List<string>();
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
+    //investigations
+    public List<Investigation> listOfInvestigations = new List<Investigation>();
     //organisations
     public List<bool> listOfOrgInfoData = new List<bool>();
     public List<string> listOfCurrentOrganisations = new List<string>();
@@ -203,6 +205,7 @@ public class SavePlayerData
     public List<string> listOfConditionsResistance = new List<string>();
     public List<string> listOfConditionsAuthority = new List<string>();
     public List<HistoryMood> listOfMoodHistory = new List<HistoryMood>();
+    public List<Investigation> listOfInvestigations = new List<Investigation>();
 }
 #endregion
 
@@ -484,6 +487,7 @@ public class SaveStatisticsData
     public float ratioPlayerDoNothing;
 }
 #endregion
+
 
 #endregion
 

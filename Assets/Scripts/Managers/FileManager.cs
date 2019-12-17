@@ -325,6 +325,11 @@ public class FileManager : MonoBehaviour
             { write.playerData.listOfSecrets.Add(secret.name); }
             else { Debug.LogWarning("Invalid secret (Null)"); }
         }
+        //investigations
+        List<Investigation> listOfInvestigations = GameManager.instance.playerScript.GetListOfInvestigations();
+        if (listOfInvestigations != null)
+        { write.playerData.listOfInvestigations.AddRange(listOfInvestigations); }
+        else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
         //mood history
         List<HistoryMood> listOfHistory = GameManager.instance.playerScript.GetListOfMoodHistory();
         foreach (HistoryMood history in listOfHistory)
@@ -487,6 +492,13 @@ public class FileManager : MonoBehaviour
             { write.dataData.listOfDeletedSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfDeletedSecrets (Null)"); }
+        #endregion
+
+        #region investigations
+        List<Investigation> listOfInvestigations = GameManager.instance.dataScript.GetListOfCompletedInvestigations();
+        if (listOfInvestigations != null)
+        { write.dataData.listOfInvestigations.AddRange(listOfInvestigations); }
+        else { Debug.LogError("Invalid listOfCompletedInvestigations (Null)"); }
         #endregion
 
         #region Organisations
@@ -1806,6 +1818,8 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.playerScript.SetSecrets(listOfSecrets);
+        //investigations
+        GameManager.instance.playerScript.SetListOfInvestigations(read.playerData.listOfInvestigations);
         //mood history
         GameManager.instance.playerScript.SetMoodHistory(read.playerData.listOfMoodHistory);
         //conditions -> Resistance
@@ -2035,6 +2049,10 @@ public class FileManager : MonoBehaviour
             { listOfSecrets.Add(secret); }
         }
         GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
+        #endregion
+
+        #region investigations
+        GameManager.instance.dataScript.SetListOfCompletedInvestigations(read.dataData.listOfInvestigations);
         #endregion
 
         #region organisations
