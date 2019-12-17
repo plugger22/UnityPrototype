@@ -1401,7 +1401,7 @@ public class PlayerManager : MonoBehaviour
             int index = listOfInvestigations.FindIndex(x => x.reference.Equals(reference, StringComparison.Ordinal));
             if (index > -1)
             {
-                Debug.LogFormat("[Inv] PlayerManager.cs -> RemoveInvestigation: Investigation \"{0}\", removed{1}}", reference, "\n");
+                Debug.LogFormat("[Inv] PlayerManager.cs -> RemoveInvestigation: Investigation \"{0}\", removed{1}", reference, "\n");
                 listOfInvestigations.RemoveAt(index);
                 return true;
             }
@@ -1479,7 +1479,9 @@ public class PlayerManager : MonoBehaviour
                 Investigation invest = listOfInvestigations[i];
                 if (invest != null)
                 {
-                    //timer active
+                    //
+                    // - - - TIMER active
+                    //
                     if (invest.timer > 0)
                     {
                         //decrement timer
@@ -1524,7 +1526,7 @@ public class PlayerManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion (evidence {4}{5}", invest.tag, invest.timer,
+                            Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion (evidence {4}){5}", invest.tag, invest.timer,
                                 invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
                             text = string.Format("{0} Investigation counting down to a Resolution", invest.tag);
                             GameManager.instance.messageScript.InvestigationResolution(text, invest);
@@ -1532,82 +1534,87 @@ public class PlayerManager : MonoBehaviour
                     }
                     else
                     {
-                        //No timer -> check for new evidence
-                        rnd = Random.Range(0, 100);
-                        isGood = false;
-                        if (rnd < chanceEvidence)
+                        //
+                        // - - - No timer -> check for new evidence (not when investigation first launched)
+                        //
+                        if (invest.turnStart + 1 < GameManager.instance.turnScript.Turn)
                         {
-                            Debug.LogFormat("[Rnd] PlayerManager.cs -> ProcessInvestigations: {0} Investigation new EVIDENCE, need {1}, rolled {2}{3}", invest.tag, chanceEvidence, rnd, "\n");
-                            //previous
-                            invest.previousEvidence = invest.evidence;
-                            //good or bad evidence -> depends on HQ actor opinion of you
-                            Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
-                            if (actor != null)
+                            rnd = Random.Range(0, 100);
+                            isGood = false;
+                            if (rnd < chanceEvidence)
                             {
-                                rnd = Random.Range(0, 100);
-                                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                switch (motivation)
+                                Debug.LogFormat("[Rnd] PlayerManager.cs -> ProcessInvestigations: {0} Investigation new EVIDENCE, need {1}, rolled {2}{3}", invest.tag, chanceEvidence, rnd, "\n");
+                                //previous
+                                invest.previousEvidence = invest.evidence;
+                                //good or bad evidence -> depends on HQ actor opinion of you
+                                Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                                if (actor != null)
                                 {
-                                    case 3: chance = 80; break;
-                                    case 2: chance = 60; break;
-                                    case 1: chance = 40; break;
-                                    case 0: chance = 20; break;
-                                    default: Debug.LogWarningFormat("Unrecognised actor Motivation \"{0}\" for {1}", invest.lead); chance = 0; break;
+                                    rnd = Random.Range(0, 100);
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    switch (motivation)
+                                    {
+                                        case 3: chance = 80; break;
+                                        case 2: chance = 60; break;
+                                        case 1: chance = 40; break;
+                                        case 0: chance = 20; break;
+                                        default: Debug.LogWarningFormat("Unrecognised actor Motivation \"{0}\" for {1}", invest.lead); chance = 0; break;
+                                    }
+                                    if (rnd < chance)
+                                    {
+                                        isGood = true;
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}", 
+                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence + 1, "\n");
+                                    }
+                                    else
+                                    {
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}", 
+                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence , "\n");
+                                    }
+                                    text = string.Format("{0} Evidence Uncovered", invest.tag);
+                                    GameManager.instance.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");
                                 }
-                                if (rnd < chance)
+                                else
+                                { Debug.LogWarningFormat("Invalid HQ Actor (Null) for investigation.lead {0}", invest.lead); }
+                                //apply evidence
+                                if (isGood == true)
                                 {
-                                    isGood = true;
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}{5}", invest.tag, chance, rnd,
-                                        invest.lead, motivation, "\n");
+                                    //Xonerating Evidence (good)
+                                    invest.evidence++;
+                                    //exceed max
+                                    if (invest.evidence > 3)
+                                    {
+                                        //start timer
+                                        invest.timer = timerInvestigationBase;
+                                        invest.status = InvestStatus.Resolution;
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found INNOCENT in {1} turn{2}",
+                                            invest.tag, invest.timer, "\n");
+                                    }
                                 }
                                 else
                                 {
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}{5}", invest.tag, chance, rnd,
-                                        invest.lead, motivation, "\n");
+                                    //Incriminating Evidence (bad)
+                                    invest.evidence--;
+                                    //exceeds min
+                                    if (invest.evidence < 0)
+                                    {
+                                        //start timer
+                                        invest.timer = timerInvestigationBase;
+                                        invest.status = InvestStatus.Resolution;
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found GUILTY in {1} turn{2}",
+                                            invest.tag, invest.timer, "\n");
+                                    }
                                 }
-                                text = string.Format("{0} Evidence Uncovered", invest.tag);
-                                GameManager.instance.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");
+                                //ensure value doesn't exceed boundary
+                                invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
+                                //evidence message
+                                text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
+                                GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
                             }
-                            else
-                            { Debug.LogWarningFormat("Invalid HQ Actor (Null) for investigation.lead {0}", invest.lead); }
-                            //apply evidence
-                            if (isGood == true)
-                            {
-                                //Xeonerating Evidence (good)
-                                invest.evidence++;
-                                //exceed max
-                                if (invest.evidence > 3)
-                                {
-                                    //start timer
-                                    invest.timer = timerInvestigationBase;
-                                    invest.status = InvestStatus.Resolution;
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found INNOCENT in {1} turn{2}",
-                                        invest.tag, invest.timer, "\n");
-                                }
-                            }
-                            else
-                            {
-                                //Incriminating Evidence (bad)
-                                invest.evidence--;
-                                //exceeds min
-                                if (invest.evidence < 0)
-                                {
-                                    //start timer
-                                    invest.timer = timerInvestigationBase;
-                                    invest.status = InvestStatus.Resolution;
-                                    Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" is reaching a conclusion. Player will be found GUILTY in {1} turn{2}",
-                                        invest.tag, invest.timer, "\n");
-                                }
-                            }
-                            //ensure value doesn't exceed boundary
-                            invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
-                            //evidence message
-                            text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
-                            GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
+                            //effects tab msg
+                            text = string.Format("Ongoing investigation into your {0}", invest.tag);
+                            GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                         }
-                        //effects tab msg
-                        text = string.Format("Ongoing investigation into your {0}", invest.tag);
-                        GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }

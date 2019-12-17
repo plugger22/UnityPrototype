@@ -4991,7 +4991,7 @@ public class MessageManager : MonoBehaviour
             data.itemText = "Investigation counting down to a Resolution";
             data.topText = "Resolution Countdown";
             data.bottomText = GameManager.instance.itemDataScript.GetInvestResolutionDetails(invest);
-            if (invest.outcome == InvestOutcome.Guilty) { data.priority = ItemPriority.High; }
+            if (invest.evidence <= 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
             data.sprite = GameManager.instance.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;

@@ -1025,14 +1025,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_8";
         data.header = "Guilty";
-        data.text = string.Format("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}GAME OVER{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}GAME OVER{3}", colourAlert, colourEnd, colourTip, colourEnd);
         listOfHelp.Add(data);
         //Guilty
         data = new HelpData();
         data.tag = "invest_9";
         data.header = "Innocent";
         data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd, 
-            colourAlert, GameManager.instance.playerScript.investHQApproval, colourEnd);
+            colourTip, GameManager.instance.playerScript.investHQApproval, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
