@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour
     [Range(0, 100)] public int chanceEvidence = 5;
     [Tooltip("Once an investigation reaches a boundary limit (> 3 or < 0) the timer kicks in and once it counts down to Zero the investigation is resolved (if evidence still at 0 or 3)")]
     [Range(1, 20)] public int timerInvestigationBase = 5;
+    [Tooltip("Gain in HQ Approval if found Innocent")]
+    [Range(1, 3)] public int investHQApproval = 2;
 
 
     public Sprite sprite;
@@ -1492,6 +1494,9 @@ public class PlayerManager : MonoBehaviour
                                 case 3:
                                     //player found innocent
                                     invest.outcome = InvestOutcome.Innocent;
+                                    //gain HQ approval
+                                    int approvalGain = GameManager.instance.playerScript.investHQApproval;
+                                    GameManager.instance.factionScript.ChangeFactionApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
                                     break;
                                 case 0:
@@ -1505,19 +1510,24 @@ public class PlayerManager : MonoBehaviour
                                         case 2: winner = WinState.Authority; break;
                                         default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
                                     }
-                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation completed", invest.tag));
+                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
                             //end investigation
                             invest.turnFinish = GameManager.instance.turnScript.Turn;
                             RemoveInvestigation(invest.reference);
+                            //msg
+                            text = string.Format("{0} Investigation completed. {1} Verdict", invest.tag, invest.evidence == 3 ? "Innocent" : "Guilty");
+                            GameManager.instance.messageScript.InvestigationCompleted(text, invest);
                             //TO DO -> place in completed investigation list in DataManager.cs
                         }
                         else
                         {
                             Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion (evidence {4}{5}", invest.tag, invest.timer,
-                         invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
+                                invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
+                            text = string.Format("{0} Investigation counting down to a Resolution", invest.tag);
+                            GameManager.instance.messageScript.InvestigationResolution(text, invest);
                         }
                     }
                     else

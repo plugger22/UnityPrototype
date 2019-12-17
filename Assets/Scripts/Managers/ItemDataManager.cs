@@ -2399,4 +2399,55 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>Evidence Uncovered by{0}{1}{2}{3}</b>", "\n", colourNeutral, source, colourEnd);
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Investigation conclusion reached and counting down to a resolution
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestResolutionDetails(Investigation invest)
+    {
+        StringBuilder builder = new StringBuilder();
+        switch (invest.outcome)
+        {
+            case InvestOutcome.Guilty:
+                builder.AppendFormat("{0}<b>{1}{2} Investigation is counting down to a{3}{4}{5}GUILTY{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+                break;
+            case InvestOutcome.Innocent:
+                builder.AppendFormat("{0}<b>{1}{2} Investigation is counting down to an{3}{4}{5}INNOCENT{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourGood, colourEnd, "\n", "\n");
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised invest.outcome \"{0}\" (should be 0 or 3)", invest.outcome);
+                builder.AppendFormat("{0}<b>{1}{2} Investigation is counting down to an{3}{4}{5}UNCERTAIN{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourAlert, colourEnd, "\n", "\n");
+                break;
+        }
+        builder.AppendFormat("<b>A resolution will be reached{0}in {1}{2}{3} turn{4}</b>", "\n", colourNeutral, invest.timer, colourEnd, invest.timer != 1 ? "s" : "");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Investigation completed. Verdict enforced
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestCompletedDetails(Investigation invest)
+    {
+        StringBuilder builder = new StringBuilder();
+        switch (invest.outcome)
+        {
+            case InvestOutcome.Guilty:
+                builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}GUILTY Verdict{6}{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}<b>You have been Fired</b>{1}", colourBad, colourEnd);
+                break;
+            case InvestOutcome.Innocent:
+                builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}INNOCENT{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourGood, colourEnd, "\n", "\n");
+                builder.AppendFormat("<b>You have been exonerated{0}{1}{2}+{3} HQ Approval</b>{4}", "\n", "\n", colourGood, GameManager.instance.playerScript.investHQApproval, colourEnd);
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised invest.outcome \"{0}\" (should be 0 or 3)", invest.outcome);
+                builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}UNCERTAIN{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourAlert, colourEnd, "\n", "\n");
+                break;
+        }
+        return builder.ToString();
+    }
 }

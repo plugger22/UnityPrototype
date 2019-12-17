@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TraitManager traitScript;                  //Trait Manager
     [HideInInspector] public TopicManager topicScript;                  //Topic Manager
     [HideInInspector] public FactionManager factionScript;              //Faction Manager
+    //[HideInInspector] public HQManager hqScript;                        //HQ Manager
     [HideInInspector] public SecretManager secretScript;                //Secret Manager
     [HideInInspector] public OrganisationManager orgScript;             //Organisation Manager
     [HideInInspector] public CityManager cityScript;                    //City Manager

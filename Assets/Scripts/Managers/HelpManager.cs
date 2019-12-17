@@ -984,8 +984,8 @@ public class HelpManager : MonoBehaviour
         //Outcome
         data = new HelpData();
         data.tag = "invest_3";
-        data.header = "Outcome";
-        data.text = string.Format("If an investigation concludes that you are {0}Guilty{1} you will be immediately fired. {2}GAME OVER{3}",
+        data.header = "Resolution";
+        data.text = string.Format("If an investigation concludes that you are {0}Guilty{1} you will be immediately fired once the investigation is Resolved. {2}GAME OVER{3}",
             colourAlert, colourEnd, colourTip, colourEnd);
         listOfHelp.Add(data);
         //Lead Investigator
@@ -1007,6 +1007,32 @@ public class HelpManager : MonoBehaviour
         data.header = "Evidence";
         data.text = string.Format("Evidence is assessed at between {0}0{1} (Bad, {2}Guilty{3}) and {4}3{5} (Good, {6}Innocent{7}) stars", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Verdict
+        data = new HelpData();
+        data.tag = "invest_6";
+        data.header = "Verdict";
+        data.text = string.Format("Once a verdict has been reached the investigation will {0}cease{1} taking into account any {2}new evidence{3} and in {4}{5}{6} turns there will be a formal resolution",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.instance.playerScript.timerInvestigationBase, colourEnd);
+        listOfHelp.Add(data);
+        //Politics
+        data = new HelpData();
+        data.tag = "invest_7";
+        data.header = "Politics";
+        data.text = string.Format("During the countdown to the resolution evidence can't change the verdict but it's {0}possible{1} that Politics may", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Guilty
+        data = new HelpData();
+        data.tag = "invest_8";
+        data.header = "Guilty";
+        data.text = string.Format("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}GAME OVER{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Guilty
+        data = new HelpData();
+        data.tag = "invest_9";
+        data.header = "Innocent";
+        data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd, 
+            colourAlert, GameManager.instance.playerScript.investHQApproval, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

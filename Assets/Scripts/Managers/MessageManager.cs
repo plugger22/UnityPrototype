@@ -4966,6 +4966,96 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// The investigation has reached a conclusion and the timer is ticking down to a resolution
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="invest"></param>
+    /// <param name="source"></param>
+    /// <returns></returns>
+    public Message InvestigationResolution(string text, Investigation invest)
+    {
+        Debug.Assert(invest != null, "Invalid Investigation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.INVESTIGATION;
+            message.subType = MessageSubType.Invest_Resolution;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = invest.evidence;
+            message.data1 = invest.timer;
+            message.dataName = invest.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Investigation counting down to a Resolution";
+            data.topText = "Resolution Countdown";
+            data.bottomText = GameManager.instance.itemDataScript.GetInvestResolutionDetails(invest);
+            if (invest.outcome == InvestOutcome.Guilty) { data.priority = ItemPriority.High; }
+            else { data.priority = ItemPriority.Medium; }
+            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "invest_6";
+            data.tag1 = "invest_7";
+            data.tag2 = "invest_8";
+            data.tag3 = "invest_9";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Investigation completed (resolution countdown timer reaches zero)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public Message InvestigationCompleted(string text, Investigation invest)
+    {
+        Debug.Assert(invest != null, "Invalid Investigation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.INVESTIGATION;
+            message.subType = MessageSubType.Invest_Completed;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = invest.evidence;
+            message.data1 = invest.timer;
+            message.dataName = invest.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Investigation COMPLETED";
+            data.topText = "Verdict Enforced";
+            data.bottomText = GameManager.instance.itemDataScript.GetInvestCompletedDetails(invest);
+            data.priority = ItemPriority.High;
+            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "invest_6";
+            data.tag1 = "invest_7";
+            data.tag2 = "invest_8";
+            data.tag3 = "invest_9";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Utilities
     //
