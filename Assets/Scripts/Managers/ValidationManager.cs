@@ -1699,6 +1699,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<NpcNode>(GameManager.instance.loadScript.arrayOfNpcNodes);
         //VIP Actions
         ValidateSOGeneric<NpcAction>(GameManager.instance.loadScript.arrayOfNpcActions);
+        //HqPositions
+        ValidateSOGeneric<HqPosition>(GameManager.instance.loadScript.arrayOfHqPositions);
 
     }
     #endregion

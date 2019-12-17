@@ -42,6 +42,7 @@ public class LoadManager : MonoBehaviour
     public NpcNode[] arrayOfNpcNodes;
     public NpcAction[] arrayOfNpcActions;
     public OrgType[] arrayOfOrgTypes;
+    public HqPosition[] arrayOfHqPositions;
     
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -661,6 +662,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfOrgTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No OrgTypes present"); }
+        //
+        // - - - HqPositions (not stored in a collection)
+        //
+        numArray = arrayOfHqPositions.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfHqPositions has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No HqPositions present"); }
         //
         // - - - Mission (not stored in a collection)
         //
