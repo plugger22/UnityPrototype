@@ -440,7 +440,7 @@ public class CityManager : MonoBehaviour
                         //Loyalty at Min -> Resistance wins
                         string textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
-                        GameManager.instance.turnScript.SetWinState(WinState.Resistance, WinReason.CityLoyaltyMin, textTop, textBottom);
+                        GameManager.instance.turnScript.SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.CityLoyaltyMin, textTop, textBottom);
 
 
                     }
@@ -496,7 +496,7 @@ public class CityManager : MonoBehaviour
                         //Loyalty at Max -> Authority wins
                         string textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
-                        GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.CityLoyaltyMax, textTop, textBottom);
+                        GameManager.instance.turnScript.SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.CityLoyaltyMax, textTop, textBottom);
                     }
                     else
                     {

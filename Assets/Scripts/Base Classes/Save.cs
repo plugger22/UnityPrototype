@@ -228,8 +228,10 @@ public class SaveGameData
     public string playerSide;
     //turnManager.cs
     public TurnActionData turnData;
-    public WinState winStateLevel;
-    public WinReason winReasonLevel;
+    public WinStateLevel winStateLevel;
+    public WinReasonLevel winReasonLevel;
+    public WinStateCampaign winStateCampaign;
+    public WinReasonCampaign winReasonCampaign;
     public AuthoritySecurityState authoritySecurity;
     public string currentSide;
     public bool haltExecution;

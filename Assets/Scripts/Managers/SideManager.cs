@@ -503,7 +503,7 @@ public class SideManager : MonoBehaviour
     public void ShowAutoRunMessage()
     {
         //only if nobody has yet won
-        if (GameManager.instance.turnScript.winStateLevel == WinState.None)
+        if (GameManager.instance.turnScript.winStateLevel == WinStateLevel.None)
         {
             List<string> listOfEvents = GameManager.instance.dataScript.GetListOfHistoryAutoRun();
             if (listOfEvents != null)

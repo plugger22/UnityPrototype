@@ -1517,18 +1517,18 @@ public class PlayerManager : MonoBehaviour
                                     //player found guilty
                                     invest.outcome = InvestOutcome.Guilty;
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found GUILTY{1}", invest.tag, "\n");
-                                    WinState winner = WinState.None;
+                                    WinStateLevel winner = WinStateLevel.None;
                                     switch (GameManager.instance.sideScript.PlayerSide.level)
                                     {
-                                        case 1: winner = WinState.Resistance; break;
-                                        case 2: winner = WinState.Authority; break;
+                                        case 1: winner = WinStateLevel.Resistance; break;
+                                        case 2: winner = WinStateLevel.Authority; break;
                                         default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
                                     }
-                                    GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
+                                    GameManager.instance.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     //black marks
-                                    GameManager.instance.campaignScript.ChangeBlackMarks(GameManager.instance.campaignScript.investigationBlackMarks, string.Format("{0} Investigation", invest.tag));
+                                    GameManager.instance.campaignScript.ChangeBlackMarks(GameManager.instance.campaignScript.GetInvestigationBlackMarks(), string.Format("{0} Investigation", invest.tag));
                                     //increase cost in blackMarks for future investigations
-                                    GameManager.instance.campaignScript.investigationBlackMarks++;
+                                    GameManager.instance.campaignScript.IncrementInvestigationBlackMarks();
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }

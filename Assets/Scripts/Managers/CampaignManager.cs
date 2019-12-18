@@ -17,16 +17,14 @@ public class CampaignManager : MonoBehaviour
     #region Save Data Compatible
     //master flags used to progress Story elements
     [HideInInspector] public int[] arrayOfStoryStatus;
-
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
-    #endregion
 
     [HideInInspector] public Campaign campaign;
     [HideInInspector] public Scenario scenario;
-    [HideInInspector] public int commendations;                 //gain from doing good things. Campaign status. NOTE: use method to change -> ChangeCommendations
-    [HideInInspector] public int blackMarks;                    //gain from doing bad things. Campaign status. NOTE: use method to change -> ChangeBlackMarks
-    [HideInInspector] public int investigationBlackMarks = 1;   //number of black marks gained from a guilty investigation, goes up +1 for each guilty verdict
-
+    private int commendations;                 //gain from doing good things. Campaign status. NOTE: use method to change -> ChangeCommendations
+    private int blackMarks;                    //gain from doing bad things. Campaign status. NOTE: use method to change -> ChangeBlackMarks
+    private int investigationBlackMarks = 1;   //number of black marks gained from a guilty investigation, goes up +1 for each guilty verdict
+    #endregion
 
     public void InitialiseGame(GameState state)
     {
@@ -259,6 +257,36 @@ public class CampaignManager : MonoBehaviour
     // - - - Campaign Status
     //
 
+    public int GetBlackMarks()
+    { return blackMarks; }
+
+    public int GetCommendations()
+    { return commendations; }
+
+    public int GetInvestigationBlackMarks()
+    { return investigationBlackMarks; }
+
+    /// <summary>
+    /// used for Save/Load data
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetBlackMarks(int value)
+    { blackMarks = value; }
+
+    /// <summary>
+    /// used for Save/Load data
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetCommendations(int value)
+    { commendations = value; }
+
+    /// <summary>
+    /// used for Save/Load data
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetInvestigationBlackMarks(int value)
+    { investigationBlackMarks = value; }
+
     /// <summary>
     /// change value of black marks. Keep reason short
     /// </summary>
@@ -283,6 +311,13 @@ public class CampaignManager : MonoBehaviour
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeCommendations: Commendations now {0}, was {1} (due to {2}){3}", commendations, previous, reason, "\n");
     }
 
+    /// <summary>
+    /// increment black marks given per investigation by +1 (happens each time a guilty verdict is reached)
+    /// </summary>
+    public void IncrementInvestigationBlackMarks()
+    { investigationBlackMarks++; }
+
+    
 
     //
     // - - - Debug - - -
@@ -311,9 +346,16 @@ public class CampaignManager : MonoBehaviour
         else
         { builder.AppendFormat(" No scenarios found{0}", "\n"); }
         //status
-        builder.AppendFormat("{0}-Campaign Status{1}", "\n", "\n");
+        builder.AppendFormat("{0} Campaign Status{1}", "\n", "\n");
         builder.AppendFormat(" Commendations: {0}{1}", commendations, "\n");
         builder.AppendFormat(" Black Marks: {0}{1}", blackMarks, "\n");    
+        builder.AppendFormat(" Investigation Black Marks (if Guilty): {0}{1}", investigationBlackMarks, "\n");
+        //win/loss
+        builder.AppendFormat("{0} Win/Loss Status{1}", "\n", "\n");
+        builder.AppendFormat(" Level WinState: {0}{1}", GameManager.instance.turnScript.winStateLevel, "\n");
+        builder.AppendFormat(" Level WinReason: {0}{1}", GameManager.instance.turnScript.winReasonLevel, "\n");
+        builder.AppendFormat(" Campaign WinState: {0}{1}", GameManager.instance.turnScript.winStateCampaign, "\n");
+        builder.AppendFormat(" Campaign WinReason: {0}{1}", GameManager.instance.turnScript.winReasonCampaign, "\n");
         //story Status array
         builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
         /*for (int i = 0; i < arrayOfStoryStatus.Length; i++)

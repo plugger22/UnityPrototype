@@ -6087,7 +6087,7 @@ public class ActorManager : MonoBehaviour
                     detailsTop = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
                     detailsBottom = string.Format("{0}You win{1}", colourBad, colourEnd);
                 }
-                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
+                GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.DoomTimerMin, detailsTop, detailsBottom);
             }
             else if (doomTimer == playerDoomFailSafeValue)
             {
@@ -6526,7 +6526,7 @@ public class ActorManager : MonoBehaviour
                     detailsTop = string.Format("The Resistance head has DIED from the Nemesis administered {0}gene tailored virus{1} within their body", colourNeutral, colourEnd);
                     detailsBottom = string.Format("{0}You win{1}", colourBad, colourEnd);
                 }
-                GameManager.instance.turnScript.SetWinState(WinState.Authority, WinReason.DoomTimerMin, detailsTop, detailsBottom);
+                GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.DoomTimerMin, detailsTop, detailsBottom);
             }
         }
         //

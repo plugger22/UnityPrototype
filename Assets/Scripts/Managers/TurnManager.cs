@@ -31,8 +31,10 @@ public class TurnManager : MonoBehaviour
     public float showSplashTimeout = 1.0f;
 
     #region Save Compatible Data
-    [HideInInspector] public WinState winStateLevel = WinState.None;            //set if somebody has won
-    [HideInInspector] public WinReason winReasonLevel = WinReason.None;         //why a win (from POV of winner)
+    [HideInInspector] public WinStateLevel winStateLevel = WinStateLevel.None;            //set if somebody has won
+    [HideInInspector] public WinReasonLevel winReasonLevel = WinReasonLevel.None;         //why a win (from POV of winner)
+    [HideInInspector] public WinStateCampaign winStateCampaign = WinStateCampaign.None;
+    [HideInInspector] public WinReasonCampaign winReasonCampaign = WinReasonCampaign.None;
     /*[HideInInspector] public ResistanceState resistanceState;*/
     [HideInInspector] public AuthoritySecurityState authoritySecurityState;
     [HideInInspector] public GlobalSide currentSide;         //which side is it who is currently taking their turn (Resistance or Authority regardless of Player / AI). Change value ONLY here in TurnManager.cs
@@ -226,13 +228,13 @@ public class TurnManager : MonoBehaviour
             do
             {
                 ProcessNewTurn();
-                if (winStateLevel == WinState.None)
+                if (winStateLevel == WinStateLevel.None)
                 {
                     GameManager.instance.dataScript.UpdateCurrentItemData();
                     numOfTurns--;
                 }
             }
-            while (numOfTurns > 0 && winStateLevel == WinState.None);
+            while (numOfTurns > 0 && winStateLevel == WinStateLevel.None);
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
@@ -280,7 +282,7 @@ public class TurnManager : MonoBehaviour
                 //only do for player
                 if (playerSide != null && currentSide.level == playerSide.level)
                 {
-                    if (winStateLevel == WinState.None)
+                    if (winStateLevel == WinStateLevel.None)
                     {
                         Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
                         //select topic
@@ -307,7 +309,7 @@ public class TurnManager : MonoBehaviour
                     }
 
                 }
-                if (winStateLevel != WinState.None)
+                if (winStateLevel != WinStateLevel.None)
                 {
                     //There is a winner
                     Debug.LogFormat("TurnManager.cs : - - - WINNER - - - turn {0}{1}", Turn, "\n");
@@ -386,8 +388,8 @@ public class TurnManager : MonoBehaviour
     {
         switch (winStateLevel)
         {
-            case WinState.Authority:
-            case WinState.Resistance:
+            case WinStateLevel.Authority:
+            case WinStateLevel.Resistance:
                 //outcome message
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 details.textTop = winTextTop;
@@ -853,7 +855,7 @@ public class TurnManager : MonoBehaviour
     /// <summary>
     /// called by any method whenever a win state is triggered. Used by ProcessNewTurn to populate an appropriate outcome message
     /// </summary>
-    public void SetWinState(WinState win, WinReason reason, string topText, string bottomText)
+    public void SetWinStateLevel(WinStateLevel win, WinReasonLevel reason, string topText, string bottomText)
     {
         Debug.Assert(string.IsNullOrEmpty(topText) == false, "Invalid topText (Null or Empty)");
         Debug.Assert(string.IsNullOrEmpty(bottomText) == false, "Invalid bottomText (Null or Empty)");
@@ -863,12 +865,12 @@ public class TurnManager : MonoBehaviour
         Sprite sprite = GameManager.instance.guiScript.firedSprite;
         switch (reason)
         {
-            case WinReason.CityLoyaltyMax:
-            case WinReason.CityLoyaltyMin:
-            case WinReason.DoomTimerMin:
-            case WinReason.FactionSupportMin:
-            case WinReason.MissionTimerMin:
-            case WinReason.ObjectivesCompleted:
+            case WinReasonLevel.CityLoyaltyMax:
+            case WinReasonLevel.CityLoyaltyMin:
+            case WinReasonLevel.CampaignResult:
+            case WinReasonLevel.FactionSupportMin:
+            case WinReasonLevel.MissionTimerMin:
+            case WinReasonLevel.ObjectivesCompleted:
                 sprite = GameManager.instance.guiScript.firedSprite;
                 break;
             default:
@@ -876,9 +878,9 @@ public class TurnManager : MonoBehaviour
                 break;
         }
         //assign winState
-        if (win != WinState.None)
+        if (win != WinStateLevel.None)
         {
-            if (winStateLevel == WinState.None)
+            if (winStateLevel == WinStateLevel.None)
             {
                 //generate new win state
                 winStateLevel = win;
@@ -887,7 +889,55 @@ public class TurnManager : MonoBehaviour
                 winTextBottom = bottomText;
                 winSprite = sprite;
             }
-            else { Debug.LogErrorFormat("Can't assign winState as GameManager win already set to \"{0}\"", win); }
+            else { Debug.LogErrorFormat("Can't assign winStateLevel as GameManager win already set to \"{0}\"", win); }
+        }
+        else { Debug.LogErrorFormat("Invalid winState \"{0}\"", win); }
+    }
+
+    /// <summary>
+    /// Set campaign win State
+    /// </summary>
+    /// <param name="win"></param>
+    /// <param name="reason"></param>
+    /// <param name="topText"></param>
+    /// <param name="bottomText"></param>
+    public void SetWinStateCampaign(WinStateCampaign win, WinReasonCampaign reason, string topText, string bottomText)
+    {
+        Debug.Assert(string.IsNullOrEmpty(topText) == false, "Invalid topText (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(bottomText) == false, "Invalid bottomText (Null or Empty)");
+        //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
+        isAutoRun = false;
+        //get approriate sprite
+        Sprite sprite = GameManager.instance.guiScript.firedSprite;
+        switch (reason)
+        {
+            case WinReasonCampaign.BlackMarks:
+            case WinReasonCampaign.Commendations:
+            case WinReasonCampaign.DoomTimerMin:
+            case WinReasonCampaign.MainGoal:
+                sprite = GameManager.instance.guiScript.firedSprite;
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
+                break;
+        }
+        //assign winState
+        if (win != WinStateCampaign.None)
+        {
+            if (winStateCampaign == WinStateCampaign.None)
+            {
+                //generate new win state
+                switch (win)
+                {
+                    case WinStateCampaign.Authority: winStateLevel = WinStateLevel.Authority; winReasonLevel = WinReasonLevel.CampaignResult; break;
+                    case WinStateCampaign.Resistance: winStateLevel = WinStateLevel.Resistance; winReasonLevel = WinReasonLevel.CampaignResult; break;
+                    default: Debug.LogWarningFormat("Unrecognised winStateCampaign \"{0}\"", win); break;
+                }
+                winTextTop = topText;
+                winTextBottom = bottomText;
+                winSprite = sprite;
+            }
+            else { Debug.LogErrorFormat("Can't assign winStateCampaign as GameManager win already set to \"{0}\"", win); }
         }
         else { Debug.LogErrorFormat("Invalid winState \"{0}\"", win); }
     }
@@ -907,12 +957,12 @@ public class TurnManager : MonoBehaviour
                 case 1:
                     //Authority mission, timer expired so Resistance wins
                     bottomText = string.Format("{0}The Resistance wins{1}", colourBad, colourEnd);
-                    SetWinState(WinState.Resistance, WinReason.MissionTimerMin, topText, bottomText);
+                    SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.MissionTimerMin, topText, bottomText);
                     break;
                 case 2:
                     //Resistance mission, timer expired so Authority wins
                     bottomText = string.Format("{0}The Authority wins{1}", colourBad, colourEnd);
-                    SetWinState(WinState.Authority, WinReason.MissionTimerMin, topText, bottomText);
+                    SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.MissionTimerMin, topText, bottomText);
                     break;
                 default:
                     Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.campaignScript.scenario.missionResistance.side.name);

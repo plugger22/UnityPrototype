@@ -223,9 +223,9 @@ public class FileManager : MonoBehaviour
         write.campaignData.campaignName = GameManager.instance.campaignScript.campaign.name;
         write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
-        write.campaignData.commendations = GameManager.instance.campaignScript.commendations;
-        write.campaignData.blackMarks = GameManager.instance.campaignScript.blackMarks;
-        write.campaignData.investigationBlackMarks = GameManager.instance.campaignScript.investigationBlackMarks;
+        write.campaignData.commendations = GameManager.instance.campaignScript.GetCommendations();
+        write.campaignData.blackMarks = GameManager.instance.campaignScript.GetBlackMarks();
+        write.campaignData.investigationBlackMarks = GameManager.instance.campaignScript.GetInvestigationBlackMarks();
         //Npc
         Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
@@ -377,6 +377,8 @@ public class FileManager : MonoBehaviour
         //turnManager.cs -> public fields
         write.gameData.winStateLevel = GameManager.instance.turnScript.winStateLevel;
         write.gameData.winReasonLevel = GameManager.instance.turnScript.winReasonLevel;
+        write.gameData.winStateCampaign = GameManager.instance.turnScript.winStateCampaign;
+        write.gameData.winReasonCampaign = GameManager.instance.turnScript.winReasonCampaign;
         write.gameData.authoritySecurity = GameManager.instance.turnScript.authoritySecurityState;
         write.gameData.currentSide = GameManager.instance.turnScript.currentSide.name;
         write.gameData.haltExecution = GameManager.instance.turnScript.haltExecution;
@@ -1726,9 +1728,9 @@ public class FileManager : MonoBehaviour
         //mission
         GameManager.instance.campaignScript.SetMission();
         //campaign status
-        GameManager.instance.campaignScript.commendations = read.campaignData.commendations;
-        GameManager.instance.campaignScript.blackMarks = read.campaignData.blackMarks;
-        GameManager.instance.campaignScript.investigationBlackMarks = read.campaignData.investigationBlackMarks;
+        GameManager.instance.campaignScript.SetCommendations(read.campaignData.commendations);
+        GameManager.instance.campaignScript.SetBlackMarks(read.campaignData.blackMarks);
+        GameManager.instance.campaignScript.SetInvestigationBlackMarks(read.campaignData.investigationBlackMarks);
     }
     #endregion
 
@@ -1868,6 +1870,8 @@ public class FileManager : MonoBehaviour
         //turnManager.cs -> public fields
         GameManager.instance.turnScript.winStateLevel = read.gameData.winStateLevel;
         GameManager.instance.turnScript.winReasonLevel = read.gameData.winReasonLevel;
+        GameManager.instance.turnScript.winStateCampaign = read.gameData.winStateCampaign;
+        GameManager.instance.turnScript.winReasonCampaign = read.gameData.winReasonCampaign;
         GameManager.instance.turnScript.authoritySecurityState = read.gameData.authoritySecurity;
         GlobalSide currentSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.currentSide);
         if (currentSide != null)

@@ -2450,7 +2450,7 @@ public class ItemDataManager : MonoBehaviour
         {
             case InvestOutcome.Guilty:
                 builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}GUILTY Verdict{6}{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}<b>You have been Fired</b>{1}Black Marks +{2}{3}", colourBad, "\n", GameManager.instance.campaignScript.investigationBlackMarks - 1, colourEnd);
+                builder.AppendFormat("{0}<b>You have been Fired</b>{1}Black Marks +{2}{3}", colourBad, "\n", GameManager.instance.campaignScript.GetInvestigationBlackMarks() - 1, colourEnd);
                 break;
             case InvestOutcome.Innocent:
                 builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}INNOCENT{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourGood, colourEnd, "\n", "\n");

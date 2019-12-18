@@ -373,12 +373,12 @@ public class FactionManager : MonoBehaviour
                 //fire player at zero
                 if (approvalZeroTimer == 0)
                 {
-                    WinState winState = WinState.Authority;
+                    WinStateLevel winState = WinStateLevel.Authority;
                     //you lost, opposite side won
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {
                         //Resistance side wins
-                        winState = WinState.Resistance;
+                        winState = WinStateLevel.Resistance;
                     }
                     msgText = string.Format("{0} faction approval Zero. Player Fired. Authority wins", playerFaction.name);
                     itemText = string.Format("{0} faction has LOST PATIENCE", playerFaction.name);
@@ -388,7 +388,7 @@ public class FactionManager : MonoBehaviour
                     //Player fired -> outcome
                     string textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
                     string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
-                    GameManager.instance.turnScript.SetWinState(winState, WinReason.FactionSupportMin, textTop, textBottom);
+                    GameManager.instance.turnScript.SetWinStateLevel(winState, WinReasonLevel.FactionSupportMin, textTop, textBottom);
 
                 }
                 else
