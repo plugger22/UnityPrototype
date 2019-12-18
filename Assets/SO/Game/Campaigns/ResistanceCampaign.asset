@@ -54,3 +54,11 @@ MonoBehaviour:
   orgHQ: {fileID: 11400000, guid: 6b6344ba25eaa58459fd133e36ec28a2, type: 2}
   orgEmergency: {fileID: 11400000, guid: 61755f069c6a2fd4f83a0a372d5d1b1c, type: 2}
   orgInfo: {fileID: 11400000, guid: 0bc9b805b6132bc4782dc397de118240, type: 2}
+  bossAut: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  subBoss1Aut: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  subBoss2Aut: {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
+  subBoss3Aut: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
+  bossRes: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  subBoss1Res: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  subBoss2Res: {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
+  subBoss3Res: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}

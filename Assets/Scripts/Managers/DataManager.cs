@@ -18,6 +18,28 @@ using Random = UnityEngine.Random;
 public class DataManager : MonoBehaviour
 {
 
+    //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
+    //NOTE: Public because data is added in Editor -> default version (each city has it's own set, use default if cities version is null)
+    [Header("Default Node Mix")]
+    public List<NodeArc> listOfOneConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfTwoConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfThreeConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
+    public List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
+    //which nodeArcs like which connections (no dupes in a single list but a nodeArc can be in multiple lists)
+    [Header("Preferred Connections for NodeArcs")]
+    public List<NodeArc> listOfOneConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfTwoConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfThreeConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfFourConnArcsPreferred = new List<NodeArc>();
+    public List<NodeArc> listOfFiveConnArcsPreferred = new List<NodeArc>();
+
+    //HQ Positions for Player Side (loaded from CampaignManager.cs)
+    private HqPosition hqBoss;
+    private HqPosition subBoss1;
+    private HqPosition subBoss2;
+    private HqPosition subBoss3;
+
     //NOTE: some arrays are initialised by ImportManager.cs making a call to DataManager methods due to sequencing issues
     //master info array
     private int[,] arrayOfNodes;                                                                //info array that uses -> index[NodeArcID, NodeInfo enum]
@@ -100,22 +122,6 @@ public class DataManager : MonoBehaviour
     private List<Trait> listOfAllTraits = new List<Trait>();
     //move nodes
     private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
-
-    //node choices (random archetypes) based on number of connections. O.K to have multiple instances of the same archetype in a list in order to tweak the probabilities.
-    //NOTE: Public because data is added in Editor -> default version (each city has it's own set, use default if cities version is null)
-    [Header("Default Node Mix")]
-    public List<NodeArc> listOfOneConnArcsDefault = new List<NodeArc>();
-    public List<NodeArc> listOfTwoConnArcsDefault = new List<NodeArc>();
-    public List<NodeArc> listOfThreeConnArcsDefault = new List<NodeArc>();
-    public List<NodeArc> listOfFourConnArcsDefault = new List<NodeArc>();
-    public List<NodeArc> listOfFiveConnArcsDefault = new List<NodeArc>();
-    //which nodeArcs like which connections (no dupes in a single list but a nodeArc can be in multiple lists)
-    [Header("Preferred Connections for NodeArcs")]
-    public List<NodeArc> listOfOneConnArcsPreferred = new List<NodeArc>();
-    public List<NodeArc> listOfTwoConnArcsPreferred = new List<NodeArc>();
-    public List<NodeArc> listOfThreeConnArcsPreferred = new List<NodeArc>();
-    public List<NodeArc> listOfFourConnArcsPreferred = new List<NodeArc>();
-    public List<NodeArc> listOfFiveConnArcsPreferred = new List<NodeArc>();
 
     //manage actor choices
     private List<ManageAction> listOfActorHandle = new List<ManageAction>();
@@ -366,6 +372,27 @@ public class DataManager : MonoBehaviour
         //Populate List of lists -> place node in the correct list
         foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
+        //HQ Positions
+        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+        {
+            //Authority
+            hqBoss = GameManager.instance.campaignScript.campaign.bossAut;
+            subBoss1 = GameManager.instance.campaignScript.campaign.subBoss1Aut;
+            subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Aut;
+            subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Aut;
+        }
+        else
+        {
+            //Resistance
+            hqBoss = GameManager.instance.campaignScript.campaign.bossRes;
+            subBoss1 = GameManager.instance.campaignScript.campaign.subBoss1Res;
+            subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Res;
+            subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Res;
+        }
+        Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
+        Debug.Assert(subBoss1 != null, "Invalid subBoss1 (Null)");
+        Debug.Assert(subBoss2 != null, "Invalid subBoss2 (Null)");
+        Debug.Assert(subBoss3 != null, "Invalid subBoss3 (Null)");
     }
     #endregion
 
@@ -3856,6 +3883,25 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for hqID {0}", hqID); }
         return isSuccess;
+    }
+
+    /// <summary>
+    /// returns string name of actual position held by enum.ActorHQ, "Unknown" if a problem
+    /// </summary>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public string GetHQActorPosition(ActorHQ actorHQ)
+    {
+        string hqPosition = "Unknown";
+        switch (actorHQ)
+        {
+            case ActorHQ.Boss: if (hqBoss != null) { hqPosition = hqBoss.tag; } break;
+            case ActorHQ.SubBoss1: if (subBoss1 != null) { hqPosition = subBoss1.tag; } break;
+            case ActorHQ.SubBoss2: if (subBoss2 != null) { hqPosition = subBoss2.tag; } break;
+            case ActorHQ.SubBoss3: if (subBoss3 != null) { hqPosition = subBoss3.tag; } break;
+            default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+        }
+        return hqPosition;
     }
 
     //

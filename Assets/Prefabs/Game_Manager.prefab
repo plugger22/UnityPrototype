@@ -1323,6 +1323,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 684c818f8281895438df3b9a62396267, type: 2}
   - {fileID: 11400000, guid: 8f444bb560ab9f543929b2799c2510b3, type: 2}
   - {fileID: 11400000, guid: 07cabc4430554864b941f2eb1a74f7f0, type: 2}
+  arrayOfHqPositions:
+  - {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  - {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
+  - {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
+  - {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -4380,6 +4385,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+  hqBoss: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  subBoss1: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  subBoss2: {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
+  subBoss3: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1

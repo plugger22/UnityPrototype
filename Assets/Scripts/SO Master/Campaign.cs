@@ -102,6 +102,19 @@ public class Campaign : ScriptableObject
     [Tooltip("Org that provides Information services such as location of Nemesis and the cleansing of secret evidence")]
     public Organisation orgInfo;
 
+    [Header("HQ Positions -> Authority")]
+    [Tooltip("HQ Position that corresponds to the enum.ActorHQ equivalent. Transferred over to DataManager.cs if playerSide")]
+    public HqPosition bossAut;
+    public HqPosition subBoss1Aut;
+    public HqPosition subBoss2Aut;
+    public HqPosition subBoss3Aut;
+
+    [Header("HQ Positions -> Resistance")]
+    [Tooltip("HQ Position that corresponds to the enum.ActorHQ equivalent. Transferred over to DataManager.cs if playerSide")]
+    public HqPosition bossRes;
+    public HqPosition subBoss1Res;
+    public HqPosition subBoss2Res;
+    public HqPosition subBoss3Res;
 
     public void OnEnable()
     {

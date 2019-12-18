@@ -2309,7 +2309,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("<b>An Investigation has been launched into your{0}{1}{2}{3}</b>{4}{5}{6}", "\n", "\n", colourNeutral, invest.tag, colourEnd, "\n", "\n");
         Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
         if (actor != null)
-        { builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}will be leading the Investigation", actor.actorName, colourAlert, actor.statusHQ, colourEnd, "\n"); }
+        { builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}will be leading the Investigation", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(actor.statusHQ), colourEnd, "\n"); }
         else
         {
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
@@ -2339,7 +2339,7 @@ public class ItemDataManager : MonoBehaviour
                 case 3: outcome = string.Format("{0}Good{1}", colourGood, colourEnd); break;
                 default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); outcome = "Unclear"; break;
             }
-            builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, invest.lead, colourEnd, "\n", "\n");
+            builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(invest.lead), colourEnd, "\n", "\n");
             builder.AppendFormat("<b>Lead Motivation {0}{1}{2}, {3}</b>{4}{5}", colourNeutral, motivation, colourEnd, outcome, "\n", "\n");
         }
         else
@@ -2407,7 +2407,7 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("Evidence Uncovered by{0}{1}<b>{2}{3}</b>", "\n", colourNeutral, source, colourEnd);
         Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
         if (actor != null)
-        { builder.AppendFormat("<b>{0}{1}, {2}{3}{4}</b>", "\n", actor.actorName, colourAlert, actor.statusHQ, colourEnd); }
+        { builder.AppendFormat("<b>{0}{1}, {2}{3}{4}</b>", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(actor.statusHQ), colourEnd); }
         else
         { Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead); }
         return builder.ToString();
