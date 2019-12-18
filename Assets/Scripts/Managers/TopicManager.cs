@@ -2466,7 +2466,7 @@ public class TopicManager : MonoBehaviour
     // - - - Process Topic - - - 
     //
 
-    #region ProcessTopic method
+    #region ProcessTopic
     /// <summary>
     /// Process selected topic (decision or Information)
     /// </summary>
@@ -2480,7 +2480,7 @@ public class TopicManager : MonoBehaviour
                 //valid topic selected, ignore otherwise
                 if (turnTopic != null)
                 {
-                    if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                    /*if (GameManager.instance.turnScript.CheckIsAutoRun() == false) -> DEBUGGING for randomly chosen autoRun options (not required now)
                     {
                         //prepare and send data to topicUI.cs
                         InitialiseTopicUI();
@@ -2490,7 +2490,10 @@ public class TopicManager : MonoBehaviour
                         //autorun -> randomly choose topic option (effects not implemented)
                         turnOption = turnTopic.listOfOptions[Random.Range(0, turnTopic.listOfOptions.Count)];
                         ProcessTopicAdmin();
-                    }
+                    }*/
+
+                    //prepare and send data to topicUI.cs
+                    InitialiseTopicUI();
                 }
             }
         }

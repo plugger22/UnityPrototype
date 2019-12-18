@@ -234,7 +234,7 @@ public class TurnManager : MonoBehaviour
                     numOfTurns--;
                 }
             }
-            while (numOfTurns > 0 && winStateLevel == WinStateLevel.None);
+            while (numOfTurns > 0 && winReasonLevel == WinReasonLevel.None);
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
@@ -287,8 +287,9 @@ public class TurnManager : MonoBehaviour
                         Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
                         //select topic
                         GameManager.instance.topicScript.SelectTopic(playerSide);
-                        //Debugging only (temporary) -> don't forget to switch on below and delete this
-                        GameManager.instance.topicScript.ProcessTopic(playerSide);
+                        
+                        /*//Debugging only (temporary) -> don't forget to switch on below and delete this
+                        GameManager.instance.topicScript.ProcessTopic(playerSide);*/
                     }
 
                     //turn on info App (only if not autorunning)
@@ -298,8 +299,8 @@ public class TurnManager : MonoBehaviour
                         //switch off any node Alerts
                         GameManager.instance.alertScript.CloseAlertUI(true);
 
-                        /*//generate topic -> SWITCHED OFF temporarily for debugging, switch back on again
-                        GameManager.instance.topicScript.ProcessTopic(playerSide);*/
+                        //generate topic
+                        GameManager.instance.topicScript.ProcessTopic(playerSide);
 
                         /*//debug
                         DebugCreatePipelineMessages();*/
@@ -309,10 +310,17 @@ public class TurnManager : MonoBehaviour
                     }
 
                 }
-                if (winStateLevel != WinStateLevel.None)
+                if (winStateCampaign != WinStateCampaign.None)
                 {
-                    //There is a winner
-                    Debug.LogFormat("TurnManager.cs : - - - WINNER - - - turn {0}{1}", Turn, "\n");
+                    //There is a Campaign winner
+                    Debug.LogFormat("TurnManager.cs : - - - Campaign WINNER - - - turn {0}{1}", Turn, "\n");
+                    isLevelOver = true;
+                    ProcessCampaignOver();
+                }
+                else if (winStateLevel != WinStateLevel.None)
+                {
+                    //There is a Level winner
+                    Debug.LogFormat("TurnManager.cs : - - - Level WINNER - - - turn {0}{1}", Turn, "\n");
                     isLevelOver = true;
                     ProcessLevelOver();
                 }
@@ -361,7 +369,7 @@ public class TurnManager : MonoBehaviour
         builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
         details.textBottom = builderBottom.ToString();
         //add to start of turn info Pipeline
-        details.type = MsgPipelineType.WinLose;
+        details.type = MsgPipelineType.WinLoseLevel;
         if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
     }
@@ -396,12 +404,37 @@ public class TurnManager : MonoBehaviour
                 details.textBottom = winTextBottom;
                 details.side = GameManager.instance.sideScript.PlayerSide;
                 details.sprite = winSprite;
-                details.type = MsgPipelineType.WinLose;
+                details.type = MsgPipelineType.WinLoseLevel;
                 if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
-                { Debug.LogWarningFormat("Win or Lose infoPipeline message FAILED to be added to dictOfPipeline"); }
+                { Debug.LogWarningFormat("WinLoseLevel infoPipeline message FAILED to be added to dictOfPipeline"); }
                 break;
             default:
-                Debug.LogWarningFormat("Invalid winState \"{0}\"", winStateLevel);
+                Debug.LogWarningFormat("Invalid winStateLevel \"{0}\"", winStateLevel);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Campaign has been won or lost
+    /// </summary>
+    private void ProcessCampaignOver()
+    {
+        switch (winStateCampaign)
+        {
+            case WinStateCampaign.Authority:
+            case WinStateCampaign.Resistance:
+                //outcome message
+                ModalOutcomeDetails details = new ModalOutcomeDetails();
+                details.textTop = winTextTop;
+                details.textBottom = winTextBottom;
+                details.side = GameManager.instance.sideScript.PlayerSide;
+                details.sprite = winSprite;
+                details.type = MsgPipelineType.WinLoseCampaign;
+                if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+                { Debug.LogWarningFormat("WinLoseCampaign infoPipeline message FAILED to be added to dictOfPipeline"); }
+                break;
+            default:
+                Debug.LogWarningFormat("Invalid winStateCampaign \"{0}\"", winStateCampaign);
                 break;
         }
     }
