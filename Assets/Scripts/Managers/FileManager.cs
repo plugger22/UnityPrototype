@@ -223,6 +223,9 @@ public class FileManager : MonoBehaviour
         write.campaignData.campaignName = GameManager.instance.campaignScript.campaign.name;
         write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
         write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
+        write.campaignData.commendations = GameManager.instance.campaignScript.commendations;
+        write.campaignData.blackMarks = GameManager.instance.campaignScript.blackMarks;
+        write.campaignData.investigationBlackMarks = GameManager.instance.campaignScript.investigationBlackMarks;
         //Npc
         Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
@@ -1722,6 +1725,10 @@ public class FileManager : MonoBehaviour
         GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
         //mission
         GameManager.instance.campaignScript.SetMission();
+        //campaign status
+        GameManager.instance.campaignScript.commendations = read.campaignData.commendations;
+        GameManager.instance.campaignScript.blackMarks = read.campaignData.blackMarks;
+        GameManager.instance.campaignScript.investigationBlackMarks = read.campaignData.investigationBlackMarks;
     }
     #endregion
 

@@ -1325,7 +1325,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 07cabc4430554864b941f2eb1a74f7f0, type: 2}
   arrayOfHqPositions:
   - {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
-  - {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
+  - {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
   - {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
   - {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   arrayOfConditions:
@@ -4271,6 +4271,9 @@ MonoBehaviour:
   arrayOfStoryStatus: 
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   scenario: {fileID: 0}
+  commendations: 0
+  blackMarks: 0
+  investigationBlackMarks: 1
 --- !u!114 &114701128435362846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4385,10 +4388,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  hqBoss: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
-  subBoss1: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
-  subBoss2: {fileID: 11400000, guid: 1264691f45c4af64e949a5504aba2381, type: 2}
-  subBoss3: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4544,7 +4543,7 @@ MonoBehaviour:
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

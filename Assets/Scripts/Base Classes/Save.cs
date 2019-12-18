@@ -45,6 +45,9 @@ public class SaveCampaignData
     public string campaignName;
     public int scenarioIndex;
     public int[] arrayOfStoryStatus;
+    public int commendations;
+    public int blackMarks;
+    public int investigationBlackMarks;
     public bool isNpc;                 //set true if NPC present, false otherwise. Needed because unable to JSON SaveNpc as a Null
     public SaveNpc npc;
 }

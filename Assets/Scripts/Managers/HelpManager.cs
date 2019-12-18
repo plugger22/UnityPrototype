@@ -985,8 +985,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_3";
         data.header = "Resolution";
-        data.text = string.Format("If an investigation concludes that you are {0}Guilty{1} you will be immediately fired once the investigation is Resolved. {2}GAME OVER{3}",
-            colourAlert, colourEnd, colourTip, colourEnd);
+        data.text = string.Format("If an investigation concludes that you are {0}Guilty{1} you will be immediately fired once the investigation is Resolved. {2}LEVEL OVER{3} and you gain {4}Black Marks{5}. ",
+            colourAlert, colourEnd, colourTip, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Lead Investigator
         data = new HelpData();
@@ -1025,7 +1025,11 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_8";
         data.header = "Guilty";
-        data.text = string.Format("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}GAME OVER{3}", colourAlert, colourEnd, colourTip, colourEnd);
+        data.text = new StringBuilder()
+            .AppendFormat("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}LEVEL OVER{3}. You also gain {4}Black Marks{5}. ",
+            colourAlert, colourEnd, colourTip, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("The number of Black Marks you gain {0}increases by +1{1}, over the Campaign, for {2}every Guilty Verdict{3}", colourAlert, colourEnd, colourAlert, colourEnd)
+            .ToString();
         listOfHelp.Add(data);
         //Guilty
         data = new HelpData();

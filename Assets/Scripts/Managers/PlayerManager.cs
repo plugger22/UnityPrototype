@@ -1525,16 +1525,22 @@ public class PlayerManager : MonoBehaviour
                                         default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
                                     }
                                     GameManager.instance.turnScript.SetWinState(winner, WinReason.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
+                                    //black marks
+                                    GameManager.instance.campaignScript.ChangeBlackMarks(GameManager.instance.campaignScript.investigationBlackMarks, string.Format("{0} Investigation", invest.tag));
+                                    //increase cost in blackMarks for future investigations
+                                    GameManager.instance.campaignScript.investigationBlackMarks++;
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
                             //end investigation
                             invest.turnFinish = GameManager.instance.turnScript.Turn;
                             RemoveInvestigation(invest.reference);
+
                             //msg
                             text = string.Format("{0} Investigation completed. {1} Verdict", invest.tag, invest.evidence == 3 ? "Innocent" : "Guilty");
                             GameManager.instance.messageScript.InvestigationCompleted(text, invest);
-                            //TO DO -> place in completed investigation list in DataManager.cs
+                            //add to listOfCompleted
+                            GameManager.instance.dataScript.AddInvestigationCompleted(invest);
                         }
                         else
                         {
@@ -1575,13 +1581,13 @@ public class PlayerManager : MonoBehaviour
                                     if (rnd < chance)
                                     {
                                         isGood = true;
-                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}", 
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}",
                                             invest.tag, chance, rnd, invest.lead, motivation, invest.evidence + 1, "\n");
                                     }
                                     else
                                     {
-                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}", 
-                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence , "\n");
+                                        Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}",
+                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence, "\n");
                                     }
                                     text = string.Format("{0} Evidence Uncovered", invest.tag);
                                     GameManager.instance.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");

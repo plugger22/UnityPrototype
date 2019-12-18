@@ -23,6 +23,9 @@ public class CampaignManager : MonoBehaviour
 
     [HideInInspector] public Campaign campaign;
     [HideInInspector] public Scenario scenario;
+    [HideInInspector] public int commendations;                 //gain from doing good things. Campaign status. NOTE: use method to change -> ChangeCommendations
+    [HideInInspector] public int blackMarks;                    //gain from doing bad things. Campaign status. NOTE: use method to change -> ChangeBlackMarks
+    [HideInInspector] public int investigationBlackMarks = 1;   //number of black marks gained from a guilty investigation, goes up +1 for each guilty verdict
 
 
     public void InitialiseGame(GameState state)
@@ -132,6 +135,9 @@ public class CampaignManager : MonoBehaviour
     {
         scenarioIndex = 0;
         Array.Clear(arrayOfStoryStatus, 0, arrayOfStoryStatus.Length);
+        commendations = 0;
+        blackMarks = 0;
+        investigationBlackMarks = 1;
     }
 
 
@@ -249,6 +255,38 @@ public class CampaignManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Campaign Status
+    //
+
+    /// <summary>
+    /// change value of black marks. Keep reason short
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="reason"></param>
+    public void ChangeBlackMarks(int value, string reason = "Unknown")
+    {
+        int previous = blackMarks;
+        blackMarks += value;
+        Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeBlackMarks: Black Marks now {0}, was {1} (due to {2}){3}", blackMarks, previous, reason, "\n");
+    }
+
+    /// <summary>
+    /// change value of Commendiations. Keep reason short
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="reason"></param>
+    public void ChangeCommendations(int value, string reason = "Unknown")
+    {
+        int previous = commendations;
+        commendations += value;
+        Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeCommendations: Commendations now {0}, was {1} (due to {2}){3}", commendations, previous, reason, "\n");
+    }
+
+
+    //
+    // - - - Debug - - -
+    //
 
     /// <summary>
     /// Debug display
@@ -272,6 +310,10 @@ public class CampaignManager : MonoBehaviour
         }
         else
         { builder.AppendFormat(" No scenarios found{0}", "\n"); }
+        //status
+        builder.AppendFormat("{0}-Campaign Status{1}", "\n", "\n");
+        builder.AppendFormat(" Commendations: {0}{1}", commendations, "\n");
+        builder.AppendFormat(" Black Marks: {0}{1}", blackMarks, "\n");    
         //story Status array
         builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
         /*for (int i = 0; i < arrayOfStoryStatus.Length; i++)
