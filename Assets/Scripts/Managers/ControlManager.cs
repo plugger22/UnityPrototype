@@ -364,10 +364,19 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
     }
 
-
+    /// <summary>
+    /// win/Loss state achieved for end of campaign -> summaries, etc before exiting
+    /// </summary>
     private void ProcessEndCampaign()
     {
-
+        //close any Node tooltip
+        GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+        //modal block
+        GameManager.instance.guiScript.SetIsBlocked(true);
+        //Open end level background
+        GameManager.instance.modalGUIScript.SetBackground(Background.EndCampaign);
+        //change game state
+        GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
     }
 
     /// <summary>
