@@ -59,7 +59,8 @@ public class TurnManager : MonoBehaviour
     private string winTextTop;                                                  //data passed via SetWinState() so that ProcessNewTurn can output an appropriate win message
     private string winTextBottom;
     private Sprite winSprite;
-    private bool isLevelOver = false;                                           //set true when a win State has been achieved to prevent ProcessNewTurn continuing to chug away
+    private bool isLevelOver = false;                                           //set true when  winStateLevel has been achieved to prevent ProcessNewTurn continuing to chug away
+    private bool isCampaignOver = false;                                        //set true when  winStateCampaign has been achieved
 
     //fast access
     private int teamArcErasure = -1;
@@ -260,7 +261,7 @@ public class TurnManager : MonoBehaviour
     private void ProcessNewTurn()
     {
         //only process new turn if a win State hasn't already been acheived
-        if (isLevelOver == false)
+        if (isLevelOver == false && isCampaignOver == false)
         {
             Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
             GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
@@ -314,7 +315,7 @@ public class TurnManager : MonoBehaviour
                 {
                     //There is a Campaign winner
                     Debug.LogFormat("TurnManager.cs : - - - Campaign WINNER - - - turn {0}{1}", Turn, "\n");
-                    isLevelOver = true;
+                    isCampaignOver = true;
                     ProcessCampaignOver();
                 }
                 else if (winStateLevel != WinStateLevel.None)
@@ -328,7 +329,19 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            //level over
+            //Win/Loss Conditions
+            if (isLevelOver == true)
+            {
+                //level over -> start MetaGame
+                EventManager.instance.PostNotification(EventType.CreateMetaGame, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                isLevelOver = false;
+            }
+            else if (isCampaignOver == true)
+            {
+                //campaign over -> start EndGame
+                EventManager.instance.PostNotification(EventType.ExitCampaign, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                isCampaignOver = false;
+            }
         }
     }
 

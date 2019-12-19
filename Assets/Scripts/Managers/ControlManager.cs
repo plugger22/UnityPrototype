@@ -22,6 +22,7 @@ public class ControlManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "ControlManager");
         EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
         EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
+        EventManager.instance.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
         EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
         EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
         EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
@@ -80,6 +81,9 @@ public class ControlManager : MonoBehaviour
                 break;
             case EventType.CloseMetaGame:
                 CloseMetaGame();
+                break;
+            case EventType.ExitCampaign:
+                ProcessEndCampaign();
                 break;
             case EventType.ExitGame:
                 CloseGame();
@@ -361,6 +365,11 @@ public class ControlManager : MonoBehaviour
     }
 
 
+    private void ProcessEndCampaign()
+    {
+
+    }
+
     /// <summary>
     /// Close save game screen
     /// </summary>
@@ -383,6 +392,8 @@ public class ControlManager : MonoBehaviour
         //quit game
         GameManager.instance.turnScript.Quit();
     }
+
+
 
     /// <summary>
     /// returns game state at time player opted for the selected option
