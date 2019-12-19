@@ -234,7 +234,7 @@ public class TurnManager : MonoBehaviour
                     numOfTurns--;
                 }
             }
-            while (numOfTurns > 0 && winReasonLevel == WinReasonLevel.None);
+            while (numOfTurns > 0 && winStateLevel == WinStateLevel.None);
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
             GameManager.instance.sideScript.RevertToHumanPlayer();
@@ -928,7 +928,7 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Set campaign win State
+    /// Set campaign win State, auto assigns appropriate level win states (same side and reason 'CampaignResult') at same time
     /// </summary>
     /// <param name="win"></param>
     /// <param name="reason"></param>
@@ -966,6 +966,8 @@ public class TurnManager : MonoBehaviour
                     case WinStateCampaign.Resistance: winStateLevel = WinStateLevel.Resistance; winReasonLevel = WinReasonLevel.CampaignResult; break;
                     default: Debug.LogWarningFormat("Unrecognised winStateCampaign \"{0}\"", win); break;
                 }
+                winStateCampaign = win;
+                winReasonCampaign = reason;
                 winTextTop = topText;
                 winTextBottom = bottomText;
                 winSprite = sprite;

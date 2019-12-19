@@ -8,9 +8,13 @@ using UnityEngine;
 /// </summary>
 public class CampaignManager : MonoBehaviour
 {
-
+    [Header("Story")]
     [Tooltip("Number of story status flags used to track stuff story developments across a multi-scenario campaign (size of the array)")]
     public int numOfFlags = 10;
+
+    [Header("Win/Loss")]
+    [Tooltip("Min numer of commendations/blackMarks required before 2 x win/loss conditions can kick in, eg. if 2 then must have 2 commendations and 4 blackMarks to win")]
+    [Range(0, 10)] public int minWinLoss = 3;
 
 
 
@@ -18,7 +22,6 @@ public class CampaignManager : MonoBehaviour
     //master flags used to progress Story elements
     [HideInInspector] public int[] arrayOfStoryStatus;
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
-
     [HideInInspector] public Campaign campaign;
     [HideInInspector] public Scenario scenario;
     private int commendations;                 //gain from doing good things. Campaign status. NOTE: use method to change -> ChangeCommendations
@@ -46,6 +49,7 @@ public class CampaignManager : MonoBehaviour
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseAllEarly();
+                SubInitialiseEvents();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
@@ -74,6 +78,14 @@ public class CampaignManager : MonoBehaviour
     }
 
     #region Initialise SubMethods
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listeners
+        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "CampaignManager");
+    }
+    #endregion
 
     #region SubInitialiseAllEarly
     private void SubInitialiseAllEarly()
@@ -123,6 +135,63 @@ public class CampaignManager : MonoBehaviour
     #endregion
 
     #endregion
+
+    /// <summary>
+    /// Called when an event happens
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect Event type
+        switch (eventType)
+        {
+            case EventType.StartTurnLate:
+                CheckWinLoss();
+                break;
+            default:
+                Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// checks for win (Commendations 2 x BlackMarks) or loss (BlackMarks 2 x Commendations). Must have a minCap amount of Commendations/BlackMarks before 2 x comparison is made (global -> minWinLoss)
+    /// </summary>
+    private void CheckWinLoss()
+    {
+        string topText = "Unknown";
+        string bottomText = "Unknown";
+        //win -> Commendations 2 x blackmarks
+        if (commendations >= minWinLoss && commendations >= blackMarks * 2)
+        {
+            WinStateCampaign win = WinStateCampaign.None;
+            switch (GameManager.instance.sideScript.PlayerSide.level)
+            {
+                case 1: win = WinStateCampaign.Authority; break;
+                case 2: win = WinStateCampaign.Resistance; break;
+                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+            }
+            topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been Outstanding", ColourType.goodText));
+            bottomText = string.Format("<b>Your {0} Commendations are twice that of your {1} Black Mark{2}</b>", commendations, blackMarks, blackMarks != 1 ? "s" : "");
+            GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.Commendations, topText, bottomText);
+        }
+        //loss -> BlackMarks 2 x commendations
+        else if (blackMarks >= minWinLoss && blackMarks >= commendations * 2)
+        {
+            WinStateCampaign win = WinStateCampaign.None;
+            switch (GameManager.instance.sideScript.PlayerSide.level)
+            {
+                case 1: win = WinStateCampaign.Resistance; break;
+                case 2: win = WinStateCampaign.Authority; break;
+                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+            }
+            topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been a huge Disappointment", ColourType.badText));
+            bottomText = string.Format("<b>Your {0} Black Marks are twice that of your {1} Commendations{2}</b>",  blackMarks, commendations, commendations != 1 ? "s" : "");
+            GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
+        }
+    }
 
 
 
