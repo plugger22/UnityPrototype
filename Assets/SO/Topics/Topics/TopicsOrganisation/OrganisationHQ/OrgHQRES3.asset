@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgHQRES0
+  m_Name: OrgHQRES3
   m_EditorClassIdentifier: 
-  tag: Nobble Investigation
+  tag: Payback
   text: Unknown
-  designNotes: Org HQ RES 0 good event
+  designNotes: Org HQ RES 2 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
@@ -27,10 +27,10 @@ MonoBehaviour:
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: b907f39478ee521449103c472b387dde, type: 2}
-  - {fileID: 11400000, guid: f1a5c48df43a11540be902edd94a1b43, type: 2}
-  - {fileID: 11400000, guid: 11b47e23ab1644441b0f4a6cb758630e, type: 2}
-  - {fileID: 11400000, guid: fd7f92c34a2c62247929c3f722975757, type: 2}
+  - {fileID: 11400000, guid: 58ac4e1a457e4f74d8daf3375198d726, type: 2}
+  - {fileID: 11400000, guid: 10f81f6d936e4f54da599f36e4e8338d, type: 2}
+  - {fileID: 11400000, guid: 98f15def0c2b5d2408d70f86403269b4, type: 2}
+  - {fileID: 11400000, guid: 21351be14a5f4414288695b112c212ce, type: 2}
   isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 28
   turnsDone: 0

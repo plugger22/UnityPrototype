@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: OrgHQRES0
+  m_Name: OrgHQRES5
   m_EditorClassIdentifier: 
-  tag: Nobble Investigation
+  tag: Blackmail
   text: Unknown
-  designNotes: Org HQ RES 0 good event
+  designNotes: Org HQ RES 5 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
   subSubType: {fileID: 0}
@@ -27,10 +27,10 @@ MonoBehaviour:
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: b907f39478ee521449103c472b387dde, type: 2}
-  - {fileID: 11400000, guid: f1a5c48df43a11540be902edd94a1b43, type: 2}
-  - {fileID: 11400000, guid: 11b47e23ab1644441b0f4a6cb758630e, type: 2}
-  - {fileID: 11400000, guid: fd7f92c34a2c62247929c3f722975757, type: 2}
+  - {fileID: 11400000, guid: b73eb346fcad2d14aaa41a03b0105cd2, type: 2}
+  - {fileID: 11400000, guid: b8de0a2a1b8588943b7ba7a0bc7b356b, type: 2}
+  - {fileID: 11400000, guid: 4a0d04d1b39d1444e9bfc825fed811d9, type: 2}
+  - {fileID: 11400000, guid: 50aa4c3019273a141abe2fc94931f010, type: 2}
   isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 28
   turnsDone: 0

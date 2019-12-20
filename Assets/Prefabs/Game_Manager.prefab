@@ -704,6 +704,8 @@ MonoBehaviour:
   showSplashTimeout: 1
   winStateLevel: 0
   winReasonLevel: 0
+  winStateCampaign: 0
+  winReasonCampaign: 0
   authoritySecurityState: 0
   currentSide: {fileID: 0}
   haltExecution: 0
@@ -2388,6 +2390,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c05e2426c0a214b43b4de358d0e7420e, type: 2}
   - {fileID: 11400000, guid: c4253aad72c58f548b1627b117ed837d, type: 2}
   - {fileID: 11400000, guid: 3398539794a3a3148b2452bb42cc36cf, type: 2}
+  - {fileID: 11400000, guid: b8475307608ffba4ab8835ae292fa2e4, type: 2}
+  - {fileID: 11400000, guid: ded71d8af6bbec14390fb479b2a55a4a, type: 2}
+  - {fileID: 11400000, guid: 3ee407007c6c9f847929ddf4b0e08459, type: 2}
+  - {fileID: 11400000, guid: 7d3130ddbeab15e4e9946131e2fede8a, type: 2}
+  - {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
+  - {fileID: 11400000, guid: 4c6e96b256ffd454b8d0f46d6b1b02c8, type: 2}
+  - {fileID: 11400000, guid: 2b23fbe2ef5bea44c921b36851949d46, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3031,6 +3040,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06e5a2005e36c6e43a74783b792ce1ff, type: 2}
   - {fileID: 11400000, guid: 96994ffc940f3f24e862d5eac786f639, type: 2}
   - {fileID: 11400000, guid: bb3389b86d0b9844a8c7d986f7309c18, type: 2}
+  - {fileID: 11400000, guid: 9efb03299eb11c542b5c533dbd643f95, type: 2}
+  - {fileID: 11400000, guid: 4f2d046f1d92539478272a377f4da768, type: 2}
+  - {fileID: 11400000, guid: a2211396365189349962f99dfe936a40, type: 2}
+  - {fileID: 11400000, guid: 486767f4f01095c4481b306f5d70aabe, type: 2}
+  - {fileID: 11400000, guid: 58ac4e1a457e4f74d8daf3375198d726, type: 2}
+  - {fileID: 11400000, guid: 10f81f6d936e4f54da599f36e4e8338d, type: 2}
+  - {fileID: 11400000, guid: 98f15def0c2b5d2408d70f86403269b4, type: 2}
+  - {fileID: 11400000, guid: 21351be14a5f4414288695b112c212ce, type: 2}
+  - {fileID: 11400000, guid: 11a6f3368c57d9047bfa7bf15100c6bd, type: 2}
+  - {fileID: 11400000, guid: 7925eb03e7d2d304a9247ecb061c05cf, type: 2}
+  - {fileID: 11400000, guid: c8037415f5479324bb584e3d4652279c, type: 2}
+  - {fileID: 11400000, guid: 631ed3c8fa10034469720a30b55394f7, type: 2}
+  - {fileID: 11400000, guid: b73eb346fcad2d14aaa41a03b0105cd2, type: 2}
+  - {fileID: 11400000, guid: b8de0a2a1b8588943b7ba7a0bc7b356b, type: 2}
+  - {fileID: 11400000, guid: 4a0d04d1b39d1444e9bfc825fed811d9, type: 2}
+  - {fileID: 11400000, guid: 50aa4c3019273a141abe2fc94931f010, type: 2}
+  - {fileID: 11400000, guid: 165fd5d24e3dff74f9f0e2c1d3616be1, type: 2}
+  - {fileID: 11400000, guid: e1c2bdf6200f1d943a0c18fe27bac83a, type: 2}
+  - {fileID: 11400000, guid: 86032cc20ee574347b7d902e6fd51dd6, type: 2}
+  - {fileID: 11400000, guid: 562571e77d5d9c4479824207347ef101, type: 2}
+  - {fileID: 11400000, guid: f28df9f0deec83a4eacf714a6c21ee83, type: 2}
+  - {fileID: 11400000, guid: b29a66d1a9d36b944943599e19de81d4, type: 2}
+  - {fileID: 11400000, guid: b2e23f1d87f8f824a8830bcc91d5ce86, type: 2}
+  - {fileID: 11400000, guid: 09cfc9cda97baf7419b427437cb2779b, type: 2}
+  - {fileID: 11400000, guid: da052db5ef5ba234ba2d66cf4f146da8, type: 2}
+  - {fileID: 11400000, guid: bd374974e80ab3a4586a5ff3d961a4b7, type: 2}
+  - {fileID: 11400000, guid: a8e0a224cf375924b86060b86e40295b, type: 2}
+  - {fileID: 11400000, guid: 0353d0dc84372a941839679d357914fc, type: 2}
   arrayOfOptionsOrgEmergency:
   - {fileID: 11400000, guid: 4560546605b860f429e6c7cdba746b20, type: 2}
   - {fileID: 11400000, guid: f9231c683224949488d4346ca72afd42, type: 2}
@@ -4268,12 +4305,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfFlags: 10
+  minWinLoss: 3
   arrayOfStoryStatus: 
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   scenario: {fileID: 0}
-  commendations: 0
-  blackMarks: 0
-  investigationBlackMarks: 1
 --- !u!114 &114701128435362846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4289,8 +4324,8 @@ MonoBehaviour:
   moodStart: 2
   moodReset: 3
   maxInvestigations: 3
-  chanceInvestigation: 100
-  chanceEvidence: 100
+  chanceInvestigation: 50
+  chanceEvidence: 10
   timerInvestigationBase: 5
   investHQApproval: 2
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
