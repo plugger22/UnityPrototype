@@ -14,7 +14,7 @@ MonoBehaviour:
   description: Actor threatens to reveal a Player related Secret
   outcomeText: Threatens to reveal your secret
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
-  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  chance: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: dae35e80e83b6b24687c68f6103c188f, type: 2}
