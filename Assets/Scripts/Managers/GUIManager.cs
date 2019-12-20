@@ -526,8 +526,12 @@ public class GUIManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(pipelineWait);
         }
         InfoPipelineDictClear();
-        yield return StartCoroutine("Topic");
-        yield return new WaitForSecondsRealtime(pipelineWait);
+        //only do topic if level or campaign win state is 'None' (level win state incorporates campaign win state where appropriate)
+        if (GameManager.instance.turnScript.winStateLevel == WinStateLevel.None)
+        {
+            yield return StartCoroutine("Topic");
+            yield return new WaitForSecondsRealtime(pipelineWait);
+        }
         yield return StartCoroutine("MainInfoApp", playerSide);
     }
 

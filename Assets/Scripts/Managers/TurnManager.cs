@@ -136,6 +136,11 @@ public class TurnManager : MonoBehaviour
         authoritySecurityState = AuthoritySecurityState.Normal;
         //current side
         currentSide = GameManager.instance.sideScript.PlayerSide;
+        Debug.Assert(currentSide != null, "Invalid currentSide (Null)");
+        //scenarion time (update for each new scenario so not in fast access)
+        scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
+        Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
+
     }
     #endregion
 
@@ -144,10 +149,8 @@ public class TurnManager : MonoBehaviour
     {
         //fast access
         teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
         conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
-        Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
     }
     #endregion
@@ -335,6 +338,8 @@ public class TurnManager : MonoBehaviour
                 //level over -> start MetaGame
                 EventManager.instance.PostNotification(EventType.CreateMetaGame, this, _turn, "TurnManager.cs -> ProcessNewTurn");
                 isLevelOver = false;
+                winStateLevel = WinStateLevel.None;
+                winReasonLevel = WinReasonLevel.None;
             }
             else if (isCampaignOver == true)
             {
@@ -999,7 +1004,7 @@ public class TurnManager : MonoBehaviour
         if (_turn == scenarioTimer)
         {
             topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
-            //win state achieved
+            //level win state achieved
             switch (GameManager.instance.campaignScript.scenario.missionResistance.side.level)
             {
                 case 1:
