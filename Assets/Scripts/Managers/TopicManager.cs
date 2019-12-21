@@ -2286,6 +2286,13 @@ public class TopicManager : MonoBehaviour
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
+            //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
+            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Info);
+            if (data != null)
+            {
+                tagOrgText = data.text;
+                tagTurn = data.turn;
+            }
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
@@ -3042,6 +3049,7 @@ public class TopicManager : MonoBehaviour
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.instance.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
+
                         //default case not required as if no match then it's assumed that no update is required
                 }
             }

@@ -24,8 +24,10 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: d2c6fd96b5d7e7b4096e4bc9d5acc9ac, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: b907f39478ee521449103c472b387dde, type: 2}
   - {fileID: 11400000, guid: f1a5c48df43a11540be902edd94a1b43, type: 2}

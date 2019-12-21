@@ -1118,6 +1118,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.Renown < renownExtreme)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownExtreme)); }
                                                 break;
+                                            case "InvestigationNormal":
+                                                //Player has a current, normal, ongoing investigation that hasn't had intervention by orgHQ
+                                                if (GameManager.instance.playerScript.CheckIInvestigationNormal() == false)
+                                                { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
+                                                break;
+                                            case "InvestigationTimer":
+                                                //Player has a current, resolution phase, guilty verdict imminent, investigation that hasn't had intervention by orgHQ
+                                                if (GameManager.instance.playerScript.CheckIfInvestigationTimer() == false)
+                                                { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
@@ -3961,6 +3971,9 @@ public class EffectManager : MonoBehaviour
             case "ChanceAddictedMed":
             case "ChanceAddictedHigh":
                 effectResolve.bottomText = ExecutePlayerChanceAddicted(effect, dataInput);
+                break;
+            case "InvestigationNormal":
+                GameManager.instance.playerScript.SetInvestigationNormal();
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

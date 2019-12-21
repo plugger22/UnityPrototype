@@ -1643,7 +1643,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// returns true if there is at least one current investigation in the normal phase (resolution timer hasn't commenced, eg. status.Ongoing) and orgHQ hasn't yet intervened (isOrgNormal false)
     /// </summary>
-    public bool CheckIfNormalInvestigation()
+    public bool CheckIInvestigationNormal()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1670,7 +1670,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// returns true if there is at least one current investigation in the resolution phase (eg. status Resolution), with an imminent GUILTY verdict, where orgHQ hasn't yet intervented (isOrgTimer false)
     /// </summary>
-    public bool CheckIfTimerInvestigation()
+    public bool CheckIfInvestigationTimer()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1685,13 +1685,87 @@ public class PlayerManager : MonoBehaviour
                     if (invest.status == InvestStatus.Resolution)
                     {
                         if (invest.isOrgHQTimer == false)
-                        { return true; }
+                        {
+                            if (invest.outcome == InvestOutcome.Guilty)
+                            { return true; }
+                        }
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid investigation Timer (Null) for listOfInvestigations[{0}]", i); }
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// returns investigation.reference for a current investigation, status.Ongoing, isOrgHQNormal false, returns null if none
+    /// </summary>
+    /// <returns></returns>
+    public string GetInvestigationNormal()
+    {
+        //any active investigations
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            //loop investigations looking for the first positive match
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    if (invest.status == InvestStatus.Ongoing)
+                    {
+                        if (invest.isOrgHQNormal == false)
+                        { return invest.reference; }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid investigation Normal (Null) for listOfInvestigations[{0}]", i); }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// returns investigation.reference for a current investigation, status.Resolution, guilty verdict imminent, isOrgHQTimer false. Returns null if none
+    /// </summary>
+    /// <returns></returns>
+    public string GetInvestigationTimer()
+    {
+        //any active investigations
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            //loop investigations looking for the first positive match
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    if (invest.status == InvestStatus.Resolution)
+                    {
+                        if (invest.isOrgHQTimer == false)
+                        {
+                            if (invest.outcome == InvestOutcome.Guilty)
+                            { return invest.reference; }
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid investigation Timer (Null) for listOfInvestigations[{0}]", i); }
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Sets 'isOrgHQNormal' flag true to signify that orgHQ asked player if they wanted investigation dropped (OrgHQ topics 0/1), regardless of outcome, to prevent repeat question
+    /// </summary>
+    /// <param name="invest"></param>
+    public void SetInvestigationNormal(Investigation invest)
+    {
+        Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(invest.reference, StringComparison.Ordinal));
+        if (investigation != null)
+        { investigation.isOrgHQNormal = true; }
+        else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", invest.reference); }
     }
 
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
+  m_Name: P_InvestigationNormal
+  m_EditorClassIdentifier: 
+  description: Organisation Offered
+  ongoingTooltip: 
+  listOfCriteria: []
+  apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
+  topicApply: {fileID: 0}
+  outcome: {fileID: 11400000, guid: af4753f5a9aaa904fa465ef53ef818a1, type: 2}
+  operand: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
+  value: 0
+  ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}
