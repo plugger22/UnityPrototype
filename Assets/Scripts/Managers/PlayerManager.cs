@@ -1640,6 +1640,60 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns true if there is at least one current investigation in the normal phase (resolution timer hasn't commenced, eg. status.Ongoing) and orgHQ hasn't yet intervened (isOrgNormal false)
+    /// </summary>
+    public bool CheckIfNormalInvestigation()
+    {
+        //any active investigations
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            //loop investigations looking for the first positive match
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    if (invest.status == InvestStatus.Ongoing)
+                    {
+                        if (invest.isOrgHQNormal == false)
+                        { return true; }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid investigation Normal (Null) for listOfInvestigations[{0}]", i); }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// returns true if there is at least one current investigation in the resolution phase (eg. status Resolution), with an imminent GUILTY verdict, where orgHQ hasn't yet intervented (isOrgTimer false)
+    /// </summary>
+    public bool CheckIfTimerInvestigation()
+    {
+        //any active investigations
+        int count = listOfInvestigations.Count;
+        if (count > 0)
+        {
+            //loop investigations looking for the first positive match
+            for (int i = 0; i < count; i++)
+            {
+                Investigation invest = listOfInvestigations[i];
+                if (invest != null)
+                {
+                    if (invest.status == InvestStatus.Resolution)
+                    {
+                        if (invest.isOrgHQTimer == false)
+                        { return true; }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid investigation Timer (Null) for listOfInvestigations[{0}]", i); }
+            }
+        }
+        return false;
+    }
+
 
     //
     // - - - Debug - - -

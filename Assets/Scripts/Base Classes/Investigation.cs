@@ -18,6 +18,8 @@ public class Investigation
     [HideInInspector] public int evidence = 2;              //evidence is a standard 3 star setup with 0 (incriminating) being bad for the player and 3 being good (exonerating)
     [HideInInspector] public int previousEvidence = 2;      //whenever evidence changes this records what the evidence was prior to the change (used for evidence message)
     [HideInInspector] public int timer = -1;                //count down timer activated once evidence boundary exceeded. Investigation resolved when timer at zero, default -1
+    [HideInInspector] public bool isOrgHQNormal;            //flag set true if OrgHQ has intervened (topic, not outcome) during the course of a normal (non 'timer') investigation
+    [HideInInspector] public bool isOrgHQTimer;             //flag set true if OrgHQ has intervented (topic, not outcome) during the course of an investigation's resolution timer period 
     [HideInInspector] public ActorHQ lead;                  //HQ actor position in charge of resolving the investigation
     [HideInInspector] public InvestStatus status;           //status of investigation
     [HideInInspector] public InvestOutcome outcome;         //outcome once investigation resolved, default 'None'
