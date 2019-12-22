@@ -1760,12 +1760,24 @@ public class PlayerManager : MonoBehaviour
     /// Sets 'isOrgHQNormal' flag true to signify that orgHQ asked player if they wanted investigation dropped (OrgHQ topics 0/1), regardless of outcome, to prevent repeat question
     /// </summary>
     /// <param name="invest"></param>
-    public void SetInvestigationNormal(Investigation invest)
+    public void SetInvestigationNormal(string investigationReference)
     {
-        Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(invest.reference, StringComparison.Ordinal));
+        Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
         if (investigation != null)
         { investigation.isOrgHQNormal = true; }
-        else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", invest.reference); }
+        else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
+    }
+
+    /// <summary>
+    /// Sets 'isOrgHQTimer' flag true to signify that orgHQ asked player if they wanted investigation dropped (OrgHQ topics 7/8), regardless of outcome, to prevent repeat question
+    /// </summary>
+    /// <param name="invest"></param>
+    public void SetInvestigationTimer(string investigationReference)
+    {
+        Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
+        if (investigation != null)
+        { investigation.isOrgHQTimer = true; }
+        else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
     }
 
 

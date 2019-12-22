@@ -3049,7 +3049,16 @@ public class TopicManager : MonoBehaviour
                         listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.instance.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
-
+                    case "InvestigationNormal":
+                        //need an investigation that meets normal criteria (status.ongoing, isOrgHQNormal false)
+                        tagStringData = GameManager.instance.playerScript.GetInvestigationNormal();
+                        if (string.IsNullOrEmpty(tagStringData) == true) { isSuccess = false; Debug.LogWarning("No valid Normal Investigation found"); }
+                        break;
+                    case "InvestigationTimer":
+                        //need an investigation that meets timer criteria (status.resolution, outcome.Guilty, isOrgHQTimer false)
+                        tagStringData = GameManager.instance.playerScript.GetInvestigationTimer();
+                        if (string.IsNullOrEmpty(tagStringData) == true) { isSuccess = false; Debug.LogWarning("No valid Timer Investigation found"); }
+                        break;
                         //default case not required as if no match then it's assumed that no update is required
                 }
             }
@@ -4177,7 +4186,8 @@ public class TopicManager : MonoBehaviour
             teamID = tagTeamID,
             contactID = tagContactID,
             secret = tagSecretName,
-            orgName = tagOrgName
+            orgName = tagOrgName,
+            investigationRef = tagStringData
         };
         return data;
     }

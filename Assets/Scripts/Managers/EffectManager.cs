@@ -3973,7 +3973,10 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerChanceAddicted(effect, dataInput);
                 break;
             case "InvestigationNormal":
-                GameManager.instance.playerScript.SetInvestigationNormal();
+                GameManager.instance.playerScript.SetInvestigationNormal(dataTopic.investigationRef);
+                break;
+            case "InvestigationTimer":
+                GameManager.instance.playerScript.SetInvestigationTimer(dataTopic.investigationRef);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

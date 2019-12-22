@@ -796,6 +796,7 @@ namespace packageAPI
         public int contactID;
         public string secret;               //name of secret, not tag
         public string orgName;              //name of organisation, not tag, eg. Blue Angel Cult
+        public string investigationRef;     //reference name of investigation
     }
 
     /// <summary>
