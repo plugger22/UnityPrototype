@@ -1764,7 +1764,11 @@ public class PlayerManager : MonoBehaviour
     {
         Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
         if (investigation != null)
-        { investigation.isOrgHQNormal = true; }
+        {
+            investigation.isOrgHQNormal = true;
+            //Add to list of services provided by orgHQ
+            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = investigation.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
+        }
         else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
     }
 
@@ -1776,7 +1780,11 @@ public class PlayerManager : MonoBehaviour
     {
         Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
         if (investigation != null)
-        { investigation.isOrgHQTimer = true; }
+        {
+            investigation.isOrgHQTimer = true;
+            //Add to list of services provided by orgHQ
+            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = investigation.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
+        }
         else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
     }
 

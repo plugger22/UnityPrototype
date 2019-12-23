@@ -1204,6 +1204,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd53aff4a13c6914a803cd0333c52b01, type: 2}
   - {fileID: 11400000, guid: 8f601b8d31ca35b49a1baccfca221408, type: 2}
   - {fileID: 11400000, guid: af4753f5a9aaa904fa465ef53ef818a1, type: 2}
+  - {fileID: 11400000, guid: 995acb1eade2e594fa277733cf197096, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1899,6 +1900,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b709ce1728f7ee44a7368319ca8d282, type: 2}
   - {fileID: 11400000, guid: 650f6dfcfaf335440bf19606d9c26fc6, type: 2}
   - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
+  - {fileID: 11400000, guid: 53c624fb003be6c488d27e8d81fdc38b, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4330,7 +4332,7 @@ MonoBehaviour:
   moodStart: 2
   moodReset: 3
   maxInvestigations: 3
-  chanceInvestigation: 50
+  chanceInvestigation: 100
   chanceEvidence: 10
   timerInvestigationBase: 5
   investHQApproval: 2

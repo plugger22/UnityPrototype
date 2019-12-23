@@ -2287,7 +2287,7 @@ public class TopicManager : MonoBehaviour
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Info);
+            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.HQ);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2327,6 +2327,13 @@ public class TopicManager : MonoBehaviour
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
+            //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
+            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Emergency);
+            if (data != null)
+            {
+                tagOrgText = data.text;
+                tagTurn = data.turn;
+            }
             //group based on player's reputation with Organisation
             group = GetGroupMood(org.GetReputation());
             //if no entries use entire list by default
