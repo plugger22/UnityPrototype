@@ -196,7 +196,7 @@
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,
         InvestigationsLaunched, InvestigationsCompleted,
-        OrgCures, OrgContractHits, OrgInfoHacks
+        OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped
     }
 
 
@@ -339,7 +339,8 @@
         Invest_Ongoing,
         Invest_Evidence,
         Invest_Resolution,
-        Invest_Completed
+        Invest_Completed,
+        Invest_Dropped
     }
 
 

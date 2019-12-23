@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: Unknown
+  text: You've accumulated a debt with the [org]. They ask that you [orgWant]. It's
+    this or they'll break contact
   designNotes: Org HQ RES 4 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -24,8 +25,14 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0e9183708b6004e4388a7348d631acf6, type: 2}
+  - {fileID: 11400000, guid: 1b092729a10dd374c8e621bb9c862f6a, type: 2}
+  - {fileID: 11400000, guid: 562f4e53b0727614e9beebf909f81255, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 11a6f3368c57d9047bfa7bf15100c6bd, type: 2}
   - {fileID: 11400000, guid: 7925eb03e7d2d304a9247ecb061c05cf, type: 2}
@@ -42,5 +49,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 28
+  turnsLive: 17
   turnsDone: 0

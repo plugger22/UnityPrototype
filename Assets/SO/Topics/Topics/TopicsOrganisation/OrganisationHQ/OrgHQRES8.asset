@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES8
   m_EditorClassIdentifier: 
   tag: Drop Investigation
-  text: Unknown
+  text: You're desperate, we know, says the voice from the [org]. The investigation
+    into your [invest] has turned sour. We can fix it
   designNotes: Org HQ RES 8 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -44,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 21
+  turnsActive: 17
   turnsLive: 0
   turnsDone: 0

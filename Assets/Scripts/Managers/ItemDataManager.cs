@@ -2463,4 +2463,20 @@ public class ItemDataManager : MonoBehaviour
         }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Investigation Dropped
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestDroppedDetails(Investigation invest)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>{1}{2} Investigation dropped{3}{4}For reasons unknown{5}{6}", colourAlert, invest.tag, colourEnd, "\n", "\n", "\n", "\n");
+        builder.AppendFormat("{0}No further action will be taken{1}", colourGood, colourEnd);
+        return builder.ToString();
+    }
+
+
+    //new methods above here
 }

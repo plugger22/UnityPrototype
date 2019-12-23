@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES5
   m_EditorClassIdentifier: 
   tag: Blackmail
-  text: Unknown
+  text: The [org] requests a 'donation'. They promise not to mention what you've done
+    for them to HQ in return
   designNotes: Org HQ RES 5 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -23,9 +24,12 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  profile: {fileID: 11400000, guid: c7257cbc837fb5c41856960b02074915, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c33b7155a14f8ff4fbad65330992d502, type: 2}
+  - {fileID: 11400000, guid: f3bace7146e866d43bd2fa999b2fcd31, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 1234805234c36e0429fb1281e887af2f, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: b73eb346fcad2d14aaa41a03b0105cd2, type: 2}
   - {fileID: 11400000, guid: b8de0a2a1b8588943b7ba7a0bc7b356b, type: 2}
@@ -42,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 28
+  turnsLive: 17
   turnsDone: 0

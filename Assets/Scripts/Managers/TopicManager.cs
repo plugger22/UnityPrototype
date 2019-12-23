@@ -169,6 +169,7 @@ public class TopicManager : MonoBehaviour
     private string tagOrgTag;           //tag of organisation, eg. 'Blue Angel Cult'
     private string tagOrgWant;          //what the org wants you to do (org.textWant)
     private string tagOrgText;          //previous service provided by Org (orgData.text)
+    private string tagInvestTag;        //investigation tag
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1305,6 +1306,7 @@ public class TopicManager : MonoBehaviour
         tagOrgTag = "";
         tagOrgWant = "";
         tagOrgText = "";
+        tagInvestTag = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -3058,13 +3060,17 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "InvestigationNormal":
                         //need an investigation that meets normal criteria (status.ongoing, isOrgHQNormal false)
-                        tagStringData = GameManager.instance.playerScript.GetInvestigationNormal();
-                        if (string.IsNullOrEmpty(tagStringData) == true) { isSuccess = false; Debug.LogWarning("No valid Normal Investigation found"); }
+                        Investigation invest = GameManager.instance.playerScript.GetInvestigationNormal();
+                        if (invest != null)
+                        { tagStringData = invest.reference; tagInvestTag = invest.tag; }
+                        else { isSuccess = false; Debug.LogWarning("No valid Normal Investigation found (Null)"); }
                         break;
                     case "InvestigationTimer":
                         //need an investigation that meets timer criteria (status.resolution, outcome.Guilty, isOrgHQTimer false)
-                        tagStringData = GameManager.instance.playerScript.GetInvestigationTimer();
-                        if (string.IsNullOrEmpty(tagStringData) == true) { isSuccess = false; Debug.LogWarning("No valid Timer Investigation found"); }
+                        invest = GameManager.instance.playerScript.GetInvestigationTimer();
+                        if (invest != null)
+                        { tagStringData = invest.reference; tagInvestTag = invest.tag; }
+                        else { isSuccess = false; Debug.LogWarning("No valid Timer Investigation found (Null)"); }
                         break;
                         //default case not required as if no match then it's assumed that no update is required
                 }
@@ -5169,6 +5175,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = tagOrgTag; }
                         }
                         else { CountTextTag("org", dictOfTags); }
+                        break;
+                    case "invest":
+                        //investigation tag
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagInvestTag, colourEnd); }
+                            else { replaceText = tagInvestTag; }
+                        }
+                        else { CountTextTag("invest", dictOfTags); }
                         break;
                     case "orgWant":
                         //organisation wants you to...

@@ -5056,6 +5056,50 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Investigation Dropped (intervention by OrgHQ, for example)
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public Message InvestigationDropped(string text, Investigation invest)
+    {
+        Debug.Assert(invest != null, "Invalid Investigation (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.INVESTIGATION;
+            message.subType = MessageSubType.Invest_Dropped;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.data0 = invest.evidence;
+            message.data1 = invest.timer;
+            message.dataName = invest.tag;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Investigation DROPPED";
+            data.topText = "Investigation Falters";
+            data.bottomText = GameManager.instance.itemDataScript.GetInvestDroppedDetails(invest);
+            data.priority = ItemPriority.Medium;
+            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "invest_6";
+            data.tag1 = "invest_7";
+            data.tag2 = "invest_8";
+            data.tag3 = "invest_9";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
     //
     // - - - Utilities
     //

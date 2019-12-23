@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: Remember your [orgText] investigation we had dropped, [daysAgo] asks the [org]
+    representative? Perhaps a little something in return?
   designNotes: Org HQ RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -24,8 +25,12 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0e9183708b6004e4388a7348d631acf6, type: 2}
+  - {fileID: 11400000, guid: 562f4e53b0727614e9beebf909f81255, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 9efb03299eb11c542b5c533dbd643f95, type: 2}
   - {fileID: 11400000, guid: 4f2d046f1d92539478272a377f4da768, type: 2}
@@ -42,5 +47,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 28
+  turnsLive: 17
   turnsDone: 0

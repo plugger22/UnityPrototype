@@ -1356,6 +1356,10 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgInfoHacks) == 0)
                                                 { BuildString(result, "Org has provided no Info Services"); }
                                                 break;
+                                            case "StatOrgHQNOTZero":
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgHQDropped) == 0)
+                                                { BuildString(result, "Org has dropped no investigations"); }
+                                                break;
                                             //
                                             // - - - Ratios
                                             //
@@ -3977,6 +3981,9 @@ public class EffectManager : MonoBehaviour
                 break;
             case "InvestigationTimer":
                 GameManager.instance.playerScript.SetInvestigationTimer(dataTopic.investigationRef);
+                break;
+            case "InvestigationDropped":
+                effectResolve.bottomText = GameManager.instance.playerScript.DropInvestigation(dataTopic.investigationRef);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

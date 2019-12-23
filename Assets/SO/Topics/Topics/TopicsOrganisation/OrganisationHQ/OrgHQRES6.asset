@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES6
   m_EditorClassIdentifier: 
   tag: Blackmail
-  text: Unknown
+  text: The [org] demands a 'retainer' otherwise they'll have no choice but to let
+    HQ know what you've done for them
   designNotes: Org HQ RES 6 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -23,9 +24,12 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  profile: {fileID: 11400000, guid: c7257cbc837fb5c41856960b02074915, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c33b7155a14f8ff4fbad65330992d502, type: 2}
+  - {fileID: 11400000, guid: f3bace7146e866d43bd2fa999b2fcd31, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 1234805234c36e0429fb1281e887af2f, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 165fd5d24e3dff74f9f0e2c1d3616be1, type: 2}
   - {fileID: 11400000, guid: e1c2bdf6200f1d943a0c18fe27bac83a, type: 2}
@@ -42,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 28
+  turnsLive: 17
   turnsDone: 0

@@ -1452,23 +1452,30 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Investigation dropped, handles all admin
+    /// Investigation dropped, handles all admin, returns text string for outcome msg
     /// </summary>
     /// <param name="invest"></param>
-    public void DropInvestigation(Investigation invest)
+    public string DropInvestigation(string investReference)
     {
+        Investigation invest = listOfInvestigations.Find(x => x.reference.Equals(investReference, StringComparison.Ordinal));
         if (invest != null)
         {
             invest.status = InvestStatus.Completed;
             invest.outcome = InvestOutcome.Dropped;
             invest.turnFinish = GameManager.instance.turnScript.Turn;
             GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
+            GameManager.instance.dataScript.StatisticIncrement(StatType.OrgHQDropped);
+            //msg
+            string text = string.Format("{0} investigation Dropped due to intervention by {1}{2}", invest.tag, GameManager.instance.campaignScript.campaign.orgHQ.tag, "\n");
+            GameManager.instance.messageScript.InvestigationDropped(text, invest);
             //remove from player
             RemoveInvestigation(invest.reference);
             //add to listOfCompleted
             GameManager.instance.dataScript.AddInvestigationCompleted(invest);
+            return GameManager.instance.colourScript.GetFormattedString(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
         }
-        else { Debug.LogError("Invalid investigation (Null)"); }
+        else { Debug.LogError("Invalid investigation (Null), not found in listOfInvestigations"); }
+        return "Unknown";
     }
 
     /// <summary>
@@ -1698,10 +1705,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns investigation.reference for a current investigation, status.Ongoing, isOrgHQNormal false, returns null if none
+    /// returns investigation for a current investigation, status.Ongoing, isOrgHQNormal false, returns null if none
     /// </summary>
     /// <returns></returns>
-    public string GetInvestigationNormal()
+    public Investigation GetInvestigationNormal()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1716,7 +1723,7 @@ public class PlayerManager : MonoBehaviour
                     if (invest.status == InvestStatus.Ongoing)
                     {
                         if (invest.isOrgHQNormal == false)
-                        { return invest.reference; }
+                        { return invest; }
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid investigation Normal (Null) for listOfInvestigations[{0}]", i); }
@@ -1726,10 +1733,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns investigation.reference for a current investigation, status.Resolution, guilty verdict imminent, isOrgHQTimer false. Returns null if none
+    /// returns investigation for a current investigation, status.Resolution, guilty verdict imminent, isOrgHQTimer false. Returns null if none
     /// </summary>
     /// <returns></returns>
-    public string GetInvestigationTimer()
+    public Investigation GetInvestigationTimer()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1746,7 +1753,7 @@ public class PlayerManager : MonoBehaviour
                         if (invest.isOrgHQTimer == false)
                         {
                             if (invest.outcome == InvestOutcome.Guilty)
-                            { return invest.reference; }
+                            { return invest; }
                         }
                     }
                 }
