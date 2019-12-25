@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes1Opt2
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res1 Option 2
-  tag: jj
-  text: jj
+  tag: Threaten
+  text: Do it or I'll expose you
   topic: {fileID: 11400000, guid: dfe1816aa46189f429c27ac6facae964, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,10 +21,12 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
+  - {fileID: 11400000, guid: 729d421dc6a8e434eafae95199d8b89e, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

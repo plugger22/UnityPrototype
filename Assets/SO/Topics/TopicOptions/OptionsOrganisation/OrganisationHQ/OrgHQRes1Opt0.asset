@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes1Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res1 Option 0
-  tag: jj
-  text: jj
+  tag: Agree
+  text: Sounds like a plan
   topic: {fileID: 11400000, guid: dfe1816aa46189f429c27ac6facae964, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,9 +21,10 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

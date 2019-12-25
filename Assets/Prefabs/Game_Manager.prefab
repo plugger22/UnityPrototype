@@ -1905,6 +1905,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
   - {fileID: 11400000, guid: 53c624fb003be6c488d27e8d81fdc38b, type: 2}
   - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
+  - {fileID: 11400000, guid: 729d421dc6a8e434eafae95199d8b89e, type: 2}
+  - {fileID: 11400000, guid: 6ea448fe449d0c542a77c06705961e0f, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4027,7 +4029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: c8ba3fea2d979644b8792f1c413d88a5, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: a5a93a3518eeade4d9de318ffa99e51f, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

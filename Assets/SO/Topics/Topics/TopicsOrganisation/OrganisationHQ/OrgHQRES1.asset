@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Nobble Investigation
   text: The investigation into your [invest] is something you don't need, rasps the
-    angry voice from the [org]. We'll kill it for a small price
+    angry voice from the [org]. We'll stop it for a small price
   designNotes: Org HQ RES 1 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06e5a2005e36c6e43a74783b792ce1ff, type: 2}
   - {fileID: 11400000, guid: 96994ffc940f3f24e862d5eac786f639, type: 2}
   - {fileID: 11400000, guid: bb3389b86d0b9844a8c7d986f7309c18, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -45,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 17
+  turnsActive: 15
   turnsLive: 0
   turnsDone: 0

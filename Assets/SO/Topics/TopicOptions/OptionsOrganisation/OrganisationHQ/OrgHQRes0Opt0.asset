@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes0Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res0 Option 0
-  tag: jj
-  text: jj
+  tag: Accept
+  text: I accept your offer
   topic: {fileID: 11400000, guid: d9336061ab2b16246b6f3590b90a9eb0, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,9 +21,10 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

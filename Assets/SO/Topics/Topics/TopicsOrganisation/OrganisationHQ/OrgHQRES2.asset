@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: OrgHQRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Remember your [orgText] investigation we had dropped, [daysAgo] asks the [org]
+  text: Remember your [orgText] investigation we killed off, [daysAgo] asks the [org]
     representative? Perhaps a little something in return?
   designNotes: Org HQ RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
@@ -36,16 +36,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f2d046f1d92539478272a377f4da768, type: 2}
   - {fileID: 11400000, guid: a2211396365189349962f99dfe936a40, type: 2}
   - {fileID: 11400000, guid: 486767f4f01095c4481b306f5d70aabe, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsActive: 15
+  turnsLive: 0
   turnsDone: 0

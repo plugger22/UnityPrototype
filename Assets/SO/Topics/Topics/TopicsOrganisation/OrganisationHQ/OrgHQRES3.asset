@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: OrgHQRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Remember your [orgText] investigation we had dropped, [daysAgo] asks the [org]
+  text: Remember your [orgText] investigation we klled off, [daysAgo] asks the [org]
     representative? Time to return the favour
   designNotes: Org HQ RES 2 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
@@ -36,16 +36,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 10f81f6d936e4f54da599f36e4e8338d, type: 2}
   - {fileID: 11400000, guid: 98f15def0c2b5d2408d70f86403269b4, type: 2}
   - {fileID: 11400000, guid: 21351be14a5f4414288695b112c212ce, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 17
+  turnsActive: 15
+  turnsLive: 0
   turnsDone: 0

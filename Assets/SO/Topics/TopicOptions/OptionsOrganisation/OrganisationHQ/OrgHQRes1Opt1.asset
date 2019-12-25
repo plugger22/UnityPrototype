@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Name: OrgHQRes1Opt1
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res1 Option 1
-  tag: jj
-  text: jj
+  tag: Generous
+  text: How much can I give you?
   topic: {fileID: 11400000, guid: dfe1816aa46189f429c27ac6facae964, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 6258c9fb9df7aa644b8af2161b637829, type: 2}
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
