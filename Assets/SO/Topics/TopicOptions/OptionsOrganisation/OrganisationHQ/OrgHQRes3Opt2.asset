@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes3Opt2
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res3 Option 2
-  tag: Over Generous
-  text: Wow, I'm giving you how much?
+  tag: Reluctant Generosity
+  text: It gives me no pleasure to do so
   topic: {fileID: 11400000, guid: ded71d8af6bbec14390fb479b2a55a4a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: f305c9949e3c6ae41b9cbc85f7057452, type: 2}
-  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

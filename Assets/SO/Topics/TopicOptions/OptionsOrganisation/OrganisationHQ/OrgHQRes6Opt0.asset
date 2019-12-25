@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Name: OrgHQRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res6 Option 0
-  tag: jj
+  tag: Helpless
   text: jj
   topic: {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

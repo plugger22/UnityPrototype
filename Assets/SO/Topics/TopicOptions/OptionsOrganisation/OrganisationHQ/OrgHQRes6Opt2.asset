@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Name: OrgHQRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res6 Option 2
-  tag: jj
+  tag: Tell HQ
   text: jj
   topic: {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

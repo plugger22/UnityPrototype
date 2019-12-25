@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes3Opt3
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res3 Option 3
-  tag: Ask Around
-  text: jj
+  tag: Offer Assistance
+  text: I can help you
   topic: {fileID: 11400000, guid: ded71d8af6bbec14390fb479b2a55a4a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: d4b249892692d6d4bb54365430700f5f, type: 2}
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 

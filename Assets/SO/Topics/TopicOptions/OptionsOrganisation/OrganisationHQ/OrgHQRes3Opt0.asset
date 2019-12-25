@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes3Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res3 Option 0
-  tag: Insist
-  text: jj
+  tag: Indifferent
+  text: Do I care? Take the money
   topic: {fileID: 11400000, guid: ded71d8af6bbec14390fb479b2a55a4a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

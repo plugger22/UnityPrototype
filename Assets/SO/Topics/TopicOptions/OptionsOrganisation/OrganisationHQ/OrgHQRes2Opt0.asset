@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes2Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res2 Option 0
-  tag: Pay
-  text: jj
+  tag: Reluctant
+  text: Only because I have to
   topic: {fileID: 11400000, guid: b8475307608ffba4ab8835ae292fa2e4, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
