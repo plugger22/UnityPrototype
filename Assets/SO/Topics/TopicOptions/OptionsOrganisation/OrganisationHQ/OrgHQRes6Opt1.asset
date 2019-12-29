@@ -27,7 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: I want money [money] but the [org] wants it to fund some crazy illegal clone
+  news: I want money [money] but the [org] need it to fund some crazy illegal clone
     colony on Titan, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 

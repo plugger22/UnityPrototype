@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: OrgHQRES0
   m_EditorClassIdentifier: 
-  tag: Nobble Investigation
+  tag: Kill Investigation
   text: The investigation into your [invest] is embarrasing. We can make it go away,
     whispers the voice from the [org]. Just say the word.
   designNotes: Org HQ RES 0 good event
@@ -45,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 15
+  turnsActive: 14
   turnsLive: 0
   turnsDone: 0

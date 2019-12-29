@@ -29,8 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: my [who] thinks that the [org] is entitled to extort money because their breakaway
-    colony on Titan is the future of humanity
+  news: My [who] thinks that the [org] are entitled to extort money because their
+    breakaway colony on Titan is the future of humanity
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

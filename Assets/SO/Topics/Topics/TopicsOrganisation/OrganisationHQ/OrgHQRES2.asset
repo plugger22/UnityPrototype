@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Remember your [orgText] investigation we killed off, [daysAgo] asks the [org]
-    representative? Perhaps a little something in return?
+  text: Remember your [orgText] investigation that we killed off, [daysAgo] asks the
+    [org] representative? Perhaps a little something in return?
   designNotes: Org HQ RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 1291380ccb65a0049a72e0fb41432034, type: 2}
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 7
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 15
-  turnsLive: 0
+  turnsDormant: 1
+  turnsActive: 16
+  turnsLive: 1
   turnsDone: 0

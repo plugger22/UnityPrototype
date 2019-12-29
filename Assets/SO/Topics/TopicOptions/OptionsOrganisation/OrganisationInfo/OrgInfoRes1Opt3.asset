@@ -20,10 +20,11 @@ MonoBehaviour:
   isIgnoreStress: 1
   isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: They shrink you, insists my [who]. The [org] do. So that you can fit in their
     underground caves, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>No Thanks</color>

@@ -1472,6 +1472,9 @@ public class PlayerManager : MonoBehaviour
             RemoveInvestigation(invest.reference);
             //add to listOfCompleted
             GameManager.instance.dataScript.AddInvestigationCompleted(invest);
+            //Add to list of services provided by orgHQ
+            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = invest.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
+            //return
             return GameManager.instance.colourScript.GetFormattedString(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
         }
         else { Debug.LogError("Invalid investigation (Null), not found in listOfInvestigations"); }
@@ -1767,32 +1770,26 @@ public class PlayerManager : MonoBehaviour
     /// Sets 'isOrgHQNormal' flag true to signify that orgHQ asked player if they wanted investigation dropped (OrgHQ topics 0/1), regardless of outcome, to prevent repeat question
     /// </summary>
     /// <param name="invest"></param>
-    public void SetInvestigationNormal(string investigationReference)
+    public string SetInvestigationFlagNormal(string investigationReference)
     {
         Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
         if (investigation != null)
-        {
-            investigation.isOrgHQNormal = true;
-            //Add to list of services provided by orgHQ
-            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = investigation.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
-        }
+        { investigation.isOrgHQNormal = true; }
         else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
+        return "Offer has been made";
     }
 
     /// <summary>
     /// Sets 'isOrgHQTimer' flag true to signify that orgHQ asked player if they wanted investigation dropped (OrgHQ topics 7/8), regardless of outcome, to prevent repeat question
     /// </summary>
     /// <param name="invest"></param>
-    public void SetInvestigationTimer(string investigationReference)
+    public string SetInvestigationFlagTimer(string investigationReference)
     {
         Investigation investigation = listOfInvestigations.Find(x => x.reference.Equals(investigationReference, StringComparison.Ordinal));
         if (investigation != null)
-        {
-            investigation.isOrgHQTimer = true;
-            //Add to list of services provided by orgHQ
-            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = investigation.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
-        }
+        { investigation.isOrgHQTimer = true; }
         else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
+        return "Offer has been made";
     }
 
 

@@ -3977,10 +3977,10 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerChanceAddicted(effect, dataInput);
                 break;
             case "InvestigationNormal":
-                GameManager.instance.playerScript.SetInvestigationNormal(dataTopic.investigationRef);
+                effectResolve.bottomText = GameManager.instance.playerScript.SetInvestigationFlagNormal(dataTopic.investigationRef);
                 break;
             case "InvestigationTimer":
-                GameManager.instance.playerScript.SetInvestigationTimer(dataTopic.investigationRef);
+                effectResolve.bottomText = GameManager.instance.playerScript.SetInvestigationFlagTimer(dataTopic.investigationRef);
                 break;
             case "InvestigationDropped":
                 effectResolve.bottomText = GameManager.instance.playerScript.DropInvestigation(dataTopic.investigationRef);

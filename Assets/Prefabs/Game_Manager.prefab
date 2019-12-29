@@ -4337,8 +4337,8 @@ MonoBehaviour:
   moodReset: 3
   maxInvestigations: 3
   chanceInvestigation: 100
-  chanceEvidence: 10
-  timerInvestigationBase: 5
+  chanceEvidence: 65
+  timerInvestigationBase: 3
   investHQApproval: 2
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
   actorID: 999
