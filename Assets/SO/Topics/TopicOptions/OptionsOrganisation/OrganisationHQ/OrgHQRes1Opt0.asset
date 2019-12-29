@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Titan is the future, says [mayor] of [city] but I'm referring to the official
+    colony, not the illegal [org] one
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

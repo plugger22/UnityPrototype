@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c3a0508bca57cc46b44fb70eafee41e, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: I'd be taking the first shuttle to Titan to join with the [org] at their colony
+    if it wasn't for my [handicap], says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

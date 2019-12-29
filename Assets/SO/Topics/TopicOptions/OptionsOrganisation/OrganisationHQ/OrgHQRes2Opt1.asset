@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Do the [org] eat their babies? My [who] thinks so but what do they know, asks
+    [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

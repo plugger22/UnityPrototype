@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res6 Option 3
   tag: Give Gear
-  text: jj
+  text: Take this in lieu of payment
   topic: {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,9 +24,10 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Who wants to live on Titan in the [org] colony of clones? Not me, that's for
+    sure, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: There's a proper way of doing things and funding a colony on Titan by scamming
+    people isn't it, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: What's wrong with Individualism? Why do the [org] want everybody on Titan
+    to be a clone, asks [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

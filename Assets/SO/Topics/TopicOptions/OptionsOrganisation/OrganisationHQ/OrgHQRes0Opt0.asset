@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[npc] of [node] was [npcIs] until the [org] got to them. Cleaned out their
+    accounts and left them destitute'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res6 Option 2
-  tag: Tell HQ
-  text: jj
+  tag: Promise
+  text: I can convince HQ to help you
   topic: {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -23,9 +23,10 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If the [org] wanted money [money] I'd understand but to turn everybody on
+    Titan into clones? It's got me beat, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

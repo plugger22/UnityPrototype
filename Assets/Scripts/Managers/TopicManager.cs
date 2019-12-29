@@ -5397,7 +5397,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     default:
                         if (isValidate == false)
-                        { Debug.LogWarningFormat("Unrecognised tag \"{0}\"", tag); }
+                        { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", tag, text); }
                         else { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName); }
                         break;
                 }

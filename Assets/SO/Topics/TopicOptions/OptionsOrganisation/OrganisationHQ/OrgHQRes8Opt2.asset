@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ea448fe449d0c542a77c06705961e0f, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: If the [org] are turning everybody on Titan into clones how do they know who's
+    who, asks [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

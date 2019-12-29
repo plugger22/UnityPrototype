@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res5 Option 1
-  tag: Leave Me Alone
-  text: jj
+  tag: Nothing Personal
+  text: It's just a business transaction
   topic: {fileID: 11400000, guid: 7d3130ddbeab15e4e9946131e2fede8a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,9 +26,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] donated all their money to the [org] because they believe that their
+    colony will change the world, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

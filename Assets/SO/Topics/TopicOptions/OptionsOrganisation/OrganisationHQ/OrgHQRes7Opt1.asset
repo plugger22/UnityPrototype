@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ea448fe449d0c542a77c06705961e0f, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: The city of [city] has no intention of contributing to the [org] colony project
+    on Titan, says [mayor]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

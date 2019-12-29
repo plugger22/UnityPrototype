@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d4afccfc4d7e4a41bb526c384c37f28, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] was [npcIs] but they left everything behind and joined the [org]
+    colony on Titan, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

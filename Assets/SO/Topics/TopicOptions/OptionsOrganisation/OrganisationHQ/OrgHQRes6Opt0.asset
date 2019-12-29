@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res6 Option 0
-  tag: Helpless
-  text: jj
+  tag: Victimisation
+  text: Why are you picking on me?
   topic: {fileID: 11400000, guid: ecb3850aa3a361140b45ac5633c9ff08, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,9 +24,10 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: 'I don''t get the [org], says [npc] of [node]. They want all my money so they
+    can turn people on Titan into clones? '
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

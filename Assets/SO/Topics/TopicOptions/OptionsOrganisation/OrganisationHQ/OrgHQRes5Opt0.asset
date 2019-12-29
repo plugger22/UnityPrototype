@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res5 Option 0
   tag: Accept
-  text: jj
+  text: It's not my money
   topic: {fileID: 11400000, guid: 7d3130ddbeab15e4e9946131e2fede8a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,9 +24,10 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: How much does it cost the [org] to keep their breakaway colony on Titan afloat,
+    asks [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

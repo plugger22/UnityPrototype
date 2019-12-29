@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 729d421dc6a8e434eafae95199d8b89e, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: The [org] extorts money from everybody, says [npc] of [node]. They need it
+    for their breakaway colony on Titan
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgHQRes5Opt3
   m_EditorClassIdentifier: 
   descriptor: Org HQ Res5 Option 3
-  tag: Help Cause
-  text: jj
+  tag: Offer Assistance
+  text: I'd love to help out
   topic: {fileID: 11400000, guid: 7d3130ddbeab15e4e9946131e2fede8a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,9 +24,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] went to Titan to join the [org] colony there. Nobody has heard from
+    them since, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
