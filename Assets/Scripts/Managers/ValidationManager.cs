@@ -2867,7 +2867,7 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
     private void CheckDictRange(int value, int lower, int upper, string varName, string tag, string key)
     {
         if (value < lower || value > upper)
-        { Debug.LogFormat("{0}dictKey \"{1}\", variable {2}, value {3}, outside of range ({4} to {5}){6}", tag, key, varName, value, lower, upper, "\n"); }
+        { Debug.LogFormat("{0}dictKey \"{1}\", variable \"{2}\", value {3}, outside of range ({4} to {5}){6}", tag, key, varName, value, lower, upper, "\n"); }
     }
 
     /// <summary>

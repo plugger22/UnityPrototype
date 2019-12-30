@@ -1315,6 +1315,7 @@ public class PlayerManager : MonoBehaviour
                             break;
                         case gameAPI.SecretStatus.Deleted:
                             //deleted secret
+                            secret.deletedWhen = GameManager.instance.turnScript.Turn;
                             GameManager.instance.dataScript.AddDeletedSecret(secret);
                             break;
                     }

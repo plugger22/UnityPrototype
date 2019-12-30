@@ -15,7 +15,7 @@ MonoBehaviour:
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
-  topicApply: {fileID: 0}
+  topicApply: {fileID: 11400000, guid: 1a5c2021038cc5e4a89125af9d18b1a7, type: 2}
   outcome: {fileID: 11400000, guid: d21f41ac8c54ea24a804d8f2cfd5844a, type: 2}
   operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
   typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}

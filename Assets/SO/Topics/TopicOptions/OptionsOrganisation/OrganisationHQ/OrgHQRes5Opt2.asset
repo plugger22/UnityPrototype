@@ -23,16 +23,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
-  - {fileID: 11400000, guid: 9d4afccfc4d7e4a41bb526c384c37f28, type: 2}
+  - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: The [org] sure do have some crazy ideas, says [npc], [job], of [node]. Everybody,
     apparently, should look the same
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 3)</color>'
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>I'd give you more if they'd let me</color>
   optionNumber: 2
