@@ -481,8 +481,8 @@ public class ItemDataManager : MonoBehaviour
                 Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
                 if (secret != null)
                 {
-                    builder.AppendFormat("{0}, {1}{2}{3}{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
-                    builder.AppendFormat("<b>\"{0}\" is Revealed</b>", secret.tag);
+                    builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}{5}has carried out their threat{6}{7}{8}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd, "\n", "\n");
+                    builder.AppendFormat("{0}<b>\"{1}\" secret is Revealed</b>{2}", colourBad, secret.tag, colourEnd);
                     /*GetSecretEffects(builder, secret);*/
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for secret {0}", secretName); }
