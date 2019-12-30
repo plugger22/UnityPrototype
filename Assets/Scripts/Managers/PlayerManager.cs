@@ -1872,6 +1872,9 @@ public class PlayerManager : MonoBehaviour
         return text;
     }
 
+    /// <summary>
+    /// Assigns a random player secret to Player
+    /// </summary>
     public void DebugAddRandomSecret()
     {
         //give the player a random secret

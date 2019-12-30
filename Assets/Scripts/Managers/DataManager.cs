@@ -149,7 +149,7 @@ public class DataManager : MonoBehaviour
 
     //secret lists
     private List<Secret> listOfPlayerSecrets = new List<Secret>();
-    private List<Secret> listOfDesperateSecrets = new List<Secret>();
+    private List<Secret> listOfOrganisationSecrets = new List<Secret>();
     private List<Secret> listOfStorySecrets = new List<Secret>();
     private List<Secret> listOfRevealedSecrets = new List<Secret>();
     private List<Secret> listOfDeletedSecrets = new List<Secret>();                                 //secrets that have been scrubbed without being revealed
@@ -5331,8 +5331,8 @@ public class DataManager : MonoBehaviour
     public List<Secret> GetListOfPlayerSecrets()
     { return listOfPlayerSecrets; }
 
-    public List<Secret> GetListOfDesperateSecrets()
-    { return listOfDesperateSecrets; }
+    public List<Secret> GetListOfOrganisationSecrets()
+    { return listOfOrganisationSecrets; }
 
     public List<Secret> GetListOfStorySecrets()
     { return listOfStorySecrets; }
@@ -5361,12 +5361,12 @@ public class DataManager : MonoBehaviour
     /// Resets Desperate Secrets list to new data. Used for Load save game
     /// </summary>
     /// <param name="listOfSecrets"></param>
-    public void SetListOfDesperateSecrets(List<Secret> listOfSecrets)
+    public void SetListOfOrganisationSecrets(List<Secret> listOfSecrets)
     {
         if (listOfSecrets != null)
         {
-            listOfDesperateSecrets.Clear();
-            listOfDesperateSecrets.AddRange(listOfSecrets);
+            listOfOrganisationSecrets.Clear();
+            listOfOrganisationSecrets.AddRange(listOfSecrets);
         }
         else { Debug.LogError("Invalid listOfDesperateSecrets (Null)"); }
     }

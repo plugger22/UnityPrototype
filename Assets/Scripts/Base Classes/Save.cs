@@ -82,7 +82,7 @@ public class SaveDataData
 {
     //secrets
     public List<string> listOfPlayerSecrets = new List<string>();
-    public List<string> listOfDesperateSecrets = new List<string>();
+    public List<string> listOfOrganisationSecrets = new List<string>();
     public List<string> listOfStorySecrets = new List<string>();
     public List<string> listOfRevealedSecrets = new List<string>();
     public List<string> listOfDeletedSecrets = new List<string>();

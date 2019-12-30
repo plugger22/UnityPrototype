@@ -150,7 +150,7 @@ public class SecretManager : MonoBehaviour
         //
         Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
-        List<Secret> listOfOrganisationSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
+        List<Secret> listOfOrganisationSecrets = GameManager.instance.dataScript.GetListOfOrganisationSecrets();
         List<Secret> listOfStorySecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
 
         int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
@@ -179,7 +179,7 @@ public class SecretManager : MonoBehaviour
                                             listOfPlayerSecrets.Add(secret.Value);
                                             break;
                                         case 1:
-                                            //Desperate measures secrets (orgs)
+                                            //Organisation measures secrets (desperate)
                                             listOfOrganisationSecrets.Add(secret.Value);
                                             break;
                                         case 2:
@@ -196,7 +196,7 @@ public class SecretManager : MonoBehaviour
                     }
                     else { Debug.LogWarning("Invalid listOfStorySecrets (Null)"); }
                 }
-                else { Debug.LogWarning("Invalid listOfDesperateSecrets (Null)"); }
+                else { Debug.LogWarning("Invalid listOfOrganisationSecrets (Null)"); }
             }
             else { Debug.LogWarning("Invalid listOfPlayerSecrets (Null)"); }
         }
@@ -458,9 +458,9 @@ public class SecretManager : MonoBehaviour
         //player secrets data
         builder.AppendFormat("{0}{1}- listOfPlayerSecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfPlayerSecrets()));
-        //desperate secrets data
-        builder.AppendFormat("{0}{1}- listOfDesperateSecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfDesperateSecrets()));
+        //organisation secrets data
+        builder.AppendFormat("{0}{1}- listOfOrganisationSecrets", "\n", "\n");
+        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfOrganisationSecrets()));
         //story secrets data
         builder.AppendFormat("{0}{1}- listOfStorySecrets", "\n", "\n");
         builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfStorySecrets()));

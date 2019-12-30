@@ -2439,6 +2439,12 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                         break;
                 }
                 CheckDictListBounds(secret.Value.GetListOfActors(), "listOfActors", tag, key, 0, highestActorID);
+                //check Organisation secrets have a non-null Organisation field
+                if (secret.Value.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
+                {
+                    if (secret.Value.org == null)
+                    { Debug.LogFormat("{0}Organisation secret \"{1}\" has an invalid org field (Null){2}", tag, secret.Value.name, "\n"); }
+                }
             }
         }
         else { Debug.LogError("Invalid dictOfSecrets (Null)"); }

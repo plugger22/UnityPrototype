@@ -465,14 +465,14 @@ public class FileManager : MonoBehaviour
             { write.dataData.listOfPlayerSecrets.Add(listOfSecrets[i].name); }
         }
         else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
-        //secret list -> DesperateSecrets
-        listOfSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
+        //secret list -> OrganisationSecrets
+        listOfSecrets = GameManager.instance.dataScript.GetListOfOrganisationSecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
-            { write.dataData.listOfDesperateSecrets.Add(listOfSecrets[i].name); }
+            { write.dataData.listOfOrganisationSecrets.Add(listOfSecrets[i].name); }
         }
-        else { Debug.LogError("Invalid listOfDesperateSecrets (Null)"); }
+        else { Debug.LogError("Invalid listOfOrganisationSecrets (Null)"); }
         //secret list -> StorySecrets
         listOfSecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
         if (listOfSecrets != null)
@@ -2026,13 +2026,13 @@ public class FileManager : MonoBehaviour
         GameManager.instance.dataScript.SetListOfPlayerSecrets(listOfSecrets);
         //Secrets List -> DesperateSecrets
         listOfSecrets.Clear();
-        for (int i = 0; i < read.dataData.listOfDesperateSecrets.Count; i++)
+        for (int i = 0; i < read.dataData.listOfOrganisationSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfDesperateSecrets[i]);
+            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfOrganisationSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfDesperateSecrets(listOfSecrets);
+        GameManager.instance.dataScript.SetListOfOrganisationSecrets(listOfSecrets);
         //Secrets List -> Storysecrets
         listOfSecrets.Clear();
         for (int i = 0; i < read.dataData.listOfStorySecrets.Count; i++)
