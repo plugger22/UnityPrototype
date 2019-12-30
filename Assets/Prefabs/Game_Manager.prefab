@@ -1754,6 +1754,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 15ac845a01dcf0b4eacb1f467002234a, type: 2}
   - {fileID: 11400000, guid: cda3648bfb38adb43af27ab46472f94c, type: 2}
   - {fileID: 11400000, guid: 65a000f3eb5cc4444850885632557f0c, type: 2}
+  - {fileID: 11400000, guid: acfb6b6c1f2b36840a61ba3c760d5daa, type: 2}
   arrayOfEffectsResistance:
   - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
   - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
@@ -3256,8 +3257,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3066b94ac26ec2340b6abc1788fc7f41, type: 2}
   - {fileID: 11400000, guid: 5d1dc06b3eb22174f83e2ade24efa615, type: 2}
   - {fileID: 11400000, guid: 9e6adf25f57e66047b6a4ef149a86667, type: 2}
-  - {fileID: 11400000, guid: 9b33ef120cd52d04b82cfb8d3d3de2d0, type: 2}
-  - {fileID: 11400000, guid: 958985cca60c2cf4f8b0231691f4b7fb, type: 2}
   - {fileID: 11400000, guid: 4bff06867962c6a4ab704bd45541de9d, type: 2}
   - {fileID: 11400000, guid: 8af9b60536749ad45b93423ea4c34b96, type: 2}
   - {fileID: 11400000, guid: d90f29c52221e6b418b3a1528cda5319, type: 2}

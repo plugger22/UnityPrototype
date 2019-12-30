@@ -5663,6 +5663,7 @@ public class ActorManager : MonoBehaviour
 
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Reveal Secret";
+                        effectInput.dataName = secret.org.name;
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (node != null)
                         {

@@ -109,6 +109,7 @@ namespace packageAPI
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string originText;                                            //name of thing that caused the effect, eg. gear name
         public int data;                                                     //multipurpose datapoint, eg. gearID
+        public string dataName;                                                 //multipurpose data string, eg. organisation name for revealed secret
 
 
         public EffectDataInput()

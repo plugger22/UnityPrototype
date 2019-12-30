@@ -25,6 +25,10 @@ public class Secret : ScriptableObject
     [Tooltip("The starting value of the evidence for the investigation. '1' indicates incriminating evidence, '2' indicates only ambivalent evidence")]
     [Range(1, 2)] public int investigationEvidence = 2;
 
+    [Header("Organisation")]
+    [Tooltip("If an organisational secret then, once revealed, org will break off all contact with Player. Ignore if not an org secret")]
+    public Organisation org;
+
 
     #region Save Data Compatible
     [HideInInspector] public gameAPI.SecretStatus status;           //enum as dynamic data 

@@ -20,7 +20,7 @@ public class SecretManager : MonoBehaviour
 
     //globals
     [HideInInspector] public SecretType secretTypePlayer;
-    [HideInInspector] public SecretType secretTypeDesperate;
+    [HideInInspector] public SecretType secretTypeOrganisation;
     [HideInInspector] public SecretType secretTypeStory;
     /*[HideInInspector] public SecretStatus secretStatusActive;
     [HideInInspector] public SecretStatus secretStatusInactive;
@@ -87,9 +87,9 @@ public class SecretManager : MonoBehaviour
                         secretType.Value.level = 0;
                         secretTypePlayer = secretType.Value;
                         break;
-                    case "Desperate":
+                    case "Organisation":
                         secretType.Value.level = 1;
-                        secretTypeDesperate = secretType.Value;
+                        secretTypeOrganisation = secretType.Value;
                         break;
                     case "Story":
                         secretType.Value.level = 2;
@@ -102,7 +102,7 @@ public class SecretManager : MonoBehaviour
             }
             //error check
             Debug.Assert(secretTypePlayer != null, "Invalid secretTypePlayer (Null)");
-            Debug.Assert(secretTypeDesperate != null, "Invalid secretTypeDesperate (Null)");
+            Debug.Assert(secretTypeOrganisation != null, "Invalid secretTypeOrganisation (Null)");
         }
         else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
         //
@@ -150,7 +150,7 @@ public class SecretManager : MonoBehaviour
         //
         Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
         List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
-        List<Secret> listOfDesperateSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
+        List<Secret> listOfOrganisationSecrets = GameManager.instance.dataScript.GetListOfDesperateSecrets();
         List<Secret> listOfStorySecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
 
         int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
@@ -158,7 +158,7 @@ public class SecretManager : MonoBehaviour
         {
             if (listOfPlayerSecrets != null)
             {
-                if (listOfDesperateSecrets != null)
+                if (listOfOrganisationSecrets != null)
                 {
                     if (listOfStorySecrets != null)
                     {
@@ -180,7 +180,7 @@ public class SecretManager : MonoBehaviour
                                             break;
                                         case 1:
                                             //Desperate measures secrets (orgs)
-                                            listOfDesperateSecrets.Add(secret.Value);
+                                            listOfOrganisationSecrets.Add(secret.Value);
                                             break;
                                         case 2:
                                             //Story secrets

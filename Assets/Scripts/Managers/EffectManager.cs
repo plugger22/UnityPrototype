@@ -1917,6 +1917,27 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     //
+                    // - - - Org Secrets (break off contact once revealed)
+                    //
+                    case "OrgContact":
+                        if (string.IsNullOrEmpty(dataInput.dataName) == false)
+                        {
+                            Organisation org = GameManager.instance.dataScript.GetOrganisaton(dataInput.dataName);
+                            if (org != null)
+                            {
+                                if (effect.operand.name.Equals("Subtract", StringComparison.Ordinal) == true)
+                                {
+                                    org.isContact = false;
+                                    effectReturn.bottomText = string.Format("{0}{1} break off contact{2}", colourBad, org.tag, colourEnd);
+                                    Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");
+                                }
+                                else { Debug.LogWarningFormat("Invalid operand \"{0}\" for OrgContact effect (should be Subtract)", effect.operand.name); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid org (Null) for dataInput.dataName \"{0}\"", dataInput.dataName); }
+                        }
+                        else { Debug.LogWarning("Invalid dataInput.dataName (Null or Empty) for 'OrgContact' effectOutcome"); }
+                        break;
+                    //
                     // - - - Other - - -
                     //
                     case "Recruit":
@@ -2081,7 +2102,7 @@ public class EffectManager : MonoBehaviour
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                         break;
                     case "TargetInfo":
-                        //TO DO
+                        //no effect, handled elsewhere
                         break;
                     case "NeutraliseTeam":
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
@@ -2207,7 +2228,6 @@ public class EffectManager : MonoBehaviour
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
-
                     default:
                         Debug.LogError(string.Format("Invalid effectOutcome \"{0}\"", effect.outcome.name));
                         effectReturn.errorFlag = true;
@@ -4997,7 +5017,7 @@ public class EffectManager : MonoBehaviour
         {
             if (org != null)
             {
-                //check Player has secret (revealWho is the player 'casue they didn't meet org's demand)
+                //check Player has secret (revealWho is the player 'cause they didn't meet org's demand)
                 if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
                 {
                     secret.revealedWho = org.tag;
@@ -5011,6 +5031,7 @@ public class EffectManager : MonoBehaviour
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Org Reveals Secret";
+                        effectInput.dataName = secret.org.name;
                         Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                         if (node != null)
                         {
@@ -5023,6 +5044,7 @@ public class EffectManager : MonoBehaviour
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 builder.Append(effectReturn.bottomText);
                             }
+                            
                             //message
                             string text = string.Format("{0} revealed \"{1}\" secret{2}", org.tag, secret.tag, "\n");
                             GameManager.instance.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");
