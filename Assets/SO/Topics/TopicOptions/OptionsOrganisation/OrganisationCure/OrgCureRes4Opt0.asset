@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c3a0508bca57cc46b44fb70eafee41e, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: If the [org] is religious what do they believe in? Can anyone tell me that,
+  news: If the [org] are religious what do they believe in? Can anyone tell me that,
     asks [npc], [job] of [node]?
   tooltipHeader: <color=#FFFFE0>Agree</color>
   tooltipMain: "<color=#98FB98> Reputation with Org +2</color>\r\n<color=#FF4500>

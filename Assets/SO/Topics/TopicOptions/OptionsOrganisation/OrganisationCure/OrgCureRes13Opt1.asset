@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: '[mayor] has told us that the [org] are a terrorist organisation and that
-    anyone dealing with the will be shot, says [npc]'
+    anyone dealing with them will be shot, says [npc]'
   tooltipHeader: <color=#FFFFE0>Free</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     finds Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing

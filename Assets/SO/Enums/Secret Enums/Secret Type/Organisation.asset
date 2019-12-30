@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 146cda3e794be9e41a8260b83aced99e, type: 3}
-  m_Name: Desperate
+  m_Name: Organisation
   m_EditorClassIdentifier: 
   descriptor: When player uses desperate measures
   level: 1

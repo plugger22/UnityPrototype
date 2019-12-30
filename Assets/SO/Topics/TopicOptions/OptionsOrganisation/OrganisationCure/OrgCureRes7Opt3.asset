@@ -25,7 +25,7 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: Who is the [org]? They're a message service of last resort, that's who, says
+  news: Who are the [org]? They're a message service of last resort, that's who, says
     [npc], [job] of [node]
   tooltipHeader: <color=#FFFFE0>No</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
