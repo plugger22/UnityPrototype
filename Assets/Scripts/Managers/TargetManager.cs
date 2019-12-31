@@ -423,6 +423,7 @@ public class TargetManager : MonoBehaviour
             AssignVIPTarget(mission);
             AssignStoryTarget(mission);
             AssignGoalTarget(mission);
+            AssignOrganisationTarget();
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }
@@ -708,6 +709,39 @@ public class TargetManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
+    }
+
+    /// <summary>
+    /// Assign a single Organisation target (if space for a new org) each level
+    /// </summary>
+    private void AssignOrganisationTarget()
+    {
+        //is there room for a new org?
+        int numOfOrgs = GameManager.instance.dataScript.GetNumOfPlayerOrganisations();
+        int maxOrgs = GameManager.instance.orgScript.maxOrgContact;
+        if (numOfOrgs < maxOrgs)
+        {
+            //create a list of all orgs player currently not in contact with
+            List<Organisation> listOfNonContactOrgs = GameManager.instance.dataScript.GetListOfNonContactOrganisations();
+            if (listOfNonContactOrgs != null)
+            {
+                int count = listOfNonContactOrgs.Count;
+                if (count > 0)
+                {
+                    Organisation org = listOfNonContactOrgs[Random.Range(0, count)];
+                    if (org != null)
+                    {
+                        //initialise org target template fields with org specific data
+
+
+                    }
+                    else { Debug.LogWarning("Invalid org (Null)"); }
+                }
+                else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Empty{0}", "\n"); }
+            }
+            else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Null{0}", "\n"); }
+        }
+        else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
     }
 
     /// <summary>

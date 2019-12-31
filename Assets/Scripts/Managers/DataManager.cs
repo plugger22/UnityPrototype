@@ -6988,6 +6988,20 @@ public class DataManager : MonoBehaviour
     { return listOfCurrentOrganisations; }
 
     /// <summary>
+    /// returns number of organisations Player currently in contact with
+    /// </summary>
+    /// <returns></returns>
+    public int GetNumOfPlayerOrganisations()
+    { return listOfCurrentOrganisations.Count(x => x.isContact == true); }
+
+    /// <summary>
+    /// returns a list of all current Organisations NOT in contact with player and that haven't cut the player off. Returns null if none (?)
+    /// </summary>
+    /// <returns></returns>
+    public List<Organisation> GetListOfNonContactOrganisations()
+    { return listOfCurrentOrganisations.Where(x => x.isContact == false && x.isCutOff == false).ToList(); }
+
+    /// <summary>
     /// returns Organisation, null if not found
     /// </summary>
     /// <param name="orgName"></param>

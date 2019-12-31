@@ -17,6 +17,8 @@ public class OrganisationManager : MonoBehaviour
     [Header("OrgInfo")]
     [Tooltip("How many turns a direct feed of the position of Nemesis/Erasure Teams/Npc last for")]
     [Range(1, 10)] public int timerOrgInfoMax = 8;
+    [Tooltip("Maximum number of Organisations that the Player can be in contact with at any one time (UI limit)")]
+    [Range(1, 5)] public int maxOrgContact = 3;
 
 
     /// <summary>

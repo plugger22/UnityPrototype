@@ -1225,6 +1225,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00209517fd7d8b9428fc7aaaf74d6d88, type: 2}
   - {fileID: 11400000, guid: de9701ea572951d4d869bfb54637ae9c, type: 2}
   - {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
+  - {fileID: 11400000, guid: 56088d3950fe1c04bb94574904b7935b, type: 2}
   arrayOfTargetTriggers:
   - {fileID: 11400000, guid: 82ae80a91c839fa48b5292e9c4fde55e, type: 2}
   - {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}
@@ -1755,6 +1756,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cda3648bfb38adb43af27ab46472f94c, type: 2}
   - {fileID: 11400000, guid: 65a000f3eb5cc4444850885632557f0c, type: 2}
   - {fileID: 11400000, guid: acfb6b6c1f2b36840a61ba3c760d5daa, type: 2}
+  - {fileID: 11400000, guid: ccf5bf6275490c94d8cc49b3b5e34b48, type: 2}
   arrayOfEffectsResistance:
   - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
   - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
