@@ -62,7 +62,7 @@ public class TargetManager : MonoBehaviour
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
     [HideInInspector] public int MaxTargets;
-    [HideInInspector] Organisation targetOrg;                                           //Organisation dynamically chosen to make contact with Player this level via a target
+    [HideInInspector] public Organisation targetOrg;                                           //Organisation dynamically chosen to make contact with Player this level via a target
     #endregion
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods

@@ -89,3 +89,11 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 11054 -> Wednesday, 1 January 2020 11:38 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 60619 -> Wednesday, 1 January 2020 12:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16061 -> Wednesday, 1 January 2020 12:20 PM
+City seed 5678 -> London, United Kingdom

@@ -462,6 +462,7 @@ public class SaveTargetData
     public int activeTargets;
     public int liveTargets;
     public int maxTargets;
+    public string targetOrgName;
     //dictOfTargets dynamic data
     public List<SaveTarget> listOfTargets = new List<SaveTarget>();
     //target pools

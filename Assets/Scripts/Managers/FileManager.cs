@@ -1582,6 +1582,9 @@ public class FileManager : MonoBehaviour
         write.targetData.activeTargets = GameManager.instance.targetScript.ActiveTargets;
         write.targetData.liveTargets = GameManager.instance.targetScript.LiveTargets;
         write.targetData.maxTargets = GameManager.instance.targetScript.MaxTargets;
+        if (GameManager.instance.targetScript.targetOrg != null)
+        { write.targetData.targetOrgName = GameManager.instance.targetScript.targetOrg.name; }
+        else { write.targetData.targetOrgName = ""; }
         //target.SO dynamic data
         Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
@@ -3453,6 +3456,13 @@ public class FileManager : MonoBehaviour
         GameManager.instance.targetScript.ActiveTargets = read.targetData.activeTargets;
         GameManager.instance.targetScript.LiveTargets = read.targetData.liveTargets;
         GameManager.instance.targetScript.MaxTargets = read.targetData.maxTargets;
+        if (string.IsNullOrEmpty(read.targetData.targetOrgName) == false)
+        {
+            Organisation org = GameManager.instance.dataScript.GetCurrentOrganisation(read.targetData.targetOrgName);
+            if (org != null)
+            { GameManager.instance.targetScript.targetOrg = org; }
+            else { Debug.LogErrorFormat("Invalid Organisation (Null) for targetOrgName \"{0}\"", read.targetData.targetOrgName); }
+        }
         //dynamic Target.SO data
         Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
