@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: ContactOrg
+  m_Name: OrgTemplate
   m_EditorClassIdentifier: 
   targetName: Contact Organisation
-  descriptorResistance: Contact Organisation
-  descriptorAuthority: Contact Organisation
+  descriptorResistance: Underground Organisation
+  descriptorAuthority: Underground Organisation
   reasonText: organisation overtures
   rumourText: make contact with an Organisation
   targetLevel: 1

@@ -137,6 +137,7 @@ public class LoadManager : MonoBehaviour
     public Target[] arrayOfTargetsVIP;
     public Target[] arrayOfTargetsStory;
     public Target[] arrayOfTargetsGoal;
+    public Target[] arrayOfTargetsOrg;
 
     [Header("Sprites")]
     public Sprite[] arrayOfGearSprites;
@@ -455,6 +456,7 @@ public class LoadManager : MonoBehaviour
         listOfTargets.AddRange(arrayOfTargetsVIP);
         listOfTargets.AddRange(arrayOfTargetsStory);
         listOfTargets.AddRange(arrayOfTargetsGoal);
+        listOfTargets.AddRange(arrayOfTargetsOrg);
         numArray = listOfTargets.Count;
         //master array
         arrayOfTargets = listOfTargets.ToArray();
@@ -1079,6 +1081,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfTargetsVIP.Length > 0, "Invalid arrayOfTargetsVIP (no records)");
         Debug.Assert(arrayOfTargetsStory.Length > 0, "Invalid arrayOfTargetsStory (no records)");
         Debug.Assert(arrayOfTargetsGoal.Length > 0, "Invalid arrayOfTargetsGoal (no records)");
+        Debug.AssertFormat(arrayOfTargetsOrg.Length == 1, "Invalid arrayOfTargetOrg (should be one OrgTemplate record only, there are {0})", arrayOfTargetsOrg.Length);
         Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {

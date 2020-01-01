@@ -40,6 +40,8 @@ public class Mission : ScriptableObject
     public Target targetBaseStory;
     [Tooltip("Goal target, can ignore")]
     public Target targetBaseGoal;
+    [Tooltip("Organisation target (use template target, dynamically assigned data each level). If none then no organisations will make contact in mission")]
+    public Target targetOrganisation;
 
     [Header("Generic Target Profile Overrides")]
     [Tooltip("If a profile is specified here it will override the Generic Target's profile. Can be ignored")]

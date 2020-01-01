@@ -3,8 +3,8 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -62,6 +62,7 @@ public class TargetManager : MonoBehaviour
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
     [HideInInspector] public int MaxTargets;
+    [HideInInspector] Organisation targetOrg;                                           //Organisation dynamically chosen to make contact with Player this level via a target
     #endregion
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods
@@ -354,7 +355,7 @@ public class TargetManager : MonoBehaviour
                                     isLive = false;
                                     target.timerHardLimit++;
                                     rndNum = Random.Range(0, 100);
-                                    switch(target.profile.activation.level)
+                                    switch (target.profile.activation.level)
                                     {
                                         case 3:
                                             //Extreme
@@ -364,13 +365,13 @@ public class TargetManager : MonoBehaviour
                                         case 2:
                                             //High
                                             if (rndNum < activateHighChance) { isLive = true; /*Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance);*/ }
-                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true;  }
+                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true; }
                                             break;
                                         case 1:
                                             //Medium
                                             /*Debug.LogFormat("[Tst] target  {0}, ID {1}, Med Roll (need {2}, roll {3}", target.targetName, target.targetID, activateMedChance, rndNum);*/
-                                            if (rndNum < activateMedChance) { isLive = true;}
-                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true;  }
+                                            if (rndNum < activateMedChance) { isLive = true; }
+                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true; }
                                             break;
                                         case 0:
                                             //Low
@@ -423,7 +424,7 @@ public class TargetManager : MonoBehaviour
             AssignVIPTarget(mission);
             AssignStoryTarget(mission);
             AssignGoalTarget(mission);
-            AssignOrganisationTarget();
+            AssignOrganisationTarget(mission);
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }
@@ -519,7 +520,7 @@ public class TargetManager : MonoBehaviour
                 numActive = 0;
                 Debug.LogWarningFormat("TargetManager.cs -> AssignGenericTargets: numLive targets now {0} (numActive Zero)", numLive);
             }
-            
+
         }
         List<Node> listOfNodesByType = new List<Node>();
         Node node = null;
@@ -583,7 +584,7 @@ public class TargetManager : MonoBehaviour
             //endless loop prevention
             attempts++;
             if (attempts == 20)
-            { Debug.LogFormat("[Tst] TargetManager.cs -> AssignGenericTargets: {0} out of {1} targets  timed out on {2} attempts", counter, numLive,  attempts); }
+            { Debug.LogFormat("[Tst] TargetManager.cs -> AssignGenericTargets: {0} out of {1} targets  timed out on {2} attempts", counter, numLive, attempts); }
         }
         while (counter < numLive && attempts < 20);
         //
@@ -714,34 +715,52 @@ public class TargetManager : MonoBehaviour
     /// <summary>
     /// Assign a single Organisation target (if space for a new org) each level
     /// </summary>
-    private void AssignOrganisationTarget()
+    private void AssignOrganisationTarget(Mission mission)
     {
-        //is there room for a new org?
-        int numOfOrgs = GameManager.instance.dataScript.GetNumOfPlayerOrganisations();
-        int maxOrgs = GameManager.instance.orgScript.maxOrgContact;
-        if (numOfOrgs < maxOrgs)
+        if (mission.targetOrganisation != null)
         {
-            //create a list of all orgs player currently not in contact with
-            List<Organisation> listOfNonContactOrgs = GameManager.instance.dataScript.GetListOfNonContactOrganisations();
-            if (listOfNonContactOrgs != null)
+            //is there room for a new org?
+            int numOfOrgs = GameManager.instance.dataScript.GetNumOfPlayerOrganisations();
+            int maxOrgs = GameManager.instance.orgScript.maxOrgContact;
+            if (numOfOrgs < maxOrgs)
             {
-                int count = listOfNonContactOrgs.Count;
-                if (count > 0)
+                //create a list of all orgs player currently not in contact with
+                List<Organisation> listOfNonContactOrgs = GameManager.instance.dataScript.GetListOfNonContactOrganisations();
+                if (listOfNonContactOrgs != null)
                 {
-                    Organisation org = listOfNonContactOrgs[Random.Range(0, count)];
-                    if (org != null)
+                    int count = listOfNonContactOrgs.Count;
+                    if (count > 0)
                     {
-                        //initialise org target template fields with org specific data
-
-
+                        Organisation org = listOfNonContactOrgs[Random.Range(0, count)];
+                        if (org != null)
+                        {
+                            //target needs a random node
+                            Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+                            if (node != null)
+                            {
+                                //assign Organisation to global so it can be referenced when target is successfully completed
+                                targetOrg = org;
+                                //set up target
+                                Target target = mission.targetOrganisation;
+                                //need to reset back to -1 otherwise SetTargetDetails will think it's already been assigned
+                                target.nodeID = -1;
+                                SetTargetDetails(target, node);
+                                //initialise org target template fields with org specific data
+                                target.targetName = $"Contact {org.tag}";
+                                target.rumourText = $"make contact with the {org.tag}";
+                                Debug.LogFormat("[Tar] MissionManager.cs -> AssignOrganisationTarget: Org node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                                    target.targetName);
+                            }
+                            else { Debug.LogWarning("Invalid node (Null) for OrganisationTarget"); }
+                        }
+                        else { Debug.LogWarning("Invalid org (Null)"); }
                     }
-                    else { Debug.LogWarning("Invalid org (Null)"); }
+                    else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Empty{0}", "\n"); }
                 }
-                else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Empty{0}", "\n"); }
+                else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Null{0}", "\n"); }
             }
-            else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as listOfNonContactOrgs is Null{0}", "\n"); }
+            else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
         }
-        else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
     }
 
     /// <summary>
@@ -811,7 +830,7 @@ public class TargetManager : MonoBehaviour
                 isSuccess = false;
             }
         }
-        else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3} (Node already has target)", node.nodeName, node.Arc.name, node.nodeID, target.targetName); isSuccess = false;}
+        else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3} (Node already has target)", node.nodeName, node.Arc.name, node.nodeID, target.targetName); isSuccess = false; }
         return isSuccess;
     }
 
@@ -1181,7 +1200,7 @@ public class TargetManager : MonoBehaviour
                                                 else
                                                 {
                                                     tempList.Add(string.Format("{0}<size=95%>{1} gear</size>{2}", colourGrey, target.gear.name, colourEnd));
-                                                    
+
                                                     /*Debug.LogFormat("[Tst]: TargetManager.cs -> GetTargetFactors: {0}, {1}, gear present but not applicable to target{2}", gear.tag, gear.type.name, "\n");*/
 
                                                     //infiltration gear can be used
@@ -1231,7 +1250,7 @@ public class TargetManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}",target.nodeID, "\n"));
+                Debug.LogError(string.Format("Invalid node (null), ID \"{0}\"{1}", target.nodeID, "\n"));
                 tempList.Add(string.Format("{0}{1}{2}", colourBad, "Target Data inaccessible", colourEnd));
             }
         }
@@ -1242,7 +1261,7 @@ public class TargetManager : MonoBehaviour
         }
         //convert list to string and return
         StringBuilder builder = new StringBuilder();
-        foreach(string text in tempList)
+        foreach (string text in tempList)
         {
             if (builder.Length > 0)
             { builder.AppendLine(); }
@@ -1270,8 +1289,8 @@ public class TargetManager : MonoBehaviour
             Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
-            //Loop listOfFactors to ensure consistency of calculations across methods
-            foreach(TargetFactors factor in listOfFactors)
+                //Loop listOfFactors to ensure consistency of calculations across methods
+                foreach (TargetFactors factor in listOfFactors)
                 {
                     switch (factor)
                     {
@@ -1718,19 +1737,19 @@ public class TargetManager : MonoBehaviour
 
             //proceed with a new target Selection
 
-                #region TargetSelection
-                //Obtain Info
-                genericDetails.returnEvent = EventType.GenericTargetInfo;
-                genericDetails.textHeader = "Select Target";
-                genericDetails.side = globalResistance;
-                genericDetails.nodeID = details.nodeID;
-                genericDetails.actorSlotID = details.actorDataID;
-                //picker text
-                genericDetails.textTop = string.Format("{0}Targets{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}Closer the Target the better the Intel{1}",
-                    colourNormal, colourEnd);
-                genericDetails.textBottom = "Click on a Target to Select. Press CONFIRM. Mouseover target for more information.";
-                //generate temp list of gear to choose from
+            #region TargetSelection
+            //Obtain Info
+            genericDetails.returnEvent = EventType.GenericTargetInfo;
+            genericDetails.textHeader = "Select Target";
+            genericDetails.side = globalResistance;
+            genericDetails.nodeID = details.nodeID;
+            genericDetails.actorSlotID = details.actorDataID;
+            //picker text
+            genericDetails.textTop = string.Format("{0}Targets{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
+            genericDetails.textMiddle = string.Format("{0}Closer the Target the better the Intel{1}",
+                colourNormal, colourEnd);
+            genericDetails.textBottom = "Click on a Target to Select. Press CONFIRM. Mouseover target for more information.";
+            //generate temp list of gear to choose from
 
             List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
             if (listOfLiveTargets != null)
@@ -1794,7 +1813,7 @@ public class TargetManager : MonoBehaviour
                         //Put generic picker data package together
                         count = Mathf.Min(maxGenericOptions, count);
                         Target[] arrayOfTargets = new Target[count];
-                        
+
                         //transfer list targets to array targets
                         for (int i = 0; i < count; i++)
                         { arrayOfTargets[i] = tempListSorted[i]; }
@@ -1874,7 +1893,7 @@ public class TargetManager : MonoBehaviour
             builderMain.AppendFormat("<b>Existing Intel {0}{1}{2}</b>{3}", colourIntel, target.intel, colourEnd, "\n");
             builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}</size>MAX Intel allowed is {5}{6}", colourNeutral, target.intelGain, colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
             builderDetails.AppendFormat("Distance {0}{1}{2}", colourNeutral, target.distance, colourEnd);
-            
+
             details.textHeader = builderHeader.ToString();
             details.textMain = builderMain.ToString();
             details.textDetails = builderDetails.ToString();
@@ -1911,7 +1930,7 @@ public class TargetManager : MonoBehaviour
                     if (target.intel > maxTargetInfo)
                     { target.intel = maxTargetInfo; }
                     builderTop.AppendFormat("{0}{1} target{2}{3}{4}", colourGear, target.targetName, colourEnd, "\n", "\n");
-                    builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.instance.colourScript.GetValueColour(target.intel), 
+                    builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.instance.colourScript.GetValueColour(target.intel),
                         target.intel, colourEnd);
                     //message
                     Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0} at {1}, {2}, id {3}, Intel +{4}, now {5} (PLANNER action){6}", target.targetName,

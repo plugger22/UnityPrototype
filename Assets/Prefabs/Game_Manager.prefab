@@ -672,6 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerOrgInfoMax: 8
+  maxOrgContact: 3
 --- !u!114 &114339811107641630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3154,6 +3155,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
   - {fileID: 11400000, guid: 2e4f8c5604ff85e46ac0cc21cb3d2bf2, type: 2}
+  arrayOfTargetsOrg:
+  - {fileID: 11400000, guid: 858a3a9041106fe47a3d4748c99535a0, type: 2}
   arrayOfGearSprites:
   - {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   arrayOfGlobalSprites:

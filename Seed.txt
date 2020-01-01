@@ -47,3 +47,45 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:352)
 	City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 61658 -> Wednesday, 1 January 2020 11:27 AM
+WARNING [Val] ValidateSO: MISMATCH on Target, array 30, assets 31 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Target[]) (at Assets/Scripts/Managers/ValidationManager.cs:1728)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1695)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:352)
+	City seed 5678 -> London, United Kingdom
+WARNING Node St. James Park, INDUSTRIAL, id 15 NOT assigned target Contact Organisation (Target already in use at nodeID 0)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:827)
+	TargetManager:AssignOrganisationTarget(Mission) (at Assets/Scripts/Managers/TargetManager.cs:745)
+	TargetManager:AssignTargets(Mission) (at Assets/Scripts/Managers/TargetManager.cs:427)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:73)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:46)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:122)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:72)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	
+Dev seed 20000 -> Wednesday, 1 January 2020 11:30 AM
+WARNING [Val] ValidateSO: MISMATCH on Target, array 30, assets 31 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Target[]) (at Assets/Scripts/Managers/ValidationManager.cs:1728)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1695)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:352)
+	City seed 5678 -> London, United Kingdom
+ERROR Invalid Target (null) for OrgTemplate
+
+UnityEngine.Debug:LogError(Object)
+	TargetManager:GetTargetTooltip(String, Boolean) (at Assets/Scripts/Managers/TargetManager.cs:918)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Node.cs:412)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 59114 -> Wednesday, 1 January 2020 11:37 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11054 -> Wednesday, 1 January 2020 11:38 AM
+City seed 5678 -> London, United Kingdom

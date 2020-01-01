@@ -6995,6 +6995,14 @@ public class DataManager : MonoBehaviour
     { return listOfCurrentOrganisations.Count(x => x.isContact == true); }
 
     /// <summary>
+    /// returns org from listOfCurrentOrganisations, null if not found
+    /// </summary>
+    /// <param name="orgName"></param>
+    /// <returns></returns>
+    public Organisation GetCurrentOrganisation(string orgName)
+    { return listOfCurrentOrganisations.Find(x => x.name.Equals(orgName, StringComparison.Ordinal) == true); }
+
+    /// <summary>
     /// returns a list of all current Organisations NOT in contact with player and that haven't cut the player off. Returns null if none (?)
     /// </summary>
     /// <returns></returns>
