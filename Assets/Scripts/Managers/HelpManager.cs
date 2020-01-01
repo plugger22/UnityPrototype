@@ -963,14 +963,14 @@ public class HelpManager : MonoBehaviour
         //Overview
         data = new HelpData();
         data.tag = "org_0";
-        data.header = "Overview";
+        data.header = "Underground Organisations";
         data.text = string.Format("Underground Organisations can, once contact has been made, provide {0}special services{1}. Note that these are {2}illegal{3} and {4}frowned up by HQ{5}", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Duration
         data = new HelpData();
         data.tag = "org_1";
-        data.header = "Duration";
+        data.header = "Organisation Contact Duration";
         data.text = string.Format("Once contact has been made a representative of the Organisation will be on hand to provide their specific services {0}in any subsequent city{1} that you visit",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
