@@ -128,8 +128,9 @@ namespace packageAPI
         public string topText { get; set; }
         public string bottomText { get; set; }
         public bool errorFlag { get; set; }
-        public bool isAction;                       //true if effect is considered an action
-        public int ongoingID;                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
+        public bool isAction;                                       //true if effect is considered an action
+        public int ongoingID;                                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
+        public List<string> listOfHelpTags = new List<string>();    //Effects can returns specific help strings to show in the outcome dialogue. Only the first four are taken into account (UI limit)
     }
 
     /// <summary>

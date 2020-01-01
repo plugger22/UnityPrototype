@@ -2528,6 +2528,8 @@ public class ActionManager : MonoBehaviour
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
                 dataInput.originText = string.Format("{0} target", target.targetName);
+                //org name, if present (only applies to ContactOrg effect for Organisation targets but send regardless)
+                dataInput.dataName = GameManager.instance.targetScript.targetOrgName;
                 //handle any Ongoing effects of target completed -> only if target Successful
                 if (isSuccessful == true && target.ongoingEffect != null)
                 {
@@ -2536,6 +2538,8 @@ public class ActionManager : MonoBehaviour
                     //add to target so it can link to effects
                     target.ongoingID = dataInput.ongoingID;
                 }
+                //effect derived help tags for outcome dialogue (only the first four are used, if none then is ignored)
+                List<string> listOfHelpTags = new List<string>();
                 //any effects to process?
                 if (listOfEffects.Count > 0)
                 {
@@ -2549,6 +2553,9 @@ public class ActionManager : MonoBehaviour
                                 //update stringBuilder texts (Bottom only)
                                 if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);
+                                //update help tags (if any)
+                                if (effectReturn.listOfHelpTags.Count > 0)
+                                { listOfHelpTags.AddRange(effectReturn.listOfHelpTags); }
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
                             }
@@ -2589,6 +2596,9 @@ public class ActionManager : MonoBehaviour
                     outcomeDetails.side = GameManager.instance.globalScript.sideResistance;
                     outcomeDetails.textTop = builderTop.ToString();
                     outcomeDetails.textBottom = builderBottom.ToString();
+                    //help tags
+                    if (listOfHelpTags.Count > 0)
+                    { ProcessOutcomeHelp(outcomeDetails, listOfHelpTags); }
                     //which sprite to use
                     if (isSuccessful == true) { outcomeDetails.sprite = GameManager.instance.guiScript.targetSuccessSprite; }
                     else { outcomeDetails.sprite = GameManager.instance.guiScript.targetFailSprite; }
@@ -2599,7 +2609,33 @@ public class ActionManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", nodeID); }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+    }
 
+    /// <summary>
+    /// Assigns help tags to outcome details. Only the first four tags are taken into account, the rest are ignored
+    /// </summary>
+    /// <param name="details"></param>
+    /// <param name="listOfHelpTags"></param>
+    public void ProcessOutcomeHelp(ModalOutcomeDetails details, List<string> listOfHelpTags)
+    {
+        if (details != null)
+        {
+            if (listOfHelpTags != null)
+            {
+                for (int index = 0; index < listOfHelpTags.Count; index++)
+                {
+                    switch (index)
+                    {
+                        case 0: details.help0 = listOfHelpTags[index]; break;
+                        case 1: details.help1 = listOfHelpTags[index]; break;
+                        case 2: details.help2 = listOfHelpTags[index]; break;
+                        case 3: details.help3 = listOfHelpTags[index]; break;
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfHelpTags (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid ModalOutcomeDetails (Null)"); }
     }
 
     /// <summary>

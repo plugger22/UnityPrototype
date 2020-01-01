@@ -1925,13 +1925,24 @@ public class EffectManager : MonoBehaviour
                             Organisation org = GameManager.instance.dataScript.GetOrganisaton(dataInput.dataName);
                             if (org != null)
                             {
-                                if (effect.operand.name.Equals("Subtract", StringComparison.Ordinal) == true)
+                                switch (effect.operand.name)
                                 {
-                                    org.isContact = false;
-                                    effectReturn.bottomText = string.Format("{0}{1} break off contact{2}", colourBad, org.tag, colourEnd);
-                                    Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");
+                                    case "Add":
+                                        org.isContact = true;
+                                        effectReturn.bottomText = string.Format("{0}{1} make contact{2}", colourGood, org.tag, colourEnd);
+                                        effectReturn.listOfHelpTags.Add("org_0");
+                                        effectReturn.listOfHelpTags.Add("org_1");
+                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");
+                                        break;
+                                    case "Subtract":
+                                        org.isContact = false;
+                                        effectReturn.bottomText = string.Format("{0}{1} break off contact{2}", colourBad, org.tag, colourEnd);
+                                        effectReturn.listOfHelpTags.Add("org_2");
+                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" in contact with Player {1}", org.tag, "\n");
+                                        break;
+                                    default:
+                                        Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\"", effect.operand.name); break;
                                 }
-                                else { Debug.LogWarningFormat("Invalid operand \"{0}\" for OrgContact effect (should be Subtract)", effect.operand.name); }
                             }
                             else { Debug.LogWarningFormat("Invalid org (Null) for dataInput.dataName \"{0}\"", dataInput.dataName); }
                         }
@@ -5044,7 +5055,7 @@ public class EffectManager : MonoBehaviour
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 builder.Append(effectReturn.bottomText);
                             }
-                            
+
                             //message
                             string text = string.Format("{0} revealed \"{1}\" secret{2}", org.tag, secret.tag, "\n");
                             GameManager.instance.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");

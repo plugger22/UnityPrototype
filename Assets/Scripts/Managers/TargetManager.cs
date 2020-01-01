@@ -62,7 +62,7 @@ public class TargetManager : MonoBehaviour
     [HideInInspector] public int ActiveTargets;
     [HideInInspector] public int LiveTargets;
     [HideInInspector] public int MaxTargets;
-    [HideInInspector] public Organisation targetOrg;                                           //Organisation dynamically chosen to make contact with Player this level via a target
+    [HideInInspector] public string targetOrgName;                                       //Organisation.name dynamically chosen to make contact with Player this level via a target
     #endregion
 
     private List<TargetFactors> listOfFactors = new List<TargetFactors>();              //used to ensure target calculations are consistent across methods
@@ -739,7 +739,7 @@ public class TargetManager : MonoBehaviour
                             if (node != null)
                             {
                                 //assign Organisation to global so it can be referenced when target is successfully completed
-                                targetOrg = org;
+                                targetOrgName = org.name;
                                 //set up target
                                 Target target = mission.targetOrganisation;
                                 //need to reset back to -1 otherwise SetTargetDetails will think it's already been assigned
