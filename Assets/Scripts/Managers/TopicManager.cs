@@ -2512,6 +2512,14 @@ public class TopicManager : MonoBehaviour
                     InitialiseTopicUI();
                 }
             }
+            else
+            {
+                //Captured
+                if (CheckPlayerCaptured(playerSide) == true)
+                {
+
+                }
+            }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
@@ -4137,6 +4145,37 @@ public class TopicManager : MonoBehaviour
                 break;
         }
         return isValid;
+    }
+    #endregion
+
+    #region CheckPlayerCaptured
+    /// <summary>
+    /// returns true if human player is captured, false otherwise. Method assumes player status 'Inactive'
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPlayerCaptured(GlobalSide playerSide)
+    {
+        switch (playerSide.level)
+        {
+            case 1:
+                if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                {
+                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                    { return true; }
+                }
+                break;
+            case 2:
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                {
+                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                    { return true; }
+                }
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", playerSide);
+                break;
+        }
+        return false;
     }
     #endregion
 
