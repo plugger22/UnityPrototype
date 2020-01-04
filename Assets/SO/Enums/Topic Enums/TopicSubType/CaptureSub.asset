@@ -20,5 +20,6 @@ MonoBehaviour:
   groupType: {fileID: 11400000, guid: 80689d85dbfe52942b14d75bff299e89, type: 2}
   isBoss: 0
   listOfSubSubType: []
-  listOfCriteria: []
-  minInterval: 4
+  listOfCriteria:
+  - {fileID: 11400000, guid: 40724b463e703e845ba30eb20c24d8b2, type: 2}
+  minInterval: 0

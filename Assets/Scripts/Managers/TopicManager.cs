@@ -2849,10 +2849,8 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-            TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
             TopicUIData data = new TopicUIData();
-
-            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
+            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseCaptureTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
 
             //use normal or debug topic
             if (turnTopic != null)

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: CapRes0Opt3
   m_EditorClassIdentifier: 
-  descriptor: 
-  tag: Capture 0 option 3
-  text: 
+  descriptor: Capture 0 option 3
+  tag: Escape
+  text: Ask the [org] to rescue you
   topic: {fileID: 11400000, guid: ff4d0e5e524cec54eb5a83e8dc08f963, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

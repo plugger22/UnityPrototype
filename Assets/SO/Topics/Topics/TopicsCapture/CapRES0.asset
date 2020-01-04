@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: CapRES0
   m_EditorClassIdentifier: 
   tag: Capture 0
-  text: Unknown
-  designNotes: 
+  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
+    It questions you
+  designNotes: Captured, Innocence 3 stars, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
   subSubType: {fileID: 0}
@@ -24,8 +25,10 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0e8efc8f93ab63d4e9f786f2ee7fcb16, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 0179cd12aca681e41ab3d4942e0e2521, type: 2}
   - {fileID: 11400000, guid: 35175244ec60aad42991943ef29c6b19, type: 2}
@@ -35,12 +38,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 0
+  status: 2
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 18
   turnsDone: 0

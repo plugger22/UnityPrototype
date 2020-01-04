@@ -1138,6 +1138,26 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.status != ActorStatus.Captured)
                                                 { BuildString(result, string.Format("Player not Captured{0}", "\n")); }
                                                 break;
+                                            case "InnocenceHigh":
+                                                //Player Innocence at 3 stars exactly
+                                                if (GameManager.instance.playerScript.Innocence != 3)
+                                                { BuildString(result, string.Format("Innocence not 3 stars{0}", "\n")); }
+                                                break;
+                                            case "InnocenceMedium":
+                                                //Player Innocence at 2 stars exactly
+                                                if (GameManager.instance.playerScript.Innocence != 2)
+                                                { BuildString(result, string.Format("Innocence not 2 stars{0}", "\n")); }
+                                                break;
+                                            case "InnocenceLow":
+                                                //Player Innocence at 1 star exactly
+                                                if (GameManager.instance.playerScript.Innocence != 1)
+                                                { BuildString(result, string.Format("Innocence not 1 star{0}", "\n")); }
+                                                break;
+                                            case "InnocenceZero":
+                                                //Player Innocence at 0 stars exactly
+                                                if (GameManager.instance.playerScript.Innocence != 0)
+                                                { BuildString(result, string.Format("Innocence not 0 stars{0}", "\n")); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
@@ -3680,6 +3700,19 @@ public class EffectManager : MonoBehaviour
                             break;
                     }
                     break;
+                case "Innocence":
+                    switch (effect.operand.name)
+                    {
+                        case "Add":
+                            GameManager.instance.playerScript.Innocence++;
+                            effectResolve.bottomText = string.Format("{0}Player gains +1 Innocence{1}", colourEffect, colourEnd);
+                            break;
+                        case "Subtract":
+                            GameManager.instance.playerScript.Innocence--;
+                            effectResolve.bottomText = string.Format("{0}Player loses -1 Innocence{1}", colourEffect, colourEnd);
+                            break;
+                    }
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
                     break;
@@ -4028,6 +4061,9 @@ public class EffectManager : MonoBehaviour
                 break;
             case "InvestigationDropped":
                 effectResolve.bottomText = GameManager.instance.playerScript.DropInvestigation(dataTopic.investigationRef);
+                break;
+            case "Innocence":
+                effectResolve = ResolvePlayerData(effect, dataInput);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

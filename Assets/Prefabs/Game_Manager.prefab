@@ -948,6 +948,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ab9a47a6f94cff4885958aeb0b9ee9f, type: 2}
   - {fileID: 11400000, guid: 40724b463e703e845ba30eb20c24d8b2, type: 2}
   - {fileID: 11400000, guid: a2604757b4a280a4bab8521ec9a73286, type: 2}
+  - {fileID: 11400000, guid: 0e8efc8f93ab63d4e9f786f2ee7fcb16, type: 2}
+  - {fileID: 11400000, guid: 0d2589c2077b50148808d7f577666c60, type: 2}
+  - {fileID: 11400000, guid: 78503e1d1f0bcd74fb92c88168771f22, type: 2}
+  - {fileID: 11400000, guid: 13a9a5812df64ae46982fae96c244170, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1122,6 +1126,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d2b88620c7dabff47829393519f6f52b, type: 2}
   - {fileID: 11400000, guid: 8d0ad11b6d3bb364b9a409a6fd368a62, type: 2}
   - {fileID: 11400000, guid: 454de3e4585fce749a2c12f657145564, type: 2}
+  - {fileID: 11400000, guid: cd399028ad1f4314e9a23dea6bd8efeb, type: 2}
+  - {fileID: 11400000, guid: e6b6f682e0669db48b21ff0680dc1025, type: 2}
+  - {fileID: 11400000, guid: 479618fc77e9fcf4095023e6c0741209, type: 2}
+  - {fileID: 11400000, guid: 5f52394f8e9ebb54ab8e6237b2bf8446, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -1216,6 +1224,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af4753f5a9aaa904fa465ef53ef818a1, type: 2}
   - {fileID: 11400000, guid: 995acb1eade2e594fa277733cf197096, type: 2}
   - {fileID: 11400000, guid: 3086fab8f7e954342abaef0f7b39d229, type: 2}
+  - {fileID: 11400000, guid: 5ec995cd38ede754dba2919611cea50f, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1918,6 +1927,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 560f652ba1050c047a1072fceb82d3b4, type: 2}
   - {fileID: 11400000, guid: 729d421dc6a8e434eafae95199d8b89e, type: 2}
   - {fileID: 11400000, guid: 6ea448fe449d0c542a77c06705961e0f, type: 2}
+  - {fileID: 11400000, guid: 01c97c2db5e396c46980188c1656a1f1, type: 2}
+  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
