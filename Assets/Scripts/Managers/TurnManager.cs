@@ -280,6 +280,11 @@ public class TurnManager : MonoBehaviour
                 //start the new turn
                 StartTurnEarly();
                 StartTurnLate();
+
+                /*//Debug
+                if (Turn == 22)
+                { GameManager.instance.playerScript.Innocence = -1; }*/
+
                 /*//Debug
                 GameManager.instance.dataScript.DebugCheckConnectionSecurity();*/
 
@@ -967,6 +972,9 @@ public class TurnManager : MonoBehaviour
             case WinReasonCampaign.DoomTimerMin:
             case WinReasonCampaign.MainGoal:
                 sprite = GameManager.instance.guiScript.firedSprite;
+                break;
+            case WinReasonCampaign.Innocence:
+                sprite = GameManager.instance.guiScript.prisonSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);

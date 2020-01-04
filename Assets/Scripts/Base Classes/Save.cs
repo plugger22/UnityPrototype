@@ -183,6 +183,7 @@ public class SavePlayerData
 {
     public int renown;
     public int Invisibility;
+    public int Innocence;
     public int mood;
     public ActorStatus status;
     public ActorTooltip tooltipStatus;

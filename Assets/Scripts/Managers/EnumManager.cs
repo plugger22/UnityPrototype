@@ -13,7 +13,7 @@
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
     public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
     public enum WinStateCampaign { None, Authority, Resistance }
-    public enum WinReasonCampaign { None, DoomTimerMin, Commendations, BlackMarks, MainGoal}
+    public enum WinReasonCampaign { None, DoomTimerMin, Commendations, BlackMarks, MainGoal, Innocence}
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   
     public enum SideState { None, AI, Human }                                                                           //who's running the side
     public enum MetaLevel { None, City, State, Nation }

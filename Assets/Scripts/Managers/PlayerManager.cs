@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
     private string _playerNameResistance;
     private string _playerNameAuthority;
     private int _invisibility;
+    private int _innocence;
 
 
     //for fast access
@@ -170,6 +171,32 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// How innocent the Authority see the resistance human/AI player when captured (3 is innocent, eg. low level operative, 0 is guilty, eg. high level commander)
+    /// </summary>
+    public int Innocence
+    {
+        get { return _innocence; }
+        set
+        {
+            if (value < 0)
+            {
+                //fail state for level
+                string text = "Unknown";
+                switch (GameManager.instance.sideScript.PlayerSide.level)
+                {
+                    case 1: text = GameManager.instance.colourScript.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
+                    case 2: text = GameManager.instance.colourScript.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
+                    default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+                }
+                GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
+            }
+            value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+            Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Innocence changed from {0} to {1}{2}", _innocence, value, "\n");
+            _innocence = value;
+        }
+    }
+
 
     /// <summary>
     /// Not for GameState.LoadGame
@@ -232,6 +259,8 @@ public class PlayerManager : MonoBehaviour
         personality.SetFactors(arrayOfFactors);
         //sex -> DEBUG (placeholder)
         sex = ActorSex.Male;
+        //maximum innocence at start of campaign
+        Innocence = 3;
         //set initial default value for drug stress immunity
         stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
     }
@@ -2238,6 +2267,7 @@ public class PlayerManager : MonoBehaviour
         { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }
         builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
         builder.AppendFormat(" Mood {0}{1}", mood, "\n");
+        builder.AppendFormat(" Innocence {0}{1}", Innocence, "\n");
         if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
         //Conditions
         if (listOfConditions != null)

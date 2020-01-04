@@ -296,6 +296,7 @@ public class FileManager : MonoBehaviour
         write.playerData.status = GameManager.instance.playerScript.status;
         write.playerData.sex = GameManager.instance.playerScript.sex;
         write.playerData.Invisibility = GameManager.instance.playerScript.Invisibility;
+        write.playerData.Innocence = GameManager.instance.playerScript.Innocence;
         write.playerData.mood = GameManager.instance.playerScript.GetMood();
         write.playerData.tooltipStatus = GameManager.instance.playerScript.tooltipStatus;
         write.playerData.inactiveStatus = GameManager.instance.playerScript.inactiveStatus;
@@ -1789,6 +1790,7 @@ public class FileManager : MonoBehaviour
     {
         GameManager.instance.playerScript.Renown = read.playerData.renown;
         GameManager.instance.playerScript.Invisibility = read.playerData.Invisibility;
+        GameManager.instance.playerScript.Innocence = read.playerData.Innocence;
         GameManager.instance.playerScript.sex = read.playerData.sex;
         GameManager.instance.playerScript.SetMood(read.playerData.mood);
         GameManager.instance.playerScript.status = read.playerData.status;
