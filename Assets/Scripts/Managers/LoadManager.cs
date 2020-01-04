@@ -119,6 +119,7 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsCity;
     public TopicOption[] arrayOfOptionsFamily;
     public TopicOption[] arrayOfOptionsHQ;
+    public TopicOption[] arrayOfOptionsCapture;
     public TopicOption[] arrayOfOptionsPlayerConditions;
     public TopicOption[] arrayOfOptionsPlayerDistrict;
     public TopicOption[] arrayOfOptionsPlayerGeneral;
@@ -262,6 +263,7 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsCity);
         listOfOptions.AddRange(arrayOfOptionsFamily);
         listOfOptions.AddRange(arrayOfOptionsHQ);
+        listOfOptions.AddRange(arrayOfOptionsCapture);
         listOfOptions.AddRange(arrayOfOptionsPlayerConditions);
         listOfOptions.AddRange(arrayOfOptionsPlayerDistrict);
         listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);

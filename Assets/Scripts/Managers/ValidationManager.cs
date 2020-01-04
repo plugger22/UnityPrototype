@@ -54,6 +54,11 @@ public class ValidationManager : MonoBehaviour
     public TopicSubType hqSubType;
 
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicType captureType;
+    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
+    public TopicSubType captureSubType;
+
+    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType actorType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType actorContactSubType;
@@ -311,6 +316,18 @@ public class ValidationManager : MonoBehaviour
         }
         else
         { Debug.LogError("Invalid hqType (Null)"); }
+        //subType checks -> Capture
+        if (captureType != null)
+        {
+            if (captureSubType != null)
+            {
+                if (captureType.listOfSubTypes.Exists(x => x.name.Equals(captureSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: captureSubType \"{0}\" Does Not Match captureType \"{1}\"{2}", captureSubType.name, captureType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid captureSubType (Null)"); }
+        }
+        else
+        { Debug.LogError("Invalid captureType (Null)"); }
         //subType checks -> Player
         if (playerType != null)
         {
@@ -1248,6 +1265,9 @@ public class ValidationManager : MonoBehaviour
                         //HQ Pool
                         if (campaign.hqPool != null)
                         { CheckCampaignPool(campaign, campaign.hqPool, hqSubType); }
+                        //Capture Pool
+                        if (campaign.capturePool != null)
+                        { CheckCampaignPool(campaign, campaign.capturePool, captureSubType); }
                         //Actor Contact Pool
                         if (campaign.actorContactPool != null)
                         { CheckCampaignPool(campaign, campaign.actorContactPool, actorContactSubType); }

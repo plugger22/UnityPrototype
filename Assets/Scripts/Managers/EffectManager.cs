@@ -1293,6 +1293,9 @@ public class EffectManager : MonoBehaviour
                                             case "TopicHQ":
                                                 isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.hqType, turn);
                                                 break;
+                                            case "TopicCapture":
+                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.captureType, turn);
+                                                break;
                                             case "TopicRebel":
                                                 isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.resistanceType, turn);
                                                 break;

@@ -44,6 +44,7 @@ MonoBehaviour:
   playerConditionsPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2,
     type: 2}
   hqPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
+  capturePool: {fileID: 11400000, guid: f5af3e9430322d74a91e30d1fa2b65d9, type: 2}
   orgCurePool: {fileID: 11400000, guid: 8576fbf5564b74f40997ee1a242c5749, type: 2}
   orgContractPool: {fileID: 11400000, guid: e01be89429dd3c5429cc0bc6bf9871cd, type: 2}
   orgHQPool: {fileID: 11400000, guid: a5a93a3518eeade4d9de318ffa99e51f, type: 2}

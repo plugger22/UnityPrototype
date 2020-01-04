@@ -64,7 +64,7 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType authorityType;
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
-    public TopicType organisationType;
+    public TopicType captureType;
 
     [Header("TopicSubTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -339,7 +339,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
         Debug.Assert(authorityType != null, "Invalid authorityType (Null)");
-        Debug.Assert(organisationType != null, "Invalid organisationType (Null)");
+        Debug.Assert(captureType != null, "Invalid captureType (Null)");
         Debug.Assert(actorDistrictSubType != null, "Invalid actorDistrictSubType (Null)");
         Debug.Assert(playerDistrictSubType != null, "Invalid playerDistrictSubType (Null)");
         Debug.Assert(authorityTeamSubType != null, "Invalid authorityTeamSubType (Null)");
@@ -798,6 +798,19 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "CaptureSub":
+                                                        if (campaign.capturePool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.capturePool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.capturePool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.capturePool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.capturePool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     case "OrgCure":
                                                         if (campaign.orgCurePool != null)
                                                         {
@@ -1216,7 +1229,7 @@ public class TopicManager : MonoBehaviour
         if (GameManager.instance.playerScript.status == ActorStatus.Captured)
         {
             //Add org type, if valid. NOTE: All org subTypes have criteria re: capture so that only one activates, eg. orgEmergency
-            TopicType topicType = organisationType;
+            TopicType topicType = captureType;
             TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
             CheckForValidSubType(topicType, topicTypeData, turn);
         }
@@ -1290,6 +1303,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckForValidSubType
     /// <summary>
     /// subMethod for CheckForValidTopicTyes, handles all subType checks, auto adds topicType to listOfTopicTypesTurn if O.K
     /// </summary>
@@ -1345,6 +1359,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topicTypeData (Null)"); }
     }
+    #endregion
 
     #region ResetTopicAdmin
     /// <summary>
@@ -1553,6 +1568,11 @@ public class TopicManager : MonoBehaviour
                     case "ResistanceCampaign":
                     case "ResistanceGeneral":
                     case "HQSub":
+                        //based on faction Approval
+                        group = GetGroupApproval(GameManager.instance.factionScript.ApprovalResistance);
+                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
+                        break;
+                    case "CaptureSub":
                         //based on faction Approval
                         group = GetGroupApproval(GameManager.instance.factionScript.ApprovalResistance);
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
@@ -2586,17 +2606,14 @@ public class TopicManager : MonoBehaviour
             }
             else
             {
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                //Resistance player Captured
+                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
                 {
-                    //Resistance player Captured
-                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                    //valid topic selected, ignore otherwise
+                    if (turnTopic != null)
                     {
-                        //valid topic selected, ignore otherwise
-                        if (turnTopic != null)
-                        {
-                            //prepare and send data to topicUI.cs
-                            InitialiseCaptureTopicUI();
-                        }
+                        //prepare and send data to topicUI.cs
+                        InitialiseCaptureTopicUI();
                     }
                 }
             }
