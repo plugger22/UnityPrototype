@@ -1128,6 +1128,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.CheckIfInvestigationTimer() == false)
                                                 { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
                                                 break;
+                                            case "PlayerCapturedNo":
+                                                //Player (Human) not captured
+                                                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                                                { BuildString(result, string.Format("Player Captured{0}", "\n")); }
+                                                break;
+                                            case "PlayerCapturedYes":
+                                                //Player (Human) not captured
+                                                if (GameManager.instance.playerScript.status != ActorStatus.Captured)
+                                                { BuildString(result, string.Format("Player not Captured{0}", "\n")); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

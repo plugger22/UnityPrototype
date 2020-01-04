@@ -63,6 +63,8 @@ public class TopicManager : MonoBehaviour
     public TopicType playerType;
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
     public TopicType authorityType;
+    [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
+    public TopicType organisationType;
 
     [Header("TopicSubTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -337,6 +339,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
         Debug.Assert(authorityType != null, "Invalid authorityType (Null)");
+        Debug.Assert(organisationType != null, "Invalid organisationType (Null)");
         Debug.Assert(actorDistrictSubType != null, "Invalid actorDistrictSubType (Null)");
         Debug.Assert(playerDistrictSubType != null, "Invalid playerDistrictSubType (Null)");
         Debug.Assert(authorityTeamSubType != null, "Invalid authorityTeamSubType (Null)");
@@ -967,7 +970,7 @@ public class TopicManager : MonoBehaviour
     //  - - - Select Topic - - -
     //   
 
-    #region SelectTopic method
+    #region SelectTopic
     /// <summary>
     /// Selects a topic for the turn (there will always be one)
     /// </summary>
@@ -1199,80 +1202,149 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region CheckForValidTopicType
+    #region CheckForValidTopicTypes
     /// <summary>
     /// Check all level topic types to see if they are valid for the Turn. Updates listOfTopicTypesTurn with valid topicTypes
     /// TopicType.side already taken into account with listOfTopicTypesLevel
     /// </summary>
     private void CheckForValidTopicTypes()
     {
+        int turn = GameManager.instance.turnScript.Turn;
         //clear list at start of selection (not done in ResetTopicAdmin as it should only be done once at start, not every iteration inside the selection loop
         listOfTopicTypesTurn.Clear();
-        //by value, not reference, as you'll be passing them onto listOfTopicTypesTurn and removing occasionally
-        List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.instance.dataScript.GetListOfTopicTypesLevel());
-        if (listOfTopicTypesLevel != null)
+        //special case of resistance player being captured
+        if (GameManager.instance.playerScript.status == ActorStatus.Captured)
         {
-            string criteriaCheck;
-            int turn = GameManager.instance.turnScript.Turn;
-            //loop list of Topic Types
-            foreach (TopicType topicType in listOfTopicTypesLevel)
+            //Add org type, if valid. NOTE: All org subTypes have criteria re: capture so that only one activates, eg. orgEmergency
+            TopicType topicType = organisationType;
+            TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+            CheckForValidSubType(topicType, topicTypeData, turn);
+        }
+        //no valid capture topic found
+        if (listOfTopicTypesTurn.Count == 0)
+        {
+            //by value, not reference, as you'll be passing them onto listOfTopicTypesTurn and removing occasionally
+            List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.instance.dataScript.GetListOfTopicTypesLevel());
+            if (listOfTopicTypesLevel != null)
             {
-                TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
-                if (topicTypeData != null)
+                //loop list of Topic Types
+                foreach (TopicType topicType in listOfTopicTypesLevel)
                 {
-                    //check topicTypeData
-                    if (CheckTopicTypeData(topicTypeData, turn) == true)
+                    TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                    CheckForValidSubType(topicType, topicTypeData, turn);
+
+                    /*
+                    if (topicTypeData != null)
                     {
-                        //check individual topicType criteria
-                        CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                        { listOfCriteria = topicType.listOfCriteria };
-                        criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                        if (criteriaCheck == null)
+                        //check topicTypeData
+                        if (CheckTopicTypeData(topicTypeData, turn) == true)
                         {
-                            //get list of SubTypes
-                            List<TopicSubType> listOfSubTypes = topicType.listOfSubTypes;
-                            if (listOfSubTypes != null)
+                            //check individual topicType criteria
+                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                            { listOfCriteria = topicType.listOfCriteria };
+                            criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                            if (criteriaCheck == null)
                             {
-                                bool isProceed = false;
-                                //topicType needs to have at least one valid subType present
-                                foreach (TopicSubType subType in listOfSubTypes)
+                                //get list of SubTypes
+                                List<TopicSubType> listOfSubTypes = topicType.listOfSubTypes;
+                                if (listOfSubTypes != null)
                                 {
-                                    if (CheckSubTypeCriteria(subType) == true)
+                                    bool isProceed = false;
+                                    //topicType needs to have at least one valid subType present
+                                    foreach (TopicSubType subType in listOfSubTypes)
                                     {
-                                        isProceed = true;
-                                        break;
+                                        if (CheckSubTypeCriteria(subType) == true)
+                                        {
+                                            isProceed = true;
+                                            break;
+                                        }
+                                    }
+                                    //valid topicType / subType, add to selection pool
+                                    if (isProceed == true)
+                                    {
+                                        //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
+                                        AddTopicTypeToList(listOfTopicTypesTurn, topicType);
+                                        Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
                                     }
                                 }
-                                //valid topicType / subType, add to selection pool
-                                if (isProceed == true)
-                                {
+                                else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
 
-                                    /*listOfTopicTypesTurn.Add(topicType);*/
-
-                                    //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
-                                    AddTopicTypeToList(listOfTopicTypesTurn, topicType);
-                                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
-                                }
                             }
-                            else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
+                            else
+                            {
+                                //criteria check FAILED
 
+                                //generate message explaining why criteria failed -> debug only, spam otherwise
+                                Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
+                            }
                         }
-                        else
-                        {
-                            //criteria check FAILED
-
-                            //generate message explaining why criteria failed -> debug only, spam otherwise
-                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
-                        }
+                        else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
                     }
-                    else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
+                    else { Debug.LogError("Invalid topicTypeData (Null)"); }
+                    */
+
                 }
-                else { Debug.LogError("Invalid topicTypeData (Null)"); }
             }
+            else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         }
-        else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
     }
     #endregion
+
+    /// <summary>
+    /// subMethod for CheckForValidTopicTyes, handles all subType checks, auto adds topicType to listOfTopicTypesTurn if O.K
+    /// </summary>
+    /// <param name="topicTypeData"></param>
+    private void CheckForValidSubType(TopicType topicType, TopicTypeData topicTypeData, int turn)
+    {
+        string criteriaCheck;
+        if (topicTypeData != null)
+        {
+            //check topicTypeData
+            if (CheckTopicTypeData(topicTypeData, turn) == true)
+            {
+                //check individual topicType criteria
+                CriteriaDataInput criteriaInput = new CriteriaDataInput()
+                { listOfCriteria = topicType.listOfCriteria };
+                criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                if (criteriaCheck == null)
+                {
+                    //get list of SubTypes
+                    List<TopicSubType> listOfSubTypes = topicType.listOfSubTypes;
+                    if (listOfSubTypes != null)
+                    {
+                        bool isProceed = false;
+                        //topicType needs to have at least one valid subType present
+                        foreach (TopicSubType subType in listOfSubTypes)
+                        {
+                            if (CheckSubTypeCriteria(subType) == true)
+                            {
+                                isProceed = true;
+                                break;
+                            }
+                        }
+                        //valid topicType / subType, add to selection pool
+                        if (isProceed == true)
+                        {
+                            //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
+                            AddTopicTypeToList(listOfTopicTypesTurn, topicType);
+                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
+
+                }
+                else
+                {
+                    //criteria check FAILED
+
+                    //generate message explaining why criteria failed -> debug only, spam otherwise
+                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
+                }
+            }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
+        }
+        else { Debug.LogError("Invalid topicTypeData (Null)"); }
+    }
 
     #region ResetTopicAdmin
     /// <summary>
@@ -2508,16 +2580,24 @@ public class TopicManager : MonoBehaviour
                         ProcessTopicAdmin();
                     }*/
 
-                    //prepare and send data to topicUI.cs
+                    //prepare and send data to topicUI.cs, normal, non-capture, topics
                     InitialiseTopicUI();
                 }
             }
             else
             {
-                //Captured
-                if (CheckPlayerCaptured(playerSide) == true)
+                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
                 {
-
+                    //Resistance player Captured
+                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                    {
+                        //valid topic selected, ignore otherwise
+                        if (turnTopic != null)
+                        {
+                            //prepare and send data to topicUI.cs
+                            InitialiseCaptureTopicUI();
+                        }
+                    }
                 }
             }
         }
@@ -2526,6 +2606,7 @@ public class TopicManager : MonoBehaviour
     #endregion
 
     #region InitialiseTopicUI
+
     /// <summary>
     /// Sends data to topicUI ready for use when activated by GUIManager.cs Pipeline
     /// </summary>
@@ -2708,6 +2789,108 @@ public class TopicManager : MonoBehaviour
                                 }
 
 
+                            }
+                            else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
+                        }
+
+                        //NodeID, needed to toggle 'Show Me' button
+                        data.nodeID = tagNodeID;
+                        //sprite & sprite tooltip (needs to be AFTER ProcessSpecialTopicData)
+                        InitialiseSprite(data);
+                        data.spriteMain = turnSprite;
+                        //everything checks out O.K
+                        if (isProceed == true)
+                        {
+                            //final tag removal for topic text
+                            data.text = CheckTopicText(data.text);
+                            //ignore button tooltip
+                            InitialiseIgnoreTooltip(data);
+                            //boss details (sprite and tooltip)
+                            if (turnTopic.subType.isBoss == true)
+                            { InitialiseBossDetails(data); }
+                            //send to TopicUI
+                            GameManager.instance.topicDisplayScript.InitialiseData(data);
+                        }
+                        else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
+                    }
+                }
+                else
+                { Debug.LogWarningFormat("Invalid listOfOptions (Null or Empty) for topic \"{0}\" -> No topic this turn", turnTopic.name); }
+            }
+            else { Debug.LogError("Invalid topic (Null) normal, or debug"); }
+        }
+        //no need for error message as possible that may equal null and all that happens is that a topic isn't generated this turn
+    }
+    #endregion
+
+    #region InitialiseCaptureTopicUI
+    /// <summary>
+    /// Sends data to topicUI ready for use when activated by GUIManager.cs Pipeline -> Specifically for case of Resistance Player Captured
+    /// NOTE: Same as InitialiseTopicUI but special case (PlayerGeneral and DebugTopics) have been stripped out. Done this way for clarity
+    /// </summary>
+    private void InitialiseCaptureTopicUI()
+    {
+        if (turnTopic != null)
+        {
+            TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
+            TopicUIData data = new TopicUIData();
+
+            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
+
+            //use normal or debug topic
+            if (turnTopic != null)
+            {
+                data.topicName = turnTopic.name;
+                data.header = turnTopic.tag;
+                data.text = turnTopic.text;
+                data.isBoss = turnTopic.subType.isBoss;
+                data.listOfOptions = turnTopic.listOfOptions;
+                data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
+                //subSubType
+                turnTopicSubSubType = turnTopic.subSubType;
+                //topic must have at least one option
+                if (data.listOfOptions != null && data.listOfOptions.Count > 0)
+                {
+                    bool isProceed = true;
+                    //topic specific conditions may require topic tag data to be updated
+                    if (turnTopic.listOfCriteria.Count > 0)
+                    {
+                        if (ProcessSpecialTopicData() == true)
+                        { isProceed = true; }
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid ProcessSpecialTopicData (FAILED) for topic \"{0}\"", turnTopic.name);
+                            isProceed = false;
+                        }
+                    }
+                    //
+                    // - - - options
+                    //
+                    if (isProceed == true)
+                    {
+                        isProceed = false;
+                        string colourOption;
+                        for (int i = 0; i < data.listOfOptions.Count; i++)
+                        {
+                            TopicOption option = data.listOfOptions[i];
+                            if (option != null)
+                            {
+                                colourOption = colourNeutral;
+                                ///Normal -> check any criteria
+                                if (CheckOptionCriteria(option) == true)
+                                {
+                                    //initialise option tooltips
+                                    if (InitialiseOptionTooltip(option) == true)
+                                    { isProceed = true; }
+                                }
+                                else
+                                {
+                                    //criteria checked failed
+                                    isProceed = true;
+                                    colourOption = colourGrey;
+                                }
+                                //colourFormat textToDisplay
+                                option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -4145,37 +4328,6 @@ public class TopicManager : MonoBehaviour
                 break;
         }
         return isValid;
-    }
-    #endregion
-
-    #region CheckPlayerCaptured
-    /// <summary>
-    /// returns true if human player is captured, false otherwise. Method assumes player status 'Inactive'
-    /// </summary>
-    /// <returns></returns>
-    private bool CheckPlayerCaptured(GlobalSide playerSide)
-    {
-        switch (playerSide.level)
-        {
-            case 1:
-                if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
-                {
-                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-                    { return true; }
-                }
-                break;
-            case 2:
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
-                {
-                    if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-                    { return true; }
-                }
-                break;
-            default:
-                Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", playerSide);
-                break;
-        }
-        return false;
     }
     #endregion
 

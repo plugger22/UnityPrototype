@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: OrgEmerRes0Opt3
+  m_Name: OrgEmerRes3Opt3
   m_EditorClassIdentifier: 
-  descriptor: Org Emergency Res0 Option 3
+  descriptor: Org Emergency Res3 Option 3
   tag: dd
   text: dd
-  topic: {fileID: 11400000, guid: 09ea51427f3ce5949ab00e0b6434626c, type: 2}
+  topic: {fileID: 11400000, guid: 71ce2b94cdcc5cf43bd58767459ecc0b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
@@ -30,4 +30,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

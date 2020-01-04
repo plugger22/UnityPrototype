@@ -417,6 +417,7 @@ MonoBehaviour:
   ActiveTargets: 0
   LiveTargets: 0
   MaxTargets: 0
+  targetOrgName: 
 --- !u!114 &114235583355878038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -944,6 +945,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d2c6fd96b5d7e7b4096e4bc9d5acc9ac, type: 2}
   - {fileID: 11400000, guid: 559728a94edcd0f4e948a38a3746fd29, type: 2}
   - {fileID: 11400000, guid: 0e9183708b6004e4388a7348d631acf6, type: 2}
+  - {fileID: 11400000, guid: 4ab9a47a6f94cff4885958aeb0b9ee9f, type: 2}
+  - {fileID: 11400000, guid: 40724b463e703e845ba30eb20c24d8b2, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1115,6 +1118,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc4d8b84bc2b9344ab58b7e1fa0518c9, type: 2}
   - {fileID: 11400000, guid: 7ada6c5183f03564388f7b4a6771b82c, type: 2}
   - {fileID: 11400000, guid: e2b3a685067776345b4f8b1bbfd3bc24, type: 2}
+  - {fileID: 11400000, guid: d2b88620c7dabff47829393519f6f52b, type: 2}
+  - {fileID: 11400000, guid: 8d0ad11b6d3bb364b9a409a6fd368a62, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -4340,9 +4345,9 @@ MonoBehaviour:
   moodStart: 2
   moodReset: 3
   maxInvestigations: 3
-  chanceInvestigation: 100
-  chanceEvidence: 65
-  timerInvestigationBase: 3
+  chanceInvestigation: 50
+  chanceEvidence: 5
+  timerInvestigationBase: 5
   investHQApproval: 2
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
   actorID: 999
@@ -4502,6 +4507,7 @@ MonoBehaviour:
     type: 3}
   topicOptionInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
     type: 3}
+  prisonSprite: {fileID: 21300000, guid: 616f6a3097c42ec47884a778934b7a5a, type: 3}
   moodStar0: {fileID: 21300000, guid: 8f46e6ebee0e4b242984a8eac9da89bd, type: 3}
   moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
   moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
@@ -4773,6 +4779,7 @@ MonoBehaviour:
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}
+  organisationType: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   actorDistrictSubType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558,
     type: 2}
   playerDistrictSubType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a,
