@@ -5551,6 +5551,34 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("drug", dictOfTags); }
                         break;
+                    case "capture":
+                        //how player status is percieved by Authority when captured
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            {
+                                switch (GameManager.instance.playerScript.Innocence)
+                                {
+                                    case 3: replaceText = string.Format("{0}<b>low level street operative</b>{1}", colourCheckText, colourEnd); break;
+                                    case 2: replaceText = string.Format("{0}<b>mid level organiser</b>{1}", colourCheckText, colourEnd); break;
+                                    case 1: replaceText = string.Format("{0}<b>high level operative</b>{1}", colourCheckText, colourEnd); break;
+                                    case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourCheckText, colourEnd); break;
+                                }
+                            }
+                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                        }
+                        else { CountTextTag("capture", dictOfTags); }
+                        break;
+                    case "innocence":
+                        //player's level of innocence
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>Innocence {1} stars</b>{2}", colourCheckText, GameManager.instance.playerScript.Innocence, colourEnd); }
+                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                        }
+                        else { CountTextTag("innocence", dictOfTags); }
+                        break;
                     case "manP":
                         //man or woman -> Player
                         if (isValidate == false)
