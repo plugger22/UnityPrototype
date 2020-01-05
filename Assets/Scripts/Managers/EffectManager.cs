@@ -3865,6 +3865,17 @@ public class EffectManager : MonoBehaviour
                             effectResolve.isError = true;
                         }
                         break;
+                    case 'R':
+                        //Random Actor
+                        Actor actorRandom = GameManager.instance.dataScript.GetRandomCurrentActor(dataInput.side);
+                        if (actorRandom != null)
+                        { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorRandom); }
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
+                            effectResolve.isError = true;
+                        }
+                        break;
                     case 'L':
                         //All Actors
                         if (ResolveGroupActorEffect(effect, dataInput) == true)
@@ -4082,6 +4093,10 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Innocence":
                 effectResolve = ResolvePlayerData(effect, dataInput);
+                break;
+            case "Released":
+                //player released from captivity
+                effectResolve.bottomText = ExecutePlayerCapture(effect, dataInput);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -5078,6 +5093,26 @@ public class EffectManager : MonoBehaviour
         }
 
         //return
+        return bottomText;
+    }
+
+    /// <summary>
+    /// Player captured (operand Add) or Released (operand Subtract)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private string ExecutePlayerCapture(Effect effect, EffectDataInput data)
+    {
+        string bottomText = "Unknown";
+        switch (effect.operand.name)
+        {
+            case "Subtract":
+                GameManager.instance.captureScript.ReleasePlayer();
+                bottomText = string.Format("{0}Player Released{1}", colourGood, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\"", effect.operand.name); break;
+        }
         return bottomText;
     }
 

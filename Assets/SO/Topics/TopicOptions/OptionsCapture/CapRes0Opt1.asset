@@ -20,8 +20,10 @@ MonoBehaviour:
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 319fe978ed65a114f8a5113a021c53da, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

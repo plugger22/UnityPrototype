@@ -663,5 +663,28 @@ public class CaptureManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Capture player with random team
+    /// </summary>
+    public void DebugCapturePlayer()
+    {
+        //player not already captured
+        if (GameManager.instance.playerScript.status != ActorStatus.Captured)
+        {
+            //get player node
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            if (node != null)
+            {
+                //get default ID 0 team (could be anything)
+                Team team = GameManager.instance.dataScript.GetTeam(0);
+                if (team != null)
+                { CapturePlayer(new CaptureDetails() { node = node, team = team }); }
+                else { Debug.LogError("Invalid team ID 0 (Null)"); }
+            }
+            else { Debug.LogErrorFormat("Invalid player node (Null), ID {0}", GameManager.instance.nodeScript.nodePlayer); }
+        }
+        else { Debug.LogWarning("Player can't be Debug Captured as they are already Captured"); }
+    }
 
+    //new methods above here
 }

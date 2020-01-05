@@ -4591,6 +4591,25 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a randomly selected actor from the current, OnMap, actors (active or inactive). Null if none present
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Actor GetRandomCurrentActor(GlobalSide side)
+    {
+        Actor actor = null;
+        List<Actor> listOfActors = new List<Actor>();
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            if (CheckActorSlotStatus(i, side) == true)
+            { listOfActors.Add(arrayOfActors[side.level, i]); }
+        }
+        if (listOfActors.Count > 0)
+        { actor = listOfActors[Random.Range(0, listOfActors.Count)]; }
+        return actor;
+    }
+
+    /// <summary>
     /// returns array of Stats for an OnMap actor-> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
     /// </summary>
     /// <param name="slotID"></param>

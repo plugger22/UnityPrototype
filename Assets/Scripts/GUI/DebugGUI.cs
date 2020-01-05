@@ -816,9 +816,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //ninth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), optionAIScreamer))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Capture Player" /*optionAIScreamer*/))
             {
-                Debug.Log("[Dbg] Button -> Toggle AI Screamer");
+                /*Debug.Log("[Dbg] Button -> Toggle AI Screamer");
                 if (GameManager.instance.aiScript.CheckAIScreamerStatus() == true)
                 {
                     GameManager.instance.aiScript.SetAIScreamer(false);
@@ -828,7 +828,9 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.aiScript.SetAIScreamer(true);
                     optionAIScreamer = "AIScreamer OFF";
-                }
+                }*/
+                Debug.Log("[Dbg] Button -> Capture Player");
+                GameManager.instance.captureScript.DebugCapturePlayer();
             }
 
 
