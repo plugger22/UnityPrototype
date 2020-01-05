@@ -1814,7 +1814,7 @@ public class EffectManager : MonoBehaviour
                     case "ConditionQuestionable":
                     case "ConditionBlackmailer":
                     case "ConditionStar":
-                    case "ConditionGroupBad":
+                    case "ConditionBad":
                     case "ConditionGroupGood":
                         if (node != null)
                         {
@@ -2417,6 +2417,24 @@ public class EffectManager : MonoBehaviour
                                             renown -= effect.value;
                                             renown = Mathf.Max(0, renown);
                                             actor.Renown = renown;
+                                            break;
+                                        default:
+                                            Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
+                                            break;
+                                    }
+                                    break;
+                                case "Invisibility":
+                                    int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
+                                    switch (effect.operand.name)
+                                    {
+                                        case "Add":
+                                            invisibility += effect.value;
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility, dataInput.originText);
+                                            break;
+                                        case "Subtract":
+                                            invisibility -= effect.value;
+                                            invisibility = Mathf.Max(0, invisibility);
+                                            actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility, dataInput.originText);
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
