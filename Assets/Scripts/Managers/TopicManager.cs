@@ -991,8 +991,8 @@ public class TopicManager : MonoBehaviour
     {
         if (playerSide != null)
         {
-            //Player must be Active
-            if (CheckPlayerStatus(playerSide) == true)
+            //Player must be Active or Captured
+            if (CheckPlayerStatus(playerSide) == true || GameManager.instance.playerScript.status == ActorStatus.Captured)
             {
                 CheckTopics();
                 //select a topic, if none found then drop the global interval by 1 and try again
@@ -1573,9 +1573,8 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     case "CaptureSub":
-                        //based on faction Approval
-                        group = GetGroupApproval(GameManager.instance.factionScript.ApprovalResistance);
-                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
+                        //based on random 50/50 roll
+                        listOfPotentialTopics = GetCaptureTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "FamilyAlpha":
                     case "FamilyBravo":
@@ -2250,6 +2249,40 @@ public class TopicManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
+            listOfTopics.Clear();
+        }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetCaptureTopics
+    /// <summary>
+    /// subType Capture templates selected based on 50/50 random roll. Returns a list of suitable Live topics. Returns Empty if none found
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetCaptureTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+
+        Organisation org = GameManager.instance.campaignScript.campaign.orgEmergency;
+        if (org != null)
+        {
+            tagOrgName = org.name;
+            tagOrgTag = org.tag;
+            tagNodeID = -1;
+            tagActorID = -1;
+            //group based on player's reputation with Organisation
+            group = GetGroupRandom();
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        }
+        else
+        {
+            Debug.LogWarning("Invalid campaign.orgEmergency (Null)");
             listOfTopics.Clear();
         }
         return listOfTopics;
@@ -4046,6 +4079,18 @@ public class TopicManager : MonoBehaviour
         return group;
     }
 
+    /// <summary>
+    /// returns good/bad on a 50/50 random roll
+    /// </summary>
+    /// <returns></returns>
+    private GroupType GetGroupRandom()
+    {
+        GroupType group = GroupType.Good;
+        if (Random.Range(0, 100) < 50)
+        { group = GroupType.Bad; }
+        return group;
+    }
+
     #endregion
 
     #region AddTopicTypeToList
@@ -5559,9 +5604,9 @@ public class TopicManager : MonoBehaviour
                             {
                                 switch (GameManager.instance.playerScript.Innocence)
                                 {
-                                    case 3: replaceText = string.Format("{0}<b>low level street operative</b>{1}", colourCheckText, colourEnd); break;
-                                    case 2: replaceText = string.Format("{0}<b>mid level organiser</b>{1}", colourCheckText, colourEnd); break;
-                                    case 1: replaceText = string.Format("{0}<b>high level operative</b>{1}", colourCheckText, colourEnd); break;
+                                    case 3: replaceText = string.Format("{0}<b>low level street Operative</b>{1}", colourCheckText, colourEnd); break;
+                                    case 2: replaceText = string.Format("{0}<b>mid level Organiser</b>{1}", colourCheckText, colourEnd); break;
+                                    case 1: replaceText = string.Format("{0}<b>high level Operative</b>{1}", colourCheckText, colourEnd); break;
                                     case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourCheckText, colourEnd); break;
                                 }
                             }

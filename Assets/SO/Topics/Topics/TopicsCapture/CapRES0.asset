@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: CapRES0
   m_EditorClassIdentifier: 
-  tag: Capture 0
+  tag: Interrogated
   text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
-    It questions you
+    It has questions
   designNotes: Captured, Innocence 3 stars, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -45,5 +45,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 20
   turnsDone: 0
