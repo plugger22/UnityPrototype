@@ -24,7 +24,7 @@ public class CaptureManager : MonoBehaviour
     [Range(0, 3)] public int releaseInvisibility = 3;
 
     [Header("Detention Period")]
-    [Tooltip("How many turns will the player/actor be held for when Captured")]
+    [Tooltip("How many turns will actor be held for when Captured (Player hard coded)")]
     [Range(1, 10)] public int captureTimerValue = 3;
 
     //fast access
