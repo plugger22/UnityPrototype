@@ -3061,7 +3061,11 @@ public class TopicManager : MonoBehaviour
                 {
                     //probability option and only one effect (which would be mood)
                     if (turnOption.chance != null && listOfEffects.Count == 1)
-                    { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
+                    {
+                        //doesn't apply if ignore mood true as the single effect would be a non-mood one
+                        if (turnOption.isIgnoreMood == false)
+                        { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
+                    }
                     //loop effects
                     foreach (Effect effect in listOfEffects)
                     {
