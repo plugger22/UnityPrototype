@@ -6109,7 +6109,7 @@ public class ActorManager : MonoBehaviour
                 //decrement timer
                 captureTimer--;
                 if (captureTimer <= 0)
-                { GameManager.instance.captureScript.ReleasePlayer(); }
+                { GameManager.instance.captureScript.ReleasePlayer(true); }
                 else
                 { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
                 break;
@@ -6539,7 +6539,7 @@ public class ActorManager : MonoBehaviour
                 //decrement timer
                 captureTimer--;
                 if (captureTimer <= 0)
-                { GameManager.instance.captureScript.ReleasePlayer(); }
+                { GameManager.instance.captureScript.ReleasePlayer(true); }
                 else
                 { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
                 break;

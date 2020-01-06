@@ -64,7 +64,7 @@ public class DebugGUI : MonoBehaviour
     private string optionNoAI;
     private string optionAIOffline;
     private string optionAITraceback;
-    private string optionAIScreamer;
+    /*private string optionAIScreamer;*/
     public string optionRenownUI;
     private string optionPath;
     public string optionContacts;
@@ -85,7 +85,7 @@ public class DebugGUI : MonoBehaviour
         optionNoAI = "NO AI ON";
         optionAIOffline = "AIOffline ON";
         optionAITraceback = "AITraceback ON";
-        optionAIScreamer = "AIScreamer ON";
+        /*optionAIScreamer = "AIScreamer ON";*/
         optionRenownUI = "Renown UI OFF";
         optionPath = "Input Path";
         optionContacts = "Contacts ON";

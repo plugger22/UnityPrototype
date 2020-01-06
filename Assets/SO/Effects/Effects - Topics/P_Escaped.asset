@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: P_Released
+  m_Name: P_Escaped
   m_EditorClassIdentifier: 
-  description: released from Captivity
+  description: escaped from Captivity
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   topicApply: {fileID: 0}
-  outcome: {fileID: 11400000, guid: 60d60714388a8484d844d8efa8b6bc66, type: 2}
+  outcome: {fileID: 11400000, guid: b47c4113782fa1f49838780c72effa58, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}

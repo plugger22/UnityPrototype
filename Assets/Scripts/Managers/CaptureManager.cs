@@ -81,7 +81,7 @@ public class CaptureManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
         EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");
+        /*EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");*/
         EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
         EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
     }
@@ -107,9 +107,9 @@ public class CaptureManager : MonoBehaviour
                 CaptureDetails details = Param as CaptureDetails;
                 CaptureSomebody(details);
                 break;
-            case EventType.ReleasePlayer:
+            /*case EventType.ReleasePlayer:
                 ReleasePlayer();
-                break;
+                break;*/
             case EventType.ReleaseActor:
                 Actor actor = Param as Actor;
                 ReleaseActor(actor);
@@ -170,8 +170,8 @@ public class CaptureManager : MonoBehaviour
             string textAutoRun = string.Format("{0} {1}Captured{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourBad, colourEnd);
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
         }
-        //detention period
-        GameManager.instance.actorScript.captureTimer = captureTimerValue;
+        //detention period -> Note: Player only ever incarcerated for one turn (needs to be '2' for sequencing issues)
+        GameManager.instance.actorScript.captureTimer = 2;
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -323,9 +323,9 @@ public class CaptureManager : MonoBehaviour
 
 
     /// <summary>
-    /// Release Human/AI Resitance player from captitivity
+    /// Release, or Escapes,  Human/AI Resitance player from captitivity. 'isMessage' true for an outcome message (go false if called via EffectManager.cs). 'isReleased' false then assumed to have escaped
     /// </summary>
-    public void ReleasePlayer()
+    public void ReleasePlayer(bool isMessage = false, bool isReleased = true)
     {
         string text;
         StringBuilder builder = new StringBuilder();
@@ -335,7 +335,9 @@ public class CaptureManager : MonoBehaviour
         Node node = GameManager.instance.dataScript.GetNode(nodeID);
         if (node != null)
         {
-            text = string.Format("{0}, Player, released at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name);
+            if (isReleased == true)
+            { text = string.Format("{0}, Player, released at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name); }
+            else { text = string.Format("{0}, Player, escapes from captivity at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name); }
             GameManager.instance.messageScript.ActorRelease(text, node, GameManager.instance.playerScript.actorID);
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
             GameManager.instance.nodeScript.nodePlayer = nodeID;
@@ -347,6 +349,8 @@ public class CaptureManager : MonoBehaviour
             cause -= actorReleased;
             cause = Mathf.Max(0, cause);
             GameManager.instance.cityScript.CityLoyalty = cause;
+            //zero out capture timer
+            GameManager.instance.actorScript.captureTimer = 0;
             //invisibility
             int invisibilityNew = releaseInvisibility;
             GameManager.instance.playerScript.Invisibility = invisibilityNew;
@@ -363,25 +367,29 @@ public class CaptureManager : MonoBehaviour
                 GameManager.instance.playerScript.status = ActorStatus.Active;
                 GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
                 builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}Player's Invisibility +{1}{2}", colourGood, invisibilityNew, colourEnd);
+                builder.AppendFormat("{0}Player's Invisibility +{1}{2}{3}{4}", colourGood, invisibilityNew, colourEnd, "\n", "\n");
+                builder.AppendFormat("{0}QUESTIONABLE condition gained{1}", colourBad, colourEnd);
                 //AI side tab (otherwise 'player indisposed' message when accessing tab)
                 GameManager.instance.aiScript.UpdateSideTabData();
                 //update Player alpha
                 GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
                 //update map
                 GameManager.instance.nodeScript.NodeRedraw = true;
-                //player released outcome window 
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                if (isMessage == true)
                 {
-                    textTop = text,
-                    textBottom = builder.ToString(),
-                    sprite = GameManager.instance.guiScript.errorSprite,
-                    isAction = false,
-                    side = GameManager.instance.globalScript.sideResistance,
-                    type = MsgPipelineType.ReleasePlayer
-                };
-                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-                { Debug.LogWarningFormat("Player Released from Captivity infoPipeline message FAILED to be added to dictOfPipeline"); }
+                    //player released outcome window 
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                    {
+                        textTop = text,
+                        textBottom = builder.ToString(),
+                        sprite = GameManager.instance.guiScript.errorSprite,
+                        isAction = false,
+                        side = GameManager.instance.globalScript.sideResistance,
+                        type = MsgPipelineType.ReleasePlayer
+                    };
+                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    { Debug.LogWarningFormat("Player Released from Captivity infoPipeline message FAILED to be added to dictOfPipeline"); }
+                }
             }
             else
             {

@@ -181,7 +181,7 @@ public enum EventType
     AISendSideData,
     //AI
     Capture,
-    ReleasePlayer,
+    /*ReleasePlayer,*/
     ReleaseActor
 };
 

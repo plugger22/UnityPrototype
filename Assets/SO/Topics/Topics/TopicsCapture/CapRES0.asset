@@ -29,6 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0e8efc8f93ab63d4e9f786f2ee7fcb16, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 0179cd12aca681e41ab3d4942e0e2521, type: 2}
   - {fileID: 11400000, guid: 35175244ec60aad42991943ef29c6b19, type: 2}
@@ -45,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 20
+  turnsLive: 18
   turnsDone: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Capture 0 option 3
   tag: Escape
-  text: You are whisked away to safety
+  text: Ask [org] to rescue you
   topic: {fileID: 11400000, guid: ff4d0e5e524cec54eb5a83e8dc08f963, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -21,7 +21,7 @@ MonoBehaviour:
   isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
+  - {fileID: 11400000, guid: a37465ed6db02cc43afe4c326087f786, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
@@ -30,5 +30,5 @@ MonoBehaviour:
   tooltipMain: <color=#98FB98>Player released from Captivity</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Ask the Bacon Brothers to rescue you</color>
+  textToDisplay: <color=#EEFB73>You are whisked away to safety</color>
   optionNumber: 3

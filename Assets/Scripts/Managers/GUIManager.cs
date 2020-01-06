@@ -105,8 +105,6 @@ public class GUIManager : MonoBehaviour
     public Sprite topicOptionValidSprite;
     [Tooltip("Sprite used for an invalid topic option")]
     public Sprite topicOptionInvalidSprite;
-    [Tooltip("Sprite used for Captured topics")]
-    public Sprite prisonSprite;
     [Tooltip("Player mood 0 star")]
     public Sprite moodStar0;
     [Tooltip("Player mood 1 star")]
@@ -165,7 +163,6 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
         Debug.Assert(topicOptionValidSprite != null, "Invalid topicValidSprite (Null)");
         Debug.Assert(topicOptionInvalidSprite != null, "Invalid topicInvalidSprite (Null)");
-        Debug.Assert(prisonSprite != null, "Invalid prisonSprite (Null)");
         Debug.Assert(moodStar0 != null, "Invalid moodStar0 (Null)");
         Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
         Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");

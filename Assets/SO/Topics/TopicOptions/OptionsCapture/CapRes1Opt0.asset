@@ -24,6 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 

@@ -4094,9 +4094,13 @@ public class EffectManager : MonoBehaviour
             case "Innocence":
                 effectResolve = ResolvePlayerData(effect, dataInput);
                 break;
-            case "Capture":
+            case "CaptureRelease":
                 //player released from captivity
-                effectResolve.bottomText = ExecutePlayerCapture(effect, dataInput);
+                effectResolve.bottomText = ExecutePlayerRelease(effect, dataInput);
+                break;
+            case "CaptureEscape":
+                //player escapes from captivity
+                effectResolve.bottomText = ExecutePlayerEscape(effect, dataInput);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -5097,23 +5101,27 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player captured (operand Add) or Released (operand Subtract)
+    /// Player released from capture
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    private string ExecutePlayerCapture(Effect effect, EffectDataInput data)
+    private string ExecutePlayerRelease(Effect effect, EffectDataInput data)
     {
-        string bottomText = "Unknown";
-        switch (effect.operand.name)
-        {
-            case "Subtract":
-                GameManager.instance.captureScript.ReleasePlayer();
-                bottomText = string.Format("{0}Player Released{1}", colourGood, colourEnd);
-                break;
-            default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\"", effect.operand.name); break;
-        }
-        return bottomText;
+        GameManager.instance.captureScript.ReleasePlayer(false);
+        return string.Format("{0}Player Released by the Authority{1}", colourGood, colourEnd);
+    }
+
+    /// <summary>
+    /// Player escapes from capture
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private string ExecutePlayerEscape(Effect effect, EffectDataInput data)
+    {
+        GameManager.instance.captureScript.ReleasePlayer(false, false);
+        return string.Format("{0}Player Escapes from Captivity{1}", colourGood, colourEnd);
     }
 
     /// <summary>

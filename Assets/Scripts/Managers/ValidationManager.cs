@@ -1601,6 +1601,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectDuration);
         //EffectOperator
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectOperator);
+        //EffectOutcome
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectOutcome);
         //ContactType
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfContactTypes);
         //TargetType

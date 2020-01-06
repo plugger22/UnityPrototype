@@ -974,7 +974,7 @@ public class TurnManager : MonoBehaviour
                 sprite = GameManager.instance.guiScript.firedSprite;
                 break;
             case WinReasonCampaign.Innocence:
-                sprite = GameManager.instance.guiScript.prisonSprite;
+                sprite = GameManager.instance.guiScript.capturedSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
