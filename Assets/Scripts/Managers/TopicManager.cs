@@ -2275,6 +2275,7 @@ public class TopicManager : MonoBehaviour
             tagOrgTag = org.tag;
             tagNodeID = -1;
             tagActorID = -1;
+            tagNodeID = GameManager.instance.nodeScript.nodeCaptured;
             //group based on player's reputation with Organisation
             group = GetGroupRandom();
             //if no entries use entire list by default
@@ -3043,6 +3044,9 @@ public class TopicManager : MonoBehaviour
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 //use Player node as default placeholder (actual tagNodeID is used)
                 Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                //special case of player being captured
+                if (node == null && GameManager.instance.playerScript.status == ActorStatus.Captured)
+                { node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured); }
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
                 if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
                 {
@@ -4879,6 +4883,9 @@ public class TopicManager : MonoBehaviour
                 case 'L':
                     //All actors
                     break;
+                case 'R':
+                    //Random actors
+                    break;
                 case 'P':
                     //player
                     prefix = "Player";
@@ -5789,6 +5796,22 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "HQ":
                     break;
+                case "Capture":
+                    turnSprite = GameManager.instance.guiScript.capturedSprite;
+                    tagSpriteName = "Prisoner";
+                    string tooltipName = "Incarcerated";
+                    //tooltip
+                    Tuple<string, string> resultsCapture = GetPlayerTooltip();
+                    if (string.IsNullOrEmpty(resultsCapture.Item1) == false)
+                    {
+                        //tooltipMain
+                        data.imageTooltipMain = resultsCapture.Item1;
+                        //main present -> Add tooltip header (Player name)
+                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}</b>", colourAlert, tooltipName, colourEnd);
+                    }
+                    if (string.IsNullOrEmpty(resultsCapture.Item2) == false)
+                    { data.imageTooltipDetails = resultsCapture.Item2; }
+                    break;
                 case "Organisation":
                     Organisation org = null;
                     switch (turnTopicSubType.name)
@@ -5819,7 +5842,7 @@ public class TopicManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid org (Null) for {0}", turnTopicSubType.name); }
                     break;
                 case "Player":
-                    string tooltipName = GameManager.instance.playerScript.PlayerName;
+                    tooltipName = GameManager.instance.playerScript.PlayerName;
                     switch (turnTopicSubType.name)
                     {
                         case "PlayerDistrict":
@@ -5862,7 +5885,6 @@ public class TopicManager : MonoBehaviour
                             tagSpriteName = GameManager.instance.playerScript.PlayerName;
                             break;
                     }
-
                     //tooltip
                     Tuple<string, string> resultsPlayer = GetPlayerTooltip();
                     if (string.IsNullOrEmpty(resultsPlayer.Item1) == false)
@@ -5975,6 +5997,7 @@ public class TopicManager : MonoBehaviour
                 case "PlayerGeneral":
                 case "PlayerStats":
                 case "PlayerConditions":
+                case "CaptureSub":
                 case "ActorMatch":
                     //info on whether topic is good or bad and why
                     switch (turnTopic.group.name)

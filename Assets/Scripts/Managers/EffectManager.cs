@@ -4094,7 +4094,7 @@ public class EffectManager : MonoBehaviour
             case "Innocence":
                 effectResolve = ResolvePlayerData(effect, dataInput);
                 break;
-            case "Released":
+            case "Capture":
                 //player released from captivity
                 effectResolve.bottomText = ExecutePlayerCapture(effect, dataInput);
                 break;
