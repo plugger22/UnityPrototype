@@ -1158,6 +1158,26 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.Innocence != 0)
                                                 { BuildString(result, string.Format("Innocence not 0 stars{0}", "\n")); }
                                                 break;
+                                            case "CaptureTool0":
+                                                //Player has CaptureTool for innocence level 0 incarceration in their possession
+                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(0) == false)
+                                                { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
+                                                break;
+                                            case "CaptureTool1":
+                                                //Player has CaptureTool for innocence level 1 incarceration in their possession
+                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(1) == false)
+                                                { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
+                                                break;
+                                            case "CaptureTool2":
+                                                //Player has CaptureTool for innocence level 2 incarceration in their possession
+                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(2) == false)
+                                                { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
+                                                break;
+                                            case "CaptureTool3":
+                                                //Player has CaptureTool for innocence level 1 incarceration in their possession
+                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(3) == false)
+                                                { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

@@ -181,7 +181,7 @@ public class CaptureManager : MonoBehaviour
             GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun);
         }
         //detention period -> Note: Player only ever incarcerated for one turn (needs to be '2' for sequencing issues)
-        GameManager.instance.actorScript.captureTimer = 2;
+        GameManager.instance.actorScript.captureTimerPlayer = 2;
         //effects builder
         StringBuilder builder = new StringBuilder();
         //any carry over text?
@@ -360,7 +360,7 @@ public class CaptureManager : MonoBehaviour
             cause = Mathf.Max(0, cause);
             GameManager.instance.cityScript.CityLoyalty = cause;
             //zero out capture timer
-            GameManager.instance.actorScript.captureTimer = 0;
+            GameManager.instance.actorScript.captureTimerPlayer = 0;
             //invisibility
             int invisibilityNew = releaseInvisibility;
             GameManager.instance.playerScript.Invisibility = invisibilityNew;

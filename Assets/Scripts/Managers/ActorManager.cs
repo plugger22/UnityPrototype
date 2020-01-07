@@ -133,7 +133,7 @@ public class ActorManager : MonoBehaviour
     #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
     [HideInInspector] public int doomTimer;                                     //countdown doom timer set when resistance player gains the DOOMED condition (infected with a slow acting lethal virus)
-    [HideInInspector] public int captureTimer;                                  //countdown timer which determines how long the Resistance player is inactive while captured
+    [HideInInspector] public int captureTimerPlayer;                            //countdown timer which determines how long the Resistance player is inactive while captured
     [HideInInspector] public bool isGearCheckRequired;                          //GearManager.cs -> used to flag that actors need to reset their gear
     [HideInInspector] public NameSet nameSet;                                   //used for naming actors. Takes nameSet from city
     [HideInInspector] public int actorIDCounter = 0;                            //used to sequentially number actorID's
@@ -6107,8 +6107,8 @@ public class ActorManager : MonoBehaviour
         {
             case ActorStatus.Captured:
                 //decrement timer
-                captureTimer--;
-                if (captureTimer <= 0)
+                captureTimerPlayer--;
+                if (captureTimerPlayer <= 0)
                 { GameManager.instance.captureScript.ReleasePlayer(true); }
                 else
                 { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
@@ -6537,8 +6537,8 @@ public class ActorManager : MonoBehaviour
         {
             case ActorStatus.Captured:
                 //decrement timer
-                captureTimer--;
-                if (captureTimer <= 0)
+                captureTimerPlayer--;
+                if (captureTimerPlayer <= 0)
                 { GameManager.instance.captureScript.ReleasePlayer(true); }
                 else
                 { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }

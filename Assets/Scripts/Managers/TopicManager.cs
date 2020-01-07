@@ -3044,11 +3044,12 @@ public class TopicManager : MonoBehaviour
                 dataInput.originText = string.Format("Event \'{0}\', {1}", turnTopic.tag, turnOption.tag);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
-                //use Player node as default placeholder (actual tagNodeID is used)
-                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                //special case of player being captured
-                if (node == null && GameManager.instance.playerScript.status == ActorStatus.Captured)
-                { node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured); }
+                //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured
+                int nodeID = -1;
+                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                { nodeID = GameManager.instance.nodeScript.nodeCaptured; }
+                else { nodeID = GameManager.instance.nodeScript.nodePlayer; }
+                Node node = GameManager.instance.dataScript.GetNode(nodeID);
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
                 if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
                 {
@@ -3162,8 +3163,12 @@ public class TopicManager : MonoBehaviour
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = string.Format("{0} IGNORE", turnTopic.tag);
             dataInput.side = GameManager.instance.sideScript.PlayerSide;
-            //use Player node as default placeholder (actual tagNodeID is used)
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            int nodeID = -1;
+            //special case of player captured otherwise default player nodeID
+            if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+            { nodeID = GameManager.instance.nodeScript.nodeCaptured; }
+            else { nodeID = GameManager.instance.nodeScript.nodePlayer; }
+            Node node = GameManager.instance.dataScript.GetNode(nodeID);
             //top text
             builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, "Ignored", colourEnd);
             //loop effects

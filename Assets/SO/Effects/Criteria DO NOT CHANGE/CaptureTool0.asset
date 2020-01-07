@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
+  m_Name: CaptureTool0
+  m_EditorClassIdentifier: 
+  description: Player has Capture Tool for level 0
+  effectCriteria: {fileID: 11400000, guid: 225118dbadc1693429dc3a85d0b3eeb9, type: 2}
+  comparison: {fileID: 0}
+  apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}

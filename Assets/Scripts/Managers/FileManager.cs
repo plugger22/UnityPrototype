@@ -1172,7 +1172,7 @@ public class FileManager : MonoBehaviour
         write.actorData.hqIDCounter = GameManager.instance.actorScript.hqIDCounter;
         write.actorData.lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
         write.actorData.doomTimer = GameManager.instance.actorScript.doomTimer;
-        write.actorData.captureTimer = GameManager.instance.actorScript.captureTimer;
+        write.actorData.captureTimer = GameManager.instance.actorScript.captureTimerPlayer;
         write.actorData.isGearCheckRequired = GameManager.instance.actorScript.isGearCheckRequired;
         write.actorData.nameSet = GameManager.instance.actorScript.nameSet.name;
         //
@@ -2963,7 +2963,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.actorScript.hqIDCounter = read.actorData.hqIDCounter;
         GameManager.instance.actorScript.lieLowTimer = read.actorData.lieLowTimer;
         GameManager.instance.actorScript.doomTimer = read.actorData.doomTimer;
-        GameManager.instance.actorScript.captureTimer = read.actorData.captureTimer;
+        GameManager.instance.actorScript.captureTimerPlayer = read.actorData.captureTimer;
         GameManager.instance.actorScript.isGearCheckRequired = read.actorData.isGearCheckRequired;
         NameSet nameSet = GameManager.instance.dataScript.GetNameSet(read.actorData.nameSet);
         if (nameSet != null)

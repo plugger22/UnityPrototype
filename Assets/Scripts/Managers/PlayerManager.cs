@@ -2386,6 +2386,34 @@ public class PlayerManager : MonoBehaviour
         ChangeMood(change, reason, factor);
     }
 
+    /// <summary>
+    /// Adds a CaptureTool to the Player's inventory for the specified innocence Level
+    /// </summary>
+    /// <param name="innocenceString"></param>
+    /// <returns></returns>
+    public string DebugAddCaptureTool(string innocenceString)
+    {
+        string reply = "Error";
+        int innocenceLevel = -1;
+        if (string.IsNullOrEmpty(innocenceString) == false)
+        {
+            //convert string to int
+            try { innocenceLevel = System.Convert.ToInt32(innocenceString); }
+            catch (System.OverflowException)
+            { Debug.LogErrorFormat("Invalid conversion for innocenceString \"{0}\"", innocenceString); }
+            //add Capture tool (called method will handle invalid innocentLevel)
+            if (AddCaptureTool(innocenceLevel) == true)
+            {
+                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(innocenceLevel);
+                if (tool != null)
+                { reply = $"{tool.tag} added"; }
+                else { Debug.LogErrorFormat("Invalid CaptureTool (Null) for innocenceLevel \"{0}\"", innocenceLevel); }
+            }
+        }
+        else { Debug.LogError("Invalid innoceneString (Null or Empty)"); }
+        return reply;
+    }
+
     //
     // - - - Node Actions
     //
@@ -2546,33 +2574,7 @@ public class PlayerManager : MonoBehaviour
         return arrayOfCaptureTools[innocenceLevel];
     }
 
-    /// <summary>
-    /// Adds a CaptureTool to the Player's inventory for the specified innocence Level
-    /// </summary>
-    /// <param name="innocenceString"></param>
-    /// <returns></returns>
-    public string DebugAddCaptureTool(string innocenceString)
-    {
-        string reply = "Error";
-        int innocenceLevel = -1;
-        if (string.IsNullOrEmpty(innocenceString) == false)
-        {
-            //convert string to int
-            try { innocenceLevel = System.Convert.ToInt32(innocenceString); }
-            catch (System.OverflowException)
-            { Debug.LogErrorFormat("Invalid conversion for innocenceString \"{0}\"", innocenceString); }
-            //add Capture tool (called method will handle invalid innocentLevel)
-            if (AddCaptureTool(innocenceLevel) == true)
-            {
-                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(innocenceLevel);
-                if (tool != null)
-                { reply = $"{tool.tag} added"; }
-                else { Debug.LogErrorFormat("Invalid CaptureTool (Null) for innocenceLevel \"{0}\"", innocenceLevel); }
-            }
-        }
-        else { Debug.LogError("Invalid innoceneString (Null or Empty)"); }
-        return reply;
-    }
+
 
     //place new methods above here
 }
