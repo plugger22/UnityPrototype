@@ -1361,6 +1361,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
   - {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
   - {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  arrayOfCaptureTools:
+  - {fileID: 11400000, guid: 4cb717a7dbff3674fb2bdda52fc4d093, type: 2}
+  - {fileID: 11400000, guid: 955dc9ad811c9014fabb1f38513130e4, type: 2}
+  - {fileID: 11400000, guid: 550e26826e757814c92f41d36ab3c00f, type: 2}
+  - {fileID: 11400000, guid: f843e35d83fae614b9583b62b5aba7d2, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -4062,6 +4067,10 @@ MonoBehaviour:
   actorReleased: 1
   releaseInvisibility: 3
   captureTimerValue: 3
+  innocence_3: {fileID: 11400000, guid: 4cb717a7dbff3674fb2bdda52fc4d093, type: 2}
+  innocence_2: {fileID: 11400000, guid: 955dc9ad811c9014fabb1f38513130e4, type: 2}
+  innocence_1: {fileID: 11400000, guid: 550e26826e757814c92f41d36ab3c00f, type: 2}
+  innocence_0: {fileID: 11400000, guid: f843e35d83fae614b9583b62b5aba7d2, type: 2}
 --- !u!114 &114558055555623972
 MonoBehaviour:
   m_ObjectHideFlags: 1

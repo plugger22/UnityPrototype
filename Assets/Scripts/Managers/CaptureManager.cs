@@ -27,6 +27,16 @@ public class CaptureManager : MonoBehaviour
     [Tooltip("How many turns will actor be held for when Captured (Player hard coded)")]
     [Range(1, 10)] public int captureTimerValue = 3;
 
+    [Header("Capture Tools")]
+    [Tooltip("CaptureTool for dealing with Innocence level 3 InterroBots. Optional")]
+    public CaptureTool innocence_3;
+    [Tooltip("CaptureTool for dealing with Innocence level 2 Inquisitors. Optional")]
+    public CaptureTool innocence_2;
+    [Tooltip("CaptureTool for dealing with Innocence level 1 TortureBots. Optional")]
+    public CaptureTool innocence_1;
+    [Tooltip("CaptureTool for dealing with Innocence level 0 Mayor. Optional")]
+    public CaptureTool innocence_0;
+
     //fast access
     private int teamErasureID;
     private Condition conditionQuestionable;

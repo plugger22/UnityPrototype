@@ -143,6 +143,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateTopics();
                 ValidateScenarios();
                 ValidateCampaigns();
+                ValidateCapture();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -1571,6 +1572,51 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region ValidateCapture
+    /// <summary>
+    /// runs checks on CaptureManager.cs
+    /// </summary>
+    private void ValidateCapture()
+    {
+        //Capture Tools -> tool innocence level should match captureManager field level
+        if (GameManager.instance.captureScript.innocence_0 != null)
+        {
+            if (GameManager.instance.captureScript.innocence_0.innocenceLevel != 0)
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_0 \"{0}\" has incorrent innocence level (is {1}, should be 0){2}",
+                    GameManager.instance.captureScript.innocence_0.name, GameManager.instance.captureScript.innocence_0.innocenceLevel, "\n");
+            }
+        }
+        //Innocence level 1
+        if (GameManager.instance.captureScript.innocence_1 != null)
+        {
+            if (GameManager.instance.captureScript.innocence_1.innocenceLevel != 1)
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_1 \"{0}\" has incorrent innocence level (is {1}, should be 1){2}",
+                    GameManager.instance.captureScript.innocence_1.name, GameManager.instance.captureScript.innocence_1.innocenceLevel, "\n");
+            }
+        }
+        //Innocence level 2
+        if (GameManager.instance.captureScript.innocence_2 != null)
+        {
+            if (GameManager.instance.captureScript.innocence_2.innocenceLevel != 2)
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_2 \"{0}\" has incorrent innocence level (is {1}, should be 2){2}",
+                    GameManager.instance.captureScript.innocence_2.name, GameManager.instance.captureScript.innocence_2.innocenceLevel, "\n");
+            }
+        }
+        //Innocence level 3
+        if (GameManager.instance.captureScript.innocence_3 != null)
+        {
+            if (GameManager.instance.captureScript.innocence_3.innocenceLevel != 3)
+            {
+                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_3 \"{0}\" has incorrent innocence level (is {1}, should be 3){2}",
+                    GameManager.instance.captureScript.innocence_3.name, GameManager.instance.captureScript.innocence_3.innocenceLevel, "\n");
+            }
+        }
+    }
+    #endregion
+
 
 #if (UNITY_EDITOR)
 
@@ -1723,6 +1769,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<NpcAction>(GameManager.instance.loadScript.arrayOfNpcActions);
         //HqPositions
         ValidateSOGeneric<HqPosition>(GameManager.instance.loadScript.arrayOfHqPositions);
+        //CaptureTools
+        ValidateSOGeneric<CaptureTool>(GameManager.instance.loadScript.arrayOfCaptureTools);
 
     }
     #endregion

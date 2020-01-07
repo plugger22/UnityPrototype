@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: NeuralMask
+  m_Name: StealthMask
   m_EditorClassIdentifier: 
   description: Hack the AI without risk of Detection
   tag: Neural Mask
@@ -19,7 +19,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []
   aiHackingEffect: {fileID: 11400000, guid: 1e7c8b2101ceb084aa6910503dc42f89, type: 2}
-  gearID: 1
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 

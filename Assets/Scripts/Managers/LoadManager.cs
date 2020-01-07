@@ -43,6 +43,7 @@ public class LoadManager : MonoBehaviour
     public NpcAction[] arrayOfNpcActions;
     public OrgType[] arrayOfOrgTypes;
     public HqPosition[] arrayOfHqPositions;
+    public CaptureTool[] arrayOfCaptureTools;
     
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -673,6 +674,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfHqPositions has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No HqPositions present"); }
+        //
+        // - - - CaptureTools (not stored in a collection)
+        //
+        numArray = arrayOfCaptureTools.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCaptureTools has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CaptureTools present"); }
         //
         // - - - Mission (not stored in a collection)
         //
