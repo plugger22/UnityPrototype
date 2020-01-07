@@ -1071,6 +1071,8 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }*/
+
+    
     #endregion
 
     #region CheckTopics
@@ -1233,8 +1235,8 @@ public class TopicManager : MonoBehaviour
             TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
             CheckForValidSubType(topicType, topicTypeData, turn);
         }
-        //no valid capture topic found
-        if (listOfTopicTypesTurn.Count == 0)
+        //normal
+        else
         {
             //by value, not reference, as you'll be passing them onto listOfTopicTypesTurn and removing occasionally
             List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.instance.dataScript.GetListOfTopicTypesLevel());
@@ -3709,7 +3711,7 @@ public class TopicManager : MonoBehaviour
                     case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
                 }
-            }
+            }           
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -4490,10 +4492,12 @@ public class TopicManager : MonoBehaviour
                 { actorCurrentSlotID = actor.slotID; }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
             }
+            //orgName provided as capture topics have org criteria on certain options (ignored for the rest)
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = option.listOfCriteria,
-                actorSlotID = actorCurrentSlotID
+                actorSlotID = actorCurrentSlotID,
+                orgName = tagOrgName
             };
             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
         }
@@ -6418,33 +6422,37 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- dictOfTopicPools{0}", "\n");
-        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
-        if (listOfTopics != null)
+        if (turnTopicSubType != null)
         {
-
-            if (listOfTopics.Count > 0)
+            List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
+            if (listOfTopics != null)
             {
-                //current topic subType pool
-                builder.AppendFormat("{0}- {1}{2}", "\n", turnTopicSubType.name, "\n");
-                foreach (Topic topic in listOfTopics)
+
+                if (listOfTopics.Count > 0)
                 {
-                    builder.AppendFormat(" {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status,
-                      topic.priority.name, topic.group.name, "\n");
-                }
-                //current topic profile data
-                builder.AppendFormat("{0}{1}- Profile data{2}", "\n", "\n", "\n");
-                foreach (Topic topic in listOfTopics)
-                {
-                    if (topic.profile != null)
+                    //current topic subType pool
+                    builder.AppendFormat("{0}- {1}{2}", "\n", turnTopicSubType.name, "\n");
+                    foreach (Topic topic in listOfTopics)
                     {
-                        builder.AppendFormat(" {0} -> {1}{2}  ts {3}, tr {4}, tw {5} -> D {6}, A {7}, L {8}, D {9} -> {10}{11}", topic.name, topic.profile.name, "\n", topic.timerStart,
-                            topic.timerRepeat, topic.timerWindow, topic.turnsDormant, topic.turnsActive, topic.turnsLive, topic.turnsDone, topic.isCurrent ? "true" : "FALSE", "\n");
+                        builder.AppendFormat(" {0}, {1} x Op, St: {2}, Pr: {3}, Gr: {4}{5}", topic.name, topic.listOfOptions?.Count, topic.status,
+                          topic.priority.name, topic.group.name, "\n");
+                    }
+                    //current topic profile data
+                    builder.AppendFormat("{0}{1}- Profile data{2}", "\n", "\n", "\n");
+                    foreach (Topic topic in listOfTopics)
+                    {
+                        if (topic.profile != null)
+                        {
+                            builder.AppendFormat(" {0} -> {1}{2}  ts {3}, tr {4}, tw {5} -> D {6}, A {7}, L {8}, D {9} -> {10}{11}", topic.name, topic.profile.name, "\n", topic.timerStart,
+                                topic.timerRepeat, topic.timerWindow, topic.turnsDormant, topic.turnsActive, topic.turnsLive, topic.turnsDone, topic.isCurrent ? "true" : "FALSE", "\n");
+                        }
                     }
                 }
+                else { builder.AppendFormat("     none found{0}", "\n"); }
             }
-            else { builder.AppendFormat("     none found{0}", "\n"); }
+            else { builder.AppendFormat("{0} Error with turnTopicSubType", "\n"); }
         }
-        else { builder.AppendFormat("{0} Error with turnTopicSubType", "\n"); }
+        else { builder.AppendFormat("{0} Invalid turnTopicSubType (NULL)", "\n"); }
         return builder.ToString();
     }
 
