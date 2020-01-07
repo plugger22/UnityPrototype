@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int stressImmunityCurrent;                             //dynamic number of turns player is immune from stress (due to drug)
     [HideInInspector] public int addictedTally;                                     //starts from 0 whenever player becomes addicted (needed to provide a buffer before feed the need kicks in)
     //collections
+    private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
     private List<Condition> listOfConditionsResistance = new List<Condition>();     //list of all conditions currently affecting the Resistance player
     private List<Condition> listOfConditionsAuthority = new List<Condition>();      //list of all conditions currently affecting the Authority player
@@ -2318,7 +2319,7 @@ public class PlayerManager : MonoBehaviour
         if (playerSide.level == globalResistance.level)
         {
             //gear
-            builder.AppendFormat("{0}- Gear{1}", "\n", "\n");
+            builder.AppendFormat("{0}-Gear{1}", "\n", "\n");
             if (listOfGear.Count > 0)
             {
                 for (int i = 0; i < listOfGear.Count; i++)
@@ -2334,6 +2335,21 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
         builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
         builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowTimes), "\n");
+        //Capture Tools
+        builder.AppendFormat("{0}-Capture Tools{1}", "\n", "\n");
+        int count = 0;
+        for (int index = 0; index < arrayOfCaptureTools.Length; index++)
+        {
+            if (arrayOfCaptureTools[index] == true)
+            {
+                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(index);
+                if (tool != null)
+                { builder.AppendFormat(" {0}, level {1}{2}", tool.tag, tool.innocenceLevel, "\n"); }
+                else { builder.AppendFormat(" Invalid captureTool (NULL){0}", "\n"); }
+                count++;
+            }
+        }
+        if (count == 0) { builder.AppendFormat(" None present{0}", "\n"); }
         return builder.ToString();
     }
 
@@ -2462,6 +2478,100 @@ public class PlayerManager : MonoBehaviour
             }
         }
         return isResult;
+    }
+
+    //
+    // - - - Capture Tools
+    //
+
+    public bool[] GetArrayOfCaptureTools()
+    { return arrayOfCaptureTools; }
+
+    /// <summary>
+    /// used for updated arrayOfCaptureTools with Save/Load data
+    /// </summary>
+    /// <param name="arrayOfTools"></param>
+    public void SetArrayOfCaptureTools(bool[] arrayOfTools)
+    {
+        if (arrayOfTools != null)
+        {
+            int count = arrayOfCaptureTools.Length;
+            Debug.AssertFormat(arrayOfTools.Length == count, "Mismatch on array lengths (input array has {0} records, arrayOfCaptureTools has {1})", arrayOfTools.Length, count);
+            for (int i = 0; i < count; i++)
+            { arrayOfCaptureTools[i] = arrayOfTools[i]; }
+        }
+        else { Debug.LogError("Invalid arrayOfTools (Null)"); }
+    }
+
+    /// <summary>
+    /// Add capture tool, for the specified innocence level, to player's inventory. Returns true if successful, false otherwise, eg. may not be a CaptureTool present for that particular level
+    /// </summary>
+    /// <param name="innocenceLevel"></param>
+    /// <returns></returns>
+    public bool AddCaptureTool(int innocenceLevel)
+    {
+        Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
+        if (GameManager.instance.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
+        {
+            arrayOfCaptureTools[innocenceLevel] = true;
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Remove capture Tool, for specified innocence leve, from Player's inventory. Returns true if successful and false if no capture tool was present for that level
+    /// </summary>
+    /// <param name="innocenceLevel"></param>
+    /// <returns></returns>
+    public bool RemoveCaptureTool(int innocenceLevel)
+    {
+        Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
+        if (arrayOfCaptureTools[innocenceLevel] == true)
+        {
+            arrayOfCaptureTools[innocenceLevel] = false;
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if player has a capture tool in their inventory for the specified level of innocence, false otherwise
+    /// </summary>
+    /// <param name="innnocenceLevel"></param>
+    /// <returns></returns>
+    public bool CheckCaptureToolPresent(int innocenceLevel)
+    {
+        Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
+        return arrayOfCaptureTools[innocenceLevel];
+    }
+
+    /// <summary>
+    /// Adds a CaptureTool to the Player's inventory for the specified innocence Level
+    /// </summary>
+    /// <param name="innocenceString"></param>
+    /// <returns></returns>
+    public string DebugAddCaptureTool(string innocenceString)
+    {
+        string reply = "Error";
+        int innocenceLevel = -1;
+        if (string.IsNullOrEmpty(innocenceString) == false)
+        {
+            //convert string to int
+            try { innocenceLevel = System.Convert.ToInt32(innocenceString); }
+            catch (System.OverflowException)
+            { Debug.LogErrorFormat("Invalid conversion for innocenceString \"{0}\"", innocenceString); }
+            //add Capture tool (called method will handle invalid innocentLevel)
+            if (AddCaptureTool(innocenceLevel) == true)
+            {
+                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(innocenceLevel);
+                if (tool != null)
+                { reply = $"{tool.tag} added"; }
+                else { Debug.LogErrorFormat("Invalid CaptureTool (Null) for innocenceLevel \"{0}\"", innocenceLevel); }
+            }
+        }
+        else { Debug.LogError("Invalid innoceneString (Null or Empty)"); }
+        return reply;
     }
 
     //place new methods above here

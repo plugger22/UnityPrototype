@@ -311,6 +311,7 @@ public class FileManager : MonoBehaviour
         write.playerData.stressImmunityCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
         write.playerData.stressImmunityStart = GameManager.instance.playerScript.stressImmunityStart;
         write.playerData.addictedTally = GameManager.instance.playerScript.addictedTally;
+        write.playerData.arrayOfCaptureTools = GameManager.instance.playerScript.GetArrayOfCaptureTools();
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
         {
@@ -1806,6 +1807,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.playerScript.stressImmunityCurrent = read.playerData.stressImmunityCurrent;
         GameManager.instance.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;
         GameManager.instance.playerScript.addictedTally = read.playerData.addictedTally;
+        GameManager.instance.playerScript.SetArrayOfCaptureTools(read.playerData.arrayOfCaptureTools);
         Personality personality = GameManager.instance.playerScript.GetPersonality();
         if (personality != null)
         {

@@ -11,7 +11,9 @@ using System;
 public class DebugGUI : MonoBehaviour
 {
     //for whenever interaction is needed
-    private enum GUIStatus { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict}
+    private enum GUIStatus
+    { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
+    GiveCaptureTool}
 
     public GUIStyle customBackground;
 
@@ -800,9 +802,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), optionAITraceback))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Give CaptureTool" /*optionAITraceback*/))
             {
-                Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
+                /*Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
                 if (GameManager.instance.aiScript.CheckAITraceBackStatus() == true)
                 {
                     GameManager.instance.aiScript.SetAITraceBack(false);
@@ -812,6 +814,15 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.aiScript.SetAITraceBack(true);
                     optionAITraceback = "AITraceback OFF";
+                }*/
+
+                //Resistance player only
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    Debug.Log("[Dbg] Button -> Give CaptureTool");
+                    if (debugDisplay != 84)
+                    { debugDisplay = 84; }
+                    else { debugDisplay = 0; }
                 }
             }
 
@@ -1672,6 +1683,23 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.playerScript.DebugDisplayInvestigations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
+                    //Give CaptureTool input
+                    case 84:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Innocence Lvl (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 20), textInput_0);
+                        status = GUIStatus.GiveCaptureTool;
+                        textOutput = null;
+                        break;
+                    //Give CaptureTool processing & Output
+                    case 85:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.playerScript.DebugAddCaptureTool(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1686,6 +1714,9 @@ public class DebugGUI : MonoBehaviour
                 {
                     case GUIStatus.GiveGear:
                         debugDisplay = 17;
+                        break;
+                    case GUIStatus.GiveCaptureTool:
+                        debugDisplay = 85;
                         break;
                     case GUIStatus.GiveCondition:
                         debugDisplay = 19;

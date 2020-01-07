@@ -673,6 +673,10 @@ public class CaptureManager : MonoBehaviour
         }
     }
 
+    //
+    // - - - Debug
+    //
+
     /// <summary>
     /// Capture player with random team
     /// </summary>
@@ -694,6 +698,48 @@ public class CaptureManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid player node (Null), ID {0}", GameManager.instance.nodeScript.nodePlayer); }
         }
         else { Debug.LogWarning("Player can't be Debug Captured as they are already Captured"); }
+    }
+
+    //
+    // - - - Capture Tools
+    //
+
+    /// <summary>
+    /// Returns captureTool for the specific innocence level, null if not present
+    /// </summary>
+    /// <param name="innocenceLevel"></param>
+    /// <returns></returns>
+    public CaptureTool GetCaptureTool(int innocenceLevel)
+    {
+        CaptureTool tool = null;
+        switch(innocenceLevel)
+        {
+            case 0: tool = innocence_0; break;
+            case 1: tool = innocence_1; break;
+            case 2: tool = innocence_2; break;
+            case 3: tool = innocence_3; break;
+            default: Debug.LogWarningFormat("Unrecognised innocenceLevel \"{0}\"", innocenceLevel); break;
+        }
+        return tool;
+    }
+
+    /// <summary>
+    /// Returns true if specified innocence level has an associated CaptureTool present, false otherwise
+    /// </summary>
+    /// <param name="innocenceLevel"></param>
+    /// <returns></returns>
+    public bool CheckIfCaptureToolPresent(int innocenceLevel)
+    {
+        bool isPresent = false;
+        switch (innocenceLevel)
+        {
+            case 0: if (innocence_0 != null) { isPresent = true; } break;
+            case 1: if (innocence_1 != null) { isPresent = true; } break;
+            case 2: if (innocence_2 != null) { isPresent = true; } break;
+            case 3: if (innocence_3 != null) { isPresent = true; } break;
+            default: Debug.LogWarningFormat("Unrecognised innocenceLevel \"{0}\"", innocenceLevel); break;
+        }
+        return isPresent;
     }
 
     //new methods above here

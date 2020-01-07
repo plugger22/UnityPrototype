@@ -202,6 +202,7 @@ public class SavePlayerData
     public string profile;
     public string profileDescriptor;
     public string profileExplanation;
+    public bool[] arrayOfCaptureTools;
     public List<int> listOfPersonalityFactors = new List<int>();
     public List<string> listOfDescriptors = new List<string>();
     public List<string> listOfGear = new List<string>();
