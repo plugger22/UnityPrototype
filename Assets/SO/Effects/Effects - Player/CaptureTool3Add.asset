@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: CaptureTool0Add 2
+  m_Name: CaptureTool3Add
   m_EditorClassIdentifier: 
-  description: Gain Item
+  description: Player gains Item
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}
@@ -20,7 +20,7 @@ MonoBehaviour:
   operand: {fileID: 11400000, guid: b4858fc13d863c64db627b8de742a542, type: 2}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
-  value: 0
+  value: 3
   ignoreEffect: 0
   isMoodEffect: 0
   belief: {fileID: 0}

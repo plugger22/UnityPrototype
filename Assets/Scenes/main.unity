@@ -17454,6 +17454,8 @@ MonoBehaviour:
   canvasFlasher: {fileID: 1225134365}
   canvasScroll: {fileID: 1387948069}
   mainInfoObject: {fileID: 1323247380}
+  leftBackground: {fileID: 2094327614}
+  rightBackground: {fileID: 2039573433}
   buttonClose: {fileID: 1833102002}
   buttonHelpInfo: {fileID: 1901418549}
   buttonHome: {fileID: 1916110549}
@@ -17607,6 +17609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topicCanvas: {fileID: 2073812143}
   topicObject: {fileID: 1071249910}
+  innerBackground: {fileID: 2043910899}
   panelBoss: {fileID: 1846757262}
   buttonOption0: {fileID: 1336395239}
   buttonOption1: {fileID: 664950695}
@@ -21469,11 +21472,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -25015,11 +25018,11 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -42656,11 +42659,11 @@ MonoBehaviour:
     lineCount: 4
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -46735,7 +46738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.07843137, g: 0.5589085, b: 0.9372549, a: 1}
+  m_Color: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -2659,7 +2659,6 @@ public class TopicManager : MonoBehaviour
     #endregion
 
     #region InitialiseTopicUI
-
     /// <summary>
     /// Sends data to topicUI ready for use when activated by GUIManager.cs Pipeline
     /// </summary>
@@ -2726,6 +2725,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
+                data.colour = GameManager.instance.guiScript.colourTopicNormal;
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
@@ -2897,6 +2897,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
+                data.colour = GameManager.instance.guiScript.colourTopicCapture;
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option

@@ -65,7 +65,7 @@ public class DebugGUI : MonoBehaviour
     public string optionDebugData;
     private string optionNoAI;
     private string optionAIOffline;
-    private string optionAITraceback;
+    /*private string optionAITraceback;*/
     /*private string optionAIScreamer;*/
     public string optionRenownUI;
     private string optionPath;
@@ -86,7 +86,7 @@ public class DebugGUI : MonoBehaviour
         optionDebugData = "Debug Data ON";
         optionNoAI = "NO AI ON";
         optionAIOffline = "AIOffline ON";
-        optionAITraceback = "AITraceback ON";
+        /*optionAITraceback = "AITraceback ON";*/
         /*optionAIScreamer = "AIScreamer ON";*/
         optionRenownUI = "Renown UI OFF";
         optionPath = "Input Path";
@@ -1089,11 +1089,11 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DebugDisplayActorLists();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 500), analysis, customBackground);
                         break;
-                    //Player stats
+                    //Player data
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.playerScript.DebugDisplayPlayerStats();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 700), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
                         break;
                     //Toggle Messages
                     case 9:

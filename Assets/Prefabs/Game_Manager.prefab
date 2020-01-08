@@ -1237,6 +1237,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5976175e127ee964fb44cc4fe7b7825f, type: 2}
   - {fileID: 11400000, guid: d77e6494404005247b6d73690a11af22, type: 2}
   - {fileID: 11400000, guid: 496c7f6eff1db9b4bb9bd3c2b1224712, type: 2}
+  - {fileID: 11400000, guid: 850a5113a2cf3df47a5d9b84f5637d2c, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1791,6 +1792,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 65a000f3eb5cc4444850885632557f0c, type: 2}
   - {fileID: 11400000, guid: acfb6b6c1f2b36840a61ba3c760d5daa, type: 2}
   - {fileID: 11400000, guid: ccf5bf6275490c94d8cc49b3b5e34b48, type: 2}
+  - {fileID: 11400000, guid: 677e573e52dd90848b0cb0677fe09881, type: 2}
+  - {fileID: 11400000, guid: b49bb8d860e677343ba11b1fe72e5964, type: 2}
+  - {fileID: 11400000, guid: ec67a895a6e918748a7713ce270336f2, type: 2}
+  - {fileID: 11400000, guid: 1127789f79e7f6e43ba0fcbe8d5820c6, type: 2}
   arrayOfEffectsResistance:
   - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
   - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
@@ -1953,6 +1958,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 319fe978ed65a114f8a5113a021c53da, type: 2}
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   - {fileID: 11400000, guid: a37465ed6db02cc43afe4c326087f786, type: 2}
+  - {fileID: 11400000, guid: ea4b894910e7645469eb712604e674e4, type: 2}
+  - {fileID: 11400000, guid: ea8dbcaaf5937434c8a6c485df73e6b0, type: 2}
+  - {fileID: 11400000, guid: 7bd00b2f16cf63b4b824a558148752cc, type: 2}
+  - {fileID: 11400000, guid: f41ee226e4e6f814d8d73b582f4c9f67, type: 2}
+  - {fileID: 11400000, guid: 0a2bee2bac3315f41b9ab506f2fb74bc, type: 2}
+  - {fileID: 11400000, guid: 194cc72b08a66f24a85696c20e90a778, type: 2}
+  - {fileID: 11400000, guid: 1847fb50ea405de4fa677bcc3608a97b, type: 2}
+  - {fileID: 11400000, guid: 89c645c804b633b4abaa6ee4c0c48206, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4567,6 +4580,8 @@ MonoBehaviour:
   moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
   moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
   moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
+  colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

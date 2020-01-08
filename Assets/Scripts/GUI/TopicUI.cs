@@ -15,6 +15,9 @@ public class TopicUI : MonoBehaviour
     public Canvas topicCanvas;
     public GameObject topicObject;
 
+    [Header("Backgrounds")]
+    public Image innerBackground;
+
     [Header("Panels")]
     public Image panelBoss;
 
@@ -132,9 +135,12 @@ public class TopicUI : MonoBehaviour
             arrayOfTooltips = new GenericTooltipUI[maxNumOfOptions];
         }
         else { Debug.LogErrorFormat("Invalid maxOptions \"{0}\", arrays not initialised", maxNumOfOptions); }
+        /*//background
+        innerBackground = innerBackground.GetComponent<Image>();*/
         //UI elements
         Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
         Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
+        Debug.Assert(innerBackground != null, "Invalid innerBackground (Null)");
         Debug.Assert(panelBoss != null, "Invalid panelBoss (Null)");
         Debug.Assert(buttonOption0 != null, "Invalid buttonOption0 (Null)");
         Debug.Assert(buttonOption1 != null, "Invalid buttonOption1 (Null)");
@@ -365,7 +371,8 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
-
+            //set colour of background
+            innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b);
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.Length; i++)
             { arrayOfButtons[i].gameObject.SetActive(false); }

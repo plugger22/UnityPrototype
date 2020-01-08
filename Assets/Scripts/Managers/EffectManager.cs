@@ -1870,6 +1870,11 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     //
+                    // - - - Capture Tools - - -
+                    case "CaptureTool":
+                        effectReturn.bottomText = ExecuteCaptureTool(effect, dataInput);
+                        break;
+                    //
                     // - - - Manage - - -
                     //
                     case "ActorDismissed":
@@ -4084,6 +4089,9 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }*/
                 effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput);
                 break;
+            case "CaptureTool":
+                effectResolve.bottomText = ExecuteCaptureTool(effect, dataInput);
+                break;
             case "CureAddicted":
             case "CureTagged":
             case "CureWounded":
@@ -5271,6 +5279,7 @@ public class EffectManager : MonoBehaviour
     {
         string bottomText = "Unknown";
         string colourEffect = GetColourEffect(effect.typeOfEffect);
+        int innocenceLevel = effect.value;
         CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(effect.value);
         if (tool != null)
         {
@@ -5278,26 +5287,41 @@ public class EffectManager : MonoBehaviour
             switch (effect.operand.name)
             {
                 case "Add":
-                    //Add item to Player's inventory
-                    if (GameManager.instance.playerScript.CheckCaptureToolPresent(effect.value) == false)
+                    //Add item to Player's inventory -> check if an appropriate level capture tool is even feasible (may not be present)
+                    if (GameManager.instance.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
                     {
-                        if (GameManager.instance.playerScript.AddCaptureTool(effect.value) == true)
-                        { bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd); }
-                        else
+                        //check if player already has this particular capture tool
+                        if (GameManager.instance.playerScript.CheckCaptureToolPresent(innocenceLevel) == false)
                         {
-                            bottomText = string.Format("{0}{1} NOT gained{2}", colourEffect, tool.tag, colourEnd);
-                            Debug.LogWarningFormat("CaptureTool NOT added to player's inventory for effect.value \"{0}\"", effect.value);
+                            if (GameManager.instance.playerScript.AddCaptureTool(innocenceLevel) == true)
+                            { bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd); }
+                            else
+                            {
+                                bottomText = string.Format("{0}{1} NOT gained{2}", colourEffect, tool.tag, colourEnd);
+                                Debug.LogWarningFormat("CaptureTool NOT added to player's inventory for effect.value \"{0}\"", innocenceLevel);
+                            }
                         }
+                        else
+                        { bottomText = string.Format("{0}{1} already present{2}", colourEffect, tool.tag, colourEnd); }
                     }
-                    else
-                    { bottomText = string.Format("{0}{1} already present{2}", colourEffect, tool.tag, colourEnd); }
+                    else { Debug.LogWarningFormat("Capture tool not present for innocenceLevel \"{0}\"", innocenceLevel); }
                     break;
                 case "Subtract":
                     //Remove item from Player's inventory
-                    if (actor.CheckConditionPresent(condition) == true)
+                    if (GameManager.instance.playerScript.CheckCaptureToolPresent(innocenceLevel) == true)
                     {
-                        actor.RemoveCondition(condition, string.Format("due to {0}", dataInput.originText));
-                        bottomText = string.Format("{0}{1} removed{2}", colourEffect, tool.tag, colourEnd);
+                        if (GameManager.instance.playerScript.RemoveCaptureTool(innocenceLevel) == true)
+                        { bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd); }
+                        else
+                        {
+                            Debug.LogWarningFormat("Capture Tool for innocenceLevel \"{0}\" Failed Removal", innocenceLevel);
+                            bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Player does not have Capture Tool for innocenceLevel \"{0}\"", innocenceLevel);
+                        bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd);
                     }
                     break;
                 default:

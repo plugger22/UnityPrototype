@@ -114,6 +114,12 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Player mood 3 star")]
     public Sprite moodStar3;
 
+    [Header("Background Colours")]
+    [Tooltip("Topic UI, main background, for all normal topics")]
+    public Color colourTopicNormal;
+    [Tooltip("Topic UI, main background, for Capture topics")]
+    public Color colourTopicCapture;
+
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
