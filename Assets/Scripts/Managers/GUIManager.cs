@@ -119,6 +119,8 @@ public class GUIManager : MonoBehaviour
     public Color colourTopicNormal;
     [Tooltip("Topic UI, main background, for Capture topics")]
     public Color colourTopicCapture;
+    [Tooltip("Main Info UI left and right backgrounds")]
+    public Color colourMainBackground;
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.

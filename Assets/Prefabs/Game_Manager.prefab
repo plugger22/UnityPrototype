@@ -4582,6 +4582,7 @@ MonoBehaviour:
   moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
   colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
+  colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:
