@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: CapRES2
+  m_EditorClassIdentifier: 
+  tag: Inquisitor
+  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
+    It has questions
+  designNotes: Captured, Innocence 2 stars, Good
+  type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
+  subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 78503e1d1f0bcd74fb92c88168771f22, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: c85cb391a6d1a0d4aa589cc38cb444ea, type: 2}
+  - {fileID: 11400000, guid: e80a8aa170371d74dbafabb19c637c8c, type: 2}
+  - {fileID: 11400000, guid: 2e523df2618e4e949be470d2be09cee0, type: 2}
+  - {fileID: 11400000, guid: b7cee59e881792649bae844eec306887, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 16
+  turnsDone: 0
