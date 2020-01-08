@@ -20,6 +20,7 @@ MonoBehaviour:
   isIgnoreStress: 1
   isIgnoreMood: 1
   listOfCriteria:
+  - {fileID: 11400000, guid: 8168a14cb231e034bbc01545650f6b94, type: 2}
   - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: a37465ed6db02cc43afe4c326087f786, type: 2}
@@ -28,10 +29,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <color=#FFFFE0>Escape</color>
-  tooltipMain: "<color=#98FB98>Player escaped from Captivity</color>\r\n<color=#FF4500>
-    Freedom from Org -1</color>"
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>No contact with Organisation</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Ask Bacon Brothers to rescue you</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Ask Bacon Brothers to rescue you</color>
   optionNumber: 3

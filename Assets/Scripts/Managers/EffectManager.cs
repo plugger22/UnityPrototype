@@ -1981,17 +1981,21 @@ public class EffectManager : MonoBehaviour
                                 switch (effect.operand.name)
                                 {
                                     case "Add":
+                                        //Contact established
                                         org.isContact = true;
                                         effectReturn.bottomText = string.Format("{0}{1} make contact{2}", colourGood, org.tag, colourEnd);
                                         effectReturn.listOfHelpTags.Add("org_0");
                                         effectReturn.listOfHelpTags.Add("org_1");
-                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");
+                                        /*Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");*/
+                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" now in CONTACT with Player{1}", org.tag, "\n");
                                         break;
                                     case "Subtract":
+                                        //break off contact
                                         org.isContact = false;
                                         effectReturn.bottomText = string.Format("{0}{1} break off contact{2}", colourBad, org.tag, colourEnd);
                                         effectReturn.listOfHelpTags.Add("org_2");
-                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" in contact with Player {1}", org.tag, "\n");
+                                        /*Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" in contact with Player{1}", org.tag, "\n");*/
+                                        Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player{1}", org.tag, "\n");
                                         break;
                                     default:
                                         Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\"", effect.operand.name); break;
@@ -5254,6 +5258,54 @@ public class EffectManager : MonoBehaviour
             else { Debug.LogWarning("Invalid actor (Null)"); }
         }
         else { Debug.LogWarningFormat("Invalid condition (Null) for outcome \"{0}\"", effect.outcome.name); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// add or remove a Capture Tool to the Player's inventory
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private string ExecuteCaptureTool(Effect effect, EffectDataInput dataInput)
+    {
+        string bottomText = "Unknown";
+        string colourEffect = GetColourEffect(effect.typeOfEffect);
+        CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(effect.value);
+        if (tool != null)
+        {
+            //Actor Condition
+            switch (effect.operand.name)
+            {
+                case "Add":
+                    //Add item to Player's inventory
+                    if (GameManager.instance.playerScript.CheckCaptureToolPresent(effect.value) == false)
+                    {
+                        if (GameManager.instance.playerScript.AddCaptureTool(effect.value) == true)
+                        { bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd); }
+                        else
+                        {
+                            bottomText = string.Format("{0}{1} NOT gained{2}", colourEffect, tool.tag, colourEnd);
+                            Debug.LogWarningFormat("CaptureTool NOT added to player's inventory for effect.value \"{0}\"", effect.value);
+                        }
+                    }
+                    else
+                    { bottomText = string.Format("{0}{1} already present{2}", colourEffect, tool.tag, colourEnd); }
+                    break;
+                case "Subtract":
+                    //Remove item from Player's inventory
+                    if (actor.CheckConditionPresent(condition) == true)
+                    {
+                        actor.RemoveCondition(condition, string.Format("due to {0}", dataInput.originText));
+                        bottomText = string.Format("{0}{1} removed{2}", colourEffect, tool.tag, colourEnd);
+                    }
+                    break;
+                default:
+                    Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
+                    break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid captureTool (Null) for effect.value \"{0}\"", effect.value); }
         return bottomText;
     }
 

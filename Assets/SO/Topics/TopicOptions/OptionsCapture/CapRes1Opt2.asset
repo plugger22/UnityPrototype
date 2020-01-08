@@ -19,16 +19,19 @@ MonoBehaviour:
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 2496835b562e4f640b2bf86c6c0a5eb4, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  tooltipHeader: <color=#FFFFE0>Avoid Questions</color>
-  tooltipMain: <color=#98FB98>Player released from Captivity</color>
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Player doesn''t have Item
+
+    </color>'
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Chew on a Fuzz Pill</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Chew on a Fuzz Pill</color>
   optionNumber: 2

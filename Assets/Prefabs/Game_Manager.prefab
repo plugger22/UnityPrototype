@@ -4341,7 +4341,7 @@ MonoBehaviour:
   maxActorsLeaveHQ: 5
   lieLowTimer: 0
   doomTimer: 0
-  captureTimer: 0
+  captureTimerPlayer: 0
   isGearCheckRequired: 0
   nameSet: {fileID: 0}
   actorIDCounter: 0

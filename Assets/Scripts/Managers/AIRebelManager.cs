@@ -3895,6 +3895,8 @@ public class AIRebelManager : MonoBehaviour
             //pass through data package
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = "Target Attempt";
+            //org name, if present (only applies to ContactOrg effect for Organisation targets but send regardless)
+            dataInput.dataName = GameManager.instance.targetScript.targetOrgName;
             //handle any Ongoing effects of target completed -> only if target Successful
             if (isSuccessful == true && target.ongoingEffect != null)
             {

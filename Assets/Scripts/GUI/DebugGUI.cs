@@ -769,13 +769,16 @@ public class DebugGUI : MonoBehaviour
                 GameManager.instance.playerScript.Renown = renown;
             }
 
-            //thirteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Set Sec State"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give CaptureTool" /*optionAITraceback*/))
             {
-                Debug.Log("[Dbg] Button -> Set Security State");
-                if (debugDisplay != 22)
-                { debugDisplay = 22; }
-                else { debugDisplay = 0; }
+                //Resistance player only
+                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                {
+                    Debug.Log("[Dbg] Button -> Give CaptureTool");
+                    if (debugDisplay != 84)
+                    { debugDisplay = 84; }
+                    else { debugDisplay = 0; }
+                }
             }
 
             //fourteenth button
@@ -801,10 +804,19 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-            //eigth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Give CaptureTool" /*optionAITraceback*/))
+            //thirteenth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Set Sec State"))
             {
-                /*Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
+                Debug.Log("[Dbg] Button -> Set Security State");
+                if (debugDisplay != 22)
+                { debugDisplay = 22; }
+                else { debugDisplay = 0; }
+            }
+
+            /*//eigth button
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), optionAITraceback))
+            {
+                Debug.Log("[Dbg] Button -> Toggle AI TraceBack");
                 if (GameManager.instance.aiScript.CheckAITraceBackStatus() == true)
                 {
                     GameManager.instance.aiScript.SetAITraceBack(false);
@@ -814,17 +826,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.aiScript.SetAITraceBack(true);
                     optionAITraceback = "AITraceback OFF";
-                }*/
-
-                //Resistance player only
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-                {
-                    Debug.Log("[Dbg] Button -> Give CaptureTool");
-                    if (debugDisplay != 84)
-                    { debugDisplay = 84; }
-                    else { debugDisplay = 0; }
                 }
-            }
+            }*/
 
             //ninth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Capture Player" /*optionAIScreamer*/))
