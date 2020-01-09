@@ -4303,7 +4303,7 @@ public class EffectManager : MonoBehaviour
             case "HQRelocate":
                 //HQ relocates (takes time, services unavailable during relocation)
                 GameManager.instance.factionScript.RelocateHQ("Player reveals Location");
-                effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}Location Compromised{2}{3}", colourBad, "\n", colourEnd, "\n");
+                effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}{2}{3}Location Compromised{4}{5}", colourBad, colourEnd, "\n", colourAlert, colourEnd, "\n");
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

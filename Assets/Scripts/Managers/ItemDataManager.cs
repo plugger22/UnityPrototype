@@ -1229,7 +1229,7 @@ public class ItemDataManager : MonoBehaviour
     }
 
     //
-    // - - - Faction - - -
+    // - - - HQ - - -
     //
 
     /// <summary>
@@ -1238,7 +1238,7 @@ public class ItemDataManager : MonoBehaviour
     /// </summary>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public string GetFactionSupportDetails(Faction faction, int factionApproval, int supportGiven)
+    public string GetHqSupportDetails(Faction faction, int factionApproval, int supportGiven)
     {
         StringBuilder builder = new StringBuilder();
         if (supportGiven > 0)
@@ -1268,7 +1268,7 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="change"></param>
     /// <param name="newLevel"></param>
     /// <returns></returns>
-    public string GetFactionApprovalDetails(Faction faction, string reason, int change, int newLevel)
+    public string GetHqApprovalDetails(Faction faction, string reason, int change, int newLevel)
     {
         StringBuilder builder = new StringBuilder();
         if (change > 0)
@@ -1280,6 +1280,32 @@ public class ItemDataManager : MonoBehaviour
             if (change > 0)
             { builder.AppendFormat("{0}<b>{1}</b>{2}", colourGood, reason, colourEnd); }
             else { builder.AppendFormat("{0}<b>{1}</b>{2}", colourBad, reason, colourEnd); }
+        }
+        return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// HQ relocates or has just completed relocation
+    /// </summary>
+    /// <param name="reason"></param>
+    /// <param name="timer"></param>
+    /// <returns></returns>
+    public string GetHqRelocationDetails(Faction faction, string reason, int timer)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (timer > 0)
+        {
+            //HQ commences relocation
+            builder.AppendFormat("{0}<b>{1}{2} is Relocating</b>{3}{4}", colourAlert, faction.tag, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, reason, colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>HQ Services are temporarily{0}{1}Unavailable</b>{2}", "\n", colourAlert, colourEnd);
+        }
+        else
+        {
+            //HQ has completed relocation
+            builder.AppendFormat("{0}<b>{1}{2} has Relocated{3}</b>{4}", colourAlert, faction.tag, colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>HQ Services are now{0}{1}Available</b>{2}", "\n", colourAlert, colourEnd);
         }
         return builder.ToString();
     }

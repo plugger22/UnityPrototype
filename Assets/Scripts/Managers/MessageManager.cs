@@ -4048,7 +4048,7 @@ public class MessageManager : MonoBehaviour
     }
 
     //
-    // - - - Faction - - -
+    // - - - HQ - - -
     //
 
     /// <summary>
@@ -4059,7 +4059,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="playerRenownBefore"></param>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public Message FactionSupport(string text, Faction faction, int factionApprovalLevel, int playerRenownBefore, int supportGiven = -1)
+    public Message HqSupport(string text, Faction faction, int factionApprovalLevel, int playerRenownBefore, int supportGiven = -1)
     {
         Debug.Assert(faction != null, "Invalid faction (Null)");
         Debug.Assert(factionApprovalLevel > -1, "Invalid factionSupportLevel ( < zero)");
@@ -4068,8 +4068,8 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.FACTION;
-            message.subType = MessageSubType.Faction_Support;
+            message.type = MessageType.HQ;
+            message.subType = MessageSubType.HQ_Support;
             message.sideLevel = faction.side.level;
             message.isPublic = true;
             message.data0 = factionApprovalLevel;
@@ -4089,7 +4089,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("Support request to {0} declined", faction.tag);
                 data.topText = "Support Declined";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetFactionSupportDetails(faction, factionApprovalLevel, supportGiven);
+            data.bottomText = GameManager.instance.itemDataScript.GetHqSupportDetails(faction, factionApprovalLevel, supportGiven);
             //high priority if given
             if (supportGiven > 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
@@ -4121,7 +4121,7 @@ public class MessageManager : MonoBehaviour
     /// <param name="change"></param>
     /// <param name="newLevel"></param>
     /// <returns></returns>
-    public Message FactionApproval(string text, string reason, Faction faction, int oldLevel, int change, int newLevel)
+    public Message HqApproval(string text, string reason, Faction faction, int oldLevel, int change, int newLevel)
     {
         Debug.Assert(faction != null, "Invalid faction (Null)");
         Debug.Assert(change != 0, "Invalid change (Zero)");
@@ -4129,8 +4129,8 @@ public class MessageManager : MonoBehaviour
         {
             Message message = new Message();
             message.text = text;
-            message.type = MessageType.FACTION;
-            message.subType = MessageSubType.Faction_Approval;
+            message.type = MessageType.HQ;
+            message.subType = MessageSubType.HQ_Approval;
             message.sideLevel = faction.side.level;
             message.isPublic = true;
             message.data0 = oldLevel;
@@ -4143,7 +4143,7 @@ public class MessageManager : MonoBehaviour
             else
             { data.itemText = string.Format("{0} Approval DECREASES", faction.tag); }
             data.topText = "Approval Changes";
-            data.bottomText = GameManager.instance.itemDataScript.GetFactionApprovalDetails(faction, reason, change, newLevel);
+            data.bottomText = GameManager.instance.itemDataScript.GetHqApprovalDetails(faction, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4154,6 +4154,53 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "hq_supp_0";
             data.tag2 = "hq_supp_2";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// HQ Relocates. Handles both start of relocation and relocation completed
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="reason"></param>
+    /// <returns></returns>
+    public Message HqRelocates(string text, string reason)
+    {
+        Faction faction = GameManager.instance.factionScript.GetCurrentFaction();
+
+        Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty)");
+        Debug.Assert(faction != null, "Invalid current faction (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            int timer = GameManager.instance.factionScript.GetHqRelocationTimer();
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.HQ;
+            message.subType = MessageSubType.HQ_Relocates;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = timer;
+            //ItemData
+            ItemData data = new ItemData();
+            if (timer > 0)
+            { data.itemText = string.Format("{0} Relocating", faction.tag); }
+            else
+            { data.itemText = string.Format("{0} completed RELOCATION", faction.tag); }
+            data.topText = "HQ Relocation";
+            data.bottomText = GameManager.instance.itemDataScript.GetHqRelocationDetails(faction, reason, timer);
+            data.priority = ItemPriority.High;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.sprite = faction.sprite;
+            data.spriteName = data.sprite.name;
+            data.help = 0;
+
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

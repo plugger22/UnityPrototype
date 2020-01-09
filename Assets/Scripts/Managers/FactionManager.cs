@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -241,12 +242,31 @@ public class FactionManager : MonoBehaviour
         //HQ relocating
         if (timerHqRelocating > 0)
         {
+            string text;
             timerHqRelocating--;
             if (timerHqRelocating <= 0)
             {
                 //relocation complete
                 isHqRelocating = false;
                 timerHqRelocating = 0;
+                text = "HQ has successfully Relocated";
+                GameManager.instance.messageScript.HqRelocates(text, "Relocation Successful");
+                Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
+            }
+            else
+            {
+                //relocation ongoing - effects tab
+                text = string.Format("<b>HQ is relocating ({0}{1}{2} turn{3} to go</b>)", colourNeutral, timerHqRelocating, colourEnd, timerHqRelocating != 1 ? "s" : "");
+                ActiveEffectData dataEffect = new ActiveEffectData()
+                {
+                    text = "HQ is Relocating",
+                    topText = "Relocation Underway",
+                    detailsTop = text,
+                    detailsBottom = string.Format("{0}<b>HQ Services are temporarily Unavailable</b>{1}", colourBad, colourEnd),
+                    sprite = GetCurrentFaction().sprite
+                };
+                GameManager.instance.messageScript.ActiveEffect(dataEffect);
+                Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: {0}{1}", text, "\n");
             }
         }
     }
@@ -283,7 +303,7 @@ public class FactionManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
-                            GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
                             //Support given
@@ -294,7 +314,7 @@ public class FactionManager : MonoBehaviour
                             //Support declined
                             Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
-                            GameManager.instance.messageScript.FactionSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
+                            GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
                         }
@@ -307,7 +327,7 @@ public class FactionManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
-                            GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd, false, "rand_1");
                             //Support given
@@ -318,7 +338,7 @@ public class FactionManager : MonoBehaviour
                             //Support declined
                             Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                            GameManager.instance.messageScript.FactionSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
+                            GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd, false, "rand_1");
                         }
@@ -397,13 +417,13 @@ public class FactionManager : MonoBehaviour
                         //Resistance side wins
                         winState = WinStateLevel.Resistance;
                     }
-                    msgText = string.Format("{0} faction approval Zero. Player Fired. Authority wins", playerFaction.name);
-                    itemText = string.Format("{0} faction has LOST PATIENCE", playerFaction.name);
-                    reason = string.Format("{0} faction approval at ZERO for an extended period", playerFaction.name);
+                    msgText = string.Format("{0} approval Zero. Player Fired. Authority wins", playerFaction.tag);
+                    itemText = string.Format("{0} has LOST PATIENCE", playerFaction.tag);
+                    reason = string.Format("{0} approval at ZERO for an extended period", playerFaction.tag);
                     warning = "You've been FIRED, game over";
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
-                    string textTop = string.Format("{0}The {1} faction has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
+                    string textTop = string.Format("{0}The {1} has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
                     string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
                     GameManager.instance.turnScript.SetWinStateLevel(winState, WinReasonLevel.FactionSupportMin, textTop, textBottom);
 
@@ -411,11 +431,11 @@ public class FactionManager : MonoBehaviour
                 else
                 {
                     //message
-                    msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                    itemText = string.Format("{0} faction about to FIRE you", playerFaction.name);
-                    reason = string.Format("{0} faction are displeased with your performance", playerFaction.name);
+                    msgText = string.Format("HQ approval Zero. HQ will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                    itemText = string.Format("{0} about to FIRE you", playerFaction.tag);
+                    reason = string.Format("{0} are displeased with your performance", playerFaction.tag);
                     warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Faction Unhappy", reason, warning);
+                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "HQ Unhappy", reason, warning);
                 }
             }
         }
@@ -632,7 +652,7 @@ public class FactionManager : MonoBehaviour
                     if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     {
                         msgText = string.Format("{0} faction approval {1}{2}", factionAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.FactionApproval(msgText, reason, factionAuthority, oldApproval, amountToChange, ApprovalAuthority);
+                        GameManager.instance.messageScript.HqApproval(msgText, reason, factionAuthority, oldApproval, amountToChange, ApprovalAuthority);
                     }
                     break;
                 case 2:
@@ -643,7 +663,7 @@ public class FactionManager : MonoBehaviour
                     if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                     {
                         msgText = string.Format("{0} faction approval {1}{2}", factionResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.FactionApproval(msgText, reason, factionResistance, oldApproval, amountToChange, ApprovalResistance);
+                        GameManager.instance.messageScript.HqApproval(msgText, reason, factionResistance, oldApproval, amountToChange, ApprovalResistance);
                     }
                     break;
                 default:
@@ -734,10 +754,13 @@ public class FactionManager : MonoBehaviour
     /// HQ relocating. Takes a number of turns. Services unavailable while relocating. Handles all admin
     /// </summary>
     /// <param name="reason"></param>
-    public void RelocateHQ(string reason)
+    public void RelocateHQ(string reason = "Unknown")
     {
         isHqRelocating = true;
         timerHqRelocating = timerRelocationBase;
+        Debug.LogFormat("[Fac] FactionManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
+        string text = string.Format("HQ is relocating due to {0} (will take {1} turns)", reason, timerHqRelocating);
+        GameManager.instance.messageScript.HqRelocates(text, reason);
     }
 
 

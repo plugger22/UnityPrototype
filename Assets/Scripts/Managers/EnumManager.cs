@@ -220,7 +220,7 @@
     //start of turn message pipeline (used for determining order messages are displayed ->  shown in enum order, make sure Compromised Gear is kept first as it's interactive)
     public enum MsgPipelineType { None, CompromisedGear, Npc, Nemesis, CapturePlayer, ReleasePlayer, WinLoseLevel, WinLoseCampaign, DebugTopic }  //see notes above
     public enum MessageCategory { None, Current, Pending, Archive, AI, Nemesis }
-    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, FACTION, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC, INVESTIGATION }
+    public enum MessageType { None, PLAYER, TEAM, AI, GEAR, ACTOR, TARGET, ACTIVE, ONGOING, DECISION, HQ, CITY, NODE, GENERAL, CONTACT, OBJECTIVE, TOPIC, ORGANISATION, NPC, INVESTIGATION }
     public enum MessageSubType
     {
         None,
@@ -317,9 +317,10 @@
         Node_Crisis,
         //City
         City_Loyalty,
-        //Faction
-        Faction_Support,
-        Faction_Approval,
+        //HQ
+        HQ_Support,
+        HQ_Approval,
+        HQ_Relocates,
         //Objective
         Objective_Progress,
         //Topic
