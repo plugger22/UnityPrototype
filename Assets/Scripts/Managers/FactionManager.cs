@@ -204,7 +204,7 @@ public class FactionManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.StartTurnEarly:
-                CheckFactionRenownSupport();
+                CheckHQRenownSupport();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -274,9 +274,9 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks if player given support (+1 renown) from faction based on a random roll vs. level of faction approval. No support if player inactive.
+    /// checks if player given support (+1 renown) from their HQ based on a random roll vs. level of HQ approval. No support if player inactive.
     /// </summary>
-    private void CheckFactionRenownSupport()
+    private void CheckHQRenownSupport()
     {
         bool isProceed = true;
         //ignore if autorun with both sides AI
@@ -286,7 +286,21 @@ public class FactionManager : MonoBehaviour
         if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[Fac] FactionManager.cs -> CheckFactionRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[Fac] FactionManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+        }
+        //HQ relocating
+        if (isHqRelocating == true)
+        {
+            isProceed = false;
+            Faction faction = GetCurrentFaction();
+            if (faction != null)
+            {
+                Debug.LogFormat("Fac] FactionManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
+                string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
+                string reason = GameManager.instance.colourScript.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", faction.tag), ColourType.salmonText);
+                GameManager.instance.messageScript.HqSupportUnavailable(text, reason, faction);
+            }
+            else { Debug.LogWarning("Invalid current faction (Null)"); }
         }
         if (isProceed == true)
         {
@@ -303,22 +317,22 @@ public class FactionManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionAuthority.name);
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", factionAuthority.tag);
                             GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
                             //Support given
                             GameManager.instance.playerScript.Renown += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionAuthority.name, threshold);
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} declines support ({1} % chance of support)", factionAuthority.tag, threshold);
                             GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                            GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd);
                         }
                         break;
                     case 2:
@@ -327,22 +341,22 @@ public class FactionManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} faction provides SUPPORT (+1 Renown)", factionResistance.name);
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", factionResistance.tag);
                             GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd, false, "rand_1");
+                            GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
                             //Support given
                             GameManager.instance.playerScript.Renown += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
+                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} declines support ({1} % chance of support)", factionResistance.tag, threshold);
                             GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd, false, "rand_1");
+                            GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd, false, "rand_1");
                         }
                         break;
                     default:

@@ -319,6 +319,7 @@
         City_Loyalty,
         //HQ
         HQ_Support,
+        HQ_SupportUnavailable,
         HQ_Approval,
         HQ_Relocates,
         //Objective

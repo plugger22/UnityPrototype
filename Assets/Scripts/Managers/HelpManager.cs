@@ -991,15 +991,15 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "hq_0";
         data.header = "HQ Relocation";
-        data.text = string.Format("Relocation is {0}extremely disruptive{1} and time consuming. Nobody has time to provide the services that you expect {2}until things settle down{3}",
+        data.text = string.Format("Relocation is {0}extremely disruptive{1} and involved. Nobody has time to provide the services that you expect {2}until things settle down{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Services Unavailable
         data = new HelpData();
         data.tag = "hq_1";
         data.header = "HQ Services";
-        data.text = string.Format("The following services will not be available: {0}HQ Support{1}, safe houses for {2}Lying Low{3}, recruits for Recruitment and equipment for {4}Gear{5}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("The following services will not be available: {0}HQ Support{1}, safe houses for {2}Lying Low{3}, candidates for {4}new Recruits{5} and equipment for {6}new Gear{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
