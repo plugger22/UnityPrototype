@@ -4300,6 +4300,11 @@ public class EffectManager : MonoBehaviour
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }
                 break;
+            case "HQRelocate":
+                //HQ relocates (takes time, services unavailable during relocation)
+                GameManager.instance.factionScript.RelocateHQ("Player reveals Location");
+                effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}Location Compromised{2}{3}", colourBad, "\n", colourEnd, "\n");
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
         return effectResolve;

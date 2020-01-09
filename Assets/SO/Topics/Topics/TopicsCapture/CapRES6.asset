@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES6
   m_EditorClassIdentifier: 
   tag: Hell Tank
-  text: '[mayor] thinks you are a [capture] with the Resistance ([innocence]). They
-    personally lower you into the Hell Deprivation Tank'
+  text: '[mayor] thinks you are a [capture] with the Resistance ([innocence]). You
+    are lowered into the Hell Deprivation Tank'
   designNotes: Captured, Innocence 0 stars, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -38,12 +38,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 2
   isCurrent: 1
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 18
-  turnsLive: 0
+  turnsActive: 15
+  turnsLive: 1
   turnsDone: 0

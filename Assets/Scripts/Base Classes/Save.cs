@@ -256,6 +256,8 @@ public class SaveScenarioData
     public bool isZeroTimerThisTurn;
     public int factionSupportAuthority;
     public int factionSupportResistance;
+    public bool isHqRelocating;
+    public int timerHqRelocating;
     //ObjectiveManager.cs
     public List<string> listOfObjectiveNames = new List<string>();
     public List<int> listOfObjectiveProgress = new List<int>();

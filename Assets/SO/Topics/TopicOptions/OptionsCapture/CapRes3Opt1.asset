@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3e46343d96cc8140a47c578671085a6, type: 2}
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Passive Resistance</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player

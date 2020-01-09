@@ -2414,6 +2414,29 @@ public class PlayerManager : MonoBehaviour
         return reply;
     }
 
+    /// <summary>
+    /// Sets player innocence level
+    /// </summary>
+    /// <param name="innocenceString"></param>
+    /// <returns></returns>
+    public string DebugSetInnocence(string innocenceString)
+    {
+        string reply = "Error";
+        int innocenceLevel = -1;
+        if (string.IsNullOrEmpty(innocenceString) == false)
+        {
+            //convert string to int
+            try { innocenceLevel = System.Convert.ToInt32(innocenceString); }
+            catch (System.OverflowException)
+            { Debug.LogErrorFormat("Invalid conversion for innocenceString \"{0}\"", innocenceString); }
+            //Set Innocence (called method will handle invalid innocentLevel)
+            Innocence = innocenceLevel;
+            reply = $"Innocence now {innocenceLevel}";
+        }
+        else { Debug.LogError("Invalid innoceneString (Null or Empty)"); }
+        return reply;
+    }
+
     //
     // - - - Node Actions
     //

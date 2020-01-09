@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Inquisitor
   text: The Inquisitor thinks you are a [capture] with the Resistance ([innocence]).
-    You detect the hint of an evil smile
+    Is that a hint of an evil smile that you see?
   designNotes: Captured, Innocence 2 stars, Bad
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -45,6 +45,6 @@ MonoBehaviour:
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 18
+  turnsActive: 16
   turnsLive: 0
   turnsDone: 0

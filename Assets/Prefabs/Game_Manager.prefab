@@ -1241,6 +1241,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5976175e127ee964fb44cc4fe7b7825f, type: 2}
   - {fileID: 11400000, guid: d77e6494404005247b6d73690a11af22, type: 2}
   - {fileID: 11400000, guid: 496c7f6eff1db9b4bb9bd3c2b1224712, type: 2}
+  - {fileID: 11400000, guid: 9dd461ee4d2224d40b838e7d7b3446cf, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1972,6 +1973,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 319fe978ed65a114f8a5113a021c53da, type: 2}
   - {fileID: 11400000, guid: a320845792d5eec40801f77dd9095918, type: 2}
   - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
+  - {fileID: 11400000, guid: 40775f9c776776643a582f19953b871a, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4487,8 +4489,10 @@ MonoBehaviour:
   renownFactor: 10
   factionApprovalActorResigns: 1
   factionFirePlayerTimer: 3
+  timerRelocationBase: 5
   factionAuthority: {fileID: 0}
   factionResistance: {fileID: 0}
+  isHqRelocating: 0
 --- !u!114 &114709307672004698
 MonoBehaviour:
   m_ObjectHideFlags: 1

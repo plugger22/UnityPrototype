@@ -13,7 +13,7 @@ public class DebugGUI : MonoBehaviour
     //for whenever interaction is needed
     private enum GUIStatus
     { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
-    GiveCaptureTool}
+    GiveCaptureTool, SetInnocence}
 
     public GUIStyle customBackground;
 
@@ -64,7 +64,7 @@ public class DebugGUI : MonoBehaviour
     public string optionConnectorTooltips;
     public string optionDebugData;
     private string optionNoAI;
-    private string optionAIOffline;
+    /*private string optionAIOffline;*/
     /*private string optionAITraceback;*/
     /*private string optionAIScreamer;*/
     public string optionRenownUI;
@@ -85,7 +85,7 @@ public class DebugGUI : MonoBehaviour
         optionConnectorTooltips = "Conn tooltips ON";
         optionDebugData = "Debug Data ON";
         optionNoAI = "NO AI ON";
-        optionAIOffline = "AIOffline ON";
+        /*optionAIOffline = "AIOffline ON";*/
         /*optionAITraceback = "AITraceback ON";*/
         /*optionAIScreamer = "AIScreamer ON";*/
         optionRenownUI = "Renown UI OFF";
@@ -789,9 +789,9 @@ public class DebugGUI : MonoBehaviour
             }
 
             //seventh button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), optionAIOffline))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 12 + button_height * 12, button_width, button_height), "Set Innocence" /*optionAIOffline*/))
             {
-                Debug.Log("[Dbg] Button -> Toggle AI Offline");
+                /*Debug.Log("[Dbg] Button -> Toggle AI Offline");
                 if (GameManager.instance.aiScript.CheckAIOffLineStatus() == true)
                 {
                     GameManager.instance.aiScript.SetAIOffline(false);
@@ -801,7 +801,12 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.instance.aiScript.SetAIOffline(true);
                     optionAIOffline = "AIOffline OFF";
-                }
+                }*/
+
+                Debug.Log("[Dbg] Button -> Set Player Innocence");
+                if (debugDisplay != 86)
+                { debugDisplay = 86; }
+                else { debugDisplay = 0; }
             }
 
             //thirteenth button
@@ -1703,6 +1708,23 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //Set Player Innnocence Input
+                    case 86:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Innocence Lvl (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 20), textInput_0);
+                        status = GUIStatus.SetInnocence;
+                        textOutput = null;
+                        break;
+                    //Set Innocence processing & Output
+                    case 87:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.playerScript.DebugSetInnocence(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1753,6 +1775,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.Conflict:
                         debugDisplay = 82;
+                        break;
+                    case GUIStatus.SetInnocence:
+                        debugDisplay = 87;
                         break;
                 }
                 break;

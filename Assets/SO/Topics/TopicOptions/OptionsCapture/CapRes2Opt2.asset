@@ -19,14 +19,15 @@ MonoBehaviour:
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: a037592ee21c9da44a9561049b62a2b1, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Poker Face</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player

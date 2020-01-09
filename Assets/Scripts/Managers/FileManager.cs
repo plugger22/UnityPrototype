@@ -403,6 +403,8 @@ public class FileManager : MonoBehaviour
         write.scenarioData.approvalZeroTimer = GameManager.instance.factionScript.GetApprovalZeroTimer();
         write.scenarioData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
         write.scenarioData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
+        write.scenarioData.isHqRelocating = GameManager.instance.factionScript.isHqRelocating;
+        write.scenarioData.timerHqRelocating = GameManager.instance.factionScript.GetHqRelocationTimer();
         //objectiveManager.cs
         List<Objective> tempList = GameManager.instance.objectiveScript.GetListOfObjectives();
         if (tempList != null)
@@ -1902,6 +1904,8 @@ public class FileManager : MonoBehaviour
         GameManager.instance.factionScript.LoadSetFactionApproval(globalResistance, read.scenarioData.factionSupportResistance);
         GameManager.instance.factionScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
         GameManager.instance.factionScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
+        GameManager.instance.factionScript.SetHqRelocationTimer(read.scenarioData.timerHqRelocating);
+        GameManager.instance.factionScript.isHqRelocating = read.scenarioData.isHqRelocating;
         //objectiveManager.cs
         List<Objective> tempList = new List<Objective>();
         for (int i = 0; i < read.scenarioData.listOfObjectiveNames.Count; i++)

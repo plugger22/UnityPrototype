@@ -27,12 +27,18 @@ public class FactionManager : MonoBehaviour
     [Tooltip("Timer set when faction approval is first zero. Decrements each turn and when zero the Player is fired. Reset if approval rises above zero")]
     [Range(1, 10)] public int factionFirePlayerTimer = 3;
 
+    [Header("HQ Relocation")]
+    [Tooltip("Number of turns needed for HQ to successfully relocate (HQ services unavialable during relocation")]
+    [Range(1, 10)] public int timerRelocationBase = 5;
+
     [HideInInspector] public Faction factionAuthority;
     [HideInInspector] public Faction factionResistance;
 
     #region SaveDataCompatible
     private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
     private int approvalZeroTimer;                          //countdown timer once approval at zero. Player fired when timer reaches zero.
+    public bool isHqRelocating;                            //true if HQ relocating. Disallows HQ support + Gear/Recruit/Lie Low actions
+    private int timerHqRelocating;                          //activated when relocation occurs, counts down to zero when relocation is considered done
     #endregion
 
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
@@ -232,6 +238,17 @@ public class FactionManager : MonoBehaviour
     {
         //reset flag ready for next turn
         isZeroTimerThisTurn = false;
+        //HQ relocating
+        if (timerHqRelocating > 0)
+        {
+            timerHqRelocating--;
+            if (timerHqRelocating <= 0)
+            {
+                //relocation complete
+                isHqRelocating = false;
+                timerHqRelocating = 0;
+            }
+        }
     }
 
     /// <summary>
@@ -713,6 +730,22 @@ public class FactionManager : MonoBehaviour
         return listOfHQPositions[Random.Range(0, listOfHQPositions.Count)];
     }
 
+    /// <summary>
+    /// HQ relocating. Takes a number of turns. Services unavailable while relocating. Handles all admin
+    /// </summary>
+    /// <param name="reason"></param>
+    public void RelocateHQ(string reason)
+    {
+        isHqRelocating = true;
+        timerHqRelocating = timerRelocationBase;
+    }
+
+
+    public int GetHqRelocationTimer()
+    { return timerHqRelocating; }
+
+    public void SetHqRelocationTimer(int timer)
+    { timerHqRelocating = timer; }
 
     //
     // - - - Debug - - -
@@ -726,7 +759,7 @@ public class FactionManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //authority
-        builder.AppendFormat(" AUTHORITY{0}{1}", "\n", "\n");
+        builder.AppendFormat(" AUTHORITY{0}", "\n");
         builder.AppendFormat(" {0} faction{1}", factionAuthority.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", factionAuthority.descriptor, "\n", "\n");
         /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
@@ -734,7 +767,7 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
-        builder.AppendFormat("{0} RESISTANCE{1}{2}", "\n", "\n", "\n");
+        builder.AppendFormat("{0} RESISTANCE{1}", "\n", "\n");
         builder.AppendFormat(" {0} faction{1}", factionResistance.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", factionResistance.descriptor, "\n", "\n");
         /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
@@ -742,8 +775,12 @@ public class FactionManager : MonoBehaviour
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
         //HQ data
-        builder.AppendFormat("{0}HQ Hierarchy{1}", "\n", "\n");
-        builder.AppendFormat("bossOpinion {0}{1}, {2}", bossOpinion > 0 ? "+" : "", bossOpinion, GetBossOpinionFormatted());
+        builder.AppendFormat("{0}- HQ Hierarchy{1}", "\n", "\n");
+        builder.AppendFormat(" bossOpinion {0}{1}, {2}{3}", bossOpinion > 0 ? "+" : "", bossOpinion, GetBossOpinionFormatted(), "\n");
+        //Relocation
+        builder.AppendFormat("{0}- HQ Relocation{1}", "\n", "\n");
+        builder.AppendFormat(" isHqRelocating: {0}{1}", isHqRelocating, "\n");
+        builder.AppendFormat(" timerHqRelocating: {0}", timerHqRelocating);
         return builder.ToString();
     }
 
