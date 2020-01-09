@@ -263,7 +263,9 @@ public class FactionManager : MonoBehaviour
                     topText = "Relocation Underway",
                     detailsTop = text,
                     detailsBottom = string.Format("{0}<b>HQ Services are temporarily Unavailable</b>{1}", colourBad, colourEnd),
-                    sprite = GetCurrentFaction().sprite
+                    sprite = GetCurrentFaction().sprite,
+                    help0 = "hq_0",
+                    help1 = "hq_1"
                 };
                 GameManager.instance.messageScript.ActiveEffect(dataEffect);
                 Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: {0}{1}", text, "\n");

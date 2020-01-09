@@ -4199,8 +4199,13 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.sprite = faction.sprite;
             data.spriteName = data.sprite.name;
-            data.help = 0;
-
+            if (timer > 0)
+            {
+                data.help = 1;
+                data.tag0 = "hq_0";
+                data.tag1 = "hq_1";
+            }
+            else { data.help = 0; }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
