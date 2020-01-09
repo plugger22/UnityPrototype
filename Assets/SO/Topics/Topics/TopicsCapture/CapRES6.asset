@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES6
   m_EditorClassIdentifier: 
   tag: Hell Tank
-  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
-    It has questions
+  text: '[mayor] thinks you are a [capture] with the Resistance ([innocence]). They
+    personally lower you into the Hell Deprivation Tank'
   designNotes: Captured, Innocence 0 stars, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -28,8 +28,7 @@ MonoBehaviour:
   listOfCriteria:
   - {fileID: 11400000, guid: 13a9a5812df64ae46982fae96c244170, type: 2}
   listOfIgnoreEffects:
-  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: 50e988caa2cb407488306009a8b14c79, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 6ec7d8c4dfee79745aacf9c9fa64f0a9, type: 2}
   - {fileID: 11400000, guid: a15621c810c8f0c4c8f8a3fced597f8a, type: 2}
@@ -39,12 +38,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 16
+  turnsActive: 18
+  turnsLive: 0
   turnsDone: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes5Opt0
   m_EditorClassIdentifier: 
   descriptor: Capture 5 option 0
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Tough it out
+  text: Pain is my middle name
   topic: {fileID: 11400000, guid: 798d60f775e2beb46bb85a1fb73ffb3c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -23,8 +23,9 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: ef22d6381dd59c84ba258e6f8fc0f468, type: 2}
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: 584908cb55e27ed4992e3c6a136c8912, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes7Opt1
   m_EditorClassIdentifier: 
   descriptor: Capture 7 option 1
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Succumb
+  text: DON"T LEAVE ME IN HERE, I'll talk!
   topic: {fileID: 11400000, guid: ba1ab83ec8a218d4ca50c1e5db71b974, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -35,4 +35,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I know NOTHING</color>
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Capture 6 option 0
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Tough it out
+  text: I can handle the tank
   topic: {fileID: 11400000, guid: 28a9ce528f2b74f4fa7ac026ff0109ac, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -23,10 +23,9 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
-  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: 50e988caa2cb407488306009a8b14c79, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: <color=#FFFFE0>Passive Resistance</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player

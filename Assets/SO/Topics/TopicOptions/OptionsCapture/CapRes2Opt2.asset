@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes2Opt2
   m_EditorClassIdentifier: 
   descriptor: Capture 2 option 2
-  tag: Poker Face
-  text: Tough it out, say nothing
+  tag: Go Crazy
+  text: Trigger your Insanity Implant
   topic: {fileID: 11400000, guid: d9622e38ce6341441ac19fd569f69172, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -35,4 +35,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Tough it out, say nothing</color>
-  optionNumber: 1
+  optionNumber: 2

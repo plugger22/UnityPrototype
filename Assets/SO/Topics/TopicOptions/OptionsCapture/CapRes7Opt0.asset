@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes7Opt0
   m_EditorClassIdentifier: 
   descriptor: Capture 7 option 0
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Tough it out
+  text: I badder than the Hell Tank
   topic: {fileID: 11400000, guid: ba1ab83ec8a218d4ca50c1e5db71b974, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -23,8 +23,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
-  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: 50e988caa2cb407488306009a8b14c79, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 

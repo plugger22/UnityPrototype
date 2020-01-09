@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Capture 5 option 1
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Give in
+  text: Put WHAT up my bottom? I'll talk!
   topic: {fileID: 11400000, guid: 798d60f775e2beb46bb85a1fb73ffb3c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: ef22d6381dd59c84ba258e6f8fc0f468, type: 2}
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
@@ -35,4 +35,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I know NOTHING</color>
-  optionNumber: 0
+  optionNumber: 1

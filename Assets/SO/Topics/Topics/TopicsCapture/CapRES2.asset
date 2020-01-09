@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES2
   m_EditorClassIdentifier: 
   tag: Inquisitor
-  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
-    It has questions
+  text: The Inquisitor thinks you are a [capture] with the Resistance ([innocence]).
+    He glares at you as he would a piece of uncooperative meat
   designNotes: Captured, Innocence 2 stars, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78503e1d1f0bcd74fb92c88168771f22, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: 77a9ce67e93458a418e982c1a70048dc, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: c85cb391a6d1a0d4aa589cc38cb444ea, type: 2}
   - {fileID: 11400000, guid: e80a8aa170371d74dbafabb19c637c8c, type: 2}
@@ -39,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 16
+  turnsActive: 18
+  turnsLive: 0
   turnsDone: 0

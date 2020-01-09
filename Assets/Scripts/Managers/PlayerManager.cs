@@ -182,7 +182,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (value < 0)
             {
-                //fail state for level
+                //fail state for campaign
                 string text = "Unknown";
                 switch (GameManager.instance.sideScript.PlayerSide.level)
                 {

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes2Opt0
   m_EditorClassIdentifier: 
   descriptor: Capture 2 option 0
-  tag: Poker Face
-  text: Tough it out, say nothing
+  tag: Resist
+  text: Sorry but I can't recall...
   topic: {fileID: 11400000, guid: d9622e38ce6341441ac19fd569f69172, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1

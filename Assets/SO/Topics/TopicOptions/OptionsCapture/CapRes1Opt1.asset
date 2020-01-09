@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Capture 1 option 1
   tag: Reveal Infomation
-  text: Give them what they expect
+  text: Are those needles? I'll talk!
   topic: {fileID: 11400000, guid: 7181ef811b61fc9419306249bcb9916a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1

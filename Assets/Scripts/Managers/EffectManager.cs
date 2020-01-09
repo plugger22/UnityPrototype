@@ -4024,7 +4024,7 @@ public class EffectManager : MonoBehaviour
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Reserve) == true)
                 { effectResolve.bottomText = string.Format("{0}{1}, {2}, moved to Reserves{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
                 break;
-            case "ActorKilled":
+            case "ActorKilledOrg":
                 //OrgContract kills an actor
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
                 {
@@ -4032,6 +4032,13 @@ public class EffectManager : MonoBehaviour
                     OrgData data = new OrgData() { text = actor.arc.name, turn = GameManager.instance.turnScript.Turn };
                     GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Contract);
                     GameManager.instance.dataScript.StatisticIncrement(StatType.OrgContractHits);
+                }
+                break;
+            case "ActorKilledCapture":
+                //Player reveals location of actor while in capture
+                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
+                {
+                    effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Player reveals location){3}", colourBad, actor.actorName, actor.arc.name, colourEnd);
                 }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4133,6 +4140,10 @@ public class EffectManager : MonoBehaviour
             case "CaptureEscape":
                 //player escapes from captivity
                 effectResolve.bottomText = ExecutePlayerEscape(effect, dataInput);
+                break;
+            case "CapturePermanent":
+                //player locked up oermanently, end of campaign
+                effectResolve.bottomText = ExecuteGameOver();
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -5334,6 +5345,24 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Player captured, identified as leader of Rebels in city and locked up permanently as a result. Campaign over.
+    /// </summary>
+    /// <returns></returns>
+    private string ExecuteGameOver()
+    {
+        //fail state for Campaign
+        string text = "Unknown";
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1: text = GameManager.instance.colourScript.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
+            case 2: text = GameManager.instance.colourScript.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+        }
+        GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
+        return "Player locked up permanently";
+    }
+
+    /// <summary>
     /// subMethod for topic condition methods to return a colour of effect (good/bad/neutral) string
     /// </summary>
     /// <param name="type"></param>
@@ -5396,6 +5425,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "ConditionAddicted":
                     condition = conditionAddicted;
+                    break;
+                case "ConditionWounded":
+                    condition = conditionWounded;
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", outcome.name);

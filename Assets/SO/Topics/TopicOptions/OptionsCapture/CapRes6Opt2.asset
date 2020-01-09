@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Capture 6 option 2
-  tag: Passive Resistance
-  text: I know NOTHING
+  tag: Use Implant
+  text: Trigger your Zen Refuge
   topic: {fileID: 11400000, guid: 28a9ce528f2b74f4fa7ac026ff0109ac, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
@@ -23,8 +23,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
-  - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
+  - {fileID: 11400000, guid: 0a2bee2bac3315f41b9ab506f2fb74bc, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
@@ -35,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I know NOTHING</color>
-  optionNumber: 1
+  optionNumber: 2

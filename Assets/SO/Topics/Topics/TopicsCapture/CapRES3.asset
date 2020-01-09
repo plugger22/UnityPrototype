@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES3
   m_EditorClassIdentifier: 
   tag: Inquisitor
-  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
-    It questions you relentlessly
+  text: The Inquisitor thinks you are a [capture] with the Resistance ([innocence]).
+    You detect the hint of an evil smile
   designNotes: Captured, Innocence 2 stars, Bad
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 78503e1d1f0bcd74fb92c88168771f22, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: 77a9ce67e93458a418e982c1a70048dc, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 677ac3328a0eaa14e9f19790240b1bbe, type: 2}
   - {fileID: 11400000, guid: f589c0fab54760a4f9b4d3dd5d2ebaa2, type: 2}
@@ -39,12 +39,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 19
+  turnsActive: 18
+  turnsLive: 0
   turnsDone: 0

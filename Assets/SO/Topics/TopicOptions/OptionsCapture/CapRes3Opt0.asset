@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Capture 3 option 0
   tag: Passive Resistance
-  text: I know NOTHING
+  text: I'd tell you if I knew
   topic: {fileID: 11400000, guid: 7670c302b98526944b11e38d530c74f5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1

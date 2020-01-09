@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES4
   m_EditorClassIdentifier: 
   tag: Tortured
-  text: The AI InterroBot thinks you are a [capture] with the Resistance ([innocence]).
-    It has questions
+  text: The TortureBot has been told that you are a [capture] with the Resistance
+    ([innocence]). It doesn't care
   designNotes: Captured, Innocence 1 star, Good
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -29,7 +29,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0d2589c2077b50148808d7f577666c60, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
-  - {fileID: 11400000, guid: a1998f2e205cf7b4ea24ea28f8faf827, type: 2}
+  - {fileID: 11400000, guid: ef22d6381dd59c84ba258e6f8fc0f468, type: 2}
+  - {fileID: 11400000, guid: 584908cb55e27ed4992e3c6a136c8912, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: d6d6477e7d2f2224abbf92d7e64737dc, type: 2}
   - {fileID: 11400000, guid: 89f7229105d70e947ab0df1b3624f835, type: 2}
@@ -39,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 16
+  turnsActive: 18
+  turnsLive: 0
   turnsDone: 0
