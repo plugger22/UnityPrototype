@@ -1001,6 +1001,12 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("The following services will not be available: {0}HQ Support{1}, safe houses for {2}Lying Low{3}, candidates for {4}new Recruits{5} and equipment for {6}new Gear{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Time to Relocate
+        data = new HelpData();
+        data.tag = "hq_2";
+        data.header = "Time to Relocate";
+        data.text = string.Format("The number of days (turns) required to relocate {0}increases with each successive relocation{1}. This carries over between Cities", colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Investigations

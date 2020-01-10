@@ -265,7 +265,8 @@ public class FactionManager : MonoBehaviour
                     detailsBottom = string.Format("{0}<b>HQ Services are temporarily Unavailable</b>{1}", colourBad, colourEnd),
                     sprite = GetCurrentFaction().sprite,
                     help0 = "hq_0",
-                    help1 = "hq_1"
+                    help1 = "hq_1",
+                    help2 = "hq_2"
                 };
                 GameManager.instance.messageScript.ActiveEffect(dataEffect);
                 Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: {0}{1}", text, "\n");
@@ -767,13 +768,18 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// HQ relocating. Takes a number of turns. Services unavailable while relocating. Handles all admin
+    /// HQ relocating. Takes a number of turns. Services unavailable while relocating. Handles all admin. Time to relocate increases with every instance
     /// </summary>
     /// <param name="reason"></param>
     public void RelocateHQ(string reason = "Unknown")
     {
+        //stats (do first as needed for calcs below) 
+        GameManager.instance.dataScript.StatisticIncrement(StatType.HQRelocations);
+        //use max value of level or campaign (as campaign data isn't updated until metagame)
+        int timesRelocated = Mathf.Max(GameManager.instance.dataScript.StatisticGetLevel(StatType.HQRelocations), GameManager.instance.dataScript.StatisticGetCampaign(StatType.HQRelocations));
         isHqRelocating = true;
-        timerHqRelocating = timerRelocationBase;
+        timerHqRelocating = timerRelocationBase * timesRelocated;
+        //messages
         Debug.LogFormat("[Fac] FactionManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
         string text = string.Format("HQ is relocating due to {0} (will take {1} turns)", reason, timerHqRelocating);
         GameManager.instance.messageScript.HqRelocates(text, reason);
@@ -785,6 +791,15 @@ public class FactionManager : MonoBehaviour
 
     public void SetHqRelocationTimer(int timer)
     { timerHqRelocating = timer; }
+
+    /// <summary>
+    /// Metagame resetting of HQ data
+    /// </summary>
+    public void ProcessMetaHQ()
+    {
+        isHqRelocating = false;
+        timerHqRelocating = 0;       
+    }
 
     //
     // - - - Debug - - -

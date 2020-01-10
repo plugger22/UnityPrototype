@@ -4244,6 +4244,7 @@ public class MessageManager : MonoBehaviour
                 data.help = 1;
                 data.tag0 = "hq_0";
                 data.tag1 = "hq_1";
+                data.tag2 = "hq_2";
             }
             //add
             GameManager.instance.dataScript.AddMessage(message);

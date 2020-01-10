@@ -196,7 +196,8 @@
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,
         InvestigationsLaunched, InvestigationsCompleted,
-        OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped
+        OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped,
+        HQRelocations
     }
 
 
