@@ -289,7 +289,7 @@ public class MessageManager : MonoBehaviour
             {
                 for (int i = 0; i < listOfHelpTags.Count; i++)
                 {
-                    switch(i)
+                    switch (i)
                     {
                         case 0: data.tag0 = listOfHelpTags[i]; break;
                         case 1: data.tag1 = listOfHelpTags[i]; break;
@@ -1497,6 +1497,8 @@ public class MessageManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(text) == false)
         {
+            bool isCrackdown = false;
+            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown) { isCrackdown = true; }
             Message message = new Message();
             message.text = text;
             message.type = MessageType.ONGOING;
@@ -1505,17 +1507,26 @@ public class MessageManager : MonoBehaviour
             message.data0 = timer;
             //ItemData
             ItemData data = new ItemData();
-            if (timer == 0)
+            if (isCrackdown == false)
             {
-                data.itemText = "Lie Low action is AVAILABLE";
-                data.topText = "Lie Low Available";
+                if (timer == 0)
+                {
+                    data.itemText = "Lie Low action is AVAILABLE";
+                    data.topText = "Lie Low Available";
+                }
+                else
+                {
+                    data.itemText = "Lie Low action UNAVAILABLE";
+                    data.topText = "Lie Low Unavailable";
+                }
             }
             else
             {
-                data.itemText = "Lie Low action is UNAVAILABLE";
+                //surveillance crackdown
+                data.itemText = "Lie Low action UNAVAILABLE";
                 data.topText = "Lie Low Unavailable";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetActorLieLowOngoingDetails(timer);
+            data.bottomText = GameManager.instance.itemDataScript.GetActorLieLowOngoingDetails(timer, isCrackdown);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.instance.guiScript.infoSprite;
             data.spriteName = data.sprite.name;
@@ -1526,6 +1537,7 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "lielow_0";
             data.tag1 = "lielow_1";
+            data.tag2 = "lielow_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -4239,13 +4251,10 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.sprite = faction.sprite;
             data.spriteName = data.sprite.name;
-            if (timer > 0)
-            {
-                data.help = 1;
-                data.tag0 = "hq_0";
-                data.tag1 = "hq_1";
-                data.tag2 = "hq_2";
-            }
+            data.help = 1;
+            data.tag0 = "hq_0";
+            data.tag1 = "hq_1";
+            data.tag2 = "hq_2";
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);
@@ -4601,7 +4610,7 @@ public class MessageManager : MonoBehaviour
             //get org info
             Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
             if (org != null)
-                {
+            {
                 Message message = new Message();
                 message.text = text;
                 message.type = MessageType.ORGANISATION;

@@ -2431,9 +2431,34 @@ public class PlayerManager : MonoBehaviour
             { Debug.LogErrorFormat("Invalid conversion for innocenceString \"{0}\"", innocenceString); }
             //Set Innocence (called method will handle invalid innocentLevel)
             Innocence = innocenceLevel;
-            reply = $"Innocence now {innocenceLevel}";
+            reply = $"Player Innocence now {innocenceLevel}";
         }
-        else { Debug.LogError("Invalid innoceneString (Null or Empty)"); }
+        else { Debug.LogError("Invalid innocenceString (Null or Empty)"); }
+        return reply;
+    }
+
+
+    /// <summary>
+    /// Sets player Mood
+    /// </summary>
+    /// <param name="moodString"></param>
+    /// <returns></returns>
+    public string DebugSetMood(string moodString)
+    {
+        string reply = "Error";
+        int moodLevel = -1;
+        if (string.IsNullOrEmpty(moodString) == false)
+        {
+            //convert string to int
+            try { moodLevel = System.Convert.ToInt32(moodString); }
+            catch (System.OverflowException)
+            { Debug.LogErrorFormat("Invalid conversion for moodString \"{0}\"", moodString); }
+            //Set Mood -> method will handle invalid input
+            int change = moodLevel - GetMood();
+            ChangeMood(change, "Debug", "Debug");
+            reply = $"Player Mood now {GetMood()}";
+        }
+        else { Debug.LogError("Invalid moodString (Null or Empty)"); }
         return reply;
     }
 

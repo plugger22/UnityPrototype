@@ -584,21 +584,30 @@ public class ItemDataManager : MonoBehaviour
     /// </summary>
     /// <param name="timer"></param>
     /// <returns></returns>
-    public string GetActorLieLowOngoingDetails(int timer)
+    public string GetActorLieLowOngoingDetails(int timer, bool isCrackdown)
     {
         StringBuilder builder = new StringBuilder();
-        if (timer == 0)
+        if (isCrackdown == false)
         {
-            //available
-            builder.AppendFormat("Arrangements have been made by {0}<b>RebelHQ</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Lie Low</b> action is {0}<b>AVAILABLE</b>{1}", colourNeutral, colourEnd);
+            if (timer == 0)
+            {
+                //available
+                builder.AppendFormat("Arrangements have been made by {0}<b>RebelHQ</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
+                builder.AppendFormat("<b>Lie Low</b> action is {0}<b>AVAILABLE</b>{1}", colourNeutral, colourEnd);
+            }
+            else
+            {
+                //unavailable
+                builder.AppendFormat("<b>RebelHQ</b> are working on it as fast as they can{0}{1}", "\n", "\n");
+                builder.AppendFormat("<b>Lie Low</b> action {0}<b>UNAVAILABLE</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+                builder.AppendFormat("<b>Duration {0}{1} turn{2}{3}</b>", colourNeutral, timer, timer != 1 ? "s" : "", colourEnd);
+            }
         }
         else
         {
-            //unavailable
-            builder.AppendFormat("<b>RebelHQ</b> are working on it as fast as they can{0}{1}", "\n", "\n");
+            //Surveillance Crackdown -> unavailable
+            builder.AppendFormat("<b>The Authority have instigated a{0}{1}SURVEILLANCE CRACKDOWN{2}</b>{3}{4}", "\n", colourBad, colourEnd, "\n", "\n");
             builder.AppendFormat("<b>Lie Low</b> action {0}<b>UNAVAILABLE</b>{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Duration {0}{1} turn{2}{3}</b>", colourNeutral, timer, timer != 1 ? "s" : "", colourEnd);
         }
         return builder.ToString();
     }
@@ -1305,7 +1314,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //HQ has completed relocation
             builder.AppendFormat("{0}<b>{1}{2} has Relocated{3}</b>{4}", colourAlert, faction.tag, colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>HQ Services are now{0}{1}Available</b>{2}", "\n", colourAlert, colourEnd);
+            builder.AppendFormat("<b>HQ Services are now{0}{1}Available</b>{2}", "\n", colourGood, colourEnd);
         }
         return builder.ToString();
     }

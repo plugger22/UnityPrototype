@@ -13,7 +13,7 @@ public class DebugGUI : MonoBehaviour
     //for whenever interaction is needed
     private enum GUIStatus
     { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
-    GiveCaptureTool, SetInnocence}
+    GiveCaptureTool, SetInnocence, SetMood}
 
     public GUIStyle customBackground;
 
@@ -782,10 +782,15 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "AISecProtocol +"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 11 + button_height * 11, button_width, button_height), "Set Mood" /*"AISecProtocol +"*/))
             {
-                Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
-                GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();
+                /*Debug.Log("[Dbg] Button -> Increase AI Security Protocol");
+                GameManager.instance.aiScript.IncreaseAISecurityProtocolLevel();*/
+
+                Debug.Log("[Dbg] Button -> Set Player Mood");
+                if (debugDisplay != 88)
+                { debugDisplay = 88; }
+                else { debugDisplay = 0; }
             }
 
             //seventh button
@@ -1725,6 +1730,23 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //Set Player Mood Input
+                    case 88:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Mood Lvl (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 20), textInput_0);
+                        status = GUIStatus.SetMood;
+                        textOutput = null;
+                        break;
+                    //Set Mood processing & Output
+                    case 89:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.playerScript.DebugSetMood(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1778,6 +1800,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetInnocence:
                         debugDisplay = 87;
+                        break;
+                    case GUIStatus.SetMood:
+                        debugDisplay = 89;
                         break;
                 }
                 break;

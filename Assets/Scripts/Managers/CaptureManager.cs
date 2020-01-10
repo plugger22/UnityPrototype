@@ -353,7 +353,7 @@ public class CaptureManager : MonoBehaviour
             GameManager.instance.nodeScript.nodePlayer = nodeID;
             GameManager.instance.nodeScript.nodeCaptured = -1;
             //actor gains condition questionable
-            GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "has been interrogated by Authority");
+            GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "Has been interrogated by Authority");
             //decrease city loyalty
             int cause = GameManager.instance.cityScript.CityLoyalty;
             cause -= actorReleased;

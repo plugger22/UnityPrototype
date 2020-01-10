@@ -537,7 +537,17 @@ public class ActorManager : MonoBehaviour
         UpdateReserveActors();
         GameManager.instance.statScript.UpdateRatios();
         //Lie Low cooldown timer
-        if (lieLowTimer > 0) { lieLowTimer--; }
+        if (lieLowTimer > 0)
+        {
+            lieLowTimer--;
+            //Resistance player (even if autorun)
+            if (GameManager.instance.sideScript.PlayerSide.level == 2)
+            {
+                //lie low timer message (InfoApp 'Effects' tab)
+                string text = string.Format("Lie Low Timer {0}", lieLowTimer);
+                GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+            }
+        }
     }
 
 
@@ -1236,24 +1246,42 @@ public class ActorManager : MonoBehaviour
                                                             };
                                                             break;
                                                         case "GetGear":
-                                                            details = new EventButtonDetails()
+                                                            //only if HQ not Relocating
+                                                            if (GameManager.instance.factionScript.isHqRelocating == false)
                                                             {
-                                                                buttonTitle = tempAction.tag,
-                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                                buttonTooltipMain = tempAction.tooltipText,
-                                                                buttonTooltipDetail = builder.ToString(),
-                                                                action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                            };
+                                                                details = new EventButtonDetails()
+                                                                {
+                                                                    buttonTitle = tempAction.tag,
+                                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                                    buttonTooltipDetail = builder.ToString(),
+                                                                    action = () => { EventManager.instance.PostNotification(EventType.GearAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                                };
+                                                            }
+                                                            else
+                                                            {
+                                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                                infoBuilder.AppendFormat("Gear unavailable as HQ Relocating");
+                                                            }
                                                             break;
                                                         case "GetRecruit":
-                                                            details = new EventButtonDetails()
+                                                            //only if HQ not Relocating
+                                                            if (GameManager.instance.factionScript.isHqRelocating == false)
                                                             {
-                                                                buttonTitle = tempAction.tag,
-                                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
-                                                                buttonTooltipMain = tempAction.tooltipText,
-                                                                buttonTooltipDetail = builder.ToString(),
-                                                                action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
-                                                            };
+                                                                details = new EventButtonDetails()
+                                                                {
+                                                                    buttonTitle = tempAction.tag,
+                                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, actor.arc.name, colourEnd),
+                                                                    buttonTooltipMain = tempAction.tooltipText,
+                                                                    buttonTooltipDetail = builder.ToString(),
+                                                                    action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, actionDetails, "ActorManager.cs -> GetNodeActions"); }
+                                                                };
+                                                            }
+                                                            else
+                                                            {
+                                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                                infoBuilder.AppendFormat("Recruits unavailable as HQ Relocating");
+                                                            }
                                                             break;
                                                         case "TargetInfo":
                                                             details = new EventButtonDetails()
@@ -1656,32 +1684,36 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (lieLowTimer == 0)
                                 {
-                                    ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                                    lielowActionDetails.side = playerSide;
-                                    lielowActionDetails.actorDataID = actor.slotID;
-                                    if (actor.isLieLowFirstturn == true)
-                                    { numOfTurns = 4 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                    else { numOfTurns = 3 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
-                                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                                    EventButtonDetails lielowDetails = new EventButtonDetails()
+                                    if (GameManager.instance.factionScript.isHqRelocating == false)
                                     {
-                                        buttonTitle = "Lie Low",
-                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                        buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
-                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                        //use a Lambda to pass arguments to the action
-                                        action = () => { EventManager.instance.PostNotification(EventType.LieLowActorAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
-                                    };
-                                    //add Lie Low button to list
-                                    tempList.Add(lielowDetails);
+                                        ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                                        lielowActionDetails.side = playerSide;
+                                        lielowActionDetails.actorDataID = actor.slotID;
+                                        if (actor.isLieLowFirstturn == true)
+                                        { numOfTurns = 4 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                        else { numOfTurns = 3 - actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                        tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", actor.actorName,
+                                            colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                                        EventButtonDetails lielowDetails = new EventButtonDetails()
+                                        {
+                                            buttonTitle = "Lie Low",
+                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                            buttonTooltipMain = string.Format("{0} {1} will be asked to keep a low profile and stay out of sight", actor.arc.name, actor.actorName),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                            //use a Lambda to pass arguments to the action
+                                            action = () => { EventManager.instance.PostNotification(EventType.LieLowActorAction, this, lielowActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                        };
+                                        //add Lie Low button to list
+                                        tempList.Add(lielowDetails);
+                                    }
+                                    else
+                                    { infoBuilder.AppendFormat("Lie Low unavailable as HQ Relocating"); }
                                 }
                                 else
                                 { infoBuilder.AppendFormat("Lie Low unavailable for {0} turn{1}", lieLowTimer, lieLowTimer != 1 ? "s" : ""); }
-
                             }
                             else
-                            { infoBuilder.Append("Can't Lie Low while a Surveillance Crackdown is in force"); }
+                            { infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd); }
                             //stress leave
                             if (actor.CheckConditionPresent(conditionStressed) == true)
                             {
@@ -1707,22 +1739,30 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (stressLeaveHQApproval == true)
                                         {
-                                            ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
-                                            leaveActionDetails.side = playerSide;
-                                            leaveActionDetails.actorDataID = actor.actorID;
-                                            leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
-                                            tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
-                                            EventButtonDetails leaveDetails = new EventButtonDetails()
+                                            if (GameManager.instance.factionScript.isHqRelocating == false)
                                             {
-                                                buttonTitle = "Stress Leave",
-                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                                buttonTooltipMain = string.Format("{0}, {1}, will recover from their Stress", actor.actorName, actor.arc.name),
-                                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                                //use a Lambda to pass arguments to the action
-                                                action = () => { EventManager.instance.PostNotification(EventType.LeaveActorAction, this, leaveActionDetails, "ActorManager.cs -> GetActorActions"); }
-                                            };
-                                            //add Activate button to list
-                                            tempList.Add(leaveDetails);
+                                                ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
+                                                leaveActionDetails.side = playerSide;
+                                                leaveActionDetails.actorDataID = actor.actorID;
+                                                leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                                tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
+                                                EventButtonDetails leaveDetails = new EventButtonDetails()
+                                                {
+                                                    buttonTitle = "Stress Leave",
+                                                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                                    buttonTooltipMain = string.Format("{0}, {1}, will recover from their Stress", actor.actorName, actor.arc.name),
+                                                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                                    //use a Lambda to pass arguments to the action
+                                                    action = () => { EventManager.instance.PostNotification(EventType.LeaveActorAction, this, leaveActionDetails, "ActorManager.cs -> GetActorActions"); }
+                                                };
+                                                //add Activate button to list
+                                                tempList.Add(leaveDetails);
+                                            }
+                                            else
+                                            {
+                                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                                infoBuilder.AppendFormat("{0}Stress Leave unavailable as HQ Relocating{1}", colourAlert, colourEnd);
+                                            }
                                         }
                                         else
                                         {
@@ -2287,30 +2327,50 @@ public class ActorManager : MonoBehaviour
                         //can't lie low if a Surveillance Crackdown is in place
                         if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
                         {
-                            ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
-                            lielowActionDetails.side = playerSide;
-                            lielowActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                            numOfTurns = 3 - invis;
-                            tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
-                                colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
-                            EventButtonDetails lielowDetails = new EventButtonDetails()
+                            if (lieLowTimer == 0)
                             {
-                                buttonTitle = "Lie Low",
-                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                                buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
-                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                //use a Lambda to pass arguments to the action
-                                action = () => { EventManager.instance.PostNotification(EventType.LieLowPlayerAction, this, lielowActionDetails, "ActorManager.cs -> GetPlayerActions"); }
-                            };
-                            //add Lie Low button to list
-                            tempList.Add(lielowDetails);
+                                if (GameManager.instance.factionScript.isHqRelocating == false)
+                                {
+                                    ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
+                                    lielowActionDetails.side = playerSide;
+                                    lielowActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                                    numOfTurns = 3 - invis;
+                                    tooltipText = string.Format("{0} will regain Invisibility and automatically reactivate in {1}{2} FULL turn{3}{4}", playerName,
+                                        colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
+                                    EventButtonDetails lielowDetails = new EventButtonDetails()
+                                    {
+                                        buttonTitle = "Lie Low",
+                                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
+                                        buttonTooltipMain = string.Format("{0} will keep a low profile and stay out of sight", playerName),
+                                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                        //use a Lambda to pass arguments to the action
+                                        action = () => { EventManager.instance.PostNotification(EventType.LieLowPlayerAction, this, lielowActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                                    };
+                                    //add Lie Low button to list
+                                    tempList.Add(lielowDetails);
+                                }
+                                else
+                                {
+                                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                    infoBuilder.AppendFormat("{0}Lie Low unavailable as HQ Relocating{1}", colourAlert, colourEnd);
+                                }
+                            }
+                            else
+                            {
+                                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                infoBuilder.AppendFormat("Lie Low unavailable for {0} turn{1}", lieLowTimer, lieLowTimer != 1 ? "s" : "");
+                            }
                         }
                         else
-                        { infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd); }
+                        {
+                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                            infoBuilder.AppendFormat("{0}Surveillance Crackdown{1}{2}{3}(can't Lie Low){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
+                        }
                     }
                     else
                     {
                         //actor invisiblity at max
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
                         infoBuilder.AppendFormat("{0}Can't Lie Low{1}{2}{3}(Invisibility at Max){4}", colourAlert, colourEnd, "\n", colourBad, colourEnd);
                         //
                         // - - - Stress Leave - - -
@@ -2325,22 +2385,30 @@ public class ActorManager : MonoBehaviour
                                 {
                                     if (stressLeaveHQApproval == true)
                                     {
-                                        ModalActionDetails leaveActionDetails = new ModalActionDetails();
-                                        leaveActionDetails.side = playerSide;
-                                        leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                                        leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
-                                        tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
-                                        EventButtonDetails leaveDetails = new EventButtonDetails()
+                                        if (GameManager.instance.factionScript.isHqRelocating == false)
                                         {
-                                            buttonTitle = "Stress Leave",
-                                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Player Action", colourEnd),
-                                            buttonTooltipMain = "Recover from your Stress",
-                                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                                            //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
-                                        };
-                                        //add Activate button to list
-                                        tempList.Add(leaveDetails);
+                                            ModalActionDetails leaveActionDetails = new ModalActionDetails();
+                                            leaveActionDetails.side = playerSide;
+                                            leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                                            leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                            tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
+                                            EventButtonDetails leaveDetails = new EventButtonDetails()
+                                            {
+                                                buttonTitle = "Stress Leave",
+                                                buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Player Action", colourEnd),
+                                                buttonTooltipMain = "Recover from your Stress",
+                                                buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                                                //use a Lambda to pass arguments to the action
+                                                action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                                            };
+                                            //add Activate button to list
+                                            tempList.Add(leaveDetails);
+                                        }
+                                        else
+                                        {
+                                            if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                                            infoBuilder.AppendFormat("{0}Stress Leave unavailable as HQ Relocating{1}", colourAlert, colourEnd);
+                                        }
                                     }
                                     else
                                     {
@@ -2364,7 +2432,7 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                            infoBuilder.Append("StressLeave only if STRESSED");
+                            infoBuilder.Append("Stress Leave only if STRESSED");
                         }
                     }
                     break;
@@ -2414,25 +2482,36 @@ public class ActorManager : MonoBehaviour
             //spare space for a new recruit?
             if (numOfActors < maxNumOfReserveActors)
             {
-                ModalActionDetails recruitActionDetails = new ModalActionDetails() { };
-                recruitActionDetails.side = playerSide;
-                recruitActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                recruitActionDetails.level = 2;
-                tooltipText = "There's a job to be done and you're the person to find the people to do it";
-                EventButtonDetails activateDetails = new EventButtonDetails()
+                if (GameManager.instance.factionScript.isHqRelocating == false)
                 {
-                    buttonTitle = "Recruit",
-                    buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
-                    buttonTooltipMain = "Recruit a subordinate",
-                    buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                    //use a Lambda to pass arguments to the action
-                    action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, recruitActionDetails, "ActorManager.cs -> GetPlayerActions"); }
-                };
-                //add Activate button to list
-                tempList.Add(activateDetails);
+                    ModalActionDetails recruitActionDetails = new ModalActionDetails() { };
+                    recruitActionDetails.side = playerSide;
+                    recruitActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                    recruitActionDetails.level = 2;
+                    tooltipText = "There's a job to be done and you're the person to find the people to do it";
+                    EventButtonDetails activateDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Recruit",
+                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
+                        buttonTooltipMain = "Recruit a subordinate",
+                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.RecruitAction, this, recruitActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                    };
+                    //add Activate button to list
+                    tempList.Add(activateDetails);
+                }
+                else
+                {
+                    if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                    infoBuilder.AppendFormat("{0}Lie Low unavailable as HQ Relocating{1}", colourAlert, colourEnd);
+                }
             }
             else
-            { infoBuilder.AppendFormat("{0}Can't Recruit as Maxxed out{1}", colourAlert, colourEnd); }
+            {
+                if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                infoBuilder.AppendFormat("{0}Can't Recruit as Maxxed out{1}", colourAlert, colourEnd);
+            }
             //
             // - - - Stress Leave - - -
             //
@@ -2442,22 +2521,30 @@ public class ActorManager : MonoBehaviour
                 //Player has enough renown
                 if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostAuthority)
                 {
-                    ModalActionDetails leaveActionDetails = new ModalActionDetails();
-                    leaveActionDetails.side = playerSide;
-                    leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
-                    leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
-                    tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
-                    EventButtonDetails leaveDetails = new EventButtonDetails()
+                    if (GameManager.instance.factionScript.isHqRelocating == false)
                     {
-                        buttonTitle = "Stress Leave",
-                        buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
-                        buttonTooltipMain = "Recover from your Stress",
-                        buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
-                    };
-                    //add Activate button to list
-                    tempList.Add(leaveDetails);
+                        ModalActionDetails leaveActionDetails = new ModalActionDetails();
+                        leaveActionDetails.side = playerSide;
+                        leaveActionDetails.actorDataID = GameManager.instance.playerScript.actorID;
+                        leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
+                        tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
+                        EventButtonDetails leaveDetails = new EventButtonDetails()
+                        {
+                            buttonTitle = "Stress Leave",
+                            buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "Mayoral Action", colourEnd),
+                            buttonTooltipMain = "Recover from your Stress",
+                            buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
+                            //use a Lambda to pass arguments to the action
+                            action = () => { EventManager.instance.PostNotification(EventType.LeavePlayerAction, this, leaveActionDetails, "ActorManager.cs -> GetPlayerActions"); }
+                        };
+                        //add Activate button to list
+                        tempList.Add(leaveDetails);
+                    }
+                    else
+                    {
+                        if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
+                        infoBuilder.AppendFormat("{0}Lie Low unavailable as HQ Relocating{1}", colourAlert, colourEnd);
+                    }
                 }
                 else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCostAuthority, colourEnd); }
             }
@@ -5101,12 +5188,6 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
-        //lie low timer message (InfoApp 'Effects' tab)
-        if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
-        {
-            text = string.Format("Lie Low Timer {0}", lieLowTimer);
-            GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
-        }
     }
 
 
@@ -5234,15 +5315,6 @@ public class ActorManager : MonoBehaviour
                 CheckForBetrayal(numOfTraitors);
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
-        }
-        if (isPlayer == true)
-        {
-            //lie low timer message (InfoApp 'Effects' tab)
-            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
-            {
-                text = string.Format("Lie Low Timer {0}", lieLowTimer);
-                GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
-            }
         }
     }
 
@@ -5459,15 +5531,6 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
-        }
-        if (isPlayer == true)
-        {
-            //lie low timer message (InfoApp 'Effects' tab)
-            if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown)
-            {
-                text = string.Format("Lie Low Timer {0}", lieLowTimer);
-                GameManager.instance.messageScript.ActorLieLowOngoing(text, lieLowTimer);
-            }
         }
     }
 
@@ -6109,7 +6172,11 @@ public class ActorManager : MonoBehaviour
                 //decrement timer
                 captureTimerPlayer--;
                 if (captureTimerPlayer <= 0)
-                { GameManager.instance.captureScript.ReleasePlayer(true); }
+                {
+                    //special case of player captured and losing game from being permanently locked up
+                    if (GameManager.instance.turnScript.winReasonCampaign != WinReasonCampaign.Innocence)
+                    { GameManager.instance.captureScript.ReleasePlayer(true); }
+                }
                 else
                 { GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerCapturedDays); }
                 break;

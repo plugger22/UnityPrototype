@@ -709,8 +709,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "lielow_0";
         data.header = "Lying Low";
-        data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and the Lie Low {5}Timer{6} must be {7}Zero{8}",
-            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and HQ must have sourced a {5}Safe House{6}",
+            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Breakdowns
         data = new HelpData();
@@ -719,7 +719,7 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Lying Low involves Resistance HQ sourcing a suitable, safe, location. This takes time and effort. The {0}Effects Tab{1} in the {2}App{3} lets you know when Lying Low will be next available",
             colourAlert, colourEnd, colourAlert,  colourEnd);
         listOfHelp.Add(data);
-        //Chance of Breakdowns
+        //Surveillance Crackdown
         data = new HelpData();
         data.tag = "lielow_2";
         data.header = "Surveillance Crackdown";
@@ -998,8 +998,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "hq_1";
         data.header = "HQ Services";
-        data.text = string.Format("The following services will not be available: {0}HQ Support{1}, safe houses for {2}Lying Low{3}, candidates for {4}new Recruits{5} and equipment for {6}new Gear{7}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = new StringBuilder()
+            .AppendFormat("The following services will be {0}unavailable{1} during Relocation{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}HQ Support{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Lying Low{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Stress Leave{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Obtaining Gear{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Obtaining Recruits{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .ToString();
         listOfHelp.Add(data);
         //Time to Relocate
         data = new HelpData();

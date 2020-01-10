@@ -626,12 +626,16 @@ public class GUIManager : MonoBehaviour
         else
         {
             Sprite sprite = GameManager.instance.guiScript.errorSprite;
-            string text = "Unknown";
+            string text = ""; //empty
             switch (playerStatus)
             {
                 case ActorStatus.Captured:
-                    text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
-                    sprite = GameManager.instance.guiScript.capturedSprite;
+                    //special case of player losing campaign by being locked up permanently
+                    if (GameManager.instance.turnScript.winReasonCampaign != WinReasonCampaign.Innocence)
+                    {
+                        text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
+                        sprite = GameManager.instance.guiScript.capturedSprite;
+                    }
                     break;
                 case ActorStatus.Inactive:
                     switch (GameManager.instance.playerScript.inactiveStatus)
@@ -652,11 +656,14 @@ public class GUIManager : MonoBehaviour
                     break;
             }
             //Non-active status -> generate a message
-            ModalOutcomeDetails details = new ModalOutcomeDetails();
-            details.textTop = text;
-            details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
-            details.sprite = sprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                ModalOutcomeDetails details = new ModalOutcomeDetails();
+                details.textTop = text;
+                details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
+                details.sprite = sprite;
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            }
         }
     }
 
