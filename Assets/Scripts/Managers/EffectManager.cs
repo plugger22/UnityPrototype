@@ -3752,11 +3752,11 @@ public class EffectManager : MonoBehaviour
                     {
                         case "Add":
                             GameManager.instance.playerScript.Innocence++;
-                            effectResolve.bottomText = string.Format("{0}Player gains +1 Innocence{1}", colourEffect, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Player Innocence +1{1}", colourEffect, colourEnd);
                             break;
                         case "Subtract":
                             GameManager.instance.playerScript.Innocence--;
-                            effectResolve.bottomText = string.Format("{0}Player loses -1 Innocence{1}", colourEffect, colourEnd);
+                            effectResolve.bottomText = string.Format("{0}Player Innocence -1{1}", colourEffect, colourEnd);
                             break;
                     }
                     break;
@@ -3895,10 +3895,10 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     case 'R':
-                        //Random Actor
-                        Actor actorRandom = GameManager.instance.dataScript.GetRandomCurrentActor(dataInput.side);
-                        if (actorRandom != null)
-                        { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorRandom); }
+                        //Random Active Actor (if resistance chooses one with the highest invisibility)
+                        Actor actorHighest = GameManager.instance.dataScript.GetActiveActorHighestInvisibility(dataInput.side);
+                        if (actorHighest != null)
+                        { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorHighest); }
                         else
                         {
                             Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
@@ -4038,7 +4038,7 @@ public class EffectManager : MonoBehaviour
                 //Player reveals location of actor while in capture
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
                 {
-                    effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Player reveals location){3}", colourBad, actor.actorName, actor.arc.name, colourEnd);
+                    effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Betrayed by Player){3}{4}", colourBad, actor.actorName, actor.arc.name, colourEnd, "\n");
                 }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4873,33 +4873,35 @@ public class EffectManager : MonoBehaviour
                     Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                         dataBefore, invisibility, "\n");
                 }
-                bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, actor.arc.name, effect.description, colourEnd);
+                bottomText = string.Format("{0}{1} Invisibility +{2}{3}", colourGoodSide, actor.arc.name, effect.value, colourEnd);
                 break;
             case "Subtract":
                 //double effect if spider is present
                 if (node.isSpider == true)
                 {
-                    invisibility -= 2;
+                    int totalLoss = effect.value + 1;
+                    totalLoss = Mathf.Min(3, totalLoss);
+                    invisibility -= totalLoss;
                     if (invisibility >= 0)
-                    { bottomText = string.Format("{0}{1} Invisibility -2 (Spider){2}", colourBadSide, actor.arc.name, colourEnd); }
+                    { bottomText = string.Format("{0}{1} Invisibility -{2} (Spider){3}", colourBadSide, actor.arc.name, totalLoss, colourEnd); }
                     else
                     {
                         //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
-                        bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                            colourBadSide, actor.arc.name, effect.description, "\n", "\n", colourEnd);
+                        bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
+                            colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
                         GameManager.instance.aiScript.immediateFlagResistance = true;
                     }
                 }
                 else
                 {
-                    invisibility -= 1;
+                    invisibility -= effect.value;
                     if (invisibility >= 0)
-                    { bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, actor.arc.name, effect.description, colourEnd); }
+                    { bottomText = string.Format("{0}{1} Invisibility -{2}{3}", colourBadSide, actor.arc.name, effect.value, colourEnd); }
                     else
                     {
                         //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
-                        bottomText = string.Format("{0}{1} {2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
-                            colourBadSide, actor.arc.name, effect.description, "\n", "\n", colourEnd);
+                        bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
+                            colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
                         GameManager.instance.aiScript.immediateFlagResistance = true;
                     }
                 }

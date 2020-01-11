@@ -19,7 +19,8 @@ MonoBehaviour:
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: b2c3310478d5c054581efe8181672a23, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:
@@ -31,7 +32,8 @@ MonoBehaviour:
   tooltipHeader: <color=#FFFFE0>Poker Face</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>
-    All Subordinates<br>Invisibility -1</color>"
+    All Subordinates<br>Invisibility -1</color>\r\n<color=#FF4500>Player Innocence
+    -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Tough it out, say nothing</color>

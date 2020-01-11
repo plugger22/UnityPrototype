@@ -2278,8 +2278,8 @@ public class TopicManager : MonoBehaviour
             tagNodeID = -1;
             tagActorID = -1;
             tagNodeID = GameManager.instance.nodeScript.nodeCaptured;
-            //group based on player's reputation with Organisation
-            group = GetGroupRandom();
+            //group based on player's mood (how well do they respond to the experience of being captured?)
+            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }

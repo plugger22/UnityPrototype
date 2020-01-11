@@ -13,13 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Capture 3 option 1
   tag: Roll Over
-  text: Brain needle? I'll talk!
+  text: BRAIN needle? I'll talk!
   topic: {fileID: 11400000, guid: 7670c302b98526944b11e38d530c74f5, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: b2c3310478d5c054581efe8181672a23, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: d7f8a7f4bcb979c49b44aad7ff2ca5fe, type: 2}
   listOfBadEffects:

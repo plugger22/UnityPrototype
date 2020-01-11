@@ -4610,6 +4610,47 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns random actor, active only. If resistance side then returns actor with highest invisibility (random if a tie)
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Actor GetActiveActorHighestInvisibility(GlobalSide side)
+    {
+        Actor actor = null;
+        List<Actor> listOfActors = new List<Actor>();
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            Actor actorTemp = arrayOfActors[side.level, i];
+            if (actorTemp != null)
+            {
+                if (CheckActorSlotStatus(i, side) == true && actorTemp.Status == ActorStatus.Active)
+                { listOfActors.Add(actorTemp); }
+            }
+            else { Debug.LogWarningFormat("Invalid actorTemp (Null) for arrayOfActors[{0}]", i); }
+        }
+        if (listOfActors.Count > 0)
+        {
+            //Authority -> random actor
+            if (side.level == 1)
+            { actor = listOfActors[Random.Range(0, listOfActors.Count)]; }
+            else
+            {
+                //Resistance, return actor with highest invisibility
+                int invis = -1;
+                foreach(Actor actorCheck in listOfActors)
+                {
+                    if (actorCheck.GetDatapoint(ActorDatapoint.Invisibility2) > invis)
+                    {
+                        invis = actorCheck.GetDatapoint(ActorDatapoint.Invisibility2);
+                        actor = actorCheck;
+                    }
+                }
+            }
+        }
+        return actor;
+    }
+
+    /// <summary>
     /// returns array of Stats for an OnMap actor-> [0] dataPoint0, [1] dataPoint1 , [2] dataPoint3
     /// </summary>
     /// <param name="slotID"></param>

@@ -104,28 +104,7 @@ public class MissionManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.StartTurnLate:
-                if (mission.npc != null)
-                {
-                    ProcessNpc(mission.npc);
-                    if (mission.npc.status == NpcStatus.Active)
-                    {
-                        //orgInfo not involved
-                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                        { ProcessContactInteraction(mission.npc); }
-                        else
-                        {
-                            //orgInfo automatically spots Npc
-                            Node node = mission.npc.currentNode;
-                            if (node != null)
-                            {
-                                string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.instance.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
-                                    node.nodeID);
-                                GameManager.instance.messageScript.OrganisationNpc(text, node, mission.npc);
-                            }
-                            else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
-                        }
-                    }
-                }
+                StartTurnLate();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -133,7 +112,9 @@ public class MissionManager : MonoBehaviour
         }
     }
 
+
     #region SetColours
+
     /// <summary>
     /// set colour palette for modal Outcome Window
     /// </summary>
@@ -151,6 +132,34 @@ public class MissionManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Start Turn Late Event
+    /// </summary>
+    private void StartTurnLate()
+    {
+        if (mission.npc != null)
+        {
+            ProcessNpc(mission.npc);
+            if (mission.npc.status == NpcStatus.Active)
+            {
+                //orgInfo not involved
+                if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                { ProcessContactInteraction(mission.npc); }
+                else
+                {
+                    //orgInfo automatically spots Npc
+                    Node node = mission.npc.currentNode;
+                    if (node != null)
+                    {
+                        string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.instance.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
+                            node.nodeID);
+                        GameManager.instance.messageScript.OrganisationNpc(text, node, mission.npc);
+                    }
+                    else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Initialise Npc (if present)
