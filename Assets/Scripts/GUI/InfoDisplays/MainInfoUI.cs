@@ -282,13 +282,9 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(leftBackground != null, "Invalid leftBackground (Null)");
         Debug.Assert(rightBackground != null, "Invalid rightBackground (Null)");
         //assign backgrounds
-        Color colour= GameManager.instance.guiScript.colourMainBackground;
-        if (colour != null)
-        {
-            leftBackground.color = new Color(colour.r, colour.g, colour.b);
-            rightBackground.color = new Color(colour.r, colour.g, colour.b);
-        }
-        else { Debug.LogError("Invalid colour (Null) for backgrounds"); }
+        Color colour = GameManager.instance.guiScript.colourMainBackground;
+        leftBackground.color = new Color(colour.r, colour.g, colour.b);
+        rightBackground.color = new Color(colour.r, colour.g, colour.b);
         //buttons
         Debug.Assert(buttonClose != null, "Invalid buttonClose (Null)");
         Debug.Assert(buttonHelpInfo != null, "Invalid buttonInfo (Null)");

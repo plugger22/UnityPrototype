@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: OrgEmerRES5
+  m_EditorClassIdentifier: 
+  tag: Blackmail
+  text: Unknown
+  designNotes: Org Emergency RES 5 good event
+  type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
+  subType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: c7257cbc837fb5c41856960b02074915, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 37b84dd6b8994d445b51f3f89a314e26, type: 2}
+  - {fileID: 11400000, guid: 36c0900578c349c429547b34bac0f372, type: 2}
+  - {fileID: 11400000, guid: 3d186667914cbac449ec9399f74ef77b, type: 2}
+  - {fileID: 11400000, guid: ae4bf404b0e77b94fafc2d671a4e0ea4, type: 2}
+  isDisabled: 1
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 2
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 8
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 18
+  turnsDone: 0
