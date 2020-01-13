@@ -1413,7 +1413,7 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgHQDropped) == 0)
                                                 { BuildString(result, "Org has dropped no investigations"); }
                                                 break;
-                                            case "StatOrgEscapesNOTZero":
+                                            case "StatOrgEmergencyNOTZero":
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.orgEscapes) == 0)
                                                 { BuildString(result, "Org hasn't helped you Escape"); }
                                                 break;

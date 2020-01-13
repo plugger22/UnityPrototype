@@ -12,16 +12,20 @@ MonoBehaviour:
   m_Name: OrgEmerRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res5 Option 1
-  tag: dd
+  tag: Leave Me Alone
   text: dd
   topic: {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
@@ -30,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

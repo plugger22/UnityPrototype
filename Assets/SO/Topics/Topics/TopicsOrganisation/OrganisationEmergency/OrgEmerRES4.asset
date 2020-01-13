@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRES4
   m_EditorClassIdentifier: 
   tag: The Big Ask
-  text: Unknown
+  text: You owe us, says the [org] emissary. You want more help from us? You [orgWant].
+    It's that or it's goodbye
   designNotes: Org Emergency RES 4 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
@@ -24,12 +25,18 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 635fa40c978ca124ab405fa6f5ca738f, type: 2}
+  - {fileID: 11400000, guid: 1b092729a10dd374c8e621bb9c862f6a, type: 2}
+  - {fileID: 11400000, guid: 1fa381ab72a5c844986da59925050e35, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  - {fileID: 11400000, guid: 3b783b50c66c2f447a91c4e6521ecb7f, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 24affb4ac92b4614f8488d8f1ba6173e, type: 2}
   - {fileID: 11400000, guid: 876a216308076c0459e75d486d648a0f, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -40,5 +47,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 21
   turnsDone: 0

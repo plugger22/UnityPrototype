@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: StatsOrgEscapesNOTZero
+  m_Name: StatsOrgEmergencyNOTZero
   m_EditorClassIdentifier: 
   description: Org provided Services > 0
   effectCriteria: {fileID: 11400000, guid: 819360969dd7ba84da1aab6723fed183, type: 2}

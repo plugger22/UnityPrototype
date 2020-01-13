@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRES3
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: You asked for our help to get you out of that secret dungeon in [orgText]
+    [daysAgo], prompts the [org] emissary. Time to pay your dues
   designNotes: Org Emergency RES 3 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
@@ -24,14 +25,18 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 635fa40c978ca124ab405fa6f5ca738f, type: 2}
+  - {fileID: 11400000, guid: 1fa381ab72a5c844986da59925050e35, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: db1cff1c3eb88bd41abcf805f92fbe73, type: 2}
   - {fileID: 11400000, guid: 3da5cdd7175e11a4ba203d0b97683fd4, type: 2}
   - {fileID: 11400000, guid: a28defca8c569c6488d4b9d8d413e693, type: 2}
   - {fileID: 11400000, guid: b7c7503c002ac32428cb7130597946de, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +47,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 21
   turnsDone: 0

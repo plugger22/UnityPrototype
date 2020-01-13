@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRES5
   m_EditorClassIdentifier: 
   tag: Blackmail
-  text: Unknown
+  text: Knock, knock, who's there? It's the emissary from the [org]. They'd like a
+    'donation'. Knock, knock, what's our little secret?
   designNotes: Org Emergency RES 5 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
@@ -24,23 +25,26 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c7257cbc837fb5c41856960b02074915, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: d6b6d25df6bb0e34899ac0c293949be8, type: 2}
+  - {fileID: 11400000, guid: 7803c462303be6a4b9ce7cf9e42b0af2, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 1234805234c36e0429fb1281e887af2f, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 37b84dd6b8994d445b51f3f89a314e26, type: 2}
   - {fileID: 11400000, guid: 36c0900578c349c429547b34bac0f372, type: 2}
   - {fileID: 11400000, guid: 3d186667914cbac449ec9399f74ef77b, type: 2}
   - {fileID: 11400000, guid: ae4bf404b0e77b94fafc2d671a4e0ea4, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 8
+  timerRepeat: 12
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 21
   turnsDone: 0

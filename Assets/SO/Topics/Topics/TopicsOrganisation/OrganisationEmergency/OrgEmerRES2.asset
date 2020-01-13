@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRES2
   m_EditorClassIdentifier: 
   tag: Payback
-  text: Unknown
+  text: We pulled you out of that secret facility in [orgText] [daysAgo], reminds
+    the [org] emissary. We'd appreciate a favour in return
   designNotes: Org Emergency RES 2 good event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
   subType: {fileID: 11400000, guid: 478491ed5fe8ca94cb22e4bf4523ce64, type: 2}
@@ -24,14 +25,18 @@ MonoBehaviour:
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
-  listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 635fa40c978ca124ab405fa6f5ca738f, type: 2}
+  - {fileID: 11400000, guid: 1fa381ab72a5c844986da59925050e35, type: 2}
+  - {fileID: 11400000, guid: de39dec7978b28a48a0a24ea8017bd7e, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: 4560546605b860f429e6c7cdba746b20, type: 2}
   - {fileID: 11400000, guid: f9231c683224949488d4346ca72afd42, type: 2}
   - {fileID: 11400000, guid: 26d043e89e457db40a4e8d56f76c3e42, type: 2}
   - {fileID: 11400000, guid: 6fdc2a7753b98c94b9bc38e11a5afa16, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -42,5 +47,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 21
   turnsDone: 0

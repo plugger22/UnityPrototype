@@ -19,9 +19,13 @@ MonoBehaviour:
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8b8017c4a8f2f6241ad13c8505ece11d, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
+  - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: f305c9949e3c6ae41b9cbc85f7057452, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

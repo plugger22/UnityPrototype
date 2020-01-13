@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Name: OrgEmerRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res6 Option 0
-  tag: dd
+  tag: Helpless
   text: dd
   topic: {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
