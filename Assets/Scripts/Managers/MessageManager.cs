@@ -466,6 +466,47 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Player escapes from incarceration with help of OrgEmergency
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public Message PlayerEscapes(string text, Node node)
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.PLAYER;
+            message.subType = MessageSubType.Plyr_Escapes;
+            message.data0 = node.nodeID;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Player Escapes";
+            data.bottomText = GameManager.instance.itemDataScript.GetPlayerEscapesDetails(node);
+            data.itemText = string.Format("{0}, has ESCAPED", GameManager.instance.playerScript.PlayerName);
+            data.priority = ItemPriority.High;
+            data.sprite = playerSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "questionable_0";
+            data.tag1 = "questionable_1";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
     /// Player renown expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side. 'Reason' is a short text tag for ItemData giving a reason why renown was used. format 'to ....'
     /// </summary>
     /// <param name="text"></param>
@@ -1720,9 +1761,17 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
-            data.tag0 = "traitor_0";
-            data.tag1 = "traitor_1";
-            data.tag2 = "traitor_2";
+            if (actorID == 999)
+            {
+                data.tag0 = "questionable_0";
+                data.tag1 = "questionable_1";
+            }
+            else
+            {
+                data.tag0 = "traitor_0";
+                data.tag1 = "traitor_1";
+                data.tag2 = "traitor_2";
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

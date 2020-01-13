@@ -1413,6 +1413,10 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgHQDropped) == 0)
                                                 { BuildString(result, "Org has dropped no investigations"); }
                                                 break;
+                                            case "StatOrgEscapesNOTZero":
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.orgEscapes) == 0)
+                                                { BuildString(result, "Org hasn't helped you Escape"); }
+                                                break;
                                             //
                                             // - - - Ratios
                                             //
@@ -5163,14 +5167,29 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player escapes from capture
+    /// Player escapes from capture with help of OrgEmergency
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="data"></param>
     /// <returns></returns>
     private string ExecutePlayerEscape(Effect effect, EffectDataInput data)
     {
+        //org data (do prior to escape) -> use name of node as place of incarceration from which the player escaped from
+        string nodeName = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured).nodeName;
+        if (string.IsNullOrEmpty(nodeName) == false)
+        {
+            OrgData dataOrg = new OrgData()
+            {
+                text = nodeName,
+                turn = GameManager.instance.turnScript.Turn
+            };
+            GameManager.instance.dataScript.AddOrgData(dataOrg, OrganisationType.Emergency);
+        }
+        else { Debug.LogWarningFormat("Invalid nodeName (Null or Empty) for nodeCaptured ID {0}", GameManager.instance.nodeScript.nodeCaptured); }
+        //escape
         GameManager.instance.captureScript.ReleasePlayer(false, false);
+        //stat
+        GameManager.instance.dataScript.StatisticIncrement(StatType.orgEscapes);
         return string.Format("{0}Player Escapes from Captivity{1}{2}", colourGood, colourEnd, "\n");
     }
 

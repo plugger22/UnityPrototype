@@ -346,9 +346,17 @@ public class CaptureManager : MonoBehaviour
         if (node != null)
         {
             if (isReleased == true)
-            { text = string.Format("{0}, Player, released at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name); }
-            else { text = string.Format("{0}, Player, escapes from captivity at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name); }
-            GameManager.instance.messageScript.ActorRelease(text, node, GameManager.instance.playerScript.actorID);
+            {
+                //released
+                text = string.Format("{0}, Player, released at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name);
+                GameManager.instance.messageScript.ActorRelease(text, node, GameManager.instance.playerScript.actorID);
+            }
+            else
+            {
+                //escapes (can only do so with help of OrgEmergency)
+                text = string.Format("{0}, Player, escapes from captivity at \"{1}\", {2}", GameManager.instance.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name);
+                GameManager.instance.messageScript.PlayerEscapes(text, node);
+            }
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
             GameManager.instance.nodeScript.nodePlayer = nodeID;
             GameManager.instance.nodeScript.nodeCaptured = -1;

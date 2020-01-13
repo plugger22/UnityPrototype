@@ -196,7 +196,7 @@
         NodeCrisis, NodeCrisisExplodes, NodeActionsResistance,
         TopicsGood, TopicsBad, TopicsIgnored,
         InvestigationsLaunched, InvestigationsCompleted,
-        OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped,
+        OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped, orgEscapes,
         HQRelocations
     }
 
@@ -234,6 +234,7 @@
         Plyr_Renown,
         Plyr_Secret,
         Plyr_Damage,
+        Plyr_Escapes,
         Plyr_Recognised,
         Plyr_Betrayed,
         Plyr_Mood,

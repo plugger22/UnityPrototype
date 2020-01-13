@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: OrgEmerRES3
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Payback
   text: Unknown
   designNotes: Org Emergency RES 3 bad event
   type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 19
   turnsDone: 0

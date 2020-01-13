@@ -230,6 +230,22 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Player escapes from incarceration with help of OrgEmergency
+    /// </summary>
+    /// <param name="node"></param>
+    /// <returns></returns>
+    public string GetPlayerEscapesDetails(Node node)
+    {
+        StringBuilder builder = new StringBuilder();
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        builder.AppendFormat("<b>{0}, {1}Player</b>{2}{3}", playerName, colourAlert, colourEnd, "\n");
+        builder.AppendFormat("{0}<b>has ESCAPED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builder.AppendFormat("from <b>{0}, {1}{2}</b>{3}{4}{5}", node.nodeName, colourAlert, node.Arc.name, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}<b>{1} is under a cloud of suspicion as a result of their time with the Authority</b>{2}", colourBad, playerName, colourEnd);
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// Player spotted (IMAGED, TAGGED)
     /// </summary>
     /// <param name="detailsTop"></param>
