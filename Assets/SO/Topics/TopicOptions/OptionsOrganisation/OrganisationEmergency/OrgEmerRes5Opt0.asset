@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes5Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res5 Option 0
-  tag: Accept
-  text: dd
+  tag: Pay Up
+  text: Don't tell anyone, please
   topic: {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

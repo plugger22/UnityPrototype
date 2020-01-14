@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes5Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res5 Option 3
-  tag: Help Cause
-  text: dd
+  tag: Forced Help
+  text: Sell Raffle Tickets? If I have to
   topic: {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes4Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res4 Option 1
-  tag: Go jump!
-  text: dd
+  tag: Bye Bye
+  text: Are we still talking? I don't think so
   topic: {fileID: 11400000, guid: dcfa689c8127c0d47a75e8e8f08392eb, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 9a7561a40b4bd7948980e573d8fecdb1, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

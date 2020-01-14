@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes3Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res3 Option 0
-  tag: Insist
-  text: dd
+  tag: Pay
+  text: How much? Is this enough?
   topic: {fileID: 11400000, guid: 71ce2b94cdcc5cf43bd58767459ecc0b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -22,11 +22,11 @@ MonoBehaviour:
   listOfCriteria:
   - {fileID: 11400000, guid: e4b5c8b98dadfb74db048d21928c12bf, type: 2}
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
-  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
+  - {fileID: 11400000, guid: 09a7068c2084bf544ac1932065407b11, type: 2}
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

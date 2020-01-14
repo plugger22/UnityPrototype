@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes3Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res3 Option 1
-  tag: I'm Broke
-  text: dd
+  tag: Low Ball
+  text: Is that a threat? I feel vulnerable
   topic: {fileID: 11400000, guid: 71ce2b94cdcc5cf43bd58767459ecc0b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 

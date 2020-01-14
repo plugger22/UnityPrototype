@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res2 Option 2
   tag: Generous
-  text: dd
+  text: I'm not afraid to dig deep
   topic: {fileID: 11400000, guid: 09ea51427f3ce5949ab00e0b6434626c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6a5e7bd653c9a94ca7038d845341574, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

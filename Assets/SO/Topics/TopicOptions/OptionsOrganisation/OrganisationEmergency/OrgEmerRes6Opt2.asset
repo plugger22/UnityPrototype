@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes6Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res6 Option 2
-  tag: Tell HQ
-  text: dd
+  tag: Brush Off
+  text: HQ won't believe you
   topic: {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

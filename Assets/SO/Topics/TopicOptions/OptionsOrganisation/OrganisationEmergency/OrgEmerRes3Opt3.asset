@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes3Opt3
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res3 Option 3
-  tag: Ask Around
-  text: dd
+  tag: Offer Assistance
+  text: I can't pay but I can help out
   topic: {fileID: 11400000, guid: 71ce2b94cdcc5cf43bd58767459ecc0b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: d4b249892692d6d4bb54365430700f5f, type: 2}
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: 

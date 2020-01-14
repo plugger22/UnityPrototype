@@ -997,11 +997,14 @@ public class ValidationManager : MonoBehaviour
                                                 }
 
                                                 listOfMoodEffects.Add(option.moodEffect.name);
-                                                //tally beliefs
+                                                //tally beliefs (only if mood is valid for option)
                                                 if (dictOfBeliefs.ContainsKey(option.moodEffect.name) == true)
                                                 {
-                                                    num = dictOfBeliefs[option.moodEffect.name] + 1;
-                                                    dictOfBeliefs[option.moodEffect.name] = num;
+                                                    if (option.isIgnoreMood == false)
+                                                    {
+                                                        num = dictOfBeliefs[option.moodEffect.name] + 1;
+                                                        dictOfBeliefs[option.moodEffect.name] = num;
+                                                    }
                                                 }
                                                 else { Debug.LogWarningFormat("Invalid moodEffect \"{0}\", (Not found in dictOfBeliefs)", option.moodEffect.name); }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res6 Option 3
   tag: Give Gear
-  text: dd
+  text: Let me pay you in kind
   topic: {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

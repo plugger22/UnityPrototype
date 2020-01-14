@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes2Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res2 Option 1
-  tag: Low Ball
-  text: dd
+  tag: Cheap Skate
+  text: I'd love to give you more, but...
   topic: {fileID: 11400000, guid: 09ea51427f3ce5949ab00e0b6434626c, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 

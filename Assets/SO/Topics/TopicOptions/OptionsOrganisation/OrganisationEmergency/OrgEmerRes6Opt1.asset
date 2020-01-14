@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes6Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res6 Option 1
-  tag: Indifferent
-  text: dd
+  tag: Pay Up
+  text: Nobody needs to know
   topic: {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes6Opt0
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res6 Option 0
-  tag: Helpless
-  text: dd
+  tag: Abuse and Agree
+  text: That's a sick motto. You need help
   topic: {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

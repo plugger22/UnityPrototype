@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes5Opt1
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res5 Option 1
-  tag: Leave Me Alone
-  text: dd
+  tag: Handle It
+  text: Blackmail I can deal with
   topic: {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

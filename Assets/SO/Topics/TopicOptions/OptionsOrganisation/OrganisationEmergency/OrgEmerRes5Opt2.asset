@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: OrgEmerRes5Opt2
   m_EditorClassIdentifier: 
   descriptor: Org Emergency Res5 Option 2
-  tag: Generous
-  text: dd
+  tag: Pay Off
+  text: I try to avoid Unpleasantness
   topic: {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56999c2804e75d248830c5ceb9ed0354, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
