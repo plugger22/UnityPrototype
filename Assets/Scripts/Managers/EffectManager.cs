@@ -4095,6 +4095,7 @@ public class EffectManager : MonoBehaviour
             case "ConditionBlackmailer":
             case "ConditionAddicted":
             case "ConditionStar":
+            case "ConditionTagged":
                 /*if (node != null)
                 { effectResolve.bottomText = ExecutePlayerCondition(effect, dataInput, node); }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", dataTopic.nodeID); }*/
@@ -4987,6 +4988,7 @@ public class EffectManager : MonoBehaviour
                         GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
                     }
+                    else { bottomText = string.Format("{0}Player already has {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
                     break;
                 case "Subtract":
                     //only remove condition if present
@@ -4995,6 +4997,7 @@ public class EffectManager : MonoBehaviour
                         GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
                     }
+                    else { bottomText = string.Format("{0}Player doesn't have {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
                     break;
                 default:
                     Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
@@ -5454,6 +5457,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "ConditionWounded":
                     condition = conditionWounded;
+                    break;
+                case "ConditionTagged":
+                    condition = conditionTagged;
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", outcome.name);

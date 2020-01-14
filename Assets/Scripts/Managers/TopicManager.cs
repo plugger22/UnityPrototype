@@ -3042,15 +3042,11 @@ public class TopicManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("Event \'{0}\', {1}", turnTopic.tag, turnOption.tag);
+                dataInput.originText = string.Format("Event<br>{0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured
-                int nodeID = -1;
-                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-                { nodeID = GameManager.instance.nodeScript.nodeCaptured; }
-                else { nodeID = GameManager.instance.nodeScript.nodePlayer; }
-                Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
                 if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
                 {
@@ -3164,12 +3160,7 @@ public class TopicManager : MonoBehaviour
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = string.Format("{0} IGNORE", turnTopic.tag);
             dataInput.side = GameManager.instance.sideScript.PlayerSide;
-            int nodeID = -1;
-            //special case of player captured otherwise default player nodeID
-            if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-            { nodeID = GameManager.instance.nodeScript.nodeCaptured; }
-            else { nodeID = GameManager.instance.nodeScript.nodePlayer; }
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
             //top text
             builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, "Ignored", colourEnd);
             //loop effects
@@ -5634,6 +5625,76 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
                         }
                         else { CountTextTag("capture", dictOfTags); }
+                        break;
+                    case "cap3":
+                        //who deals with player when captured for innocence level 3
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>InterroBot</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "InterroBot"; }
+                        }
+                        else { CountTextTag("cap3", dictOfTags); }
+                        break;
+                    case "cap3s":
+                        //who deals with player when captured for innocence level 3, plural
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>InterroBots</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "InterroBots"; }
+                        }
+                        else { CountTextTag("cap3s", dictOfTags); }
+                        break;
+                    case "cap2":
+                        //who deals with player when captured for innocence level 2
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>Inquisitor</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "Inquisitor"; }
+                        }
+                        else { CountTextTag("cap2", dictOfTags); }
+                        break;
+                    case "cap2s":
+                        //who deals with player when captured for innocence level 2, plural
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>Inquisitors</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "Inquisitors"; }
+                        }
+                        else { CountTextTag("cap2s", dictOfTags); }
+                        break;
+                    case "cap1":
+                        //who deals with player when captured for innocence level 1
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>TortureBot</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "TortureBot"; }
+                        }
+                        else { CountTextTag("cap1", dictOfTags); }
+                        break;
+                    case "cap1s":
+                        //who deals with player when captured for innocence level 1, plural
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>TortureBots</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "TortureBots"; }
+                        }
+                        else { CountTextTag("cap1s", dictOfTags); }
+                        break;
+                    case "cap0":
+                        //who deals with player when captured for innocence level 0 -> mayor + first name (NOTE: [cap0] is same for plural and same as [mayor])
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
+                            else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                        }
+                        else { CountTextTag("cap0", dictOfTags); }
                         break;
                     case "innocence":
                         //player's level of innocence

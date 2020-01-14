@@ -473,6 +473,23 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
+    /// Use this for all calls for player nodeID. Handles edge cases automatically. Returns -1 if a problem (unlikely)
+    /// </summary>
+    /// <returns></returns>
+    public int GetPlayerNodeID()
+    {
+        int nodeID;
+        switch (GameManager.instance.playerScript.status)
+        {
+            case ActorStatus.Active: nodeID = nodePlayer; break;
+            case ActorStatus.Captured: nodeID = nodeCaptured; break;
+            default: nodeID = -1; break;
+        }
+        return nodeID;
+    }
+
+
+    /// <summary>
     /// highlights all nodes depening on the enum NodeUI criteria
     /// </summary>
     public void ShowNodes(NodeUI nodeUI)
@@ -542,7 +559,7 @@ public class NodeManager : MonoBehaviour
 
             //show all viable move locations for player (nodes adjacent to current location)
             case NodeUI.Move:
-                Node nodeRef = GameManager.instance.dataScript.GetNode(nodePlayer);
+                Node nodeRef = GameManager.instance.dataScript.GetNode(GetPlayerNodeID());
                 if (nodeRef != null)
                 {
                     List<Node> nodeList = nodeRef.GetNeighbouringNodes();
@@ -566,7 +583,7 @@ public class NodeManager : MonoBehaviour
                     }
                     else { Debug.LogError("Invalid nodeList (Null) for GetNeighbouring nodes"); }
                 }
-                else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", nodePlayer)); }
+                else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", GetPlayerNodeID())); }
                 break;
             //show all contacts with effectiveness (highest) on node face
             case NodeUI.ShowContacts:
@@ -860,7 +877,7 @@ public class NodeManager : MonoBehaviour
                 }
                 break;
             case NodeUI.NearNeighbours:
-                Node nodeNear = GameManager.instance.dataScript.GetNode(nodePlayer);
+                Node nodeNear = GameManager.instance.dataScript.GetNode(GetPlayerNodeID());
                 if (nodeNear != null)
                 {
                     List<Node> listOfNearNeighbours = nodeNear.GetNearNeighbours();
@@ -2810,7 +2827,7 @@ public class NodeManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
             //get cure node
-            Node node = GameManager.instance.dataScript.GetNode(nodePlayer);
+            Node node = GameManager.instance.dataScript.GetNode(GetPlayerNodeID());
             Node nodeCure = null;
             if (listOfExclusion != null && listOfExclusion.Count > 0)
             { nodeCure = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(node, requiredDistance, listOfExclusion); }

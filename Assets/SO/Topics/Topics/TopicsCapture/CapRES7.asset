@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES7
   m_EditorClassIdentifier: 
   tag: Hell Tank
-  text: '[mayor] knows you are a [capture] with the Resistance ([innocence]). The
-    hatch slams shut on the Deprivation Hell Tank'
+  text: '[cap0] knows you are a [capture] with the Resistance ([innocence]). The hatch
+    slams shut on the Deprivation Hell Tank'
   designNotes: Captured, Innocence 0 stars, Bad
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -44,6 +44,6 @@ MonoBehaviour:
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 16
+  turnsActive: 19
   turnsLive: 0
   turnsDone: 0

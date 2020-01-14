@@ -546,6 +546,32 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Tagged Condition
+        //
+        // - - - Tagged Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "tagged_0";
+        data.header = "Tagged Condition";
+        data.text = string.Format("You have been microchipped subdermally with a powerful electronic {0}TRACKER{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Effect
+        data = new HelpData();
+        data.tag = "tagged_1";
+        data.header = "Effect on Player";
+        data.text = string.Format("Every time you {0}Personally take an Action{1} your {2}Invisibility{3} will drop to {4}Zero{5} and the Authority will know your location", colourAlert, colourEnd,
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "tagged_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("Being Tagged is no small matter. To avoid capture {0}keep a very low profile{1}, make use of your {2}Subordinates{3}, and jump at any chance of a {4}Cure{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Stressed Condition
         //
         // - - - Stressed Condition

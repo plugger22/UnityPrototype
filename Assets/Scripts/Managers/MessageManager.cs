@@ -5289,6 +5289,12 @@ public class MessageManager : MonoBehaviour
                         data.tag2 = "addict_2";
                         data.tag3 = "addict_3";
                         break;
+                    case "TAGGED":
+                        data.help = 1;
+                        data.tag0 = "tagged_0";
+                        data.tag1 = "tagged_1";
+                        data.tag2 = "tagged_2";
+                        break;
                 }
             }
             else { Debug.LogWarning("Invalid condition (Null)"); }

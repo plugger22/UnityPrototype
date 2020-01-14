@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: CapRES5
   m_EditorClassIdentifier: 
   tag: Tortured
-  text: The TortureBot has been told that you are a [capture] with the Resistance
-    ([innocence]). You feel yourself being scanned by an uncaring AI
+  text: The [cap1] has been told that you are a [capture] with the Resistance ([innocence]).
+    You feel yourself being scanned by an uncaring AI
   designNotes: Captured, Innocence 1 star, Bad
   type: {fileID: 11400000, guid: 7b6275c9ef83125419209fe51b9ddaef, type: 2}
   subType: {fileID: 11400000, guid: 79da4e8b0cc9b36439f1322f657bc3d4, type: 2}
@@ -46,6 +46,6 @@ MonoBehaviour:
   timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 16
+  turnsActive: 19
   turnsLive: 0
   turnsDone: 0
