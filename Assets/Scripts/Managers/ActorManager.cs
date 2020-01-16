@@ -5557,7 +5557,7 @@ public class ActorManager : MonoBehaviour
             string reason = string.Format("{0}You are {1}<b>{2}</b>{3}{4}", "\n", colourBad, builder.ToString(), colourEnd, "\n");
             string warning = string.Format("{0}Your Subordinates may resign{1}", colourAlert, colourEnd);
             if (isQuestionable == true)
-            { warning = string.Format("{0}Your Subordinates may resign{1}{2}HQ APPROVAL may fall{3}", colourAlert, "\n", "\n", colourEnd); }
+            { warning = string.Format("{0}Your Subordinates may resign{1}HQ APPROVAL may fall{2}", colourAlert, "\n", colourEnd); }
             GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Dubious Reputation", reason, warning);
         }
         else { Debug.LogError("Invalid listOfBadConditions (Null)"); }

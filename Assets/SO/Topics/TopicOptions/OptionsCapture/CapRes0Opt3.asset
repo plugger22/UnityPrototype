@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: You get wired up before those [cap3s] come for you. Sit their like a damn
+    Christmas tree, laments [npc], [job], of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: <color=#FFE4B5>No contact with Organisation</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

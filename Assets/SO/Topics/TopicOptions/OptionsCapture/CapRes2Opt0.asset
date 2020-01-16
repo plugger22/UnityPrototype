@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Those [cap2s] play on your emotions like the Devil plays the fiddle, says
+    [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Resist</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>

@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8617a5a2148eaaa419360382ca121409, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: If they gave me enough [money] I'd volunteer to test out a Hell Tank. They're
+    always looking for idiots like me, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Escape</color>
   tooltipMain: "<color=#98FB98>Player escaped from Captivity</color>\r\n<color=#FF4500>
     Freedom from Org -3</color>"

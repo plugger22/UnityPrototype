@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: My [who] wanted [money] and the [org] helped them! Perhaps I ought to put
+    my hand up as well, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

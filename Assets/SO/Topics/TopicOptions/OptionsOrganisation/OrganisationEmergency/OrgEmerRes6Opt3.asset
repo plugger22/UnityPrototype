@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0fc2ce6cc2b47164d9de479c8edca05f, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Would I support the [org]? You bet I would. They helped me cope with my [handicap],
+    says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

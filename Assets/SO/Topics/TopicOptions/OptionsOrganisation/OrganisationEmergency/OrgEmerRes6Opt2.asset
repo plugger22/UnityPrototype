@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: How bad are the [org]? Pretty damn bad, reckons my [who]. Steal your cat and
+    eat your dog, type bad, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

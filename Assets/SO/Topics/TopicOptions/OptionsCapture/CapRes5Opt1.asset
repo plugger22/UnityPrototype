@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Sometimes those [cap1s] fry a circuit and rip people apart. All that's left
+    is a pile of bloody mince, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Give in</color>
   tooltipMain: "<color=#98FB98>Player released from Captivity</color>\r\n<color=#FF4500>
     Killed (Player reveals location)</color>\r\n<color=#FF4500>Player Innocence -1</color>"

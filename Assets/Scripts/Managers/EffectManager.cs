@@ -1414,7 +1414,7 @@ public class EffectManager : MonoBehaviour
                                                 { BuildString(result, "Org has dropped no investigations"); }
                                                 break;
                                             case "StatOrgEmergencyNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.orgEscapes) == 0)
+                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgEscapes) == 0)
                                                 { BuildString(result, "Org hasn't helped you Escape"); }
                                                 break;
                                             //
@@ -5192,7 +5192,7 @@ public class EffectManager : MonoBehaviour
         //escape
         GameManager.instance.captureScript.ReleasePlayer(false, false);
         //stat
-        GameManager.instance.dataScript.StatisticIncrement(StatType.orgEscapes);
+        GameManager.instance.dataScript.StatisticIncrement(StatType.OrgEscapes);
         return string.Format("{0}Player Escapes from Captivity{1}{2}", colourGood, colourEnd, "\n");
     }
 

@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: What do the [org] want? To be the next Resistance, as far as I can tell, says
+    [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

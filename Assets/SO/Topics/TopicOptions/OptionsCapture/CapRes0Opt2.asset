@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89c645c804b633b4abaa6ee4c0c48206, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: My [who] is scared that one of those [cap3s] is going to squeeze them dry
+    one day. What's there to squeeze, asks [npc] of [node]?
   tooltipHeader: <color=#FFFFE0>Confuse</color>
   tooltipMain: <color=#98FB98>Player released from Captivity</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

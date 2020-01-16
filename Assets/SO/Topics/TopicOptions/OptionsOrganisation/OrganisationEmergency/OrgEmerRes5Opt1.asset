@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Why are the [org] and the Resistance fighting each other when they should
+    be cooperating, asks [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

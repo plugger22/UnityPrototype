@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: My [who] was worked over by a [cap1] and now they poop into a bag. Phewee!
+    Frightens the heck out me, says [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Poker Face</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>

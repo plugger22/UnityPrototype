@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40775f9c776776643a582f19953b871a, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: It's a perk of the job that [cap0] gets to lock up people in the Hell Tank.
+    Fun and giggles all around, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Reveal HQ Location</color>
   tooltipMain: "<color=#98FB98>Player released from Captivity</color>\r\n<color=#FF4500>
     HQ Location Compromised</color>"

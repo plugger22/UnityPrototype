@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 194cc72b08a66f24a85696c20e90a778, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: My [who] swears that they could go ten rounds with a [cap1]. Tell them that
+    they're dreaming, says [npc], [job], of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Player doesn''t have Item
 

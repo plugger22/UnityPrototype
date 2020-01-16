@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Those [cap2s] have some kind of evil Jedi training that lets them suck you
+    dry of all emotions until you are nothing but a husk, says [npc]
   tooltipHeader: <color=#FFFFE0>Passive Resistance</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>

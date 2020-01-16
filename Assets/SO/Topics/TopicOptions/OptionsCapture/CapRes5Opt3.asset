@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d4afccfc4d7e4a41bb526c384c37f28, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Had a dream about a [cap1] last night says [npc], [job], of [node]. Woke up
+    and found my pillow shredded
   tooltipHeader: <color=#FFFFE0>Passive Resistance</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>

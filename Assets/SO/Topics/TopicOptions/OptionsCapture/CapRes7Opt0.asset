@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50e988caa2cb407488306009a8b14c79, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: My [who] spent time in a Hell Tank and now they won't stop screaming. Going
+    to have to be put down, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Tough it out</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     released from Captivity</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Player

@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aaf111a8ac13b6946ae697b6d7452d02, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: My [who] claims they saw an [cap3] once. Insisted that it did THINGS to them.
+    Sadly, not enough, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Reveal Infomation</color>
   tooltipMain: "<color=#98FB98>Player released from Captivity</color>\r\n<color=#FF4500>
     Random Subordinate<br>Invisibility -1</color>"

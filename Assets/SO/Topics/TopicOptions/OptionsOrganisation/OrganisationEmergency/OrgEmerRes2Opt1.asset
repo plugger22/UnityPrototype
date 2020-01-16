@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: The Resistance does a good job of sticking it to the Authority but what about
+    those [org], asks [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

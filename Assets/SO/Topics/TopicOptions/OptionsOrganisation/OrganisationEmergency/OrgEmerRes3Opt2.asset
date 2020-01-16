@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f305c9949e3c6ae41b9cbc85f7057452, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [org] do a lot of good in the community. Stuff you don't always hear about,
+    says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

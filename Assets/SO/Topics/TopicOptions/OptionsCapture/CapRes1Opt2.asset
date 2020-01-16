@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89c645c804b633b4abaa6ee4c0c48206, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: I'd rather have a frontal lobotomy than have to face one of those [cap3s],
+    says [npc], [job], of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Player doesn''t have Item
 
