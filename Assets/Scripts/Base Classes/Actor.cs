@@ -68,6 +68,8 @@ namespace gameAPI
         private int gearTimesTaken;                                                         //tally of how many times player has taken gear from actor (harder to do so each time) NO GAME EFFECT AT PRESENT
         //collections
         private List<int> listOfTeams = new List<int>();                                    //teamID of all teams that the actor has currently deployed OnMap
+        private List<int> listOfGoodRelations = new List<int>();                            //actorID's who have a +ve relationship with this actor. Weighted for compatibility, eg. if +3 then 3 entries
+        private List<int> listOfBadRelations = new List<int>();                             //actorID's who have a -ve relationship with this actor. Weighted for compatibility, eg. if -3 then 3 entries
         private List<Secret> listOfSecrets = new List<Secret>();                            //Player secrets that the actor knows
         private List<Condition> listOfConditions = new List<Condition>();                   //list of all conditions currently affecting the actor
         private List<string> listOfTraitEffects = new List<string>();                       //list of all traitEffect.teffID's       
@@ -1211,6 +1213,79 @@ namespace gameAPI
 
         public Personality GetPersonality()
         { return personality; }
+
+        /// <summary>
+        /// Get list of Relationships (good or bad) containing weighted pool of actorID's
+        /// </summary>
+        /// <param name="isGood"></param>
+        /// <returns></returns>
+        public List<int> GetListOfRelations(bool isGood)
+        {
+            if (isGood == true) { return listOfGoodRelations; }
+            else { return listOfBadRelations; }
+        }
+
+        /// <summary>
+        /// adds weighted entries of actorID to relevant relationship list (+ve/-ve) based on isGood true/false. Number of entries equal to ABS(compatibility).
+        /// NOTE: Compatibility should NOT be equal to zero (otherwise neither good nor bad relationship)
+        /// </summary>
+        /// <param name="compatibility"></param>
+        /// <param name="isGood"></param>
+        public void AddRelationship(int compatibility, int actorWithRelationshipID, bool isGood)
+        {
+            Debug.Assert(compatibility != 0, "Compatibility Zero (should be NOT Zero)");
+            int numOfEntries = Mathf.Abs(compatibility);
+            List<int> tempList = new List<int>();
+            for (int i = 0; i < numOfEntries; i++)
+            { tempList.Add(actorWithRelationshipID); }
+            if (isGood) { listOfGoodRelations.AddRange(tempList); }
+            else { listOfBadRelations.AddRange(tempList); }
+        }
+
+        /// <summary>
+        /// reset both good and bad lists of relationships to Empty prior to recalculating new relationships
+        /// </summary>
+        public void ResetRelations()
+        {
+            listOfGoodRelations.Clear();
+            listOfBadRelations.Clear();
+        }
+
+        /// <summary>
+        /// returns a randomly selected actorID from the appropriate list (good relations if isGood true, bad if false). Returns -1 if no relationship of the type exists
+        /// </summary>
+        /// <param name="isGood"></param>
+        /// <returns></returns>
+        public int GetRandomRelationship(bool isGood)
+        {
+            int actorID = -1;
+            if (isGood == true)
+            {
+                if (listOfGoodRelations.Count > 0)
+                { actorID = listOfGoodRelations[Random.Range(0, listOfGoodRelations.Count)]; }
+            }
+            else
+            {
+                if (listOfBadRelations.Count > 0)
+                { actorID = listOfBadRelations[Random.Range(0, listOfBadRelations.Count)]; }
+            }
+            return actorID;
+        }
+
+        /// <summary>
+        /// Returns true if there are any relationships of the type specified present, eg. Good relationships with other actors if isGood true, bad if false. Returns false if none present.
+        /// </summary>
+        /// <param name="isGood"></param>
+        /// <returns></returns>
+        public bool CheckRelationship(bool isGood)
+        {
+            if (isGood == true)
+            { if (listOfGoodRelations.Count > 0) { return true; } }
+            else
+            { if (listOfBadRelations.Count > 0) { return true; } }
+            return false;
+        }
+
 
         //
         // - - - Node Actions (Both sides)

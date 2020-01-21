@@ -159,8 +159,10 @@ public class PersonalityManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        //set compatibility of all actors in level right at level start
+        //set compatibility of all actors with Player in level
         SetAllActorsPersonality();
+        //set compatibility of all current actors with each other
+        SetAllActorsCompatibility(GameManager.instance.sideScript.PlayerSide);
     }
     #endregion
 
@@ -274,6 +276,7 @@ public class PersonalityManager : MonoBehaviour
         {
             if (dictOfActors != null)
             {
+                int[] arrayOfPlayerFactors = playerPersonality.GetFactors();
                 foreach (var actor in dictOfActors)
                 {
                     if (actor.Value != null)
@@ -283,7 +286,7 @@ public class PersonalityManager : MonoBehaviour
                         if (personality != null)
                         {
                             //compatibility with Player
-                            compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
+                            compatibility = CheckCompatibility(arrayOfPlayerFactors, personality.GetFactors());
                             personality.SetCompatibilityWithPlayer(compatibility);
                             //descriptors
                             SetDescriptors(personality);
@@ -310,7 +313,7 @@ public class PersonalityManager : MonoBehaviour
         if (personality != null)
         {
             //compatibility with Player
-            compatibility = CheckCompatibilityWithPlayer(personality.GetFactors());
+            compatibility = CheckCompatibility(playerPersonality.GetFactors(), personality.GetFactors());
             personality.SetCompatibilityWithPlayer(compatibility);
             //descriptors
             SetDescriptors(personality);
@@ -322,71 +325,142 @@ public class PersonalityManager : MonoBehaviour
 
 
     /// <summary>
-    /// Checks Player personality with another for compatibility and returns a value from -3 (extremely incompatible) to +3 (extremely compatible) based on a mathematical comparison of the first 5 factors
-    /// NOTE: Currently the dark triad has an no effect, only the standard Five Factor Model ones are taken into account
+    /// Checks Player/Actor personality with another for compatibility and returns a value from -3 (extremely incompatible) to +3 (extremely compatible) based on a mathematical comparison of the first 5 factors
+    /// NOTE: first factors is for first actor/player, second is for who they are being compared against (order of which doesn't matter)
+    /// NOTE: Actors are checked if onMap, status is irrelevant
     /// </summary>
-    /// <param name="arrayOfCompareFactors"></param>
+    /// <param name="arrayOfSecondFactors"></param>
     /// <returns></returns>
-    public int CheckCompatibilityWithPlayer(int[] arrayOfCompareFactors)
+    public int CheckCompatibility(int[] arrayOfFirstFactors, int[] arrayOfSecondFactors)
     {
         int difference;
         int compatibility = 0;
         int tally = 0;
-        int[] arrayOfFactors = playerPersonality.GetFactors();
-        if (arrayOfFactors != null)
+        if (arrayOfFirstFactors != null)
         {
-            //both arrays must be off the same length
-            int length = arrayOfCompareFactors.Length;
-            if (length != arrayOfFactors.Length)
-            { Debug.LogErrorFormat("Invalid arrayOfCompareFactors (incorrect length \"{0}\")", length); }
-            else
+            if (arrayOfSecondFactors != null)
             {
-                //tally up differences (
-                for (int i = 0; i < 5; i++)
+                //both arrays must be off the same length
+                if (arrayOfFirstFactors.Length != arrayOfSecondFactors.Length)
+                { Debug.LogErrorFormat("Invalid arrayOfFactors (incorrect length, first \"{0}\", second \"{1}\")", arrayOfFirstFactors.Length, arrayOfSecondFactors.Length); }
+                else
                 {
-                    //difference is ABS value where the closer a personality factor is to each other, the more compatible they are and the further apart they are the more incompatible they are.
-                    difference = Mathf.Abs(arrayOfFactors[i] - arrayOfCompareFactors[i]);
-                    tally += difference;
+                    //tally up differences (
+                    for (int i = 0; i < 5; i++)
+                    {
+                        //difference is ABS value where the closer a personality factor is to each other, the more compatible they are and the further apart they are the more incompatible they are.
+                        difference = Mathf.Abs(arrayOfFirstFactors[i] - arrayOfSecondFactors[i]);
+                        tally += difference;
+                    }
+                    //convert compatibility into one of 7 bands
+                    switch (tally)
+                    {
+                        case 0:
+                        case 1:
+                            compatibility = 3; break;
+                        case 2:
+                        case 3:
+                            compatibility = 2; break;
+                        case 4:
+                        case 5:
+                        case 6:
+                            compatibility = 1; break;
+                        case 7:
+                        case 8:
+                            compatibility = 0; break;
+                        case 9:
+                        case 10:
+                        case 11:
+                            compatibility = -1; break;
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                            compatibility = -2; break;
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                        case 20:
+                            compatibility = -3; break;
+                        default:
+                            Debug.LogWarningFormat("Invalid compatibility \"{0}\" (band, should be between 0 and 20) ", compatibility);
+                            break;
+                    }
                 }
-                //convert compatibility into one of 7 bands
-                switch (tally)
+            }
+            else { Debug.LogError("Invalid arrayOfSecondFactors (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfFirstFactors (Null)"); }
+        return compatibility;
+    }
+
+    /// <summary>
+    /// calculates actor vs actor compatibilities. Needs to be called everytime there is a change in the actor line-up
+    /// </summary>
+    public void SetAllActorsCompatibility(GlobalSide side)
+    {
+        if (side != null)
+        {
+            int compatibility;
+            Actor firstActor, secondActor;
+            Personality firstPersonality, secondPersonality;
+            //you only need to check 1 less than the max number of actors in order
+            int numOfChecks = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
+            //loop slot #'s with an outer loop for first actor and inner loop for second (to compare against)
+            for (int i = 0; i < numOfChecks; i++)
+            {
+                //first actor actor present in slot
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
                 {
-                    case 0:
-                    case 1:
-                        compatibility = 3; break;
-                    case 2:
-                    case 3:
-                        compatibility = 2; break;
-                    case 4:
-                    case 5:
-                    case 6:
-                        compatibility = 1; break;
-                    case 7:
-                    case 8:
-                        compatibility = 0; break;
-                    case 9:
-                    case 10:
-                    case 11:
-                        compatibility = -1; break;
-                    case 12:
-                    case 13:
-                    case 14:
-                    case 15:
-                        compatibility = -2; break;
-                    case 16:
-                    case 17:
-                    case 18:
-                    case 19:
-                    case 20:
-                        compatibility = -3; break;
-                    default:
-                        Debug.LogWarningFormat("Invalid compatibility \"{0}\" (band, should be between 0 and 20) ", compatibility);
-                        break;
+                    firstActor = GameManager.instance.dataScript.GetCurrentActor(i, side);
+                    if (firstActor != null)
+                    {
+                        firstPersonality = firstActor.GetPersonality();
+                        if (firstPersonality != null)
+                        {
+                            for (int j = 0; j < numOfChecks + 1; j++)
+                            {
+                                //ignore if same slot #'s
+                                if (i != j)
+                                {
+                                    //check second actor present in slot
+                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(j, side) == true)
+                                    {
+                                        secondActor = GameManager.instance.dataScript.GetCurrentActor(j, side);
+                                        if (secondActor != null)
+                                        {
+                                            secondPersonality = secondActor.GetPersonality();
+                                            if (secondPersonality != null)
+                                            {
+                                                compatibility = CheckCompatibility(firstPersonality.GetFactors(), secondPersonality.GetFactors());
+                                                if (compatibility > 0)
+                                                {
+                                                    firstActor.AddRelationship(compatibility, secondActor.actorID, true);
+                                                    //if a slotID 3 actor need to add as last firstactor is ignored in loop
+                                                    if (j == numOfChecks) { secondActor.AddRelationship(compatibility, firstActor.actorID, true); }
+                                                }
+                                                else if (compatibility < 0)
+                                                {
+                                                    firstActor.AddRelationship(compatibility, secondActor.actorID, false);
+                                                    //if a slotID 3 actor need to add as last firstactor is ignored in loop
+                                                    if (j == numOfChecks) { secondActor.AddRelationship(compatibility, firstActor.actorID, false); }
+                                                }
+                                            }
+                                            else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", j); }
+                                        }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid secondActor (Null) for slotID {0}", j); }
+                                }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid personality (Null) for firstActor, slotID {0}", i); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid firstActor (Null) for slotID {0}", i); }
                 }
             }
         }
-        else { Debug.LogError("Invalid playerPersonality.arrayOfFactors (Null)"); }
-        return compatibility;
+        else { Debug.LogError("Invalid side (Null)"); }
     }
 
     /// <summary>
@@ -597,7 +671,7 @@ public class PersonalityManager : MonoBehaviour
         string factorPlayer = "Unknown";
         bool isStressed = false;
         Belief actionBelief = null;
-        switch(type)
+        switch (type)
         {
             //Manage actions (multiText is actorArcName)
             case MoodType.ReservePromise:
@@ -688,7 +762,7 @@ public class PersonalityManager : MonoBehaviour
                 if (playerValue != 0)
                 {
                     switch (actionBelief.type.name)
-                        {
+                    {
                         case "Good":
                             change = playerValue;
                             break;
@@ -947,7 +1021,7 @@ public class PersonalityManager : MonoBehaviour
         }
         else
         {
-            
+
             //Player stressed, show mood change in grey to indicate that effect will have no impact
             if (GameManager.instance.playerScript.isStressed == false)
             {
@@ -1039,13 +1113,13 @@ public class PersonalityManager : MonoBehaviour
                             int[] arrayOfCriteria = trait.GetArrayOfCriteria();
                             if (arrayOfCriteria != null)
                             {
-                                builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}", 
-                                    trait.tag, 
+                                builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}",
+                                    trait.tag,
                                     arrayOfCriteria[0] != 99 && arrayOfCriteria[0] > 0 ? "+" : "", arrayOfCriteria[0] != 99 ? arrayOfCriteria[0].ToString() : ".",
-                                    arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".", 
+                                    arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".",
                                     arrayOfCriteria[2] != 99 && arrayOfCriteria[2] > 0 ? "+" : "", arrayOfCriteria[2] != 99 ? arrayOfCriteria[2].ToString() : ".",
-                                    arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".", 
-                                    arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".", 
+                                    arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".",
+                                    arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".",
                                     "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
@@ -1104,37 +1178,37 @@ public class PersonalityManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                {
+                    //display actor personality
+                    builder.AppendFormat("-{0}, {1}, hID {2}, HQ, {3}{4}", actor.actorName, actor.arc.name, actor.hqID, actor.statusHQ, "\n");
+                    Trait trait = actor.GetTrait();
+                    if (trait != null)
                     {
-                        //display actor personality
-                        builder.AppendFormat("-{0}, {1}, hID {2}, HQ, {3}{4}", actor.actorName, actor.arc.name, actor.hqID, actor.statusHQ, "\n");
-                        Trait trait = actor.GetTrait();
-                        if (trait != null)
+                        int[] arrayOfCriteria = trait.GetArrayOfCriteria();
+                        if (arrayOfCriteria != null)
                         {
-                            int[] arrayOfCriteria = trait.GetArrayOfCriteria();
-                            if (arrayOfCriteria != null)
-                            {
-                                builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}",
-                                    trait.tag,
-                                    arrayOfCriteria[0] != 99 && arrayOfCriteria[0] > 0 ? "+" : "", arrayOfCriteria[0] != 99 ? arrayOfCriteria[0].ToString() : ".",
-                                    arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".",
-                                    arrayOfCriteria[2] != 99 && arrayOfCriteria[2] > 0 ? "+" : "", arrayOfCriteria[2] != 99 ? arrayOfCriteria[2].ToString() : ".",
-                                    arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".",
-                                    arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".",
-                                    "\n");
-                            }
-                            else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
+                            builder.AppendFormat(" \"{0}\" trait, criteria | {1}{2} | {3}{4} | {5}{6} | {7}{8} | {9}{10} | {11}",
+                                trait.tag,
+                                arrayOfCriteria[0] != 99 && arrayOfCriteria[0] > 0 ? "+" : "", arrayOfCriteria[0] != 99 ? arrayOfCriteria[0].ToString() : ".",
+                                arrayOfCriteria[1] != 99 && arrayOfCriteria[1] > 0 ? "+" : "", arrayOfCriteria[1] != 99 ? arrayOfCriteria[1].ToString() : ".",
+                                arrayOfCriteria[2] != 99 && arrayOfCriteria[2] > 0 ? "+" : "", arrayOfCriteria[2] != 99 ? arrayOfCriteria[2].ToString() : ".",
+                                arrayOfCriteria[3] != 99 && arrayOfCriteria[3] > 0 ? "+" : "", arrayOfCriteria[3] != 99 ? arrayOfCriteria[3].ToString() : ".",
+                                arrayOfCriteria[4] != 99 && arrayOfCriteria[4] > 0 ? "+" : "", arrayOfCriteria[4] != 99 ? arrayOfCriteria[4].ToString() : ".",
+                                "\n");
                         }
-                        else
-                        {
-                            builder.AppendFormat(" ERROR: INVALID TRAIT (NULL){0}", "\n");
-                            Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, hID {2}", actor.actorName, actor.arc.name, actor.hqID);
-                        }
-                        builder.Append(DebugDisplayIndividualPersonality(actor.GetPersonality()));
-                        builder.AppendLine();
+                        else { Debug.LogErrorFormat("Invalid arrayOfCriteria (Null) for {0} trait", trait.tag); }
                     }
+                    else
+                    {
+                        builder.AppendFormat(" ERROR: INVALID TRAIT (NULL){0}", "\n");
+                        Debug.LogWarningFormat("Invalid trait (Null) for {0}, {1}, hID {2}", actor.actorName, actor.arc.name, actor.hqID);
+                    }
+                    builder.Append(DebugDisplayIndividualPersonality(actor.GetPersonality()));
+                    builder.AppendLine();
                 }
+            }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
@@ -1245,7 +1319,7 @@ public class PersonalityManager : MonoBehaviour
                             count = listOfHistory.Count;
                             if (count > 0)
                             {
-                                foreach(string text in listOfHistory)
+                                foreach (string text in listOfHistory)
                                 { builder.AppendFormat("  {0}{1}", text, "\n"); }
                             }
                             else { builder.AppendFormat("  No records present{0}", "\n"); }
@@ -1278,13 +1352,13 @@ public class PersonalityManager : MonoBehaviour
         for (int index = 0; index < numOfFactors; index++)
         {
             factorValue = playerPersonality.GetFactorValue(index);
-            Debug.AssertFormat(factorValue >= minPersonalityFactor && factorValue <= maxPersonalityFactor, "Invalid factorValue \"{0}\" (needs to be between {1} and {2}, inclusive)", 
+            Debug.AssertFormat(factorValue >= minPersonalityFactor && factorValue <= maxPersonalityFactor, "Invalid factorValue \"{0}\" (needs to be between {1} and {2}, inclusive)",
                 factorValue, minPersonalityFactor, maxPersonalityFactor);
-            switch(index)
+            switch (index)
             {
                 case 0:
                     //Openness
-                    switch(factorValue)
+                    switch (factorValue)
                     {
                         case 2:
                             listOfStrongLikes.AddRange(listOfOpennessGood);
@@ -1407,7 +1481,7 @@ public class PersonalityManager : MonoBehaviour
         count = listOfStrongLikes.Count;
         if (count > 0)
         {
-            foreach(string item in listOfStrongLikes)
+            foreach (string item in listOfStrongLikes)
             { builder.AppendFormat(" {0}{1}", item, "\n"); }
         }
         else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
@@ -1438,6 +1512,91 @@ public class PersonalityManager : MonoBehaviour
             { builder.AppendFormat(" {0}{1}", item, "\n"); }
         }
         else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Debug display of actor's compatibility with other actors
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorCompatibility()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Actor Compatibility with other Actors{0}", "\n");
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.AppendFormat("{0} {1}, {2}, ID {3}", "\n", actor.actorName, actor.arc.name, actor.actorID);
+                        builder.AppendFormat("{0}{1}", "\n", DebugGetActorRelations(actor));
+                        builder.AppendLine();
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Submethod to get a string (each item on a new line) of all relations, good and bad, for that actor
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private string DebugGetActorRelations(Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        List<int> tempList = new List<int>();
+        List<int> checkList = new List<int>();
+        int compatibility, actorID;
+        //good relationships
+        tempList.AddRange(actor.GetListOfRelations(true));
+        if (tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                actorID = tempList[i];
+                //not in check list
+                if (checkList.Exists(x => x == actorID) == false)
+                {
+                    //add to check list (prevents dupes)
+                    checkList.Add(actorID);
+                    //how many present?
+                    compatibility = tempList.Count(x => x == actorID);
+                    builder.AppendFormat("  Good Relationship, actorID {0}, compatibility +{1}{2}", actorID, compatibility, "\n");
+                }
+            }
+        }
+        //bad relationships
+        tempList.Clear();
+        checkList.Clear();
+        tempList.AddRange(actor.GetListOfRelations(false));
+        if (tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                actorID = tempList[i];
+                //not in check list
+                if (checkList.Exists(x => x == actorID) == false)
+                {
+                    //add to check list (prevents dupes)
+                    checkList.Add(actorID);
+                    //how many present?
+                    compatibility = tempList.Count(x => x == actorID);
+                    builder.AppendFormat("  Bad Relationship, actorID {0}, compatibility -{1}{2}", actorID, compatibility, "\n");
+                }
+            }
+        }
+        if (builder.Length == 0)
+        { builder.AppendFormat("  Nothing to Report{0}", "\n"); }
         return builder.ToString();
     }
 
