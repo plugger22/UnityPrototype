@@ -4038,6 +4038,8 @@ public class DataManager : MonoBehaviour
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
         }
+        //update actor compatibility
+        GameManager.instance.personScript.SetAllActorsCompatibility();
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
     }

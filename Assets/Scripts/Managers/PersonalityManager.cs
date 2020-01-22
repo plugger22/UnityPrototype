@@ -162,7 +162,7 @@ public class PersonalityManager : MonoBehaviour
         //set compatibility of all actors with Player in level
         SetAllActorsPersonality();
         //set compatibility of all current actors with each other
-        SetAllActorsCompatibility(GameManager.instance.sideScript.PlayerSide);
+        SetAllActorsCompatibility();
     }
     #endregion
 
@@ -263,6 +263,7 @@ public class PersonalityManager : MonoBehaviour
         else { Debug.LogFormat("Invalid index \"{0}\" (should be within 0 to 4)", index); }
         return descriptor;
     }
+
 
     /// <summary>
     /// loop through entire suite of actors in a level (even those in reserve pools) and set their compatibility with the player and their factor descriptors 
@@ -396,15 +397,18 @@ public class PersonalityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// calculates actor vs actor compatibilities. Needs to be called everytime there is a change in the actor line-up
+    /// calculates actor vs actor compatibilities. Needs to be called everytime there is a change in the actor line-up. Automatically applies to player side
     /// </summary>
-    public void SetAllActorsCompatibility(GlobalSide side)
+    public void SetAllActorsCompatibility()
     {
+        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         if (side != null)
         {
             int compatibility;
             Actor firstActor, secondActor;
             Personality firstPersonality, secondPersonality;
+            //reset all actors compatibility prior to updating
+            ResetAllActorsRelations();
             //you only need to check 1 less than the max number of actors in order
             int numOfChecks = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
             //loop slot #'s with an outer loop for first actor and inner loop for second (to compare against)
@@ -450,7 +454,6 @@ public class PersonalityManager : MonoBehaviour
                                             else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", j); }
                                         }
                                     }
-                                    else { Debug.LogErrorFormat("Invalid secondActor (Null) for slotID {0}", j); }
                                 }
                             }
                         }
@@ -460,7 +463,32 @@ public class PersonalityManager : MonoBehaviour
                 }
             }
         }
-        else { Debug.LogError("Invalid side (Null)"); }
+        else { Debug.LogError("Invalid playerSide (Null)"); }
+    }
+
+    /// <summary>
+    /// Resets all actors relations (compatibility) prior to recaculating a new set
+    /// </summary>
+    private void ResetAllActorsRelations()
+    {
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        //reset compatibility lists
+                        actor.ResetRelations();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
     /// <summary>

@@ -1008,6 +1008,24 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckActiveActorPresent(3, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
+                                            case "ActorRelationsGood":
+                                                //actor has at least one good relationship with another actor OnMap
+                                                if (actor != null)
+                                                {
+                                                    if (actor.CheckRelationship(true) == false)
+                                                    { BuildString(result, "No Good Relations present"); }
+                                                }
+                                                else { Debug.LogWarning("Invalid actor (Null) for ActorRelationsGood"); }
+                                                break;
+                                            case "ActorRelationsBad":
+                                                //actor has at least one bad relationship with another actor OnMap
+                                                if (actor != null)
+                                                {
+                                                    if (actor.CheckRelationship(false) == false)
+                                                    { BuildString(result, "No Bad Relations present"); }
+                                                }
+                                                else { Debug.LogWarning("Invalid actor (Null) for ActorRelationsBad"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));

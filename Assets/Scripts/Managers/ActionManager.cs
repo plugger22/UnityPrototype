@@ -2296,6 +2296,8 @@ public class ActionManager : MonoBehaviour
                     GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);
                     //remove actor from reserve list
                     GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
+                    //recalculate all actors compatibility
+                    GameManager.instance.personScript.SetAllActorsCompatibility();
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {
