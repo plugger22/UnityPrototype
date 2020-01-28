@@ -130,6 +130,10 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Maximum number of actors that can leave HQ at the end of a level (during MetaGame)")]
     [Range(0, 10)] public int maxActorsLeaveHQ = 5;
 
+    [Header("Actor to Actor Relations")]
+    [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
+    [Range(0, 20)] public int timerRelations = 10;
+
     #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
     [HideInInspector] public int doomTimer;                                     //countdown doom timer set when resistance player gains the DOOMED condition (infected with a slow acting lethal virus)
@@ -455,6 +459,8 @@ public class ActorManager : MonoBehaviour
                     CheckInactiveResistanceActorsHuman();
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveResistanceActorsHuman();
+                    //count down relation timers
+                    GameManager.instance.dataScript.CheckRelations();
                     //end game checks
                     GameManager.instance.factionScript.CheckFactionFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();

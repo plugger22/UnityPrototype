@@ -4647,7 +4647,7 @@ public class DataManager : MonoBehaviour
             {
                 //Resistance, return actor with highest invisibility
                 int invis = -1;
-                foreach(Actor actorCheck in listOfActors)
+                foreach (Actor actorCheck in listOfActors)
                 {
                     if (actorCheck.GetDatapoint(ActorDatapoint.Invisibility2) > invis)
                     {
@@ -7305,8 +7305,10 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Current Organisations{0}{1}", "\n", "\n");
         foreach (Organisation org in listOfCurrentOrganisations)
-        { builder.AppendFormat(" {0}{1}  Rep {2}, Free {3}, Contact {4} CutOff {5} Secret {6} Timer {7}{8}", org.tag, "\n", org.GetReputation(), org.GetFreedom(), org.isContact, 
-            org.isCutOff, org.isSecretKnown, org.timer, "\n"); }
+        {
+            builder.AppendFormat(" {0}{1}  Rep {2}, Free {3}, Contact {4} CutOff {5} Secret {6} Timer {7}{8}", org.tag, "\n", org.GetReputation(), org.GetFreedom(), org.isContact,
+              org.isCutOff, org.isSecretKnown, org.timer, "\n");
+        }
         //arrayOfOrgInfo
         builder.AppendFormat("{0}{1}-ArrayOfOrgInfo{2}", "\n", "\n", "\n");
         for (int i = 0; i < arrayOfOrgInfo.Length; i++)
@@ -8402,17 +8404,18 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         builder.AppendFormat("-Actor Relationships{0}", "\n");
-        foreach(var relation in dictOfRelations)
+        foreach (var relation in dictOfRelations)
         {
             builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
             builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
             builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
+            builder.AppendFormat("  timer {0}{1}", relation.Value.timer, "\n");
         }
         return builder.ToString();
     }
 
     /// <summary>
-    /// Add a new relationship (deletes any existing relationship)
+    /// Add a new relationship (overrides any existing relationship as an actor can only have one relationship current at a time)
     /// </summary>
     /// <param name="firstSlotID"></param>
     /// <param name="secondSlotID"></param>
@@ -8435,14 +8438,38 @@ public class DataManager : MonoBehaviour
         {
             if (dictOfRelations.ContainsKey(secondSlotID) == true)
             {
-                //first entry
-                RelationshipData data1 = new RelationshipData() { slotID = secondSlotID, actorID = secondActorID, relationship = relation };
-                dictOfRelations[firstSlotID] = data1;
-                //second entry
-                RelationshipData data2 = new RelationshipData() { slotID = firstSlotID, actorID = firstActorID, relationship = relation };
-                dictOfRelations[secondSlotID] = data2;
-                //successfully set both relations
-                isSuccess = true;
+                bool isContinue = true;
+                //make sure there are no other existing relationships for first actor
+                RelationshipData checkData = dictOfRelations[firstSlotID];
+                if (checkData.slotID > -1)
+                {
+                    //can only change relationship if timer for previous relationship has hit zero
+                    if (checkData.timer == 0)
+                    { dictOfRelations[checkData.slotID] = new RelationshipData(); }
+                    else { isContinue = false; }
+                }
+                if (isContinue == true)
+                {
+                    //make sure there are no other existing relationships for second actor
+                    checkData = dictOfRelations[secondSlotID];
+                    if (checkData.slotID > -1)
+                    {
+                        if (checkData.timer == 0)
+                        { dictOfRelations[checkData.slotID] = new RelationshipData(); }
+                        else { isContinue = false; }
+                    }
+                }
+                if (isContinue == true)
+                {
+                    //add first actor entry
+                    RelationshipData data1 = new RelationshipData() { slotID = secondSlotID, actorID = secondActorID, relationship = relation };
+                    dictOfRelations[firstSlotID] = data1;
+                    //add second actor entry
+                    RelationshipData data2 = new RelationshipData() { slotID = firstSlotID, actorID = firstActorID, relationship = relation };
+                    dictOfRelations[secondSlotID] = data2;
+                    //successfully set both relations
+                    isSuccess = true;
+                }
             }
             else { Debug.LogWarningFormat("Entry not found for secondSlotID {0}", secondSlotID); }
         }
@@ -8481,6 +8508,7 @@ public class DataManager : MonoBehaviour
                     {
                         if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Friend) == true)
                         { reply = $"Friends made ({input_0} & {input_1})"; }
+                        else { reply = $"Friends NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
                     }
                     else { reply = $"Invalid secondActor, slotID {input_1}"; }
                 }
@@ -8490,7 +8518,65 @@ public class DataManager : MonoBehaviour
         }
         return reply;
     }
-        
+
+    /// <summary>
+    /// Debug method to make two actors enemies using their slotID's as inputs
+    /// </summary>
+    /// <param name="input_0"></param>
+    /// <param name="input_1"></param>
+    /// <returns></returns>
+    public string DebugSetEnemy(string input_0, string input_1)
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        string reply = "";
+        int firstSlotID = -1;
+        int secondSlotID = -1;
+        try { firstSlotID = Convert.ToInt32(input_0); }
+        catch (OverflowException)
+        { reply = $"Invalid first Actor slotID {input_0}"; }
+        try { secondSlotID = Convert.ToInt32(input_1); }
+        catch (OverflowException)
+        { reply = $"Invalid second Actor slotID {input_0}"; }
+        //no problems with conversion
+        if (reply.Length == 0)
+        {
+            if (firstSlotID != secondSlotID)
+            {
+                Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
+                if (firstActor != null)
+                {
+                    Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
+                    if (secondActor != null)
+                    {
+                        if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Enemy) == true)
+                        { reply = $"Enemies made ({input_0} & {input_1})"; }
+                        else { reply = $"Enemies NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
+                    }
+                    else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                }
+                else { reply = $"Invalid FirstActor, slotID {input_0}"; }
+            }
+            else { reply = "Error (identical slotID's)"; }
+        }
+        return reply;
+    }
+
+    /// <summary>
+    /// ActorManager.cs -> StartTurnLate countdown all relationship timers (no change until timer reaches zero)
+    /// </summary>
+    public void CheckRelations()
+    {
+        //loop all relations
+        foreach (var relation in dictOfRelations)
+        {
+            if (relation.Value.slotID > -1)
+            {
+                if (relation.Value.timer > 0)
+                { relation.Value.timer--; }
+            }
+        }
+    }
+
 
     //new methods above here
 }

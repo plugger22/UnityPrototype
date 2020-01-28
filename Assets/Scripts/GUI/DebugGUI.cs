@@ -977,6 +977,16 @@ public class DebugGUI : MonoBehaviour
                 else { debugDisplay = 0; }
             }
 
+            //twentyEight button
+            modifier = 27;
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Set Enemy"))
+            {
+                Debug.Log("[Dbg] Button -> Set Enemy");
+                if (debugDisplay != 94)
+                { debugDisplay = 94; }
+                else { debugDisplay = 0; }
+            }
+
             //
             // - - - Level Menu - - -
             //
@@ -1806,6 +1816,25 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
+                    //Set Enemy Input
+                    case 94:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 30, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 35, 150, 20), "First Actor slotID (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 55, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 85, 150, 20), "Second Actor (0 - 3)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 50, 105, 100, 20), textInput_1);
+                        status = GUIStatus.SetEnemy;
+                        textOutput = null;
+                        break;
+                    //Set Enemy processing & Output
+                    case 95:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.dataScript.DebugSetEnemy(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1865,6 +1894,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetFriend:
                         debugDisplay = 93;
+                        break;
+                    case GUIStatus.SetEnemy:
+                        debugDisplay = 95;
                         break;
                 }
                 break;

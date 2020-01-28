@@ -873,6 +873,7 @@ namespace packageAPI
     {
         public int slotID;                                                  //slotID of actor with whom the current actor has a relationship with
         public int actorID;                                                 //actorID of actor with whom the current actor has a relationship with
+        public int timer;                                                   //relationships can't be changed while timer > 0
         public ActorRelationship relationship;                              //friend or enemy? (default 'none')
 
         public RelationshipData()
@@ -880,6 +881,7 @@ namespace packageAPI
             slotID = -1;
             actorID = -1;
             relationship = ActorRelationship.None;
+            timer = GameManager.instance.actorScript.timerRelations;
         }
     }
 
