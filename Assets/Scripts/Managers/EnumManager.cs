@@ -105,6 +105,7 @@
         ActorContactMin, ActorContactNOTMax, ActorConflictNOTZero,
         RenownMore, RenownLess, KnowsSecret, KnowsNothing
     }
+    public enum ActorRelationship { None, Friend, Enemy }                                       //relationships between subordinate actors, NOT with the player
 
     //
     // - - - Gear - - -

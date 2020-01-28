@@ -865,5 +865,23 @@ namespace packageAPI
         public int turn;
     }
 
+    /// <summary>
+    /// Used for DataManager.cs -> dictOfRelationships to track relationships between subordinate actors
+    /// </summary>
+    [System.Serializable]
+    public class RelationshipData
+    {
+        public int slotID;                                                  //slotID of actor with whom the current actor has a relationship with
+        public int actorID;                                                 //actorID of actor with whom the current actor has a relationship with
+        public ActorRelationship relationship;                              //friend or enemy? (default 'none')
+
+        public RelationshipData()
+        {
+            slotID = -1;
+            actorID = -1;
+            relationship = ActorRelationship.None;
+        }
+    }
+
     //new classes above here
 }

@@ -35,6 +35,7 @@ public class DebugGUI : MonoBehaviour
     public int box_y;
     public int box_width;
     public int box_height;
+    public int modifier;
     [Tooltip("gap at start between header and first button")]
     public int gap_y;
 
@@ -125,9 +126,9 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 60), "Option Menu", customBackground);
             //background box (Info)
-            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 240), "Info Menu", customBackground);
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 240), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 290), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Map Menu", customBackground);
 
@@ -198,7 +199,8 @@ public class DebugGUI : MonoBehaviour
                     case 4: debugDisplay = 68; actorToggle = 5; break;
                     case 5: debugDisplay = 69; actorToggle = 6; break;
                     case 6: debugDisplay = 80; actorToggle = 7; break;
-                    case 7: debugDisplay = 0; actorToggle = 0; break;
+                    case 7: debugDisplay = 91; actorToggle = 8; break;
+                    case 8: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -456,6 +458,18 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 78)
                 { debugDisplay = 78; }
                 else { debugDisplay = 0; }
+            }
+
+            //twentyEigth button
+            modifier = 26;
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
+            {
+            }
+
+            //twentyNinth button
+            modifier = 27;
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
+            {
             }
 
             //
@@ -1752,6 +1766,12 @@ public class DebugGUI : MonoBehaviour
                     case 90:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.personScript.DebugDisplayActorCompatibility();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Actor Relationship with other Actors
+                    case 91:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorRelations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                 }

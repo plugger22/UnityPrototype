@@ -242,6 +242,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
     private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
+    private Dictionary<int, RelationshipData> dictOfRelations = new Dictionary<int, RelationshipData>();        //Key -> slotID, Value -> RelationshipData.cs package
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -388,6 +389,13 @@ public class DataManager : MonoBehaviour
             subBoss1 = GameManager.instance.campaignScript.campaign.subBoss1Res;
             subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Res;
             subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Res;
+        }
+        //dictOfRelations
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            //create a default entry for every slot position
+            try { dictOfRelations.Add(i, new RelationshipData()); }
+            catch (ArgumentException) { Debug.LogErrorFormat("Invalid entry (duplicate) in dictOfRelations for slotID {0}", i); }
         }
         Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
         Debug.Assert(subBoss1 != null, "Invalid subBoss1 (Null)");
@@ -8380,6 +8388,29 @@ public class DataManager : MonoBehaviour
         { builder.AppendFormat("{0}{1}", "\n", tag); }
         return builder.ToString();
     }
+
+    //
+    // - - - Actor Relations
+    //
+
+    /// <summary>
+    /// Debug display of Actor to Actor relationships
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorRelations()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        builder.AppendFormat("-Actor Relationships{0}", "\n");
+        foreach(var relation in dictOfRelations)
+        {
+            builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
+            builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
+            builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
+        }
+        return builder.ToString();
+    }
+        
 
     //new methods above here
 }
