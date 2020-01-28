@@ -8410,6 +8410,86 @@ public class DataManager : MonoBehaviour
         }
         return builder.ToString();
     }
+
+    /// <summary>
+    /// Add a new relationship (deletes any existing relationship)
+    /// </summary>
+    /// <param name="firstSlotID"></param>
+    /// <param name="secondSlotID"></param>
+    /// <param name="firstActorID"></param>
+    /// <param name="secondActorID"></param>
+    /// <param name="relation"></param>
+    /// <returns></returns>
+    public bool AddRelationship(int firstSlotID, int secondSlotID, int firstActorID, int secondActorID, ActorRelationship relation)
+    {
+        Debug.AssertFormat(firstSlotID != secondSlotID, "Invalid slotID's ({0} and {1}) Can't be identical", firstSlotID, secondSlotID);
+        Debug.AssertFormat(firstActorID != secondActorID, "Invalid actorID's ({0} and {1}) Can't be identical", firstActorID, secondActorID);
+        Debug.AssertFormat(firstSlotID > -1, "Invalid firstSlotID {0}", firstSlotID);
+        Debug.AssertFormat(firstActorID > -1, "Invalid firstActorID {0}", firstActorID);
+        Debug.AssertFormat(secondSlotID > -1, "Invalid secondSlotID {0}", secondSlotID);
+        Debug.AssertFormat(secondActorID > -1, "Invalid secondActorID {0}", secondActorID);
+        Debug.Assert(relation != ActorRelationship.None, "Invalid relationship (Can't be 'None')");
+        bool isSuccess = false;
+        //find dict entry
+        if (dictOfRelations.ContainsKey(firstSlotID) == true)
+        {
+            if (dictOfRelations.ContainsKey(secondSlotID) == true)
+            {
+                //first entry
+                RelationshipData data1 = new RelationshipData() { slotID = secondSlotID, actorID = secondActorID, relationship = relation };
+                dictOfRelations[firstSlotID] = data1;
+                //second entry
+                RelationshipData data2 = new RelationshipData() { slotID = firstSlotID, actorID = firstActorID, relationship = relation };
+                dictOfRelations[secondSlotID] = data2;
+                //successfully set both relations
+                isSuccess = true;
+            }
+            else { Debug.LogWarningFormat("Entry not found for secondSlotID {0}", secondSlotID); }
+        }
+        else { Debug.LogWarningFormat("Entry not found for firstSlotID {0}", firstSlotID); }
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// Debug method to make two actors friends using their slotID's as inputs
+    /// </summary>
+    /// <param name="input_0"></param>
+    /// <param name="input_1"></param>
+    /// <returns></returns>
+    public string DebugSetFriend(string input_0, string input_1)
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        string reply = "";
+        int firstSlotID = -1;
+        int secondSlotID = -1;
+        try { firstSlotID = Convert.ToInt32(input_0); }
+        catch (OverflowException)
+        { reply = $"Invalid first Actor slotID {input_0}"; }
+        try { secondSlotID = Convert.ToInt32(input_1); }
+        catch (OverflowException)
+        { reply = $"Invalid second Actor slotID {input_0}"; }
+        //no problems with conversion
+        if (reply.Length == 0)
+        {
+            if (firstSlotID != secondSlotID)
+            {
+                Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
+                if (firstActor != null)
+                {
+                    Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
+                    if (secondActor != null)
+                    {
+                        if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Friend) == true)
+                        { reply = $"Friends made ({input_0} & {input_1})"; }
+                    }
+                    else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                }
+                else { reply = $"Invalid FirstActor, slotID {input_0}"; }
+            }
+            else { reply = "Error (identical slotID's)"; }
+        }
+        return reply;
+    }
         
 
     //new methods above here

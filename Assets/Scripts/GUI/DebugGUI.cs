@@ -13,7 +13,7 @@ public class DebugGUI : MonoBehaviour
     //for whenever interaction is needed
     private enum GUIStatus
     { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
-    GiveCaptureTool, SetInnocence, SetMood}
+    GiveCaptureTool, SetInnocence, SetMood, SetFriend, SetEnemy}
 
     public GUIStyle customBackground;
 
@@ -56,6 +56,8 @@ public class DebugGUI : MonoBehaviour
     private int factionToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
+    private int friendToggle = 0;
+    private int enemyToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";
@@ -958,10 +960,21 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentySixth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 25 + button_height * 25, button_width, button_height), "Import Data"))
+            modifier = 25;
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Import Data"))
             {
                 Debug.Log("[Dbg] Button -> Import Data");
                 GameManager.instance.textScript.Import();
+            }
+
+            //twentySeventh button
+            modifier = 26;
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Set Friend"))
+            {
+                Debug.Log("[Dbg] Button -> Set Friend");
+                if (debugDisplay != 92)
+                { debugDisplay = 92; }
+                else { debugDisplay = 0; }
             }
 
             //
@@ -1774,6 +1787,25 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DebugDisplayActorRelations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
+                    //Set Friend Input
+                    case 92:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 30, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 35, 150, 20), "First Actor slotID (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 55, 100, 20), textInput_0);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 85, 150, 20), "Second Actor (0 - 3)");
+                        textInput_1 = GUI.TextField(new Rect(Screen.width / 2 - 50, 105, 100, 20), textInput_1);
+                        status = GUIStatus.SetFriend;
+                        textOutput = null;
+                        break;
+                    //Set Friend processing & Output
+                    case 93:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.dataScript.DebugSetFriend(textInput_0, textInput_1); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1830,6 +1862,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetMood:
                         debugDisplay = 89;
+                        break;
+                    case GUIStatus.SetFriend:
+                        debugDisplay = 93;
                         break;
                 }
                 break;
