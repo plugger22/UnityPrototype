@@ -8622,12 +8622,26 @@ public class DataManager : MonoBehaviour
         return reply;
     }
 
+
+    /// <summary>
+    /// returns relationship data package for a given actor slotID (should always return a package but it will be full of default data if there is no relationship) Returns Null if a problem
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public RelationshipData GetRelationshipData(int slotID)
+    {
+        RelationshipData data = null;
+        if (dictOfRelations.ContainsKey(slotID) == true)
+        { data = dictOfRelations[slotID]; }
+        return data;
+    }
+
     /// <summary>
     /// ActorManager.cs -> StartTurnLate countdown all relationship timers (no change until timer reaches zero)
     /// </summary>
     public void CheckRelations()
     {
-        //loop all relations
+        //loop all relations, decrement timers if > 0
         foreach (var relation in dictOfRelations)
         {
             if (relation.Value.slotID > -1)

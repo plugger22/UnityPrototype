@@ -4729,7 +4729,9 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private string ExecuteActorMotivation(Effect effect, Actor actor, EffectDataInput dataInput)
     {
-        string bottomText = "Unknown";
+        string bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
+
+        /*string bottomText = "Unknown";
         int motivation;
         switch (effect.operand.name)
         {
@@ -4756,10 +4758,104 @@ public class EffectManager : MonoBehaviour
                 }
                 else { bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, effect.description, colourEnd); }
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
-
                 break;
+        }*/
+
+        //relationship motivational shift in a friend or enemy
+        RelationshipData data = GameManager.instance.dataScript.GetRelationshipData(actor.slotID);
+        if (data != null)
+        {
+            if (data.relationship != ActorRelationship.None)
+            { bottomText = ExecuteActorRelationMotivation(data, effect.operand.name, bottomText); }
+        }
+        else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
+        return bottomText;
+    }
+
+    /// <summary>
+    /// subMethod for ExecuteActorMotivation/ExecuteActorRelationMotivation to handle motivation shift processing
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="amount"></param>
+    /// <param name="operandName"></param>
+    /// <param name="originText"></param>
+    /// <param name="description"></param>
+    /// <returns></returns>
+    private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description)
+    {
+        string bottomText = "Unknown";
+        int motivation;
+        switch (operandName)
+        {
+            case "Add":
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                motivation += Mathf.Abs(amount);
+                motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, description, colourEnd);
+                break;
+            case "Subtract":
+                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                motivation -= Mathf.Abs(amount);
+
+                if (motivation < 0)
+                {
+                    //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                    builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
+                    builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
+                    motivation = Mathf.Max(0, motivation);
+                    bottomText = builder.ToString();
+                }
+                else { bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, description, colourEnd); }
+                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
         }
         return bottomText;
+    }
+
+    /// <summary>
+    /// handles motivation shifts for actor in the other end of a friend/enemy relationship
+    /// NOTE: data checked for Null by parent method, ExecuteActorMotivation
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="bottomText"></param>
+    /// <returns></returns>
+    private string ExecuteActorRelationMotivation(RelationshipData data, string operandName, string bottomText)
+    {
+        string text = "";
+        if (data.actorID > -1)
+        {
+            Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+            if (actor != null)
+            {
+                string description = "Unknown";
+                string newOperand = operandName;
+                switch (data.relationship)
+                {
+                    case ActorRelationship.Friend:
+                        switch (operandName)
+                        {
+                            case "Add": description = "Motivation +1"; break;
+                            case "Subtract": description = "Motivation -1"; break;
+                        }
+                        break;
+                    case ActorRelationship.Enemy:
+                        switch (operandName)
+                        {
+                            case "Add": description = "Motivation -1"; newOperand = "Subtract"; break;
+                            case "Subtract": description = "Motivation +1"; newOperand = "Add"; break;
+                        }
+                        break;
+                }
+                text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship", description);
+            }
+            else { Debug.LogWarningFormat("Invalid actor (Null) for data.actorID {0}", data.actorID); }
+        }
+        else { Debug.LogWarningFormat("No valid RelationshipData.actorID \"{0}\"", data.actorID); }
+        return string.Format("{0}{1}{2}", bottomText, text.Length > 0 ? "\n" : "", text);
     }
 
     /// <summary>
