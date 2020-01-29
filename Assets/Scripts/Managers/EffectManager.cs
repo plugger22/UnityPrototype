@@ -2439,6 +2439,7 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Motivation":
                                     int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    int dataBefore = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                     switch (effect.operand.name)
                                     {
                                         case "Add":
@@ -2454,6 +2455,12 @@ public class EffectManager : MonoBehaviour
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
                                             break;
+                                    }
+                                    //log
+                                    if (motivation != dataBefore)
+                                    {
+                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                                            dataBefore, motivation, "\n");
                                     }
                                     break;
                                 case "Renown":
@@ -4766,7 +4773,7 @@ public class EffectManager : MonoBehaviour
         if (data != null)
         {
             if (data.relationship != ActorRelationship.None)
-            { bottomText = ExecuteActorRelationMotivation(data, effect.operand.name, bottomText); }
+            { bottomText = ExecuteActorRelationMotivation(actor, data, effect.operand.name, bottomText); }
         }
         else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
         return bottomText;
@@ -4784,20 +4791,18 @@ public class EffectManager : MonoBehaviour
     private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description)
     {
         string bottomText = "Unknown";
-        int motivation;
+        int dataBefore = actor.GetDatapoint(ActorDatapoint.Motivation1);
+        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
         switch (operandName)
         {
             case "Add":
-                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                 motivation += Mathf.Abs(amount);
                 motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
                 bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, description, colourEnd);
                 break;
             case "Subtract":
-                motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                 motivation -= Mathf.Abs(amount);
-
                 if (motivation < 0)
                 {
                     //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
@@ -4813,17 +4818,24 @@ public class EffectManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
         }
+        //log entry
+        if (motivation != dataBefore)
+        {
+            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                dataBefore, motivation, "\n");
+        }
         return bottomText;
     }
 
     /// <summary>
     /// handles motivation shifts for actor in the other end of a friend/enemy relationship
-    /// NOTE: data checked for Null by parent method, ExecuteActorMotivation
+    /// Originating actor is the actor with relationship who sparked the motivational shift in the RelationshipData actor
+    /// NOTE: originatingActor and data checked for Null by parent method, ExecuteActorMotivation
     /// </summary>
     /// <param name="data"></param>
     /// <param name="bottomText"></param>
     /// <returns></returns>
-    private string ExecuteActorRelationMotivation(RelationshipData data, string operandName, string bottomText)
+    private string ExecuteActorRelationMotivation(Actor orginatingActor, RelationshipData data, string operandName, string bottomText)
     {
         string text = "";
         if (data.actorID > -1)
@@ -4840,6 +4852,7 @@ public class EffectManager : MonoBehaviour
                         {
                             case "Add": description = "Motivation +1"; break;
                             case "Subtract": description = "Motivation -1"; break;
+                            default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
                         }
                         break;
                     case ActorRelationship.Enemy:
@@ -4847,10 +4860,12 @@ public class EffectManager : MonoBehaviour
                         {
                             case "Add": description = "Motivation -1"; newOperand = "Subtract"; break;
                             case "Subtract": description = "Motivation +1"; newOperand = "Add"; break;
+                            default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
                         }
                         break;
+                    default: Debug.LogWarningFormat("Unrecognised relationship \"{0}\"", data.relationship); break;
                 }
-                text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship", description);
+                text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship with {actor.arc.name}", description);
             }
             else { Debug.LogWarningFormat("Invalid actor (Null) for data.actorID {0}", data.actorID); }
         }

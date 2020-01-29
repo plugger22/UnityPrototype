@@ -3042,7 +3042,7 @@ public class TopicManager : MonoBehaviour
                 EffectDataReturn effectReturn = new EffectDataReturn();
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
-                dataInput.originText = string.Format("Event<br>{0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
+                dataInput.originText = string.Format("Event {0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
                 dataInput.side = GameManager.instance.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured

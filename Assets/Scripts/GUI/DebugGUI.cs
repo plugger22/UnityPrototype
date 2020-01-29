@@ -56,8 +56,6 @@ public class DebugGUI : MonoBehaviour
     private int factionToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
-    private int friendToggle = 0;
-    private int enemyToggle = 0;
     private string textInput_0 = "what";
     private string textInput_1 = "who";
     private string analysis = "Unknown";

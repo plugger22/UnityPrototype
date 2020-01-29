@@ -381,6 +381,7 @@ MonoBehaviour:
   box_y: 10
   box_width: 130
   box_height: 400
+  modifier: 0
   gap_y: 20
   optionAutoGear: 
   optionFogOfWar: 
@@ -4411,6 +4412,7 @@ MonoBehaviour:
   chanceOfReservesToHQ: 40
   maxActorsToHQ: 5
   maxActorsLeaveHQ: 5
+  timerRelations: 10
   lieLowTimer: 0
   doomTimer: 0
   captureTimerPlayer: 0
