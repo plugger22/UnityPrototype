@@ -847,6 +847,17 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
         #endregion
 
+        #region relations
+        //dictOfRelations
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        if (dictOfRelations != null)
+        {
+            write.dataData.listOfRelationshipKeys.AddRange(dictOfRelations.Keys);
+            write.dataData.listOfRelationshipValues.AddRange(dictOfRelations.Values);
+        }
+        else { Debug.LogError("Invalid dictOfRelations (Null)"); }
+        #endregion
+
         #region registers
         //Ongoing Effects
         Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
@@ -2611,6 +2622,10 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
 
+        #endregion
+
+        #region relations
+        GameManager.instance.dataScript.SetDictOfRelations(read.dataData.listOfRelationshipKeys, read.dataData.listOfRelationshipValues);
         #endregion
 
         #region registers

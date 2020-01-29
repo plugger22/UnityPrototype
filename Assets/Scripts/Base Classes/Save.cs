@@ -148,6 +148,9 @@ public class SaveDataData
     public List<StringListWrapper> listOfTopicPoolsValue = new List<StringListWrapper>();
     public List<int> listOfTopicHistoryKeys = new List<int>();
     public List<HistoryTopic> listOfTopicHistoryValues = new List<HistoryTopic>();
+    //Relations
+    public List<int> listOfRelationshipKeys = new List<int>();
+    public List<RelationshipData> listOfRelationshipValues = new List<RelationshipData>();
     //Registers
     public List<EffectDataOngoing> listOfOngoingEffects = new List<EffectDataOngoing>();
     public List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();

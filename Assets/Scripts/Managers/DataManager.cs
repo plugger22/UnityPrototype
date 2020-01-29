@@ -545,6 +545,8 @@ public class DataManager : MonoBehaviour
         dictOfCurrentMessages.Clear();
         dictOfAIMessages.Clear();
         dictOfHistory.Clear();
+        //relations
+        dictOfRelations.Clear();
 
         //dictOfTargets -> leave
         //dictOfStatistics -> leave
@@ -8395,23 +8397,48 @@ public class DataManager : MonoBehaviour
     // - - - Actor Relations
     //
 
+    public Dictionary<int, RelationshipData> GetDictOfRelations()
+    { return dictOfRelations; }
+
     /// <summary>
-    /// Debug display of Actor to Actor relationships
+    /// Used to clear out dictOfRelations and refill with saved/loaded game data
     /// </summary>
-    /// <returns></returns>
-    public string DebugDisplayActorRelations()
+    /// <param name="listOfRelations"></param>
+    public void SetDictOfRelations(List<int> listOfRelationsKeys, List<RelationshipData> listOfRelationsValues)
     {
-        StringBuilder builder = new StringBuilder();
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        builder.AppendFormat("-Actor Relationships{0}", "\n");
-        foreach (var relation in dictOfRelations)
+        if (listOfRelationsValues != null)
         {
-            builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
-            builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
-            builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
-            builder.AppendFormat("  timer {0}{1}", relation.Value.timer, "\n");
+            if (listOfRelationsKeys != null)
+            {
+                if (listOfRelationsValues.Count > 0)
+                {
+                    if (listOfRelationsKeys.Count > 0)
+                    {
+                        if (listOfRelationsKeys.Count == listOfRelationsValues.Count)
+                        {
+                            //clear out any existing data
+                            dictOfRelations.Clear();
+                            //reload with new data
+                            for (int i = 0; i < listOfRelationsValues.Count; i++)
+                            {
+                                RelationshipData data = listOfRelationsValues[i];
+                                if (data != null)
+                                {
+                                    try { dictOfRelations.Add(listOfRelationsKeys[i], data); }
+                                    catch (ArgumentException) { Debug.LogErrorFormat("Duplicate record exists in dictOfRelations for key/slotID {0}", i); }
+                                }
+                                else { Debug.LogErrorFormat("Invalid Relationship data for listOfRelationsValues[{0}]", i); }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Mismatch between listOfRelationsKeys ({0} records) and listOfRelationsValue ({1} records)", listOfRelationsKeys.Count, listOfRelationsValues.Count); }
+                    }
+                    else { Debug.LogError("Invalid listOfRelationsKeys (Empty)"); }
+                }
+                else { Debug.LogError("Invalid listOfRelationsValues (Empty)"); }
+            }
+            else { Debug.LogError("Invalid listOfRelationsKeys (Null)"); }
         }
-        return builder.ToString();
+        else { Debug.LogError("Invalid listOfRelationsValues (Null)"); }
     }
 
     /// <summary>
@@ -8475,6 +8502,25 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Entry not found for firstSlotID {0}", firstSlotID); }
         return isSuccess;
+    }
+
+    /// <summary>
+    /// Debug display of Actor to Actor relationships
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorRelations()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        builder.AppendFormat("-Actor Relationships{0}", "\n");
+        foreach (var relation in dictOfRelations)
+        {
+            builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
+            builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
+            builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
+            builder.AppendFormat("  timer {0}{1}", relation.Value.timer, "\n");
+        }
+        return builder.ToString();
     }
 
     /// <summary>
