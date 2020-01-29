@@ -285,11 +285,17 @@ public class DataManager : MonoBehaviour
         {
             case GameState.NewInitialisation:
                 SubInitialiseNewGame();
+                SubInitialiseReset();
                 SubInitialiseAll();
                 if (GameManager.instance.isSession == false)
                 { SubInitialiseStartSession(); }
                 break;
             case GameState.FollowOnInitialisation:
+                SubInitialiseReset();
+                SubInitialiseAll();
+                if (GameManager.instance.isSession == false)
+                { SubInitialiseStartSession(); }
+                break;
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseAll();
@@ -390,13 +396,6 @@ public class DataManager : MonoBehaviour
             subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Res;
             subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Res;
         }
-        //dictOfRelations
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
-        {
-            //create a default entry for every slot position
-            try { dictOfRelations.Add(i, new RelationshipData()); }
-            catch (ArgumentException) { Debug.LogErrorFormat("Invalid entry (duplicate) in dictOfRelations for slotID {0}", i); }
-        }
         Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
         Debug.Assert(subBoss1 != null, "Invalid subBoss1 (Null)");
         Debug.Assert(subBoss2 != null, "Invalid subBoss2 (Null)");
@@ -422,6 +421,22 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
 
+    }
+    #endregion
+
+    #region SubInitialiseReset
+    /// <summary>
+    /// handles stuff that you reset between levels but during loads
+    /// </summary>
+    private void SubInitialiseReset()
+    {
+        //dictOfRelations
+        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        {
+            //create a default entry for every slot position
+            try { dictOfRelations.Add(i, new RelationshipData()); }
+            catch (ArgumentException) { Debug.LogErrorFormat("Invalid entry (duplicate) in dictOfRelations for slotID {0}", i); }
+        }
     }
     #endregion
 
