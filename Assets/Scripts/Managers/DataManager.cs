@@ -8530,10 +8530,18 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("-Actor Relationships{0}", "\n");
         foreach (var relation in dictOfRelations)
         {
-            builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
-            builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
-            builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
-            builder.AppendFormat("  timer {0}{1}", relation.Value.timer, "\n");
+            if (CheckActorSlotStatus(relation.Key, playerSide) == true)
+            {
+                builder.AppendFormat("{0} slotID {1} {2}{3}", "\n", relation.Key, relation.Key > -1 ? GetCurrentActor(relation.Key, playerSide).arc.name : "", "\n");
+                builder.AppendFormat("  actorID {0} {1}{2}", relation.Value.actorID, relation.Value.actorID > -1 ? GetActor(relation.Value.actorID).arc.name : "", "\n");
+                builder.AppendFormat("  relationship {0}{1}", relation.Value.relationship, "\n");
+                builder.AppendFormat("  timer {0}{1}", relation.Value.timer, "\n");
+            }
+            else
+            {
+                //no actor present in slot
+                builder.AppendFormat("{0} slotID {1} No Actor Present{2}", "\n", relation.Key, "\n");
+            }
         }
         return builder.ToString();
     }
