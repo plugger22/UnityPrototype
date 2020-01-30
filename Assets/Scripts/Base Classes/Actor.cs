@@ -344,7 +344,7 @@ namespace gameAPI
                                 {
                                     text = string.Format("{0}, {1}, ignore Motivation {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
                                     GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome, "rand_0");
-                                    Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2}{3}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, "\n");
+                                    Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2} for datapoint {3}{4}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, datapoint, "\n");
                                 }
                                 //motivational History
                                 HistoryMotivation history = new HistoryMotivation();

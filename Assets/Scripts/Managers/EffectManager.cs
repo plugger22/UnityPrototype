@@ -4815,7 +4815,7 @@ public class EffectManager : MonoBehaviour
                     if (chanceMotivationShift < 100)
                     {
                         string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
-                        GameManager.instance.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood);
+                        GameManager.instance.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood, "rand_6");
                     }
                 }
             }
