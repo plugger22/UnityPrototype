@@ -8601,6 +8601,7 @@ public class DataManager : MonoBehaviour
     public void UpdateRelationsMessages()
     {
         List<int> tempList = new List<int>();
+        //loop dictionary, assumed that counter corresponds to slotID dict.Key (order of dict doesn't matter)
         for (int i = 0; i < dictOfRelations.Count; i++)
         {
             RelationshipData data = dictOfRelations[i];
@@ -8608,8 +8609,17 @@ public class DataManager : MonoBehaviour
             {
                 if (data.relationship != ActorRelationship.None)
                 {
-                    if (data.slotID > -1)
-                    { tempList.Add(i); }
+                    //not on exclusion list (only want one entry for each relationship)
+                    if (tempList.Exists(x => x == i) == false)
+                    {
+                        if (data.slotID > -1)
+                        {
+                            //add to exclusion list
+                            tempList.Add(i);
+                            //gnerate message
+
+                        }
+                    }
                 }
             }
             else { Debug.LogErrorFormat("Invalid relationshipData (Null) in dictOfRelations.Key slotID {0}", i); }
