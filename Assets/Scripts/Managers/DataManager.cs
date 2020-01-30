@@ -8596,6 +8596,27 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// does an end of turn check to generate messages for existing relations in the InfoApp effects tab
+    /// </summary>
+    public void UpdateRelationsMessages()
+    {
+        List<int> tempList = new List<int>();
+        for (int i = 0; i < dictOfRelations.Count; i++)
+        {
+            RelationshipData data = dictOfRelations[i];
+            if (data != null)
+            {
+                if (data.relationship != ActorRelationship.None)
+                {
+                    if (data.slotID > -1)
+                    { tempList.Add(i); }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid relationshipData (Null) in dictOfRelations.Key slotID {0}", i); }
+        }
+    }
+
+    /// <summary>
     /// Debug display of Actor to Actor relationships
     /// </summary>
     /// <returns></returns>
