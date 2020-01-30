@@ -134,7 +134,7 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
     [Range(0, 20)] public int timerRelations = 10;
     [Tooltip("Chance of a motivational shift occuring when a friend/enemy relationship exists (will only ever be +/-1 regardless of how big the initial shift in the originating actor")]
-    [Range(0, 100)] public int chanceRelationShift = 50;
+    [Range(0, 100)] public int chanceRelationShift = 100;
 
     #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.

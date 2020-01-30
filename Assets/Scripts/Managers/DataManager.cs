@@ -4031,6 +4031,8 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
     {
+        //update relations
+        UpdateRelations(actor.slotID);
         //update actor arrays
         if (actor.Status != ActorStatus.Reserve)
         {
@@ -8520,6 +8522,80 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns relationship data package for a given actor slotID (should always return a package but it will be full of default data if there is no relationship) Returns Null if a problem
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public RelationshipData GetRelationshipData(int slotID)
+    {
+        RelationshipData data = null;
+        if (dictOfRelations.ContainsKey(slotID) == true)
+        { data = dictOfRelations[slotID]; }
+        return data;
+    }
+
+    /// <summary>
+    /// ActorManager.cs -> StartTurnLate countdown all relationship timers (no change until timer reaches zero)
+    /// </summary>
+    public void CheckRelations()
+    {
+        //loop all relations, decrement timers if > 0
+        foreach (var relation in dictOfRelations)
+        {
+            if (relation.Value.slotID > -1)
+            {
+                if (relation.Value.timer > 0)
+                { relation.Value.timer--; }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Whenever an actor leaves the onMap lineUp you need to call this to update dictOfRelations. slotID is for actor joining
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <param name="isNewActor"></param>
+    public void UpdateRelations(int slotID)
+    {
+        //find relevant entry in dict
+        if (dictOfRelations.ContainsKey(slotID) == true)
+        {
+            RelationshipData data = dictOfRelations[slotID];
+            if (data != null)
+            {
+                //did actor have a relationship?
+                if (data.relationship != ActorRelationship.None)
+                {
+                    //zero out that relationship as, with the first actor leaving, the relationship is now null and void
+                    if (dictOfRelations.ContainsKey(data.slotID) == true)
+                    {
+                        RelationshipData dataOther = dictOfRelations[data.slotID];
+                        if (dataOther != null)
+                        {
+                            //reset to default (remove relationship)
+                            dataOther.slotID = -1;
+                            dataOther.actorID = -1;
+                            dataOther.timer = GameManager.instance.actorScript.timerRelations;
+                            dataOther.relationship = ActorRelationship.None;
+                            dictOfRelations[data.slotID] = dataOther;
+                        }
+                        else { Debug.LogErrorFormat("Invalid relationshipData (Null) for data.slotID {0}", data.slotID); }
+                    }
+                    else { Debug.LogErrorFormat("No entry found in dictOfRelations for data.slotID {0}", data.slotID); }
+                    //need to reset relationship data to default
+                    data.slotID = -1;
+                    data.actorID = -1;
+                    data.timer = GameManager.instance.actorScript.timerRelations;
+                    data.relationship = ActorRelationship.None;
+                    dictOfRelations[slotID] = data;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid relationshipData (Null) for slotID {0}", slotID); }
+        }
+        else { Debug.LogErrorFormat("No entry found in dictOfRelations for slotID {0}", slotID); }
+    }
+
+    /// <summary>
     /// Debug display of Actor to Actor relationships
     /// </summary>
     /// <returns></returns>
@@ -8569,19 +8645,27 @@ public class DataManager : MonoBehaviour
         {
             if (firstSlotID != secondSlotID)
             {
-                Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
-                if (firstActor != null)
+                if (CheckActorSlotStatus(firstSlotID, playerSide) == true)
                 {
-                    Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
-                    if (secondActor != null)
+                    if (CheckActorSlotStatus(secondSlotID, playerSide) == true)
                     {
-                        if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Friend) == true)
-                        { reply = $"Friends made ({input_0} & {input_1})"; }
-                        else { reply = $"Friends NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
+                        Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
+                        if (firstActor != null)
+                        {
+                            Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
+                            if (secondActor != null)
+                            {
+                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Friend) == true)
+                                { reply = $"Friends made ({input_0} & {input_1})"; }
+                                else { reply = $"Friends NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
+                            }
+                            else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                        }
+                        else { reply = $"Invalid FirstActor, slotID {input_0}"; }
                     }
-                    else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                    else { reply = $"No actor in slotID {secondSlotID}"; }
                 }
-                else { reply = $"Invalid FirstActor, slotID {input_0}"; }
+                else { reply = $"No actor in slotID {firstSlotID}"; }
             }
             else { reply = "Error (identical slotID's)"; }
         }
@@ -8611,53 +8695,31 @@ public class DataManager : MonoBehaviour
         {
             if (firstSlotID != secondSlotID)
             {
-                Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
-                if (firstActor != null)
+                if (CheckActorSlotStatus(firstSlotID, playerSide) == true)
                 {
-                    Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
-                    if (secondActor != null)
+                    if (CheckActorSlotStatus(secondSlotID, playerSide) == true)
                     {
-                        if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Enemy) == true)
-                        { reply = $"Enemies made ({input_0} & {input_1})"; }
-                        else { reply = $"Enemies NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
+                        Actor firstActor = GetCurrentActor(firstSlotID, playerSide);
+                        if (firstActor != null)
+                        {
+                            Actor secondActor = GetCurrentActor(secondSlotID, playerSide);
+                            if (secondActor != null)
+                            {
+                                if (AddRelationship(firstSlotID, secondSlotID, firstActor.actorID, secondActor.actorID, ActorRelationship.Enemy) == true)
+                                { reply = $"Enemies made ({input_0} & {input_1})"; }
+                                else { reply = $"Enemies NOT made (timer hasn't expired) ({input_0} & {input_1})"; }
+                            }
+                            else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                        }
+                        else { reply = $"Invalid FirstActor, slotID {input_0}"; }
                     }
-                    else { reply = $"Invalid secondActor, slotID {input_1}"; }
+                    else { reply = $"No actor in slotID {secondSlotID}"; }
                 }
-                else { reply = $"Invalid FirstActor, slotID {input_0}"; }
+                else { reply = $"No actor in slotID {firstSlotID}"; }
             }
             else { reply = "Error (identical slotID's)"; }
         }
         return reply;
-    }
-
-
-    /// <summary>
-    /// returns relationship data package for a given actor slotID (should always return a package but it will be full of default data if there is no relationship) Returns Null if a problem
-    /// </summary>
-    /// <param name="slotID"></param>
-    /// <returns></returns>
-    public RelationshipData GetRelationshipData(int slotID)
-    {
-        RelationshipData data = null;
-        if (dictOfRelations.ContainsKey(slotID) == true)
-        { data = dictOfRelations[slotID]; }
-        return data;
-    }
-
-    /// <summary>
-    /// ActorManager.cs -> StartTurnLate countdown all relationship timers (no change until timer reaches zero)
-    /// </summary>
-    public void CheckRelations()
-    {
-        //loop all relations, decrement timers if > 0
-        foreach (var relation in dictOfRelations)
-        {
-            if (relation.Value.slotID > -1)
-            {
-                if (relation.Value.timer > 0)
-                { relation.Value.timer--; }
-            }
-        }
     }
 
 

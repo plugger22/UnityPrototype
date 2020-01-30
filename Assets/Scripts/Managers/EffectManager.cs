@@ -4770,45 +4770,54 @@ public class EffectManager : MonoBehaviour
             Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
             if (actor != null)
             {
-                string description = "Unknown";
-                string newOperand = operandName;
-                switch (data.relationship)
+                //other actor must be active to be affected
+                if (actor.Status == ActorStatus.Active)
                 {
-                    case ActorRelationship.Friend:
-                        switch (operandName)
-                        {
-                            case "Add": description = "Motivation +1"; isGood = false; break;
-                            case "Subtract": description = "Motivation -1"; isGood = true; break;
-                            default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
-                        }
-                        break;
-                    case ActorRelationship.Enemy:
-                        switch (operandName)
-                        {
-                            case "Add": description = "Motivation -1"; newOperand = "Subtract"; isGood = true; break;
-                            case "Subtract": description = "Motivation +1"; newOperand = "Add"; isGood = false; break;
-                            default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
-                        }
-                        break;
-                    default: Debug.LogWarningFormat("Unrecognised relationship \"{0}\"", data.relationship); break;
+                    string description = "Unknown";
+                    string newOperand = operandName;
+                    switch (data.relationship)
+                    {
+                        case ActorRelationship.Friend:
+                            switch (operandName)
+                            {
+                                case "Add": description = "Motivation +1"; isGood = false; break;
+                                case "Subtract": description = "Motivation -1"; isGood = true; break;
+                                default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
+                            }
+                            break;
+                        case ActorRelationship.Enemy:
+                            switch (operandName)
+                            {
+                                case "Add": description = "Motivation -1"; newOperand = "Subtract"; isGood = true; break;
+                                case "Subtract": description = "Motivation +1"; newOperand = "Add"; isGood = false; break;
+                                default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
+                            }
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised relationship \"{0}\"", data.relationship); break;
+                    }
+                    //there is a chance of a motivational shift
+                    int rnd = Random.Range(0, 100);
+                    //successful roll
+                    if (rnd < chanceMotivationShift)
+                    {
+                        //process motivation of other actor in the relationship
+                        text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship with {actor.arc.name}", description);
+                        if (chanceMotivationShift < 100)
+                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: SUCCEEDED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n"); }
+                    }
+                    else
+                    {
+                        //failed roll
+                        if (chanceMotivationShift < 100)
+                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: FAILED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n"); }
+                    }
+                    //random msg
+                    if (chanceMotivationShift < 100)
+                    {
+                        string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
+                        GameManager.instance.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood);
+                    }
                 }
-                //there is a chance of a motivational shift
-                int rnd = Random.Range(0, 100);
-                //successful roll
-                if (rnd < chanceMotivationShift)
-                {
-                    //process motivation of other actor in the relationship
-                    text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship with {actor.arc.name}", description);
-                    Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: SUCCEEDED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n");
-                }
-                else
-                {
-                    //failed roll
-                    Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: FAILED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n");
-                }
-                //random msg
-                string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
-                GameManager.instance.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood);
             }
             else { Debug.LogWarningFormat("Invalid actor (Null) for data.actorID {0}", data.actorID); }
         }

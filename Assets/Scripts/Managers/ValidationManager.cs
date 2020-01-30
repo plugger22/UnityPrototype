@@ -1874,6 +1874,7 @@ public class ValidationManager : MonoBehaviour
             CheckPlayerData(prefix);
             CheckTopicData(prefix);
             CheckTextListData(prefix);
+            CheckRelationsData(prefix);
         }
     }
     #endregion
@@ -2864,7 +2865,69 @@ tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
         }
         else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
     }
+    #endregion
 
+    #region CheckRelationsData
+    /// <summary>
+    /// checks dictOfRelations to ensure there are entries for each slotID and that any relations match up
+    /// </summary>
+    /// <param name="prefix"></param>
+    private void CheckRelationsData(string prefix)
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        string tag = string.Format("{0}{1}", prefix, "CheckRelationsData: ");
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        if (dictOfRelations != null)
+        {
+            int timer = GameManager.instance.actorScript.timerRelations;
+            for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+            {
+                //ensure that there's an entry for each slotID
+                if (dictOfRelations.ContainsKey(i) == true)
+                {
+                    RelationshipData data = dictOfRelations[i];
+                    if (data != null)
+                    {
+                        if (data.relationship != ActorRelationship.None)
+                        {
+                            //check reciprocal relationship is valid
+                            if (data.slotID != i)
+                            {
+                                //get other actor in relationship
+                                if (dictOfRelations.ContainsKey(data.slotID) == true)
+                                {
+                                    RelationshipData dataOther = dictOfRelations[data.slotID];
+                                    if (dataOther != null)
+                                    {
+                                        if (dataOther.slotID != i) { Debug.LogFormat("{0}relationshipData.other.slotID \"{1}\" doesn't match original slotID {2}{3}", tag, dataOther.slotID, i, "\n"); }
+                                        if (dataOther.timer != data.timer) { Debug.LogFormat("{0}relationshipData.other.timer \"{1}\" doesn't match original slotID timer {2}{3}", tag, dataOther.timer, data.timer, "\n"); }
+                                        if (dataOther.relationship != data.relationship) { Debug.LogFormat("{0}relationshipData.other.relationship \"{1}\" doesn't match original slotID relationship {2}{3}", tag, dataOther.relationship, data.relationship, "\n"); }
+                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, playerSide);
+                                        if (actor != null)
+                                        { if (dataOther.actorID != actor.actorID) { Debug.LogFormat("{0}relationshipData.other.actorID \"{1}\" doesn't match original actorID {2} for slotID {3}{4}", tag, dataOther.actorID, actor.actorID, i, "\n"); } }
+                                        else { Debug.LogFormat("{0}Invalid actor (Null) for slotID {1}{2}", tag, i, "\n"); }
+                                    }
+                                    else { Debug.LogFormat("{0}Invalid dataOther (Null) for relationshipData.slotID {1}{2}", tag, data.slotID, "\n"); }
+                                }
+                                else { Debug.LogFormat("{0}No entry found for relationshipData.slotID {1} for slotID {2}{3}", tag, data.slotID, i, "\n"); }
+                            }
+                            else { Debug.LogFormat("{0}Duplicate slotID's (should be different, dict key is {1}, relationshipData is {2}){3}", tag, i, data.slotID, "\n"); }
+                        }
+                        else
+                        {
+                            //no relationship, check data is default
+                            if (data.slotID != -1) { Debug.LogFormat("{0}Invalid data.slotID \"{1}\" (should be -1) for slotID {2}{3}", tag, data.slotID, i, "\n"); }
+                            if (data.actorID != -1) { Debug.LogFormat("{0}Invalid data.actorID \"{1}\" (should be -1) for slotID {2}{3}", tag, data.actorID, i, "\n"); }
+                            if (data.timer != timer) { Debug.LogFormat("{0}Invalid data.timer \"{1}\" (should be {2}) for slotID {3}{4}", tag, data.timer, timer, i, "\n"); }
+                        }
+                    }
+                    else { Debug.LogFormat("{0}Invalid relationshipData (Null) for slotID {1}{2}", tag, i, "\n"); }
+                }
+                else { Debug.LogFormat("{0}No entry found in dictOfRelations for slotID {1){2}", tag, i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfRelations (Null)"); }
+    }
     #endregion
 
     #endregion

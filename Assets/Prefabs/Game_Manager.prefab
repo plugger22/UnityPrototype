@@ -4413,6 +4413,7 @@ MonoBehaviour:
   maxActorsToHQ: 5
   maxActorsLeaveHQ: 5
   timerRelations: 10
+  chanceRelationShift: 100
   lieLowTimer: 0
   doomTimer: 0
   captureTimerPlayer: 0
