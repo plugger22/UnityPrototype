@@ -151,6 +151,7 @@ public class TopicManager : MonoBehaviour
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
+    private int tagActorOtherID;        //used for dual actor effects, eg. relationships
     private int tagNodeID;
     private int tagTeamID;              //used for authority team actions
     private int tagContactID;
@@ -172,6 +173,7 @@ public class TopicManager : MonoBehaviour
     private string tagOrgWant;          //what the org wants you to do (org.textWant)
     private string tagOrgText;          //previous service provided by Org (orgData.text)
     private string tagInvestTag;        //investigation tag
+    private ActorRelationship tagRelation;  //used for actor relationships
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1378,6 +1380,7 @@ public class TopicManager : MonoBehaviour
         turnOption = null;
         //info tags
         tagActorID = -1;
+        tagActorOtherID = -1;
         tagNodeID = -1;
         tagTeamID = -1;
         tagContactID = -1;
@@ -1399,6 +1402,7 @@ public class TopicManager : MonoBehaviour
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
+        tagRelation = ActorRelationship.None;
         //empty collections
         listOfTypePool.Clear();
         listOfSubTypePool.Clear();
@@ -4453,12 +4457,14 @@ public class TopicManager : MonoBehaviour
         TopicEffectData data = new TopicEffectData()
         {
             actorID = tagActorID,
+            actorOtherID = tagActorOtherID,
             nodeID = tagNodeID,
             teamID = tagTeamID,
             contactID = tagContactID,
             secret = tagSecretName,
             orgName = tagOrgName,
-            investigationRef = tagStringData
+            investigationRef = tagStringData,
+            relation = tagRelation
         };
         return data;
     }

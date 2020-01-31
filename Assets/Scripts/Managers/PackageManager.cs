@@ -797,12 +797,14 @@ namespace packageAPI
     public class TopicEffectData
     {
         public int actorID;
+        public int actorOtherID;           //other actor in a dual actor effect, eg. relationship
         public int nodeID;
         public int teamID;
         public int contactID;
         public string secret;               //name of secret, not tag
         public string orgName;              //name of organisation, not tag, eg. Blue Angel Cult
         public string investigationRef;     //reference name of investigation
+        public ActorRelationship relation;   //used for ActorTopic relationships
     }
 
     /// <summary>

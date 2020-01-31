@@ -960,6 +960,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 635fa40c978ca124ab405fa6f5ca738f, type: 2}
   - {fileID: 11400000, guid: 52b6d3d6648ad6542b2775763c62ff21, type: 2}
   - {fileID: 11400000, guid: 188382edfd59ff7408e2dfda0b616f26, type: 2}
+  - {fileID: 11400000, guid: deac201f401a37d4b857e403a546d217, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1146,6 +1147,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 819360969dd7ba84da1aab6723fed183, type: 2}
   - {fileID: 11400000, guid: fdfc63f4697d9014fad35dfcb26bdf5a, type: 2}
   - {fileID: 11400000, guid: 39b70a45bc397184294b0476ce0d5215, type: 2}
+  - {fileID: 11400000, guid: 0e5fcef34ae915a4f9db1722d4d432b9, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -4412,7 +4414,7 @@ MonoBehaviour:
   chanceOfReservesToHQ: 40
   maxActorsToHQ: 5
   maxActorsLeaveHQ: 5
-  timerRelations: 10
+  timerRelations: 999
   chanceRelationShift: 100
   lieLowTimer: 0
   doomTimer: 0

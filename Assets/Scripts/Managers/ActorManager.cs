@@ -132,7 +132,7 @@ public class ActorManager : MonoBehaviour
 
     [Header("Actor to Actor Relations")]
     [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
-    [Range(0, 20)] public int timerRelations = 10;
+    [Range(0, 1000)] public int timerRelations = 999;
     [Tooltip("Chance of a motivational shift occuring when a friend/enemy relationship exists (will only ever be +/-1 regardless of how big the initial shift in the originating actor")]
     [Range(0, 100)] public int chanceRelationShift = 100;
 

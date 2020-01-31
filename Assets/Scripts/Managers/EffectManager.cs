@@ -1283,6 +1283,11 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsNothing, playerSide) == 0)
                                                 { BuildString(result, "All actors know Player Secrets"); }
                                                 break;
+                                            case "RelationshipPossible":
+                                                //1+ actors present onMap who are active and don't have a current relationship (or do and their timer is zero)
+                                                if (GameManager.instance.dataScript.CheckIfRelationPossible() == false)
+                                                { BuildString(result, "Relationship isn't possible"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

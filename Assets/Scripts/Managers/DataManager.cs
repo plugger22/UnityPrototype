@@ -8551,6 +8551,44 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns true if there are 2+ active actors OnMap with no current relationship (or with one where the timer is zero). False otherwise.
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfRelationPossible()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        int counter = 0;
+        if (CheckNumOfActiveActors(playerSide) > 1)
+        {
+            //loop (efficient) dictOfRelations. Exit on first viable possible relationship
+            foreach(var relation in dictOfRelations)
+            {
+                //no current relationship
+                if (relation.Value.relationship == ActorRelationship.None || relation.Value.timer == 0)
+                {
+                    //actor present in slot
+                    if (CheckActorSlotStatus(relation.Key, playerSide) == true)
+                    {
+                        Actor actor = GetCurrentActor(relation.Key, playerSide);
+                        if (actor != null)
+                        {
+                            //actor is active
+                            if (actor.Status == ActorStatus.Active)
+                            {
+                                counter++;
+                                //need two
+                                if (counter > 1) { return true; }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for relation.Key slotID {0}", relation.Key); }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Whenever an actor leaves the onMap lineUp you need to call this to update dictOfRelations. slotID is for actor joining
     /// </summary>
     /// <param name="slotID"></param>
