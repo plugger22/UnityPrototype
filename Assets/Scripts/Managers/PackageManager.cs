@@ -887,5 +887,22 @@ namespace packageAPI
         }
     }
 
+    /// <summary>
+    /// Used to pass selected actors for an Actor Politics topic back to TopicManager.cs -> GetActorPoliticsTopics
+    /// </summary>
+    public class RelationSelectData
+    {
+        public int actorFirstID;
+        public int actorSecondID;
+        public ActorRelationship relation;
+
+        public RelationSelectData()
+        {
+            actorFirstID = -1;
+            actorSecondID = -1;
+            relation = ActorRelationship.None;
+        }
+    }
+
     //new classes above here
 }

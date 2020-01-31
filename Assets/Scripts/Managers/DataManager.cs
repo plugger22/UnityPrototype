@@ -8589,6 +8589,62 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a pair of current, active actors, with no current relationship, for TopicManager.cs -> GetActorPoliticsTopics. Returns a default data set if no suitable actor pair found
+    /// </summary>
+    /// <returns></returns>
+    public RelationSelectData GetRelationData()
+    {
+        RelationSelectData data = new RelationSelectData();
+        List<int> tempList = new List<int>();   //list to hold actorID's of suitable actors
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+
+        //loop (efficient) dictOfRelations -> place all suitable actors in tempList
+        foreach (var relation in dictOfRelations)
+        {
+            //no current relationship
+            if (relation.Value.relationship == ActorRelationship.None || relation.Value.timer == 0)
+            {
+                //actor present in slot
+                if (CheckActorSlotStatus(relation.Key, playerSide) == true)
+                {
+                    Actor actor = GetCurrentActor(relation.Key, playerSide);
+                    if (actor != null)
+                    {
+                        //actor is active
+                        if (actor.Status == ActorStatus.Active)
+                        { tempList.Add(actor.actorID); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for relation.Key slotID {0}", relation.Key); }
+                }
+            }
+        }
+        int count = tempList.Count;
+        if (count > 1)
+        {
+
+            //choose a random actor from list
+
+            List<int> listPool = new List<int>();  
+            //create a weighted pool (based on compatibility) of actorID to select from
+            for (int i = 0; i < count; i++)
+            {
+                Actor actor = GetActor(tempList[i]);
+                if (actor != null)
+                {
+                    //any good relationships
+                    if (actor.CheckRelationship(true) == true)
+                    {
+
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", tempList[i]); }
+            }
+        }
+        else { Debug.LogWarningFormat("Only {0} actor found that matches criteria (need at least two)", count); }
+        return data;
+    }
+
+    /// <summary>
     /// Whenever an actor leaves the onMap lineUp you need to call this to update dictOfRelations. slotID is for actor joining
     /// </summary>
     /// <param name="slotID"></param>
