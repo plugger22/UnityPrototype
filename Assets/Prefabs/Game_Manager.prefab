@@ -4640,6 +4640,8 @@ MonoBehaviour:
     type: 3}
   topicOptionInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
     type: 3}
+  friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
+  enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
   moodStar0: {fileID: 21300000, guid: 8f46e6ebee0e4b242984a8eac9da89bd, type: 3}
   moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
   moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}

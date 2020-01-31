@@ -461,8 +461,7 @@ public class ActorManager : MonoBehaviour
                     CheckInactiveResistanceActorsHuman();
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveResistanceActorsHuman();
-                    //count down relation timers
-                    GameManager.instance.dataScript.CheckRelations();
+
                     //end game checks
                     GameManager.instance.factionScript.CheckFactionFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
@@ -542,6 +541,10 @@ public class ActorManager : MonoBehaviour
                     break;
             }
         }
+        //count down relation timers
+        GameManager.instance.dataScript.CheckRelations();
+        UpdateRelationMessages();
+        //Reserve actors
         UpdateReserveActors();
         GameManager.instance.statScript.UpdateRatios();
         //Lie Low cooldown timer
@@ -8069,6 +8072,70 @@ public class ActorManager : MonoBehaviour
         }
         else { result = string.Format("No actor is slot {0}", slotID); }
         return result;
+    }
+
+    //
+    // - - - Relations
+    //
+
+    /// <summary>
+    /// does an end of turn check to generate messages for existing relations in the InfoApp effects tab
+    /// </summary>
+    public void UpdateRelationMessages()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        List<int> tempList = new List<int>();
+        string detailsTop, detailsBottom, relationship, colourRelation;
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        if (dictOfRelations != null)
+        {
+            //loop dictionary, assumed that counter corresponds to slotID dict.Key (order of dict doesn't matter)
+            for (int i = 0; i < dictOfRelations.Count; i++)
+            {
+                RelationshipData data = dictOfRelations[i];
+                if (data != null)
+                {
+                    if (data.relationship != ActorRelationship.None)
+                    {
+                        //Get two actors in relationship
+                        Actor actorFirst = GameManager.instance.dataScript.GetCurrentActor(i, playerSide);
+                        if (actorFirst != null)
+                        {
+                            Actor actorSecond = GameManager.instance.dataScript.GetActor(data.actorID);
+                            if (actorSecond != null)
+                            {
+                                //not on exclusion list (only want one entry for each relationship)
+                                if (tempList.Exists(x => x == data.slotID) == false)
+                                {
+                                    if (data.slotID > -1)
+                                    {
+                                        //add to exclusion list
+                                        tempList.Add(i);
+                                        //gnerate message
+                                        ActiveEffectData msgData = new ActiveEffectData();
+                                        relationship = data.relationship == ActorRelationship.Friend ? "Friends" : "Enemies";
+                                        colourRelation = data.relationship == ActorRelationship.Friend ? colourGood : colourBad;
+                                        detailsTop = string.Format("{0}, {1}{2}{3}{4}is {5}{6}{7} with{8}{9}, {10}{11}{12}", actorFirst.actorName, colourAlert, actorFirst.arc.name, colourEnd, "\n",
+                                            colourRelation, relationship, colourEnd, "\n", actorSecond.actorName, colourAlert, actorSecond.arc.name, colourEnd);
+                                        detailsBottom = string.Format("Any changes in {0}Motivation{1} in one {2}can affect the other{3}", colourNeutral, colourEnd, colourAlert, colourEnd);   
+                                        msgData.text = string.Format("{0} and {1} are {2}", actorFirst.arc.name, actorSecond.arc.name, relationship);
+                                        msgData.topText = "Relationship Exists";
+                                        msgData.detailsTop = detailsTop;
+                                        msgData.detailsBottom = detailsBottom;
+                                        msgData.sprite = data.relationship == ActorRelationship.Friend ? GameManager.instance.guiScript.friendSprite : GameManager.instance.guiScript.enemySprite;
+                                        GameManager.instance.messageScript.ActiveEffect(msgData);
+                                    }
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid actorSecond (Null) for actorID {0}", data.actorID); }
+                        }
+                        else { Debug.LogErrorFormat("Invalid actorFirst (Null) for slotID {0}", i); }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid relationshipData (Null) in dictOfRelations.Key slotID {0}", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfRelations (Null)"); }
     }
 
     //new methods above here
