@@ -8123,6 +8123,10 @@ public class ActorManager : MonoBehaviour
                                         msgData.detailsTop = detailsTop;
                                         msgData.detailsBottom = detailsBottom;
                                         msgData.sprite = data.relationship == ActorRelationship.Friend ? GameManager.instance.guiScript.friendSprite : GameManager.instance.guiScript.enemySprite;
+                                        msgData.help0 = "relation_0";
+                                        msgData.help1 = "relation_1";
+                                        msgData.help2 = "relation_2";
+                                        msgData.help3 = "relation_3";
                                         GameManager.instance.messageScript.ActiveEffect(msgData);
                                     }
                                 }

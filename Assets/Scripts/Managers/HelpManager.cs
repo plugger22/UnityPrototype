@@ -1132,6 +1132,43 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Relations
+        //
+        // - - - Relations
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "relation_0";
+        data.header = "Relations Overview";
+        data.text = new StringBuilder()
+            .AppendFormat("Friend or Enemy relationships can exist between your {0}subordinates{1}. ", colourAlert, colourEnd)
+            .AppendFormat("A subordinate can only have {0}one{1} relationship {2}at a time{3} and relationships {4}end{5} once either party {6}leaves{7}", colourAlert, colourEnd,
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd)
+            .ToString();
+        listOfHelp.Add(data);
+        //Movitation
+        data = new HelpData();
+        data.tag = "relation_1";
+        data.header = "Motivation";
+        data.text = string.Format("If either party in a relationship experiences a {0}change in Motivation{1} then there is a {2}{3} % chance{4} of the other subordinate experiencing a change at the {5}same time{6}",
+            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.chanceRelationShift, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Friends
+        data = new HelpData();
+        data.tag = "relation_2";
+        data.header = "Friends";
+        data.text = string.Format("In a Friends relationship the change in Motivation to one party is {0}identical{1} to the change in the other (they are happy when their friend is happy and vice versa)",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Friends
+        data = new HelpData();
+        data.tag = "relation_3";
+        data.header = "Enemies";
+        data.text = string.Format("In an Enemies relationship the change in Motivation to one party is the {0}opposite{1} to the change in the other (they are happy when their enemy is upset and vice versa)",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
 
 
         //
@@ -1148,10 +1185,10 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "orgInfo_0";
-        string tag1 = "orgInfo_1";
-        string tag2 = "orgInfo_2";
-        string tag3 = "";
+        string tag0 = "relation_0";
+        string tag1 = "relation_1";
+        string tag2 = "relation_2";
+        string tag3 = "relation_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
         GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
