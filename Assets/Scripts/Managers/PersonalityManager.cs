@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -408,7 +409,7 @@ public class PersonalityManager : MonoBehaviour
             Actor firstActor, secondActor;
             Personality firstPersonality, secondPersonality;
             //reset all actors compatibility prior to updating
-            ResetAllActorsRelations();
+            GameManager.instance.dataScript.ResetAllActorsCompatibility();
             //you only need to check 1 less than the max number of actors in order
             int numOfChecks = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
             //loop slot #'s with an outer loop for first actor and inner loop for second (to compare against)
@@ -440,15 +441,15 @@ public class PersonalityManager : MonoBehaviour
                                                 compatibility = CheckCompatibility(firstPersonality.GetFactors(), secondPersonality.GetFactors());
                                                 if (compatibility > 0)
                                                 {
-                                                    firstActor.AddRelationship(compatibility, secondActor.actorID, true);
+                                                    GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
                                                     //if a slotID 3 actor need to add as last firstactor is ignored in loop
-                                                    if (j == numOfChecks) { secondActor.AddRelationship(compatibility, firstActor.actorID, true); }
+                                                    if (j == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
                                                 }
                                                 else if (compatibility < 0)
                                                 {
-                                                    firstActor.AddRelationship(compatibility, secondActor.actorID, false);
+                                                    GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
                                                     //if a slotID 3 actor need to add as last firstactor is ignored in loop
-                                                    if (j == numOfChecks) { secondActor.AddRelationship(compatibility, firstActor.actorID, false); }
+                                                    if (j == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
                                                 }
                                             }
                                             else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", j); }
@@ -464,31 +465,6 @@ public class PersonalityManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
-    }
-
-    /// <summary>
-    /// Resets all actors relations (compatibility) prior to recaculating a new set
-    /// </summary>
-    private void ResetAllActorsRelations()
-    {
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-        if (arrayOfActors != null)
-        {
-            for (int i = 0; i < arrayOfActors.Length; i++)
-            {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
-                {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
-                    {
-                        //reset compatibility lists
-                        actor.ResetRelations();
-                    }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
     /// <summary>
@@ -1549,84 +1525,42 @@ public class PersonalityManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorCompatibility()
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Actor Compatibility with other Actors{0}", "\n");
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-        if (arrayOfActors != null)
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        if (dictOfRelations != null)
         {
-            for (int i = 0; i < arrayOfActors.Length; i++)
+            foreach(var relation in dictOfRelations)
             {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                builder.AppendLine();
+                Actor actor = GameManager.instance.dataScript.GetCurrentActor(relation.Key, playerSide);
+                if (actor != null)
                 {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
+                    builder.AppendFormat(" {0}, {1}, ID {2}, slotID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                    for (int i = 0; i < relation.Value.arrayOfCompatibility.Length; i++)
+                    { builder.AppendFormat("  slotID {0}, compatibility {1}{2}{3}", i, relation.Value.arrayOfCompatibility[i] > 0 ? "+" : "", relation.Value.arrayOfCompatibility[i], "\n"); }
+                    if (relation.Value.relationship == ActorRelationship.None)
+                    { builder.AppendFormat("  No current relationship{0}", "\n"); }
+                    else
                     {
-                        builder.AppendFormat("{0} {1}, {2}, ID {3}", "\n", actor.actorName, actor.arc.name, actor.actorID);
-                        builder.AppendFormat("{0}{1}", "\n", DebugGetActorRelations(actor));
-                        builder.AppendLine();
+                        Actor actorOther = GameManager.instance.dataScript.GetActor(relation.Value.actorID);
+                        if (actorOther != null)
+                        {
+                            builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
+                                actorOther.arc.name, actorOther.actorID, actorOther.slotID, "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid actorOther (Null) for relation.Value.actorID {0}", relation.Value.actorID); }
                     }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
                 }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", relation.Key); }
             }
         }
-        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        else { Debug.LogError("Invalid dictOfRelations (Null)"); }
         return builder.ToString();
     }
 
-    /// <summary>
-    /// Submethod to get a string (each item on a new line) of all relations, good and bad, for that actor
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <returns></returns>
-    private string DebugGetActorRelations(Actor actor)
-    {
-        StringBuilder builder = new StringBuilder();
-        List<int> tempList = new List<int>();
-        List<int> checkList = new List<int>();
-        int compatibility, actorID;
-        //good relationships
-        tempList.AddRange(actor.GetListOfRelations(true));
-        if (tempList.Count > 0)
-        {
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                actorID = tempList[i];
-                //not in check list
-                if (checkList.Exists(x => x == actorID) == false)
-                {
-                    //add to check list (prevents dupes)
-                    checkList.Add(actorID);
-                    //how many present?
-                    compatibility = tempList.Count(x => x == actorID);
-                    builder.AppendFormat("  Good Relationship, actorID {0}, compatibility +{1}{2}", actorID, compatibility, "\n");
-                }
-            }
-        }
-        //bad relationships
-        tempList.Clear();
-        checkList.Clear();
-        tempList.AddRange(actor.GetListOfRelations(false));
-        if (tempList.Count > 0)
-        {
-            for (int i = 0; i < tempList.Count; i++)
-            {
-                actorID = tempList[i];
-                //not in check list
-                if (checkList.Exists(x => x == actorID) == false)
-                {
-                    //add to check list (prevents dupes)
-                    checkList.Add(actorID);
-                    //how many present?
-                    compatibility = tempList.Count(x => x == actorID);
-                    builder.AppendFormat("  Bad Relationship, actorID {0}, compatibility -{1}{2}", actorID, compatibility, "\n");
-                }
-            }
-        }
-        if (builder.Length == 0)
-        { builder.AppendFormat("  Nothing to Report{0}", "\n"); }
-        return builder.ToString();
-    }
+   
 
 
     //new methods above here

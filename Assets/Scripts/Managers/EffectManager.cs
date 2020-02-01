@@ -1012,7 +1012,7 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckActiveActorPresent(3, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
-                                            case "ActorRelationsGood":
+                                            /*case "ActorRelationsGood":
                                                 //actor has at least one good relationship with another actor OnMap
                                                 if (actor != null)
                                                 {
@@ -1029,7 +1029,7 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "No Bad Relations present"); }
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for ActorRelationsBad"); }
-                                                break;
+                                                break;*/
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));

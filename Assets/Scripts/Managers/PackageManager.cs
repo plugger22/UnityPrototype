@@ -877,6 +877,7 @@ namespace packageAPI
         public int actorID;                                                 //actorID of actor with whom the current actor has a relationship with
         public int timer;                                                   //relationships can't be changed while timer > 0
         public ActorRelationship relationship;                              //friend or enemy? (default 'none')
+        public int[] arrayOfCompatibility;                                  //compatibility with other actors, index corresponds to slotID, default values 0
 
         public RelationshipData()
         {
@@ -884,6 +885,7 @@ namespace packageAPI
             actorID = -1;
             relationship = ActorRelationship.None;
             timer = GameManager.instance.actorScript.timerRelations;
+            arrayOfCompatibility = new int[GameManager.instance.actorScript.maxNumOfOnMapActors];
         }
     }
 

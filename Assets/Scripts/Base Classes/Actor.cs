@@ -1214,7 +1214,7 @@ namespace gameAPI
         public Personality GetPersonality()
         { return personality; }
 
-        /// <summary>
+        /*/// <summary>
         /// Get list of Relationships (good or bad) containing weighted pool of actorID's
         /// </summary>
         /// <param name="isGood"></param>
@@ -1284,7 +1284,7 @@ namespace gameAPI
             else
             { if (listOfBadRelations.Count > 0) { return true; } }
             return false;
-        }
+        }*/
 
 
         //

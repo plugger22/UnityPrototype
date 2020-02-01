@@ -8459,6 +8459,57 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Populates the arrayOfCompatibility in relationshipData.cs, eg. gives the compatibility of an actor with all the other current actors (slotID based, -1 default value if no actor present in slot)
+    /// </summary>
+    /// <param name="firstActorSlotID"></param>
+    /// <param name="secondActorSlotID"></param>
+    /// <param name="compatibility"></param>
+    public void AddActorCompatibility(int firstActorSlotID, int secondActorSlotID, int compatibility)
+    {
+        if (compatibility < 4 && compatibility > -4)
+        {
+            if (dictOfRelations.ContainsKey(firstActorSlotID) == true)
+            {
+                RelationshipData relations = dictOfRelations[firstActorSlotID];
+                if (relations != null)
+                {
+                    if (secondActorSlotID != firstActorSlotID)
+                    {
+                        int arrayLength = relations.arrayOfCompatibility.Length;
+                        if (secondActorSlotID < arrayLength)
+                        {
+                            //update compatibility
+                            relations.arrayOfCompatibility[secondActorSlotID] = compatibility;
+                        }
+                        else { Debug.LogErrorFormat("Invalid secondActorSlotID \"{0}\" (Greater than array size of {1})", secondActorSlotID, arrayLength); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid secondActorSlotID \"{0}\" (identical to firstActorSlotID)", secondActorSlotID); }
+                }
+                else { Debug.LogErrorFormat("Invalid relationshipData (Null) for firstActorSlotID {0}", firstActorSlotID); }
+            }
+            else { Debug.LogErrorFormat("Invalid firstActorSlotId \"{0}\" (key not found in dictOfRelations)", firstActorSlotID); }
+        }
+        else { Debug.LogErrorFormat("Invalid compatibility \"{0}\" ( 3 <= x >= -3)", compatibility); }
+    }
+
+    /// <summary>
+    /// Reset all arrayOfCompatibility's to default -1 data
+    /// </summary>
+    public void ResetAllActorsCompatibility()
+    {
+        foreach(var relation in dictOfRelations)
+        {
+            RelationshipData data = relation.Value;
+            if (data != null)
+            {
+                for (int i = 0; i < data.arrayOfCompatibility.Length; i++)
+                { data.arrayOfCompatibility[i] = 0; }
+            }
+            else { Debug.LogErrorFormat("Invalid relationshipData in dictOfRelations.Key.slotID {0}", relation.Key); }
+        }
+    }
+
+    /// <summary>
     /// Add a new relationship (overrides any existing relationship as an actor can only have one relationship current at a time)
     /// </summary>
     /// <param name="firstSlotID"></param>
@@ -8632,10 +8683,7 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     //any good relationships
-                    if (actor.CheckRelationship(true) == true)
-                    {
 
-                    }
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", tempList[i]); }
             }
