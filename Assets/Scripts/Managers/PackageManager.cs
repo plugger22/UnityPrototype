@@ -894,15 +894,14 @@ namespace packageAPI
     /// </summary>
     public class RelationSelectData
     {
-        public int actorFirstID;
-        public int actorSecondID;
-        public ActorRelationship relation;
+        public int actorFirstID;            //actorID
+        public int actorSecondID;           //actorID
+        public int compatibility;
 
         public RelationSelectData()
         {
             actorFirstID = -1;
             actorSecondID = -1;
-            relation = ActorRelationship.None;
         }
     }
 

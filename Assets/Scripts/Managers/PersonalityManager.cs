@@ -413,54 +413,45 @@ public class PersonalityManager : MonoBehaviour
             //you only need to check 1 less than the max number of actors in order
             int numOfChecks = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
             //loop slot #'s with an outer loop for first actor and inner loop for second (to compare against)
-            for (int i = 0; i < numOfChecks; i++)
+            for (int outer = 0; outer < numOfChecks; outer++)
             {
                 //first actor actor present in slot
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(outer, side) == true)
                 {
-                    firstActor = GameManager.instance.dataScript.GetCurrentActor(i, side);
+                    firstActor = GameManager.instance.dataScript.GetCurrentActor(outer, side);
                     if (firstActor != null)
                     {
                         firstPersonality = firstActor.GetPersonality();
                         if (firstPersonality != null)
                         {
-                            for (int j = 0; j < numOfChecks + 1; j++)
+                            for (int inner = 0; inner < numOfChecks + 1; inner++)
                             {
                                 //ignore if same slot #'s
-                                if (i != j)
+                                if (outer != inner)
                                 {
                                     //check second actor present in slot
-                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(j, side) == true)
+                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(inner, side) == true)
                                     {
-                                        secondActor = GameManager.instance.dataScript.GetCurrentActor(j, side);
+                                        secondActor = GameManager.instance.dataScript.GetCurrentActor(inner, side);
                                         if (secondActor != null)
                                         {
                                             secondPersonality = secondActor.GetPersonality();
                                             if (secondPersonality != null)
                                             {
                                                 compatibility = CheckCompatibility(firstPersonality.GetFactors(), secondPersonality.GetFactors());
-                                                if (compatibility > 0)
-                                                {
-                                                    GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
-                                                    //if a slotID 3 actor need to add as last firstactor is ignored in loop
-                                                    if (j == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
-                                                }
-                                                else if (compatibility < 0)
-                                                {
-                                                    GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
-                                                    //if a slotID 3 actor need to add as last firstactor is ignored in loop
-                                                    if (j == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
-                                                }
+                                                GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
+                                                //if a slotID 3 actor need to add as last firstactor is ignored in loop
+                                                if (inner == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
                                             }
-                                            else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", j); }
+                                            else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", inner); }
                                         }
                                     }
                                 }
                             }
                         }
-                        else { Debug.LogErrorFormat("Invalid personality (Null) for firstActor, slotID {0}", i); }
+                        else { Debug.LogErrorFormat("Invalid personality (Null) for firstActor, slotID {0}", outer); }
                     }
-                    else { Debug.LogErrorFormat("Invalid firstActor (Null) for slotID {0}", i); }
+                    else { Debug.LogErrorFormat("Invalid firstActor (Null) for slotID {0}", outer); }
                 }
             }
         }
@@ -1531,7 +1522,7 @@ public class PersonalityManager : MonoBehaviour
         Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
         if (dictOfRelations != null)
         {
-            foreach(var relation in dictOfRelations)
+            foreach (var relation in dictOfRelations)
             {
                 builder.AppendLine();
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(relation.Key, playerSide);
@@ -1547,7 +1538,7 @@ public class PersonalityManager : MonoBehaviour
                         Actor actorOther = GameManager.instance.dataScript.GetActor(relation.Value.actorID);
                         if (actorOther != null)
                         {
-                            builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
+                            builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
                                 actorOther.arc.name, actorOther.actorID, actorOther.slotID, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actorOther (Null) for relation.Value.actorID {0}", relation.Value.actorID); }
@@ -1560,7 +1551,7 @@ public class PersonalityManager : MonoBehaviour
         return builder.ToString();
     }
 
-   
+
 
 
     //new methods above here

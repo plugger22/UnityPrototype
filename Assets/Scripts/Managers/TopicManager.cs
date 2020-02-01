@@ -1835,46 +1835,25 @@ public class TopicManager : MonoBehaviour
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-        //get all active, onMap actors
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
-        if (listOfActors != null)
+        //Get a random possible relationship pair of actors from a weighted pool that favours the stronger compatibilities over the weaker
+        RelationSelectData data = GameManager.instance.dataScript.GetPossibleRelationData();
+        if (data != null)
         {
-            List<Actor> selectionList = new List<Actor>();
-            int numOfEntries = 0;
-            int numOfActors = 0;
-            foreach (Actor actor in listOfActors)
+            //need data for dual actor effect and also relationship type
+            tagActorID = data.actorFirstID;
+            tagActorOtherID = data.actorSecondID;
+            if (data.compatibility > 0) { tagRelation = ActorRelationship.Friend; }
+            else if (data.compatibility < 0) { tagRelation = ActorRelationship.Enemy; }
+            else
             {
-                if (actor != null)
-                {
-                    numOfActors++;
-                    //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
-                    switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
-                    {
-                        case 3: numOfEntries = 2; break;
-                        case 2: numOfEntries = 1; break;
-                        case 1: numOfEntries = 2; break;
-                        case 0: numOfEntries = 3; break;
-                    }
-                    //populate selection pool
-                    for (int i = 0; i < numOfEntries; i++)
-                    { selectionList.Add(actor); }
-
-                }
-                else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
+                //compatibility 0, 50/50 chance of Friend/Enemy relationship
+                if (Random.Range(0, 100) < 50) { tagRelation = ActorRelationship.Friend; } else { tagRelation = ActorRelationship.Enemy; }
             }
-            //check at least two actors present (need one actor interacting with another)
-            if (selectionList.Count > 0 && numOfActors > 1)
-            {
-                //randomly select an actor from unweighted list
-                Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
-                //if no entries use entire list by default
-                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
-                //Info tags
-                tagActorID = actor.actorID;
-            }
+            //group based on Player Mood
+            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
-        else { Debug.LogWarning("Invalid listOfActors (Null) for ActorPolitic subType"); }
         return listOfTopics;
     }
     #endregion
@@ -5837,6 +5816,7 @@ public class TopicManager : MonoBehaviour
                             switch (turnTopicSubType.name)
                             {
                                 case "ActorMatch":
+                                case "ActorPolitic":
                                     //based on player mood
                                     Tuple<string, string> resultsMatch = GetPlayerTooltip();
                                     if (string.IsNullOrEmpty(resultsMatch.Item1) == false)
@@ -6080,6 +6060,7 @@ public class TopicManager : MonoBehaviour
                 case "PlayerConditions":
                 case "CaptureSub":
                 case "ActorMatch":
+                case "ActorPolitic":
                     //info on whether topic is good or bad and why
                     switch (turnTopic.group.name)
                     {

@@ -8640,56 +8640,102 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a pair of current, active actors, with no current relationship, for TopicManager.cs -> GetActorPoliticsTopics. Returns a default data set if no suitable actor pair found
+    /// Returns a pair of current, active actors, with no current relationship, for TopicManager.cs -> GetActorPoliticsTopics. Returns null if no suitable actor pair found
     /// </summary>
     /// <returns></returns>
-    public RelationSelectData GetRelationData()
+    public RelationSelectData GetPossibleRelationData()
     {
-        RelationSelectData data = new RelationSelectData();
-        List<int> tempList = new List<int>();   //list to hold actorID's of suitable actors
+        int compatibility;
+        RelationSelectData dataReturn = null;
+        List<RelationSelectData> tempList = new List<RelationSelectData>();   //list to hold weighted pool (by compatibility) of actor pairs
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-
-        //loop (efficient) dictOfRelations -> place all suitable actors in tempList
-        foreach (var relation in dictOfRelations)
+        int searchLength = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
+        //shortened loop of all onMap slots (last excluded)
+        for (int i = 0; i < searchLength; i++)
         {
-            //no current relationship
-            if (relation.Value.relationship == ActorRelationship.None || relation.Value.timer == 0)
+            //actor present in slot
+            if (CheckActorSlotStatus(i, playerSide) == true)
             {
-                //actor present in slot
-                if (CheckActorSlotStatus(relation.Key, playerSide) == true)
-                {
-                    Actor actor = GetCurrentActor(relation.Key, playerSide);
-                    if (actor != null)
-                    {
-                        //actor is active
-                        if (actor.Status == ActorStatus.Active)
-                        { tempList.Add(actor.actorID); }
-                    }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for relation.Key slotID {0}", relation.Key); }
-                }
-            }
-        }
-        int count = tempList.Count;
-        if (count > 1)
-        {
-
-            //choose a random actor from list
-
-            List<int> listPool = new List<int>();  
-            //create a weighted pool (based on compatibility) of actorID to select from
-            for (int i = 0; i < count; i++)
-            {
-                Actor actor = GetActor(tempList[i]);
+                Actor actor = GetCurrentActor(i, playerSide);
                 if (actor != null)
                 {
-                    //any good relationships
-
+                    //actor is active
+                    if (actor.Status == ActorStatus.Active)
+                    {
+                        //No relationship or one with timer zero
+                        if (dictOfRelations.ContainsKey(i) == true)
+                        {
+                            RelationshipData data = dictOfRelations[i];
+                            if (data != null)
+                            {
+                                //has no relationship or one where timer is Zero
+                                if (data.relationship == ActorRelationship.None || data.timer == 0)
+                                {
+                                    //search compatibility
+                                    for (int j = i + 1; j < searchLength + 1; j++)
+                                    {
+                                        //Other actor -> no current relationship or one with timer zero
+                                        if (dictOfRelations.ContainsKey(j) == true)
+                                        {
+                                            if (dictOfRelations[j].relationship == ActorRelationship.None || dictOfRelations[j].timer == 0)
+                                            {
+                                                //Other actor present
+                                                if (CheckActorSlotStatus(j, playerSide) == true)
+                                                {
+                                                    Actor actorOther = GetCurrentActor(j, playerSide);
+                                                    if (actorOther != null)
+                                                    {
+                                                        if (actorOther.Status == ActorStatus.Active)
+                                                        {
+                                                            compatibility = data.arrayOfCompatibility[j];
+                                                            //add entries to weighted pool with 1 + [ABS(compatibility) x 3] entries
+                                                            for (int k = 0; k < 1 + (Mathf.Abs(compatibility) * 3); k++)
+                                                            { tempList.Add(new RelationSelectData() { actorFirstID = actor.actorID, actorSecondID = actorOther.actorID, compatibility = compatibility }); }
+                                                        }
+                                                        else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: actorOther, {0}, not Active, for slotID {1}, {2} check{3}", actorOther.arc.name, i, actor.arc.name, "\n"); }
+                                                    }
+                                                    else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Invalid actor (Null) for slotID {0}{1}", j, "\n"); }
+                                                }
+                                                else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No actor in slotID {0}, for compatibility check with slotID {1}, {2}{3}", j, i, actor.arc.name, "\n"); }
+                                            }
+                                            else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship exists between slotID {0}, {1} and slotID {2} ({3}){4}", i, actor.arc.name, j, data.relationship, "\n"); }
+                                        }
+                                        else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No dict.key found for slotID {0}{1}", j, "\n"); }
+                                    }
+                                }
+                                else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship already exists for slotID {0}, {1}{2}", i, actor.arc.name, "\n"); }
+                            }
+                            else { Debug.LogErrorFormat("Invalid RelationshipData (Null) for dictOfRelations.slotID {0}", i); }
+                        }
+                        else { Debug.LogErrorFormat("Entry not found in dictOfRelations for slotID {0}", i); }
+                    }
+                    else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: {0} not Active for slotID {1}{2}", actor.arc.name, i, "\n"); }
                 }
-                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", tempList[i]); }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for relation.Key slotID {0}", i); }
             }
         }
-        else { Debug.LogWarningFormat("Only {0} actor found that matches criteria (need at least two)", count); }
-        return data;
+        //check pool
+        int count = tempList.Count;
+        if (count > 0)
+        {
+            //Debug
+            for (int g = 0; g < count; g++)
+            {
+                RelationSelectData data = tempList[g];
+                Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: WEIGHTED POOL firstActorID {0}, secondActorID {1}, compatibility {2}{3}", data.actorFirstID, data.actorSecondID, data.compatibility, "\n");
+            }
+            //if non-Neutral compatibilities present, remove all neutral ones prior to selection
+            if (tempList.Exists(x => x.compatibility != 0) == true)
+            {
+                tempList.RemoveAll(x => x.compatibility == 0);
+                Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Zero Compatibility Entries removed, Weighted Pool now has {0} Records (previously {1}){2}", tempList.Count, count, "\n");
+            }
+
+            //randomly select from weighted pool
+            dataReturn = tempList[Random.Range(0, tempList.Count)];
+            Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: SELECTED firstActorID {0}, secondActorID {1}, compatibility {2}{3}", dataReturn.actorFirstID, dataReturn.actorSecondID, dataReturn.compatibility, "\n");
+        }
+        return dataReturn;
     }
 
     /// <summary>

@@ -4167,7 +4167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: 2cacc8eee82bc0b4fad6705b3c6e6054, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
