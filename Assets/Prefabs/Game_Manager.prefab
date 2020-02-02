@@ -1501,22 +1501,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
   - {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
   arrayOfShortTextLists:
+  - {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
+  - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
+  - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
+  - {fileID: 11400000, guid: 0fbb8e16170e5de4eae9b025a4a72342, type: 2}
+  - {fileID: 11400000, guid: 7315e5d847c2d5d4cb3c6d738dbff089, type: 2}
+  - {fileID: 11400000, guid: 2a07263d1e10c1140ae0ae5db60c4c4f, type: 2}
+  - {fileID: 11400000, guid: 45c41c90912d73841aa0412f3b2461f7, type: 2}
+  - {fileID: 11400000, guid: b14b996a69fb26649ae432c3f1a3d0bb, type: 2}
+  - {fileID: 11400000, guid: 4393b2fe505a2a143a796738aa2b8eb5, type: 2}
+  - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
+  - {fileID: 11400000, guid: 2722b7af5d0f2a148bc5f1c8a47a059b, type: 2}
+  - {fileID: 11400000, guid: e5ce01708718c664f91bee948c2a57e6, type: 2}
+  - {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9, type: 2}
+  - {fileID: 11400000, guid: a36166163ef83be40a74e6b77df95cb9, type: 2}
   - {fileID: 11400000, guid: 3b6cb7fa1bf12e944aa1290eed955b2b, type: 2}
   - {fileID: 11400000, guid: d7a20b7327f67314182b9de848f10109, type: 2}
-  - {fileID: 11400000, guid: 4e1a7dac6736c5141b8ef299ece40f7b, type: 2}
-  - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
-  - {fileID: 11400000, guid: fad95893e4f2a134485d610a2fd27add, type: 2}
   - {fileID: 11400000, guid: 7ad680a9417a9164ab0f16699e570f5a, type: 2}
-  - {fileID: 11400000, guid: f8e7e22597d1ba047bad727ab1d6a6c9, type: 2}
   - {fileID: 11400000, guid: 3cf3841dabd52074ab2250fca01adda4, type: 2}
-  - {fileID: 11400000, guid: e5ce01708718c664f91bee948c2a57e6, type: 2}
-  - {fileID: 11400000, guid: a36166163ef83be40a74e6b77df95cb9, type: 2}
-  - {fileID: 11400000, guid: 2722b7af5d0f2a148bc5f1c8a47a059b, type: 2}
-  - {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   - {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
   - {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
-  - {fileID: 11400000, guid: 0fbb8e16170e5de4eae9b025a4a72342, type: 2}
-  - {fileID: 11400000, guid: 45c41c90912d73841aa0412f3b2461f7, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -2506,6 +2510,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dcfa689c8127c0d47a75e8e8f08392eb, type: 2}
   - {fileID: 11400000, guid: 8b5130b6250247c4bb959f373fc80b3a, type: 2}
   - {fileID: 11400000, guid: 2737b5dc2254c824b877a0bd31231ca6, type: 2}
+  - {fileID: 11400000, guid: 88e957345416e32409fbd174cb9ddb84, type: 2}
+  - {fileID: 11400000, guid: fc430f0f2eeb46f43a484d217f2a26d6, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2718,6 +2724,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4205739c9b74f534a94117e4f266fb33, type: 2}
   - {fileID: 11400000, guid: e89df270131d4fd42841475acd3f874d, type: 2}
   - {fileID: 11400000, guid: b57afc9e38aa05c40a391f692d507f94, type: 2}
+  - {fileID: 11400000, guid: ce5d04ea1029efc48a340f003fee31c6, type: 2}
+  - {fileID: 11400000, guid: 1b517c887d4f24d4596492a726160b72, type: 2}
+  - {fileID: 11400000, guid: c969a7a119572c44289006c79c094006, type: 2}
+  - {fileID: 11400000, guid: c8a06fb1a08d96e469f1f44126865bb4, type: 2}
+  - {fileID: 11400000, guid: 3a1b9e498af0af548a69f1e894c417fc, type: 2}
+  - {fileID: 11400000, guid: 92f7fe856a586f44f99477336c6506fa, type: 2}
   arrayOfOptionsAuthorityCampaign:
   - {fileID: 11400000, guid: c7b1334e635dba943bab8a4034ecff9d, type: 2}
   - {fileID: 11400000, guid: cf21afdc8f1b3a745acb54ae86a1cb8b, type: 2}
@@ -4919,6 +4931,14 @@ MonoBehaviour:
   textListCondition: {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   textListFriend: {fileID: 11400000, guid: 45c41c90912d73841aa0412f3b2461f7, type: 2}
   textListEnemy: {fileID: 11400000, guid: 0fbb8e16170e5de4eae9b025a4a72342, type: 2}
+  textListEnemyAction: {fileID: 11400000, guid: 7315e5d847c2d5d4cb3c6d738dbff089,
+    type: 2}
+  textListEnemyReason: {fileID: 11400000, guid: 2a07263d1e10c1140ae0ae5db60c4c4f,
+    type: 2}
+  textListFriendAction: {fileID: 11400000, guid: b14b996a69fb26649ae432c3f1a3d0bb,
+    type: 2}
+  textListFriendReason: {fileID: 11400000, guid: 4393b2fe505a2a143a796738aa2b8eb5,
+    type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}

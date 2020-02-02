@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: ActPolRES2
+  m_EditorClassIdentifier: 
+  tag: Issue Raised
+  text: Your [other] is [relAct] that your [actor] is [relRes]
+  designNotes: 
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: ce5d04ea1029efc48a340f003fee31c6, type: 2}
+  - {fileID: 11400000, guid: 1b517c887d4f24d4596492a726160b72, type: 2}
+  - {fileID: 11400000, guid: c969a7a119572c44289006c79c094006, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 2
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 3
+  turnsActive: 1
+  turnsLive: 11
+  turnsDone: 0

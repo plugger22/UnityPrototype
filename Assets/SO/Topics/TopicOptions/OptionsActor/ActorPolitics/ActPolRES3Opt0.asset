@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActPolRES3Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Actor Politics Resistance 3 option 0
+  tag: No Problem
+  text: Am I worried?
+  topic: {fileID: 11400000, guid: fc430f0f2eeb46f43a484d217f2a26d6, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Actor Politics Resistance 1 option 0</color>
+  tooltipMain: No Effects present
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
+  optionNumber: 0

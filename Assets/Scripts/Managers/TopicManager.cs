@@ -59,6 +59,14 @@ public class TopicManager : MonoBehaviour
     public TextList textListFriend;
     [Tooltip("List of Enemy actions for ActorPolitic topics")]
     public TextList textListEnemy;
+    [Tooltip("List of Enemy actions for ActorPolitic topics")]
+    public TextList textListEnemyAction;
+    [Tooltip("List of Enemy reasons for ActorPolitic topics")]
+    public TextList textListEnemyReason;
+    [Tooltip("List of Friend actions for ActorPolitic topics")]
+    public TextList textListFriendAction;
+    [Tooltip("List of Friend reasons for ActorPolitic topics")]
+    public TextList textListFriendReason;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -343,6 +351,10 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListCondition != null, "Invalid textListCondition (Null)");
         Debug.Assert(textListFriend != null, "Invalid textListFriend (Null)");
         Debug.Assert(textListEnemy != null, "Invalid textListEnemy (Null)");
+        Debug.Assert(textListFriendAction != null, "Invalid textListFriendAction (Null)");
+        Debug.Assert(textListEnemyAction != null, "Invalid textListEnemyAction (Null)");
+        Debug.Assert(textListFriendReason != null, "Invalid textListFriendReason (Null)");
+        Debug.Assert(textListEnemyReason != null, "Invalid textListEnemyReason (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -3091,7 +3103,7 @@ public class TopicManager : MonoBehaviour
             //hq boss's opinion
             if (turnTopicSubType.isBoss == true)
             {
-                if (turnOption.moodEffect.belief != null)
+                if (turnOption.moodEffect != null)
                 {
                     Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
                     if (actorHQ != null)
@@ -3109,7 +3121,7 @@ public class TopicManager : MonoBehaviour
                     }
                     else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
                 }
-                else { Debug.LogWarningFormat("Invalid turnOption.moodEffect.belief (Null) for option \"{0}\"", turnOption.name); }
+                else { Debug.LogWarningFormat("Invalid turnOption.moodEffect (Null) for option \"{0}\"", turnOption.name); }
             }
             //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
@@ -5491,7 +5503,50 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("relation", dictOfTags); }
                         break;
-
+                    case "relAct":
+                        //Relationship Action (ActorPolitic),  depends on tagRelation
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            {
+                                switch (tagRelation)
+                                {
+                                    case ActorRelationship.Friend:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriendAction.GetRandomRecord(), colourEnd);
+                                        break;
+                                    case ActorRelationship.Enemy:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemyAction.GetRandomRecord(), colourEnd);
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
+                                }
+                            }
+                            else
+                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriendAction.GetRandomRecord() : GameManager.instance.topicScript.textListEnemyAction.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("relAct", dictOfTags); }
+                        break;
+                    case "relRes":
+                        //Relationship Reason (ActorPolitic),  depends on tagRelation
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            {
+                                switch (tagRelation)
+                                {
+                                    case ActorRelationship.Friend:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriendReason.GetRandomRecord(), colourEnd);
+                                        break;
+                                    case ActorRelationship.Enemy:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemyReason.GetRandomRecord(), colourEnd);
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
+                                }
+                            }
+                            else
+                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriendReason.GetRandomRecord() : GameManager.instance.topicScript.textListEnemyReason.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("relRes", dictOfTags); }
+                        break;
                     case "orgWant":
                         //organisation wants you to...
                         if (isValidate == false)

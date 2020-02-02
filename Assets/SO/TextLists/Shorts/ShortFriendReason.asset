@@ -9,19 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortEnemy
+  m_Name: ShortFriendReason
   m_EditorClassIdentifier: 
-  descriptor: 'ActorPolitic topics -> Enemies
+  descriptor: 'ActorPolitic topics -> Friend reason
 
-    format ''Your [Planner] and [Operator] have broken protocol by [...]'''
+    format ''Your [other] is [EnemyAction] that your [actor] is [EnemyReason]'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
-  - constantly arguing in public
-  - being seen fighting with each other
-  - constantly bickering in public together
-  - aggressively locking horns in public
-  - having at each other in public
-  - constantly badmouthing each other
-  index: 5
+  - given more support
+  - treated better
+  - given more recognition
+  - given more respect
+  - allowed to do their job
+  - no longer bullied
+  - given a fair go
+  - treated with a measure of dignity
+  - appreciated more than they currently are
+  - valued more highly for their contribution
+  index: 4
