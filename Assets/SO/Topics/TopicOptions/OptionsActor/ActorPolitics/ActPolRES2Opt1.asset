@@ -23,13 +23,13 @@ MonoBehaviour:
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Point Finger</color>
-  tooltipMain: "<color=#FF4500>OBSERVER Motivation -1</color>\r\n<color=#FF4500>Player
-    Renown -1</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  news: I can understand the Resistance needing to maintain operational security but
+    I think they take it too far, says [npc], [job], of [node]
+  tooltipHeader: <color=#FFFFE0>Straighten Out</color>
+  tooltipMain: <color=#FF4500>FIXER Motivation -1</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Blame OBSERVER</color>
+  textToDisplay: <color=#EEFB73>Have stern words with your FIXER</color>
   optionNumber: 1
