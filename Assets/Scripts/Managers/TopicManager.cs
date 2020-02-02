@@ -3091,21 +3091,25 @@ public class TopicManager : MonoBehaviour
             //hq boss's opinion
             if (turnTopicSubType.isBoss == true)
             {
-                Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
-                if (actorHQ != null)
+                if (turnOption.moodEffect.belief != null)
                 {
-                    int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
-                    if (opinionChange != 0)
+                    Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+                    if (actorHQ != null)
                     {
-                        int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
-                        bossOpinion += opinionChange;
-                        GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
-                        builderBottom.AppendLine();
-                        if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
-                        else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                        int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
+                        if (opinionChange != 0)
+                        {
+                            int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+                            bossOpinion += opinionChange;
+                            GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
+                            builderBottom.AppendLine();
+                            if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
+                            else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                        }
                     }
+                    else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
                 }
-                else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
+                else { Debug.LogWarningFormat("Invalid turnOption.moodEffect.belief (Null) for option \"{0}\"", turnOption.name); }
             }
             //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
@@ -4604,7 +4608,6 @@ public class TopicManager : MonoBehaviour
         if (builder.Length == 0) { builder.Append("No Effects present"); }
         option.tooltipMain = builder.ToString(); ;
         //Details -> derived from option mood Effect
-
         if (option.isIgnoreMood == false)
         {
             if (option.moodEffect != null)
@@ -4875,6 +4878,13 @@ public class TopicManager : MonoBehaviour
                     if (actor != null)
                     { prefix = actor.arc.name; }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    break;
+                case 'B':
+                    //actorOther
+                    Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                    if (actorOther != null)
+                    { prefix = actorOther.arc.name; }
+                    else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
                     break;
                 case 'L':
                     //All actors
@@ -5460,26 +5470,28 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("invest", dictOfTags); }
                         break;
-                    case "friend":
-                        //'broken protocol by [friend] together in public' 
+                    case "relation":
+                        //'broken protocol by [friend/enemy]'  depends on tagRelation
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriend.GetRandomRecord(), colourEnd); }
-                            else { replaceText = GameManager.instance.topicScript.textListFriend.GetRandomRecord(); }
+                            {
+                                switch (tagRelation)
+                                {
+                                    case ActorRelationship.Friend:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriend.GetRandomRecord(), colourEnd);
+                                        break;
+                                    case ActorRelationship.Enemy:
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemy.GetRandomRecord(), colourEnd);
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
+                                }
+                            }
+                            else { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriend.GetRandomRecord() : GameManager.instance.topicScript.textListEnemy.GetRandomRecord(); }
                         }
-                        else { CountTextTag("friend", dictOfTags); }
+                        else { CountTextTag("relation", dictOfTags); }
                         break;
-                    case "enemy":
-                        //'broken protocol by [enemy] together in public' 
-                        if (isValidate == false)
-                        {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemy.GetRandomRecord(), colourEnd); }
-                            else { replaceText = GameManager.instance.topicScript.textListEnemy.GetRandomRecord(); }
-                        }
-                        else { CountTextTag("enemy", dictOfTags); }
-                        break;
+
                     case "orgWant":
                         //organisation wants you to...
                         if (isValidate == false)
@@ -5852,13 +5864,13 @@ public class TopicManager : MonoBehaviour
             switch (turnTopicType.name)
             {
                 case "Actor":
-                    if (tagActorID > -1)
+                    if (tagActorOtherID > -1)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                        if (actor != null)
+                        Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                        if (actorOther != null)
                         {
-                            turnSprite = actor.sprite;
-                            tagSpriteName = actor.actorName;
+                            turnSprite = actorOther.sprite;
+                            tagSpriteName = actorOther.actorName;
                             switch (turnTopicSubType.name)
                             {
                                 case "ActorMatch":
@@ -5870,28 +5882,28 @@ public class TopicManager : MonoBehaviour
                                         //tooltipMain
                                         data.imageTooltipMain = resultsMatch.Item1;
                                         //main present -> Add tooltip header (Actor name and type)
-                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actorOther.arc.name, colourEnd, "\n", colourNormal, actorOther.actorName, colourEnd);
                                     }
                                     if (string.IsNullOrEmpty(resultsMatch.Item2) == false)
                                     { data.imageTooltipDetails = resultsMatch.Item2; }
                                     break;
                                 default:
-                                    Tuple<string, string> resultsActor = GetActorTooltip(actor);
+                                    Tuple<string, string> resultsActor = GetActorTooltip(actorOther);
                                     if (string.IsNullOrEmpty(resultsActor.Item1) == false)
                                     {
                                         //tooltipMain
                                         data.imageTooltipMain = resultsActor.Item1;
                                         //main present -> Add tooltip header (Actor name and type)
-                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actorOther.arc.name, colourEnd, "\n", colourNormal, actorOther.actorName, colourEnd);
                                     }
                                     if (string.IsNullOrEmpty(resultsActor.Item2) == false)
                                     { data.imageTooltipDetails = resultsActor.Item2; }
                                     break;
                             }
                         }
-                        else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                        else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
                     }
-                    else { Debug.LogWarningFormat("Invalid tagActor \"{0}\"", tagActorID); }
+                    else { Debug.LogWarningFormat("Invalid tagActorOtherID \"{0}\"", tagActorOtherID); }
                     break;
                 case "Authority":
                     break;

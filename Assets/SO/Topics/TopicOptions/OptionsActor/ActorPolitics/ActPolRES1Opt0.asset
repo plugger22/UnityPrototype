@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Name: ActPolRES1Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 1 option 0
-  tag: 
-  text: 
+  tag: No Problem
+  text: Am I worried?
   topic: {fileID: 11400000, guid: bf7d8e95f7b870142b1ca782c4bf9499, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: <color=#FFFFE0>Actor Politics Resistance 1 option 0</color>
   tooltipMain: No Effects present

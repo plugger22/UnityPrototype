@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActPolRES0
   m_EditorClassIdentifier: 
-  tag: ActorPolitics Resistance 0
-  text: Your [actor] and [other] have broken protocol by [friend]
+  tag: Poor Behaviour
+  text: Your [other] and [actor] have broken protocol by [relation]
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
@@ -25,7 +25,8 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   listOfCriteria: []
-  listOfIgnoreEffects: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
   listOfOptions:
   - {fileID: 11400000, guid: e41986ec637e1c14792483df5bee8878, type: 2}
   - {fileID: 11400000, guid: ca1c2707039b29a4f98ef7b522b9d7a0, type: 2}
@@ -41,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 4
   turnsActive: 1
-  turnsLive: 15
+  turnsLive: 14
   turnsDone: 0

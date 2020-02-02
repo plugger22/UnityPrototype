@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c065faad5ab8a64f9cda2d02e998465, type: 3}
   m_Name: Steal Package
   m_EditorClassIdentifier: 
-  tag: violently steal the package from
+  tag: violently wrench the package from
   outcome: is left unconscious and bleeding
   activity: steal the package from them

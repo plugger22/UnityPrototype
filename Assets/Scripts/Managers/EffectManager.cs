@@ -3927,20 +3927,28 @@ public class EffectManager : MonoBehaviour
                                     if (actorOther != null)
                                     { effectResolve = ResolveTopicDualActorEffect(effect, dataInput, data, actor, actorOther); }
                                     else
-                                    { Debug.LogWarningFormat("Invalid actorOther (Null) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
-                                        effectResolve.isError = true; }
+                                    {
+                                        Debug.LogWarningFormat("Invalid actorOther (Null) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
+                                        effectResolve.isError = true;
+                                    }
                                 }
                                 else
-                                { Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
-                                    effectResolve.isError = true; }
+                                {
+                                    Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                                    effectResolve.isError = true;
+                                }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid data.actorOtherID (less than Zero) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
-                                effectResolve.isError = true; }
+                            {
+                                Debug.LogWarningFormat("Invalid data.actorOtherID (less than Zero) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
+                                effectResolve.isError = true;
+                            }
                         }
                         else
-                        { Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
-                            effectResolve.isError = true; }
+                        {
+                            Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                            effectResolve.isError = true;
+                        }
                         break;
                     case 'R':
                         //Random Active Actor (if resistance chooses one with the highest invisibility)
@@ -3948,8 +3956,10 @@ public class EffectManager : MonoBehaviour
                         if (actorHighest != null)
                         { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorHighest); }
                         else
-                        { Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
-                            effectResolve.isError = true; }
+                        {
+                            Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
+                            effectResolve.isError = true;
+                        }
                         break;
                     case 'L':
                         //All Actors
@@ -4083,9 +4093,7 @@ public class EffectManager : MonoBehaviour
             case "ActorKilledCapture":
                 //Player reveals location of actor while in capture
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
-                {
-                    effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Betrayed by Player){3}{4}", colourBad, actor.actorName, actor.arc.name, colourEnd, "\n");
-                }
+                { effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Betrayed by Player){3}{4}", colourBad, actor.actorName, actor.arc.name, colourEnd, "\n"); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -4106,7 +4114,24 @@ public class EffectManager : MonoBehaviour
     {
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        switch (effect.outcome.name)
+        {
+            case "Relationship":
+                //assign relationship
+                ActorRelationship relationship = dataTopic.relation;
+                if (GameManager.instance.dataScript.AddRelationship(actor.slotID, actorOther.slotID, actor.actorID, actorOther.actorID, relationship) == true)
+                { effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name, 
+                    relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd); }
+                break;
+            case "Motivation":
+                //actor Other changes motivation
+                effectResolve.bottomText = ExecuteActorMotivation(effect, actorOther, dataInput);
+                break;
+        }
         return effectResolve;
     }
 

@@ -9,18 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: B_Relationship
+  m_Name: B_LoseMotMed
   m_EditorClassIdentifier: 
-  description: will form a Relationship
+  description: Motivation -1
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
-  topicApply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
-  outcome: {fileID: 11400000, guid: 50c454ba8bbd7ac4dbaa551bdb96e4e6, type: 2}
-  operand: {fileID: 0}
+  topicApply: {fileID: 0}
+  outcome: {fileID: 11400000, guid: d4ea6b4ab62aeef42ac35ce3673ca036, type: 2}
+  operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
   typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
-  value: 0
+  value: 2
   ignoreEffect: 0
   isMoodEffect: 0
   belief: {fileID: 0}

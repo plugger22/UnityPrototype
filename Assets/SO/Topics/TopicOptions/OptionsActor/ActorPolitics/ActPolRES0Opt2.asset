@@ -11,5 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActPolRES0Opt2
   m_EditorClassIdentifier: 
-  tag: Actor Politics Resistance 0 option 2
+  descriptor: Actor Politics Resistance 0 option 2
+  tag: Assign Fault
+  text: Blame [other]
   topic: {fileID: 11400000, guid: 5fb73e831da643447b3ab5b33f263017, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Assign Fault</color>
+  tooltipMain: "<color=#FF4500>OPERATOR Motivation -1</color>\r\n<color=#FF4500>Player
+    Renown -1</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Blame OPERATOR</color>
+  optionNumber: 2

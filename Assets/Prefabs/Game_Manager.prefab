@@ -1248,6 +1248,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 496c7f6eff1db9b4bb9bd3c2b1224712, type: 2}
   - {fileID: 11400000, guid: 9dd461ee4d2224d40b838e7d7b3446cf, type: 2}
   - {fileID: 11400000, guid: 0245937009cf66848a2d682bf1a1a8fd, type: 2}
+  - {fileID: 11400000, guid: 50c454ba8bbd7ac4dbaa551bdb96e4e6, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1983,6 +1984,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03787a8a5c055614abb014a535f1eb54, type: 2}
   - {fileID: 11400000, guid: 40775f9c776776643a582f19953b871a, type: 2}
   - {fileID: 11400000, guid: 167c272b150654244b64eb15d847e2c8, type: 2}
+  - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
+  - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
+  - {fileID: 11400000, guid: 63aaafaa1ad43bc4a980c9ce53813c32, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4736,7 +4740,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 59833
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
