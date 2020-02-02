@@ -8698,7 +8698,8 @@ public class DataManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No actor in slotID {0}, for compatibility check with slotID {1}, {2}{3}", j, i, actor.arc.name, "\n"); }
                                             }
-                                            else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship exists between slotID {0}, {1} and slotID {2} ({3}){4}", i, actor.arc.name, j, data.relationship, "\n"); }
+                                            else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship exists between slotID {0} and slotID {1} ({2}){3}", 
+                                                j, dictOfRelations[j].slotID, dictOfRelations[j].relationship, "\n"); }
                                         }
                                         else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No dict.key found for slotID {0}{1}", j, "\n"); }
                                     }

@@ -26,4 +26,5 @@ MonoBehaviour:
   - Waqa
   - Chomba
   - Wine
-  index: 2
+  - Confidence
+  index: 7

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES0
   m_EditorClassIdentifier: 
   tag: ActorPolitics Resistance 0
+  text: Your [actor] and [other] have broken protocol by [friend]
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 907cb53b43dc9774ab2103a5558cc3bb, type: 2}
   subSubType: {fileID: 0}
@@ -23,17 +25,21 @@ MonoBehaviour:
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: e41986ec637e1c14792483df5bee8878, type: 2}
   - {fileID: 11400000, guid: ca1c2707039b29a4f98ef7b522b9d7a0, type: 2}
   - {fileID: 11400000, guid: a0510687bbbb6e84a851ed9075aec4ce, type: 2}
-  status: 2
-  isCurrent: 0
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 1
   timerStart: 0
-  timerRepeat: 4
+  timerRepeat: 3
   timerWindow: 0
-  turnsDormant: 3
+  turnsDormant: 4
   turnsActive: 1
-  turnsLive: 23
+  turnsLive: 15
   turnsDone: 0

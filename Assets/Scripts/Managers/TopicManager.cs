@@ -55,6 +55,10 @@ public class TopicManager : MonoBehaviour
     public TextList textListWho1;
     [Tooltip("List of condition relating to person referred to be textListWho")]
     public TextList textListCondition;
+    [Tooltip("List of Friend actions for ActorPolitic topics")]
+    public TextList textListFriend;
+    [Tooltip("List of Enemy actions for ActorPolitic topics")]
+    public TextList textListEnemy;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -337,6 +341,8 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListWho0 != null, "Invalid textListWho0 (Null)");
         Debug.Assert(textListWho1 != null, "Invalid textListWho1 (Null)");
         Debug.Assert(textListCondition != null, "Invalid textListCondition (Null)");
+        Debug.Assert(textListFriend != null, "Invalid textListFriend (Null)");
+        Debug.Assert(textListEnemy != null, "Invalid textListEnemy (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -4976,7 +4982,27 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
+                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <actor>", tagActorID); }
+                        }
+                        else { CountTextTag("actor", dictOfTags); }
+                        break;
+                    case "other":
+                        //actorOther (second actor in dual actor situations, eg. ActorPolitic topics) arc name
+                        if (isValidate == false)
+                        {
+                            if (tagActorOtherID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                                if (actor != null)
+                                {
+                                    if (isColourHighlighting == true)
+                                    { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
+                                    else { replaceText = actor.arc.name; }
+                                }
+                                else { Debug.LogWarningFormat("Invalid actor other (Null) for tagActorOtherID \"{0}\"", tagActorOtherID); }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid tagActorOtherID \"{0}\" for tag <other>", tagActorOtherID); }
                         }
                         else { CountTextTag("actor", dictOfTags); }
                         break;
@@ -4996,7 +5022,7 @@ public class TopicManager : MonoBehaviour
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                             }
                             else
-                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <Actor>", tagActorID); }
+                            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\" for tag <actors>", tagActorID); }
                         }
                         else { CountTextTag("actors", dictOfTags); }
                         break;
@@ -5433,6 +5459,26 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = tagInvestTag; }
                         }
                         else { CountTextTag("invest", dictOfTags); }
+                        break;
+                    case "friend":
+                        //'broken protocol by [friend] together in public' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriend.GetRandomRecord(), colourEnd); }
+                            else { replaceText = GameManager.instance.topicScript.textListFriend.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("friend", dictOfTags); }
+                        break;
+                    case "enemy":
+                        //'broken protocol by [enemy] together in public' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemy.GetRandomRecord(), colourEnd); }
+                            else { replaceText = GameManager.instance.topicScript.textListEnemy.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("enemy", dictOfTags); }
                         break;
                     case "orgWant":
                         //organisation wants you to...

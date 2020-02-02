@@ -958,8 +958,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a037592ee21c9da44a9561049b62a2b1, type: 2}
   - {fileID: 11400000, guid: 2496835b562e4f640b2bf86c6c0a5eb4, type: 2}
   - {fileID: 11400000, guid: 635fa40c978ca124ab405fa6f5ca738f, type: 2}
-  - {fileID: 11400000, guid: 52b6d3d6648ad6542b2775763c62ff21, type: 2}
-  - {fileID: 11400000, guid: 188382edfd59ff7408e2dfda0b616f26, type: 2}
   - {fileID: 11400000, guid: deac201f401a37d4b857e403a546d217, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
@@ -1145,8 +1143,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 44789d9e7a3eb0344a98aeaea6c76375, type: 2}
   - {fileID: 11400000, guid: 03f40af242a0f524e887ed613cba2b38, type: 2}
   - {fileID: 11400000, guid: 819360969dd7ba84da1aab6723fed183, type: 2}
-  - {fileID: 11400000, guid: fdfc63f4697d9014fad35dfcb26bdf5a, type: 2}
-  - {fileID: 11400000, guid: 39b70a45bc397184294b0476ce0d5215, type: 2}
   - {fileID: 11400000, guid: 0e5fcef34ae915a4f9db1722d4d432b9, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
@@ -1518,6 +1514,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   - {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
   - {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
+  - {fileID: 11400000, guid: 0fbb8e16170e5de4eae9b025a4a72342, type: 2}
+  - {fileID: 11400000, guid: 45c41c90912d73841aa0412f3b2461f7, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -4738,7 +4736,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 59833
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
@@ -4915,6 +4913,8 @@ MonoBehaviour:
   textListWho0: {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
   textListWho1: {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
   textListCondition: {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
+  textListFriend: {fileID: 11400000, guid: 45c41c90912d73841aa0412f3b2461f7, type: 2}
+  textListEnemy: {fileID: 11400000, guid: 0fbb8e16170e5de4eae9b025a4a72342, type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}

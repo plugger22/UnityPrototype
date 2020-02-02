@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
   m_Name: RelationshipPossible
   m_EditorClassIdentifier: 
-  description: 1+ active actors, no current relationship
+  description: 2+ active actors, no current relationship
   effectCriteria: {fileID: 11400000, guid: 0e5fcef34ae915a4f9db1722d4d432b9, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}

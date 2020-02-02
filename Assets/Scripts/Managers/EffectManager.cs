@@ -1012,24 +1012,6 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckActiveActorPresent(3, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
-                                            /*case "ActorRelationsGood":
-                                                //actor has at least one good relationship with another actor OnMap
-                                                if (actor != null)
-                                                {
-                                                    if (actor.CheckRelationship(true) == false)
-                                                    { BuildString(result, "No Good Relations present"); }
-                                                }
-                                                else { Debug.LogWarning("Invalid actor (Null) for ActorRelationsGood"); }
-                                                break;
-                                            case "ActorRelationsBad":
-                                                //actor has at least one bad relationship with another actor OnMap
-                                                if (actor != null)
-                                                {
-                                                    if (actor.CheckRelationship(false) == false)
-                                                    { BuildString(result, "No Bad Relations present"); }
-                                                }
-                                                else { Debug.LogWarning("Invalid actor (Null) for ActorRelationsBad"); }
-                                                break;*/
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("ActorCurrent: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
@@ -3932,16 +3914,42 @@ public class EffectManager : MonoBehaviour
                             effectResolve.isError = true;
                         }
                         break;
+                    case 'B':
+                        //dual actor effect
+                        if (data.actorID > -1)
+                        {
+                            if (data.actorOtherID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                                if (actor != null)
+                                {
+                                    Actor actorOther = GameManager.instance.dataScript.GetActor(data.actorOtherID);
+                                    if (actorOther != null)
+                                    { effectResolve = ResolveTopicDualActorEffect(effect, dataInput, data, actor, actorOther); }
+                                    else
+                                    { Debug.LogWarningFormat("Invalid actorOther (Null) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
+                                        effectResolve.isError = true; }
+                                }
+                                else
+                                { Debug.LogWarningFormat("Invalid actor (Null) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                                    effectResolve.isError = true; }
+                            }
+                            else
+                            { Debug.LogWarningFormat("Invalid data.actorOtherID (less than Zero) for effect \"{0}\", data.actorOtherID {1}", effect.name, data.actorOtherID);
+                                effectResolve.isError = true; }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid data.actorID (less than Zero) for effect \"{0}\", data.actorID {1}", effect.name, data.actorID);
+                            effectResolve.isError = true; }
+                        break;
                     case 'R':
                         //Random Active Actor (if resistance chooses one with the highest invisibility)
                         Actor actorHighest = GameManager.instance.dataScript.GetActiveActorHighestInvisibility(dataInput.side);
                         if (actorHighest != null)
                         { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorHighest); }
                         else
-                        {
-                            Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
-                            effectResolve.isError = true;
-                        }
+                        { Debug.LogWarningFormat("Invalid Random actor (Null) for effect \"{0}\"", effect.name);
+                            effectResolve.isError = true; }
                         break;
                     case 'L':
                         //All Actors
@@ -4081,6 +4089,23 @@ public class EffectManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
+
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all dual actor effects (eg. ActorPolitic topics)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <param name="actor"></param>
+    /// <param name="actorOther"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicDualActorEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic, Actor actor, Actor actorOther)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
 
         return effectResolve;
     }
