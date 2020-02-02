@@ -9,21 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortFriend
+  m_Name: ShortEnemyTopic
   m_EditorClassIdentifier: 
-  descriptor: 'ActorPolitic topics -> Friends
+  descriptor: 'ActorPolitic topics -> Enemies
 
     format ''Your [Planner] and [Operator] have broken protocol by [...]'''
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 0
   isTestForTextTags: 0
   randomList:
-  - getting drunk in public together
-  - being seen to flirt in a public place
-  - conspicously carousing in public
-  - sharing a meal together in public
-  - whooping it up in public
-  - having fun in public together
-  - being amorous in public together
-  - having been spotted kissing
-  index: 4
+  - constantly arguing in public
+  - being seen fighting with each other
+  - constantly bickering in public together
+  - aggressively locking horns in public
+  - having at each other in public
+  - constantly badmouthing each other
+  index: 3

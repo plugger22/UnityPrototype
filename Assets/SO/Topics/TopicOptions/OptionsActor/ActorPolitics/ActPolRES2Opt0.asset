@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES2Opt0
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 2 option 0
-  tag: So What?
-  text: Nothing to see here, move on
+  tag: Go Away
+  text: I'm busy, tell somebody else
   topic: {fileID: 11400000, guid: 88e957345416e32409fbd174cb9ddb84, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 0 option 2
   tag: Assign Fault
-  text: Blame [other]
+  text: Blame your [other]
   topic: {fileID: 11400000, guid: 5fb73e831da643447b3ab5b33f263017, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES2Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 2 option 2
-  tag: Assign Fault
-  text: Blame [other]
+  tag: Shut Down
+  text: Have stern words with your [other]
   topic: {fileID: 11400000, guid: 88e957345416e32409fbd174cb9ddb84, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

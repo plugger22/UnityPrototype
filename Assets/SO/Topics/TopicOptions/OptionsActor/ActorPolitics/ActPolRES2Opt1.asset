@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES2Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 2 option 1
-  tag: Point Finger
-  text: Blame [actor]
+  tag: Straighten Out
+  text: Have stern words with your [actor]
   topic: {fileID: 11400000, guid: 88e957345416e32409fbd174cb9ddb84, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

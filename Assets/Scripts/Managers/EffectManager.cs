@@ -4909,7 +4909,7 @@ public class EffectManager : MonoBehaviour
                 {
                     //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
                     StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                    builder.AppendFormat("{0}{1}{2} Motivation too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
                     builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                     builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
                     motivation = Mathf.Max(0, motivation);

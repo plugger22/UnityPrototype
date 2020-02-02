@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES3Opt1
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 3 option 1
-  tag: Point Finger
-  text: It's the fault of your [actor]
+  tag: Straighten Out
+  text: Reprimand your [actor]
   topic: {fileID: 11400000, guid: fc430f0f2eeb46f43a484d217f2a26d6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

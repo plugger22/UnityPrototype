@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActPolRES3Opt2
   m_EditorClassIdentifier: 
   descriptor: Actor Politics Resistance 3 option 2
-  tag: Assign Blame
-  text: It's the fault of your [other]
+  tag: Shut Down
+  text: Reprimand your [other]
   topic: {fileID: 11400000, guid: fc430f0f2eeb46f43a484d217f2a26d6, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

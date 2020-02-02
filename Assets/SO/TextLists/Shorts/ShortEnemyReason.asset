@@ -18,24 +18,24 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
-  - a traitor
-  - incompetent
-  - questionable
-  - a hypcrite
-  - an imposter
-  - a turncoat
-  - a spy
-  - an idiot
-  - a jackass
-  - a schmuck
-  - a jerk
-  - a moron
-  - stupid
-  - a blockhead
-  - a bonehead
-  - a cretin
-  - a dimwit
-  - an imbecile
-  - incapable
-  - useless
-  index: 4
+  - a traitor and should be shot
+  - an incompetent peanut
+  - questionable and untrustworthy
+  - an unsavoury hypcrite
+  - an imposter with poor hygiene
+  - a turncoat with a bad fashion sense
+  - a spy and a dog hater
+  - a drooling idiot
+  - a jackass with body odour
+  - a schmuck with beady eyes
+  - a jerk who dribbles
+  - a moron and an embarrasment
+  - 'outright stupid '
+  - a blockhead with a bad attitude
+  - a bonehead with aggressive undertones
+  - a cretin that should be put down
+  - a clown that should be in the circus
+  - an imbecile that should be committed
+  - incapable of thinking an honest thought
+  - useless and hopeless
+  index: 14
