@@ -3592,7 +3592,7 @@ public class ActorManager : MonoBehaviour
         int motivation;
         bool errorFlag = false;
         bool isBoss;
-        char starFull = '\u2B50';
+        char starFull = '\u0024';
         char starEmpty = '\u2606';
         string title;
         //close all modal 0 tooltips
