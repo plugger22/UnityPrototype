@@ -238,7 +238,7 @@ public class ModalInventoryUI : MonoBehaviour
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
-            outcomeDetails.textBottom = "The WolfMan has been called";
+            outcomeDetails.textBottom = "We've called the WolfMan. He's on his way";
             outcomeDetails.side = details.side;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
         }

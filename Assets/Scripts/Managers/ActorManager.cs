@@ -3578,6 +3578,95 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// sets up all needed data for HQ Actors and triggers ModalInventoryUI to display such
+    /// </summary>
+    private void InitialiseHqActorsInventory()
+    {
+        int numOfActors = 0;
+        int lengthOfArray;
+        bool errorFlag = false;
+        //close all modal 0 tooltips
+        GameManager.instance.guiScript.SetTooltipsOff();
+        //get HQ actors
+        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        lengthOfArray = arrayOfHqActors.Length;
+        if (arrayOfHqActors != null)
+        {
+            //tally up actors (ignore non-hierarchy actors)
+            for (int i = 0; i < lengthOfArray; i++)
+            { if (arrayOfHqActors[i] != null) { numOfActors++; } }
+            //should be a full compliment at all times
+            if (numOfActors != arrayOfHqActors.Length)
+            { Debug.LogWarningFormat("Mismatch for arrayOfHqActors (has {0} actors, should have {1}){2}", numOfActors, lengthOfArray, "\n"); }
+            if (numOfActors > 0)
+            {
+                //At least one actor in HQ
+                InventoryInputData data = new InventoryInputData();
+                data.side = GameManager.instance.sideScript.PlayerSide;
+                data.textHeader = "HQ Hierarchy";
+                data.textTop = string.Format("This is the {0}{1}{2} HQ Hierarchy", colourNeutral, data.side.name, colourEnd);
+                data.textBottom = string.Format("This is for {0}information{1} purposes only. Interact  with your HQ Hierarchy by requesting a {2}Meeting{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+                data.state = InventoryState.HQ;
+                //loop actors and populate data packages
+                for (int i = 0; i < lengthOfArray; i++)
+                {
+                    Actor actor = arrayOfHqActors[i];
+                    if (actor != null)
+                    {
+                        InventoryOptionData optionData = new InventoryOptionData();
+                        optionData.sprite = actor.sprite;
+                        optionData.textUpper = actor.arc.name;
+                        //combined text string
+                        optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
+                        optionData.optionID = actor.actorID;
+
+                        //tooltip
+                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+
+                        //add to arrays
+                        data.arrayOfOptions[i] = optionData;
+                        data.arrayOfTooltips[i] = tooltipDetails;
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
+                }
+                //data package has been populated, proceed if all O.K
+                if (errorFlag == true)
+                {
+                    //error msg
+                    ModalOutcomeDetails details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
+                        textBottom = "Phone calls are being made. Lots of them.",
+                        sprite = GameManager.instance.guiScript.errorSprite,
+                        isAction = false
+                    };
+                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
+                }
+                else
+                {
+                    //open Inventory UI
+                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data, "ActorManager.cs -> InitialiseHqActorsInventory");
+                }
+            }
+            else
+            {
+                //no actor in HQ
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.instance.sideScript.PlayerSide,
+                    textTop = string.Format("{0}HQ is currently unmanned{1}", colourInvalid, colourEnd),
+                    textBottom = "Frantic phone calls are being made",
+                    sprite = GameManager.instance.guiScript.infoSprite,
+                    isAction = false
+                };
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfHQActors (Null)"); }
+    }
+
+    /// <summary>
     /// sets up all needed data for Reserve Actor pool and triggers ModalInventoryUI to display such
     /// </summary>
     private void InitialiseReservePoolInventory()
@@ -3594,7 +3683,7 @@ public class ActorManager : MonoBehaviour
             //At least one actor in reserve
             InventoryInputData data = new InventoryInputData();
             data.side = GameManager.instance.sideScript.PlayerSide;
-            data.textHeader = "Reserve Actor Pool";
+            data.textHeader = "Reserves";
             data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
                 colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
@@ -3681,7 +3770,7 @@ public class ActorManager : MonoBehaviour
                             data.arrayOfTooltips[i] = tooltipDetails;
                         }
                         else
-                        { Debug.LogWarning(string.Format("Invalid Actor (Null) for actorID {0}", listOfActors[i])); }
+                        { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", listOfActors[i]); }
                     }
                 }
                 else
@@ -8117,7 +8206,7 @@ public class ActorManager : MonoBehaviour
                                         colourRelation = data.relationship == ActorRelationship.Friend ? colourGood : colourBad;
                                         detailsTop = string.Format("{0}, {1}{2}{3}{4}is {5}{6}{7} with{8}{9}, {10}{11}{12}", actorFirst.actorName, colourAlert, actorFirst.arc.name, colourEnd, "\n",
                                             colourRelation, relationship, colourEnd, "\n", actorSecond.actorName, colourAlert, actorSecond.arc.name, colourEnd);
-                                        detailsBottom = string.Format("Any changes in {0}Motivation{1} in one {2}can affect the other{3}", colourNeutral, colourEnd, colourAlert, colourEnd);   
+                                        detailsBottom = string.Format("Any changes in {0}Motivation{1} in one {2}can affect the other{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
                                         msgData.text = string.Format("{0} and {1} are {2}", actorFirst.arc.name, actorSecond.arc.name, relationship);
                                         msgData.topText = "Relationship Exists";
                                         msgData.detailsTop = detailsTop;

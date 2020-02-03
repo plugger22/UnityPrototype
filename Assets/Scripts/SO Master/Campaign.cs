@@ -126,6 +126,15 @@ public class Campaign : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(listOfScenarios.Count > 0, "Invalid listOfScenarios (Empty) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        //hq
+        Debug.AssertFormat(bossAut != null, "Invalid bossAut (Null) for {0}", name);
+        Debug.AssertFormat(subBoss1Aut != null, "Invalid subBoss1Aut (Null) for {0}", name);
+        Debug.AssertFormat(subBoss2Aut != null, "Invalid subBoss2Aut (Null) for {0}", name);
+        Debug.AssertFormat(subBoss3Aut != null, "Invalid subBoss3Aut (Null) for {0}", name);
+        Debug.AssertFormat(bossRes != null, "Invalid bossRes (Null) for {0}", name);
+        Debug.AssertFormat(subBoss1Res != null, "Invalid subBoss1Res (Null) for {0}", name);
+        Debug.AssertFormat(subBoss2Res != null, "Invalid subBoss2Res (Null) for {0}", name);
+        Debug.AssertFormat(subBoss3Res != null, "Invalid subBoss3Res (Null) for {0}", name);
     }
 
 

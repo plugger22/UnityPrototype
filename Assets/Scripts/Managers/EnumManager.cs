@@ -26,7 +26,7 @@
     public enum ModalSubState { None, Outcome, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe }          //ModalUI sub game states
     public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                   //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
-    public enum InventoryState { None, Gear, ReservePool}
+    public enum InventoryState { None, Gear, ReservePool, HQ}
     public enum AlignHorizontal { None, Left, Centre, Right }
     public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
