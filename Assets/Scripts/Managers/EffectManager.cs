@@ -1603,6 +1603,24 @@ public class EffectManager : MonoBehaviour
                                         }
                                         break;
                                     //
+                                    // - - - Faction - - -
+                                    //
+                                    case "Faction":
+                                        switch (criteria.effectCriteria.name)
+                                        {
+                                            case "HqRelocatingNo":
+                                                //HQ not currently relocating
+                                                if (GameManager.instance.factionScript.isHqRelocating == true)
+                                                { BuildString(result, "HQ is Relocating"); }
+                                                break;
+                                            default:
+                                                BuildString(result, "Error!");
+                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                errorFlag = true;
+                                                break;
+                                        }
+                                        break;
+                                    //
                                     // - - - Special - - -
                                     //
                                     case "Special":
@@ -1654,6 +1672,9 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                         }
                                         break;
+                                    //
+                                    // - - - global default
+                                    //
                                     default:
                                         BuildString(result, "Error!");
                                         Debug.LogWarning(string.Format("Invalid effect.criteria.apply \"{0}\"", criteria.apply.name));

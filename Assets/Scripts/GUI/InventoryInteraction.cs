@@ -31,8 +31,9 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                
+
                 //display gear info -> TO DO
+                Debug.LogFormat("[Tst] InventoryInteraction.cs -> OnPointerClick: LEFT BUTTON CLICKED{0}", "\n");
 
                 break;
             case PointerEventData.InputButton.Right:

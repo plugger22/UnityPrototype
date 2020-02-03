@@ -119,6 +119,7 @@ public enum EventType
     //Inventory UI
     InventorySetReserve,
     InventorySetGear,
+    InventorySetHQ,
     InventoryOpenUI,
     InventoryCloseUI,
     InventoryReassure,

@@ -12,24 +12,37 @@ MonoBehaviour:
   m_Name: HQ0
   m_EditorClassIdentifier: 
   tag: HQ test 0
+  text: Unknown
+  designNotes: 'Applies to both sides
+
+    Generic internal politics'
   type: {fileID: 11400000, guid: b662571175bcd8b43aa7617fcc8ff8c8, type: 2}
   subType: {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
+  subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: b84c39d0fe1e6c14ba78168c9e7515ac, type: 2}
   - {fileID: 11400000, guid: fe92896fddc3fda4ab02c9a25fa3c754, type: 2}
   - {fileID: 11400000, guid: 30837159a59bb874ea6e405ad0fce1a5, type: 2}
   - {fileID: 11400000, guid: 075bb469e8c3a934eaf6a1f63415e0cb, type: 2}
-  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
-  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
-  listOfCriteria: []
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 5
+  timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 33
+  turnsLive: 17
   turnsDone: 0

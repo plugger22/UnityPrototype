@@ -288,6 +288,7 @@ public class ActorManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericRecruitActorResistance, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.InventorySetHQ, OnEvent, "ActorManager");
     }
     #endregion
 
@@ -437,6 +438,9 @@ public class ActorManager : MonoBehaviour
                 break;
             case EventType.InventorySetReserve:
                 InitialiseReservePoolInventory();
+                break;
+            case EventType.InventorySetHQ:
+                InitialiseHqHierarchyInventory();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -3578,13 +3582,19 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// sets up all needed data for HQ Actors and triggers ModalInventoryUI to display such
+    /// sets up all needed data for HQ Hierarchy only Actors and triggers ModalInventoryUI to display such
     /// </summary>
-    private void InitialiseHqActorsInventory()
+    private void InitialiseHqHierarchyInventory()
     {
         int numOfActors = 0;
+        int offset = 1;             //accomodates fact that first entry in arrayOfActorsHQ is 'None'
         int lengthOfArray;
+        int motivation;
         bool errorFlag = false;
+        bool isBoss;
+        char starFull = '\u2805';
+        char starEmpty = '\u2606';
+        string title;
         //close all modal 0 tooltips
         GameManager.instance.guiScript.SetTooltipsOff();
         //get HQ actors
@@ -3595,9 +3605,9 @@ public class ActorManager : MonoBehaviour
             //tally up actors (ignore non-hierarchy actors)
             for (int i = 0; i < lengthOfArray; i++)
             { if (arrayOfHqActors[i] != null) { numOfActors++; } }
-            //should be a full compliment at all times
-            if (numOfActors != arrayOfHqActors.Length)
-            { Debug.LogWarningFormat("Mismatch for arrayOfHqActors (has {0} actors, should have {1}){2}", numOfActors, lengthOfArray, "\n"); }
+            //should be a full compliment at all times (ignore first and last entries, 'None' and 'Worker', 'LeftHQ' & 'Count')
+            if (numOfActors != arrayOfHqActors.Length - 3)
+            { Debug.LogWarningFormat("Mismatch for arrayOfHqActors (has {0} actors, should have {1}){2}", numOfActors, lengthOfArray - 2, "\n"); }
             if (numOfActors > 0)
             {
                 //At least one actor in HQ
@@ -3605,27 +3615,43 @@ public class ActorManager : MonoBehaviour
                 data.side = GameManager.instance.sideScript.PlayerSide;
                 data.textHeader = "HQ Hierarchy";
                 data.textTop = string.Format("This is the {0}{1}{2} HQ Hierarchy", colourNeutral, data.side.name, colourEnd);
-                data.textBottom = string.Format("This is for {0}information{1} purposes only. Interact  with your HQ Hierarchy by requesting a {2}Meeting{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+                data.textBottom = string.Format("{0}LEFT CLICK{1} portrait for more information", colourAlert, colourEnd);
                 data.state = InventoryState.HQ;
-                //loop actors and populate data packages
-                for (int i = 0; i < lengthOfArray; i++)
+                //loop actors and populate data packages (only want hierarchy entries)
+                for (int i = offset; i < offset + GameManager.instance.factionScript.numOfActorsHQ; i++)
                 {
                     Actor actor = arrayOfHqActors[i];
                     if (actor != null)
                     {
+                        motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                        title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
+                        if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         InventoryOptionData optionData = new InventoryOptionData();
                         optionData.sprite = actor.sprite;
-                        optionData.textUpper = actor.arc.name;
-                        //combined text string
-                        optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
+                        optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        switch(motivation)
+                        {
+                            case 3: optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourGood, starFull, starFull, starFull, colourEnd); break;
+                            case 2: optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
+                            case 1: optionData.textLower = string.Format("{0}{1}{2}{3}{4}", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
+                            case 0: optionData.textLower = string.Format("{0}{1}{2}", starEmpty, starEmpty, starEmpty); break;
+                            default: Debug.LogWarningFormat("Unrecognised actor.motivation {0}", motivation); break;
+                        }
+                        /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
-
                         //tooltip
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-
+                        tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        tooltipDetails.textMain = new StringBuilder()
+                           .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
+                                   actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
+                           .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
+                           .ToString();
+                        if (isBoss == true)
+                        { tooltipDetails.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.factionScript.GetBossOpinionFormatted()); }
                         //add to arrays
-                        data.arrayOfOptions[i] = optionData;
-                        data.arrayOfTooltips[i] = tooltipDetails;
+                        data.arrayOfOptions[i - offset] = optionData;
+                        data.arrayOfTooltips[i - offset] = tooltipDetails;
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
                 }
@@ -3687,7 +3713,7 @@ public class ActorManager : MonoBehaviour
             data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
                 colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
                 maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
-            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Actor for Info, {3}{4}RIGHT CLICK{5}{6} Actor for Options{7}", colourAlert, colourEnd, colourDefault,
+            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} portrait for Info, {3}{4}RIGHT CLICK{5}{6} portrait for Options{7}", colourAlert, colourEnd, colourDefault,
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
             data.state = InventoryState.ReservePool;

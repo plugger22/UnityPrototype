@@ -386,6 +386,44 @@ public class CampaignManager : MonoBehaviour
     public void IncrementInvestigationBlackMarks()
     { investigationBlackMarks++; }
 
+    /// <summary>
+    /// returns official HQ title (string, eg. 'Treasurer') for specified enum and Playerside. Returns 'Unknown' if a problem
+    /// </summary>
+    /// <param name="hqPosition"></param>
+    /// <returns></returns>
+    public string GetHqTitle(ActorHQ hqPosition)
+    {
+        string title = "Unknown";
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        switch (playerSide.level)
+        {
+            case 1:
+                //authority
+                switch (hqPosition)
+                {
+                    case ActorHQ.Boss: title = campaign.bossAut.tag; break;
+                    case ActorHQ.SubBoss1: title = campaign.subBoss1Aut.tag; break;  
+                    case ActorHQ.SubBoss2: title = campaign.subBoss2Aut.tag; break;  
+                    case ActorHQ.SubBoss3: title = campaign.subBoss3Aut.tag; break;
+                    default: Debug.LogWarningFormat("Unrecognised Authority hqPosition \"{0}\"", hqPosition); break;
+                }
+                break;
+            case 2:
+                //resistance
+                switch (hqPosition)
+                {
+                    case ActorHQ.Boss: title = campaign.bossRes.tag; break;
+                    case ActorHQ.SubBoss1: title = campaign.subBoss1Res.tag; break;
+                    case ActorHQ.SubBoss2: title = campaign.subBoss2Res.tag; break;
+                    case ActorHQ.SubBoss3: title = campaign.subBoss3Res.tag; break;
+                    default: Debug.LogWarningFormat("Unrecognised Resistance hqPosition \"{0}\"", hqPosition); break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide.level {0}", playerSide.level); break;
+        }
+        return title;
+    }
+
     
 
     //

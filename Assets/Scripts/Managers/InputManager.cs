@@ -232,6 +232,10 @@ public class InputManager : MonoBehaviour
                 {
                     EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", string.Format("InputManager.cs -> ProcessInput ShowGear \"{0}\"", Input.inputString.ToUpper()));
                 }
+                else if (Input.GetButtonDown("ShowHQ") == true)
+                {
+                    EventManager.instance.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessInput ShowHQ \"{0}\"", Input.inputString.ToUpper()));
+                }
                 else if (Input.GetButtonDown("ShowTargets") == true)
                 {
                     EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, string.Format("InputManager.cs -> ProcessInput ShowTargets \"{0}\"", Input.inputString.ToUpper()));

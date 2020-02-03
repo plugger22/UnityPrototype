@@ -38,4 +38,26 @@ MonoBehaviour:
   actorMatchPool: {fileID: 11400000, guid: 66cd518c39713114a8eea05d555cfdf6, type: 2}
   actorPoliticPool: {fileID: 11400000, guid: 3cafa210b53bc8a4cb37b8d88e3a6a62, type: 2}
   playerDistrictPool: {fileID: 0}
+  playerGeneralPool: {fileID: 0}
+  playerStatsPool: {fileID: 0}
+  playerConditionsPool: {fileID: 0}
   hqPool: {fileID: 0}
+  capturePool: {fileID: 0}
+  orgCurePool: {fileID: 0}
+  orgContractPool: {fileID: 0}
+  orgHQPool: {fileID: 0}
+  orgEmergencyPool: {fileID: 0}
+  orgInfoPool: {fileID: 0}
+  orgCure: {fileID: 0}
+  orgContract: {fileID: 0}
+  orgHQ: {fileID: 0}
+  orgEmergency: {fileID: 0}
+  orgInfo: {fileID: 0}
+  bossAut: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  subBoss1Aut: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  subBoss2Aut: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
+  subBoss3Aut: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
+  bossRes: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  subBoss1Res: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  subBoss2Res: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
+  subBoss3Res: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}

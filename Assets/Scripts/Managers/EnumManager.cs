@@ -89,11 +89,12 @@
     //
     public enum ActorStatus { Active, Inactive, Reserve, RecruitPool, Captured, Dismissed, Promoted, Killed, Resigned, HQ }
     public enum ActorSex { None, Male, Female}
-    public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove and you'll need to...  
+    public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove/order and you'll need to...  
                                                                                                 //change code in DataManager -> InitialiseActorArrays
                                                                                                 //change code in FactionManager.cs -> DebugDisplayHQActors
                                                                                                 //change ValidationManager.cs -> CheckActorData
                                                                                                 //change FactionManager.cs -> GetRandomHQPosition
+                                                                                                //change ActorManager.cs -> InitialiseHqHierarchyInventory
 
     public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                               //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}             //used as a parameter only to access lists (DataManager.cs -> GetActorList)

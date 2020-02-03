@@ -294,11 +294,11 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: unassigned
-    descriptiveName: Toggle highlight all nodes of this arc type
+    m_Name: ShowHQ
+    descriptiveName: Display HQ Hierarchy
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: f8
+    positiveButton: h
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0

@@ -2410,3 +2410,108 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 16701 -> Monday, 3 February 2020 11:02 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 31775 -> Monday, 3 February 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56188 -> Monday, 3 February 2020 2:51 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentException: Input Button ShowHQ is not setup.
+ To change the input settings use: Edit -> Project Settings -> Input
+InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:235)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 60266 -> Monday, 3 February 2020 2:52 PM
+City seed 5678 -> London, United Kingdom
+WARNING Mismatch for arrayOfHqActors (has 4 actors, should have 5)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3605)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:3636)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 46619 -> Monday, 3 February 2020 2:53 PM
+City seed 5678 -> London, United Kingdom
+WARNING Mismatch for arrayOfHqActors (has 4 actors, should have 5)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3605)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_class_small_idepth(intptr,object)
+	ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:3640)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 6663 -> Monday, 3 February 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+WARNING Mismatch for arrayOfHqActors (has 4 actors, should have 5)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3605)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid actor (Null) in arrayOfHqActors[5]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3643)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Mismatch for arrayOfHqActors (has 4 actors, should have 5)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3605)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid actor (Null) in arrayOfHqActors[5]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorManager:InitialiseHqHierarchyInventory() (at Assets/Scripts/Managers/ActorManager.cs:3643)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:443)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 31222 -> Monday, 3 February 2020 3:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49824 -> Monday, 3 February 2020 3:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61668 -> Monday, 3 February 2020 3:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10274 -> Monday, 3 February 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31925 -> Monday, 3 February 2020 3:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32563 -> Monday, 3 February 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37079 -> Monday, 3 February 2020 4:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43547 -> Monday, 3 February 2020 4:24 PM
+City seed 5678 -> London, United Kingdom
