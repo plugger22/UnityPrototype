@@ -2515,3 +2515,154 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 43547 -> Monday, 3 February 2020 4:24 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 33106 -> Monday, 3 February 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17544 -> Monday, 3 February 2020 5:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25653 -> Monday, 3 February 2020 5:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24506 -> Monday, 3 February 2020 5:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26008 -> Monday, 3 February 2020 5:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 738 -> Monday, 3 February 2020 5:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33109 -> Monday, 3 February 2020 5:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33360 -> Monday, 3 February 2020 5:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61703 -> Monday, 3 February 2020 5:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61045 -> Monday, 3 February 2020 5:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54490 -> Monday, 3 February 2020 5:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54251 -> Monday, 3 February 2020 5:37 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid option.moodEffect (Null) for option FamC0Opt0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4635)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2832)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5870)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2842)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid option.moodEffect (Null) for option FamC0Opt1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4635)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2832)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5870)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2842)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid option.moodEffect (Null) for option FamC0Opt2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4635)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2832)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5870)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2842)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid belief (Null) for option "FamC0Opt0", topic FamC0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4846)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2864)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid belief (Null) for option "FamC0Opt1", topic FamC0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4846)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2864)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid belief (Null) for option "FamC0Opt2", topic FamC0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4846)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2864)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2641)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid data.sprite (Null or Empty) for topic "FamC0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:400)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:326)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid sprite (Null)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:Topic(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4521)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3530)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3430)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:577)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:279)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:373)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 36899 -> Monday, 3 February 2020 6:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40819 -> Monday, 3 February 2020 6:46 PM
+City seed 5678 -> London, United Kingdom
