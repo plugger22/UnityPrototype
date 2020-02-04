@@ -3920,7 +3920,11 @@ public class EffectManager : MonoBehaviour
                         //Actor
                         if (data.actorID > -1)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                            Actor actor = null;
+                            //check for HQ actor
+                            if (data.isHqActors == false)
+                            { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
+                            else { actor = GameManager.instance.dataScript.GetHQActor(data.actorID); }
                             if (actor != null)
                             { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor); }
                             else
@@ -3941,10 +3945,17 @@ public class EffectManager : MonoBehaviour
                         {
                             if (data.actorOtherID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                                Actor actor = null;
+                                //check for HQ actors
+                                if (data.isHqActors == false)
+                                { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
+                                else { actor = GameManager.instance.dataScript.GetHQActor(data.actorID); }
                                 if (actor != null)
                                 {
-                                    Actor actorOther = GameManager.instance.dataScript.GetActor(data.actorOtherID);
+                                    Actor actorOther = null;
+                                    if (data.isHqActors == false)
+                                    { actorOther = GameManager.instance.dataScript.GetActor(data.actorOtherID); }
+                                    else { actorOther = GameManager.instance.dataScript.GetHQActor(data.actorOtherID); }
                                     if (actorOther != null)
                                     { effectResolve = ResolveTopicDualActorEffect(effect, dataInput, data, actor, actorOther); }
                                     else
@@ -4963,7 +4974,7 @@ public class EffectManager : MonoBehaviour
         //log entry
         if (motivation != dataBefore)
         {
-            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                 dataBefore, motivation, "\n");
         }
         return bottomText;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: HQ 1 option 3
   tag: Reprimand
-  text: Act like Adults
+  text: Suggest they start acting like Adults
   topic: {fileID: 11400000, guid: 737a8e5d07e37c1448e3661d53e68614, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -28,9 +28,11 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: 2
+  tooltipHeader: <color=#FFFFE0>Reprimand</color>
+  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
+    HQ Approval +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Financier
+    Motivation -1</color>\r\n<color=#FF4500>Quartermaster Motivation -1</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Suggest they start acting like Adults</color>
+  optionNumber: 3
