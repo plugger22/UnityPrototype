@@ -574,6 +574,23 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns faction sprite for current player side, returns errorSprite if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Sprite GetFactionSpirte()
+    {
+        Sprite sprite = GameManager.instance.guiScript.errorSprite;
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1: sprite = factionAuthority.sprite; break;
+            case 2: sprite = factionResistance.sprite; break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.instance.sideScript.PlayerSide.level); break;
+        }
+        return sprite;
+    }
+
+
+    /// <summary>
     /// returns current faction approval level for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>

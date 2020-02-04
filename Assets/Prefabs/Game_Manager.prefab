@@ -1996,6 +1996,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 615220622b6ec8f49ae1dfd2ee4a6a12, type: 2}
   - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
   - {fileID: 11400000, guid: 63aaafaa1ad43bc4a980c9ce53813c32, type: 2}
+  - {fileID: 11400000, guid: b530cb38c36b77e46b678e898777109f, type: 2}
+  - {fileID: 11400000, guid: 4abbd6480e2804d429bc4bf9e2a43253, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -2865,6 +2867,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7697bb153727c40438e2114491292d71, type: 2}
   - {fileID: 11400000, guid: 4ac6875b69fa2a34bba8d39e5649556c, type: 2}
   - {fileID: 11400000, guid: faec220b1ada0674ba516d61c77bbf4f, type: 2}
+  - {fileID: 11400000, guid: ca59bf5ada06f234fa4bd65f3f646bed, type: 2}
   arrayOfOptionsCapture:
   - {fileID: 11400000, guid: 0179cd12aca681e41ab3d4942e0e2521, type: 2}
   - {fileID: 11400000, guid: 35175244ec60aad42991943ef29c6b19, type: 2}

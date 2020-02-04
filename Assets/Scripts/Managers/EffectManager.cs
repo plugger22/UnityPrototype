@@ -4064,7 +4064,7 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic, dataInput);
                 break;
             case "Motivation":
-                effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+                effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput, dataTopic);
                 break;
             case "Invisibility":
                 if (node != null)
@@ -4150,7 +4150,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Motivation":
                 //actor Other changes motivation
-                effectResolve.bottomText = ExecuteActorMotivation(effect, actorOther, dataInput);
+                effectResolve.bottomText = ExecuteActorMotivation(effect, actorOther, dataInput, dataTopic);
                 break;
         }
         return effectResolve;
@@ -4814,17 +4814,27 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ExecuteActorMotivation(Effect effect, Actor actor, EffectDataInput dataInput)
+    private string ExecuteActorMotivation(Effect effect, Actor actor, EffectDataInput dataInput, TopicEffectData dataTopic = null)
     {
-        string bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
-        //relationship motivational shift in a friend or enemy
-        RelationshipData data = GameManager.instance.dataScript.GetRelationshipData(actor.slotID);
-        if (data != null)
+        string bottomText = "Unknown";
+        //only applies to OnMap actors, not HQ ones
+        if (dataTopic == null || dataTopic.isHqActors == false)
         {
-            if (data.relationship != ActorRelationship.None)
-            { bottomText = ExecuteActorRelationMotivation(actor, data, effect.operand.name, bottomText); }
+            bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
+            //relationship motivational shift in a friend or enemy
+            RelationshipData data = GameManager.instance.dataScript.GetRelationshipData(actor.slotID);
+            if (data != null)
+            {
+                if (data.relationship != ActorRelationship.None)
+                { bottomText = ExecuteActorRelationMotivation(actor, data, effect.operand.name, bottomText); }
+            }
+            else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
         }
-        else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
+        else
+        {
+            //HQ actor
+            bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description, dataTopic.isHqActors);
+        }
         return bottomText;
     }
 
@@ -4911,7 +4921,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="originText"></param>
     /// <param name="description"></param>
     /// <returns></returns>
-    private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description)
+    private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description, bool isHqActor = false)
     {
         string bottomText = "Unknown";
         int dataBefore = actor.GetDatapoint(ActorDatapoint.Motivation1);
@@ -4922,21 +4932,30 @@ public class EffectManager : MonoBehaviour
                 motivation += Mathf.Abs(amount);
                 motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
-                bottomText = string.Format("{0}{1} {2}{3}", colourGood, actor.arc.name, description, colourEnd);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                 break;
             case "Subtract":
                 motivation -= Mathf.Abs(amount);
-                if (motivation < 0)
+                if (motivation < 0 )
                 {
-                    //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
-                    StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}{2} Motivation too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
-                    builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
-                    builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
-                    motivation = Mathf.Max(0, motivation);
-                    bottomText = builder.ToString();
+                    if (isHqActor == false)
+                    {
+                        //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
+                        StringBuilder builder = new StringBuilder();
+                        builder.AppendFormat("{0}{1}{2} Motivation too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
+                        motivation = Mathf.Max(0, motivation);
+                        bottomText = builder.ToString();
+                    }
+                    else
+                    {
+                        motivation = Mathf.Max(0, motivation);
+                        bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+                    }
                 }
-                else { bottomText = string.Format("{0}{1} {2}{3}", colourBad, actor.arc.name, description, colourEnd); }
+                else
+                { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;

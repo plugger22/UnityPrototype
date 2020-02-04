@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: ShortHqWant
   m_EditorClassIdentifier: 
-  descriptor: It's [shortHqActive]. [actor] and [other] are arguing [shortHqIssue]
-    and both [shortHqWant] your support
+  descriptor: It's [shortHqActive]. [actor] and [other] are arguing [shortHqIssue].
+    Both [shortHqWant] your support
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 0
   isTestForTextTags: 0
@@ -23,4 +23,4 @@ MonoBehaviour:
   - are appealing for
   - are petitioning for
   - are requesting
-  index: 0
+  index: 1

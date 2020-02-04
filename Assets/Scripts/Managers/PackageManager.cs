@@ -798,6 +798,7 @@ namespace packageAPI
     {
         public int actorID;
         public int actorOtherID;           //other actor in a dual actor effect, eg. relationship
+        public bool isHqActors;            //if true, actors are from HQ, default false
         public int nodeID;
         public int teamID;
         public int contactID;

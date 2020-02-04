@@ -174,6 +174,7 @@ public class TopicManager : MonoBehaviour
     private int tagTeamID;              //used for authority team actions
     private int tagContactID;
     private int tagTurn;
+    private bool tagHqActors;           //if true, tagActorID / tagActorOtherID are from HQ, default false, ignore (used for HQ topics)
     private string tagJob;
     private string tagLocation;
     private string tagGear;
@@ -1416,6 +1417,7 @@ public class TopicManager : MonoBehaviour
         tagTeamID = -1;
         tagContactID = -1;
         tagTurn = -1;
+        tagHqActors = false;
         tagJob = "";
         tagLocation = "";
         tagGear = "";
@@ -2318,11 +2320,12 @@ public class TopicManager : MonoBehaviour
                 {
                     if (actorSecond != null)
                     {
-                        //need data for dual actor effect and also relationship type
-                        tagActorID = actorFirst.actorID;
-                        tagActorOtherID = actorSecond.actorID;
+                        //need data for dual actor effect and also relationship type -> NOTE: actorID's are actually hqID's (O.K 'cause tagHqActors is true which caters for this in code)
+                        tagActorID = actorFirst.hqID;
+                        tagActorOtherID = actorSecond.hqID;
                         tagHqActorName = actorFirst.actorName;
                         tagHqOtherName = actorSecond.actorName;
+                        tagHqActors = true;
                         tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
                         tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
                         //group based on faction approval
@@ -4542,6 +4545,7 @@ public class TopicManager : MonoBehaviour
         {
             actorID = tagActorID,
             actorOtherID = tagActorOtherID,
+            isHqActors = tagHqActors,
             nodeID = tagNodeID,
             teamID = tagTeamID,
             contactID = tagContactID,
@@ -4968,18 +4972,36 @@ public class TopicManager : MonoBehaviour
             switch (key)
             {
                 case 'A':
-                    //actor
-                    Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                    if (actor != null)
-                    { prefix = actor.arc.name; }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    //actor -> if HQ actors then actorID is actually hqID
+                    Actor actor = null;
+                    if (tagHqActors == false)
+                    {
+                        actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        if (actor != null) { prefix = actor.arc.name; }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
+                    }
+                    else
+                    {
+                        actor = GameManager.instance.dataScript.GetHQActor(tagActorID);
+                        if (actor != null) { prefix = tagHqTitleActor; }
+                        else { Debug.LogErrorFormat("Invalid HQ actor (Null) for tagActorID {0}", tagActorID); }
+                    }
                     break;
                 case 'B':
-                    //actorOther
-                    Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
-                    if (actorOther != null)
-                    { prefix = actorOther.arc.name; }
-                    else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
+                    //actorOther -> if HQ actors then actorID is actually hqID
+                    Actor actorOther = null;
+                    if (tagHqActors == false)
+                    {
+                        actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                        if (actorOther != null) { prefix = actorOther.arc.name; }
+                        else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
+                    }
+                    else
+                    {
+                        actorOther = GameManager.instance.dataScript.GetHQActor(tagActorOtherID);
+                        if (actorOther != null) { prefix = tagHqTitleOther; }
+                        else { Debug.LogErrorFormat("Invalid HQ actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
+                    }
                     break;
                 case 'L':
                     //All actors
@@ -6114,6 +6136,19 @@ public class TopicManager : MonoBehaviour
                 case "Family":
                     break;
                 case "HQ":
+                    turnSprite = GameManager.instance.factionScript.GetFactionSpirte();
+                    tagSpriteName = GameManager.instance.sideScript.PlayerSide.name;
+                    //based on HQ approval
+                    Tuple<string, string> resultsHQ = GetHqTooltip();
+                    if (string.IsNullOrEmpty(resultsHQ.Item1) == false)
+                    {
+                        //tooltipMain
+                        data.imageTooltipMain = resultsHQ.Item1;
+                        //main present -> Add tooltip header (Actor name and type)
+                        data.imageTooltipHeader = string.Format("<b>{0}{1} HQ{2}</b>", colourAlert, tagSpriteName, colourEnd);
+                    }
+                    if (string.IsNullOrEmpty(resultsHQ.Item2) == false)
+                    { data.imageTooltipDetails = resultsHQ.Item2; }
                     break;
                 case "Capture":
                     turnSprite = GameManager.instance.guiScript.capturedSprite;
@@ -6393,6 +6428,46 @@ public class TopicManager : MonoBehaviour
 
         if (reputation < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
         else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
+        textDetails = builder.ToString();
+        return new Tuple<string, string>(textMain, textDetails);
+    }
+    #endregion
+
+    #region GetHqTooltip
+    /// <summary>
+    /// Returns tooltip main and details based on faction (HQ) approval. tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// </summary>
+    /// <returns></returns>
+    Tuple<string, string> GetHqTooltip()
+    {
+        string textMain = "";
+        string textDetails = "";
+        StringBuilder builder = new StringBuilder();
+        //info on whether topic is good or bad and why
+        switch (turnTopic.group.name)
+        {
+            case "Good":
+                textMain = string.Format("{0}<size=115%>GOOD{1}{2}{3}Event</size>{4}", colourGood, colourEnd, "\n", colourNormal, colourEnd);
+                break;
+            case "Bad":
+                textMain = string.Format("{0}<size=115%>BAD{1}{2}{3}Event</size>{4}", colourBad, colourEnd, "\n", colourNormal, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
+        }
+        //details
+        int approval = GameManager.instance.factionScript.GetFactionApproval();
+        int oddsGood = 50;
+        int oddsBad = 100 - oddsGood;
+        builder.AppendFormat("Determined by{0}{1}<size=110%>HQ Approval</size>{2}{3}", "\n", colourAlert, colourEnd, "\n");
+        //highlight current reputation band, grey out the rest
+        if (approval >= 6) { builder.AppendFormat("if {0}6+{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+        else { builder.AppendFormat("<size=90%>{0}if 6+, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
+
+        if (approval < 6 && approval > 3) { builder.AppendFormat("if {0}4 or 5{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+        else { builder.AppendFormat("<size=90%>{0}if 4 or 5, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
+
+        if (approval < 4) { builder.AppendFormat("if {0}3 or less{1}, {2}Bad{3}", colourNeutral, colourEnd, colourBad, colourEnd); }
+        else { builder.AppendFormat("<size=90%>{0}if 3 or less, Bad{1}</size>", colourGrey, colourEnd); }
         textDetails = builder.ToString();
         return new Tuple<string, string>(textMain, textDetails);
     }

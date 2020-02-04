@@ -11,5 +11,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: HQ1Opt0
   m_EditorClassIdentifier: 
-  tag: HQ 1 option 0
+  descriptor: HQ 1 option 0
+  tag: Take Side
+  text: Back [hqTitleA]
   topic: {fileID: 11400000, guid: 737a8e5d07e37c1448e3661d53e68614, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Take Side</color>
+  tooltipMain: "<color=#98FB98>Quartermaster Motivation +1</color>\r\n<color=#FF4500>Quartermaster
+    Motivation -1</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Back Quartermaster</color>
+  optionNumber: 0
