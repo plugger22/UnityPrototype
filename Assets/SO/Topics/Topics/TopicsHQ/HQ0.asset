@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: HQ0
   m_EditorClassIdentifier: 
-  tag: HQ test 0
-  text: Unknown
+  tag: HQ Internal Politics
+  text: It's [hqActive]. [hqTitleA] [hqNameA] and [hqTitleO] [hqNameO] are arguing
+    [hqIssue] and both [hqWant] your support
   designNotes: 'Applies to both sides
 
     Generic internal politics'
@@ -25,7 +26,7 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  profile: {fileID: 11400000, guid: 64d78a497f3fa3842a62b1957b4c5c9c, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects: []
   listOfOptions:
@@ -37,12 +38,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 4
+  timerRepeat: 10
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 18
   turnsDone: 0

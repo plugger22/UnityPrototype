@@ -95,6 +95,7 @@
                                                                                                 //change ValidationManager.cs -> CheckActorData
                                                                                                 //change FactionManager.cs -> GetRandomHQPosition
                                                                                                 //change ActorManager.cs -> InitialiseHqHierarchyInventory
+                                                                                                //change TopicManager.cs -> GetHQSubTopics
 
     public enum ActorInactive { None, LieLow, Breakdown, StressLeave}                               //reason actor is inactive
     public enum ActorList { None, Reserve, Promoted, Dismissed, Disposed, Resigned, HQ}             //used as a parameter only to access lists (DataManager.cs -> GetActorList)

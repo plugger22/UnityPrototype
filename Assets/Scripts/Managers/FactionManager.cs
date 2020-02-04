@@ -38,8 +38,8 @@ public class FactionManager : MonoBehaviour
     #region SaveDataCompatible
     private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
     private int approvalZeroTimer;                          //countdown timer once approval at zero. Player fired when timer reaches zero.
-    public bool isHqRelocating;                            //true if HQ relocating. Disallows HQ support + Gear/Recruit/Lie Low actions
     private int timerHqRelocating;                          //activated when relocation occurs, counts down to zero when relocation is considered done
+    [HideInInspector] public bool isHqRelocating;           //true if HQ relocating. Disallows HQ support + Gear/Recruit/Lie Low actions
     #endregion
 
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed

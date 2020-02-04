@@ -1523,6 +1523,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3cf3841dabd52074ab2250fca01adda4, type: 2}
   - {fileID: 11400000, guid: 81cf92af807c2974a81bd8053bbb4dd6, type: 2}
   - {fileID: 11400000, guid: 1220323b8e836614fb58898cdd15e3ab, type: 2}
+  - {fileID: 11400000, guid: fafb644a07b521f4ebf4755625f3133f, type: 2}
+  - {fileID: 11400000, guid: 6fb37af2b3a997a4f8b821c0e6dc2de3, type: 2}
+  - {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -4183,7 +4186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 2cacc8eee82bc0b4fad6705b3c6e6054, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4941,6 +4944,9 @@ MonoBehaviour:
     type: 2}
   textListFriendReason: {fileID: 11400000, guid: 4393b2fe505a2a143a796738aa2b8eb5,
     type: 2}
+  textListHqActive: {fileID: 11400000, guid: fafb644a07b521f4ebf4755625f3133f, type: 2}
+  textListHqIssue: {fileID: 11400000, guid: 6fb37af2b3a997a4f8b821c0e6dc2de3, type: 2}
+  textListHqWant: {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}

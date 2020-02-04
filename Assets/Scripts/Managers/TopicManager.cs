@@ -67,6 +67,12 @@ public class TopicManager : MonoBehaviour
     public TextList textListFriendAction;
     [Tooltip("List of Friend reasons for ActorPolitic topics")]
     public TextList textListFriendReason;
+    [Tooltip("List of active verb combos for HQ topics")]
+    public TextList textListHqActive;
+    [Tooltip("List of issues for HQ topics")]
+    public TextList textListHqIssue;
+    [Tooltip("List of wants for HQ topics")]
+    public TextList textListHqWant;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -185,6 +191,10 @@ public class TopicManager : MonoBehaviour
     private string tagOrgWant;          //what the org wants you to do (org.textWant)
     private string tagOrgText;          //previous service provided by Org (orgData.text)
     private string tagInvestTag;        //investigation tag
+    private string tagHqActorName;      //name of HQ [actor.tagActorID]
+    private string tagHqOtherName;      //name of HQ [actor.tagActorOtherID]
+    private string tagHqTitleActor;     //title of HQ [actor.tagActorID]
+    private string tagHqTitleOther;     //title of HQ [other.tagActorOtherID]
     private ActorRelationship tagRelation;  //used for actor relationships
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
@@ -355,6 +365,9 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListEnemyAction != null, "Invalid textListEnemyAction (Null)");
         Debug.Assert(textListFriendReason != null, "Invalid textListFriendReason (Null)");
         Debug.Assert(textListEnemyReason != null, "Invalid textListEnemyReason (Null)");
+        Debug.Assert(textListHqActive != null, "Invalid textListHqActive (Null)");
+        Debug.Assert(textListHqIssue != null, "Invalid textListHqIssue (Null)");
+        Debug.Assert(textListHqWant != null, "Invalid textListHqWant (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -1417,6 +1430,10 @@ public class TopicManager : MonoBehaviour
         tagOrgWant = "";
         tagOrgText = "";
         tagInvestTag = "";
+        tagHqActorName = "";
+        tagHqOtherName = "";
+        tagHqTitleActor = "";
+        tagHqTitleOther = "";
         tagSpriteName = "";
         tagOptionText = "";
         tagStringData = "";
@@ -1592,9 +1609,8 @@ public class TopicManager : MonoBehaviour
                     case "ResistanceCampaign":
                     case "ResistanceGeneral":
                     case "HQSub":
-                        //based on faction Approval
-                        group = GetGroupApproval(GameManager.instance.factionScript.ApprovalResistance);
-                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
+                        //two hq actors selected at random, internal politics
+                        listOfPotentialTopics = GetHQSubTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "CaptureSub":
                         //based on random 50/50 roll
@@ -1622,7 +1638,7 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetActorGearTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorPolitic":
-                        //based on actor Motivation
+                        //based on relationships between actors (two actors selected)
                         listOfPotentialTopics = GetActorPoliticTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorContact":
@@ -1845,7 +1861,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorPoliticTopics
     /// <summary>
-    /// subType ActorPolitic template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorPolitic template topics selected by relationships between actors (selects from a weighted pool). Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
@@ -2254,6 +2270,73 @@ public class TopicManager : MonoBehaviour
             Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
             listOfTopics.Clear();
         }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetHQSubTopics
+    /// <summary>
+    /// subType HqSub template topics. Returns EMPTY if none found. 
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetHQSubTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfHqActors != null)
+        {
+            int offset = 1;
+            int numOfHierarchy = GameManager.instance.factionScript.numOfActorsHQ;
+            //get first actor from hq hierarchy
+            List<int> tempList = new List<int>();
+            //loop through hierarchy and get array indexes for any valid actors
+            for (int i = offset; i < offset + numOfHierarchy; i++)
+            {
+                if (arrayOfHqActors[i] != null) { tempList.Add(i); }
+                else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
+            }
+            int count = tempList.Count;
+            //should always be a full complement present
+            if (count != numOfHierarchy) { Debug.LogWarningFormat("Missing HQ hierarchy actors (is {0}, should be {1})", count, numOfHierarchy); }
+            //need at least two actors in HQ for topic
+            if (count > 1)
+            {
+                int rndNum = Random.Range(0, count);
+                int indexFirst = tempList[rndNum];
+                //remove record to prevent dupes
+                tempList.RemoveAt(rndNum);
+                int indexSecond = tempList[Random.Range(0, tempList.Count)];
+                //get actors from array using randomly chosen indexes
+                Actor actorFirst = arrayOfHqActors[indexFirst];
+                Actor actorSecond = arrayOfHqActors[indexSecond];
+                if (actorFirst != null)
+                {
+                    if (actorSecond != null)
+                    {
+                        //need data for dual actor effect and also relationship type
+                        tagActorID = actorFirst.actorID;
+                        tagActorOtherID = actorSecond.actorID;
+                        tagHqActorName = actorFirst.actorName;
+                        tagHqOtherName = actorSecond.actorName;
+                        tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
+                        tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
+                        //group based on faction approval
+                        group = GetGroupApproval(GameManager.instance.factionScript.GetFactionApproval());
+                        //if no entries use entire list by default
+                        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                    }
+                    else { Debug.LogWarningFormat("Invalid actorSecond (Null) for arrayOfHQActors[{0}]", indexSecond); }
+                }
+                else { Debug.LogWarningFormat("Invalid actorFirst (Null) for arrayOfHQActors[{0)]", indexFirst); }
+            }
+            else { Debug.LogWarningFormat("Not enough HQ hierarchy actors (is {0}, need at least 2", count); }
+        }
+        else { Debug.LogWarning("Invalid arrayOfActorsHQ (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -5853,6 +5936,68 @@ public class TopicManager : MonoBehaviour
                             else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); replaceText = "unknown"; }
                         }
                         else { CountTextTag("manP", dictOfTags); }
+                        break;
+                    case "hqActive":
+                        //HQ topic -> 'HQ internal politics have [..]' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}</b>", textListHqActive.GetRandomRecord()); }
+                            else { replaceText = textListHqActive.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("hqActive", dictOfTags); }
+                        break;
+                    case "hqIssue":
+                        //HQ topic -> 'are arguing [..]' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}</b>", textListHqIssue.GetRandomRecord()); }
+                            else { replaceText = textListHqIssue.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("hqIssue", dictOfTags); }
+                        break;
+                    case "hqWant":
+                        //HQ topic -> 'both [..] your support' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}</b>", textListHqWant.GetRandomRecord()); }
+                            else { replaceText = textListHqWant.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("hqWant", dictOfTags); }
+                        break;
+                    case "hqNameA":
+                        //name of HQ [actor]
+                        if (isValidate == false)
+                        { replaceText = string.Format("<b>{0}</b>", tagHqActorName); }
+                        else { CountTextTag("hqNameA", dictOfTags); }
+                        break;
+                    case "hqNameO":
+                        //name of HQ [other]
+                        if (isValidate == false)
+                        { replaceText = string.Format("<b>{0}</b>", tagHqOtherName); }
+                        else { CountTextTag("hqNameO", dictOfTags); }
+                        break;
+                    case "hqTitleA":
+                        //title of HQ [actor]
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagHqTitleActor, colourEnd); }
+                            else { replaceText =tagHqTitleActor; }
+                        }
+                        else { CountTextTag("hqTitleA", dictOfTags); }
+                        break;
+                    case "hqTitleO":
+                        //title of HQ [other]
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagHqTitleOther, colourEnd); }
+                            else { replaceText = tagHqTitleOther; }
+                        }
+                        else { CountTextTag("hqTitleO", dictOfTags); }
                         break;
                     default:
                         if (isValidate == false)

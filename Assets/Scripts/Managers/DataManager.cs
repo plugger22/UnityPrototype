@@ -50,7 +50,7 @@ public class DataManager : MonoBehaviour
     private string[,] arrayOfStatTags;                                                          //tags for actor stats -> index[(int)Side, 3 Qualities]
     private Factor[] arrayOfFactors;                                                            //personality factors (indexes correspond to Actor/Player personality arrays)
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
-    private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.StatusHQ (index 0 & last are Null as 'None' & 'Worker')
+    private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.StatusHQ (index 0 & last few are Null as 'None', etc)
     private bool[] arrayOfOrgInfo;                                                              //index maps to enum.OrgInfoType and if true, OrgInfo is currently providing player info on that type
 
     private Graph graph;

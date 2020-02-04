@@ -3592,7 +3592,7 @@ public class ActorManager : MonoBehaviour
         int motivation;
         bool errorFlag = false;
         bool isBoss;
-        char starFull = '\u0024';
+        char starFull = '\u2605';
         char starEmpty = '\u2606';
         string title;
         //close all modal 0 tooltips
@@ -3629,21 +3629,18 @@ public class ActorManager : MonoBehaviour
                         InventoryOptionData optionData = new InventoryOptionData();
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
-                        StringBuilder builderLower = new StringBuilder();
                         switch(motivation)
                         {
-                            /*case 3: optionData.textLower = string.Format("Motivation{0}{1}{2} {3} {4}{5}", "\n", colourGood, starFull, starFull, starFull, colourEnd); break;
+                            /*case 3: optionData.textLower = string.Format("Motivation{1}{2} {3} {4}{5}", "\n", colourGood, starFull, starFull, starFull, colourEnd); break;
                             case 2: optionData.textLower = string.Format("Motivation{0}{1}{2} {3}{4} {5}", "\n",  colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
                             case 1: optionData.textLower = string.Format("Motivation{0}{1}{2}{3} {4} {5}", "\n", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
                             case 0: optionData.textLower = string.Format("Motivation{0}{1} {2} {3}", "\n", starEmpty, starEmpty, starEmpty); break;*/
 
-                            case 3: builderLower.AppendFormat("{0}{1} {2} {3}{4}", colourGood, starFull, starFull, starFull, colourEnd); break;
-                            case 2: builderLower.AppendFormat("{0}{1} {2}{3} {4}", colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
-                            case 1: builderLower.AppendFormat("{0}{1}{2} {3} {4}", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
-                            case 0: builderLower.AppendFormat("{0} {1} {2}", starEmpty, starEmpty, starEmpty); break;
-                            default: Debug.LogWarningFormat("Unrecognised actor.motivation {0}", motivation); break;
+                            case 3: optionData.textLower = string.Format("{0}{1} {2} {3}{4}", colourGood, starFull, starFull, starFull, colourEnd); break;
+                            case 2: optionData.textLower = string.Format("{0}{1} {2}{3} {4}", colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
+                            case 1: optionData.textLower = string.Format("{0}{1}{2} {3} {4}", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
+                            case 0: optionData.textLower = string.Format("{0} {1} {2}", starEmpty, starEmpty, starEmpty); break;
                         }
-                        optionData.textLower = builderLower.ToString();
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
                         //tooltip
