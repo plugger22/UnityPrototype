@@ -6036,17 +6036,19 @@ public class TopicManager : MonoBehaviour
             switch (turnTopicType.name)
             {
                 case "Actor":
-                    if (tagActorOtherID > -1)
+                    //normal actor situation or special (dual/multiple)
+                    switch (turnTopicSubType.name)
                     {
-                        Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
-                        if (actorOther != null)
-                        {
-                            turnSprite = actorOther.sprite;
-                            tagSpriteName = actorOther.actorName;
-                            switch (turnTopicSubType.name)
+                        case "ActorMatch":
+                        case "ActorPolitic":
+                            //use tagActorOtherID
+                            if (tagActorOtherID > -1)
                             {
-                                case "ActorMatch":
-                                case "ActorPolitic":
+                                Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                                if (actorOther != null)
+                                {
+                                    turnSprite = actorOther.sprite;
+                                    tagSpriteName = actorOther.actorName;
                                     //based on player mood
                                     Tuple<string, string> resultsMatch = GetPlayerTooltip();
                                     if (string.IsNullOrEmpty(resultsMatch.Item1) == false)
@@ -6058,24 +6060,36 @@ public class TopicManager : MonoBehaviour
                                     }
                                     if (string.IsNullOrEmpty(resultsMatch.Item2) == false)
                                     { data.imageTooltipDetails = resultsMatch.Item2; }
-                                    break;
-                                default:
-                                    Tuple<string, string> resultsActor = GetActorTooltip(actorOther);
+                                }
+                                else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid tagActorOtherID \"{0}\"", tagActorOtherID); }
+                            break;
+                        default:
+                            //use tagActorID
+                            if (tagActorID > -1)
+                            {
+                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                if (actor != null)
+                                {
+                                    turnSprite = actor.sprite;
+                                    tagSpriteName = actor.actorName;
+                                    Tuple<string, string> resultsActor = GetActorTooltip(actor);
                                     if (string.IsNullOrEmpty(resultsActor.Item1) == false)
                                     {
                                         //tooltipMain
                                         data.imageTooltipMain = resultsActor.Item1;
                                         //main present -> Add tooltip header (Actor name and type)
-                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actorOther.arc.name, colourEnd, "\n", colourNormal, actorOther.actorName, colourEnd);
+                                        data.imageTooltipHeader = string.Format("<b>{0}{1}{2}{3}{4}{5}{6}</b>", colourAlert, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
                                     }
                                     if (string.IsNullOrEmpty(resultsActor.Item2) == false)
                                     { data.imageTooltipDetails = resultsActor.Item2; }
-                                    break;
+                                }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
                             }
-                        }
-                        else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
+                            else { Debug.LogWarningFormat("Invalid tagActorID \"{0}\"", tagActorID); }
+                            break;
                     }
-                    else { Debug.LogWarningFormat("Invalid tagActorOtherID \"{0}\"", tagActorOtherID); }
                     break;
                 case "Authority":
                     break;
