@@ -26,12 +26,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: I'm a big believer in [side] HQ. They are here to make my life better. How?
+    I'm not exactly sure but I'm hoping, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Politely Decline</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\n<color=#BDC3C7>Nothing
     Happens</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500> HQ
     Approval -1</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>I'm not that kind of guy</color>
   optionNumber: 3

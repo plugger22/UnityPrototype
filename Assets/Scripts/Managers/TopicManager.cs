@@ -5971,6 +5971,12 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("hqTitleO", dictOfTags); }
                         break;
+                    case "side":
+                        //Player side
+                        if (isValidate == false)
+                        { replaceText = string.Format("<b>{0}</b>", GameManager.instance.sideScript.PlayerSide.name); }
+                        else { CountTextTag("side", dictOfTags); }
+                        break;
                     default:
                         if (isValidate == false)
                         { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", tag, text); }
