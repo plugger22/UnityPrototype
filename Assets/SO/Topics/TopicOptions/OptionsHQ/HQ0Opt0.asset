@@ -24,11 +24,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4441f5fe61c587c4fb736bd8c71fdaf3, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Take Sides</color>
-  tooltipMain: "<color=#98FB98>Director Motivation +1</color>\r\n<color=#FF4500>Quartermaster
+  tooltipMain: "<color=#98FB98>Director Motivation +1</color>\r\n<color=#FF4500>Psychologist
     Motivation -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1

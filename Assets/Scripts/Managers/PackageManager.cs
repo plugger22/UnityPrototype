@@ -96,6 +96,7 @@ namespace packageAPI
         {
             nodeID = -1;
             actorSlotID = -1;
+            actorHqID = -1;
             teamArcID = -1;
         }
     }

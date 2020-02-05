@@ -25,11 +25,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>A Big NO</color>
-  tooltipMain: "<color=#98FB98>Player Renown +2</color>\r\n<color=#FF4500>Psychologist
+  tooltipMain: "<color=#98FB98>Player Renown +2</color>\r\n<color=#FF4500>Quartermaster
     Motivation -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1

@@ -1106,7 +1106,7 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }*/
 
-    
+
     #endregion
 
     #region CheckTopics
@@ -1279,8 +1279,12 @@ public class TopicManager : MonoBehaviour
                 //loop list of Topic Types
                 foreach (TopicType topicType in listOfTopicTypesLevel)
                 {
-                    TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
-                    CheckForValidSubType(topicType, topicTypeData, turn);
+                    //Topic Types can be switched on/off for debugging purposes
+                    if (topicType.isDisabled == false)
+                    {
+                        TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                        CheckForValidSubType(topicType, topicTypeData, turn);
+                    }
                 }
             }
             else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
@@ -1315,7 +1319,7 @@ public class TopicManager : MonoBehaviour
                         //topicType needs to have at least one valid subType present
                         foreach (TopicSubType subType in listOfSubTypes)
                         {
-                            if (CheckSubTypeCriteria(subType) == true)
+                            if (subType.isDisabled == false && CheckSubTypeCriteria(subType) == true)
                             {
                                 isProceed = true;
                                 break;
@@ -1330,12 +1334,10 @@ public class TopicManager : MonoBehaviour
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
-
                 }
                 else
                 {
                     //criteria check FAILED
-
                     //generate message explaining why criteria failed -> debug only, spam otherwise
                     Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
                 }
@@ -2270,13 +2272,26 @@ public class TopicManager : MonoBehaviour
                     if (actorSecond != null)
                     {
                         //need data for dual actor effect and also relationship type -> NOTE: actorID's are actually hqID's (O.K 'cause tagHqActors is true which caters for this in code)
-                        tagActorID = actorFirst.hqID;
-                        tagActorOtherID = actorSecond.hqID;
-                        tagHqActorName = actorFirst.actorName;
-                        tagHqOtherName = actorSecond.actorName;
                         tagHqActors = true;
-                        tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
-                        tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
+                        //tagActorID is always the actor with the highest (or equal highest) motivation (optimises HQ single actor topics)
+                        if (actorFirst.GetDatapoint(ActorDatapoint.Motivation1) >= actorSecond.GetDatapoint(ActorDatapoint.Motivation1))
+                        {
+                            tagActorID = actorFirst.hqID;
+                            tagActorOtherID = actorSecond.hqID;
+                            tagHqActorName = actorFirst.actorName;
+                            tagHqOtherName = actorSecond.actorName;
+                            tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
+                            tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
+                        }
+                        else
+                        {
+                            tagActorID = actorSecond.hqID;
+                            tagActorOtherID = actorFirst.hqID;
+                            tagHqActorName = actorSecond.actorName;
+                            tagHqOtherName = actorFirst.actorName;
+                            tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
+                            tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
+                        }
                         //group based on faction approval
                         group = GetGroupApproval(GameManager.instance.factionScript.GetFactionApproval());
                         //if no entries use entire list by default
@@ -2792,43 +2807,7 @@ public class TopicManager : MonoBehaviour
                             if (option != null)
                             {
                                 colourOption = colourNeutral;
-
-                                /*//check any criteria
-                                if (CheckOptionCriteria(option) == true)
-                                {
-                                    //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
-                                    if (isPlayerGeneral == true)
-                                    {
-                                        if (option.optionNumber > -1)
-                                        {
-                                            tagActorID = arrayOfOptionActorIDs[option.optionNumber];
-                                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: optionNumber {0}, tagActorID {1}{2}", option.optionNumber, tagActorID, "\n");
-                                        }
-                                        else { Debug.LogWarningFormat("Invalid option.optionNumber {0} for {1}", option.optionNumber, option.name); }
-                                    }
-                                    //initialise option tooltips
-                                    if (InitialiseOptionTooltip(option) == true)
-                                    { isProceed = true; }
-                                }
-                                else
-                                {
-                                    //criteria checked failed
-                                    isProceed = true;
-                                    colourOption = colourGrey;
-                                    if (isPlayerGeneral == true)
-                                    { tagActorID = -1; }
-                                }
-                                //colourFormat textToDisplay -> special case first
-                                if (isPlayerGeneral == true)
-                                {
-                                    if (tagActorID < 0)
-                                    { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, "Subordinate unavailable", colourEnd); }
-                                    else { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }
-                                }
-                                else
-                                { option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd); }*/
-
-
+                                //special case of multiple actor choices
                                 if (isPlayerGeneral == true)
                                 {
                                     if (option.optionNumber > -1)
@@ -2876,8 +2855,6 @@ public class TopicManager : MonoBehaviour
                                     //colourFormat textToDisplay
                                     option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
                                 }
-
-
                             }
                             else { Debug.LogErrorFormat("Invalid topicOption (Null) in listOfOptions[{0}] for topic \"{1}\"", i, turnTopic.name); }
                         }
@@ -3131,7 +3108,7 @@ public class TopicManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, turnOption.name); }
                     }
                 }
-                else { builderBottom.AppendFormat("{0}Nothing happened{1}", colourGrey, colourEnd); }
+                else { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
             }
             else
             { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
@@ -3748,7 +3725,7 @@ public class TopicManager : MonoBehaviour
                     case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
                 }
-            }           
+            }
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
@@ -4528,15 +4505,21 @@ public class TopicManager : MonoBehaviour
             int actorCurrentHqID = -1;
             if (tagActorID > -1)
             {
-                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
-                if (actor != null)
+                Actor actor = null;
+                //normal actor uses slotID, HQ actor uses hqID
+                if (tagHqActors == false)
                 {
-                    //normal actor uses slotID, HQ actor uses hqID
-                    if (tagHqActors == false)
+                    actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    if (actor != null)
                     { actorCurrentSlotID = actor.slotID; }
-                    else { actorCurrentHqID = -1; }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                 }
-                else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
+                else
+                {
+                    actor = GameManager.instance.dataScript.GetHQActor(tagActorID);
+                    if (actor != null)
+                    { actorCurrentHqID = actor.hqID; }
+                }
             }
             //orgName provided as capture topics have org criteria on certain options (ignored for the rest)
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
@@ -5974,7 +5957,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagHqTitleActor, colourEnd); }
-                            else { replaceText =tagHqTitleActor; }
+                            else { replaceText = tagHqTitleActor; }
                         }
                         else { CountTextTag("hqTitleA", dictOfTags); }
                         break;

@@ -20,4 +20,5 @@ MonoBehaviour:
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: cd489508540b15f44b51045d9933098a, type: 2}
+  isDisabled: 1
   minInterval: 0

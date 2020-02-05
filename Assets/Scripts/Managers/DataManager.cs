@@ -4040,6 +4040,7 @@ public class DataManager : MonoBehaviour
             arrayOfActorsPresent[side.level, actor.slotID] = false;
         }
         actor.Status = status;
+        actor.slotID = -1;   //added Feb 5 '20
         //update node contacts
         if (actor.CheckNumOfContacts() > 0)
         { RemoveContactsActor(actor.actorID); }

@@ -40,6 +40,10 @@ public class TopicSubType : ScriptableObject
     [Tooltip("In order for the topic type to be valid for a level all Criteria must be TRUE")]
     public List<Criteria> listOfCriteria;
 
+    [Header("Testing")]
+    [Tooltip("Ignored if true")]
+    public bool isDisabled;
+
     [HideInInspector] public int minInterval;               //calculated value = minIntervalFactor x TopicManager.cs -> minIntervalGlobal (calculated at TopicManager.cs -> subInitialiseStartUp)
 
     public void OnEnable()

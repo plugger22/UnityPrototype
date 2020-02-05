@@ -25,11 +25,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>No Thankyou</color>
-  tooltipMain: "<color=#98FB98>Player Renown +3</color>\r\n<color=#FF4500>Director
+  tooltipMain: "<color=#98FB98>Player Renown +3</color>\r\n<color=#FF4500>Quartermaster
     Motivation -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1

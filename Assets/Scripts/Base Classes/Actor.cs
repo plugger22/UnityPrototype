@@ -361,7 +361,13 @@ namespace gameAPI
                                 //add to list
                                 personality.AddMotivation(history);
                             }
-                            else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
+                            else
+                            {
+                                if (Status != ActorStatus.HQ)
+                                { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
+                                else { Debug.LogWarningFormat("SetDatapoint change Datapoint1 has same value as already present for {0}, {1}, ID {2}, hqID {3}", actorName, 
+                                    GameManager.instance.campaignScript.GetHqTitle(statusHQ), actorID, hqID); }
+                            }
                         }
                         else
                         {

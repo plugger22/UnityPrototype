@@ -33,4 +33,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 504b318621626ff4fa1b719fc91320fd, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 8f1e0c7f861171349a77315e9653e719, type: 2}
-  minInterval: 4
+  isDisabled: 1
+  minInterval: 2

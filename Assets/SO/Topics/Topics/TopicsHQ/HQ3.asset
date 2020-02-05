@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: HQ3
   m_EditorClassIdentifier: 
   tag: Indecent Proposal
-  text: I beg your pardon! [hqTitleA] [hqNameA], visiting [city], has suggested that
-    we do the unmentionable
+  text: Excuse Me! [hqTitleA] [hqNameA], visiting [city], has suggested that we wet
+    the whistle
   designNotes: 'Applies to both sides
 
     Generic internal politics'
@@ -46,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 16
+  turnsLive: 21
   turnsDone: 0

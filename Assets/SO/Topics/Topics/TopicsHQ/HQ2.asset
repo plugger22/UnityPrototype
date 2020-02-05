@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: HQ2
   m_EditorClassIdentifier: 
   tag: Improper Proposal
-  text: Excuse Me! [hqTitleA] [hqNameA], visiting [city], has suggested that we wet
-    the whistle!
+  text: I beg your pardon! [hqTitleA] [hqNameA], visiting [city], is whispering sweet
+    nothings in your ear
   designNotes: 'Applies to both sides
 
     Generic internal politics'
@@ -46,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 22
+  turnsLive: 19
   turnsDone: 0

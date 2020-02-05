@@ -25,14 +25,14 @@ MonoBehaviour:
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   - {fileID: 11400000, guid: 2b167a01f98ded54cb07f8c3a5f3f0aa, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   news: 
   tooltipHeader: <color=#FFFFE0>Reprimand</color>
   tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>
-    HQ Approval +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Financier
+    HQ Approval +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Psychologist
     Motivation -1</color>\r\n<color=#FF4500>Quartermaster Motivation -1</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Suggest they start acting like Adults</color>
   optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: HQ1Opt1
   m_EditorClassIdentifier: 
   descriptor: HQ 1 option 1
-  tag: Choose
-  text: Back the [hqTitleO]
+  tag: Help
+  text: I have to help the [hqTitleO]
   topic: {fileID: 11400000, guid: 737a8e5d07e37c1448e3661d53e68614, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,11 +24,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b530cb38c36b77e46b678e898777109f, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Choose</color>
-  tooltipMain: "<color=#98FB98>Quartermaster Motivation +1</color>\r\n<color=#FF4500>Financier
+  tooltipMain: "<color=#98FB98>Quartermaster Motivation +1</color>\r\n<color=#FF4500>Psychologist
     Motivation -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
