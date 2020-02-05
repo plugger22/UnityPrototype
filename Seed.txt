@@ -7990,3 +7990,16 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 57887 -> Wednesday, 5 February 2020 5:18 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 36966 -> Wednesday, 5 February 2020 5:47 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicUI.InitialiseTooltips () (at Assets/Scripts/GUI/TopicUI.cs:353)
+	TopicUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/TopicUI.cs:219)
+	TopicUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/TopicUI.cs:104)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:760)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:815)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:361)
+	
+Dev seed 12034 -> Wednesday, 5 February 2020 5:48 PM
+City seed 5678 -> London, United Kingdom

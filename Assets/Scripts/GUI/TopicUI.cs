@@ -28,7 +28,8 @@ public class TopicUI : MonoBehaviour
     public Button buttonOption3;
     public Button buttonIgnore;
     public Button buttonShowMe;
-    public Button buttonHelp;
+    public Button buttonHelp_generic;
+    public Button buttonHelp_specific;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
@@ -148,7 +149,8 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonOption3 != null, "Invalid buttonOption3 (Null)");
         Debug.Assert(buttonIgnore != null, "Invalid buttonIgnore (Null)");
         Debug.Assert(buttonShowMe != null, "Invalid buttonShowMe (Null)");
-        Debug.Assert(buttonHelp != null, "Invalid buttonHelp (Null)");
+        Debug.Assert(buttonHelp_generic != null, "Invalid buttonHelp_generic (Null)");
+        Debug.Assert(buttonHelp_specific != null, "Invalid buttonHelp_specific (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
@@ -347,10 +349,16 @@ public class TopicUI : MonoBehaviour
         List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
-            GenericHelpTooltipUI help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
-            if (help != null)
-            { help.SetHelpTooltip(listOfHelp, 150, 200); }
-            else { Debug.LogWarning("Invalid GenericHelpTooltipUI (Null)"); }
+            //generic help
+            GenericHelpTooltipUI helpGeneric = buttonHelp_generic.GetComponent<GenericHelpTooltipUI>();
+            if (helpGeneric != null)
+            { helpGeneric.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGeneric (Null)"); }
+            //specific help
+            GenericHelpTooltipUI helpSpecific = buttonHelp_specific.GetComponent<GenericHelpTooltipUI>();
+            if (helpSpecific != null)
+            { helpSpecific.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
