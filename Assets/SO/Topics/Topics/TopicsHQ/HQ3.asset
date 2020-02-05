@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: HQ3
+  m_EditorClassIdentifier: 
+  tag: Indecent Proposal
+  text: I beg your pardon! [hqTitleA] [hqNameA], visiting [city], has suggested that
+    we do the unmentionable
+  designNotes: 'Applies to both sides
+
+    Generic internal politics'
+  type: {fileID: 11400000, guid: b662571175bcd8b43aa7617fcc8ff8c8, type: 2}
+  subType: {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: 64d78a497f3fa3842a62b1957b4c5c9c, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: d60c0a1b8b5cf574c87cef9061a2a7b0, type: 2}
+  - {fileID: 11400000, guid: 56266a88edd6b7b4c89a480864b1b433, type: 2}
+  - {fileID: 11400000, guid: e25a8fca0f207e449b02cc15e5d37bc9, type: 2}
+  - {fileID: 11400000, guid: 7f244c88ef285dc499781040545902c0, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 10
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 16
+  turnsDone: 0

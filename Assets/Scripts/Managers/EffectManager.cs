@@ -301,7 +301,7 @@ public class EffectManager : MonoBehaviour
             //
             // - - - access necessary data prior to loop
             //
-            //Get node if required (eg., if "CurrentActor" then not)
+            //Get node if required
             if (data.nodeID > -1)
             {
                 node = GameManager.instance.dataScript.GetNode(data.nodeID);
@@ -309,13 +309,23 @@ public class EffectManager : MonoBehaviour
                 { Debug.LogError("Invalid node (null)"); errorFlag = true; }
             }
             //Get actor if required
-            if (data.actorSlotID != -1)
+            if (data.actorSlotID > -1)
             {
-                //get actor
+                //OnMap actor
                 actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor == null)
                 {
-                    Debug.LogError("Invalid actorSlotID -> Criteria Check cancelled");
+                    Debug.LogErrorFormat("Invalid actorSlotID \"{0}\" -> Criteria Check cancelled", data.actorSlotID);
+                    errorFlag = true;
+                }
+            }
+            else if (data.actorHqID > -1)
+            {
+                //HQ actor
+                actor = GameManager.instance.dataScript.GetHQActor(data.actorHqID);
+                if (actor == null)
+                {
+                    Debug.LogErrorFormat("Invalid actorHqID \"{0}\" -> Criteria Check cancelled", data.actorHqID);
                     errorFlag = true;
                 }
             }
@@ -910,6 +920,15 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, string.Format(" {0} Low Motivation (need 2+)", actor.arc.name)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for MotivationNeutralMin"); }
+                                                break;
+                                            case "MotivationNOTZero":
+                                                //Actor motivation is 1+
+                                                if (actor != null)
+                                                {
+                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                                                    { BuildString(result, string.Format(" {0} Motivation Zero", actor.arc.name)); }
+                                                }
+                                                else { Debug.LogWarning("Invalid actor (Null) for MotivationNOTZero"); }
                                                 break;
                                             case "RenownReserveMin":
                                                 //player
@@ -1612,6 +1631,11 @@ public class EffectManager : MonoBehaviour
                                                 //HQ not currently relocating
                                                 if (GameManager.instance.factionScript.isHqRelocating == true)
                                                 { BuildString(result, "HQ is Relocating"); }
+                                                break;
+                                            case "HqApprovalNOTZero":
+                                                //Player HQ Approval 1+
+                                                if (GameManager.instance.factionScript.GetFactionApproval() == 0)
+                                                { BuildString(result, "HQ Approval Zero"); }
                                                 break;
                                             default:
                                                 BuildString(result, "Error!");

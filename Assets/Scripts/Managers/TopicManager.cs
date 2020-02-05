@@ -1281,57 +1281,6 @@ public class TopicManager : MonoBehaviour
                 {
                     TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
                     CheckForValidSubType(topicType, topicTypeData, turn);
-
-                    /*
-                    if (topicTypeData != null)
-                    {
-                        //check topicTypeData
-                        if (CheckTopicTypeData(topicTypeData, turn) == true)
-                        {
-                            //check individual topicType criteria
-                            CriteriaDataInput criteriaInput = new CriteriaDataInput()
-                            { listOfCriteria = topicType.listOfCriteria };
-                            criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
-                            if (criteriaCheck == null)
-                            {
-                                //get list of SubTypes
-                                List<TopicSubType> listOfSubTypes = topicType.listOfSubTypes;
-                                if (listOfSubTypes != null)
-                                {
-                                    bool isProceed = false;
-                                    //topicType needs to have at least one valid subType present
-                                    foreach (TopicSubType subType in listOfSubTypes)
-                                    {
-                                        if (CheckSubTypeCriteria(subType) == true)
-                                        {
-                                            isProceed = true;
-                                            break;
-                                        }
-                                    }
-                                    //valid topicType / subType, add to selection pool
-                                    if (isProceed == true)
-                                    {
-                                        //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
-                                        AddTopicTypeToList(listOfTopicTypesTurn, topicType);
-                                        Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
-                                    }
-                                }
-                                else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
-
-                            }
-                            else
-                            {
-                                //criteria check FAILED
-
-                                //generate message explaining why criteria failed -> debug only, spam otherwise
-                                Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
-                            }
-                        }
-                        else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
-                    }
-                    else { Debug.LogError("Invalid topicTypeData (Null)"); }
-                    */
-
                 }
             }
             else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
@@ -4576,11 +4525,17 @@ public class TopicManager : MonoBehaviour
         {
             //pass actor to effect criteria check if a valid actorID
             int actorCurrentSlotID = -1;
+            int actorCurrentHqID = -1;
             if (tagActorID > -1)
             {
                 Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
                 if (actor != null)
-                { actorCurrentSlotID = actor.slotID; }
+                {
+                    //normal actor uses slotID, HQ actor uses hqID
+                    if (tagHqActors == false)
+                    { actorCurrentSlotID = actor.slotID; }
+                    else { actorCurrentHqID = -1; }
+                }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
             }
             //orgName provided as capture topics have org criteria on certain options (ignored for the rest)
@@ -4588,6 +4543,7 @@ public class TopicManager : MonoBehaviour
             {
                 listOfCriteria = option.listOfCriteria,
                 actorSlotID = actorCurrentSlotID,
+                actorHqID = actorCurrentHqID,
                 orgName = tagOrgName
             };
             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
@@ -5958,6 +5914,17 @@ public class TopicManager : MonoBehaviour
                             else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); replaceText = "unknown"; }
                         }
                         else { CountTextTag("manP", dictOfTags); }
+                        break;
+                    case "guy":
+                        //'guy' or 'girl' depending on player sex as in 'I'm not that kind of [guy]
+                        if (isValidate == false)
+                        {
+                            ActorSex sex = GameManager.instance.playerScript.sex;
+                            if (sex == ActorSex.Male) { replaceText = "guy"; }
+                            else if (sex == ActorSex.Female) { replaceText = "girl"; }
+                            else { Debug.LogWarningFormat("Unrecognised actor sex \"{0}\"", sex); replaceText = "unknown"; }
+                        }
+                        else { CountTextTag("guy", dictOfTags); }
                         break;
                     case "hqActive":
                         //HQ topic -> 'HQ internal politics have [..]' 

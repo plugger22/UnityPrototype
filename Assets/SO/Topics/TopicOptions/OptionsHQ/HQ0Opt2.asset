@@ -19,7 +19,8 @@ MonoBehaviour:
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 87860e70abe576e4ebdd880a658ad825, type: 2}
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}

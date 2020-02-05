@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: HQ3Opt2
+  m_EditorClassIdentifier: 
+  descriptor: HQ 3 option 2
+  tag: Make an Excuse
+  text: Sorry, I'm on Knob Rot meds
+  topic: {fileID: 11400000, guid: e43111fc9f90cc74e80cb580ff72d1d3, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: 571c982d036f72d4ab99bf88b0c0dd54, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 0}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Make an Excuse</color>
+  tooltipMain: "<b><color=#FF4500>Low</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
+    Renown +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>Psychologist
+    Motivation -1</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Sorry, I'm on Knob Rot meds</color>
+  optionNumber: 2
