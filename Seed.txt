@@ -8006,3 +8006,225 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 14146 -> Wednesday, 5 February 2020 8:25 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 3588 -> Thursday, 6 February 2020 12:04 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topic_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Not found, tag "topic_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:497)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Entry not found for firstSlotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddRelationship(Int32, Int32, Int32, Int32, ActorRelationship) (at Assets/Scripts/Managers/DataManager.cs:8572)
+	EffectManager:ResolveTopicDualActorEffect(Effect, EffectDataInput, TopicEffectData, Actor, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4182)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3984)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1842)
+	TopicManager:ProcessIgnore() (at Assets/Scripts/Managers/TopicManager.cs:3191)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:593)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:283)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 45748 -> Thursday, 6 February 2020 12:08 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found in hqID 39, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHQActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3888)
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4942)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:4740)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4645)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2847)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	ERROR Invalid HQ actorOther (Null) for tagActorOtherID 39
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4944)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:4740)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4645)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2847)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Not found in hqID 39, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHQActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3888)
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4942)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:4740)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4633)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2847)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	ERROR Invalid HQ actorOther (Null) for tagActorOtherID 39
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4944)
+	TopicManager:GetBadEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:4740)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4633)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2847)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Not found in hqID 39, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHQActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3888)
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4942)
+	TopicManager:InitialiseIgnoreTooltip(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4787)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2874)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	ERROR Invalid HQ actorOther (Null) for tagActorOtherID 39
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:4944)
+	TopicManager:InitialiseIgnoreTooltip(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4787)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2874)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2691)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:312)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 45748 -> Thursday, 6 February 2020 12:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45748 -> Thursday, 6 February 2020 12:15 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topic_Sub1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_Sub1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Entry not found for firstSlotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddRelationship(Int32, Int32, Int32, Int32, ActorRelationship) (at Assets/Scripts/Managers/DataManager.cs:8572)
+	EffectManager:ResolveTopicDualActorEffect(Effect, EffectDataInput, TopicEffectData, Actor, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4182)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3984)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1842)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3092)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 45748 -> Thursday, 6 February 2020 12:25 PM
+City seed 5678 -> London, United Kingdom
+WARNING Entry not found for firstSlotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddRelationship(Int32, Int32, Int32, Int32, ActorRelationship) (at Assets/Scripts/Managers/DataManager.cs:8572)
+	EffectManager:ResolveTopicDualActorEffect(Effect, EffectDataInput, TopicEffectData, Actor, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4182)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3984)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1842)
+	TopicManager:ProcessIgnore() (at Assets/Scripts/Managers/TopicManager.cs:3193)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:593)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:283)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 45748 -> Thursday, 6 February 2020 12:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45748 -> Thursday, 6 February 2020 12:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45748 -> Thursday, 6 February 2020 12:36 PM
+City seed 5678 -> London, United Kingdom
+WARNING Entry not found for firstSlotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddRelationship(Int32, Int32, Int32, Int32, ActorRelationship) (at Assets/Scripts/Managers/DataManager.cs:8572)
+	EffectManager:ResolveTopicDualActorEffect(Effect, EffectDataInput, TopicEffectData, Actor, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4182)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3984)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1842)
+	TopicManager:ProcessIgnore() (at Assets/Scripts/Managers/TopicManager.cs:3191)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:593)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:283)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

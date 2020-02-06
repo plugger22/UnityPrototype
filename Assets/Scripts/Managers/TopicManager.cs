@@ -2777,6 +2777,7 @@ public class TopicManager : MonoBehaviour
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 data.colour = GameManager.instance.guiScript.colourTopicNormal;
+                data.listOfHelp = GetTopicSubTypeHelp();
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
@@ -2911,6 +2912,7 @@ public class TopicManager : MonoBehaviour
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 data.colour = GameManager.instance.guiScript.colourTopicCapture;
+                data.listOfHelp = GetTopicSubTypeHelp();
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
@@ -6440,6 +6442,23 @@ public class TopicManager : MonoBehaviour
         else { builder.AppendFormat("<size=90%>{0}if 3 or less, Bad{1}</size>", colourGrey, colourEnd); }
         textDetails = builder.ToString();
         return new Tuple<string, string>(textMain, textDetails);
+    }
+    #endregion
+
+    #region GetTopicSubTypeHelp
+    /// <summary>
+    /// returns a list of Help tags for the topicSubType for use with the optional second help icon on the topic UI. Returns null if none (not an error condition as help for subTypes is optional)
+    /// </summary>
+    /// <returns></returns>
+    private List<string> GetTopicSubTypeHelp()
+    {
+        List<string> listOfHelp = null;
+        switch (turnTopicSubType.name)
+        {
+            case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" };  break;
+            //no default as it only picks up what's needed
+        }
+        return listOfHelp;
     }
     #endregion
 

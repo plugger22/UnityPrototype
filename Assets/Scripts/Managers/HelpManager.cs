@@ -111,6 +111,36 @@ public class HelpManager : MonoBehaviour
         }
         return listOfHelp;
     }
+
+    /// <summary>
+    /// Get help data generic (overloaded for a list input, only the first four entries are taken into account)
+    /// </summary>
+    /// <param name="listOfHelpStrings"></param>
+    /// <returns></returns>
+    public List<HelpData> GetHelpData(List<string> listOfHelpStrings)
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+        if (listOfHelpStrings != null)
+        {
+            string tag;
+            //max four entries
+            int count = Mathf.Min(listOfHelpStrings.Count, 4);
+            for (int i = 0; i < count; i++)
+            {
+                tag = listOfHelpStrings[i];
+                if (string.IsNullOrEmpty(tag) == false)
+                {
+                    HelpData help = GameManager.instance.dataScript.GetHelpData(tag);
+                    if (help != null)
+                    { listOfHelp.Add(help); }
+                    else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag \"{0}\"", tag); }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfHelpStrings (Null)"); }
+        return listOfHelp;
+    }
+
     #endregion
 
 
@@ -316,6 +346,25 @@ public class HelpManager : MonoBehaviour
         data.header = "Decision";
         data.text = string.Format("This item records the outcome of the decision that you have decided upon at the {0}start of this turn{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region TopicSubTypes
+        //
+        // - - - TopicSubType help (for optional 2nd help icon on topicUI that covers subType details for the topic)
+        //
+        //ActorPolitic -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_0";
+        data.header = string.Format("{0}Subordinate Politics{1}", colourTip, colourEnd);
+        data.text = string.Format("Somebody once said it's like {0}herding cats{1}. Do your best", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorPolitic -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_1";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're the leader and you set the tone", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
         #endregion
 
         #region Secrets

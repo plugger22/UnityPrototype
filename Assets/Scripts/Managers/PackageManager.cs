@@ -773,6 +773,7 @@ namespace packageAPI
         public Sprite spriteBoss;                                           //Sprite for Boss (if 'isBoss' true, ignore otherwise)
         public List<TopicOption> listOfOptions = new List<TopicOption>();
         public List<Effect> listOfIgnoreEffects = new List<Effect>();
+        public List<string> listOfHelp = new List<string>();                //list of help tags for, optional, second help mouseover down the bottom (not shown if listOfHelp is empty)
 
         public TopicUIData()
         { colour = GameManager.instance.guiScript.colourTopicNormal; }

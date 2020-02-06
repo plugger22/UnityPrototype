@@ -59,6 +59,8 @@ public class TopicUI : MonoBehaviour
     private GenericTooltipUI tooltipShowMe;
     private GenericTooltipUI tooltipImage;
     private GenericTooltipUI tooltipBoss;
+    //help
+    private GenericHelpTooltipUI helpSpecific;
     //options
     private TopicOption[] arrayOfOptions;
     private Button[] arrayOfButtons;
@@ -354,11 +356,10 @@ public class TopicUI : MonoBehaviour
             if (helpGeneric != null)
             { helpGeneric.SetHelpTooltip(listOfHelp, 150, 200); }
             else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGeneric (Null)"); }
-            //specific help
-            GenericHelpTooltipUI helpSpecific = buttonHelp_specific.GetComponent<GenericHelpTooltipUI>();
-            if (helpSpecific != null)
-            { helpSpecific.SetHelpTooltip(listOfHelp, 150, 200); }
-            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
+            //specific help (don't populate help, just get component)
+            helpSpecific = buttonHelp_specific.GetComponent<GenericHelpTooltipUI>();
+            if (helpSpecific == null)
+            { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -485,6 +486,20 @@ public class TopicUI : MonoBehaviour
                 buttonInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
             }
             else { buttonShowMe.gameObject.SetActive(false); }
+            //optional second help icon
+            if (data.listOfHelp != null && data.listOfHelp.Count > 0)
+            {
+                buttonHelp_specific.gameObject.SetActive(true);
+                if (helpSpecific != null)
+                {
+                    List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(data.listOfHelp);
+                    if (listOfHelpData != null)
+                    { helpSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
+                    else { buttonHelp_specific.gameObject.SetActive(false); }
+                }
+                else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
+            }
+            else { buttonHelp_specific.gameObject.SetActive(false); }
             //initialise Image tooltip
             if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
             { tooltipImage.tooltipHeader = data.imageTooltipHeader; }
