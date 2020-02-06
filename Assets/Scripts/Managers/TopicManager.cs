@@ -2743,6 +2743,7 @@ public class TopicManager : MonoBehaviour
                         if (turnTopicSubType != null)
                         {
                             Debug.LogFormat("[Top] TopicManager.cs -> InitialiseTopicUI: Topic OVERRIDE for debugTopicPool \"{0}\"{1}", debugTopicPool.name, "\n");
+                            tagHqActors = false; //needed to prevent the previously selected topic, eg. HQ, sending a 'true' result forward to the debug topic
                             GetTopic(GameManager.instance.sideScript.PlayerSide);
                         }
                         if (turnTopic != null)
@@ -6456,6 +6457,9 @@ public class TopicManager : MonoBehaviour
         switch (turnTopicSubType.name)
         {
             case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" };  break;
+            case "ActorMatch": listOfHelp = new List<string>() { "topicSub_2", "topicSub_3" }; break;
+            case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topic_6" }; break;
+            case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topic_9" }; break;
             //no default as it only picks up what's needed
         }
         return listOfHelp;

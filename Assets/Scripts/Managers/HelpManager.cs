@@ -352,11 +352,12 @@ public class HelpManager : MonoBehaviour
         //
         // - - - TopicSubType help (for optional 2nd help icon on topicUI that covers subType details for the topic)
         //
+
         //ActorPolitic -> Overview
         data = new HelpData();
         data.tag = "topicSub_0";
         data.header = string.Format("{0}Subordinate Politics{1}", colourTip, colourEnd);
-        data.text = string.Format("Somebody once said it's like {0}herding cats{1}. Do your best", colourAlert, colourEnd);
+        data.text = string.Format("\'Pull the string, and it will follow wherever you wish. {0}Push it, and it will go nowhere at all{1}\' - Dwight D. Eisenhower", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorPolitic -> Good/Bad
         data = new HelpData();
@@ -365,6 +366,56 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're the leader and you set the tone", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
+        //ActorMatch -> Overvew
+        data = new HelpData();
+        data.tag = "topicSub_2";
+        data.header = string.Format("{0}Subordinate Interactions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'If you judge people you have no time to love them\' - Mother Teresa", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorMatch -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_3";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're in charge and you set the example", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //ActorDistrict -> Overvew
+        data = new HelpData();
+        data.tag = "topicSub_4";
+        data.header = string.Format("{0}Subordinate Actions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'Every {0}action{1} has an equal and {2}opposite{3} reaction\' - Sir Isaac Newton", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorDistrict -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_5";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Motivation{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorDistrict -> Tracking
+        data = new HelpData();
+        data.tag = "topicSub_6";
+        data.header = "Tracking";
+        data.text = string.Format("All district actions taken by your Subordinates are tracked. Their {0}most recent actions{1} are the ones most likely to cause a ripple (or splash)", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //ActorContact -> Overvew
+        data = new HelpData();
+        data.tag = "topicSub_7";
+        data.header = string.Format("{0}Subordinate Contacts{1}", colourTip, colourEnd);
+        data.text = string.Format("\'It occurs to me that our survival may depend upon our talking to one another\' - Dan Simmons, Hyperion", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorContact -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_8";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on the {0}Subordinates Motivation{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorContact -> Networks
+        data = new HelpData();
+        data.tag = "topicSub_9";
+        data.header = "Networks";
+        data.text = string.Format("Each of your Subordinates has their own {0}personal{1} network of Contacts within the city that {2}answer to them alone{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Secrets
