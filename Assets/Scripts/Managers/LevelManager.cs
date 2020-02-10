@@ -1084,6 +1084,8 @@ public class LevelManager : MonoBehaviour
                                 Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor & City Hall at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                 record.Key.nodeName = "City Centre";
                                 record.Key.specialName = "Town Hall";
+                                //make city hall a larger cylinder
+                                record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                 //Mayor placed at CityHall at game start
                                 GameManager.instance.cityScript.mayorDistrictID = record.Key.nodeID;
                                 GameManager.instance.cityScript.cityHallDistrictID = record.Key.nodeID;
@@ -1109,6 +1111,8 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Airport at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.airportDistrict;
                                     record.Key.specialName = "Airport";
+                                    //make airport a larger cylinder
+                                    record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                     GameManager.instance.cityScript.airportDistrictID = record.Key.nodeID;
                                 }
                                 else { Debug.LogWarning("Missing airportDistrict name"); }
@@ -1121,6 +1125,8 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Harbour at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.harbourDistrict;
                                     record.Key.specialName = "Harbour";
+                                    //make harbour a larger cylinder
+                                    record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                     GameManager.instance.cityScript.harbourDistrictID = record.Key.nodeID;
                                 }
                                 /*else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }*/
