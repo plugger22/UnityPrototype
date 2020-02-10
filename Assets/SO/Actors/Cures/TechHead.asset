@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44add3af33e40e4fb2bcdd99ecd0f46, type: 3}
+  m_Name: TechHead
+  m_EditorClassIdentifier: 
+  condition: {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84, type: 2}
+  cureName: Tech Head
+  distance: 5
+  tooltipText: The Tech Head inserts THINGS into your skull. An invasive cranial probe
+    that gets you a Certificate of Truth to wave at HQ. Better you than me.
+  outcomeText: Your head feels like a watermelon that's been hit by a high velocity
+    projectile. At least you've got your certificate of truth. That's something
+  isActive: 0
+  isOrgActivated: 0

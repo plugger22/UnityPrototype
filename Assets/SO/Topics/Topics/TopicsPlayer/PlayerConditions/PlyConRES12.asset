@@ -9,14 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: PlyStatRES14
+  m_Name: PlyConRES12
   m_EditorClassIdentifier: 
-  tag: Down Time
-  text: During the previous [turn] days, you have opted to do nothing only [stat10]
-    times. Your [actor] is impressed by your hands on approach
-  designNotes: Player Do Nothing Actions good event (low criteria)
+  tag: Questionable
+  text: The word is that HQ is worried that they can't trust you, says your [actor].
+    There's this guy, a Tech Head, who can fix that. It might hurt
+  designNotes: 'Player Condition Questionable, Good event
+
+
+    Chance of removing questionable condition'
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
-  subType: {fileID: 11400000, guid: 05994f0540619e6408e7648a3069b68e, type: 2}
+  subType: {fileID: 11400000, guid: 9a4c3752a4745e5489f32b11aea4a2b0, type: 2}
   subSubType: {fileID: 0}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
@@ -24,25 +27,26 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
-  profile: {fileID: 11400000, guid: 3d7bee04346e0b240a52e2a907c37c07, type: 2}
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 72bbe16c62503a942a2ffd0d4c7b67b1, type: 2}
+  - {fileID: 11400000, guid: 724c26a8102ed8f48915ba8b634b6f58, type: 2}
+  - {fileID: 11400000, guid: 1eeae65edb87bcd41bbb53764d537b62, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: dc31f5a82c06aa345a11efc224edb5c2, type: 2}
-  - {fileID: 11400000, guid: d893e6b4db5f5de4082a08b052efcb1c, type: 2}
-  - {fileID: 11400000, guid: 6506cd7009e13b14fb932643431957cd, type: 2}
-  - {fileID: 11400000, guid: a9f7c1b2fa4c4884ba4d537757d5822e, type: 2}
+  - {fileID: 11400000, guid: 77adbb2adc5183f479aa1228704d52f9, type: 2}
+  - {fileID: 11400000, guid: f2273adaaaf499e4b8c49e0622150cf0, type: 2}
+  - {fileID: 11400000, guid: 8acd60ed6bb76744a98901536593e550, type: 2}
+  - {fileID: 11400000, guid: 7704205ce8b033c40913805ea7767b83, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
-  turnsDormant: 15
-  turnsActive: 1
-  turnsLive: 5
+  turnsDormant: 0
+  turnsActive: 16
+  turnsLive: 0
   turnsDone: 0

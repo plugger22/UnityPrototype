@@ -1411,6 +1411,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dac17cf22b79c8c4f9d0eac3d4e95dd0, type: 2}
   - {fileID: 11400000, guid: 1a46adcf9419dd94ebc7ef04f847d170, type: 2}
   - {fileID: 11400000, guid: d9f04d14f6573c14bb5ba2f55c137c44, type: 2}
+  - {fileID: 11400000, guid: bb7165770c1d3c14f8ef8e3d643798ac, type: 2}
   arrayOfTraitCategories:
   - {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   - {fileID: 11400000, guid: 4dc6bc7afec85ba4593931a1144467d3, type: 2}
@@ -2525,6 +2526,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fc430f0f2eeb46f43a484d217f2a26d6, type: 2}
   - {fileID: 11400000, guid: c212794ed72006f4e9999b43a98ac0f4, type: 2}
   - {fileID: 11400000, guid: e43111fc9f90cc74e80cb580ff72d1d3, type: 2}
+  - {fileID: 11400000, guid: 13ec676e85622a6499bf2e87db40b8b3, type: 2}
+  - {fileID: 11400000, guid: d741632f554c7e147807ba6828a673b7, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2964,6 +2967,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 48f5076e9b66ee64e8bb58216189bbe3, type: 2}
   - {fileID: 11400000, guid: bcab6b5728d92bb43a5ed3f9848de998, type: 2}
   - {fileID: 11400000, guid: 99d4cc5b71cf60440bb38cfdb9242e92, type: 2}
+  - {fileID: 11400000, guid: 77adbb2adc5183f479aa1228704d52f9, type: 2}
+  - {fileID: 11400000, guid: f2273adaaaf499e4b8c49e0622150cf0, type: 2}
+  - {fileID: 11400000, guid: 8acd60ed6bb76744a98901536593e550, type: 2}
+  - {fileID: 11400000, guid: 7704205ce8b033c40913805ea7767b83, type: 2}
+  - {fileID: 11400000, guid: f1ccce2cb85178047bacb7ecb252423f, type: 2}
+  - {fileID: 11400000, guid: ab433d89b464370409714579d6502cb2, type: 2}
+  - {fileID: 11400000, guid: 130da6e63b30ad843a59bf561626a933, type: 2}
+  - {fileID: 11400000, guid: 7dc8335653b98e043a267ec3c12b83bd, type: 2}
   arrayOfOptionsPlayerDistrict:
   - {fileID: 11400000, guid: a124e4174ec758e43a83a5859ecd3f43, type: 2}
   - {fileID: 11400000, guid: fe1759f08eafbae40ad0f861a5567802, type: 2}
@@ -4203,7 +4214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

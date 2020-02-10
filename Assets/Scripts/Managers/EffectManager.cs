@@ -1675,6 +1675,11 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
                                                 { BuildString(result, "Doomed Cure unavailable"); }
                                                 break;
+                                            case "CureQuestionableNo":
+                                                //No active cure is present OnMap for Questionable Condition
+                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionQuestionable.cure) == true)
+                                                { BuildString(result, "Questionable Cure unavailable"); }
+                                                break;
                                             case "NemesisActive":
                                                 //Nemesis is present and active
                                                 if (GameManager.instance.nemesisScript.nemesis == null)
