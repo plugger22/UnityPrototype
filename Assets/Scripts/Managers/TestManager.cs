@@ -21,7 +21,7 @@ public class TestManager : MonoBehaviour
     public TopicPool debugTopicPool;
 
     [Header("Authority Player AutoRun tests")]
-    [Tooltip("Specify a turn (within autorun) where the indicated Condition will be given to the Authority player")]
+    [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;
     [Tooltip("Who gets the Condition? use 0/1/2/3  (slotID's) for authority actors and 999 for Player")]
     public int conditionWhoAuthority = 999;
@@ -29,7 +29,7 @@ public class TestManager : MonoBehaviour
     public Condition condtionAuthority;
 
     [Header("Resistance Player AutoRun tests")]
-    [Tooltip("Specify a turn (within autorun) where the Condition will be given to the Resistance player")]
+    [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the Condition will be given to the Resistance player")]
     public int conditionTurnResistance = -1;
     [Tooltip("Who gets the Condition? use 0/1/2/3  (slotID's) for resistance actors and 999 for Player")]
     public int conditionWhoResistance = 999;

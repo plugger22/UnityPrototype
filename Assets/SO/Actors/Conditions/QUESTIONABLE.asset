@@ -22,5 +22,5 @@ MonoBehaviour:
     type: 2}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,
     type: 2}
-  cure: {fileID: 0}
+  cure: {fileID: 11400000, guid: bb7165770c1d3c14f8ef8e3d643798ac, type: 2}
   isNowA: 0

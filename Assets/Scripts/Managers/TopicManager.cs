@@ -6048,7 +6048,6 @@ public class TopicManager : MonoBehaviour
                     //normal actor situation or special (dual/multiple)
                     switch (turnTopicSubType.name)
                     {
-                        case "ActorMatch":
                         case "ActorPolitic":
                             //use tagActorOtherID
                             if (tagActorOtherID > -1)

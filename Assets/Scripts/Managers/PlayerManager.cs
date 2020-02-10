@@ -932,6 +932,9 @@ public class PlayerManager : MonoBehaviour
                             case "IMAGED":
                                 GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
                                 break;
+                            case "QUESTIONABLE":
+                                GameManager.instance.nodeScript.AddCureNode(conditionQuestionable.cure);
+                                break;
                             case "ADDICTED":
                                 isAddicted = true;
                                 addictedTally = 0;
@@ -1055,6 +1058,9 @@ public class PlayerManager : MonoBehaviour
                                     break;
                                 case "IMAGED":
                                     GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
+                                    break;
+                                case "QUESTIONABLE":
+                                    GameManager.instance.nodeScript.RemoveCureNode(conditionQuestionable.cure);
                                     break;
                                 case "STRESSED":
                                     ChangeMood(moodReset, reason, "n.a");

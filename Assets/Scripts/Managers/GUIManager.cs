@@ -124,7 +124,7 @@ public class GUIManager : MonoBehaviour
     public Color colourTopicNormal;
     [Tooltip("Topic UI, main background, for Capture topics")]
     public Color colourTopicCapture;
-    [Tooltip("Main Info UI left and right backgrounds")]
+    [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
     public Color colourMainBackground;
 
 

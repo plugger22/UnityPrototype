@@ -229,6 +229,18 @@ public class TurnManager : MonoBehaviour
         {
             isAutoRun = true;
             Debug.LogFormat("AUTORUN for {0} turns", numOfTurns);
+            //check any test conditions are within parameters
+            if (GameManager.instance.testScript.conditionTurnResistance >= autoTurns)
+            {
+                Debug.LogWarningFormat("Invalid conditionTurnResistance (Test) turn {0} (outside of autorun period of {1}) -> will be ignored",
+                    GameManager.instance.testScript.conditionTurnResistance, autoTurns);
+            }
+            if (GameManager.instance.testScript.conditionTurnAuthority >= autoTurns)
+            {
+                Debug.LogWarningFormat("Invalid conditionTurnAuthority (Test) turn {0} (outside of autorun period of {1}) -> will be ignored",
+                    GameManager.instance.testScript.conditionTurnAuthority, autoTurns);
+            }
+            //Execute AutoRun
             do
             {
                 ProcessNewTurn();

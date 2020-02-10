@@ -4254,6 +4254,7 @@ public class EffectManager : MonoBehaviour
             case "CureWounded":
             case "CureImaged":
             case "CureDoomed":
+            case "CureQuestionable":
                 effectResolve.bottomText = ExecutePlayerCure(effect, dataInput, dataTopic);
                 break;
             case "Drugs":
@@ -5297,6 +5298,7 @@ public class EffectManager : MonoBehaviour
             case "CureTagged": condition = conditionTagged; break;
             case "CureImaged": condition = conditionImaged; break;
             case "CureDoomed": condition = conditionDoomed; break;
+            case "CureQuestionable": condition = conditionQuestionable; break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
         }
         if (condition != null)

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyConRES13
   m_EditorClassIdentifier: 
   tag: Questionable
-  text: So HQ think you a traitor, huh, asks your [actor]. That's bad, man. Let me
-    tell you about this Tech Head that I know. He can fix it
+  text: So HQ think you're a traitor, huh, asks your [actor]? That's bad, man. Let
+    me tell you about this nasty little, expensive, Tech Head that I know
   designNotes: 'Player Condition Questionable, Bad event
 
 
@@ -47,6 +47,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 16
+  turnsActive: 15
   turnsLive: 0
   turnsDone: 0

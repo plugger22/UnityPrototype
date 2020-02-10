@@ -962,6 +962,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d2d32177066a114084ffb8a8b0e4d59, type: 2}
   - {fileID: 11400000, guid: 571c982d036f72d4ab99bf88b0c0dd54, type: 2}
   - {fileID: 11400000, guid: 87860e70abe576e4ebdd880a658ad825, type: 2}
+  - {fileID: 11400000, guid: 1eeae65edb87bcd41bbb53764d537b62, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1150,6 +1151,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8758ec0fbdeeec8458ad92cd2722dff0, type: 2}
   - {fileID: 11400000, guid: 44b46046990d5a3428841d04dfee6850, type: 2}
   - {fileID: 11400000, guid: eee090becae9ae14dafd4bff19b122a6, type: 2}
+  - {fileID: 11400000, guid: 5bc1d00160d8e99439088d021d298fe8, type: 2}
   arrayOfEffectDuration:
   - {fileID: 11400000, guid: 3518129ddca7c354fb87d8b1768321fb, type: 2}
   - {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
@@ -1255,6 +1257,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9dd461ee4d2224d40b838e7d7b3446cf, type: 2}
   - {fileID: 11400000, guid: 0245937009cf66848a2d682bf1a1a8fd, type: 2}
   - {fileID: 11400000, guid: 50c454ba8bbd7ac4dbaa551bdb96e4e6, type: 2}
+  - {fileID: 11400000, guid: e9d41039983d97c4c9befde23964c468, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -2003,6 +2006,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63aaafaa1ad43bc4a980c9ce53813c32, type: 2}
   - {fileID: 11400000, guid: b530cb38c36b77e46b678e898777109f, type: 2}
   - {fileID: 11400000, guid: 4abbd6480e2804d429bc4bf9e2a43253, type: 2}
+  - {fileID: 11400000, guid: 3d48b990a4ac2184f96c3b2ba9619e0b, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4214,7 +4218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: c0d4c73d54ec2484cb06430e00084ce2, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 0e0366074a1d4c9479eed6cd79ef75c2, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

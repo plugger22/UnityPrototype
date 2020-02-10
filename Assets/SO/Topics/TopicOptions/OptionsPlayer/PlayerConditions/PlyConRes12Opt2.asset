@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: PlyConRes12Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Conditions Res12 Opt 2
-  tag: 
-  text: 
+  tag: Order
+  text: Tell me, that's an order!
   topic: {fileID: 11400000, guid: 13ec676e85622a6499bf2e87db40b8b3, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 0
-  isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 3d48b990a4ac2184f96c3b2ba9619e0b, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
@@ -32,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#FF4500>Player Mood -2</color>
   isValid: 0
   textToDisplay: <color=#BDC3C7>Tell me all about it</color>
-  optionNumber: 1
+  optionNumber: 2
