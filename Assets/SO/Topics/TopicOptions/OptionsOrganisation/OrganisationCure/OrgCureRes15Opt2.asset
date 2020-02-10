@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: OrgCureRes15Opt2
+  m_EditorClassIdentifier: 
+  descriptor: Org Cure Res 15 Option 2
+  tag: Donation
+  text: I have a generous spirit
+  topic: {fileID: 11400000, guid: 476c27ff21d11c74faeb6daad040aa55, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 907142a5c9c158940be23cce01376d5f, type: 2}
+  - {fileID: 11400000, guid: 3d48b990a4ac2184f96c3b2ba9619e0b, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  - {fileID: 11400000, guid: 0ae6a1caffb52044996d60c62a29158b, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: My [who] wishes that they had a fridge full of spit like the [org]. Good for
+    world domination, they reckon, says [npc] of [node]
+  tooltipHeader: <color=#FFFFE0>Donation</color>
+  tooltipMain: "<color=#98FB98> Reputation with Org +1</color>\r\n<color=#98FB98>Player
+    finds Cure for Addiction</color>\r\n<color=#FF4500>Player Renown -1</color>"
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Let me make a donation</color>
+  optionNumber: 2

@@ -32,4 +32,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2dd92217d42b49f4386db44ba2dcef6c, type: 2}
   - {fileID: 11400000, guid: 35e1e292e2e438f45bb8cb847edeb004, type: 2}
   - {fileID: 11400000, guid: 61e35791bc771ea42aab76e335ecf65b, type: 2}
+  - {fileID: 11400000, guid: 476c27ff21d11c74faeb6daad040aa55, type: 2}
+  - {fileID: 11400000, guid: e7c44458b7a18b74eb4878b34969a46d, type: 2}
   listOfSubSubTypePools: []

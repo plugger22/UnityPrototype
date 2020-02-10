@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: OrgCureRes16Opt2
+  m_EditorClassIdentifier: 
+  descriptor: Org Cure Res 16 Option 2
+  tag: Threaten Exposure
+  text: I'll tell the world all about you
+  topic: {fileID: 11400000, guid: e7c44458b7a18b74eb4878b34969a46d, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 3d48b990a4ac2184f96c3b2ba9619e0b, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 183291d23098ad94fa8a375fcf1a4a6b, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: People generally don't know much about the [org] apart from the fact that
+    they are collecting everybodies spit, says [npc], [job], of [node]
+  tooltipHeader: <color=#FFFFE0>Crooks</color>
+  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
+    finds Cure for Addiction</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>
+    Reputation with Org -2</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>You're crooks, I'll tell everybody</color>
+  optionNumber: 2

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: OrgCureRES16
+  m_EditorClassIdentifier: 
+  tag: Cranial Probe
+  text: Once people start doubting your honesty it's all downhill. The [org] can get
+    you back to where your word can be relied upon, for a price
+  designNotes: 'Org Cure RES 16 bad event
+
+    Questionable cure'
+  type: {fileID: 11400000, guid: ac0f3535a5865e749a8591a5df78877d, type: 2}
+  subType: {fileID: 11400000, guid: e3abbdf407e1d0b479bcde1ca88c09de, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 724c26a8102ed8f48915ba8b634b6f58, type: 2}
+  - {fileID: 11400000, guid: 1eeae65edb87bcd41bbb53764d537b62, type: 2}
+  - {fileID: 11400000, guid: 3db2396c8a98bbc46b9865cf6139c3f7, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: b183b54533872554bb75d2f7c5a4d792, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: c028ea4313e5d874280b5f3a6a954b2a, type: 2}
+  - {fileID: 11400000, guid: 54e1fd2addc71c349897d92993e001e5, type: 2}
+  - {fileID: 11400000, guid: a8e29d7d27eb129449d501add4911918, type: 2}
+  - {fileID: 11400000, guid: feb268430ef1be744afb05e81d644e85, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 1
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 21
+  turnsLive: 0
+  turnsDone: 0
