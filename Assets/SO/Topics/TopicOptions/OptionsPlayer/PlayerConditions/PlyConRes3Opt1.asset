@@ -26,7 +26,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: Say a man on [drug] go ape and take out three TidyBots all on his own, says
+  news: Saw a man on [drug] go ape and take out three TidyBots all on his own, says
     [actor], [job] of [node]
   tooltipHeader: <color=#FFFFE0>Roll Dice</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player

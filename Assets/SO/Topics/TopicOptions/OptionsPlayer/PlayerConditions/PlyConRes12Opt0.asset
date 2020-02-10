@@ -27,12 +27,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Those TechHeads drill holes in your skull and ram all kinds of sh*t straight
+    into your squishy matter, says [npc], of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 
     (need 1)</color>'
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 0
-  textToDisplay: <color=#BDC3C7>Tell me all about it</color>
+  textToDisplay: <color=#BDC3C7>Mmmmm, O.K</color>
   optionNumber: 0

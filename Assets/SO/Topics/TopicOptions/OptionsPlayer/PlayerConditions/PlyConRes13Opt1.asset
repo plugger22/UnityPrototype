@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 982311000abf09140a248e80380a5afe, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: TechHeads turn your brain into scrambled egg yolk and let it dribble out your
+    nose, warns [npc], [job], of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 

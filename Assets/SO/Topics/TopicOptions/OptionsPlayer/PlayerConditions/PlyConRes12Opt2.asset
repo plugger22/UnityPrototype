@@ -26,12 +26,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: '<color=#FFE4B5>Not enough Renown
-
-    (need 1)</color>'
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
-  isValid: 0
-  textToDisplay: <color=#BDC3C7>Tell me all about it</color>
+  news: Would I ever visit a TechHead? Do I look like somebody who wants backyard
+    brain surgery, asks [npc], [job], of [node]?
+  tooltipHeader: <color=#FFFFE0>Order</color>
+  tooltipMain: "<color=#98FB98>Player finds Cure for QUESTIONABLE</color>\r\n<color=#FF4500>RECRUITER
+    Motivation -1</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Tell me, that's an order!</color>
   optionNumber: 2

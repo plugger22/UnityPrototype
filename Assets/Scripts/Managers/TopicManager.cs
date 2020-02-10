@@ -6459,6 +6459,11 @@ public class TopicManager : MonoBehaviour
             case "ActorMatch": listOfHelp = new List<string>() { "topicSub_2", "topicSub_3" }; break;
             case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topic_6" }; break;
             case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topic_9" }; break;
+            case "PlayerConditions": listOfHelp = new List<string>() { "topicSub_10", "topicSub_11" }; break;
+            case "PlayerStats": listOfHelp = new List<string>() { "topicSub_12", "topicSub_13", "topicSub_14" }; break;
+            case "PlayerGeneral": listOfHelp = new List<string>() { "topicSub_15", "topicSub_16" }; break;
+            case "PlayerDistrict": listOfHelp = new List<string>() { "topicSub_17", "topicSub_18" }; break;
+            case "HQSub": listOfHelp = new List<string>() { "topicSub_19", "topicSub_20" }; break;
             //no default as it only picks up what's needed
         }
         return listOfHelp;

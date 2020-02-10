@@ -26,12 +26,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I've heard that the TechHeads use bioSpiders. Let them crawl in through your
+    ear and rummage around your brain, says [npc] of [node]
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
-  tooltipMain: '<color=#FFE4B5>Not enough Renown
-
-    (need 1)</color>'
-  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  tooltipMain: <color=#FFE4B5> RECRUITER Low Motivation (need 2+)</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 0
-  textToDisplay: <color=#BDC3C7>Tell me all about it</color>
+  textToDisplay: <color=#BDC3C7>You owe me a favour</color>
   optionNumber: 1

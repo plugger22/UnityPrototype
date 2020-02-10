@@ -357,7 +357,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_0";
         data.header = string.Format("{0}Subordinate Politics{1}", colourTip, colourEnd);
-        data.text = string.Format("\'Pull the string, and it will follow wherever you wish. {0}Push it, and it will go nowhere at all{1}\' - Dwight D. Eisenhower", colourAlert, colourEnd);
+        data.text = string.Format("\'Pull the string, and it will follow wherever you wish. Push it, and it will go nowhere at all\' - {0}Dwight D. Eisenhower{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorPolitic -> Good/Bad
         data = new HelpData();
@@ -366,11 +366,11 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're the leader and you set the tone", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
-        //ActorMatch -> Overvew
+        //ActorMatch -> Overview
         data = new HelpData();
         data.tag = "topicSub_2";
         data.header = string.Format("{0}Subordinate Interactions{1}", colourTip, colourEnd);
-        data.text = string.Format("\'If you judge people you have no time to love them\' - Mother Teresa", colourAlert, colourEnd);
+        data.text = string.Format("\'If you judge people you have no time to love them\' - {0}Mother Teresa{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorMatch -> Good/Bad
         data = new HelpData();
@@ -379,11 +379,11 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're in charge and you set the example", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
-        //ActorDistrict -> Overvew
+        //ActorDistrict -> Overview
         data = new HelpData();
         data.tag = "topicSub_4";
         data.header = string.Format("{0}Subordinate Actions{1}", colourTip, colourEnd);
-        data.text = string.Format("\'Every {0}action{1} has an equal and {2}opposite{3} reaction\' - Sir Isaac Newton", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("\'Every actionhas an equal and opposite reaction\' - {0}Sir Isaac Newton{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorDistrict -> Good/Bad
         data = new HelpData();
@@ -398,11 +398,11 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("All district actions taken by your Subordinates are tracked. Their {0}most recent actions{1} are the ones most likely to cause a ripple (or splash)", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
-        //ActorContact -> Overvew
+        //ActorContact -> Overview
         data = new HelpData();
         data.tag = "topicSub_7";
         data.header = string.Format("{0}Subordinate Contacts{1}", colourTip, colourEnd);
-        data.text = string.Format("\'It occurs to me that our survival may depend upon our talking to one another\' - Dan Simmons, Hyperion", colourAlert, colourEnd);
+        data.text = string.Format("\'It occurs to me that our survival may depend upon our talking to one another\' - {0}Dan Simmons, Hyperion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorContact -> Good/Bad
         data = new HelpData();
@@ -415,6 +415,77 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicSub_9";
         data.header = "Networks";
         data.text = string.Format("Each of your Subordinates has their own {0}personal{1} network of Contacts within the city that {2}answer to them alone{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //PlayerConditions -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_10";
+        data.header = string.Format("{0}Player Conditions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'You are never strong enough that you don't need help\' - {0}Cesar Chavez, Civil Rights Activist{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //PlayerConditions -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_11";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Mood{1}. How people relate to you has a lot to do with how you project yourself", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //PlayerStats -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_12";
+        data.header = string.Format("{0}Player Activity{1}", colourTip, colourEnd);
+        data.text = string.Format("\'Measure a man's worth by his actions alone. For the devil also promises the moon!\' - {0}Avijeet Das, Poet{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //PlayerStats -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_13";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Mood{1}. How people view you has a lot to do with how you project yourself", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //PlayerStats -> Tracking
+        data = new HelpData();
+        data.tag = "topicSub_14";
+        data.header = "Your Activity";
+        data.text = string.Format("Your activity is tracked in some detail. Your subordinates will {0}judge you on what you've done{1}, not what you say you've done", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //PlayerGeneral -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_15";
+        data.header = string.Format("{0}Unique Actions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'No man will make a great leader who wants to do it all himself or get all the credit for doing it.\' - {0}Andrew Carnegie, Industrialist{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //PlayerGeneral -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_16";
+        data.header = "Leadership";
+        data.text = string.Format("These represent unique opportunities to exercise various degrees of leadership depending on your own {0}Mood{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //PlayerDistrict -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_17";
+        data.header = string.Format("{0}Player Actions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'This is a world of action, and not for moping and droning in.This is a world of action, and not for moping and droning in.\' - {0}Charles Dickens, Author{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //PlayerDistrict -> Tracking
+        data = new HelpData();
+        data.tag = "topicSub_18";
+        data.header = "Your Actions";
+        data.text = string.Format("Every action you take has an impact. Actions can have {0}unforseen consequences{1}, both good or bad", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //HQ -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_19";
+        data.header = string.Format("{0}Player Actions{1}", colourTip, colourEnd);
+        data.text = string.Format("\'Without pride, man becomes a parasite – and there are already too many parasites.\' - {0}Carla H Krueger, Author{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //HQ -> Tracking
+        data = new HelpData();
+        data.tag = "topicSub_20";
+        data.header = "Good and Bad";
+        data.text = string.Format("Internal politics are a sad fact of life for any organisation. Your {0}HQ Approval Level{1} determines whether they are good or bad", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
