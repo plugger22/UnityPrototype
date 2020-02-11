@@ -143,6 +143,8 @@ public class GUIManager : MonoBehaviour
     private string colourBad;
     //private string colourNormal;
     private string colourEnd;
+    //star
+    private char starChar = '\uf005';
 
     public void Awake()
     {
@@ -736,6 +738,29 @@ public class GUIManager : MonoBehaviour
         string tooltipMain = string.Format("Press to display the {0}District{1} and/or {2}Connection{3} referred to", colourAlert, colourEnd, colourAlert, colourEnd);
         string tooltipDetails = string.Format("{0}Keyboard Shortcut{1}{2}{3}SPACE{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd);
         return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
+    }
+
+    //
+    // - - - Stars - - -
+    //
+
+    /// <summary>
+    /// returns TMP Pro self contained string for the required number of stars (always returns 3 stars, colourNeutral for active, grey, low opacity, for inactive). Returns "Unknown"
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    public string GetStars(int num)
+    {
+        string stars = "Unknown";
+        switch (num)
+        {
+            case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
+            case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}{4}<alpha=#AA>{5}{6}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, starChar, colourEnd); break;
+            case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}<alpha=#AA>{4}{5}{6}</font>", colourNeutral, starChar, colourEnd, colourGrey, starChar, starChar, colourEnd); break;
+            case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}<alpha=#AA>{1}{2}{3}{4}</font>", colourGrey, starChar, starChar, starChar, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
+        }
+        return stars;
     }
 
 

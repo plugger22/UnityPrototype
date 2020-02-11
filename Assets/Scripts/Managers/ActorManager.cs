@@ -3629,18 +3629,8 @@ public class ActorManager : MonoBehaviour
                         InventoryOptionData optionData = new InventoryOptionData();
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
-                        switch(motivation)
-                        {
-                            /*case 3: optionData.textLower = string.Format("Motivation{1}{2} {3} {4}{5}", "\n", colourGood, starFull, starFull, starFull, colourEnd); break;
-                            case 2: optionData.textLower = string.Format("Motivation{0}{1}{2} {3}{4} {5}", "\n",  colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
-                            case 1: optionData.textLower = string.Format("Motivation{0}{1}{2}{3} {4} {5}", "\n", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
-                            case 0: optionData.textLower = string.Format("Motivation{0}{1} {2} {3}", "\n", starEmpty, starEmpty, starEmpty); break;*/
-
-                            case 3: optionData.textLower = string.Format("{0}{1} {2} {3}{4}", colourGood, starFull, starFull, starFull, colourEnd); break;
-                            case 2: optionData.textLower = string.Format("{0}{1} {2}{3} {4}", colourNeutral, starFull, starFull, colourEnd, starEmpty); break;
-                            case 1: optionData.textLower = string.Format("{0}{1}{2} {3} {4}", colourBad, starFull, colourEnd, starEmpty, starEmpty); break;
-                            case 0: optionData.textLower = string.Format("{0} {1} {2}", starEmpty, starEmpty, starEmpty); break;
-                        }
+                        //motivation stars
+                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
                         //tooltip
