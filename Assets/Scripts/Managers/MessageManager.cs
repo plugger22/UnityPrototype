@@ -4030,9 +4030,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             if (node != null)
             { data.nodeID = node.nodeID; }
-            data.help = 0;
             if (condition != null)
-            { SetConditionHelp(condition, data); }
+            { data.help = 1;  SetConditionHelp(condition, data); }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

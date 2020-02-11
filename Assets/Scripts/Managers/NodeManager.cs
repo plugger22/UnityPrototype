@@ -481,9 +481,11 @@ public class NodeManager : MonoBehaviour
         int nodeID;
         switch (GameManager.instance.playerScript.status)
         {
-            case ActorStatus.Active: nodeID = nodePlayer; break;
+            case ActorStatus.Active:
+            case ActorStatus.Inactive:
+                nodeID = nodePlayer; break;
             case ActorStatus.Captured: nodeID = nodeCaptured; break;
-            default: nodeID = -1; break;
+            default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.instance.playerScript.status);  nodeID = -1; break;
         }
         return nodeID;
     }

@@ -4820,8 +4820,13 @@ public class TopicManager : MonoBehaviour
             else
             {
                 //No ignoreEffects -> default text
-                data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
-                colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                if (turnTopicSubType.isBoss == true)
+                {
+                    data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}Boss will Disapprove{4}{5}{6}ESC shortcut{7}", colourGrey, colourEnd, "\n",
+                  colourBad, colourEnd, "\n", colourNeutral, colourEnd);
+                }
+                else
+                { data.ignoreTooltipDetails = string.Format("{0}Nothing happens{1}{2}{3}ESC shortcut{4}", colourGrey, colourEnd, "\n", colourNeutral, colourEnd); }
             }
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
@@ -6455,7 +6460,7 @@ public class TopicManager : MonoBehaviour
         List<string> listOfHelp = null;
         switch (turnTopicSubType.name)
         {
-            case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" };  break;
+            case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" }; break;
             case "ActorMatch": listOfHelp = new List<string>() { "topicSub_2", "topicSub_3" }; break;
             case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topic_6" }; break;
             case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topic_9" }; break;
@@ -6464,7 +6469,13 @@ public class TopicManager : MonoBehaviour
             case "PlayerGeneral": listOfHelp = new List<string>() { "topicSub_15", "topicSub_16" }; break;
             case "PlayerDistrict": listOfHelp = new List<string>() { "topicSub_17", "topicSub_18" }; break;
             case "HQSub": listOfHelp = new List<string>() { "topicSub_19", "topicSub_20" }; break;
-            //no default as it only picks up what's needed
+            case "OrgContract":
+            case "OrgCure":
+            case "OrgEmergency":
+            case "OrgHQ":
+            case "OrgInfo":
+                listOfHelp = new List<string>() { "topicSub_21", "topicSub_22", "topicSub_23" }; break;
+                //no default as it only picks up what's needed
         }
         return listOfHelp;
     }

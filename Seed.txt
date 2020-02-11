@@ -9410,3 +9410,189 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 13805 -> Tuesday, 11 February 2020 9:47 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 23761 -> Tuesday, 11 February 2020 10:26 AM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topicSub_21", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topicSub_21"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Not found, tag "topic_23", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_23"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 62816 -> Tuesday, 11 February 2020 10:28 AM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topic_9", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_9"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 28850 -> Tuesday, 11 February 2020 10:33 AM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topic_23", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_23"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:619)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:597)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:547)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 37437 -> Tuesday, 11 February 2020 10:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55069 -> Tuesday, 11 February 2020 10:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35206 -> Tuesday, 11 February 2020 11:24 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:751)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2834)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2637)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:759)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2834)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2637)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	ERROR Invalid Cure nodeID (-1) for "Tech Head", distance 5
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2656)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	
+Dev seed 35206 -> Tuesday, 11 February 2020 11:36 AM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised Player Status "Inactive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:GetPlayerNodeID() (at Assets/Scripts/Managers/NodeManager.cs:486)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2830)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2637)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:751)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2834)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2637)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:759)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2834)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2637)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	ERROR Invalid Cure nodeID (-1) for "Tech Head", distance 5
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2656)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:936)
+	ActorManager:DebugAddConditionToPlayer(Condition) (at Assets/Scripts/Managers/ActorManager.cs:4658)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4603)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	
+Dev seed 35206 -> Tuesday, 11 February 2020 11:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35206 -> Tuesday, 11 February 2020 11:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35206 -> Tuesday, 11 February 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35206 -> Tuesday, 11 February 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35206 -> Tuesday, 11 February 2020 12:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36298 -> Tuesday, 11 February 2020 12:09 PM
+City seed 5678 -> London, United Kingdom

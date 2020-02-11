@@ -164,99 +164,9 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("No help has been provided here. You need to go into {0}HelpManager.cs{1} and create a series of topics for the this item", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
-        #region RandomTab items Help
-        //
-        // - - - Random Tab additional (single topic, green header) item help (explains meaning of particular item) -> Number sequentially 'rand_x'
-        //
-        //Compatibility check
-        data = new HelpData();
-        data.tag = "rand_0";
-        data.header = string.Format("{0}Compatibility Check{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("The actor's {0}Compatibility{1} with you can {2}prevent{3} any change in motivation occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("If they have a good opinion of you {0}they may ignore{1} a drop in motivation and vice versa. ", colourAlert, colourEnd);
-        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Faction support
-        data = new HelpData();
-        data.tag = "rand_1";
-        int approval = 5;
-        data.header = string.Format("{0}Faction Support{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
-        builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd, 
-            colourAlert, colourEnd, approval, approval * 10);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Addiction Feed the need check
-        data = new HelpData();
-        data.tag = "rand_2";
-        data.header = string.Format("{0}Addiction Need Check{1}", colourTip, colourEnd);
-        data.text = string.Format("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert, 
-            GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Take Drugs check
-        data = new HelpData();
-        data.tag = "rand_3";
-        data.header = string.Format("{0}Addicted Check{1}", colourTip, colourEnd);
-        data.text = string.Format("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Investigation check
-        data = new HelpData();
-        data.tag = "rand_4";
-        data.header = string.Format("{0}Investigation Check{1}", colourTip, colourEnd);
-        data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd, 
-            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
-        listOfHelp.Add(data);
-        //New Evidence
-        data = new HelpData();
-        data.tag = "rand_5";
-        data.header = string.Format("{0}Evidence Type{1}", colourTip, colourEnd);
-        data.text = string.Format("Each turn there is a chance that the Lead Investigator will {0}uncover new evidence{1}. The type of evidence will have a {2}higher chance{3} of being in your {4}favour{5} if the Lead has a high {6}Motivation{7}", 
-            colourAlert, colourEnd,  colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Relations Motivational shifts
-        data = new HelpData();
-        data.tag = "rand_6";
-        data.header = string.Format("{0}Relationships{1}", colourTip, colourEnd);
-        data.text = string.Format("Whenever a {0}Friend or Enemy{1} relationship exists, any {2}change in Motivation{3} in one subordinate can affect the motivation of the {4}other subordinate{5}", 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
+        
 
-        #region HQ Support
-        //
-        // - - - HQ Support
-        //
-        //overview
-        data = new HelpData();
-        data.tag = "hq_supp_0";
-        data.header = "Faction Support";
-        builder = new StringBuilder();
-        builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
-        builder.AppendFormat("The chance of it doing so depends on your level of {0}HQ Approval{1}. ", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //chance
-        data = new HelpData();
-        data.tag = "hq_supp_1";
-        data.header = "Chance of Support";
-        builder = new StringBuilder();
-        builder.AppendFormat("The better your {0}relationship{1} with your HQ, the greater the chance of support. ", colourAlert, colourEnd);
-        builder.AppendFormat("Support is given if a ten sided die (1d10) is {0}less than{1} your level of HQ Approval (top centre)", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //tip
-        data = new HelpData();
-        data.tag = "hq_supp_2";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("Renown is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
-        builder.AppendFormat("Your main source of Renown is from the support of your HQ. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        #endregion
+        #region ...GUI
 
         #region Main Info App
         //
@@ -298,6 +208,10 @@ public class HelpManager : MonoBehaviour
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
+
+        #endregion
+
+        #region ...Topics
 
         #region Topic UI
         //
@@ -478,7 +392,7 @@ public class HelpManager : MonoBehaviour
         //HQ -> Overview
         data = new HelpData();
         data.tag = "topicSub_19";
-        data.header = string.Format("{0}Player Actions{1}", colourTip, colourEnd);
+        data.header = string.Format("{0}HQ Actions{1}", colourTip, colourEnd);
         data.text = string.Format("\'Without pride, man becomes a parasite – and there are already too many parasites.\' - {0}Carla H Krueger, Author{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //HQ -> Tracking
@@ -487,70 +401,34 @@ public class HelpManager : MonoBehaviour
         data.header = "Good and Bad";
         data.text = string.Format("Internal politics are a sad fact of life for any organisation. Your {0}HQ Approval Level{1} determines whether they are good or bad", colourAlert, colourEnd);
         listOfHelp.Add(data);
+
+        //Organisations -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_21";
+        data.header = string.Format("{0}Underground Organisations{1}", colourTip, colourEnd);
+        data.text = string.Format("Underground Organisations can, once contact has been made, provide {0}special services{1}. Note that these are {2}illegal{3} and {4}frowned up by HQ{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Organisations -> Reputation
+        data = new HelpData();
+        data.tag = "topicSub_22";
+        data.header = "Reputation";
+        data.text = string.Format("You have a Reputation ({0}0 to 3 stars{1}, higher the better) with an Organisation which represents their {2}willingness to help{3} you", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Organisations -> Freedom
+        data = new HelpData();
+        data.tag = "topicSub_23";
+        data.header = "Freedom";
+        data.text = string.Format("Once you use an Organisation's services, you start incurring a debt with them. Freedom ({0}0 to 3 stars{1}, higher the better) indicates have much {2}obligation (debt){3} you have", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
         #endregion
 
-        #region Secrets
-        //
-        // - - - Secrets
-        //
-        //Overview
-        data = new HelpData();
-        data.tag = "secret_0";
-        data.header = "Secrets";
-        builder = new StringBuilder();
-        builder.AppendFormat("You start the game with a secret and can gain more due to your {0}actions{1}. ", colourAlert, colourEnd);
-        builder.AppendFormat("Only {0}you{1} have secrets but your subordinates can learn them", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Learning
-        data = new HelpData();
-        data.tag = "secret_1";
-        data.header = "Learning Secrets";
-        data.text = string.Format("Each turn there is a {0}small chance{1} that your subordinates may learn one of your secrets. The walls have ears", colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //They Know Your Secrets
-        data = new HelpData();
-        data.tag = "secret_2";
-        data.header = "Revealing Secrets";
-        builder = new StringBuilder();
-        builder.AppendFormat("Secrets can have {0}serious consequences{1} if revealed. ", colourAlert, colourEnd);
-        builder.AppendFormat("Any time you have a {0}Conflict{1} with one of your Subordinates there is a chance they may blackmail you and threaten to reveal your secret", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //tip
-        data = new HelpData();
-        data.tag = "secret_3";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        builder = new StringBuilder();
-        builder.AppendFormat("Avoid {0}conflicts{1} with any of your subordinates that know of your secrets. It's too risky. ", colourAlert, colourEnd);
-        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
         #endregion
-
-        #region Random Rolls
-        //
-        // - - - Random Rolls - - -
-        //
-        //overview
-        data = new HelpData();
-        data.tag = "roll_0";
-        data.header = "Random Rolls";
-        data.text = string.Format("Various events within the game require random rolls. Important ones are shown here in the {0}Random{1} tab. ", colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //good rolls
-        data = new HelpData();
-        data.tag = "roll_1";
-        data.header = "Good Rolls";
-        data.text = string.Format("If a successful roll indicates a {0}GOOD{1} outcome from the Player's point of view, the header is shown in {2}GREEN{3}.", colourAlert, colourEnd, colourAlert, colourEnd); ;
-        listOfHelp.Add(data);
-        //bad rolls
-        data = new HelpData();
-        data.tag = "roll_2";
-        data.header = "Bad Rolls";
-        data.text = string.Format("If a successful roll indicates a {0}BAD{1} outcome from the Player's point of view, the header is shown in {2}RED{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
+    
+        #region ...Actors
 
         #region Actor Compatibility
         //
@@ -629,66 +507,9 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Player Betrayed
-        //
-        // - - - Player Betrayed
-        //
-        //overview
-        data = new HelpData();
-        data.tag = "betrayal_0";
-        data.header = "Betrayed";
-        data.text = string.Format("At any point there is a chance of you being Betrayed, {0}losing Invisibility{1} and possibly having the Authority immediately know your position (Invisibility {2}Zero{3})",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Who
-        data = new HelpData();
-        data.tag = "betrayal_1";
-        data.header = "Traitors";
-        data.text = string.Format("Traitors within Rebel HQ are outside of your control but any subordinate with the {0}QUESTIONABLE{1} condition has a chance of being a traitor (increases everytime they are {2}Captured{3})",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Odds of Betrayal
-        data = new HelpData();
-        data.tag = "betrayal_2";
-        data.header = "Chance of Betrayal";
-        data.text = string.Format("A check is made every turn. There is a base chance representing Rebel HQ and this {0}increases with traitorous subordinates{1} (doubles if one, triples if two, etc.)",
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Tip
-        data = new HelpData();
-        data.tag = "betrayal_3";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("A {0}QUESTIONABLE subordinate{1} may NOT be a traitor. On the other hand if you're being betrayed {2}often{3}, don't take any chances",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
         #endregion
 
-        #region Traitor
-        //
-        // - - - Traitor
-        //
-        //overview
-        data = new HelpData();
-        data.tag = "traitor_0";
-        data.header = "Traitors";
-        data.text = string.Format("Whenever a subordinate has been in Captivity there is a chance that they have been persuaded to turn {0}TRAITOR{1} and will inform the Authority of your location from time to time",
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //chance of Traitor
-        data = new HelpData();
-        data.tag = "traitor_1";
-        data.header = "Chance of Becoming a Traitor";
-        data.text = string.Format("There is a base chance that {0}increases{1} with each {2}period of Captivity{3} (doubles if Captured twice, triples if Captured three times, etc.)",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Tip
-        data = new HelpData();
-        data.tag = "traitor_2";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("How can you tell if a subordinate is a {0}TRAITOR{1}? You can't. Any leaks could be coming from Rebel HQ but if they become more frequent, take a hard look at any {2}QUESTIONABLE{3} subordinates",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
+        #region ...Conditions
 
         #region Questionable Condition
         //
@@ -817,6 +638,10 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #endregion
+
+        #region ...Stress
+
         #region Immunity to Stress
         //
         // - - - Immune to Stress
@@ -873,256 +698,9 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Cure
-        //
-        // - - - Cure (condition)
-        //
-        //Overview
-        data = new HelpData();
-        data.tag = "cure_0";
-        data.header = "Cure";
-        data.text = string.Format("Certain conditions have cures available that allow the {0}condition to be removed{1}. Cures apply {2}only{3} to the Player", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //How to
-        data = new HelpData();
-        data.tag = "cure_1";
-        data.header = "How To";
-        data.text = string.Format("To use a cure {0}move{1} to the specified district, {2}Right Click{3} for the Action Menu, Select {4}Cure{5}", colourAlert, colourEnd, colourAlert, colourEnd, 
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Details
-        data = new HelpData();
-        data.tag = "cure_2";
-        data.header = "Details";
-        data.text = string.Format("There is {0}no Renown or Invisibilty penalty{1} for a cure but an {2}Action{3} will be used. Cures, once available, do not {4}time out{5}", colourAlert, colourEnd, 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Tip
-        data = new HelpData();
-        data.tag = "cure_3";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = "If a cure is available you generally don't want to waste time making use of it. Who knows if it'll still be there tomorrow?";
-        listOfHelp.Add(data);
         #endregion
 
-        #region Lying Low
-        //
-        // - - - Lying Low
-        //
-        //Overview
-        data = new HelpData();
-        data.tag = "lielow_0";
-        data.header = "Lying Low";
-        data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and HQ must have sourced a {5}Safe House{6}",
-            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Breakdowns
-        data = new HelpData();
-        data.tag = "lielow_1";
-        data.header = "Lie Low Timer";
-        data.text = string.Format("Lying Low involves Resistance HQ sourcing a suitable, safe, location. This takes time and effort. The {0}Effects Tab{1} in the {2}App{3} lets you know when Lying Low will be next available",
-            colourAlert, colourEnd, colourAlert,  colourEnd);
-        listOfHelp.Add(data);
-        //Surveillance Crackdown
-        data = new HelpData();
-        data.tag = "lielow_2";
-        data.header = "Surveillance Crackdown";
-        data.text = string.Format("If this Security Measure is in place, safe locations aren't available and Lying Low {0}isn't possible{1}", colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Recovering from Stress
-        data = new HelpData();
-        data.tag = "lielow_3";
-        data.header = "Lying Low Effects";
-        data.text = string.Format("Removes Stress, increases your Invisibility (to {0}{1} stars{2}) and improves your Mood (to {3}{4} stars{5}, Player only)", colourAlert, 
-            GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, GameManager.instance.playerScript.moodReset, colourEnd); ;
-        listOfHelp.Add(data);
-        #endregion
-
-        #region Mood
-        //
-        // - - - Mood
-        //
-        //Overview
-        data = new HelpData();
-        data.tag = "mood_0";
-        data.header = "Mood";
-        data.text = string.Format("Only you, the Player, have a mood. Doing {0}actions in line with your beliefs{1} (defined by your personality) improves your mood, the opposite worsens it.", 
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Stressed
-        data = new HelpData();
-        data.tag = "mood_1";
-        data.header = "Mood and Stress";
-        data.text = string.Format("Your mood moves between 0 and {0}. If it drops {1}below Zero{2} you become {3}STRESSED{4}", GameManager.instance.playerScript.moodMax, colourAlert, colourEnd,
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Improving mood
-        data = new HelpData();
-        data.tag = "mood_2";
-        data.header = "Improving your Mood";
-        data.text = string.Format("{0}Lying Low, Stress Leave and Doing Nothing{1} (Unused actions at the end of your turn) all improve your mood as does {2}any action that aligns with your beliefs{3}", 
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Tip
-        data = new HelpData();
-        data.tag = "mood_3";
-        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("As in real life doing things that you feel strongly about will change your mood. {0}Avoid STRESSING{1} yourself out if you can",
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
-
-        #region Nemesis
-        //
-        // - - - Nemesis
-        //
-        //Stealth
-        data = new HelpData();
-        data.tag = "nemesis_0";
-        data.header = "Stealth Rating";
-        builder = new StringBuilder();
-        builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("The rating changes depending on their mode{0}  * {1}Hunt{2} mode {3}-1{4} Stealth{5}  * {6}Ambush{7} mode {8}INVISIBLE{9}",
-            "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        #endregion
-
-        #region Npc
-        //
-        // - - - Npc
-        //
-        //Overview
-        data = new HelpData();
-        data.tag = "npc_0";
-        data.header = "Overview";
-        data.text = string.Format("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by {2}Contacts or Tracers{3}.", 
-            colourAlert, colourEnd, colourAlert, colourEnd);        
-        listOfHelp.Add(data);
-        //Interaction
-        data = new HelpData();
-        data.tag = "npc_1";
-        data.header = "Interacting";
-        data.text = string.Format("You {0}automatically{1} find and interact with a Special Character if you {2}end your turn{3} in the {4}same district{5}", colourAlert, colourEnd, colourAlert, colourEnd,
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Movement
-        data = new HelpData();
-        data.tag = "npc_2";
-        data.header = "Movement";
-        data.text = string.Format("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Stealth
-        data = new HelpData();
-        data.tag = "npc_3";
-        data.header = "Stealth";
-        builder = new StringBuilder();
-        builder.AppendFormat("Special Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high){1}. ", colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("A Contact will {0}spot them{1} if their Effectiveness is {2}Equal to or Greater{3} than the Character's Stealth Rating", colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Effects
-        data = new HelpData();
-        data.tag = "npc_4";
-        data.header = "Benefits and Penalties";
-        data.text = string.Format("HQ will task you with interacting with Special Characters. Doing so {0}before they depart{1} generally grants a benefit and failing to do so incurs a penalty", 
-            colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Tracers
-        data = new HelpData();
-        data.tag = "npc_5";
-        data.header = "Tracers";
-        data.text = string.Format("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating",  colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
-
-        #region Contact
-        //
-        // - - - Contact (Resistance)
-        //
-        //resistance overview
-        data = new HelpData();
-        data.tag = "contact_0";
-        data.header = "Overview";
-        builder = new StringBuilder();
-        builder.AppendFormat("Contacts work for your subordinates and are your {0}eyes and ears{1} on the ground.", colourAlert, colourEnd);
-        builder.AppendFormat("Contacts enable your subordinates to carry out {0}Actions{1} and can report on all manner of Authority activity", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Effectiveness
-        data = new HelpData();
-        data.tag = "contact_1";
-        data.header = "Effectiveness";
-        builder = new StringBuilder();
-        builder.AppendFormat("Effectiveness is a measure of the Contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
-        builder.AppendFormat("It ranges from {0}{1}  1{2} '...knows stuff' (worst){3}{4}  2{5} '...is networked'{6}{7}  3{8} '...is Wired-in' (best)", 
-            "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //Contacts and the Authority
-        data = new HelpData();
-        data.tag = "contact_2";
-        data.header = "Contacts and the Authority";
-        data.text = string.Format("Contacts can become {0}known{1} to the Authority (if a {2}Probe Team{3} is in the same district) and can, on occasion, be {4}Erased{5} (Erasure Team in same district)", 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Target Rumours
-        data = new HelpData();
-        data.tag = "contact_3";
-        data.header = "Target Rumours";
-        builder = new StringBuilder();
-        builder.AppendFormat("Contacts can learn rumours of new targets that will appear in the future. Their {0}information{1} can be relied upon as {2}accurate{3}.", 
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("Contacts with {0}High{1} Effectiveness are {2}more likely{3} to hear rumours than those with low Effectiveness",colourAlert, colourEnd, colourAlert, colourEnd);
-        data.text = builder.ToString();
-        listOfHelp.Add(data);
-        //New Contact
-        data = new HelpData();
-        data.tag = "contact_4";
-        data.header = "New Contact";
-        data.text = string.Format("Your subordinate will now be able to {0}carry out actions{1} in the new contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Lost Contact
-        data = new HelpData();
-        data.tag = "contact_5";
-        data.header = "Lost Contact";
-        data.text = string.Format("Your subordinate will {0}No Longer{1} be able to carry out actions in their ex-contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Nemesis
-        data = new HelpData();
-        data.tag = "contact_6";
-        data.header = "Spotting Nemesis";
-        data.text = string.Format("If a Nemesis is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= Nemesis's Stealth rating{3}", 
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Teams
-        data = new HelpData();
-        data.tag = "contact_7";
-        data.header = "Spotting Teams";
-        data.text = string.Format("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Inactive
-        data = new HelpData();
-        data.tag = "contact_8";
-        data.header = "Gone Silent";
-        data.text = string.Format("A Contact who has gone silent will {0}no longer{1} provide {2}information{3} or enable your subordinate to carry out {4}actions{5} in the Contact's district", 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //How long Inactive
-        data = new HelpData();
-        data.tag = "contact_9";
-        data.header = "For How Long?";
-        data.text = string.Format("You can check the {0}Effects Tab{1} in the InfoApp {2}next turn{3} to see when your Contact will {4}return{5}", 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        //Return to Active
-        data = new HelpData();
-        data.tag = "contact_10";
-        data.header = "Back on the Grid";
-        data.text = string.Format("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
-            colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
+        #region ...Organisations
 
         #region OrgInfo
         //
@@ -1187,6 +765,10 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #endregion
+
+        #region ...HQ
+
         #region HQ Services
         //
         // - - - HQ Services (Relocating)
@@ -1216,6 +798,483 @@ public class HelpManager : MonoBehaviour
         data.tag = "hq_2";
         data.header = "Time to Relocate";
         data.text = string.Format("The number of days (turns) required to relocate {0}increases with each successive relocation{1}. This carries over between Cities", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region HQ Support
+        //
+        // - - - HQ Support
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "hq_supp_0";
+        data.header = "Faction Support";
+        builder = new StringBuilder();
+        builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
+        builder.AppendFormat("The chance of it doing so depends on your level of {0}HQ Approval{1}. ", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //chance
+        data = new HelpData();
+        data.tag = "hq_supp_1";
+        data.header = "Chance of Support";
+        builder = new StringBuilder();
+        builder.AppendFormat("The better your {0}relationship{1} with your HQ, the greater the chance of support. ", colourAlert, colourEnd);
+        builder.AppendFormat("Support is given if a ten sided die (1d10) is {0}less than{1} your level of HQ Approval (top centre)", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //tip
+        data = new HelpData();
+        data.tag = "hq_supp_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("Renown is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
+        builder.AppendFormat("Your main source of Renown is from the support of your HQ. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
+        #endregion
+
+        #region ...Random
+
+        #region Random Rolls
+        //
+        // - - - Random Rolls - - -
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "roll_0";
+        data.header = "Random Rolls";
+        data.text = string.Format("Various events within the game require random rolls. Important ones are shown here in the {0}Random{1} tab. ", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //good rolls
+        data = new HelpData();
+        data.tag = "roll_1";
+        data.header = "Good Rolls";
+        data.text = string.Format("If a successful roll indicates a {0}GOOD{1} outcome from the Player's point of view, the header is shown in {2}GREEN{3}.", colourAlert, colourEnd, colourAlert, colourEnd); ;
+        listOfHelp.Add(data);
+        //bad rolls
+        data = new HelpData();
+        data.tag = "roll_2";
+        data.header = "Bad Rolls";
+        data.text = string.Format("If a successful roll indicates a {0}BAD{1} outcome from the Player's point of view, the header is shown in {2}RED{3}.", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region RandomTab items Help
+        //
+        // - - - Random Tab additional (single topic, green header) item help (explains meaning of particular item) -> Number sequentially 'rand_x'
+        //
+        //Compatibility check
+        data = new HelpData();
+        data.tag = "rand_0";
+        data.header = string.Format("{0}Compatibility Check{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("The actor's {0}Compatibility{1} with you can {2}prevent{3} any change in motivation occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("If they have a good opinion of you {0}they may ignore{1} a drop in motivation and vice versa. ", colourAlert, colourEnd);
+        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Faction support
+        data = new HelpData();
+        data.tag = "rand_1";
+        int approval = 5;
+        data.header = string.Format("{0}Faction Support{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
+        builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd,
+            colourAlert, colourEnd, approval, approval * 10);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Addiction Feed the need check
+        data = new HelpData();
+        data.tag = "rand_2";
+        data.header = string.Format("{0}Addiction Need Check{1}", colourTip, colourEnd);
+        data.text = string.Format("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert,
+            GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Take Drugs check
+        data = new HelpData();
+        data.tag = "rand_3";
+        data.header = string.Format("{0}Addicted Check{1}", colourTip, colourEnd);
+        data.text = string.Format("Whenever you take {0}illegal drugs{1} there is a chance that you become {2}ADDICTED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Investigation check
+        data = new HelpData();
+        data.tag = "rand_4";
+        data.header = string.Format("{0}Investigation Check{1}", colourTip, colourEnd);
+        data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd,
+            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
+        listOfHelp.Add(data);
+        //New Evidence
+        data = new HelpData();
+        data.tag = "rand_5";
+        data.header = string.Format("{0}Evidence Type{1}", colourTip, colourEnd);
+        data.text = string.Format("Each turn there is a chance that the Lead Investigator will {0}uncover new evidence{1}. The type of evidence will have a {2}higher chance{3} of being in your {4}favour{5} if the Lead has a high {6}Motivation{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Relations Motivational shifts
+        data = new HelpData();
+        data.tag = "rand_6";
+        data.header = string.Format("{0}Relationships{1}", colourTip, colourEnd);
+        data.text = string.Format("Whenever a {0}Friend or Enemy{1} relationship exists, any {2}change in Motivation{3} in one subordinate can affect the motivation of the {4}other subordinate{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #endregion
+
+
+
+        #region Player Betrayed
+        //
+        // - - - Player Betrayed
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "betrayal_0";
+        data.header = "Betrayed";
+        data.text = string.Format("At any point there is a chance of you being Betrayed, {0}losing Invisibility{1} and possibly having the Authority immediately know your position (Invisibility {2}Zero{3})",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Who
+        data = new HelpData();
+        data.tag = "betrayal_1";
+        data.header = "Traitors";
+        data.text = string.Format("Traitors within Rebel HQ are outside of your control but any subordinate with the {0}QUESTIONABLE{1} condition has a chance of being a traitor (increases everytime they are {2}Captured{3})",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Odds of Betrayal
+        data = new HelpData();
+        data.tag = "betrayal_2";
+        data.header = "Chance of Betrayal";
+        data.text = string.Format("A check is made every turn. There is a base chance representing Rebel HQ and this {0}increases with traitorous subordinates{1} (doubles if one, triples if two, etc.)",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "betrayal_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("A {0}QUESTIONABLE subordinate{1} may NOT be a traitor. On the other hand if you're being betrayed {2}often{3}, don't take any chances",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Traitor
+        //
+        // - - - Traitor
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "traitor_0";
+        data.header = "Traitors";
+        data.text = string.Format("Whenever a subordinate has been in Captivity there is a chance that they have been persuaded to turn {0}TRAITOR{1} and will inform the Authority of your location from time to time",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //chance of Traitor
+        data = new HelpData();
+        data.tag = "traitor_1";
+        data.header = "Chance of Becoming a Traitor";
+        data.text = string.Format("There is a base chance that {0}increases{1} with each {2}period of Captivity{3} (doubles if Captured twice, triples if Captured three times, etc.)",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "traitor_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("How can you tell if a subordinate is a {0}TRAITOR{1}? You can't. Any leaks could be coming from Rebel HQ but if they become more frequent, take a hard look at any {2}QUESTIONABLE{3} subordinates",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Secrets
+        //
+        // - - - Secrets
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "secret_0";
+        data.header = "Secrets";
+        builder = new StringBuilder();
+        builder.AppendFormat("You start the game with a secret and can gain more due to your {0}actions{1}. ", colourAlert, colourEnd);
+        builder.AppendFormat("Only {0}you{1} have secrets but your subordinates can learn them", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Learning
+        data = new HelpData();
+        data.tag = "secret_1";
+        data.header = "Learning Secrets";
+        data.text = string.Format("Each turn there is a {0}small chance{1} that your subordinates may learn one of your secrets. The walls have ears", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //They Know Your Secrets
+        data = new HelpData();
+        data.tag = "secret_2";
+        data.header = "Revealing Secrets";
+        builder = new StringBuilder();
+        builder.AppendFormat("Secrets can have {0}serious consequences{1} if revealed. ", colourAlert, colourEnd);
+        builder.AppendFormat("Any time you have a {0}Conflict{1} with one of your Subordinates there is a chance they may blackmail you and threaten to reveal your secret", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //tip
+        data = new HelpData();
+        data.tag = "secret_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        builder = new StringBuilder();
+        builder.AppendFormat("Avoid {0}conflicts{1} with any of your subordinates that know of your secrets. It's too risky. ", colourAlert, colourEnd);
+        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Cure
+        //
+        // - - - Cure (condition)
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "cure_0";
+        data.header = "Cure";
+        data.text = string.Format("Certain conditions have cures available that allow the {0}condition to be removed{1}. Cures apply {2}only{3} to the Player", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //How to
+        data = new HelpData();
+        data.tag = "cure_1";
+        data.header = "How To";
+        data.text = string.Format("To use a cure {0}move{1} to the specified district, {2}Right Click{3} for the Action Menu, Select {4}Cure{5}", colourAlert, colourEnd, colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Details
+        data = new HelpData();
+        data.tag = "cure_2";
+        data.header = "Details";
+        data.text = string.Format("There is {0}no Renown or Invisibilty penalty{1} for a cure but an {2}Action{3} will be used. Cures, once available, do not {4}time out{5}", colourAlert, colourEnd,
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "cure_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = "If a cure is available you generally don't want to waste time making use of it. Who knows if it'll still be there tomorrow?";
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Lying Low
+        //
+        // - - - Lying Low
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "lielow_0";
+        data.header = "Lying Low";
+        data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and HQ must have sourced a {5}Safe House{6}",
+            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns
+        data = new HelpData();
+        data.tag = "lielow_1";
+        data.header = "Lie Low Timer";
+        data.text = string.Format("Lying Low involves Resistance HQ sourcing a suitable, safe, location. This takes time and effort. The {0}Effects Tab{1} in the {2}App{3} lets you know when Lying Low will be next available",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Surveillance Crackdown
+        data = new HelpData();
+        data.tag = "lielow_2";
+        data.header = "Surveillance Crackdown";
+        data.text = string.Format("If this Security Measure is in place, safe locations aren't available and Lying Low {0}isn't possible{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Stress
+        data = new HelpData();
+        data.tag = "lielow_3";
+        data.header = "Lying Low Effects";
+        data.text = string.Format("Removes Stress, increases your Invisibility (to {0}{1} stars{2}) and improves your Mood (to {3}{4} stars{5}, Player only)", colourAlert,
+            GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, GameManager.instance.playerScript.moodReset, colourEnd); ;
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Mood
+        //
+        // - - - Mood
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "mood_0";
+        data.header = "Mood";
+        data.text = string.Format("Only you, the Player, have a mood. Doing {0}actions in line with your beliefs{1} (defined by your personality) improves your mood, the opposite worsens it.",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Stressed
+        data = new HelpData();
+        data.tag = "mood_1";
+        data.header = "Mood and Stress";
+        data.text = string.Format("Your mood moves between 0 and {0}. If it drops {1}below Zero{2} you become {3}STRESSED{4}", GameManager.instance.playerScript.moodMax, colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Improving mood
+        data = new HelpData();
+        data.tag = "mood_2";
+        data.header = "Improving your Mood";
+        data.text = string.Format("{0}Lying Low, Stress Leave and Doing Nothing{1} (Unused actions at the end of your turn) all improve your mood as does {2}any action that aligns with your beliefs{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "mood_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("As in real life doing things that you feel strongly about will change your mood. {0}Avoid STRESSING{1} yourself out if you can",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Nemesis
+        //
+        // - - - Nemesis
+        //
+        //Stealth
+        data = new HelpData();
+        data.tag = "nemesis_0";
+        data.header = "Stealth Rating";
+        builder = new StringBuilder();
+        builder.AppendFormat("Nemesis have a Stealth Rating ranging from {0}0 (low) to 3 (high).{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("The rating changes depending on their mode{0}  * {1}Hunt{2} mode {3}-1{4} Stealth{5}  * {6}Ambush{7} mode {8}INVISIBLE{9}",
+            "\n", colourAlert, colourEnd, colourAlert, colourEnd, "\n", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Npc
+        //
+        // - - - Npc
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "npc_0";
+        data.header = "Overview";
+        data.text = string.Format("Special Characters arrive in the city and conduct their business before departing. They {0}aren't visible{1} but can be spotted by {2}Contacts or Tracers{3}.",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Interaction
+        data = new HelpData();
+        data.tag = "npc_1";
+        data.header = "Interacting";
+        data.text = string.Format("You {0}automatically{1} find and interact with a Special Character if you {2}end your turn{3} in the {4}same district{5}", colourAlert, colourEnd, colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Movement
+        data = new HelpData();
+        data.tag = "npc_2";
+        data.header = "Movement";
+        data.text = string.Format("Special Characters can move {0}ONE{1} district a turn, at most", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Stealth
+        data = new HelpData();
+        data.tag = "npc_3";
+        data.header = "Stealth";
+        builder = new StringBuilder();
+        builder.AppendFormat("Special Characters (and NEMESIS) have a Stealth Rating ranging from {0}0 (low) to 3 (high){1}. ", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("A Contact will {0}spot them{1} if their Effectiveness is {2}Equal to or Greater{3} than the Character's Stealth Rating", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Effects
+        data = new HelpData();
+        data.tag = "npc_4";
+        data.header = "Benefits and Penalties";
+        data.text = string.Format("HQ will task you with interacting with Special Characters. Doing so {0}before they depart{1} generally grants a benefit and failing to do so incurs a penalty",
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tracers
+        data = new HelpData();
+        data.tag = "npc_5";
+        data.header = "Tracers";
+        data.text = string.Format("Tracers will {0}automatically spot{1} a Special Character in the {2}same district{3} regardless of their Stealth Rating", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Contact
+        //
+        // - - - Contact (Resistance)
+        //
+        //resistance overview
+        data = new HelpData();
+        data.tag = "contact_0";
+        data.header = "Overview";
+        builder = new StringBuilder();
+        builder.AppendFormat("Contacts work for your subordinates and are your {0}eyes and ears{1} on the ground.", colourAlert, colourEnd);
+        builder.AppendFormat("Contacts enable your subordinates to carry out {0}Actions{1} and can report on all manner of Authority activity", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Effectiveness
+        data = new HelpData();
+        data.tag = "contact_1";
+        data.header = "Effectiveness";
+        builder = new StringBuilder();
+        builder.AppendFormat("Effectiveness is a measure of the Contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
+        builder.AppendFormat("It ranges from {0}{1}  1{2} '...knows stuff' (worst){3}{4}  2{5} '...is networked'{6}{7}  3{8} '...is Wired-in' (best)",
+            "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //Contacts and the Authority
+        data = new HelpData();
+        data.tag = "contact_2";
+        data.header = "Contacts and the Authority";
+        data.text = string.Format("Contacts can become {0}known{1} to the Authority (if a {2}Probe Team{3} is in the same district) and can, on occasion, be {4}Erased{5} (Erasure Team in same district)",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Target Rumours
+        data = new HelpData();
+        data.tag = "contact_3";
+        data.header = "Target Rumours";
+        builder = new StringBuilder();
+        builder.AppendFormat("Contacts can learn rumours of new targets that will appear in the future. Their {0}information{1} can be relied upon as {2}accurate{3}.",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("Contacts with {0}High{1} Effectiveness are {2}more likely{3} to hear rumours than those with low Effectiveness", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = builder.ToString();
+        listOfHelp.Add(data);
+        //New Contact
+        data = new HelpData();
+        data.tag = "contact_4";
+        data.header = "New Contact";
+        data.text = string.Format("Your subordinate will now be able to {0}carry out actions{1} in the new contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Lost Contact
+        data = new HelpData();
+        data.tag = "contact_5";
+        data.header = "Lost Contact";
+        data.text = string.Format("Your subordinate will {0}No Longer{1} be able to carry out actions in their ex-contact's {2}District{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Nemesis
+        data = new HelpData();
+        data.tag = "contact_6";
+        data.header = "Spotting Nemesis";
+        data.text = string.Format("If a Nemesis is in the {0}same district{1} as the Contact they will be spotted if the {2}Contact's Effectiveness is >= Nemesis's Stealth rating{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Teams
+        data = new HelpData();
+        data.tag = "contact_7";
+        data.header = "Spotting Teams";
+        data.text = string.Format("Any teams in the {0}same district{1} as the Contact will be {2}spotted automatically{3} (it's hard to hide a team)", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Inactive
+        data = new HelpData();
+        data.tag = "contact_8";
+        data.header = "Gone Silent";
+        data.text = string.Format("A Contact who has gone silent will {0}no longer{1} provide {2}information{3} or enable your subordinate to carry out {4}actions{5} in the Contact's district",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //How long Inactive
+        data = new HelpData();
+        data.tag = "contact_9";
+        data.header = "For How Long?";
+        data.text = string.Format("You can check the {0}Effects Tab{1} in the InfoApp {2}next turn{3} to see when your Contact will {4}return{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Return to Active
+        data = new HelpData();
+        data.tag = "contact_10";
+        data.header = "Back on the Grid";
+        data.text = string.Format("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
+            colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

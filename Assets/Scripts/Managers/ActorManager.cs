@@ -5276,7 +5276,7 @@ public class ActorManager : MonoBehaviour
                                                 case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID, null, condition);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
@@ -5537,7 +5537,7 @@ public class ActorManager : MonoBehaviour
                                                 case 2: detailsBottom = string.Format("{0}{1}{2}", colourGood, condition.bottomTextActor, colourEnd); break;
                                                 default: detailsBottom = "Unknown"; break;
                                             }
-                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
+                                            GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, actor.sprite, actor.actorID, null, condition);
                                         }
                                         else { Debug.LogWarningFormat("Invalid condition (Null) for {0}, {1}, ID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                                     }
