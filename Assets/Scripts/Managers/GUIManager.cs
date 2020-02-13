@@ -741,6 +741,7 @@ public class GUIManager : MonoBehaviour
         return new Tuple<string, string, string>(tooltipHeader, tooltipMain, tooltipDetails);
     }
 
+
     //
     // - - - Stars - - -
     //

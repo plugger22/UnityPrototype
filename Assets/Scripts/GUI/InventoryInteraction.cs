@@ -16,6 +16,8 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     public Image optionImage;
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textLower;
+    public GenericTooltipUI tooltipSprite;
+    public GenericTooltipUI tooltipStars;
 
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
     [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear

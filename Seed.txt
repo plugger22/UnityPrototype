@@ -9653,3 +9653,56 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 2728 -> Thursday, 13 February 2020 11:30 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 41335 -> Thursday, 13 February 2020 2:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16354 -> Thursday, 13 February 2020 2:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40086 -> Thursday, 13 February 2020 2:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1907 -> Thursday, 13 February 2020 2:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34625 -> Thursday, 13 February 2020 2:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54654 -> Thursday, 13 February 2020 2:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13582 -> Thursday, 13 February 2020 2:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16198 -> Thursday, 13 February 2020 3:08 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid tooltipDetailsStars (Null) for arrayOfOptions[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalInventoryUI:SetInventoryUI(InventoryInputData) (at Assets/Scripts/GUI/ModalInventoryUI.cs:223)
+	ModalInventoryUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalInventoryUI.cs:114)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	GearManager:InitialiseGearInventoryDisplay() (at Assets/Scripts/Managers/GearManager.cs:957)
+	GearManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GearManager.cs:311)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	WARNING Invalid tooltipDetailsStars (Null) for arrayOfOptions[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalInventoryUI:SetInventoryUI(InventoryInputData) (at Assets/Scripts/GUI/ModalInventoryUI.cs:223)
+	ModalInventoryUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalInventoryUI.cs:114)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	GearManager:InitialiseGearInventoryDisplay() (at Assets/Scripts/Managers/GearManager.cs:957)
+	GearManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GearManager.cs:311)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
+	
+Dev seed 27635 -> Thursday, 13 February 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52038 -> Thursday, 13 February 2020 3:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1315 -> Thursday, 13 February 2020 3:18 PM
+City seed 5678 -> London, United Kingdom

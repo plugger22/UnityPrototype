@@ -3633,7 +3633,7 @@ public class ActorManager : MonoBehaviour
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
-                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title.ToUpper(), colourEnd);
                         tooltipDetailsSprite.textMain = new StringBuilder()
                            .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
@@ -3643,8 +3643,8 @@ public class ActorManager : MonoBehaviour
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.factionScript.GetBossOpinionFormatted()); }
                         //tooltip -> stars (bottom text, motivation -> same for all)
                         GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
-                        tooltipDetailsStars.textHeader = string.Format("{0}{1}{2}<size=120%><\"Motivation\"{3}", actor.actorName, "\n", colourAlert, colourEnd);
-                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, title, colourEnd, "\n", colourNeutral, colourEnd);
                         tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i - offset] = optionData;

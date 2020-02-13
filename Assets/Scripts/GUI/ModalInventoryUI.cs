@@ -1,8 +1,6 @@
 ﻿using delegateAPI;
 using gameAPI;
 using modalAPI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -72,18 +70,20 @@ public class ModalInventoryUI : MonoBehaviour
                 //interaction
                 InventoryInteraction interaction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
                 if (interaction != null)
-                { arrayOfInteractions[i] = interaction; }
+                {
+                    arrayOfInteractions[i] = interaction;
+                    //tooltip -> sprite
+                    GenericTooltipUI tooltipSprite = interaction.tooltipSprite.GetComponent<GenericTooltipUI>();
+                    if (tooltipSprite != null)
+                    { arrayOfTooltipsSprites[i] = tooltipSprite; }
+                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipSprite \"{0}\" (Null)", i)); }
+                    //tooltip -> stars (bottomText, optional)
+                    GenericTooltipUI tooltipStars = interaction.tooltipStars.GetComponent<GenericTooltipUI>();
+                    if (tooltipStars != null)
+                    { arrayOfTooltipsStars[i] = tooltipStars; }
+                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipStars \"{0}\" (Null)", i)); }
+                }
                 else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
-
-                //tooltip -> sprite
-                GenericTooltipUI tooltipSprite = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
-                if (tooltipSprite != null)
-                { arrayOfTooltipsSprites[i] = tooltipSprite; }
-                else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i)); }
-
-
-                //tooltip -> stars (bottomText, optional)
-
             }
             else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
         }
@@ -92,7 +92,7 @@ public class ModalInventoryUI : MonoBehaviour
 
 
     private void Start()
-    {        
+    {
         //register listener
         EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
         EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
@@ -193,7 +193,7 @@ public class ModalInventoryUI : MonoBehaviour
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
                             arrayOfInteractions[i].optionName = details.arrayOfOptions[i].optionName;
                             arrayOfInteractions[i].type = details.state;
-                            //tooltip data
+                            //tooltip data -> sprites
                             if (arrayOfTooltipsSprites[i] != null)
                             {
                                 if (details.arrayOfTooltipsSprite[i] != null)
@@ -203,11 +203,30 @@ public class ModalInventoryUI : MonoBehaviour
                                     arrayOfTooltipsSprites[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
                                     arrayOfTooltipsSprites[i].x_offset = 55;
                                 }
-                                else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
+                                else { Debug.LogWarningFormat("Invalid tooltipDetailsSprite (Null) for arrayOfOptions[{0}]", i); }
                             }
                             else
                             {
                                 Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
+                            }
+                            //tooltip data -> stars
+                            if (arrayOfTooltipsStars[i] != null)
+                            {
+                                if (details.arrayOfTooltipsStars[i] != null)
+                                {
+                                    arrayOfTooltipsStars[i].tooltipHeader = details.arrayOfTooltipsStars[i].textHeader;
+                                    arrayOfTooltipsStars[i].tooltipMain = details.arrayOfTooltipsStars[i].textMain;
+                                    arrayOfTooltipsStars[i].tooltipDetails = details.arrayOfTooltipsStars[i].textDetails;
+                                    arrayOfTooltipsStars[i].x_offset = 55;
+                                    arrayOfTooltipsStars[i].y_offset = 15;
+                                }
+                                else
+                                {
+                                    //this tooltip is optional, fill with blank data otherwise previously used data will be used
+                                    arrayOfTooltipsStars[i].tooltipHeader = "";
+                                    arrayOfTooltipsStars[i].tooltipMain = "";
+                                    arrayOfTooltipsStars[i].tooltipDetails = "";
+                                }
                             }
                         }
                         else
@@ -219,7 +238,7 @@ public class ModalInventoryUI : MonoBehaviour
                     else
                     {
                         //error -> Null Interaction data
-                        Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i));
+                        Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i);
                         errorFlag = true;
                         break;
                     }
@@ -227,7 +246,7 @@ public class ModalInventoryUI : MonoBehaviour
                 else
                 {
                     //error -> Null array
-                    Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] (Null)", i));
+                    Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i);
                     errorFlag = true;
                     break;
                 }
@@ -336,7 +355,7 @@ public class ModalInventoryUI : MonoBehaviour
                         }
                     }
                     else
-                    {                        
+                    {
                         //error -> Null array
                         Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[\"{0}\"] (Null)", i));
                     }
