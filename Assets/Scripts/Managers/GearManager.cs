@@ -923,7 +923,7 @@ public class GearManager : MonoBehaviour
                                 optionData.optionName = gear.name;
                                 //add to array
                                 data.arrayOfOptions[i] = optionData;
-                                data.arrayOfTooltips[i] = tooltipDetails;
+                                data.arrayOfTooltipsSprite[i] = tooltipDetails;
                             }
                             else
                             { Debug.LogWarning(string.Format("Invalid gear (Null) for gear {0}", listOfGear[i])); }
@@ -1039,7 +1039,7 @@ public class GearManager : MonoBehaviour
                             optionData.optionName = gear.name;
                             //add to array
                             data.arrayOfOptions[i] = optionData;
-                            data.arrayOfTooltips[i] = tooltipDetails;
+                            data.arrayOfTooltipsSprite[i] = tooltipDetails;
                         }
                         else
                         { Debug.LogWarning(string.Format("Invalid gear (Null) for gearID {0}", listOfGear[i])); }

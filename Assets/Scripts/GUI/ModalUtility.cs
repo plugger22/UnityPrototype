@@ -283,8 +283,9 @@ namespace modalAPI
         public string textTop;
         public string textBottom;
         public GlobalSide side;
-        public InventoryOptionData[] arrayOfOptions = new InventoryOptionData[4];                 //only the first four are recognised
-        public GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[4];              //same [index] for both arrays. Keep in synch!!
+        public InventoryOptionData[] arrayOfOptions = new InventoryOptionData[4];                           //only the first four are recognised
+        public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[4];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
+        public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[4];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
     }
 
     /// <summary>

@@ -39166,6 +39166,7 @@ GameObject:
   - component: {fileID: 1651010768}
   - component: {fileID: 1651010770}
   - component: {fileID: 1651010769}
+  - component: {fileID: 1651010771}
   m_Layer: 5
   m_Name: textBottom
   m_TagString: Untagged
@@ -39312,6 +39313,26 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1651010767}
   m_CullTransparentMesh: 0
+--- !u!114 &1651010771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1651010767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!114 &1651923743 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114183179448910338, guid: 3a4adbf33b13e3e499908367387ad592,

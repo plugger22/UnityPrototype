@@ -28,7 +28,8 @@ public class ModalInventoryUI : MonoBehaviour
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
-    private GenericTooltipUI[] arrayOfTooltips;                 //used for fast access to tooltip components
+    private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
+    private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
 
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
@@ -62,7 +63,8 @@ public class ModalInventoryUI : MonoBehaviour
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
-        arrayOfTooltips = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
             if (arrayOfInventoryOptions[i] != null)
@@ -72,11 +74,16 @@ public class ModalInventoryUI : MonoBehaviour
                 if (interaction != null)
                 { arrayOfInteractions[i] = interaction; }
                 else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
-                //tooltip
-                GenericTooltipUI tooltip = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
-                if (tooltip != null)
-                { arrayOfTooltips[i] = tooltip; }
+
+                //tooltip -> sprite
+                GenericTooltipUI tooltipSprite = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
+                if (tooltipSprite != null)
+                { arrayOfTooltipsSprites[i] = tooltipSprite; }
                 else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i)); }
+
+
+                //tooltip -> stars (bottomText, optional)
+
             }
             else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
         }
@@ -187,14 +194,14 @@ public class ModalInventoryUI : MonoBehaviour
                             arrayOfInteractions[i].optionName = details.arrayOfOptions[i].optionName;
                             arrayOfInteractions[i].type = details.state;
                             //tooltip data
-                            if (arrayOfTooltips[i] != null)
+                            if (arrayOfTooltipsSprites[i] != null)
                             {
-                                if (details.arrayOfTooltips[i] != null)
+                                if (details.arrayOfTooltipsSprite[i] != null)
                                 {
-                                    arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
-                                    arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
-                                    arrayOfTooltips[i].tooltipDetails = details.arrayOfTooltips[i].textDetails;
-                                    arrayOfTooltips[i].x_offset = 55;
+                                    arrayOfTooltipsSprites[i].tooltipHeader = details.arrayOfTooltipsSprite[i].textHeader;
+                                    arrayOfTooltipsSprites[i].tooltipMain = details.arrayOfTooltipsSprite[i].textMain;
+                                    arrayOfTooltipsSprites[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
+                                    arrayOfTooltipsSprites[i].x_offset = 55;
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                             }
@@ -301,13 +308,13 @@ public class ModalInventoryUI : MonoBehaviour
                                 arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
                                 arrayOfInteractions[i].optionName = details.arrayOfOptions[i].optionName;
                                 //tooltip data
-                                if (arrayOfTooltips[i] != null)
+                                if (arrayOfTooltipsSprites[i] != null)
                                 {
-                                    if (details.arrayOfTooltips[i] != null)
+                                    if (details.arrayOfTooltipsSprite[i] != null)
                                     {
-                                        arrayOfTooltips[i].tooltipHeader = details.arrayOfTooltips[i].textHeader;
-                                        arrayOfTooltips[i].tooltipMain = details.arrayOfTooltips[i].textMain;
-                                        arrayOfTooltips[i].tooltipDetails = details.arrayOfTooltips[i].textDetails;
+                                        arrayOfTooltipsSprites[i].tooltipHeader = details.arrayOfTooltipsSprite[i].textHeader;
+                                        arrayOfTooltipsSprites[i].tooltipMain = details.arrayOfTooltipsSprite[i].textMain;
+                                        arrayOfTooltipsSprites[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
                                     }
                                     else { Debug.LogWarning(string.Format("Invalid tooltipDetails (Null) for arrayOfOptions[\"{0}\"]", i)); }
                                 }

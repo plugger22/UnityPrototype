@@ -3592,8 +3592,6 @@ public class ActorManager : MonoBehaviour
         int motivation;
         bool errorFlag = false;
         bool isBoss;
-        char starFull = '\u2605';
-        char starEmpty = '\u2606';
         string title;
         //close all modal 0 tooltips
         GameManager.instance.guiScript.SetTooltipsOff();
@@ -3633,19 +3631,25 @@ public class ActorManager : MonoBehaviour
                         optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
-                        //tooltip
-                        GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                        tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
-                        tooltipDetails.textMain = new StringBuilder()
+                        //tooltip -> sprite
+                        GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
+                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        tooltipDetailsSprite.textMain = new StringBuilder()
                            .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
                            .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
                            .ToString();
                         if (isBoss == true)
-                        { tooltipDetails.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.factionScript.GetBossOpinionFormatted()); }
+                        { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.factionScript.GetBossOpinionFormatted()); }
+                        //tooltip -> stars (bottom text, motivation -> same for all)
+                        GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
+                        tooltipDetailsStars.textHeader = string.Format("{0}{1}{2}<size=120%><\"Motivation\"{3}", actor.actorName, "\n", colourAlert, colourEnd);
+                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i - offset] = optionData;
-                        data.arrayOfTooltips[i - offset] = tooltipDetails;
+                        data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
+                        data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
                 }
@@ -3787,7 +3791,7 @@ public class ActorManager : MonoBehaviour
                             tooltipDetails.textDetails = builderDetails.ToString();
                             //add to arrays
                             data.arrayOfOptions[i] = optionData;
-                            data.arrayOfTooltips[i] = tooltipDetails;
+                            data.arrayOfTooltipsSprite[i] = tooltipDetails;
                         }
                         else
                         { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", listOfActors[i]); }
@@ -3906,7 +3910,7 @@ public class ActorManager : MonoBehaviour
                             "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
                         //add to arrays
                         data.arrayOfOptions[i] = optionData;
-                        data.arrayOfTooltips[i] = tooltipDetails;
+                        data.arrayOfTooltipsSprite[i] = tooltipDetails;
                     }
                     else
                     { Debug.LogWarning(string.Format("Invalid Actor (Null) for actorID {0}", listOfActors[i])); }

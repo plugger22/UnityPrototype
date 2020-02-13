@@ -145,6 +145,7 @@ public class GUIManager : MonoBehaviour
     private string colourEnd;
     //star
     private char starChar = '\uf005';
+    private string alpha = "<alpha=#66>";   //alpha transparency, used for stars (FF is 100%, CC / AA / 88 / 66 / 44 / 22)
 
     public void Awake()
     {
@@ -754,10 +755,10 @@ public class GUIManager : MonoBehaviour
         string stars = "Unknown";
         switch (num)
         {
-            case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
-            case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}{4}<alpha=#AA>{5}{6}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, starChar, colourEnd); break;
-            case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2}{3}<alpha=#AA>{4}{5}{6}</font>", colourNeutral, starChar, colourEnd, colourGrey, starChar, starChar, colourEnd); break;
-            case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}<alpha=#AA>{1}{2}{3}{4}</font>", colourGrey, starChar, starChar, starChar, colourEnd); break;
+            case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
+            case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
+            case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
+            case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
         }
         return stars;
