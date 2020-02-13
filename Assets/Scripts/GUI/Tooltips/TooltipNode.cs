@@ -286,7 +286,10 @@ public class TooltipNode : MonoBehaviour
                 {
                     statData = data.arrayOfStats[i];
                     if (i > 0) { builderStats.AppendLine(); }
-                    builderStats.AppendFormat("{0}{1}{2}", GetStatColour(statData, (NodeData)i), statData, colourEnd);
+
+                    /*builderStats.AppendFormat("{0}{1}{2}", GetStatColour(statData, (NodeData)i), statData, colourEnd);*/
+                    builderStats.AppendFormat("{0}", GameManager.instance.guiScript.GetStars(statData));
+
                     //idiot check to handle case of being too many stats
                     checkCounter++;
                     if (checkCounter >= 3) { break; }
