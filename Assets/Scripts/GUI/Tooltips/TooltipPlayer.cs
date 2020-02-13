@@ -224,8 +224,13 @@ public class TooltipPlayer : MonoBehaviour
                 int invisibility = GameManager.instance.playerScript.Invisibility;
                 int mood = GameManager.instance.playerScript.GetMood();
                 StringBuilder builderRes = new StringBuilder();
-                builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
-                builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);
+
+                /*builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
+                builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);*/
+
+                builderRes.AppendFormat("<size=110%><b>Invisibility<pos=57%>{0}</b></size>{1}", GameManager.instance.guiScript.GetStars(invisibility), "\n");
+                builderRes.AppendFormat("<size=110%><b>Mood<pos=57%>{0}</b></size>", GameManager.instance.guiScript.GetStars(mood));
+
                 playerStats.text = builderRes.ToString();
                 break;
         }

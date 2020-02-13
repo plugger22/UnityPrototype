@@ -9730,3 +9730,42 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 61723 -> Thursday, 13 February 2020 6:06 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 2632 -> Thursday, 13 February 2020 8:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26755 -> Thursday, 13 February 2020 8:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50921 -> Thursday, 13 February 2020 8:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57981 -> Thursday, 13 February 2020 8:35 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object arg0, System.Object arg1) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TooltipPlayer.SetTooltip (UnityEngine.Vector3 pos) (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:231)
+	PlayerSpriteTooltipUI+<ShowPlayerTooltip>c__Iterator1.MoveNext () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:130)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 12436 -> Thursday, 13 February 2020 8:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17439 -> Thursday, 13 February 2020 8:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17790 -> Thursday, 13 February 2020 8:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2992 -> Thursday, 13 February 2020 8:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24618 -> Thursday, 13 February 2020 8:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43010 -> Thursday, 13 February 2020 8:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16310 -> Thursday, 13 February 2020 9:18 PM
+City seed 5678 -> London, United Kingdom

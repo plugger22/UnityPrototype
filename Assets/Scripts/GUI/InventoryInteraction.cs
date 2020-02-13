@@ -85,7 +85,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     position.x += 25;
                                     position.y -= 50;
                                     position = Camera.main.ScreenToWorldPoint(position);
-                                    //gear
+                                    //reserve actions menu
                                     ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                                     {
                                         itemID = actor.actorID,

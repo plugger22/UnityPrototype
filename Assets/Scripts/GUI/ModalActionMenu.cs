@@ -10,7 +10,7 @@ using gameAPI;
 
 
 /// <summary>
-/// handles modal Action Menu for nodes
+/// handles modal Action Menu for nodes and other purposes, eg. Reserve action menu
 /// </summary>
 public class ModalActionMenu : MonoBehaviour
 {

@@ -3751,12 +3751,17 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
+                                /*builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
                                     actor.GetDatapoint(ActorDatapoint.Datapoint0), colourEnd, "\n");
                                 builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint1)),
                                     actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n");
                                 builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
-                                    actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);
+                                    actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);*/
+
+                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
+                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
+                                builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
+
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action
