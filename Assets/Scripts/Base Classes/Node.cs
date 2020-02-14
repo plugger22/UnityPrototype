@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -79,7 +80,8 @@ public class Node : MonoBehaviour
     private List<Node> listOfNearNeighbours;            //list of all nodes within a 2 connection radius (includes immediate neighbours) -> Initialised by AIManager.cs -> Initialise -> SetNearNeighbours
     private List<Connection> listOfConnections;         //list of neighbouring connections
 
-    [HideInInspector] public TextMesh faceText;        //textmesh component of faceObject (cached in Awake)
+    [HideInInspector] public TextMeshPro faceText;         //textmesh component of faceObject (cached in Awake)
+    [HideInInspector] public char defaultChar;          //default node face text
 
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -207,7 +209,7 @@ public class Node : MonoBehaviour
         if (faceObject != null)
         {
             //node face text
-            faceText = faceObject.GetComponent<TextMesh>();
+            faceText = faceObject.GetComponent<TextMeshPro>();
             faceText.text = "";
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }

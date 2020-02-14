@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224524534335314508}
   - component: {fileID: 222416397762090564}
   - component: {fileID: 114853983530084180}
-  - component: {fileID: 114417341332108404}
   m_Layer: 5
   m_Name: ImageSprite
   m_TagString: Untagged
@@ -55,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224816813924769026}
   - component: {fileID: 114525781696955744}
+  - component: {fileID: 114668023496721710}
   m_Layer: 5
   m_Name: InventoryOption
   m_TagString: Untagged
@@ -350,26 +350,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114417341332108404
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1222710882055980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  x_offset: 0
-  y_offset: 0
-  nodeID: 0
-  connID: 0
-  testTag: 
-  isIgnoreClick: 0
 --- !u!114 &114525781696955744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,11 +364,31 @@ MonoBehaviour:
   optionImage: {fileID: 114853983530084180}
   textUpper: {fileID: 114415490704887210}
   textLower: {fileID: 114037131444707108}
-  tooltipSprite: {fileID: 114417341332108404}
+  tooltipSprite: {fileID: 0}
   tooltipStars: {fileID: 114869060912166896}
   optionData: 0
   optionName: 
   type: 0
+--- !u!114 &114668023496721710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495198540931258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!114 &114853983530084180
 MonoBehaviour:
   m_ObjectHideFlags: 1

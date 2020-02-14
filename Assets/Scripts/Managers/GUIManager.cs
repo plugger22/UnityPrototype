@@ -127,6 +127,13 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
     public Color colourMainBackground;
 
+    //font awesome icons
+    [HideInInspector] public char starChar = '\uf005';
+    [HideInInspector] public char airportChar = '\uf072';
+    [HideInInspector] public char harbourChar = '\uf13d';
+    [HideInInspector] public char cityHallChar = '\uf66f';
+    [HideInInspector] public char iconChar = '\uf5a6';
+
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -143,8 +150,8 @@ public class GUIManager : MonoBehaviour
     private string colourBad;
     //private string colourNormal;
     private string colourEnd;
-    //star
-    private char starChar = '\uf005';
+
+
     private string alpha = "<alpha=#66>";   //alpha transparency, used for stars (FF is 100%, CC / AA / 88 / 66 / 44 / 22)
 
     public void Awake()

@@ -16,7 +16,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     public Image optionImage;
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textLower;
-    public GenericTooltipUI tooltipSprite;
+    //public GenericTooltipUI tooltipSprite;                        //EDIT -> tooltip component attached to gameobject rather than sprite as can't get mouseover and click detection from sprite without code change
     public GenericTooltipUI tooltipStars;
 
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.

@@ -415,9 +415,9 @@ public class DataManager : MonoBehaviour
                 { AddNodeCrisisToList(crisis.Value); }
                 else { Debug.LogWarningFormat("Invalid nodeCrisis \"{0}\" (Null)", crisis.Key); }
             }
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
-            Debug.LogFormat("[Imp] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
+            Debug.LogFormat("[Loa] DataManager.cs -> InitialiseLate: listOfCrisisStability has {0} records", listOfCrisisStability.Count);
+            Debug.LogFormat("[Loa] DataManager.cs -> InitialiseLate: listOfCrisisSupport has {0} records", listOfCrisisSupport.Count);
+            Debug.LogFormat("[Loa] DataManager.cs -> InitialiseLate: listOfCrisisSecurity has {0} records", listOfCrisisSecurity.Count);
         }
         else { Debug.LogWarning("Invalid dictOfNodeCrisis (Null)"); }
 
@@ -664,7 +664,7 @@ public class DataManager : MonoBehaviour
             currentInfoData.arrayOfItemData[outer].AddRange(tempList);
             //check list length -> need to know if too long so I can adjust to accommodate max. possible
             if (tempList.Count > 20)
-            { Debug.LogWarningFormat("tempList has {0} records for tab {1}", tempList.Count, outer); }
+            { Debug.LogWarningFormat("tempList has {0} records for tab {1} -> INFO only", tempList.Count, outer); }
             //empty out temp list ready for next tab data set
             tempList.Clear();
         }

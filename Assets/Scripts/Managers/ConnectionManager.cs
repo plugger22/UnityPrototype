@@ -129,8 +129,8 @@ public class ConnectionManager : MonoBehaviour
             {
                 listOfConnections.Clear();
                 listOfConnections.AddRange(dictOfConnections.Values.ToList());
-                Debug.LogFormat("[Imp] ConnectionManager.cs -> dictOfConnections has {0} records", dictOfConnections.Count);
-                Debug.LogFormat("[Imp] ConnectionManager.cs -> listOfConnections has {0} records", listOfConnections.Count);
+                Debug.LogFormat("[Loa] ConnectionManager.cs -> dictOfConnections has {0} records", dictOfConnections.Count);
+                Debug.LogFormat("[Loa] ConnectionManager.cs -> listOfConnections has {0} records", listOfConnections.Count);
                 Debug.Assert(listOfConnections.Count == dictOfConnections.Count, "Mismatch on record count between listOfConnections and dictOfConnections");
             }
             else { Debug.LogWarning("Invalid listOfConnections (Null)"); }

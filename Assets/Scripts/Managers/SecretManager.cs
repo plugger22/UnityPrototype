@@ -191,7 +191,7 @@ public class SecretManager : MonoBehaviour
                             }
                             else { Debug.LogWarning("Invalid secret (Null) in dictOfSecrets"); }
                         }
-                        Debug.LogFormat("[Imp] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
+                        Debug.LogFormat("[Loa] SecretManager.cs -> listOfPlayerSecrets has {0} entries{1}", listOfPlayerSecrets.Count, "\n");
                         Debug.Assert(listOfPlayerSecrets.Count > 0, "No records in listOfPlayerSecrets");
                     }
                     else { Debug.LogWarning("Invalid listOfStorySecrets (Null)"); }

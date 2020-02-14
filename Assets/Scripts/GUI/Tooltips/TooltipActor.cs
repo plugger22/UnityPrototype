@@ -156,7 +156,7 @@ public class TooltipActor : MonoBehaviour
         if (data.actor != null)
         {
             //Header
-            actorName.text = string.Format("{0}<b>{1}</b>{2}{3}{4}{5}{6}", colourArc, data.actor.arc.name, colourEnd, "\n", colourName, data.actor.actorName, colourEnd);
+            actorName.text = string.Format("{0}<b><size=120%>{1}</size>{2}{3}{4}{5}</b>{6}", colourArc, data.actor.arc.name, colourEnd, "\n", colourName, data.actor.actorName, colourEnd);
             //Status (ignore for the default 'Active' Condition)
             if (data.actor.Status != ActorStatus.Active)
             {
@@ -228,14 +228,15 @@ public class TooltipActor : MonoBehaviour
                 else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
             }
             //Trait
-            actorTrait.text = data.actor.GetTrait().tagFormatted;
+            actorTrait.text = string.Format("<size=120%>{0}</size>", data.actor.GetTrait().tagFormatted);
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
         //action
         if (data.action != null)
         { actorAction.text = string.Format("{0}<b>{1}</b>{2}", colourAction, data.action.tag, colourEnd); }
         else { Debug.LogWarning(string.Format("Actor \"{0}\" has an invalid Action (Null)", data.actor.actorName)); }
-        //qualities
+
+        /*//qualities -> EDIT no longer used as replaced by a single text field for both qualities and stars combined (below)
         int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         if (data.arrayOfQualities.Length > 0)
         {
@@ -246,10 +247,11 @@ public class TooltipActor : MonoBehaviour
                 builder.AppendFormat("{0}{1}{2}", colourQuality, data.arrayOfQualities[i], colourEnd);
             }
             actorQualities.text = builder.ToString();
-        }
+        }*/
 
         //Stats -> only takes the first three Qualities, eg. "Connections, Motivation, Invisibility"
         int dataStats;
+        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
         if (data.arrayOfStats.Length > 0 || data.arrayOfStats.Length < numOfQualities)
         {
             StringBuilder builder = new StringBuilder();
@@ -257,9 +259,7 @@ public class TooltipActor : MonoBehaviour
             {
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-
-                /*builder.AppendFormat("{0}{1}{2}", GameManager.instance.colourScript.GetValueColour(dataStats), dataStats, colourEnd);*/
-                builder.AppendFormat("{0}", GameManager.instance.guiScript.GetStars(dataStats));
+                builder.AppendFormat("{0}<pos=57%>{1}", data.arrayOfQualities[i], GameManager.instance.guiScript.GetStars(dataStats));
             }
             actorStats.text = builder.ToString();
         }

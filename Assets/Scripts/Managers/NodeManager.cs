@@ -1156,7 +1156,10 @@ public class NodeManager : MonoBehaviour
             foreach (Node node in listOfNodes)
             {
                 node.SetMaterial(materialNormal);
-                node.faceText.text = "";
+                if (node.defaultChar != '\0')
+                { node.faceText.text = string.Format("{0}", node.defaultChar); }
+                else { node.faceText.text = ""; }
+                node.faceText.color = Color.yellow;
             }
             //trigger an automatic redraw
             NodeRedraw = true;

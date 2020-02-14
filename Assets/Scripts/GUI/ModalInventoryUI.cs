@@ -72,11 +72,11 @@ public class ModalInventoryUI : MonoBehaviour
                 if (interaction != null)
                 {
                     arrayOfInteractions[i] = interaction;
-                    //tooltip -> sprite
-                    GenericTooltipUI tooltipSprite = interaction.tooltipSprite.GetComponent<GenericTooltipUI>();
+                    //tooltip -> sprite (attached to game object to prevent tooltip component masking gameobject interaction component which is needed for click detection for menu's)
+                    GenericTooltipUI tooltipSprite = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
                     if (tooltipSprite != null)
                     { arrayOfTooltipsSprites[i] = tooltipSprite; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipSprite \"{0}\" (Null)", i)); }
+                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i)); }
                     //tooltip -> stars (bottomText, optional)
                     GenericTooltipUI tooltipStars = interaction.tooltipStars.GetComponent<GenericTooltipUI>();
                     if (tooltipStars != null)

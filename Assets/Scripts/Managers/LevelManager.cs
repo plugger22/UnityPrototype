@@ -1081,9 +1081,11 @@ public class LevelManager : MonoBehaviour
                         {
                             if (record.Key.Arc.name.Equals("GOVERNMENT", StringComparison.Ordinal) == true)
                             {
+                                //CITY HALL
                                 Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor & City Hall at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                 record.Key.nodeName = "City Centre";
                                 record.Key.specialName = "Town Hall";
+                                record.Key.defaultChar = GameManager.instance.guiScript.cityHallChar;
                                 //make city hall a larger cylinder
                                 record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                 //Mayor placed at CityHall at game start
@@ -1111,6 +1113,7 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Airport at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.airportDistrict;
                                     record.Key.specialName = "Airport";
+                                    record.Key.defaultChar = GameManager.instance.guiScript.airportChar;
                                     //make airport a larger cylinder
                                     record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                     GameManager.instance.cityScript.airportDistrictID = record.Key.nodeID;
@@ -1125,6 +1128,7 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Harbour at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.harbourDistrict;
                                     record.Key.specialName = "Harbour";
+                                    record.Key.defaultChar = GameManager.instance.guiScript.harbourChar;
                                     //make harbour a larger cylinder
                                     record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                     GameManager.instance.cityScript.harbourDistrictID = record.Key.nodeID;
@@ -1156,6 +1160,7 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Icon \"{0}\" district at {1}, {2}, ID {3}{4}", city.iconName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                     node.nodeName = city.iconDistrict;
                                     node.specialName = city.iconName;
+                                    node.defaultChar = GameManager.instance.guiScript.iconChar;
                                     GameManager.instance.cityScript.iconDistrictID = node.nodeID;
                                     break;
                                 }

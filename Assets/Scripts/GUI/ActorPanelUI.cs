@@ -24,13 +24,14 @@ public class ActorPanelUI : MonoBehaviour
     public Image picture2;
     public Image picture3;
     public Image picturePlayer;
-    public Image moodStars;
+    public Image spriteStars;
 
     public TextMeshProUGUI type0;
     public TextMeshProUGUI type1;
     public TextMeshProUGUI type2;
     public TextMeshProUGUI type3;
     public TextMeshProUGUI playerStressed;
+    public TextMeshProUGUI moodStars;
 
     public Image renownCircle0;
     public Image renownCircle1;
@@ -389,7 +390,8 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="mood"></param>
     public void SetPlayerMoodUI(int mood, bool isStressed = false)
     {
-        if (isStressed == false)
+        //sprite based mood stars
+        /*if (isStressed == false)
         {
             playerStressed.gameObject.SetActive(false);
             moodStars.gameObject.SetActive(true);
@@ -407,6 +409,21 @@ public class ActorPanelUI : MonoBehaviour
             //stressed
             playerStressed.gameObject.SetActive(true);
             moodStars.gameObject.SetActive(false);
+        }*/
+
+
+        //no longer using sprites, swapped to fontAwesome stars
+        spriteStars.gameObject.SetActive(false);
+        if (isStressed == true)
+        {
+            playerStressed.gameObject.SetActive(true);
+            moodStars.gameObject.SetActive(false);
+        }
+        else
+        {
+            playerStressed.gameObject.SetActive(false);
+            moodStars.gameObject.SetActive(true);
+            moodStars.text = GameManager.instance.guiScript.GetStars(mood);
         }
     }
 

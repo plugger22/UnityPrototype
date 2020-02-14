@@ -9769,3 +9769,146 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 16310 -> Thursday, 13 February 2020 9:18 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 60108 -> Friday, 14 February 2020 11:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4594 -> Friday, 14 February 2020 11:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32758 -> Friday, 14 February 2020 11:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4078 -> Friday, 14 February 2020 12:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61322 -> Friday, 14 February 2020 12:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12165 -> Friday, 14 February 2020 12:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44754 -> Friday, 14 February 2020 12:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20116 -> Friday, 14 February 2020 12:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45328 -> Friday, 14 February 2020 2:00 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:667)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:249)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
+	
+Dev seed 56344 -> Friday, 14 February 2020 2:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28007 -> Friday, 14 February 2020 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54236 -> Friday, 14 February 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62550 -> Friday, 14 February 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26511 -> Friday, 14 February 2020 2:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28653 -> Friday, 14 February 2020 2:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32506 -> Friday, 14 February 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55412 -> Friday, 14 February 2020 3:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28851 -> Friday, 14 February 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21429 -> Friday, 14 February 2020 3:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19300 -> Friday, 14 February 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11079 -> Friday, 14 February 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38155 -> Friday, 14 February 2020 3:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20412 -> Friday, 14 February 2020 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24097 -> Friday, 14 February 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6893 -> Friday, 14 February 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29697 -> Friday, 14 February 2020 4:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17395 -> Friday, 14 February 2020 4:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49885 -> Friday, 14 February 2020 4:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54088 -> Friday, 14 February 2020 4:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15262 -> Friday, 14 February 2020 4:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44330 -> Friday, 14 February 2020 4:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28452 -> Friday, 14 February 2020 4:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4805 -> Friday, 14 February 2020 4:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25554 -> Friday, 14 February 2020 4:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61369 -> Friday, 14 February 2020 4:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14129 -> Friday, 14 February 2020 5:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43053 -> Friday, 14 February 2020 5:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28697 -> Friday, 14 February 2020 5:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56116 -> Friday, 14 February 2020 5:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5796 -> Friday, 14 February 2020 5:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63556 -> Friday, 14 February 2020 5:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59944 -> Friday, 14 February 2020 5:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44966 -> Friday, 14 February 2020 5:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3227 -> Friday, 14 February 2020 5:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1201 -> Friday, 14 February 2020 5:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53999 -> Friday, 14 February 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
