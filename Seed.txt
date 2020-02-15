@@ -9912,3 +9912,511 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 53999 -> Friday, 14 February 2020 5:12 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 43974 -> Friday, 14 February 2020 7:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37503 -> Friday, 14 February 2020 7:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25167 -> Friday, 14 February 2020 7:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40366 -> Saturday, 15 February 2020 2:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55749 -> Saturday, 15 February 2020 2:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53298 -> Saturday, 15 February 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50690 -> Saturday, 15 February 2020 2:22 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	ERROR Invalid faceObject (Null)
+UnityEngine.Debug:LogError(Object)
+	Node:Awake() (at Assets/Scripts/Base Classes/Node.cs:215)
+	UnityEngine.Object:Instantiate(GameObject, Vector3, Quaternion)
+	LevelManager:InitialiseNodes(Int32, Single) (at Assets/Scripts/Managers/LevelManager.cs:321)
+	LevelManager:SubInitialiseAll() (at Assets/Scripts/Managers/LevelManager.cs:108)
+	LevelManager:Initialise(GameState) (at Assets/Scripts/Managers/LevelManager.cs:82)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:760)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:814)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:361)
+	
+Dev seed 40716 -> Saturday, 15 February 2020 2:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2880 -> Saturday, 15 February 2020 2:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36736 -> Saturday, 15 February 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18370 -> Saturday, 15 February 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14959 -> Saturday, 15 February 2020 2:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53413 -> Saturday, 15 February 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34227 -> Saturday, 15 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38024 -> Saturday, 15 February 2020 3:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6772 -> Saturday, 15 February 2020 3:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1886 -> Saturday, 15 February 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41146 -> Saturday, 15 February 2020 3:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33367 -> Saturday, 15 February 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35409 -> Saturday, 15 February 2020 3:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39404 -> Saturday, 15 February 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28628 -> Saturday, 15 February 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13441 -> Saturday, 15 February 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6830 -> Saturday, 15 February 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31789 -> Saturday, 15 February 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20884 -> Saturday, 15 February 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38727 -> Saturday, 15 February 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31855 -> Saturday, 15 February 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36328 -> Saturday, 15 February 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55621 -> Saturday, 15 February 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9193 -> Saturday, 15 February 2020 4:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21864 -> Saturday, 15 February 2020 4:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61260 -> Saturday, 15 February 2020 4:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51106 -> Saturday, 15 February 2020 4:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3678 -> Saturday, 15 February 2020 4:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40904 -> Saturday, 15 February 2020 4:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3976 -> Saturday, 15 February 2020 4:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53266 -> Saturday, 15 February 2020 4:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41732 -> Saturday, 15 February 2020 4:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19645 -> Saturday, 15 February 2020 4:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43194 -> Saturday, 15 February 2020 4:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40955 -> Saturday, 15 February 2020 4:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32173 -> Saturday, 15 February 2020 4:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32047 -> Saturday, 15 February 2020 4:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49855 -> Saturday, 15 February 2020 4:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6104 -> Saturday, 15 February 2020 4:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14957 -> Saturday, 15 February 2020 4:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43594 -> Saturday, 15 February 2020 4:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11463 -> Saturday, 15 February 2020 4:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15749 -> Saturday, 15 February 2020 4:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28037 -> Saturday, 15 February 2020 4:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27820 -> Saturday, 15 February 2020 4:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25041 -> Saturday, 15 February 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59941 -> Saturday, 15 February 2020 4:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15010 -> Saturday, 15 February 2020 4:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40070 -> Saturday, 15 February 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43484 -> Saturday, 15 February 2020 4:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9904 -> Saturday, 15 February 2020 4:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9000 -> Saturday, 15 February 2020 4:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16449 -> Saturday, 15 February 2020 4:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63524 -> Saturday, 15 February 2020 4:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6700 -> Saturday, 15 February 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34283 -> Saturday, 15 February 2020 5:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13000 -> Saturday, 15 February 2020 5:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51159 -> Saturday, 15 February 2020 5:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28119 -> Saturday, 15 February 2020 5:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21924 -> Saturday, 15 February 2020 5:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59041 -> Saturday, 15 February 2020 5:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19940 -> Saturday, 15 February 2020 5:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18867 -> Saturday, 15 February 2020 5:18 PM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found nzt, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5658)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:1878)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1229)
+	
+Dev seed 62390 -> Saturday, 15 February 2020 5:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32105 -> Saturday, 15 February 2020 5:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56907 -> Saturday, 15 February 2020 5:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51212 -> Saturday, 15 February 2020 5:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35010 -> Saturday, 15 February 2020 5:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36545 -> Saturday, 15 February 2020 5:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61681 -> Saturday, 15 February 2020 5:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44678 -> Saturday, 15 February 2020 5:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56964 -> Saturday, 15 February 2020 5:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18843 -> Saturday, 15 February 2020 5:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42952 -> Saturday, 15 February 2020 5:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50614 -> Saturday, 15 February 2020 5:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25368 -> Saturday, 15 February 2020 5:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64399 -> Saturday, 15 February 2020 5:55 PM
+City seed 5678 -> London, United Kingdom

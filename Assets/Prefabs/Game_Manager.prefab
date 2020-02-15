@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fb2197a869b8a4aac691aa8470c7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node: {fileID: 1129962086605652, guid: 43940505c17f9e043a23a9e16a189956, type: 2}
+  node: {fileID: 1899248245568038, guid: 02bbccd9c94d9c94daf64d6cf1203067, type: 2}
   connection: {fileID: 1469875037488358, guid: 4109dd209868d7d43acd916ee7b399e0, type: 2}
   blockingLayer:
     serializedVersion: 2
@@ -4712,6 +4712,11 @@ MonoBehaviour:
   colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  starChar: 61445
+  airportChar: 61554
+  harbourChar: 61757
+  cityHallChar: 61852
+  iconChar: 62886
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

@@ -1053,6 +1053,18 @@ public class LevelManager : MonoBehaviour
                             node.nodeName = listOfNames[index];
                             //delete record to avoid dupes
                             listOfNames.RemoveAt(index);
+                            //assign nodeArc default faceText
+                            switch(node.Arc.name)
+                            {
+                                case "CORPORATE": node.defaultChar = GameManager.instance.guiScript.corporateChar; break;
+                                case "GATED": node.defaultChar = GameManager.instance.guiScript.gatedChar; break;
+                                case "INDUSTRIAL": node.defaultChar = GameManager.instance.guiScript.industrialChar; break;
+                                case "RESEARCH": node.defaultChar = GameManager.instance.guiScript.researchChar; break;
+                                case "GOVERNMENT": node.defaultChar = GameManager.instance.guiScript.governmentChar; break;
+                                case "SPRAWL": node.defaultChar = GameManager.instance.guiScript.sprawlChar; break;
+                                case "UTILITY": node.defaultChar = GameManager.instance.guiScript.utilityChar; break;
+                                default: Debug.LogWarningFormat("Unrecognised nodeArc \"{0}\"", node.Arc.name); break;
+                            }
                         }
                         else { Debug.LogWarningFormat("Invalid name (Null or Empty) for listOfNames[{0}]", index); }
                     }

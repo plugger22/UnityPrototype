@@ -188,7 +188,8 @@ public class NodeManager : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
-    {            //fast access
+    {            
+        //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         materialNormal = GetNodeMaterial(NodeType.Normal);
@@ -208,7 +209,14 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
-        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
+        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");        
+        //gear node Action Fast access
+        actionKinetic = GameManager.instance.dataScript.GetAction("gearKinetic");
+        actionHacking = GameManager.instance.dataScript.GetAction("gearHacking");
+        actionPersuasion = GameManager.instance.dataScript.GetAction("gearPersuasion");
+        Debug.Assert(actionKinetic != null, "Invalid actionKinetic (Null)");
+        Debug.Assert(actionHacking != null, "Invalid actionHacking (Null)");
+        Debug.Assert(actionPersuasion != null, "Invalid actionPersuasion (Null)");
         //flash
         flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
         Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
@@ -290,13 +298,8 @@ public class NodeManager : MonoBehaviour
         if (outcomeStatusTracers == null) { Debug.LogError("Invalid outcomeStatusTracers (Null)"); }
         if (outcomeStatusContacts == null) { Debug.LogError("Invalid outcomeStatusContacts (Null)"); }
         if (outcomeStatusTeams == null) { Debug.LogError("Invalid outcomeStatusTeams (Null)"); }
-        //gear node Action Fast access
-        actionKinetic = GameManager.instance.dataScript.GetAction("gearKinetic");
-        actionHacking = GameManager.instance.dataScript.GetAction("gearHacking");
-        actionPersuasion = GameManager.instance.dataScript.GetAction("gearPersuasion");
-        Debug.Assert(actionKinetic != null, "Invalid actionKinetic (Null)");
-        Debug.Assert(actionHacking != null, "Invalid actionHacking (Null)");
-        Debug.Assert(actionPersuasion != null, "Invalid actionPersuasion (Null)");
+        //set default face text for nodes
+        ResetNodes();
     }
     #endregion
 
@@ -1159,7 +1162,7 @@ public class NodeManager : MonoBehaviour
                 if (node.defaultChar != '\0')
                 { node.faceText.text = string.Format("{0}", node.defaultChar); }
                 else { node.faceText.text = ""; }
-                node.faceText.color = Color.yellow;
+                node.faceText.color = Color.white;
             }
             //trigger an automatic redraw
             NodeRedraw = true;
@@ -1234,9 +1237,10 @@ public class NodeManager : MonoBehaviour
                                     data = node.GetNodeActivity(activityUI);
                                     if (data > -1)
                                     {
-                                        node.faceText.text = data.ToString();
+                                        node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
                                         node.faceText.color = GetActivityColour(activityUI, data);
                                     }
+                                    else { node.faceText.text = ""; }
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));

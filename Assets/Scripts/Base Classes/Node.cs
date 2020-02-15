@@ -190,6 +190,7 @@ public class Node : MonoBehaviour
 	
 	private void Awake ()
     {
+        Debug.Assert(faceObject != null, "Invalid faceObject (Null)");
         //collections
         listOfNeighbourPositions = new List<Vector3>();
         listOfNeighbourNodes = new List<Node>();
@@ -199,23 +200,33 @@ public class Node : MonoBehaviour
         listOfOngoingEffects = new List<EffectDataOngoing>();
 
         //vars
-        _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+
+        /*_Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
-        minValue = GameManager.instance.nodeScript.minNodeValue;
+        minValue = GameManager.instance.nodeScript.minNodeValue;*/
+
         //components
         launcher = GetComponent<ParticleLauncher>();
         if (faceObject != null)
         {
             //node face text
-            faceText = faceObject.GetComponent<TextMeshPro>();
+            faceText = faceObject.gameObject.GetComponent<TextMeshPro>();
             faceText.text = "";
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
         Debug.Assert(faceText != null, "Invalid faceText (Null)");
 	}
+
+    private void OnEnable()
+    {
+        _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
+        maxValue = GameManager.instance.nodeScript.maxNodeValue;
+        minValue = GameManager.instance.nodeScript.minNodeValue;
+    }
 
     private void Start()
     {
