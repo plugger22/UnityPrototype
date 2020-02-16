@@ -1024,6 +1024,7 @@ public class LevelManager : MonoBehaviour
             //target -> none
             node.targetName = null;
             //assign nodeArc default faceText
+            node.defaultChar = '\0';
             switch (nodeArc.name)
             {
                 case "CORPORATE": node.defaultChar = GameManager.instance.guiScript.corporateChar; break;
@@ -1035,7 +1036,7 @@ public class LevelManager : MonoBehaviour
                 case "UTILITY": node.defaultChar = GameManager.instance.guiScript.utilityChar; break;
                 default: Debug.LogWarningFormat("Unrecognised nodeArc \"{0}\"", node.Arc.name); break;
             }
-            /*Debug.LogFormat("[Tst] LevelManager.cs -> SetNodeDetails: {0}, node.defaultChar {1}{2}", node.Arc.name, node.defaultChar.ToString(), "\n");*/
+            /*Debug.LogFormat("[Tst] LevelManager.cs -> SetNodeDetails: {0}, nodeID {1}{2}", node.Arc.name, node.nodeID, "\n");*/
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", node.nodeID); }
     }

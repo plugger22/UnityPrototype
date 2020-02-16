@@ -731,6 +731,26 @@ public class Node : MonoBehaviour
     { return _Material; }
 
     /// <summary>
+    /// Sets node to material (eg. active material) with black, full opacity, face icon
+    /// </summary>
+    /// <param name="newMaterial"></param>
+    public void SetActive(Material newMaterial)
+    {
+        _Material = newMaterial;
+        faceText.color = new Color32(0, 0, 0, 255);
+    }
+
+    /// <summary>
+    /// Sets node to material (eg. normal material) with default, three quarter opacity, face icon
+    /// </summary>
+    /// <param name="newMaterial"></param>
+    public void SetNormal(Material newMaterial)
+    {
+        _Material = newMaterial;
+        faceText.color = new Color32(255, 255, 224, 202);
+    }
+
+    /// <summary>
     /// Add Tracer
     /// </summary>
     public void AddTracer()

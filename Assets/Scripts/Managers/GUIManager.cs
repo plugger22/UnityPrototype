@@ -127,7 +127,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
     public Color colourMainBackground;
 
-    //font awesome icons
+    //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
     [HideInInspector] public char starChar = '\uf005';
     [HideInInspector] public char airportChar = '\uf072';
     [HideInInspector] public char harbourChar = '\uf13d';
@@ -135,9 +135,9 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char corporateChar = '\uf1ad';
     [HideInInspector] public char gatedChar = '\uf015';
     [HideInInspector] public char industrialChar = '\uf275';
-    [HideInInspector] public char governmentChar = '\uf0eb';
-    [HideInInspector] public char sprawlChar = '\uf70c';
-    [HideInInspector] public char utilityChar = '\uf1e6';
+    [HideInInspector] public char governmentChar = '\uf0e3';
+    [HideInInspector] public char sprawlChar = '\uf554';
+    [HideInInspector] public char utilityChar = '\uf0eb';
     [HideInInspector] public char researchChar = '\uf0c3';
     [HideInInspector] public char iconChar = '\uf5a6';
 
@@ -198,6 +198,7 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
         Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");
         Debug.Assert(moodStar3 != null, "Invalid moodStar3 (Null)");
+
     }
 
     /// <summary>

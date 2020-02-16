@@ -4716,6 +4716,13 @@ MonoBehaviour:
   airportChar: 61554
   harbourChar: 61757
   cityHallChar: 61852
+  corporateChar: 61869
+  gatedChar: 61461
+  industrialChar: 62069
+  governmentChar: 61667
+  sprawlChar: 62804
+  utilityChar: 61675
+  researchChar: 61635
   iconChar: 62886
   waitUntilDone: 0
 --- !u!114 &114736970613289560

@@ -946,7 +946,8 @@ public class GameManager : MonoBehaviour
     /// <param name="obj"></param>
     public void SafeDestroy(GameObject obj)
     {
-        obj.transform.parent = null;
+        /*obj.transform.parent = null;*/
+        obj.transform.SetParent(null);
         obj.name = "$disposed";
         Destroy(obj);
         obj.SetActive(false);
