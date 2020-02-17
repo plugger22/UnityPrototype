@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: NameBritishLast
+  m_Name: NameEnglishLast
   m_EditorClassIdentifier: 
-  descriptor: British last names
+  descriptor: English last names
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
@@ -24,5 +24,46 @@ MonoBehaviour:
   - Prefect
   - Cumberland
   - Fogh
+  - Black
+  - Smart
+  - Wright
+  - Graham
+  - Sweeney
+  - Cochrane
+  - Douglas
+  - Roberts
+  - Davis
+  - Downie
+  - Wallace
+  - Scott
+  - Montgomery
+  - Edwards
+  - Davies
+  - Burnett
+  - McPherson
+  - Campbell
   - Fogg
-  index: 1
+  - Drummond
+  - Shepherd
+  - Love
+  - McLaren
+  - Knox
+  - O'Donnell
+  - Bennett
+  - Bruce
+  - Clark
+  - Harper
+  - Marshall
+  - McGuire
+  - Jones
+  - Williams
+  - Morris
+  - Powell
+  - Gill
+  - Adams
+  - Watts
+  - Ross
+  - Doyle
+  - Holmes
+  - Harris
+  index: 22

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: NameBritishFirstMale
+  m_Name: NameEnglishFirstMale
   m_EditorClassIdentifier: 
-  descriptor: Male first names, British
+  descriptor: Male first names, English
   category: {fileID: 11400000, guid: 0b65e91319c84cb4faa1878553d83b32, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
@@ -25,4 +25,45 @@ MonoBehaviour:
   - Benedict
   - Lex
   - Erasmus
-  index: 1
+  - Francis
+  - Hunter
+  - Zack
+  - Eddie
+  - Jaden
+  - Eduard
+  - Edward
+  - Charles
+  - Max
+  - Freddy
+  - Charlie
+  - Tyler
+  - Jamie
+  - James
+  - Flynn
+  - Julian
+  - Julius
+  - Elias
+  - Troy
+  - Erik
+  - Toby
+  - Jaxon
+  - Caelan
+  - Ernie
+  - Declan
+  - Barney
+  - Finlay
+  - Teddy
+  - Ben
+  - Benjamin
+  - Barnaby
+  - Rory
+  - Fraser
+  - Ian
+  - Craig
+  - Daniel
+  - Sebastian
+  - Owen
+  - Ashton
+  - Vincent
+  - Callen
+  index: 3
