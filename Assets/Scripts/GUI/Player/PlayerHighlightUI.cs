@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using gameAPI;
 
 /// <summary>
-/// flashes player's current node whilever mouse over
+/// flashes player's current node while ever mouse over
 /// </summary>
 public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -44,7 +44,9 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
         {
             //human resistance player
-            switch (GameManager.instance.playerScript.status)
+            node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+
+            /*switch (GameManager.instance.playerScript.status)
             {
                 case ActorStatus.Captured:
                     node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
@@ -52,7 +54,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 default:
                     node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                     break;
-            }
+            }*/
         }
         else
         {
@@ -97,7 +99,8 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
                     if (node != null)
                     {
-                        node.SetMaterial(materialPlayer);
+                        node.SetPlayerNormal();
+                        /*node.SetMaterial(materialPlayer);*/
                         GameManager.instance.nodeScript.NodeRedraw = true;
                     }
                     break;
@@ -105,7 +108,8 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
                     if (node != null)
                     {
-                        node.SetMaterial(materialNormal);
+                        node.SetNormal();
+                        /*node.SetMaterial(materialNormal);*/
                         GameManager.instance.nodeScript.NodeRedraw = true;
                     }
                     break;
@@ -129,14 +133,16 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             if (isFlashOn == false)
             {
-                node.SetMaterial(materialPlayer);
+                node.SetPlayerFlash();
+                /*node.SetMaterial(materialPlayer);*/
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 isFlashOn = true;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
             }
             else
             {
-                node.SetMaterial(materialNormal);
+                node.SetNormal();
+                /*node.SetMaterial(materialNormal);*/
                 GameManager.instance.nodeScript.NodeRedraw = true;
                 isFlashOn = false;
                 yield return new WaitForSecondsRealtime(flashNodeTime);

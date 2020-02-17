@@ -2309,6 +2309,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat("{0}- States{1}", "\n", "\n");
         builder.AppendFormat(" Status {0}{1}", status, "\n");
         builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
+        builder.AppendFormat(" showPlayerNode {0}{1}", GameManager.instance.nodeScript.GetShowPlayerNode(), "\n");
         builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
         builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" isEndOfTurnGearCheck {0}{1}", isEndOfTurnGearCheck, "\n");

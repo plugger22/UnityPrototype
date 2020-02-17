@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
-    public Material _Material { get; private set; }    //material renderer uses to draw node
+    [HideInInspector] public Material _Material { get; private set; }    //material renderer uses to draw node
     public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
 
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from NodeManager nodeCounter, don't skip numbers, keep it sequential, 0+
@@ -91,7 +91,13 @@ public class Node : MonoBehaviour
     //fast access fields
     private int maxValue;                               //max and min node datapoint values (derive from NodeManager.cs)
     private int minValue;
-   
+
+    private Material materialNormal;
+    private Material materialActive;
+    private Material materialHighlight;
+    private Material materialPlayer;
+    private Material materialNemesis;
+
     private int stabilityTeamEffect = 999;
     private int securityTeamEffect = 999;
     private int supportTeamEffect = 999;
@@ -221,11 +227,22 @@ public class Node : MonoBehaviour
 
     private void OnEnable()
     {
+        //fast access
         _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+        materialNormal = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
+        materialActive = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
+        materialHighlight = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Highlight);
+        materialNemesis = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Nemesis);
+        materialPlayer = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
         mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;
+        Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
+        Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
+        Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
+        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
+        Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
     }
 
     private void Start()
@@ -731,22 +748,59 @@ public class Node : MonoBehaviour
     { return _Material; }
 
     /// <summary>
-    /// Sets node to material (eg. active material) with black, full opacity, face icon
+    /// Sets node to active material with black, full opacity, face icon
     /// </summary>
     /// <param name="newMaterial"></param>
-    public void SetActive(Material newMaterial)
+    public void SetActive()
     {
-        _Material = newMaterial;
+        _Material = materialActive;
         faceText.color = new Color32(0, 0, 0, 255);
     }
 
     /// <summary>
-    /// Sets node to material (eg. normal material) with default, three quarter opacity, face icon
+    /// Sets node to Player material with black, full opacity, face text
+    /// </summary>
+    public void SetPlayerFlash()
+    {
+        _Material = materialPlayer;
+        faceText.color = new Color32(0, 0, 0, 255);
+    }
+
+    /// <summary>
+    /// Sets node to Player material with default, three quarter opacity, face icon
     /// </summary>
     /// <param name="newMaterial"></param>
-    public void SetNormal(Material newMaterial)
+    public void SetPlayerNormal()
     {
-        _Material = newMaterial;
+        _Material = materialPlayer;
+        faceText.color = new Color32(255, 255, 224, 202);
+    }
+
+    /// <summary>
+    /// Sets node to Highlight material and black, full opacity, face icon
+    /// </summary>
+    public void SetHighlight()
+    {
+        _Material = materialHighlight;
+        faceText.color = new Color32(0, 0, 0, 255);
+    }
+
+    /// <summary>
+    /// Sets node to Nemesis material and default icon
+    /// </summary>
+    public void SetNemesis()
+    {
+        _Material = materialNemesis;
+        faceText.color = new Color32(255, 255, 224, 202);
+    }
+
+    /// <summary>
+    /// Sets node to normal material with default, three quarter opacity, face icon
+    /// </summary>
+    /// <param name="newMaterial"></param>
+    public void SetNormal()
+    {
+        _Material = materialNormal;
         faceText.color = new Color32(255, 255, 224, 202);
     }
 

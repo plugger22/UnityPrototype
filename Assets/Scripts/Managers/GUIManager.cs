@@ -129,12 +129,12 @@ public class GUIManager : MonoBehaviour
 
     //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
     [HideInInspector] public char starChar = '\uf005';
-    [HideInInspector] public char airportChar = '\uf072';
+    [HideInInspector] public char airportChar = '\uf533';
     [HideInInspector] public char harbourChar = '\uf13d';
     [HideInInspector] public char cityHallChar = '\uf19c';
     [HideInInspector] public char corporateChar = '\uf1ad';
     [HideInInspector] public char gatedChar = '\uf015';
-    [HideInInspector] public char industrialChar = '\uf275';
+    [HideInInspector] public char industrialChar = '\uf0ad';
     [HideInInspector] public char governmentChar = '\uf0e3';
     [HideInInspector] public char sprawlChar = '\uf554';
     [HideInInspector] public char utilityChar = '\uf0eb';

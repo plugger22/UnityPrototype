@@ -13,9 +13,11 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class NodeManager : MonoBehaviour
 {
+    [Header("Materials")]
     [Tooltip("Node Colour Types")]
     public Material[] arrayOfNodeMaterials;
 
+    [Header("Active Nodes")]
     [Tooltip("% chance times actor.Ability of a primary node being active for an Actor, halved for secondary node")]
     [Range(10, 40)] public int nodePrimaryChance = 20;
     [Tooltip("Minimum number of active nodes on a map for any actor type")]
@@ -490,6 +492,9 @@ public class NodeManager : MonoBehaviour
             case ActorStatus.Captured: nodeID = nodeCaptured; break;
             default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.instance.playerScript.status);  nodeID = -1; break;
         }
+        //debug problem tracking
+        if (nodeID < 0)
+        { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive stats \"{2}\"", nodeID, GameManager.instance.playerScript.status, GameManager.instance.playerScript.inactiveStatus); }
         return nodeID;
     }
 
@@ -531,7 +536,7 @@ public class NodeManager : MonoBehaviour
                         {
                             Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
                             if (nodeTemp != null)
-                            { nodeTemp.SetActive(materialActive); }
+                            { nodeTemp.SetActive(); }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
@@ -552,7 +557,7 @@ public class NodeManager : MonoBehaviour
                             Node nodeTemp = GameManager.instance.dataScript.GetNode(target.nodeID);
                             //only show if target isKnown
                             if (nodeTemp != null && nodeTemp.isTargetKnown == true)
-                            { nodeTemp.SetActive(materialActive); counter++; }
+                            { nodeTemp.SetActive(); counter++; }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
@@ -575,7 +580,7 @@ public class NodeManager : MonoBehaviour
                             foreach (Node node in nodeList)
                             {
                                 if (node != null)
-                                { node.SetActive(materialActive); }
+                                { node.SetActive(); }
                             }
                             displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourDefault, nodeList.Count, colourEnd,
                                 colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
@@ -622,7 +627,7 @@ public class NodeManager : MonoBehaviour
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.SetActive(materialActive);
+                                node.SetActive();
                                 count++;
                             }
                             //conditional -> only show if spider is known
@@ -630,7 +635,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.isSpiderKnown == true)
                                 {
-                                    node.SetActive(materialActive);
+                                    node.SetActive();
                                     count++;
                                 }
                             }
@@ -676,7 +681,7 @@ public class NodeManager : MonoBehaviour
                             //show all
                             if (proceedFlag == true)
                             {
-                                node.SetActive(materialActive);
+                                node.SetActive();
                                 count++;
                             }
                             //conditional -> only show if tracer is known
@@ -684,7 +689,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.isTracerKnown == true)
                                 {
-                                    node.SetActive(materialActive);
+                                    node.SetActive();
                                     count++;
                                 }
                             }
@@ -733,7 +738,7 @@ public class NodeManager : MonoBehaviour
                                 //show all
                                 if (proceedFlag == true)
                                 {
-                                    node.SetActive(materialActive);
+                                    node.SetActive();
                                     count++;
                                 }
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
@@ -741,7 +746,7 @@ public class NodeManager : MonoBehaviour
                                 {
                                     if (node.isTeamKnown || node.isTracer || node.isContactResistance)
                                     {
-                                        node.SetActive(materialActive);
+                                        node.SetActive();
                                         count++;
                                     }
                                 }
@@ -767,7 +772,7 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in connectedList)
                         {
                             if (node != null)
-                            { node.SetActive(materialActive); }
+                            { node.SetActive(); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
@@ -790,7 +795,7 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in loiterList)
                         {
                             if (node != null)
-                            { node.SetActive(materialActive); }
+                            { node.SetActive(); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, loiterList.Count, colourEnd, colourHighlight,
@@ -817,7 +822,7 @@ public class NodeManager : MonoBehaviour
                             if (node != null)
                             {
                                 if (node.cure.isActive == true)
-                                { node.SetActive(materialActive); counter++; }
+                                { node.SetActive(); counter++; }
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
@@ -841,7 +846,7 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in decisionList)
                         {
                             if (node != null)
-                            { node.SetActive(materialActive); }
+                            { node.SetActive(); }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
@@ -866,7 +871,7 @@ public class NodeManager : MonoBehaviour
                         {
                             if (node != null)
                             {
-                                node.SetActive(materialActive);
+                                node.SetActive();
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
@@ -894,7 +899,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (nodeTemp != null)
                                 {
-                                    nodeTemp.SetActive(materialActive);
+                                    nodeTemp.SetActive();
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
                             }
@@ -929,7 +934,7 @@ public class NodeManager : MonoBehaviour
                             {
                                 if (node.isCentreNode == true)
                                 {
-                                    node.SetActive(materialActive);
+                                    node.SetActive();
                                     counter++;
                                 }
                             }
@@ -972,7 +977,7 @@ public class NodeManager : MonoBehaviour
                     foreach (Node node in nodeList)
                     {
                         if (node != null)
-                        { node.SetActive(materialActive); }
+                        { node.SetActive(); }
                     }
                     displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, nodeList.Count, colourEnd,
                     colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
@@ -1019,7 +1024,7 @@ public class NodeManager : MonoBehaviour
                     if (GameManager.instance.dataScript.CheckActiveContactAtNode(node.nodeID, playerSide) == true)
                     {
                         //change material for selected nodes & change face text to black, full opacity
-                        node.SetActive(materialActive);
+                        node.SetActive();
                     }
                     break;
                 case 2:
@@ -1027,7 +1032,7 @@ public class NodeManager : MonoBehaviour
                     if (GameManager.instance.dataScript.CheckForActorContactActive(actor, node.nodeID) == true)
                     {
                         //change material for selected nodes
-                        node.SetActive(materialActive);
+                        node.SetActive();
                     }
                     break;
             }
@@ -1056,6 +1061,9 @@ public class NodeManager : MonoBehaviour
     public void SetShowPlayerNode(bool isShown = true)
     { showPlayerNode = isShown; }
 
+    public bool GetShowPlayerNode()
+    { return showPlayerNode; }
+
     /// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
@@ -1069,6 +1077,7 @@ public class NodeManager : MonoBehaviour
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
             foreach (Node node in listOfNodes)
             {
+                //node.SetNormal();
                 nodeRenderer = node.GetComponent<Renderer>();
                 nodeRenderer.material = node._Material;
             }
@@ -1081,6 +1090,7 @@ public class NodeManager : MonoBehaviour
                     //only do so if it's a normal node, otherwise ignore
                     if (node.GetMaterial() == materialNormal)
                     {
+                        /*node.SetHighlight();*/
                         nodeRenderer = node.GetComponent<Renderer>();
                         nodeRenderer.material = materialHighlight;
                     }
@@ -1107,6 +1117,7 @@ public class NodeManager : MonoBehaviour
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial() == materialNormal)
                             {
+                                /*node.SetPlayer();*/
                                 nodeRenderer = node.GetComponent<Renderer>();
                                 nodeRenderer.material = materialPlayer;
                             }
@@ -1134,6 +1145,7 @@ public class NodeManager : MonoBehaviour
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial() == materialNormal)
                             {
+                                /*node.SetNemesis();*/
                                 nodeRenderer = node.GetComponent<Renderer>();
                                 nodeRenderer.material = materialNemesis;
                             }
@@ -2378,7 +2390,7 @@ public class NodeManager : MonoBehaviour
             if (isFlashOn == false)
             {
                 /*node.SetMaterial(materialActive);*/
-                node.SetActive(materialActive);
+                node.SetActive();
                 NodeRedraw = true;
                 isFlashOn = true;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
@@ -2386,7 +2398,7 @@ public class NodeManager : MonoBehaviour
             else
             {
                 /*node.SetMaterial(materialNormal);*/
-                node.SetNormal(materialNormal);
+                node.SetNormal();
                 NodeRedraw = true;
                 isFlashOn = false;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
