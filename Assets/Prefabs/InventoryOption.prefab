@@ -364,7 +364,6 @@ MonoBehaviour:
   optionImage: {fileID: 114853983530084180}
   textUpper: {fileID: 114415490704887210}
   textLower: {fileID: 114037131444707108}
-  tooltipSprite: {fileID: 0}
   tooltipStars: {fileID: 114869060912166896}
   optionData: 0
   optionName: 
