@@ -154,7 +154,7 @@ public class LoadManager : MonoBehaviour
     public ManageAction[] arrayOfManageActions;
     public ActorConflict[] arrayOfActorConflicts;
     public Secret[] arrayOfSecrets;
-    public Hq[] arrayOfFactions;
+    public Hq[] arrayOfHQs;
     public CityArc[] arrayOfCityArcs;
     public City[] arrayOfCities;
     public Objective[] arrayOfObjectives;
@@ -1717,32 +1717,32 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfSecrets (Null) -> Import failed"); }
         //
-        // - - - Factions - - - (done higher as no dictionary requirement)
+        // - - - HQs - - - (done higher as no dictionary requirement)
         //
-        Dictionary<string, Hq> dictOfFactions = GameManager.instance.dataScript.GetDictOfHQs();
-        if (dictOfFactions != null)
+        Dictionary<string, Hq> dictOfHQs = GameManager.instance.dataScript.GetDictOfHQs();
+        if (dictOfHQs != null)
         {
             counter = 0;
-            numArray = arrayOfFactions.Length;
+            numArray = arrayOfHQs.Length;
             for (int i = 0; i < numArray; i++)
             {
-                Hq faction = arrayOfFactions[i];
+                Hq factionHQ = arrayOfHQs[i];
                 counter++;
                 //add to dictionary
                 try
-                { dictOfFactions.Add(faction.name, faction); }
+                { dictOfHQs.Add(factionHQ.name, factionHQ); }
                 catch (ArgumentNullException)
-                { Debug.LogError("Invalid Faction (Null)"); counter--; }
+                { Debug.LogError("Invalid HQ (Null)"); counter--; }
                 catch (ArgumentException)
-                { Debug.LogError(string.Format("Invalid Faction (duplicate) \"{0}\"", counter, faction.name)); counter--; }
+                { Debug.LogError(string.Format("Invalid HQ (duplicate) \"{0}\"", counter, factionHQ.name)); counter--; }
             }
-            numDict = dictOfFactions.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfFactions has {0} entries{1}", numDict, "\n");
+            numDict = dictOfHQs.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfHQs has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on count");
-            Debug.Assert(numDict > 0, "No Factions have been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch in Faction count, array {0}, dict {1}", numArray, numDict));
+            Debug.Assert(numDict > 0, "No HQs have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in HQ count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfFactions (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfHQs (Null) -> Import failed"); }
         //
         // - - - Cities - - -
         //

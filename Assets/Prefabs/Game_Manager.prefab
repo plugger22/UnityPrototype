@@ -3473,7 +3473,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bed62aab8c6244a40bc77dde8b4c2eb2, type: 2}
   - {fileID: 11400000, guid: 5dfe93c276dab67418ac1d6ad145c226, type: 2}
   - {fileID: 11400000, guid: 98d27052c6e43c84790c0c04a19f3626, type: 2}
-  arrayOfFactions:
+  arrayOfHQs:
   - {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
   - {fileID: 11400000, guid: fa8015dfe3e3b7a4cb14490effb1a8ee, type: 2}
   arrayOfCityArcs:
@@ -4571,15 +4571,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7a9c6a91c87384d9e1f94de61e8d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxFactionApproval: 10
+  maxHqApproval: 10
   renownPerTurn: 1
   numOfActorsHQ: 4
   renownFactor: 10
-  factionApprovalActorResigns: 1
-  factionFirePlayerTimer: 3
+  hQApprovalActorResigns: 1
+  hQFirePlayerTimer: 3
   timerRelocationBase: 5
-  factionAuthority: {fileID: 0}
-  factionResistance: {fileID: 0}
+  hQAuthority: {fileID: 0}
+  hQResistance: {fileID: 0}
   isHqRelocating: 0
 --- !u!114 &114709307672004698
 MonoBehaviour:
@@ -4766,7 +4766,7 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   traitScript: {fileID: 0}
   topicScript: {fileID: 0}
-  factionScript: {fileID: 0}
+  hqScript: {fileID: 0}
   secretScript: {fileID: 0}
   orgScript: {fileID: 0}
   cityScript: {fileID: 0}

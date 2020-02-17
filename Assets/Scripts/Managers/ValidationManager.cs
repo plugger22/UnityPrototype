@@ -1746,8 +1746,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfActorConflicts);
         //Secret
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfSecrets);
-        //Faction
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfFactions);
+        //HQ
+        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfHQs);
         //Objective
         ValidateSOGeneric(GameManager.instance.loadScript.arrayOfObjectives);
         //Organisation
