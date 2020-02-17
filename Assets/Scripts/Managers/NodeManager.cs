@@ -1075,10 +1075,7 @@ public class NodeManager : MonoBehaviour
         {
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
             foreach (Node node in listOfNodes)
-            {
-                /*node.SetNormal();*/
-                node.renderer.material = node._Material;
-            }
+            { node.nodeRenderer.material = node._Material; }
             //highlighted node
             if (nodeHighlight > -1)
             {
@@ -1087,10 +1084,7 @@ public class NodeManager : MonoBehaviour
                 {
                     //only do so if it's a normal node, otherwise ignore
                     if (node.GetMaterial() == materialNormal)
-                    {
-                        /*node.SetHighlight();*/
-                        node.renderer.material = materialHighlight;
-                    }
+                    { node.nodeRenderer.material = materialHighlight; }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
             }
@@ -1113,10 +1107,7 @@ public class NodeManager : MonoBehaviour
                         {
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial() == materialNormal)
-                            {
-                                /*node.SetPlayer();*/
-                                node.renderer.material = materialPlayer;
-                            }
+                            { node.nodeRenderer.material = materialPlayer; }
                         }
                     }
                 }
@@ -1140,10 +1131,7 @@ public class NodeManager : MonoBehaviour
                         {
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial() == materialNormal)
-                            {
-                                /*node.SetNemesis();*/
-                                node.renderer.material = materialNemesis;
-                            }
+                            { node.nodeRenderer.material = materialNemesis; }
                         }
                     }
                 }

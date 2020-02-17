@@ -681,6 +681,7 @@ public class SaveNode
     public bool isChokepointNode;
 
     public string targetName;
+    public char defaultChar;
 
     public int spiderTimer;
     public int tracerTimer;

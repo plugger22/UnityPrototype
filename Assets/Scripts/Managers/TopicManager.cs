@@ -2243,19 +2243,20 @@ public class TopicManager : MonoBehaviour
         Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
         if (arrayOfHqActors != null)
         {
-            int offset = 1;
+            //exlude 'None' and 'Boss' (Boss can't be involved in internal politics)
+            int offset = 2;
             int numOfHierarchy = GameManager.instance.factionScript.numOfActorsHQ;
             //get first actor from hq hierarchy
             List<int> tempList = new List<int>();
             //loop through hierarchy and get array indexes for any valid actors
-            for (int i = offset; i < offset + numOfHierarchy; i++)
+            for (int i = offset; i < offset + numOfHierarchy - 1; i++)
             {
                 if (arrayOfHqActors[i] != null) { tempList.Add(i); }
                 else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
             }
             int count = tempList.Count;
             //should always be a full complement present
-            if (count != numOfHierarchy) { Debug.LogWarningFormat("Missing HQ hierarchy actors (is {0}, should be {1})", count, numOfHierarchy); }
+            if (count != numOfHierarchy - 1) { Debug.LogWarningFormat("Missing HQ hierarchy actors (is {0}, should be {1} as Boss excluded)", count, numOfHierarchy - 1); }
             //need at least two actors in HQ for topic
             if (count > 1)
             {

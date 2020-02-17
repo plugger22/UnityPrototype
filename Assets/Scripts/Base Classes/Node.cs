@@ -20,7 +20,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
-    [HideInInspector] public Renderer renderer;         //renders node
+    [HideInInspector] public Renderer nodeRenderer;     //renders node
 
     #region Save Data Compatible
     [HideInInspector] public bool isTracer;             //has resistance tracer?
@@ -55,6 +55,9 @@ public class Node : MonoBehaviour
 
     [HideInInspector] public LoiterData loiter;         //pre-configured data at game start to aid nemesis moving to the nearest loiter node
     [HideInInspector] public Cure cure = null;          //cure node (condition). Null if none.
+
+    [HideInInspector] public char defaultChar;          //default node face text
+
     //save collections
     private List<Team> listOfTeams;                     //Authority teams present at the node
     private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
@@ -82,7 +85,7 @@ public class Node : MonoBehaviour
     private List<Connection> listOfConnections;         //list of neighbouring connections
 
     [HideInInspector] public TextMeshPro faceText;         //textmesh component of faceObject (cached in Awake)
-    [HideInInspector] public char defaultChar;          //default node face text
+ 
 
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -223,10 +226,10 @@ public class Node : MonoBehaviour
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }
         //renderer
-        renderer = GetComponent<Renderer>();
+        nodeRenderer = GetComponent<Renderer>();
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
         Debug.Assert(faceText != null, "Invalid faceText (Null)");
-        Debug.Assert(renderer != null, "Invalid renderer (Null)");
+        Debug.Assert(nodeRenderer != null, "Invalid renderer (Null)");
 	}
 
     private void OnEnable()
