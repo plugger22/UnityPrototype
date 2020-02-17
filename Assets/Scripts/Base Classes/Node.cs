@@ -20,6 +20,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
+    [HideInInspector] public Renderer renderer;         //renders node
 
     #region Save Data Compatible
     [HideInInspector] public bool isTracer;             //has resistance tracer?
@@ -221,8 +222,11 @@ public class Node : MonoBehaviour
             faceText.text = "";
         }
         else { Debug.LogError("Invalid faceObject (Null)"); }
+        //renderer
+        renderer = GetComponent<Renderer>();
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
         Debug.Assert(faceText != null, "Invalid faceText (Null)");
+        Debug.Assert(renderer != null, "Invalid renderer (Null)");
 	}
 
     private void OnEnable()

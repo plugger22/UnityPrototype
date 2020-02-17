@@ -1069,7 +1069,6 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void RedrawNodes()
     {
-        Renderer nodeRenderer;
         bool proceedFlag = true;
         List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
@@ -1077,9 +1076,8 @@ public class NodeManager : MonoBehaviour
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
             foreach (Node node in listOfNodes)
             {
-                //node.SetNormal();
-                nodeRenderer = node.GetComponent<Renderer>();
-                nodeRenderer.material = node._Material;
+                /*node.SetNormal();*/
+                node.renderer.material = node._Material;
             }
             //highlighted node
             if (nodeHighlight > -1)
@@ -1091,8 +1089,7 @@ public class NodeManager : MonoBehaviour
                     if (node.GetMaterial() == materialNormal)
                     {
                         /*node.SetHighlight();*/
-                        nodeRenderer = node.GetComponent<Renderer>();
-                        nodeRenderer.material = materialHighlight;
+                        node.renderer.material = materialHighlight;
                     }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
@@ -1118,8 +1115,7 @@ public class NodeManager : MonoBehaviour
                             if (node.GetMaterial() == materialNormal)
                             {
                                 /*node.SetPlayer();*/
-                                nodeRenderer = node.GetComponent<Renderer>();
-                                nodeRenderer.material = materialPlayer;
+                                node.renderer.material = materialPlayer;
                             }
                         }
                     }
@@ -1146,8 +1142,7 @@ public class NodeManager : MonoBehaviour
                             if (node.GetMaterial() == materialNormal)
                             {
                                 /*node.SetNemesis();*/
-                                nodeRenderer = node.GetComponent<Renderer>();
-                                nodeRenderer.material = materialNemesis;
+                                node.renderer.material = materialNemesis;
                             }
                         }
                     }
