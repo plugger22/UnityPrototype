@@ -2867,7 +2867,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextStatus = "Promoted";
                                     msgReason = "Promoted";
                                     msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName,
-                                        GameManager.instance.factionScript.GetCurrentFaction().name);
+                                        GameManager.instance.hqScript.GetCurrentHQ().name);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissPromote, actor.arc.name);
                                     break;
                                 case "DismissIncompetent":

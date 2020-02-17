@@ -1557,7 +1557,7 @@ public class PlayerManager : MonoBehaviour
                                     invest.outcome = InvestOutcome.Innocent;
                                     //gain HQ approval
                                     int approvalGain = GameManager.instance.playerScript.investHQApproval;
-                                    GameManager.instance.factionScript.ChangeFactionApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
+                                    GameManager.instance.hqScript.ChangeHqApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
                                     break;
                                 case 0:

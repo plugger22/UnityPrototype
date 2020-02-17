@@ -84,8 +84,8 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
             screenPos.y -= 55;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("{0} Approval", GameManager.instance.factionScript.GetFactionName(playerSide));
-                tooltipMain = GameManager.instance.factionScript.GetFactionApprovalLevel(playerSide);
+                tooltipHeader = string.Format("{0} Approval", GameManager.instance.hqScript.GetHqName(playerSide));
+                tooltipMain = GameManager.instance.hqScript.GetHqApprovalLevel(playerSide);
                 GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;

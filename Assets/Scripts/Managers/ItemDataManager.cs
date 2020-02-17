@@ -1158,7 +1158,7 @@ public class ItemDataManager : MonoBehaviour
         if (isGivenToHQ == true)
         {
             //gear lost 'cause you overloaded the actor with gear
-            builder.AppendFormat("{0}Donated to Faction HQ{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}Donated to HQ{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
             builder.AppendFormat("by <b>{0}, {1}{2}</b>{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
             builder.AppendFormat("Subordinates can only have{0}{1}one item of Gear{2}", "\n", colourAlert, colourEnd);
         }
@@ -1259,46 +1259,46 @@ public class ItemDataManager : MonoBehaviour
 
     /// <summary>
     /// returns a colour formatted string for ItemData string Message
-    /// NOTE: faction has been checked for null by the calling method: MessageManager.cs -> FactionSupport
+    /// NOTE: HQ has been checked for null by the calling method: MessageManager.cs -> HQSupport
     /// </summary>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public string GetHqSupportDetails(Faction faction, int factionApproval, int supportGiven)
+    public string GetHqSupportDetails(Hq factionHQ, int hqApproval, int supportGiven)
     {
         StringBuilder builder = new StringBuilder();
         if (supportGiven > 0)
         {
             //support approved
-            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", faction.tag, "\n", "\n");
+            builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", factionHQ.tag, "\n", "\n");
             builder.AppendFormat("{0}<b>Renown +{1}</b>{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
-                factionApproval, GameManager.instance.factionScript.maxFactionApproval);
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}HQ Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, hqApproval * 10, colourEnd, "\n",
+                hqApproval, GameManager.instance.hqScript.maxHqApproval);
         }
         else
         {
             //support declined
-            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", faction.tag, "\n", "\n", colourBad, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}Faction Approval <b>{4} out of <b>{5}</b>", colourNeutral, factionApproval * 10, colourEnd, "\n",
-                factionApproval, GameManager.instance.factionScript.maxFactionApproval);
+            builder.AppendFormat("{0} HQ couldn't agree{1}{2}{3}<b>No Support provided</b>{4}{5}{6}", factionHQ.tag, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}HQ Approval <b>{4} out of <b>{5}</b>", colourNeutral, hqApproval * 10, colourEnd, "\n",
+                hqApproval, GameManager.instance.hqScript.maxHqApproval);
         }
         return builder.ToString();
     }
 
     /// <summary>
-    /// Faction Approval level changes
+    /// HQ Approval level changes
     /// </summary>
-    /// <param name="faction"></param>
+    /// <param name="factionHQ"></param>
     /// <param name="reason"></param>
     /// <param name="oldLevel"></param>
     /// <param name="change"></param>
     /// <param name="newLevel"></param>
     /// <returns></returns>
-    public string GetHqApprovalDetails(Faction faction, string reason, int change, int newLevel)
+    public string GetHqApprovalDetails(Hq factionHQ, string reason, int change, int newLevel)
     {
         StringBuilder builder = new StringBuilder();
         if (change > 0)
-        { builder.AppendFormat("{0} {1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
-        else { builder.AppendFormat("{0} faction{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", faction.tag, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        { builder.AppendFormat("{0} {1}Approval {2}<b>+{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", factionHQ.tag, "\n", colourGood, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
+        else { builder.AppendFormat("{0} HQ{1}Approval {2}<b>{3}</b>{4}, now {5}<b>{6}</b>{7}{8}{9}", factionHQ.tag, "\n", colourBad, change, colourEnd, colourNeutral, newLevel, colourEnd, "\n", "\n"); }
         if (string.IsNullOrEmpty(reason) == false)
         {
             builder.AppendFormat("<b>Because of</b>{0}", "\n");
@@ -1316,20 +1316,20 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="reason"></param>
     /// <param name="timer"></param>
     /// <returns></returns>
-    public string GetHqRelocationDetails(Faction faction, string reason, int timer)
+    public string GetHqRelocationDetails(Hq factionHQ, string reason, int timer)
     {
         StringBuilder builder = new StringBuilder();
         if (timer > 0)
         {
             //HQ commences relocation
-            builder.AppendFormat("{0}<b>{1}{2} is Relocating</b>{3}{4}", colourAlert, faction.tag, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}{2} is Relocating</b>{3}{4}", colourAlert, factionHQ.tag, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, reason, colourEnd, "\n", "\n");
             builder.AppendFormat("<b>HQ Services are temporarily{0}{1}Unavailable</b>{2}", "\n", colourAlert, colourEnd);
         }
         else
         {
             //HQ has completed relocation
-            builder.AppendFormat("{0}<b>{1}{2} has Relocated{3}</b>{4}", colourAlert, faction.tag, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>{1}{2} has Relocated{3}</b>{4}", colourAlert, factionHQ.tag, colourEnd, "\n", "\n");
             builder.AppendFormat("<b>HQ Services are now{0}{1}Available</b>{2}", "\n", colourGood, colourEnd);
         }
         return builder.ToString();

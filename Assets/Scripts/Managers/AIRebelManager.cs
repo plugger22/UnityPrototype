@@ -191,7 +191,7 @@ public class AIRebelManager : MonoBehaviour
     //actor arcs
     private ActorArc arcFixer;
     //resistance faction (dynamically updated in ProcessResources)
-    Faction factionResistance;
+    Hq factionResistance;
 
     //Authority activity
     private List<AITracker> listOfNemesisReports = new List<AITracker>();
@@ -1365,10 +1365,10 @@ public class AIRebelManager : MonoBehaviour
     {
         int resources;
         int rnd = Random.Range(0, 100);
-        int approvalResistance = GameManager.instance.factionScript.ApprovalResistance;
-        int renownPerTurn = GameManager.instance.factionScript.renownPerTurn;
+        int approvalResistance = GameManager.instance.hqScript.ApprovalResistance;
+        int renownPerTurn = GameManager.instance.hqScript.renownPerTurn;
         int threshold = approvalResistance * 10;
-        factionResistance = GameManager.instance.factionScript.factionResistance;
+        factionResistance = GameManager.instance.hqScript.hQResistance;
         if (factionResistance != null)
         {
             resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
@@ -2206,7 +2206,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Approval Level - - -
         //
-        int approvalLevel = GameManager.instance.factionScript.ApprovalResistance;
+        int approvalLevel = GameManager.instance.hqScript.ApprovalResistance;
         if (approvalLevel < factionSupportThreshold)
         {
             //check only if Player Active (node irrelevant in this situation as invisibility not an issue)
@@ -2214,7 +2214,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 //generate task
                 AITask task = new AITask();
-                task.type = AITaskType.Faction;
+                task.type = AITaskType.HQ;
                 //normal priority as per RebelLeader but Critical if approval level zero
                 if (approvalLevel == 0)
                 { task.priority = Priority.Critical; }
@@ -2824,7 +2824,7 @@ public class AIRebelManager : MonoBehaviour
             case AITaskType.Cure:
                 ExecuteCureTask(task);
                 break;
-            case AITaskType.Faction:
+            case AITaskType.HQ:
                 ExecuteFactionTask(task);
                 break;
             case AITaskType.Dismiss:
@@ -3938,7 +3938,7 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteFactionTask(AITask task)
     {
-        GameManager.instance.factionScript.ChangeFactionApproval(1, globalResistance, "Rebel Leader lobbies HQ");
+        GameManager.instance.hqScript.ChangeHqApproval(1, globalResistance, "Rebel Leader lobbies HQ");
         //action
         UseAction("raise Faction Approval Level");
     }

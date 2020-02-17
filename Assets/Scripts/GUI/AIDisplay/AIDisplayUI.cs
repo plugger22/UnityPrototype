@@ -269,9 +269,9 @@ public class AIDisplayUI : MonoBehaviour
     public void InitialiseTooltips()
     {
         //faction top tab tooltip
-        topTabTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName(aiSide);
-        topTabTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription(aiSide);
-        topTabTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(aiSide);
+        topTabTooltip.tooltipHeader = GameManager.instance.hqScript.GetHqName(aiSide);
+        topTabTooltip.tooltipMain = GameManager.instance.hqScript.GetHqDescription(aiSide);
+        topTabTooltip.tooltipDetails = GameManager.instance.hqScript.GetHqDetails(aiSide);
         topTabTooltip.x_offset = 175;
         //hacking bottom tab tooltip
         bottomTabTooltip.tooltipHeader = "";

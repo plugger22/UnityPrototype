@@ -154,7 +154,7 @@ public class LoadManager : MonoBehaviour
     public ManageAction[] arrayOfManageActions;
     public ActorConflict[] arrayOfActorConflicts;
     public Secret[] arrayOfSecrets;
-    public Faction[] arrayOfFactions;
+    public Hq[] arrayOfFactions;
     public CityArc[] arrayOfCityArcs;
     public City[] arrayOfCities;
     public Objective[] arrayOfObjectives;
@@ -1719,14 +1719,14 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Factions - - - (done higher as no dictionary requirement)
         //
-        Dictionary<string, Faction> dictOfFactions = GameManager.instance.dataScript.GetDictOfFactions();
+        Dictionary<string, Hq> dictOfFactions = GameManager.instance.dataScript.GetDictOfHQs();
         if (dictOfFactions != null)
         {
             counter = 0;
             numArray = arrayOfFactions.Length;
             for (int i = 0; i < numArray; i++)
             {
-                Faction faction = arrayOfFactions[i];
+                Hq faction = arrayOfFactions[i];
                 counter++;
                 //add to dictionary
                 try

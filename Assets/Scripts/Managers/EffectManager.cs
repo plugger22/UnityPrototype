@@ -1629,12 +1629,12 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "HqRelocatingNo":
                                                 //HQ not currently relocating
-                                                if (GameManager.instance.factionScript.isHqRelocating == true)
+                                                if (GameManager.instance.hqScript.isHqRelocating == true)
                                                 { BuildString(result, "HQ is Relocating"); }
                                                 break;
                                             case "HqApprovalNOTZero":
                                                 //Player HQ Approval 1+
-                                                if (GameManager.instance.factionScript.GetFactionApproval() == 0)
+                                                if (GameManager.instance.hqScript.GetHqApproval() == 0)
                                                 { BuildString(result, "HQ Approval Zero"); }
                                                 break;
                                             default:
@@ -2184,12 +2184,12 @@ public class EffectManager : MonoBehaviour
                         switch (effect.operand.name)
                         {
                             case "Add":
-                                GameManager.instance.factionScript.ChangeFactionApproval(effect.value, dataInput.side, dataInput.originText);
+                                GameManager.instance.hqScript.ChangeHqApproval(effect.value, dataInput.side, dataInput.originText);
                                 effectReturn.topText = string.Format("{0}HQ have a better opinion of you{1}", colourText, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
                                 break;
                             case "Subtract":
-                                GameManager.instance.factionScript.ChangeFactionApproval(effect.value * -1, dataInput.side, dataInput.originText);
+                                GameManager.instance.hqScript.ChangeHqApproval(effect.value * -1, dataInput.side, dataInput.originText);
                                 effectReturn.topText = string.Format("{0}HQ's opinion of you has diminished{1}", colourText, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
                                 break;
@@ -3616,7 +3616,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "ActorPromoted":
                 effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2} HQ{3}", colourEffect, actor.actorName,
-                    GameManager.instance.factionScript.GetCurrentFaction(), colourEnd);
+                    GameManager.instance.hqScript.GetCurrentHQ(), colourEnd);
                 break;
             case "ActorDismissed":
                 effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);
@@ -4441,11 +4441,11 @@ public class EffectManager : MonoBehaviour
                 switch (effect.operand.name)
                 {
                     case "Add":
-                        GameManager.instance.factionScript.ChangeFactionApproval(effect.value, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.instance.hqScript.ChangeHqApproval(effect.value, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
                         break;
                     case "Subtract":
-                        GameManager.instance.factionScript.ChangeFactionApproval(effect.value * -1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.instance.hqScript.ChangeHqApproval(effect.value * -1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4453,7 +4453,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "HQRelocate":
                 //HQ relocates (takes time, services unavailable during relocation)
-                GameManager.instance.factionScript.RelocateHQ("Player reveals Location");
+                GameManager.instance.hqScript.RelocateHQ("Player reveals Location");
                 effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}{2}{3}Location Compromised{4}{5}", colourBad, colourEnd, "\n", colourAlert, colourEnd, "\n");
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;

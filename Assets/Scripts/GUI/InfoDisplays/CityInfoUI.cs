@@ -288,8 +288,8 @@ public class CityInfoUI : MonoBehaviour
                 else { mayorTrait.text = "Unknown"; }
             }
             else { mayorName.text = "Unknown"; }
-            factionName.text = GameManager.instance.factionScript.GetFactionName(globalAuthority, false);
-            factionTrait.text = GameManager.instance.factionScript.GetFactionDescription(globalAuthority);
+            factionName.text = GameManager.instance.hqScript.GetHqName(globalAuthority, false);
+            factionTrait.text = GameManager.instance.hqScript.GetHqDescription(globalAuthority);
             organisations.text = GameManager.instance.cityScript.GetNumOfOrganisations();
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)
@@ -301,9 +301,9 @@ public class CityInfoUI : MonoBehaviour
             mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTraitFormatted();
             mayorTooltip.tooltipDetails = GameManager.instance.cityScript.GetMayorFactionFormatted();
             mayorTooltip.x_offset = 25;
-            factionTooltip.tooltipHeader = GameManager.instance.factionScript.GetFactionName(globalAuthority);
-            factionTooltip.tooltipMain = GameManager.instance.factionScript.GetFactionDescription(globalAuthority);
-            factionTooltip.tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(globalAuthority);
+            factionTooltip.tooltipHeader = GameManager.instance.hqScript.GetHqName(globalAuthority);
+            factionTooltip.tooltipMain = GameManager.instance.hqScript.GetHqDescription(globalAuthority);
+            factionTooltip.tooltipDetails = GameManager.instance.hqScript.GetHqDetails(globalAuthority);
             factionTooltip.x_offset = 25;
             organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityNameFormatted();
             organisationTooltip.tooltipDetails = GameManager.instance.cityScript.GetOrganisationsTooltip();

@@ -35,7 +35,7 @@ public class MetaManager : MonoBehaviour
         GameManager.instance.topicScript.ProcessMetaTopics();
         GameManager.instance.actorScript.ProcessMetaActors();
         GameManager.instance.dataScript.ProcessMetaCures();
-        GameManager.instance.factionScript.ProcessMetaHQ();
+        GameManager.instance.hqScript.ProcessMetaHQ();
     }
 
 

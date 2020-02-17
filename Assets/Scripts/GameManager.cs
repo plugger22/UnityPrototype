@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public PlayerManager playerScript;                //Player Manager
     [HideInInspector] public TraitManager traitScript;                  //Trait Manager
     [HideInInspector] public TopicManager topicScript;                  //Topic Manager
-    [HideInInspector] public FactionManager factionScript;              //Faction Manager
-    //[HideInInspector] public HQManager hqScript;                        //HQ Manager
+    [HideInInspector] public HQManager hqScript;                        //HQ Manager
     [HideInInspector] public SecretManager secretScript;                //Secret Manager
     [HideInInspector] public OrganisationManager orgScript;             //Organisation Manager
     [HideInInspector] public CityManager cityScript;                    //City Manager
@@ -188,7 +187,7 @@ public class GameManager : MonoBehaviour
         playerScript = GetComponent<PlayerManager>();
         traitScript = GetComponent<TraitManager>();
         topicScript = GetComponent<TopicManager>();
-        factionScript = GetComponent<FactionManager>();
+        hqScript = GetComponent<HQManager>();
         secretScript = GetComponent<SecretManager>();
         orgScript = GetComponent<OrganisationManager>();
         cityScript = GetComponent<CityManager>();
@@ -265,7 +264,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(playerScript != null, "Invalid playerScript (Null)");
         Debug.Assert(traitScript != null, "Invalid traitScript (Null)");
         Debug.Assert(topicScript != null, "Invalid topicScript (Null)");
-        Debug.Assert(factionScript != null, "Invalid factionScript (Null)");
+        Debug.Assert(hqScript != null, "Invalid hqScript (Null)");
         Debug.Assert(secretScript != null, "Invalid secretScript (Null)");
         Debug.Assert(orgScript != null, "Invalid orgScript (Null)");
         Debug.Assert(cityScript != null, "Invalid cityScript (Null)");
@@ -562,9 +561,9 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
-        //Faction Manager
-        startMethod.handler = factionScript.Initialise;
-        startMethod.className = "FactionManager";
+        //HQ Manager
+        startMethod.handler = hqScript.Initialise;
+        startMethod.className = "HqManager";
         listOfLevelMethods.Add(startMethod);
         //Organisation Manager
         startMethod.handler = orgScript.Initialise;

@@ -105,7 +105,7 @@ public class WidgetTopUI : MonoBehaviour
         //event listener
         EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeFactionBar, OnEvent, "WidgetTopUI");
+        EventManager.instance.AddListener(EventType.ChangeHqBar, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
@@ -174,7 +174,7 @@ public class WidgetTopUI : MonoBehaviour
             case EventType.ChangeCityBar:
                 SetCityBar((int)Param);
                 break;
-            case EventType.ChangeFactionBar:
+            case EventType.ChangeHqBar:
                 SetFactionBar((int)Param);
                 break;
             /*case EventType.ChangeStarLeft: -> Done directly by ObjectiveManager.cs methods, issues with events at level start (sequencing)
@@ -223,11 +223,11 @@ public class WidgetTopUI : MonoBehaviour
         {
             case 1:
                 //authority
-                SetFactionBar(GameManager.instance.factionScript.ApprovalAuthority);
+                SetFactionBar(GameManager.instance.hqScript.ApprovalAuthority);
                 break;
             case 2:
                 //resistance
-                SetFactionBar(GameManager.instance.factionScript.ApprovalResistance);
+                SetFactionBar(GameManager.instance.hqScript.ApprovalResistance);
                 break;
         }
     }

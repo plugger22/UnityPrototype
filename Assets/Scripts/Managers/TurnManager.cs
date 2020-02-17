@@ -936,7 +936,7 @@ public class TurnManager : MonoBehaviour
             case WinReasonLevel.CityLoyaltyMax:
             case WinReasonLevel.CityLoyaltyMin:
             case WinReasonLevel.CampaignResult:
-            case WinReasonLevel.FactionSupportMin:
+            case WinReasonLevel.HqSupportMin:
             case WinReasonLevel.MissionTimerMin:
             case WinReasonLevel.ObjectivesCompleted:
                 sprite = GameManager.instance.guiScript.firedSprite;

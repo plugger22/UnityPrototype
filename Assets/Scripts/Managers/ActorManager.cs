@@ -467,7 +467,7 @@ public class ActorManager : MonoBehaviour
                     CheckActiveResistanceActorsHuman();
 
                     //end game checks
-                    GameManager.instance.factionScript.CheckFactionFirePlayer();
+                    GameManager.instance.hqScript.CheckHqFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
@@ -511,7 +511,7 @@ public class ActorManager : MonoBehaviour
                     //needs to be AFTER CheckInactiveActors
                     CheckActiveAuthorityActorsHuman();
                     //end game checks
-                    GameManager.instance.factionScript.CheckFactionFirePlayer();
+                    GameManager.instance.hqScript.CheckHqFirePlayer();
                     GameManager.instance.cityScript.CheckCityLoyaltyAtLimit();
                     break;
                 case SideState.AI:
@@ -734,8 +734,8 @@ public class ActorManager : MonoBehaviour
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int numOfArcs, level;
-        int numOfActors = GameManager.instance.factionScript.numOfActorsHQ;
-        int renownFactor = GameManager.instance.factionScript.renownFactor;
+        int numOfActors = GameManager.instance.hqScript.numOfActorsHQ;
+        int renownFactor = GameManager.instance.hqScript.renownFactor;
         int[] arrayOfLevels = new int[] { 3, 3, 3, 3, 2, 2, 2, 1, 1 }; //weighted towards higher calibre actors
         List<ActorArc> listOfArcs;
         List<Actor> listOfActors = new List<Actor>();
@@ -1262,7 +1262,7 @@ public class ActorManager : MonoBehaviour
                                                             break;
                                                         case "GetGear":
                                                             //only if HQ not Relocating
-                                                            if (GameManager.instance.factionScript.isHqRelocating == false)
+                                                            if (GameManager.instance.hqScript.isHqRelocating == false)
                                                             {
                                                                 details = new EventButtonDetails()
                                                                 {
@@ -1281,7 +1281,7 @@ public class ActorManager : MonoBehaviour
                                                             break;
                                                         case "GetRecruit":
                                                             //only if HQ not Relocating
-                                                            if (GameManager.instance.factionScript.isHqRelocating == false)
+                                                            if (GameManager.instance.hqScript.isHqRelocating == false)
                                                             {
                                                                 details = new EventButtonDetails()
                                                                 {
@@ -1699,7 +1699,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (lieLowTimer == 0)
                                 {
-                                    if (GameManager.instance.factionScript.isHqRelocating == false)
+                                    if (GameManager.instance.hqScript.isHqRelocating == false)
                                     {
                                         ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                                         lielowActionDetails.side = playerSide;
@@ -1754,7 +1754,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (stressLeaveHQApproval == true)
                                         {
-                                            if (GameManager.instance.factionScript.isHqRelocating == false)
+                                            if (GameManager.instance.hqScript.isHqRelocating == false)
                                             {
                                                 ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
                                                 leaveActionDetails.side = playerSide;
@@ -2344,7 +2344,7 @@ public class ActorManager : MonoBehaviour
                         {
                             if (lieLowTimer == 0)
                             {
-                                if (GameManager.instance.factionScript.isHqRelocating == false)
+                                if (GameManager.instance.hqScript.isHqRelocating == false)
                                 {
                                     ModalActionDetails lielowActionDetails = new ModalActionDetails() { };
                                     lielowActionDetails.side = playerSide;
@@ -2400,7 +2400,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     if (stressLeaveHQApproval == true)
                                     {
-                                        if (GameManager.instance.factionScript.isHqRelocating == false)
+                                        if (GameManager.instance.hqScript.isHqRelocating == false)
                                         {
                                             ModalActionDetails leaveActionDetails = new ModalActionDetails();
                                             leaveActionDetails.side = playerSide;
@@ -2497,7 +2497,7 @@ public class ActorManager : MonoBehaviour
             //spare space for a new recruit?
             if (numOfActors < maxNumOfReserveActors)
             {
-                if (GameManager.instance.factionScript.isHqRelocating == false)
+                if (GameManager.instance.hqScript.isHqRelocating == false)
                 {
                     ModalActionDetails recruitActionDetails = new ModalActionDetails() { };
                     recruitActionDetails.side = playerSide;
@@ -2536,7 +2536,7 @@ public class ActorManager : MonoBehaviour
                 //Player has enough renown
                 if (GameManager.instance.playerScript.Renown >= stressLeaveRenownCostAuthority)
                 {
-                    if (GameManager.instance.factionScript.isHqRelocating == false)
+                    if (GameManager.instance.hqScript.isHqRelocating == false)
                     {
                         ModalActionDetails leaveActionDetails = new ModalActionDetails();
                         leaveActionDetails.side = playerSide;
@@ -3616,7 +3616,7 @@ public class ActorManager : MonoBehaviour
                 data.textBottom = string.Format("{0}LEFT CLICK{1} portrait for more information", colourAlert, colourEnd);
                 data.state = InventoryState.HQ;
                 //loop actors and populate data packages (only want hierarchy entries)
-                for (int i = offset; i < offset + GameManager.instance.factionScript.numOfActorsHQ; i++)
+                for (int i = offset; i < offset + GameManager.instance.hqScript.numOfActorsHQ; i++)
                 {
                     Actor actor = arrayOfHqActors[i];
                     if (actor != null)
@@ -3640,7 +3640,7 @@ public class ActorManager : MonoBehaviour
                            .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
                            .ToString();
                         if (isBoss == true)
-                        { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.factionScript.GetBossOpinionFormatted()); }
+                        { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
                         //tooltip -> stars (bottom text, motivation -> same for all)
                         GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
                         tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
@@ -6504,7 +6504,7 @@ public class ActorManager : MonoBehaviour
                                 if (renown < playerAddictedRenownCost)
                                 {
                                     //insufficient renown, HQ support -1
-                                    GameManager.instance.factionScript.ChangeFactionApproval(-1, playerSide, "Player Addiction");
+                                    GameManager.instance.hqScript.ChangeHqApproval(-1, playerSide, "Player Addiction");
                                     //feed the need text
                                     text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED, Insufficient Renown, -1 HQ Approval{0}", "\n");
                                     approvalCost = 1;
@@ -6606,7 +6606,7 @@ public class ActorManager : MonoBehaviour
                         //Random chance of losing HQ approval
                         rnd = Random.Range(0, 100);
                         if (rnd < playerQuestionableChance)
-                        { GameManager.instance.factionScript.ChangeFactionApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
+                        { GameManager.instance.hqScript.ChangeHqApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
 
                     }
                 }
@@ -6903,7 +6903,7 @@ public class ActorManager : MonoBehaviour
                         //Random chance of losing HQ approval
                         rnd = Random.Range(0, 100);
                         if (rnd < playerQuestionableChance)
-                        { GameManager.instance.factionScript.ChangeFactionApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
+                        { GameManager.instance.hqScript.ChangeHqApproval(-1, globalResistance, "due to QUESTIONABLE loyalty"); }
 
                     }
                 }

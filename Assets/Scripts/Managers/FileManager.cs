@@ -392,19 +392,19 @@ public class FileManager : MonoBehaviour
 
     #region  Write Scenario Data
     /// <summary>
-    /// CityManager.cs and FactionManager.cs data write to file
+    /// CityManager.cs and HqManager.cs data write to file
     /// </summary>
     public void WriteScenarioData()
     {
         //cityManager.cs
         write.scenarioData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
-        //factionManager.cs
-        write.scenarioData.bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
-        write.scenarioData.approvalZeroTimer = GameManager.instance.factionScript.GetApprovalZeroTimer();
-        write.scenarioData.factionSupportAuthority = GameManager.instance.factionScript.ApprovalAuthority;
-        write.scenarioData.factionSupportResistance = GameManager.instance.factionScript.ApprovalResistance;
-        write.scenarioData.isHqRelocating = GameManager.instance.factionScript.isHqRelocating;
-        write.scenarioData.timerHqRelocating = GameManager.instance.factionScript.GetHqRelocationTimer();
+        //HqManager.cs
+        write.scenarioData.bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
+        write.scenarioData.approvalZeroTimer = GameManager.instance.hqScript.GetApprovalZeroTimer();
+        write.scenarioData.hqSupportAuthority = GameManager.instance.hqScript.ApprovalAuthority;
+        write.scenarioData.hqSupportResistance = GameManager.instance.hqScript.ApprovalResistance;
+        write.scenarioData.isHqRelocating = GameManager.instance.hqScript.isHqRelocating;
+        write.scenarioData.timerHqRelocating = GameManager.instance.hqScript.GetHqRelocationTimer();
         //objectiveManager.cs
         List<Objective> tempList = GameManager.instance.objectiveScript.GetListOfObjectives();
         if (tempList != null)
@@ -1912,12 +1912,12 @@ public class FileManager : MonoBehaviour
         //cityManager.cs
         GameManager.instance.cityScript.CityLoyalty = read.scenarioData.cityLoyalty;
         //factionManager.cs
-        GameManager.instance.factionScript.LoadSetFactionApproval(globalAuthority, read.scenarioData.factionSupportAuthority);
-        GameManager.instance.factionScript.LoadSetFactionApproval(globalResistance, read.scenarioData.factionSupportResistance);
-        GameManager.instance.factionScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
-        GameManager.instance.factionScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
-        GameManager.instance.factionScript.SetHqRelocationTimer(read.scenarioData.timerHqRelocating);
-        GameManager.instance.factionScript.isHqRelocating = read.scenarioData.isHqRelocating;
+        GameManager.instance.hqScript.LoadSetHqApproval(globalAuthority, read.scenarioData.hqSupportAuthority);
+        GameManager.instance.hqScript.LoadSetHqApproval(globalResistance, read.scenarioData.hqSupportResistance);
+        GameManager.instance.hqScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
+        GameManager.instance.hqScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
+        GameManager.instance.hqScript.SetHqRelocationTimer(read.scenarioData.timerHqRelocating);
+        GameManager.instance.hqScript.isHqRelocating = read.scenarioData.isHqRelocating;
         //objectiveManager.cs
         List<Objective> tempList = new List<Objective>();
         for (int i = 0; i < read.scenarioData.listOfObjectiveNames.Count; i++)
@@ -3705,8 +3705,8 @@ public class FileManager : MonoBehaviour
         //faction support depends on side
         switch (side.level)
         {
-            case 1: widget.factionSupport = read.scenarioData.factionSupportAuthority; break;
-            case 2: widget.factionSupport = read.scenarioData.factionSupportResistance; break;
+            case 1: widget.factionSupport = read.scenarioData.hqSupportAuthority; break;
+            case 2: widget.factionSupport = read.scenarioData.hqSupportResistance; break;
             default: Debug.LogError("Unrecognised {0}", side); break;
         }
         widget.isSecurityFlash = read.gameData.isSecurityFlash;

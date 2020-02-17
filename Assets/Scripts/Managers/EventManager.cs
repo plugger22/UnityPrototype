@@ -50,7 +50,7 @@ public enum EventType
     //Top Widget
     ChangeActionPoints,
     ChangeCityBar,
-    ChangeFactionBar,
+    ChangeHqBar,
     /*ChangeStarLeft,
     ChangeStarMiddle,
     ChangeStarRight,*/

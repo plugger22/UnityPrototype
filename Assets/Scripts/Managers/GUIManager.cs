@@ -65,7 +65,7 @@ public class GUIManager : MonoBehaviour
     public Sprite capturedSprite;
     [Tooltip("Used for Player or Actor being released from captivity (152 x 160 png)")]
     public Sprite releasedSprite;
-    [Tooltip("Used for Player being Fired by their Faction")]
+    [Tooltip("Used for Player being Fired by their HQ")]
     public Sprite firedSprite;
     [Tooltip("Default City Arc sprite (512 x 150 png)")]
     public Sprite cityArcDefaultSprite;

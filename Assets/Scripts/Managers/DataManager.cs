@@ -212,7 +212,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();                         //Key -> msgID, Value -> Message
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
-    private Dictionary<string, Faction> dictOfFactions = new Dictionary<string, Faction>();                     //Key -> faction.name, Value -> Faction
+    private Dictionary<string, Hq> dictOfHQs = new Dictionary<string, Hq>();                                    //Key -> HQ.name, Value -> HQ
     private Dictionary<string, City> dictOfCities = new Dictionary<string, City>();                             //Key -> city.name, Value -> City
     private Dictionary<string, Objective> dictOfObjectives = new Dictionary<string, Objective>();               //Key -> objective.name, Value -> Objective
     private Dictionary<string, Organisation> dictOfOrganisations = new Dictionary<string, Organisation>();      //Key -> organisation.name, Value -> Organisation
@@ -4049,8 +4049,8 @@ public class DataManager : MonoBehaviour
         {
             case ActorStatus.Resigned:
                 //if actor resigned, loose -1 faction support
-                int approvalChange = GameManager.instance.factionScript.factionApprovalActorResigns * -1;
-                GameManager.instance.factionScript.ChangeFactionApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
+                int approvalChange = GameManager.instance.hqScript.hQApprovalActorResigns * -1;
+                GameManager.instance.hqScript.ChangeHqApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
                 //lose secrets
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 //teams -> remove any onMap teams (for cases other than resigned this is handled locally)
@@ -4841,8 +4841,8 @@ public class DataManager : MonoBehaviour
     public void InitialiseActorArrays()
     {
         arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-        Debug.AssertFormat(GameManager.instance.factionScript.numOfActorsHQ + 3 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
-            GameManager.instance.factionScript.numOfActorsHQ + 3, (int)ActorHQ.Count);
+        Debug.AssertFormat(GameManager.instance.hqScript.numOfActorsHQ + 3 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
+            GameManager.instance.hqScript.numOfActorsHQ + 3, (int)ActorHQ.Count);
         arrayOfActorsHQ = new Actor[(int)ActorHQ.Count];
         arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
     }
@@ -6896,7 +6896,7 @@ public class DataManager : MonoBehaviour
 
 
     //
-    // - - - Factions - - - 
+    // - - - HQs - - - 
     //
 
     /// <summary>
@@ -6904,26 +6904,26 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Faction GetFaction(GlobalSide sideRequired)
+    public Hq GetHQ(GlobalSide sideRequired)
     {
-        Faction factionReturn = null;
+        Hq hqReturn = null;
         if (sideRequired != null)
         {
-            foreach (var faction in dictOfFactions)
+            foreach (var hq in dictOfHQs)
             {
-                if (faction.Value.side.level == sideRequired.level)
+                if (hq.Value.side.level == sideRequired.level)
                 {
-                    factionReturn = faction.Value;
+                    hqReturn = hq.Value;
                     break;
                 }
             }
         }
         else { Debug.LogError("Invalid sideRequired (Null)"); }
-        return factionReturn;
+        return hqReturn;
     }
 
-    public Dictionary<string, Faction> GetDictOfFactions()
-    { return dictOfFactions; }
+    public Dictionary<string, Hq> GetDictOfHQs()
+    { return dictOfHQs; }
 
     //
     // - - - Cities - - -

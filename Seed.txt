@@ -215,3 +215,50 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 15101 -> Monday, 17 February 2020 2:44 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 39183 -> Monday, 17 February 2020 3:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7836 -> Monday, 17 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48743 -> Monday, 17 February 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4719 -> Monday, 17 February 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17194 -> Monday, 17 February 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64163 -> Monday, 17 February 2020 4:35 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "topic_9", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:636)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:614)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:564)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid HelpData (Null) for tag "topic_9"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:636)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:614)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:564)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

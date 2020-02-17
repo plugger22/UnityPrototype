@@ -6,14 +6,14 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
-/// handles all faction related matters for both sides
+/// handles all HQ related matters for both sides
 /// </summary>
-public class FactionManager : MonoBehaviour
+public class HQManager : MonoBehaviour
 {
-    [Header("Faction Data")]
-    [Tooltip("Approval for both sides factions range from 0 to this amount")]
-    [Range(0, 10)] public int maxFactionApproval = 10;
-    [Tooltip("How much Renown will the faction give per turn if they decide to support the Player")]
+    [Header("HQ Data")]
+    [Tooltip("Approval for both sides HQ range from 0 to this amount")]
+    [Range(0, 10)] public int maxHqApproval = 10;
+    [Tooltip("How much Renown will the HQ give per turn if they decide to support the Player")]
     [Range(1, 3)] public int renownPerTurn = 1;
     [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
@@ -21,19 +21,19 @@ public class FactionManager : MonoBehaviour
     [Range(1, 20)] public int renownFactor = 10;
 
     [Header("Actor Influence")]
-    [Tooltip("Amount Faction Approval drops by whenever an Actor resigns for whatever reason")]
-    [Range(0, 3)] public int factionApprovalActorResigns = 1;
+    [Tooltip("Amount HQ Approval drops by whenever an Actor resigns for whatever reason")]
+    [Range(0, 3)] public int hQApprovalActorResigns = 1;
 
-    [Header("Faction Matters")]
-    [Tooltip("Timer set when faction approval is first zero. Decrements each turn and when zero the Player is fired. Reset if approval rises above zero")]
-    [Range(1, 10)] public int factionFirePlayerTimer = 3;
+    [Header("HQ Matters")]
+    [Tooltip("Timer set when HQ approval is first zero. Decrements each turn and when zero the Player is fired. Reset if approval rises above zero")]
+    [Range(1, 10)] public int hQFirePlayerTimer = 3;
 
     [Header("HQ Relocation")]
     [Tooltip("Number of turns needed for HQ to successfully relocate (HQ services unavialable during relocation")]
     [Range(1, 10)] public int timerRelocationBase = 5;
 
-    [HideInInspector] public Faction factionAuthority;
-    [HideInInspector] public Faction factionResistance;
+    [HideInInspector] public Hq hQAuthority;
+    [HideInInspector] public Hq hQResistance;
 
     #region SaveDataCompatible
     private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
@@ -43,8 +43,8 @@ public class FactionManager : MonoBehaviour
     #endregion
 
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
-    private int _approvalAuthority;                         //level of faction approval (out of 10) enjoyed by authority side (Player/AI)
-    private int _approvalResistance;                        //level of faction approval (out of 10) enjoyed by resistance side (Player/AI)
+    private int _approvalAuthority;                         //level of HQ approval (out of 10) enjoyed by authority side (Player/AI)
+    private int _approvalResistance;                        //level of HQ approval (out of 10) enjoyed by resistance side (Player/AI)
 
     //fast access
     private GlobalSide globalAuthority;
@@ -62,7 +62,7 @@ public class FactionManager : MonoBehaviour
     private string colourEnd;
 
     /// <summary>
-    /// use ChangeFactionApproval to set
+    /// use ChangeHqApproval to set
     /// </summary>
     public int ApprovalAuthority
     {
@@ -70,15 +70,15 @@ public class FactionManager : MonoBehaviour
         private set
         {
             _approvalAuthority = value;
-            _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxFactionApproval);
+            _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxHqApproval);
             //update top widget bar if current side is authority
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _approvalAuthority, "FactionManager.cs -> ApprovalAuthority"); }
+            { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalAuthority, "HqManager.cs -> ApprovalAuthority"); }
         }
     }
 
     /// <summary>
-    /// use ChangeFactionApproval to set
+    /// use ChangeHqApproval to set
     /// </summary>
     public int ApprovalResistance
     {
@@ -86,10 +86,10 @@ public class FactionManager : MonoBehaviour
         private set
         {
             _approvalResistance = value;
-            _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxFactionApproval);
+            _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxHqApproval);
             //update top widget bar if current side is resistance
             if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
-            { EventManager.instance.PostNotification(EventType.ChangeFactionBar, this, _approvalResistance, "FactionManager.cs -> ApprovalResistance"); }
+            { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalResistance, "HqManager.cs -> ApprovalResistance"); }
         }
     }
 
@@ -153,23 +153,23 @@ public class FactionManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "FactionManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "FactionManager");
-        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "FactionManager");
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "HQManager");
+        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "HQManager");
+        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "HQManager");
     }
     #endregion
 
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
-        //Authority faction 
-        factionAuthority = GameManager.instance.dataScript.GetFaction(GameManager.instance.globalScript.sideAuthority);
-        if (factionAuthority == null)
-        { Debug.LogError("Invalid factionAuthority (Null)"); }
-        //Resistance faction
-        factionResistance = GameManager.instance.dataScript.GetFaction(GameManager.instance.globalScript.sideResistance);
-        if (factionResistance == null)
-        { Debug.LogError("Invalid factionResistance (Null)"); }
+        //Authority HQ 
+        hQAuthority = GameManager.instance.dataScript.GetHQ(GameManager.instance.globalScript.sideAuthority);
+        if (hQAuthority == null)
+        { Debug.LogError("Invalid HqAuthority (Null)"); }
+        //Resistance HQ
+        hQResistance = GameManager.instance.dataScript.GetHQ(GameManager.instance.globalScript.sideResistance);
+        if (hQResistance == null)
+        { Debug.LogError("Invalid HqResistance (Null)"); }
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
         int approval = GameManager.instance.campaignScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
@@ -178,8 +178,8 @@ public class FactionManager : MonoBehaviour
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;
-        Debug.LogFormat("[Fac] FactionManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
-            factionResistance, ApprovalResistance, factionAuthority, ApprovalAuthority, "\n");
+        Debug.LogFormat("[Fac] HQManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
+            hQResistance, ApprovalResistance, hQAuthority, ApprovalAuthority, "\n");
 
     }
     #endregion
@@ -251,7 +251,7 @@ public class FactionManager : MonoBehaviour
                 timerHqRelocating = 0;
                 text = "HQ has successfully Relocated";
                 GameManager.instance.messageScript.HqRelocates(text, "Relocation Successful");
-                Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
+                Debug.LogFormat("[Fac] HqManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
             }
             else
             {
@@ -263,13 +263,13 @@ public class FactionManager : MonoBehaviour
                     topText = "Relocation Underway",
                     detailsTop = text,
                     detailsBottom = string.Format("{0}<b>HQ Services are temporarily Unavailable</b>{1}", colourBad, colourEnd),
-                    sprite = GetCurrentFaction().sprite,
+                    sprite = GetCurrentHQ().sprite,
                     help0 = "hq_0",
                     help1 = "hq_1",
                     help2 = "hq_2"
                 };
                 GameManager.instance.messageScript.ActiveEffect(dataEffect);
-                Debug.LogFormat("[Fac] FactionManager.cs -> EndTurnLate: {0}{1}", text, "\n");
+                Debug.LogFormat("[Fac] HqManager.cs -> EndTurnLate: {0}{1}", text, "\n");
             }
         }
     }
@@ -287,21 +287,21 @@ public class FactionManager : MonoBehaviour
         if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[Fac] FactionManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[Fac] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
         }
         //HQ relocating
         if (isHqRelocating == true)
         {
             isProceed = false;
-            Faction faction = GetCurrentFaction();
-            if (faction != null)
+            Hq hqFaction = GetCurrentHQ();
+            if (hqFaction != null)
             {
-                Debug.LogFormat("Fac] FactionManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
+                Debug.LogFormat("Fac] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
-                string reason = GameManager.instance.colourScript.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", faction.tag), ColourType.salmonText);
-                GameManager.instance.messageScript.HqSupportUnavailable(text, reason, faction);
+                string reason = GameManager.instance.colourScript.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
+                GameManager.instance.messageScript.HqSupportUnavailable(text, reason, hqFaction);
             }
-            else { Debug.LogWarning("Invalid current faction (Null)"); }
+            else { Debug.LogWarning("Invalid current HQ (Null)"); }
         }
         if (isProceed == true)
         {
@@ -318,9 +318,9 @@ public class FactionManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", factionAuthority.tag);
-                            GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQAuthority.tag);
+                            GameManager.instance.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
                             //Support given
@@ -329,9 +329,9 @@ public class FactionManager : MonoBehaviour
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} declines support ({1} % chance of support)", factionAuthority.tag, threshold);
-                            GameManager.instance.messageScript.HqSupport(msgText, factionAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} declines support ({1} % chance of support)", hQAuthority.tag, threshold);
+                            GameManager.instance.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd);
                         }
@@ -342,9 +342,9 @@ public class FactionManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", factionResistance.tag);
-                            GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQResistance.tag);
+                            GameManager.instance.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
                             //Support given
@@ -353,9 +353,9 @@ public class FactionManager : MonoBehaviour
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] FactionManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} declines support ({1} % chance of support)", factionResistance.tag, threshold);
-                            GameManager.instance.messageScript.HqSupport(msgText, factionResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} declines support ({1} % chance of support)", hQResistance.tag, threshold);
+                            GameManager.instance.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
                             //random
                             GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd, false, "rand_1");
                         }
@@ -381,30 +381,30 @@ public class FactionManager : MonoBehaviour
     /// <summary>
     /// Checks if approval zero, sets timer, counts down each turn and fires player when timer expired. Timer cancelled if approval rises
     /// </summary>
-    public void CheckFactionFirePlayer()
+    public void CheckHqFirePlayer()
     {
         string msgText, itemText, reason, warning;
         //get approval
         int approval = -1;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Faction playerFaction = null;
+        Hq playerHQ = null;
         switch (side.level)
         {
             case 1:
                 //Authority
                 approval = _approvalAuthority;
-                playerFaction = factionAuthority;
+                playerHQ = hQAuthority;
                 break;
             case 2:
                 //Resistance
                 approval = _approvalResistance;
-                playerFaction = factionResistance;
+                playerHQ = hQResistance;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid side \"{0}\"", side);
                 break;
         }
-        Debug.Assert(playerFaction != null, "Invalid playerFaction (Null)");
+        Debug.Assert(playerHQ != null, "Invalid playerHQ (Null)");
         //only check once per turn
         if (approval == 0 && isZeroTimerThisTurn == false)
         {
@@ -412,13 +412,13 @@ public class FactionManager : MonoBehaviour
             if (approvalZeroTimer == 0)
             {
                 //set timer
-                approvalZeroTimer = factionFirePlayerTimer;
+                approvalZeroTimer = hQFirePlayerTimer;
                 //message
-                msgText = string.Format("Faction approval Zero. Faction will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                itemText = string.Format("{0} faction approval at ZERO", playerFaction.name);
-                reason = string.Format("{0} faction have lost faith in you", playerFaction.name);
+                msgText = string.Format("HQ approval Zero. HQ will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
+                itemText = string.Format("{0} HQ approval at ZERO", playerHQ.name);
+                reason = string.Format("{0} HQ have lost faith in you", playerHQ.name);
                 warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Faction Approval", reason, warning);
+                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "HQ Approval", reason, warning);
             }
             else
             {
@@ -434,23 +434,23 @@ public class FactionManager : MonoBehaviour
                         //Resistance side wins
                         winState = WinStateLevel.Resistance;
                     }
-                    msgText = string.Format("{0} approval Zero. Player Fired. Authority wins", playerFaction.tag);
-                    itemText = string.Format("{0} has LOST PATIENCE", playerFaction.tag);
-                    reason = string.Format("{0} approval at ZERO for an extended period", playerFaction.tag);
+                    msgText = string.Format("{0} approval Zero. Player Fired. Authority wins", playerHQ.tag);
+                    itemText = string.Format("{0} has LOST PATIENCE", playerHQ.tag);
+                    reason = string.Format("{0} approval at ZERO for an extended period", playerHQ.tag);
                     warning = "You've been FIRED, game over";
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
-                    string textTop = string.Format("{0}The {1} has lost faith in your abilities{2}", colourNormal, GetFactionName(side), colourEnd);
+                    string textTop = string.Format("{0}The {1} has lost faith in your abilities{2}", colourNormal, GetHqName(side), colourEnd);
                     string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
-                    GameManager.instance.turnScript.SetWinStateLevel(winState, WinReasonLevel.FactionSupportMin, textTop, textBottom);
+                    GameManager.instance.turnScript.SetWinStateLevel(winState, WinReasonLevel.HqSupportMin, textTop, textBottom);
 
                 }
                 else
                 {
                     //message
                     msgText = string.Format("HQ approval Zero. HQ will FIRE you in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                    itemText = string.Format("{0} about to FIRE you", playerFaction.tag);
-                    reason = string.Format("{0} are displeased with your performance", playerFaction.tag);
+                    itemText = string.Format("{0} about to FIRE you", playerHQ.tag);
+                    reason = string.Format("{0} are displeased with your performance", playerHQ.tag);
                     warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
                     GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "HQ Unhappy", reason, warning);
                 }
@@ -464,32 +464,32 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction for player side, Null if not found
+    /// returns current HQ for player side, Null if not found
     /// </summary>
     /// <returns></returns>
-    public Faction GetCurrentFaction()
+    public Hq GetCurrentHQ()
     {
-        Faction faction = null;
+        Hq factionHQ = null;
         switch (GameManager.instance.sideScript.PlayerSide.name)
         {
             case "Authority":
-                faction = factionAuthority;
+                factionHQ = hQAuthority;
                 break;
             case "Resistance":
-                faction = factionResistance;
+                factionHQ = hQResistance;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
                 break;
         }
-        return faction;
+        return factionHQ;
     }
 
     /// <summary>
-    /// returns current faction for the specified side in a colour formatted string. 'isOversized' gives name at 115% (default), false for normal.
+    /// returns current HQ for the specified side in a colour formatted string. 'isOversized' gives name at 115% (default), false for normal.
     /// </summary>
     /// <returns></returns>
-    public string GetFactionName(GlobalSide side, bool isOversized = true)
+    public string GetHqName(GlobalSide side, bool isOversized = true)
     {
         string description = "Unknown";
         if (side != null)
@@ -500,10 +500,10 @@ public class FactionManager : MonoBehaviour
                 switch (side.level)
                 {
                     case 1:
-                        description = string.Format("<b><size=115%>{0}</size></b>", factionAuthority.tag);
+                        description = string.Format("<b><size=115%>{0}</size></b>", hQAuthority.tag);
                         break;
                     case 2:
-                        description = string.Format("<b><size=115%>{0}</size></b>", factionResistance.tag);
+                        description = string.Format("<b><size=115%>{0}</size></b>", hQResistance.tag);
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -516,10 +516,10 @@ public class FactionManager : MonoBehaviour
                 switch (side.level)
                 {
                     case 1:
-                        description = string.Format("<b>{0}</b>", factionAuthority.name);
+                        description = string.Format("<b>{0}</b>", hQAuthority.name);
                         break;
                     case 2:
-                        description = string.Format("<b>{0}</b>", factionResistance.name);
+                        description = string.Format("<b>{0}</b>", hQResistance.name);
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -532,10 +532,10 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction description for specified side in colour formatted string
+    /// returns current HQ description for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionDescription(GlobalSide side)
+    public string GetHqDescription(GlobalSide side)
     {
         string description = "Unknown";
         if (side != null)
@@ -543,10 +543,10 @@ public class FactionManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2}", colourNeutral, factionAuthority.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNeutral, hQAuthority.descriptor, colourEnd);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2}", colourNeutral, factionResistance.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNeutral, hQResistance.descriptor, colourEnd);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -558,10 +558,10 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns faction approval level for current side, returns -1 if a problem
+    /// returns HQ approval level for current side, returns -1 if a problem
     /// </summary>
     /// <returns></returns>
-    public int GetFactionApproval()
+    public int GetHqApproval()
     {
         int approval = -1;
         switch (GameManager.instance.sideScript.PlayerSide.level)
@@ -574,16 +574,16 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns faction sprite for current player side, returns errorSprite if a problem
+    /// returns HQ sprite for current player side, returns errorSprite if a problem
     /// </summary>
     /// <returns></returns>
-    public Sprite GetFactionSpirte()
+    public Sprite GetHqSpirte()
     {
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case 1: sprite = factionAuthority.sprite; break;
-            case 2: sprite = factionResistance.sprite; break;
+            case 1: sprite = hQAuthority.sprite; break;
+            case 2: sprite = hQResistance.sprite; break;
             default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.instance.sideScript.PlayerSide.level); break;
         }
         return sprite;
@@ -591,10 +591,10 @@ public class FactionManager : MonoBehaviour
 
 
     /// <summary>
-    /// returns current faction approval level for specified side in colour formatted string
+    /// returns current HQ approval level for specified side in colour formatted string
     /// </summary>
     /// <returns></returns>
-    public string GetFactionApprovalLevel(GlobalSide side)
+    public string GetHqApprovalLevel(GlobalSide side)
     {
         string description = "Unknown";
         if (side != null)
@@ -602,10 +602,10 @@ public class FactionManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalAuthority, colourEnd, maxFactionApproval);
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalAuthority, colourEnd, maxHqApproval);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalResistance, colourEnd, maxFactionApproval);
+                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalResistance, colourEnd, maxHqApproval);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -617,10 +617,10 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current faction details for specified side in colour formatted string. 'Unknown' if an problem
+    /// returns current HQ details for specified side in colour formatted string. 'Unknown' if an problem
     /// </summary>
     /// <returns></returns>
-    public string GetFactionDetails(GlobalSide side)
+    public string GetHqDetails(GlobalSide side)
     {
         string colourNode = colourGrey;
         StringBuilder builder = new StringBuilder();
@@ -629,28 +629,10 @@ public class FactionManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    builder.AppendFormat("Faction details: {0}To be Done{1}", colourNode, colourEnd);
-                    /*arc = factionAuthority.preferredArc;
-                    if (arc != null) { colourNode = colourGood; }
-                    else { colourNode = colourGrey; }
-                    builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    arc = factionAuthority.hostileArc;
-                    if (arc != null) { colourNode = colourBad; }
-                    else { colourNode = colourGrey; }
-                    builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionAuthority.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
+                    builder.AppendFormat("HQ details: {0}To be Done{1}", colourNode, colourEnd);
                     break;
                 case 2:
-                    builder.AppendFormat("Faction details: {0}To be Done{1}", colourNode, colourEnd);
-                    /*arc = factionResistance.preferredArc;
-                    if (arc != null) { colourNode = colourGood; }
-                    else { colourNode = colourGrey; }
-                    builder.AppendFormat("Preferred Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    arc = factionResistance.hostileArc;
-                    if (arc != null) { colourNode = colourBad; }
-                    else { colourNode = colourGrey; }
-                    builder.AppendFormat("Hostile Nodes {0}{1}{2}{3}", colourNode, arc != null ? arc.name : "None", colourEnd, "\n");
-                    builder.AppendFormat("{0}{1}{2}{3} Actions per turn{4}", colourNeutral, factionResistance.actionsTaskPerTurn, colourEnd, colourNormal, colourEnd);*/
+                    builder.AppendFormat("HQ details: {0}To be Done{1}", colourNode, colourEnd);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -666,10 +648,10 @@ public class FactionManager : MonoBehaviour
 
 
     /// <summary>
-    /// use this to adjust faction approval level (auto checks for various faction mechanics and generates a message) 'Reason' is self contained. Amount to change should be negative to lower Approval
+    /// use this to adjust HQ approval level (auto checks for various HQ mechanics and generates a message) 'Reason' is self contained. Amount to change should be negative to lower Approval
     /// </summary>
     /// <param name="amount"></param>
-    public void ChangeFactionApproval(int amountToChange, GlobalSide side, string reason)
+    public void ChangeHqApproval(int amountToChange, GlobalSide side, string reason)
     {
         if (side != null)
         {
@@ -682,22 +664,22 @@ public class FactionManager : MonoBehaviour
                     //Authority
                     oldApproval = ApprovalAuthority;
                     ApprovalAuthority += amountToChange;
-                    Debug.LogFormat("[Fac] <b>Authority</b> Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
+                    Debug.LogFormat("[Fac] <b>Authority</b> HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     {
-                        msgText = string.Format("{0} faction approval {1}{2}", factionAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.HqApproval(msgText, reason, factionAuthority, oldApproval, amountToChange, ApprovalAuthority);
+                        msgText = string.Format("{0} HQ approval {1}{2}", hQAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
+                        GameManager.instance.messageScript.HqApproval(msgText, reason, hQAuthority, oldApproval, amountToChange, ApprovalAuthority);
                     }
                     break;
                 case 2:
                     //Resistance
                     oldApproval = ApprovalResistance;
                     ApprovalResistance += amountToChange;
-                    Debug.LogFormat("[Fac] Resistance Faction Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
+                    Debug.LogFormat("[Fac] Resistance HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                     {
-                        msgText = string.Format("{0} faction approval {1}{2}", factionResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.HqApproval(msgText, reason, factionResistance, oldApproval, amountToChange, ApprovalResistance);
+                        msgText = string.Format("{0} HQ approval {1}{2}", hQResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
+                        GameManager.instance.messageScript.HqApproval(msgText, reason, hQResistance, oldApproval, amountToChange, ApprovalResistance);
                     }
                     break;
                 default:
@@ -709,11 +691,11 @@ public class FactionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Set faction approval levels directly when loading saved game data (use ChangeFactionApproval otherwise)
+    /// Set HQ approval levels directly when loading saved game data (use ChangeHqApproval otherwise)
     /// </summary>
     /// <param name="side"></param>
     /// <param name="approval"></param>
-    public void LoadSetFactionApproval(GlobalSide side, int approval)
+    public void LoadSetHqApproval(GlobalSide side, int approval)
     {
         if (side != null)
         {
@@ -745,7 +727,7 @@ public class FactionManager : MonoBehaviour
     {
         int oldValue = bossOpinion;
         bossOpinion = newValue;
-        Debug.LogFormat("[Fac] FactionManager.cs -> SetBossOpinion: Opinion now {0} (was {1}), due to {2}{3}", newValue, oldValue, reason, "\n");
+        Debug.LogFormat("[Fac] HqManager.cs -> SetBossOpinion: Opinion now {0} (was {1}), due to {2}{3}", newValue, oldValue, reason, "\n");
     }
 
     /// <summary>
@@ -797,7 +779,7 @@ public class FactionManager : MonoBehaviour
         isHqRelocating = true;
         timerHqRelocating = timerRelocationBase * timesRelocated;
         //messages
-        Debug.LogFormat("[Fac] FactionManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
+        Debug.LogFormat("[Fac] HqManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
         string text = string.Format("HQ is relocating due to {0} (will take {1} turns)", reason, timerHqRelocating);
         GameManager.instance.messageScript.HqRelocates(text, reason);
     }
@@ -823,26 +805,22 @@ public class FactionManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Debug method to display faction info
+    /// Debug method to display HQ info
     /// </summary>
     /// <returns></returns>
-    public string DebugDisplayFactions()
+    public string DebugDisplayHq()
     {
         StringBuilder builder = new StringBuilder();
         //authority
         builder.AppendFormat(" AUTHORITY{0}", "\n");
-        builder.AppendFormat(" {0} faction{1}", factionAuthority.name, "\n");
-        builder.AppendFormat(" {0}{1}{2}", factionAuthority.descriptor, "\n", "\n");
-        /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionAuthority.preferredArc != null ? factionAuthority.preferredArc.name : "None", "\n");
-        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionAuthority.hostileArc != null ? factionAuthority.hostileArc.name : "None", "\n", "\n");*/
+        builder.AppendFormat(" {0} HQ{1}", hQAuthority.name, "\n");
+        builder.AppendFormat(" {0}{1}{2}", hQAuthority.descriptor, "\n", "\n");
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
         builder.AppendFormat("{0} RESISTANCE{1}", "\n", "\n");
-        builder.AppendFormat(" {0} faction{1}", factionResistance.name, "\n");
-        builder.AppendFormat(" {0}{1}{2}", factionResistance.descriptor, "\n", "\n");
-        /*builder.AppendFormat(" Preferred Nodes: {0}{1}", factionResistance.preferredArc != null ? factionResistance.preferredArc.name : "None", "\n");
-        builder.AppendFormat(" Hostile Nodes: {0}{1}", factionResistance.hostileArc != null ? factionResistance.hostileArc.name : "None", "\n", "\n");*/
+        builder.AppendFormat(" {0} HQ{1}", hQResistance.name, "\n");
+        builder.AppendFormat(" {0}{1}{2}", hQResistance.descriptor, "\n", "\n");
         builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
         builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
         //HQ data

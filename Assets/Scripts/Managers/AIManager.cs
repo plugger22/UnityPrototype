@@ -1697,7 +1697,7 @@ public class AIManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         }
         //authority faction approval level low
-        if (GameManager.instance.factionScript.ApprovalAuthority <= thresholdLowHQApproval)
+        if (GameManager.instance.hqScript.ApprovalAuthority <= thresholdLowHQApproval)
         { isLowHQApproval = true; }
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
         List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
@@ -3770,7 +3770,7 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessLobbyHQ()
     {
-        GameManager.instance.factionScript.ChangeFactionApproval(increaseHQApproval, globalAuthority, "<b>Mayor lobbies HQ</b>");
+        GameManager.instance.hqScript.ChangeHqApproval(increaseHQApproval, globalAuthority, "<b>Mayor lobbies HQ</b>");
         return true;
     }
 

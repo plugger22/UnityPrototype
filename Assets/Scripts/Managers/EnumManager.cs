@@ -11,7 +11,7 @@
         None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, LoadGame, LoadAtStart,
         PlayGame, MetaGame, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
-    public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, FactionSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
+    public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, HqSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
     public enum WinStateCampaign { None, Authority, Resistance }
     public enum WinReasonCampaign { None, DoomTimerMin, Commendations, BlackMarks, MainGoal, Innocence}
     public enum AuthoritySecurityState { Normal, APB, SecurityAlert, SurveillanceCrackdown }                            //specific Authority Security states (Player or AI)   
@@ -91,9 +91,9 @@
     public enum ActorSex { None, Male, Female}
     public enum ActorHQ { None, Boss, SubBoss1, SubBoss2, SubBoss3, Worker, LeftHQ, Count}      //determines size of DataManager.cs -> arrayOfActorsHQ. Change enum add/remove/order and you'll need to...  
                                                                                                 //change code in DataManager -> InitialiseActorArrays
-                                                                                                //change code in FactionManager.cs -> DebugDisplayHQActors
+                                                                                                //change code in HQManager.cs -> DebugDisplayHQActors
                                                                                                 //change ValidationManager.cs -> CheckActorData
-                                                                                                //change FactionManager.cs -> GetRandomHQPosition
+                                                                                                //change HQManager.cs -> GetRandomHQPosition
                                                                                                 //change ActorManager.cs -> InitialiseHqHierarchyInventory
                                                                                                 //change TopicManager.cs -> GetHQSubTopics
 
@@ -134,7 +134,7 @@
     // - - - AI - - -
     //
     public enum Priority { None, Low, Medium, High, Critical }
-    public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Dismiss, Faction, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
+    public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Dismiss, HQ, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                                      //used for toggling debugGUI.cs  AI data
     public enum AINodeCriteria { None }                                                                         //AIResistanceManager.cs -> ActorArc node task (find node with this criteria)
     public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI

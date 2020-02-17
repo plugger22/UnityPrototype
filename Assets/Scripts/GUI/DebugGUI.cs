@@ -53,7 +53,7 @@ public class DebugGUI : MonoBehaviour
     private int newsToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
-    private int factionToggle = 0;
+    private int hqToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
     private string textInput_0 = "what";
@@ -214,18 +214,18 @@ public class DebugGUI : MonoBehaviour
             }
 
             //eigth button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Faction Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "HQ Data"))
             {
-                Debug.Log("[Dbg] Button -> Toggle Faction Data");
+                Debug.Log("[Dbg] Button -> Toggle HQ Data");
                 if (debugDisplay != 11)
                 { debugDisplay = 11; }
                 else { debugDisplay = 0; }
 
-                switch (factionToggle)
+                switch (hqToggle)
                 {
-                    case 0: debugDisplay = 11; factionToggle = 1; break;
-                    case 1: debugDisplay = 71; factionToggle = 2; break;
-                    case 2: debugDisplay = 0; factionToggle = 0; break;
+                    case 0: debugDisplay = 11; hqToggle = 1; break;
+                    case 1: debugDisplay = 71; hqToggle = 2; break;
+                    case 2: debugDisplay = 0; hqToggle = 0; break;
                 }
             }
 
@@ -1184,10 +1184,10 @@ public class DebugGUI : MonoBehaviour
                         }
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
                         break;
-                    //Factions
+                    //HQs
                     case 11:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.factionScript.DebugDisplayFactions();
+                        analysis = GameManager.instance.hqScript.DebugDisplayHq();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //Show Options
@@ -1648,10 +1648,10 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.personScript.DebugDisplayHQPersonalities();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
-                    //Factions
+                    //HQs
                     case 71:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.factionScript.DebugDisplayHQActors();
+                        analysis = GameManager.instance.hqScript.DebugDisplayHQActors();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
                         break;
                     //News Items

@@ -1579,7 +1579,7 @@ public class TopicManager : MonoBehaviour
                     //Dynamic topic
                     case "CitySub":
                         //based on City Loyalty
-                        group = GetGroupLoyalty(GameManager.instance.factionScript.ApprovalResistance);
+                        group = GetGroupLoyalty(GameManager.instance.hqScript.ApprovalResistance);
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     case "AuthorityTeam":
@@ -2245,7 +2245,7 @@ public class TopicManager : MonoBehaviour
         {
             //exlude 'None' and 'Boss' (Boss can't be involved in internal politics)
             int offset = 2;
-            int numOfHierarchy = GameManager.instance.factionScript.numOfActorsHQ;
+            int numOfHierarchy = GameManager.instance.hqScript.numOfActorsHQ;
             //get first actor from hq hierarchy
             List<int> tempList = new List<int>();
             //loop through hierarchy and get array indexes for any valid actors
@@ -2294,7 +2294,7 @@ public class TopicManager : MonoBehaviour
                             tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
                         }
                         //group based on faction approval
-                        group = GetGroupApproval(GameManager.instance.factionScript.GetFactionApproval());
+                        group = GetGroupApproval(GameManager.instance.hqScript.GetHqApproval());
                         //if no entries use entire list by default
                         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     }
@@ -3127,9 +3127,9 @@ public class TopicManager : MonoBehaviour
                         int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
                         if (opinionChange != 0)
                         {
-                            int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+                            int bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
                             bossOpinion += opinionChange;
-                            GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
+                            GameManager.instance.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
                             builderBottom.AppendLine();
                             if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
                             else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
@@ -3241,9 +3241,9 @@ public class TopicManager : MonoBehaviour
     public void ProcessIgnoreBossOpinion()
     {
         //hq boss's opinion
-        int bossOpinion = GameManager.instance.factionScript.GetBossOpinion();
+        int bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
         bossOpinion += -1;
-        GameManager.instance.factionScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', Ignored", turnTopic.tag));
+        GameManager.instance.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', Ignored", turnTopic.tag));
     }
     #endregion
 
@@ -4897,7 +4897,7 @@ public class TopicManager : MonoBehaviour
             data.bossTooltipMain = builder.ToString();
             //Boss's view of your decision making ability
             data.bossTooltipDetails = string.Format("Boss's opinion of your Decisions{0}<b><size=115%>{1}{2}{3}</size></b>", "\n",
-                colourNeutral, GameManager.instance.factionScript.GetBossOpinionFormatted(), colourEnd);
+                colourNeutral, GameManager.instance.hqScript.GetBossOpinionFormatted(), colourEnd);
         }
         else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
     }
@@ -6114,7 +6114,7 @@ public class TopicManager : MonoBehaviour
                 case "Family":
                     break;
                 case "HQ":
-                    turnSprite = GameManager.instance.factionScript.GetFactionSpirte();
+                    turnSprite = GameManager.instance.hqScript.GetHqSpirte();
                     tagSpriteName = GameManager.instance.sideScript.PlayerSide.name;
                     //based on HQ approval
                     Tuple<string, string> resultsHQ = GetHqTooltip();
@@ -6433,7 +6433,7 @@ public class TopicManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
         }
         //details
-        int approval = GameManager.instance.factionScript.GetFactionApproval();
+        int approval = GameManager.instance.hqScript.GetHqApproval();
         int oddsGood = 50;
         int oddsBad = 100 - oddsGood;
         builder.AppendFormat("Determined by{0}{1}<size=110%>HQ Approval</size>{2}{3}", "\n", colourAlert, colourEnd, "\n");
@@ -6463,8 +6463,8 @@ public class TopicManager : MonoBehaviour
         {
             case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" }; break;
             case "ActorMatch": listOfHelp = new List<string>() { "topicSub_2", "topicSub_3" }; break;
-            case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topic_6" }; break;
-            case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topic_9" }; break;
+            case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topicSub_6" }; break;
+            case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topicSub_9" }; break;
             case "PlayerConditions": listOfHelp = new List<string>() { "topicSub_10", "topicSub_11" }; break;
             case "PlayerStats": listOfHelp = new List<string>() { "topicSub_12", "topicSub_13", "topicSub_14" }; break;
             case "PlayerGeneral": listOfHelp = new List<string>() { "topicSub_15", "topicSub_16" }; break;

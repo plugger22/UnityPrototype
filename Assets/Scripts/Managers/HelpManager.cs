@@ -808,7 +808,7 @@ public class HelpManager : MonoBehaviour
         //overview
         data = new HelpData();
         data.tag = "hq_supp_0";
-        data.header = "Faction Support";
+        data.header = "HQ Support";
         builder = new StringBuilder();
         builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
         builder.AppendFormat("The chance of it doing so depends on your level of {0}HQ Approval{1}. ", colourAlert, colourEnd);
@@ -876,11 +876,11 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
-        //Faction support
+        //HQ support
         data = new HelpData();
         data.tag = "rand_1";
         int approval = 5;
-        data.header = string.Format("{0}Faction Support{1}", colourTip, colourEnd);
+        data.header = string.Format("{0}HQ Support{1}", colourTip, colourEnd);
         builder = new StringBuilder();
         builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
         builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd,

@@ -247,18 +247,18 @@ public class SaveGameData
 
 #region SaveScenarioData
 /// <summary>
-/// City, Objective and Faction Manager.cs data
+/// City, Objective and HQ Manager.cs data
 /// </summary>
 [System.Serializable]
 public class SaveScenarioData
 {
     public int cityLoyalty;
-    //factionManager.cs
+    //HqManager.cs
     public int bossOpinion;
     public int approvalZeroTimer;
     public bool isZeroTimerThisTurn;
-    public int factionSupportAuthority;
-    public int factionSupportResistance;
+    public int hqSupportAuthority;
+    public int hqSupportResistance;
     public bool isHqRelocating;
     public int timerHqRelocating;
     //ObjectiveManager.cs

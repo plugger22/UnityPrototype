@@ -90,9 +90,9 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             screenPos.y -= 90;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = GameManager.instance.factionScript.GetFactionName(playerSide);
-                tooltipMain = GameManager.instance.factionScript.GetFactionDescription(playerSide);
-                tooltipDetails = GameManager.instance.factionScript.GetFactionDetails(playerSide);
+                tooltipHeader = GameManager.instance.hqScript.GetHqName(playerSide);
+                tooltipMain = GameManager.instance.hqScript.GetHqDescription(playerSide);
+                tooltipDetails = GameManager.instance.hqScript.GetHqDetails(playerSide);
                 GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;
