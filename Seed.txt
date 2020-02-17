@@ -191,3 +191,27 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
 	City seed 5678 -> London, United Kingdom
+
+Dev seed 35600 -> Monday, 17 February 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37696 -> Monday, 17 February 2020 1:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12658 -> Monday, 17 February 2020 1:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60998 -> Monday, 17 February 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55390 -> Monday, 17 February 2020 2:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25643 -> Monday, 17 February 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37956 -> Monday, 17 February 2020 2:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15101 -> Monday, 17 February 2020 2:44 PM
+City seed 5678 -> London, United Kingdom

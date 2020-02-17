@@ -105,6 +105,7 @@ public class NodeManager : MonoBehaviour
     private Material materialActive;
     private Material materialPlayer;
     private Material materialNemesis;
+    private Material materialBackground;            //grey
     //flash
     private float flashNodeTime;
 
@@ -199,6 +200,7 @@ public class NodeManager : MonoBehaviour
         materialActive = GetNodeMaterial(NodeType.Active);
         materialPlayer = GetNodeMaterial(NodeType.Player);
         materialNemesis = GetNodeMaterial(NodeType.Nemesis);
+        materialBackground = GetNodeMaterial(NodeType.Background);
         crisisBaseChanceDoubled = "NodeCrisisBaseChanceDoubled";
         crisisBaseChanceHalved = "NodeCrisisBaseChanceHalved";
         crisisTimerHigh = "NodeCrisisTimerHigh";
@@ -211,7 +213,8 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
-        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");        
+        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
+        Debug.Assert(materialBackground != null, "Invalid materialBackground (Null)");
         //gear node Action Fast access
         actionKinetic = GameManager.instance.dataScript.GetAction("gearKinetic");
         actionHacking = GameManager.instance.dataScript.GetAction("gearHacking");
@@ -1204,6 +1207,7 @@ public class NodeManager : MonoBehaviour
         //active AlertUI
         if (string.IsNullOrEmpty(displayText) == false)
         { GameManager.instance.alertScript.SetAlertUI(displayText); }
+        NodeRedraw = true;
     }
 
     /// <summary>
@@ -1236,7 +1240,11 @@ public class NodeManager : MonoBehaviour
                                         node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
                                         node.faceText.color = GetActivityColour(activityUI, data);
                                     }
-                                    else { node.faceText.text = ""; }
+                                    else
+                                    {
+                                        node.faceText.text = "";
+                                        node.SetMaterial(materialBackground);
+                                    }
                                     break;
                                 default:
                                     Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));

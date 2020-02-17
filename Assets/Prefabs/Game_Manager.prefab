@@ -729,6 +729,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e775ef34bd82c88438e614619163b088, type: 2}
   - {fileID: 2100000, guid: e627b327e59799847a9aa7a0c5cd69b5, type: 2}
   - {fileID: 2100000, guid: 8290b263c7ec738488ec931a79bf5beb, type: 2}
+  - {fileID: 2100000, guid: 74f1698b3d662dd41884834f164c7449, type: 2}
   nodePrimaryChance: 20
   nodeActiveMinimum: 3
   moveInvisibilityDelay: 4
