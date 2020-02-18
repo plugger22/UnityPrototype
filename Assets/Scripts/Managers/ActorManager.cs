@@ -3624,7 +3624,7 @@ public class ActorManager : MonoBehaviour
                         motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
                         title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
-                        InventoryOptionData optionData = new InventoryOptionData();
+                        GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
                         //motivation stars
@@ -3727,7 +3727,7 @@ public class ActorManager : MonoBehaviour
                         Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
                         if (actor != null)
                         {
-                            InventoryOptionData optionData = new InventoryOptionData();
+                            GenericOptionData optionData = new GenericOptionData();
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = actor.arc.name;
                             //unhappy situation
@@ -3878,7 +3878,7 @@ public class ActorManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
                     if (actor != null)
                     {
-                        InventoryOptionData optionData = new InventoryOptionData();
+                        GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = actor.arc.name;
                         //unhappy situation

@@ -283,21 +283,31 @@ namespace modalAPI
         public string textTop;
         public string textBottom;
         public GlobalSide side;
-        public InventoryOptionData[] arrayOfOptions = new InventoryOptionData[4];                           //only the first four are recognised
+        public GenericOptionData[] arrayOfOptions = new GenericOptionData[4];                           //only the first four are recognised
         public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[4];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
         public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[4];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
     }
 
     /// <summary>
-    /// subclass for InventoryInputData detailing specific option information
+    /// subclass for InventoryInputData and ReviewInputData detailing specific option information
     /// </summary>
-    public class InventoryOptionData
+    public class GenericOptionData
     {
         public Sprite sprite;
         public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
-        public string textLower;                //details that go below name, eg. "Unhappy in 2 turns"
+        public string textLower;                //details that go below name, eg. "Unhappy in 2 turns", motivational stars, etc
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, etc.
-        public string optionName;                  //used when Generic Picker returns a result which is then processed, for name key's, eg. gear
+        public string optionName;                  //used when Generic Picker returns a result which is then processed, for name key's, eg. gear. Optional
+    }
+
+    /// <summary>
+    /// Main class passed (internally) to ReviewUI for initialisation
+    /// </summary>
+    public class ReviewInputData
+    {
+        public GenericOptionData[] arrayOfOptions = new GenericOptionData[9];                           //5 x HQ (Boss is twice first up), 4 x Subordinates
+        public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[9];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
+        public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[9];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
     }
 
 

@@ -127,6 +127,10 @@ public enum EventType
     InventoryLetGo,
     InventoryFire,
     InventoryActiveDuty,
+    //Review UI
+    ReviewOpenUI,
+    ReviewCloseUI,
+    ReviewStart,
 
     /*//Dice UI
     OpenDiceUI,

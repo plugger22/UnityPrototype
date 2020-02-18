@@ -906,7 +906,7 @@ public class GearManager : MonoBehaviour
                             GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
                             if (tooltipDetails != null)
                             {
-                                InventoryOptionData optionData = new InventoryOptionData();
+                                GenericOptionData optionData = new GenericOptionData();
                                 optionData.sprite = gear.sprite;
                                 optionData.textUpper = gear.tag.ToUpper();
                                 //colour code Rarity
@@ -1022,7 +1022,7 @@ public class GearManager : MonoBehaviour
                         GenericTooltipDetails tooltipDetails = GetGearTooltip(gear);
                         if (tooltipDetails != null)
                         {
-                            InventoryOptionData optionData = new InventoryOptionData();
+                            GenericOptionData optionData = new GenericOptionData();
                             optionData.sprite = gear.sprite;
                             optionData.textUpper = gear.tag.ToUpper();
                             //colour code Rarity

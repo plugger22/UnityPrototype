@@ -124,7 +124,7 @@ public class ModalInventoryUI : MonoBehaviour
 
 
     /// <summary>
-    /// Open up Inventory UI
+    /// Open Inventory UI
     /// </summary>
     /// <param name="details"></param>
     private void SetInventoryUI(InventoryInputData details)
