@@ -312,3 +312,12 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
 	City seed 5678 -> London, United Kingdom
+
+Dev seed 38158 -> Tuesday, 18 February 2020 12:07 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
+	City seed 5678 -> London, United Kingdom

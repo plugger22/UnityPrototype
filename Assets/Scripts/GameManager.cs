@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalTeamPicker teamPickerScript;          //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;    //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;          //Modal InventoryUI window
+    [HideInInspector] public ModalReviewUI reviewScript;                //Modal ReviewUI window
     /*[HideInInspector] public ModalDiceUI diceScript;                  //Modal Dice UI window*/
     [HideInInspector] public ModalGUI modalGUIScript;                   //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                       //Alert UI text display
@@ -232,6 +233,7 @@ public class GameManager : MonoBehaviour
         teamPickerScript = ModalTeamPicker.Instance();
         genericPickerScript = ModalGenericPicker.Instance();
         inventoryScript = ModalInventoryUI.Instance();
+        reviewScript = ModalReviewUI.Instance();
         /*diceScript = ModalDiceUI.Instance();*/
         modalGUIScript = ModalGUI.Instance();
         widgetTopScript = WidgetTopUI.Instance();
