@@ -107,7 +107,7 @@ public class ModalReviewUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.ReviewOpenUI:
-                ReviewInputData details = InitialiseReviewUI();
+                ReviewInputData details = Param as ReviewInputData;
                 SetReviewUI(details);
                 break;
             case EventType.ReviewCloseUI:
@@ -119,16 +119,6 @@ public class ModalReviewUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Initialises ReviewUI. Does so internally as the data is static
-    /// </summary>
-    /// <returns></returns>
-    private ReviewInputData InitialiseReviewUI()
-    {
-        ReviewInputData data = new ReviewInputData();
-
-        return data;
-    }
 
 
     /// <summary>
@@ -197,7 +187,12 @@ public class ModalReviewUI : MonoBehaviour
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                             arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
+                            arrayOfInteractions[i].textResult.text = details.arrayOfOptions[i].textOther1;
+                            arrayOfInteractions[i].textBackground.text = details.arrayOfOptions[i].textOther2;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
+                            //disable result (debug)
+                            arrayOfInteractions[i].textBackground.gameObject.SetActive(true);
+                            arrayOfInteractions[i].textResult.gameObject.SetActive(true);
                             //tooltip data -> sprites
                             if (arrayOfTooltipsSprites[i] != null)
                             {

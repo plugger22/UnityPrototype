@@ -296,6 +296,8 @@ namespace modalAPI
         public Sprite sprite;
         public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
         public string textLower;                //details that go below name, eg. "Unhappy in 2 turns", motivational stars, etc
+        public string textOther1;                //generic text field, eg. Review results. Optional
+        public string textOther2;               //generic text field, eg. Review result background. Optional
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, etc.
         public string optionName;                  //used when Generic Picker returns a result which is then processed, for name key's, eg. gear. Optional
     }

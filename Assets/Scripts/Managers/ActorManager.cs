@@ -3690,6 +3690,190 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfHQActors (Null)"); }
     }
 
+
+    /// <summary>
+    /// Initialises Peer ReviewUI
+    /// </summary>
+    /// <returns></returns>
+    public void InitialiseReview()
+    {
+        int numOfActors = 0;
+        int offset = 1;             //accomodates fact that first entry in arrayOfActorsHQ is 'None'
+        int lengthOfArray;
+        int motivation;
+        bool isBoss;
+        bool errorFlag = false;
+        string title;
+        string background = string.Format("{0}", GameManager.instance.guiScript.circleChar);
+        //close all modal 0 tooltips
+        GameManager.instance.guiScript.SetTooltipsOff();
+        //data package
+        ReviewInputData data = new ReviewInputData();
+        //
+        // - - - HQ actors
+        //
+        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        lengthOfArray = arrayOfHqActors.Length;
+        if (arrayOfHqActors != null)
+        {
+            //tally up actors (ignore non-hierarchy actors)
+            for (int i = 0; i < lengthOfArray; i++)
+            { if (arrayOfHqActors[i] != null) { numOfActors++; } }
+            //should be a full compliment at all times (ignore first and last entries, 'None' and 'Worker', 'LeftHQ' & 'Count')
+            if (numOfActors != arrayOfHqActors.Length - 3)
+            { Debug.LogWarningFormat("Mismatch for arrayOfHqActors (has {0} actors, should have {1}){2}", numOfActors, lengthOfArray - 2, "\n"); }
+            if (numOfActors > 0)
+            {
+                //loop actors and populate data packages (only want hierarchy entries)
+                for (int i = offset; i < offset + GameManager.instance.hqScript.numOfActorsHQ; i++)
+                {
+                    Actor actor = arrayOfHqActors[i];
+                    if (actor != null)
+                    {
+                        motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                        title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
+                        if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
+                        GenericOptionData optionData = new GenericOptionData();
+                        optionData.sprite = actor.sprite;
+                        optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        //motivation stars
+                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
+                        optionData.textOther1 = GetReviewResult(motivation);
+                        optionData.textOther2 = background;
+                        optionData.optionID = actor.actorID;
+                        //tooltip -> sprite
+                        GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
+                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title.ToUpper(), colourEnd);
+                        tooltipDetailsSprite.textMain = new StringBuilder()
+                           .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
+                                   actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
+                           .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
+                           .ToString();
+                        if (isBoss == true)
+                        { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
+                        //tooltip -> stars (bottom text, motivation -> same for all)
+                        GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
+                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, title, colourEnd, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                        //add to arrays
+                        if (isBoss == true)
+                        {
+                            //first Boss -> opinion of decisions
+                            data.arrayOfOptions[i - offset] = optionData;
+                            data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
+                            data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
+                            //second Boss -> motivation
+                            data.arrayOfOptions[i + 1 - offset] = optionData;
+                            data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
+                            data.arrayOfTooltipsStars[i + 1 - offset] = tooltipDetailsStars;
+                        }
+                        else
+                        {
+                            //standard HQ hierarchy
+                            data.arrayOfOptions[i + 1 - offset] = optionData;
+                            data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
+                            data.arrayOfTooltipsStars[i + 1 - offset] = tooltipDetailsStars;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
+                }
+            }
+            else
+            { Debug.LogError("Invalid HQ actors (None, should be full compliment)"); errorFlag = true; }
+        }
+        else { Debug.LogError("Invalid arrayOfHQActors (Null)"); errorFlag = true; }
+        //
+        // - - - Subordinates
+        //
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                GenericOptionData optionData = new GenericOptionData();
+                GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
+                GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                        //subordinate data
+                        optionData.sprite = actor.sprite;
+                        optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, actor.arc.name, colourEnd);
+                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
+                        optionData.textOther1 = GetReviewResult(motivation);
+                        optionData.textOther2 = background;
+                        optionData.optionID = actor.actorID;
+                        //tooltip -> stars (bottom text, motivation -> same for all)
+                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[i]", i); }
+                }
+                else
+                {
+                    //empty slot
+                    optionData.sprite = GameManager.instance.guiScript.vacantResistanceActor;
+                    optionData.textUpper = "Vacant";
+                    optionData.textLower = "";
+                    optionData.optionID = -1;
+                }
+                data.arrayOfOptions[5 + i] = optionData;
+                data.arrayOfTooltipsStars[5 + i] = tooltipDetailsStars;
+                data.arrayOfTooltipsSprite[5 + i] = tooltipDetailsSprite;
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); errorFlag = true; }
+        //
+        // - - - Execute
+        //
+
+        //data package has been populated, proceed if all O.K
+        if (errorFlag == true)
+        {
+            //error msg
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}Peer Reviews are unavailable at this point in time{1}", colourAlert, colourEnd),
+                textBottom = "Phone calls are being made. Lots of them.",
+                sprite = GameManager.instance.guiScript.errorSprite,
+                isAction = false
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseReview");
+        }
+        else
+        {
+            //open Inventory UI
+            EventManager.instance.PostNotification(EventType.ReviewOpenUI, this, data, "ActorManager.cs -> InitialiseReview");
+        }
+
+    }
+
+    /// <summary>
+    /// returns colour formatted review icon (fontAwesome) for a given motivation/opinion of decisions taken (values from 0 to 3)
+    /// </summary>
+    /// <param name="motivation"></param>
+    /// <returns></returns>
+    private string GetReviewResult(int motivation)
+    {
+        string review = "?";
+        switch (motivation)
+        {
+            case 3: review = string.Format("{0}{1}{2}", colourGood, GameManager.instance.guiScript.positiveChar, colourEnd); break;
+            case 2: review = string.Format("{0}{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); break;
+            case 1: 
+            case 0: review = string.Format("{0}{1}{2}", colourBad, GameManager.instance.guiScript.negativeChar, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
+        }
+        return review;
+    }
+
     /// <summary>
     /// sets up all needed data for Reserve Actor pool and triggers ModalInventoryUI to display such
     /// </summary>

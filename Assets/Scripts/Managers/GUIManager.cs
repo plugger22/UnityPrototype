@@ -140,6 +140,11 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char utilityChar = '\uf0eb';
     [HideInInspector] public char researchChar = '\uf0c3';
     [HideInInspector] public char iconChar = '\uf5a6';
+    [HideInInspector] public char positiveChar = '\uf058';
+    [HideInInspector] public char neutralChar = '\uf056';
+    [HideInInspector] public char negativeChar = '\uf057';
+    [HideInInspector] public char circleChar = '\uf111';
+    
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.

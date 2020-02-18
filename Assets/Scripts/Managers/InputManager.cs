@@ -255,7 +255,8 @@ public class InputManager : MonoBehaviour
                 else if (Input.GetButtonDown("ShowAutoRun") == true)
                 {
                     //debug
-                    GameManager.instance.sideScript.ShowAutoRunMessage();
+                    /*GameManager.instance.sideScript.ShowAutoRunMessage();*/
+                    GameManager.instance.actorScript.InitialiseReview();
                 }
                 //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
                 else if (Input.GetButtonDown("NodeArc0") == true)
