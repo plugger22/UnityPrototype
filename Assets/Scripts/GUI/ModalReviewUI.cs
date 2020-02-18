@@ -191,7 +191,7 @@ public class ModalReviewUI : MonoBehaviour
                             arrayOfInteractions[i].textBackground.text = details.arrayOfOptions[i].textOther2;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
                             //disable result (debug)
-                            arrayOfInteractions[i].textBackground.gameObject.SetActive(true);
+                            arrayOfInteractions[i].textBackground.gameObject.SetActive(false);
                             arrayOfInteractions[i].textResult.gameObject.SetActive(true);
                             //tooltip data -> sprites
                             if (arrayOfTooltipsSprites[i] != null)
