@@ -209,6 +209,8 @@ public class ActorManager : MonoBehaviour
     private string colourGood;
     private string colourNeutral;
     private string colourBad;
+    private string colourDataGood;
+    private string colourDataTerrible;
     private string colourDefault;
     private string colourNormal;
     private string colourRecruit;
@@ -588,6 +590,8 @@ public class ActorManager : MonoBehaviour
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourDataTerrible = GameManager.instance.colourScript.GetColour(ColourType.dataTerrible);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourRecruit = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
@@ -3626,14 +3630,14 @@ public class ActorManager : MonoBehaviour
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
-                        optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                         //motivation stars
                         optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
-                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title.ToUpper(), colourEnd);
+                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
                         tooltipDetailsSprite.textMain = new StringBuilder()
                            .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
@@ -3703,8 +3707,7 @@ public class ActorManager : MonoBehaviour
         int motivation;
         bool isBoss;
         bool errorFlag = false;
-        string title;
-        string background = string.Format("{0}", GameManager.instance.guiScript.circleChar);
+        string title, opinionText;
         //close all modal 0 tooltips
         GameManager.instance.guiScript.SetTooltipsOff();
         //data package
@@ -3731,49 +3734,49 @@ public class ActorManager : MonoBehaviour
                     if (actor != null)
                     {
                         motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                        opinionText = GetOpinionText(motivation);
                         title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
-                        optionData.textUpper = string.Format("{0}{1}{2}", isBoss == true ? colourNeutral : colourAlert, title, colourEnd);
+                        optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                         //motivation stars
-                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
-                        optionData.textOther1 = GetReviewResult(motivation);
-                        optionData.textOther2 = background;
+                        optionData.textLower = GetReviewResult(motivation);
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
-                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", isBoss == true ? colourNeutral : colourAlert, title.ToUpper(), colourEnd);
-                        tooltipDetailsSprite.textMain = new StringBuilder()
+                        tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
+                        /*tooltipDetailsSprite.textMain = new StringBuilder()
                            .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
                            .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
-                           .ToString();
+                           .ToString();*/
+                        tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
-                        //tooltip -> stars (bottom text, motivation -> same for all)
-                        GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
-                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
-                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, title, colourEnd, "\n", colourNeutral, colourEnd);
-                        tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                        //tooltip -> result 
+                        GenericTooltipDetails tooltipDetailsResult = new GenericTooltipDetails();
+                        tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourNeutral, title, colourEnd);
+                        tooltipDetailsResult.textMain = string.Format("Thinks you are doing a{0}{1}{2}job", "\n", opinionText, "\n");
+                        tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}MOTIVATION{3}", "\n", "\n", colourAlert, colourEnd);
                         //add to arrays
                         if (isBoss == true)
                         {
                             //first Boss -> opinion of decisions
                             data.arrayOfOptions[i - offset] = optionData;
                             data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
-                            data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
+                            data.arrayOfTooltipsResult[i - offset] = tooltipDetailsResult;
                             //second Boss -> motivation
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
-                            data.arrayOfTooltipsStars[i + 1 - offset] = tooltipDetailsStars;
+                            data.arrayOfTooltipsResult[i + 1 - offset] = tooltipDetailsResult;
                         }
                         else
                         {
                             //standard HQ hierarchy
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
-                            data.arrayOfTooltipsStars[i + 1 - offset] = tooltipDetailsStars;
+                            data.arrayOfTooltipsResult[i + 1 - offset] = tooltipDetailsResult;
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
@@ -3793,7 +3796,7 @@ public class ActorManager : MonoBehaviour
             {
                 GenericOptionData optionData = new GenericOptionData();
                 GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
-                GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
+                GenericTooltipDetails tooltipDetailsResult = new GenericTooltipDetails();
                 //check actor is present in slot (not vacant)
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
@@ -3804,14 +3807,12 @@ public class ActorManager : MonoBehaviour
                         //subordinate data
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, actor.arc.name, colourEnd);
-                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
-                        optionData.textOther1 = GetReviewResult(motivation);
-                        optionData.textOther2 = background;
+                        optionData.textLower = GetReviewResult(motivation);
                         optionData.optionID = actor.actorID;
-                        //tooltip -> stars (bottom text, motivation -> same for all)
-                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
-                        tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd);
-                        tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                        //tooltip -> result (bottom text, motivation -> same for all)
+                        tooltipDetailsResult.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsResult.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsResult.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[i]", i); }
                 }
@@ -3819,12 +3820,12 @@ public class ActorManager : MonoBehaviour
                 {
                     //empty slot
                     optionData.sprite = GameManager.instance.guiScript.vacantResistanceActor;
-                    optionData.textUpper = "Vacant";
+                    optionData.textUpper = string.Format("{0}<alpha=#88>Vacant{1}", colourAlert, colourEnd);
                     optionData.textLower = "";
                     optionData.optionID = -1;
                 }
                 data.arrayOfOptions[5 + i] = optionData;
-                data.arrayOfTooltipsStars[5 + i] = tooltipDetailsStars;
+                data.arrayOfTooltipsResult[5 + i] = tooltipDetailsResult;
                 data.arrayOfTooltipsSprite[5 + i] = tooltipDetailsSprite;
             }
         }
@@ -3865,13 +3866,32 @@ public class ActorManager : MonoBehaviour
         string review = "?";
         switch (motivation)
         {
-            case 3: review = string.Format("{0}{1}{2}", colourGood, GameManager.instance.guiScript.positiveChar, colourEnd); break;
-            case 2: review = string.Format("{0}{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); break;
+            case 3: review = string.Format("{0}{1}{2}", colourDataGood, GameManager.instance.guiScript.positiveChar, colourEnd); break;
+            case 2: review = string.Format("{0}<alpha=#22>{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); break;
             case 1: 
-            case 0: review = string.Format("{0}{1}{2}", colourBad, GameManager.instance.guiScript.negativeChar, colourEnd); break;
+            case 0: review = string.Format("{0}{1}{2}", colourDataTerrible, GameManager.instance.guiScript.negativeChar, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
         }
         return review;
+    }
+
+    /// <summary>
+    /// returns a colour formatted string of the actor's opinion of you, eg. Good / Bad
+    /// </summary>
+    /// <param name="motivation"></param>
+    /// <returns></returns>
+    private string GetOpinionText(int motivation)
+    {
+        string opinionText = "Unknown";
+        switch (motivation)
+        {
+            case 3: opinionText = string.Format("{0}<size=120%>GOOD{1}", colourGood, colourEnd); break;
+            case 2: opinionText = string.Format("{0}<size=120%>NEUTRAL{1}", colourNeutral, colourEnd); break;
+            case 1:
+            case 0: opinionText = string.Format("{0}<size=120%>BAD</size>{1}", colourBad, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
+        }
+        return opinionText;
     }
 
     /// <summary>

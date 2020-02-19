@@ -27,7 +27,7 @@ public class ModalReviewUI : MonoBehaviour
                                                                 //HQ Boss opinion of decisions / HQ heirarchy in enum order / subordinates in slotID order
     private ReviewInteraction[] arrayOfInteractions;            //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
-    private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
+    private GenericTooltipUI[] arrayOfTooltipsResults;            //used for fast access to tooltip components for Stars (bottomText)
 
     private static ModalReviewUI modalReviewUI;
     private ButtonInteraction buttonInteraction;
@@ -60,7 +60,7 @@ public class ModalReviewUI : MonoBehaviour
         int numOfOptions = arrayOfOptions.Length;
         arrayOfInteractions = new ReviewInteraction[numOfOptions];
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
-        arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsResults = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
             if (arrayOfOptions[i] != null)
@@ -71,21 +71,20 @@ public class ModalReviewUI : MonoBehaviour
                 {
                     arrayOfInteractions[i] = interaction;
                     //tooltip -> sprite (attached to game object to prevent tooltip component masking gameobject interaction component which is needed for click detection for menu's)
-                    GenericTooltipUI tooltipSprite = arrayOfOptions[i].GetComponent<GenericTooltipUI>();
+                    GenericTooltipUI tooltipSprite = interaction.tooltipSprite.GetComponent<GenericTooltipUI>();
                     if (tooltipSprite != null)
                     { arrayOfTooltipsSprites[i] = tooltipSprite; }
                     else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfReviewOptions[{0}] (Null)", i)); }
-                    //tooltip -> stars (bottomText, optional)
-                    GenericTooltipUI tooltipStars = interaction.tooltipStars.GetComponent<GenericTooltipUI>();
-                    if (tooltipStars != null)
-                    { arrayOfTooltipsStars[i] = tooltipStars; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipStars \"{0}\" (Null)", i)); }
+                    //tooltip -> result 
+                    GenericTooltipUI tooltipResult = interaction.tooltipResult.GetComponent<GenericTooltipUI>();
+                    if (tooltipResult != null)
+                    { arrayOfTooltipsResults[i] = tooltipResult; }
+                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipResult \"{0}\" (Null)", i)); }
                 }
                 else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
             }
             else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
         }
-
     }
 
     private void Start()
@@ -186,13 +185,10 @@ public class ModalReviewUI : MonoBehaviour
                             //populate option data
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
-                            arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
-                            arrayOfInteractions[i].textResult.text = details.arrayOfOptions[i].textOther1;
-                            arrayOfInteractions[i].textBackground.text = details.arrayOfOptions[i].textOther2;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
-                            //disable result (debug)
-                            arrayOfInteractions[i].textBackground.gameObject.SetActive(false);
+                            //result
                             arrayOfInteractions[i].textResult.gameObject.SetActive(true);
+                            arrayOfInteractions[i].textResult.text = details.arrayOfOptions[i].textLower;
                             //tooltip data -> sprites
                             if (arrayOfTooltipsSprites[i] != null)
                             {
@@ -210,23 +206,23 @@ public class ModalReviewUI : MonoBehaviour
                                 Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
                             }
                             //tooltip data -> stars
-                            if (arrayOfTooltipsStars[i] != null)
+                            if (arrayOfTooltipsResults[i] != null)
                             {
-                                if (details.arrayOfTooltipsStars[i] != null)
+                                if (details.arrayOfTooltipsResult[i] != null)
                                 {
-                                    arrayOfTooltipsStars[i].tooltipHeader = details.arrayOfTooltipsStars[i].textHeader;
-                                    arrayOfTooltipsStars[i].tooltipMain = details.arrayOfTooltipsStars[i].textMain;
-                                    arrayOfTooltipsStars[i].tooltipDetails = details.arrayOfTooltipsStars[i].textDetails;
-                                    arrayOfTooltipsStars[i].x_offset = 55;
-                                    arrayOfTooltipsStars[i].y_offset = 15;
+                                    arrayOfTooltipsResults[i].tooltipHeader = details.arrayOfTooltipsResult[i].textHeader;
+                                    arrayOfTooltipsResults[i].tooltipMain = details.arrayOfTooltipsResult[i].textMain;
+                                    arrayOfTooltipsResults[i].tooltipDetails = details.arrayOfTooltipsResult[i].textDetails;
+                                    arrayOfTooltipsResults[i].x_offset = 55;
+                                    arrayOfTooltipsResults[i].y_offset = 15;
                                 }
-                                else
+                                /*else
                                 {
                                     //this tooltip is optional, fill with blank data otherwise previously used data will be used
-                                    arrayOfTooltipsStars[i].tooltipHeader = "";
-                                    arrayOfTooltipsStars[i].tooltipMain = "";
-                                    arrayOfTooltipsStars[i].tooltipDetails = "";
-                                }
+                                    arrayOfTooltipsResults[i].tooltipHeader = "";
+                                    arrayOfTooltipsResults[i].tooltipMain = "";
+                                    arrayOfTooltipsResults[i].tooltipDetails = "";
+                                }*/
                             }
                         }
                         else

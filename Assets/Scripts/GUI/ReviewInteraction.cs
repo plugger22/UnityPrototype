@@ -10,11 +10,8 @@ public class ReviewInteraction : MonoBehaviour, IPointerClickHandler
 
     public Image optionImage;
     public TextMeshProUGUI textUpper;
-    public TextMeshProUGUI textLower;
     public TextMeshProUGUI textResult;
-    public TextMeshProUGUI textBackground;
     public GenericTooltipUI tooltipSprite;                        //EDIT -> tooltip component attached to gameobject rather than sprite as can't get mouseover and click detection from sprite without code change
-    public GenericTooltipUI tooltipStars;
     public GenericTooltipUI tooltipResult;
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
 
@@ -24,11 +21,8 @@ public class ReviewInteraction : MonoBehaviour, IPointerClickHandler
     {
         Debug.Assert(optionImage != null, "Invalid optionImage (Null)");
         Debug.Assert(textUpper != null, "Invalid textUpper (Null)");
-        Debug.Assert(textLower != null, "Invalid textLower (Null)");
         Debug.Assert(textResult != null, "Invalid textResult (Null)");
-        Debug.Assert(textBackground != null, "Invalid textBackground (Null)");
         Debug.Assert(tooltipSprite != null, "Invalid tooltipSprite (Null)");
-        Debug.Assert(tooltipStars != null, "Invalid tooltipStars (Null)");
         Debug.Assert(tooltipResult != null, "Invalid tooltipResult (Null)");        
     }
 

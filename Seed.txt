@@ -1,328 +1,5 @@
 
-Dev seed 65475 -> Monday, 17 February 2020 10:52 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5518 -> Monday, 17 February 2020 11:01 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18035 -> Monday, 17 February 2020 11:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23711 -> Monday, 17 February 2020 11:15 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2348 -> Monday, 17 February 2020 11:18 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40841 -> Monday, 17 February 2020 11:21 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9212 -> Monday, 17 February 2020 11:24 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61524 -> Monday, 17 February 2020 11:26 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5323 -> Monday, 17 February 2020 11:27 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14510 -> Monday, 17 February 2020 11:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18905 -> Monday, 17 February 2020 11:43 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2573 -> Monday, 17 February 2020 11:49 AM
-City seed 5678 -> London, United Kingdom
-WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1045)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:363)
-	WARNING Missing HQ hierarchy actors (is 3, should be 4)
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetHQSubTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2259)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1566)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2748)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	
-Dev seed 60071 -> Monday, 17 February 2020 11:52 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 64904 -> Monday, 17 February 2020 11:58 AM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-WARNING Invalid option.moodEffect (Null) for option ActGea1Opt0
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4665)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2849)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6002)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2859)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid option.moodEffect (Null) for option ActGea1Opt1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4665)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2849)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6002)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2859)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid option.moodEffect (Null) for option ActGea1Opt2
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4665)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2849)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid text (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6002)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2859)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid belief (Null) for option "ActGea1Opt0", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4881)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2879)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid belief (Null) for option "ActGea1Opt1", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4881)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2879)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	WARNING Invalid belief (Null) for option "ActGea1Opt2", topic ActGeaRES1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4881)
-	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2879)
-	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2692)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
-	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:224)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:384)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 35600 -> Monday, 17 February 2020 12:02 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 37696 -> Monday, 17 February 2020 1:14 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 12658 -> Monday, 17 February 2020 1:19 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 60998 -> Monday, 17 February 2020 2:20 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55390 -> Monday, 17 February 2020 2:29 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25643 -> Monday, 17 February 2020 2:36 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 37956 -> Monday, 17 February 2020 2:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15101 -> Monday, 17 February 2020 2:44 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 39183 -> Monday, 17 February 2020 3:35 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 7836 -> Monday, 17 February 2020 3:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 48743 -> Monday, 17 February 2020 3:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4719 -> Monday, 17 February 2020 4:01 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 17194 -> Monday, 17 February 2020 4:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 64163 -> Monday, 17 February 2020 4:35 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-WARNING Not found, tag "topic_9", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7575)
-	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:133)
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:636)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:614)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:564)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING Invalid HelpData (Null) for tag "topic_9"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(List`1) (at Assets/Scripts/Managers/HelpManager.cs:136)
-	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:495)
-	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
-	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:636)
-	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:614)
-	UnityEngine.MonoBehaviour:StartCoroutine(String)
-	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:564)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 46096 -> Monday, 17 February 2020 4:48 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 8805 -> Monday, 17 February 2020 5:11 PM
-WARNING [Val] ValidateSO: MISMATCH on NameSet, array 4, assets 5 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(NameSet[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1700)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 32345 -> Monday, 17 February 2020 5:15 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 54561 -> Tuesday, 18 February 2020 9:02 AM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 13669 -> Tuesday, 18 February 2020 9:44 AM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 38158 -> Tuesday, 18 February 2020 12:07 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:759)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:351)
-	City seed 5678 -> London, United Kingdom
-
-Dev seed 2826 -> Tuesday, 18 February 2020 4:18 PM
+Dev seed 51613 -> Wednesday, 19 February 2020 11:04 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -331,40 +8,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 5519 -> Tuesday, 18 February 2020 4:22 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	City seed 5678 -> London, United Kingdom
-ASSERT UnassignedReferenceException: The variable panelObject of ModalReviewUI has not been assigned.
-You probably need to assign the panelObject variable of the ModalReviewUI script in the inspector.
-ModalReviewUI.SetReviewUI (modalAPI.ReviewInputData details) (at Assets/Scripts/GUI/ModalReviewUI.cs:133)
-	ModalReviewUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalReviewUI.cs:111)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:281)
-	ActorManager.InitialiseReview () (at Assets/Scripts/Managers/ActorManager.cs:3793)
-	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:259)
-	GameManager.Update () (at Assets/Scripts/GameManager.cs:385)
-	
-Dev seed 64382 -> Tuesday, 18 February 2020 4:25 PM
-WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
-	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
-	City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ModalReviewUI.SetReviewUI (modalAPI.ReviewInputData details) (at Assets/Scripts/GUI/ModalReviewUI.cs:187)
-	ModalReviewUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalReviewUI.cs:111)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:281)
-	ActorManager.InitialiseReview () (at Assets/Scripts/Managers/ActorManager.cs:3793)
-	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:259)
-	GameManager.Update () (at Assets/Scripts/GameManager.cs:385)
-	
-Dev seed 30017 -> Tuesday, 18 February 2020 5:01 PM
+Dev seed 50216 -> Wednesday, 19 February 2020 11:21 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -373,7 +17,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 32961 -> Tuesday, 18 February 2020 5:06 PM
+Dev seed 64543 -> Wednesday, 19 February 2020 11:23 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -382,7 +26,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 4072 -> Tuesday, 18 February 2020 5:08 PM
+Dev seed 35029 -> Wednesday, 19 February 2020 11:25 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -391,7 +35,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 48389 -> Tuesday, 18 February 2020 5:10 PM
+Dev seed 47244 -> Wednesday, 19 February 2020 11:27 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -400,7 +44,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 35382 -> Tuesday, 18 February 2020 5:32 PM
+Dev seed 29180 -> Wednesday, 19 February 2020 11:32 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -409,7 +53,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 3487 -> Tuesday, 18 February 2020 5:33 PM
+Dev seed 29555 -> Wednesday, 19 February 2020 11:36 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -418,7 +62,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 13531 -> Tuesday, 18 February 2020 5:51 PM
+Dev seed 12353 -> Wednesday, 19 February 2020 11:37 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -427,7 +71,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 60791 -> Tuesday, 18 February 2020 6:09 PM
+Dev seed 15851 -> Wednesday, 19 February 2020 11:38 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -436,7 +80,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 32265 -> Tuesday, 18 February 2020 6:10 PM
+Dev seed 43624 -> Wednesday, 19 February 2020 11:39 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -445,7 +89,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 25169 -> Tuesday, 18 February 2020 8:01 PM
+Dev seed 38818 -> Wednesday, 19 February 2020 11:42 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -454,7 +98,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 11963 -> Tuesday, 18 February 2020 8:05 PM
+Dev seed 13197 -> Wednesday, 19 February 2020 11:44 AM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
@@ -463,7 +107,79 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 58052 -> Tuesday, 18 February 2020 8:07 PM
+Dev seed 64180 -> Wednesday, 19 February 2020 11:46 AM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 16776 -> Wednesday, 19 February 2020 11:50 AM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 50191 -> Wednesday, 19 February 2020 12:08 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 37040 -> Wednesday, 19 February 2020 12:11 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5677 -> London, United Kingdom
+
+Dev seed 53922 -> Wednesday, 19 February 2020 12:11 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 31367 -> Wednesday, 19 February 2020 12:16 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 13444 -> Wednesday, 19 February 2020 12:17 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 39734 -> Wednesday, 19 February 2020 12:21 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 41227 -> Wednesday, 19 February 2020 12:32 PM
 WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
 UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
