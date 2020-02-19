@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using modalAPI;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,16 +22,24 @@ public class ModalReviewUI : MonoBehaviour
     public TextMeshProUGUI textBottom;
     public TextMeshProUGUI textHeader;
 
-    public Button buttonCancel;
+    public Button buttonReview;
+    public Button buttonExit;
 
     public GameObject[] arrayOfOptions;                         //place Review option UI elements here (5 x HQ options for top panel, 4 Subordinate options for bottom panel, in order Left to Right, Top to Bottom))
                                                                 //HQ Boss opinion of decisions / HQ heirarchy in enum order / subordinates in slotID order
+
+    [HideInInspector] ModalReviewSubState status;
+
     private ReviewInteraction[] arrayOfInteractions;            //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsResults;            //used for fast access to tooltip components for Stars (bottomText)
 
     private static ModalReviewUI modalReviewUI;
-    private ButtonInteraction buttonInteraction;
+    private ButtonInteraction buttonInteractionReview;
+    private ButtonInteraction buttonInteractionExit;
+
+    private int votesFor;
+    private int votesAgainst;
 
 
     /// <summary>
@@ -51,11 +60,17 @@ public class ModalReviewUI : MonoBehaviour
 
     private void Awake()
     {
-        //cancel button event
-        buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
-        if (buttonInteraction != null)
-        { buttonInteraction.SetButton(EventType.ReviewCloseUI); }
-        else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        status = ModalReviewSubState.None;
+        //Review button event
+        buttonInteractionReview = buttonReview.GetComponent<ButtonInteraction>();
+        if (buttonInteractionReview != null)
+        { buttonInteractionReview.SetButton(EventType.ReviewStart); }
+        else { Debug.LogError("Invalid buttonInteraction Review (Null)"); }
+        //Exit button event
+        buttonInteractionExit = buttonExit.GetComponent<ButtonInteraction>();
+        if (buttonInteractionExit != null)
+        { buttonInteractionExit.SetButton(EventType.ReviewCloseUI); }
+        else { Debug.LogError("Invalid buttonInteraction Exit (Null)"); }
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfOptions.Length;
         arrayOfInteractions = new ReviewInteraction[numOfOptions];
@@ -91,6 +106,7 @@ public class ModalReviewUI : MonoBehaviour
     {
         //register listener
         EventManager.instance.AddListener(EventType.ReviewOpenUI, OnEvent, "ReviewInventoryUI");
+        EventManager.instance.AddListener(EventType.ReviewStart, OnEvent, "ReviewInventoryUI");
         EventManager.instance.AddListener(EventType.ReviewCloseUI, OnEvent, "ReviewInventoryUI");
     }
 
@@ -108,6 +124,9 @@ public class ModalReviewUI : MonoBehaviour
             case EventType.ReviewOpenUI:
                 ReviewInputData details = Param as ReviewInputData;
                 SetReviewUI(details);
+                break;
+            case EventType.ReviewStart:
+                StartReview();
                 break;
             case EventType.ReviewCloseUI:
                 CloseReviewUI();
@@ -133,8 +152,9 @@ public class ModalReviewUI : MonoBehaviour
         reviewObject.SetActive(true);
         headerObject.SetActive(true);
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        //populate dialogue
-
+        //buttons
+        buttonReview.gameObject.SetActive(true);
+        buttonExit.gameObject.SetActive(false);
         //set up modal panel & buttons to be side appropriate
         switch (playerSide.level)
         {
@@ -142,23 +162,27 @@ public class ModalReviewUI : MonoBehaviour
                 panelBackground.sprite = GameManager.instance.sideScript.inventory_background_Authority;
                 panelHeader.sprite = GameManager.instance.sideScript.header_background_Authority;
                 //set button sprites
-                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonReview.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonExit.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
                 //set sprite transitions
                 SpriteState spriteStateAuthority = new SpriteState();
                 spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
                 spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
-                buttonCancel.spriteState = spriteStateAuthority;
+                buttonReview.spriteState = spriteStateAuthority;
+                buttonExit.spriteState = spriteStateAuthority;
                 break;
             case 2:
                 panelBackground.sprite = GameManager.instance.sideScript.inventory_background_Resistance;
                 panelHeader.sprite = GameManager.instance.sideScript.header_background_Resistance;
                 //set button sprites
-                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonReview.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonExit.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
                 //set sprite transitions
                 SpriteState spriteStateRebel = new SpriteState();
                 spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
                 spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
-                buttonCancel.spriteState = spriteStateRebel;
+                buttonReview.spriteState = spriteStateRebel;
+                buttonExit.spriteState = spriteStateRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", playerSide.name));
@@ -166,8 +190,8 @@ public class ModalReviewUI : MonoBehaviour
         }
         //set texts
         textHeader.text = "Peer Review";
-        textTop.text = "You are being assessed by your Peers";
-        textBottom.text = "Press SPACE, or the REVIEW button";
+        textTop.text = "You are about to be assessed by your Peers";
+        textBottom.text = "Press SPACE, or the COMMENCE REVIEW button";
         if (details != null)
         {
             //loop array and set options
@@ -187,7 +211,7 @@ public class ModalReviewUI : MonoBehaviour
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
                             //result
-                            arrayOfInteractions[i].textResult.gameObject.SetActive(true);
+                            arrayOfInteractions[i].textResult.gameObject.SetActive(false);
                             arrayOfInteractions[i].textResult.text = details.arrayOfOptions[i].textLower;
                             //tooltip data -> sprites
                             if (arrayOfTooltipsSprites[i] != null)
@@ -205,7 +229,7 @@ public class ModalReviewUI : MonoBehaviour
                             {
                                 Debug.LogError(string.Format("Invalid GenericTooltipUI (Null) in arrayOfTooltips[{0}]", i));
                             }
-                            //tooltip data -> stars
+                            //tooltip data -> results
                             if (arrayOfTooltipsResults[i] != null)
                             {
                                 if (details.arrayOfTooltipsResult[i] != null)
@@ -216,14 +240,10 @@ public class ModalReviewUI : MonoBehaviour
                                     arrayOfTooltipsResults[i].x_offset = 55;
                                     arrayOfTooltipsResults[i].y_offset = 15;
                                 }
-                                /*else
-                                {
-                                    //this tooltip is optional, fill with blank data otherwise previously used data will be used
-                                    arrayOfTooltipsResults[i].tooltipHeader = "";
-                                    arrayOfTooltipsResults[i].tooltipMain = "";
-                                    arrayOfTooltipsResults[i].tooltipDetails = "";
-                                }*/
+                                else
+                                { Debug.LogWarningFormat("Invalid tooltipResults (Null) in arrayOfTooltipResults[{0}]", i); }
                             }
+                            else { Debug.LogWarningFormat("Invalid arrayOfTooltipsResults[{0}] (Null)", i); }
                         }
                         else
                         {
@@ -253,7 +273,6 @@ public class ModalReviewUI : MonoBehaviour
             Debug.LogError("Invalid ReviewInputData (Null)");
             errorFlag = true;
         }
-
         //error outcome message if there is a problem
         if (errorFlag == true)
         {
@@ -268,10 +287,72 @@ public class ModalReviewUI : MonoBehaviour
         else
         {
             //all good, inventory window displayed
+            status = ModalReviewSubState.Open;
+            votesFor = details.votesFor;
+            votesAgainst = details.votesAgainst;
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Review };
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
+    }
+
+    /// <summary>
+    /// Shows actor review outcomes, one by one, once 'Commence Review' button pressed
+    /// </summary>
+    private void StartReview()
+    {
+        status = ModalReviewSubState.Review;
+        //deactivate review button
+        buttonReview.gameObject.SetActive(false);
+        StartCoroutine("ShowReviews");
+        //activate exit button
+        buttonExit.gameObject.SetActive(true);
+        status = ModalReviewSubState.Close;
+    }
+
+    /// <summary>
+    /// Coroutine to sequentially display review outcomes (suspense) and, once done, review result
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowReviews()
+    {
+        //loop array and make review outcomes visibile 
+        for (int i = 0; i < arrayOfOptions.Length; i++)
+        {
+            //valid option?
+            if (arrayOfOptions[i] != null)
+            {
+                if (arrayOfInteractions[i] != null)
+                {
+                    if (arrayOfOptions[i] != null)
+                    {
+                        //result
+                        arrayOfInteractions[i].textResult.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        //invalid option, switch off
+                        arrayOfOptions[i].SetActive(false);
+                    }
+                }
+                else
+                {
+                    //error -> Null Interaction data
+                    Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i);
+                    break;
+                }
+            }
+            else
+            {
+                //error -> Null array
+                Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i);
+                break;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+        textTop.text = string.Format("Votes For {0}, Votes Against {1}", votesFor, votesAgainst);
+        textBottom.text = "Press ESC or EXIT once done";
+        yield return null;
     }
 
     /// <summary>

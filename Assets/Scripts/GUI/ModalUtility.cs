@@ -305,6 +305,8 @@ namespace modalAPI
     /// </summary>
     public class ReviewInputData
     {
+        public int votesFor;
+        public int votesAgainst;
         public GenericOptionData[] arrayOfOptions = new GenericOptionData[9];                           //5 x HQ (Boss is twice first up), 4 x Subordinates
         public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[9];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
         public GenericTooltipDetails[] arrayOfTooltipsResult = new GenericTooltipDetails[9];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Result) tooltip
