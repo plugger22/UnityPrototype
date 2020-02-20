@@ -14,6 +14,7 @@ public class ModalReviewUI : MonoBehaviour
     public GameObject reviewObject;
     public GameObject panelObject;
     public GameObject headerObject;
+
     public Image panelBackground;
     public Image panelTop;
     public Image panelBottom;
@@ -27,6 +28,8 @@ public class ModalReviewUI : MonoBehaviour
 
     public Button buttonReview;
     public Button buttonExit;
+    public Button buttonHelpOpen;
+    public Button buttonHelpClose;
 
     public GameObject[] arrayOfOptions;                         //place Review option UI elements here (5 x HQ options for top panel, 4 Subordinate options for bottom panel, in order Left to Right, Top to Bottom))
                                                                 //HQ Boss opinion of decisions / HQ heirarchy in enum order / subordinates in slotID order
@@ -39,6 +42,9 @@ public class ModalReviewUI : MonoBehaviour
     private ReviewInteraction[] arrayOfInteractions;            //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsResults;            //used for fast access to tooltip components for Stars (bottomText)
+
+    private GenericHelpTooltipUI tooltipHelpOpen;
+    private GenericHelpTooltipUI tooltipHelpClose;
 
     private static ModalReviewUI modalReviewUI;
     private ButtonInteraction buttonInteractionReview;
@@ -78,6 +84,11 @@ public class ModalReviewUI : MonoBehaviour
         if (buttonInteractionExit != null)
         { buttonInteractionExit.SetButton(EventType.ReviewCloseUI); }
         else { Debug.LogError("Invalid buttonInteraction Exit (Null)"); }
+        //help tooltips
+        tooltipHelpOpen = buttonHelpOpen.GetComponent<GenericHelpTooltipUI>();
+        tooltipHelpClose = buttonHelpClose.GetComponent<GenericHelpTooltipUI>();
+        Debug.Assert(tooltipHelpOpen != null, "Invalid tooltipHelpOpen (Null)");
+        Debug.Assert(tooltipHelpClose != null, "Invalid tooltipHelpClose (Null)");
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfOptions.Length;
         arrayOfInteractions = new ReviewInteraction[numOfOptions];
@@ -165,6 +176,8 @@ public class ModalReviewUI : MonoBehaviour
         //buttons
         buttonReview.gameObject.SetActive(true);
         buttonExit.gameObject.SetActive(false);
+        buttonHelpOpen.gameObject.SetActive(true);
+        buttonHelpClose.gameObject.SetActive(false);
         //outcome symbols
         outcomeLeft.gameObject.SetActive(false);
         outcomeRight.gameObject.SetActive(false);
@@ -317,6 +330,7 @@ public class ModalReviewUI : MonoBehaviour
         GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Review;
         //deactivate review button
         buttonReview.gameObject.SetActive(false);
+        buttonHelpOpen.gameObject.SetActive(false);
         textTop.text = "";
         textBottom.text = "Press SPACE to Skip";
         Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Pre Coroutine{0}", "\n");
@@ -395,6 +409,7 @@ public class ModalReviewUI : MonoBehaviour
         textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
         textBottom.text = "Press ESC or EXIT once done";
         //hand back control
+        buttonHelpClose.gameObject.SetActive(true);
         GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Close;
         yield return null;
     }

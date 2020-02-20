@@ -852,3 +852,90 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
 	City seed 5678 -> London, United Kingdom
+
+Dev seed 6717 -> Thursday, 20 February 2020 8:47 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 27747 -> Thursday, 20 February 2020 8:48 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 10221 -> Thursday, 20 February 2020 8:51 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 3514 -> Thursday, 20 February 2020 8:51 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 19788 -> Thursday, 20 February 2020 8:54 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 59927 -> Thursday, 20 February 2020 8:55 PM
+WARNING [Val] ValidateSO: MISMATCH on Hq, array 2, assets 0 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Hq[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1750)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:761)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:353)
+	City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
