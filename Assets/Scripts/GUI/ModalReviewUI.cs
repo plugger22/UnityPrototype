@@ -350,7 +350,11 @@ public class ModalReviewUI : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f);
         }
-        textTop.text = string.Format("Votes For {0}, Votes Against {1}", votesFor, votesAgainst);
+        string outcomeText = "Unknown";
+        if (votesAgainst >= 5) { outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("BLACK MARK", ColourType.badText)); }
+        else if (votesFor >= 5) { outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("COMMENDATION", ColourType.goodText)); }
+        else { outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText)); }
+        textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
         textBottom.text = "Press ESC or EXIT once done";
         yield return null;
     }

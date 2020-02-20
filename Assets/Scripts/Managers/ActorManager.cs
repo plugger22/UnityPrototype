@@ -3766,7 +3766,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(opinionConverted, votesFor, votesAgainst);
+                            optionData.textLower = GetReviewResult(opinionConverted, ref votesFor, ref votesAgainst);
                             //add to arrays
                             data.arrayOfOptions[i - offset] = optionData;
                             data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
@@ -3788,7 +3788,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, votesFor, votesAgainst);
+                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -3810,7 +3810,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, votesFor, votesAgainst);
+                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -3845,7 +3845,7 @@ public class ActorManager : MonoBehaviour
                         //subordinate data
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, actor.arc.name, colourEnd);
-                        optionData.textLower = GetReviewResult(motivation, votesFor, votesAgainst);
+                        optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
@@ -3901,10 +3901,11 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// returns colour formatted review icon (fontAwesome) for a given motivation/opinion of decisions taken (values from 0 to 3)
+    /// NOTE: ref parameters as votesFor/Against are ongoing tallies
     /// </summary>
     /// <param name="motivation"></param>
     /// <returns></returns>
-    private string GetReviewResult(int motivation, int votesFor, int votesAgainst)
+    private string GetReviewResult(int motivation, ref int votesFor, ref int votesAgainst)
     {
         string review = "?";
         switch (motivation)
