@@ -143,6 +143,8 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char positiveChar = '\uf058';
     [HideInInspector] public char neutralChar = '\uf056';
     [HideInInspector] public char negativeChar = '\uf057';
+    [HideInInspector] public char commendationChar = '\uf559';
+    [HideInInspector] public char blackMarkChar = '\uf714';
     /*[HideInInspector] public char circleChar = '\uf111';*/
     
 

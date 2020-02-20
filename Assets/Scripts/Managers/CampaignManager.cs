@@ -369,7 +369,7 @@ public class CampaignManager : MonoBehaviour
     }
 
     /// <summary>
-    /// change value of Commendiations. Keep reason short
+    /// change value of Commendations. Keep reason short. Value is amount to change, eg. +1, -1
     /// </summary>
     /// <param name="value"></param>
     /// <param name="reason"></param>
@@ -385,6 +385,8 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     public void IncrementInvestigationBlackMarks()
     { investigationBlackMarks++; }
+
+
 
     /// <summary>
     /// returns official HQ title (string, eg. 'Treasurer') for specified enum and Playerside. Returns 'Unknown' if a problem

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using System.Text;
+using UnityEngine;
 
 /// <summary>
 /// class used for SetModalState, only main state needs to be specified as constructor has default options for subStates
@@ -29,7 +27,8 @@ public class InputManager : MonoBehaviour
     private ModalState _modalState;                                 //main modal state status
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalState.InfoDisplay -> what type of info?
-    private ModalGenericPickerSubState _modalGenericPickerState;    // sub state of ModalState.GenericPicker -> what type of picker?
+    private ModalGenericPickerSubState _modalGenericPickerState;    //sub state of ModalState.GenericPicker -> what type of picker?
+    private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
 
     public void Initialise(GameState state)
     {
@@ -88,6 +87,16 @@ public class InputManager : MonoBehaviour
             Debug.Log(string.Format("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n"));
         }
     }
+    public ModalReviewSubState ModalReviewState
+    {
+        get { return _modalReviewState; }
+        set
+        {
+            _modalReviewState = value;
+            Debug.LogFormat("[Inp] InputManager.cs: ModalReviewSubState now {0}{1}", _modalReviewState, "\n");
+        }
+    }
+
     #endregion
 
     #region Set and Reset Modal State
@@ -362,7 +371,28 @@ public class InputManager : MonoBehaviour
                                 break;
                         }
                         break;
-
+                    case ModalSubState.Review:
+                        switch (_modalReviewState)
+                        {
+                            case ModalReviewSubState.Open:
+                                if (Input.GetButtonDown("Cancel") == true)
+                                { EventManager.instance.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessInput Cancel"); }
+                                else if (Input.GetButtonDown("Multipurpose") == true)
+                                { EventManager.instance.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessInput Multipurpose"); }
+                                break;
+                            case ModalReviewSubState.Review:
+                                if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: SKIP REVIEW{0}", "\n");
+                                    GameManager.instance.reviewScript.reviewWaitTime = 0.0f;
+                                }
+                                break;
+                            case ModalReviewSubState.Close:
+                                if (Input.GetButtonDown("Cancel") == true)
+                                { EventManager.instance.PostNotification(EventType.ReviewCloseUI, this, null, "InputManager.cs -> ProcessInput Cancel"); }
+                                break;
+                        }
+                        break;
                     case ModalSubState.ActionMenu:
                         if (Input.GetButtonDown("Cancel") == true)
                         {
