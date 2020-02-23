@@ -56,6 +56,7 @@ public class ModalReviewUI : MonoBehaviour
 
     private int votesFor;
     private int votesAgainst;
+    private int votesAbstained;
     private float reviewWaitTimerDefault;
 
     private bool isOutcome;                                     //true if an outcome achieved, eg. Black mark or commendation, false if inconclusive
@@ -345,6 +346,7 @@ public class ModalReviewUI : MonoBehaviour
             GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Open;
             votesFor = details.votesFor;
             votesAgainst = details.votesAgainst;
+            votesAbstained = details.votesAbstained;
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Review };
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
@@ -377,6 +379,7 @@ public class ModalReviewUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator ShowReview()
     {
+        string text;
         //close any open help tooltips
         GameManager.instance.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
         //loop array and make review outcomes visibile 
@@ -428,7 +431,10 @@ public class ModalReviewUI : MonoBehaviour
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeBlackMarks(1, "Peer Review");
             isOutcome = true;
+            //admin
             GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewBlackmarks);
+            text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Blackmark, "\n");
+            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Blackmark);
         }
         else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
@@ -440,9 +446,19 @@ public class ModalReviewUI : MonoBehaviour
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeCommendations(1, "Peer Review");
             isOutcome = true;
+            //admin
             GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewCommendations);
+            text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Commendation, "\n");
+            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Commendation);
         }
-        else { outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText)); }
+        else
+        {
+            outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText));
+            //admin
+            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewInconclusive);
+            text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive, "\n");
+            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive);
+        }
         textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
         textBottom.text = "Press ESC or EXIT once done";
         //initialise outcome tooltips (if any)

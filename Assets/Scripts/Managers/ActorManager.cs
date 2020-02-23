@@ -3707,6 +3707,7 @@ public class ActorManager : MonoBehaviour
         int motivation;
         int votesFor = 0;
         int votesAgainst = 0;
+        int votesAbstained = 0;
         bool isBoss;
         bool errorFlag = false;
         string title;
@@ -3766,7 +3767,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(opinionConverted, ref votesFor, ref votesAgainst);
+                            optionData.textLower = GetReviewResult(opinionConverted, ref votesFor, ref votesAgainst, ref votesAbstained);
                             //add to arrays
                             data.arrayOfOptions[i - offset] = optionData;
                             data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
@@ -3788,7 +3789,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
+                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -3810,7 +3811,7 @@ public class ActorManager : MonoBehaviour
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
+                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -3845,7 +3846,7 @@ public class ActorManager : MonoBehaviour
                         //subordinate data
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, actor.arc.name, colourEnd);
-                        optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst);
+                        optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
@@ -3867,6 +3868,7 @@ public class ActorManager : MonoBehaviour
                 }
                 data.votesFor = votesFor;
                 data.votesAgainst = votesAgainst;
+                data.votesAbstained = votesAbstained;
                 data.arrayOfOptions[5 + i] = optionData;
                 data.arrayOfTooltipsResult[5 + i] = tooltipDetailsResult;
                 data.arrayOfTooltipsSprite[5 + i] = tooltipDetailsSprite;
@@ -3905,13 +3907,13 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="motivation"></param>
     /// <returns></returns>
-    private string GetReviewResult(int motivation, ref int votesFor, ref int votesAgainst)
+    private string GetReviewResult(int motivation, ref int votesFor, ref int votesAgainst, ref int votesAbstained)
     {
         string review = "?";
         switch (motivation)
         {
             case 3: review = string.Format("{0}{1}{2}", colourDataGood, GameManager.instance.guiScript.positiveChar, colourEnd); votesFor++;  break;
-            case 2: review = string.Format("{0}<alpha=#22>{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); break;
+            case 2: review = string.Format("{0}<alpha=#22>{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); votesAbstained++; break;
             case 1: 
             case 0: review = string.Format("{0}{1}{2}", colourDataTerrible, GameManager.instance.guiScript.negativeChar, colourEnd); votesAgainst++; break;
             default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;

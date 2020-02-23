@@ -4707,6 +4707,7 @@ MonoBehaviour:
     type: 3}
   topicOptionInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
     type: 3}
+  topicReviewSprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
   friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
   moodStar0: {fileID: 21300000, guid: 8f46e6ebee0e4b242984a8eac9da89bd, type: 3}
@@ -4978,6 +4979,7 @@ MonoBehaviour:
   minIntervalGlobal: 2
   maxOptions: 4
   reviewPeriod: 20
+  reviewActivationChance: 50
   chanceExtreme: 90
   chanceHigh: 75
   chanceMedium: 50

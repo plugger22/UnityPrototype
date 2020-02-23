@@ -159,7 +159,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetGeneralInfoDetails(string reason, string explanation, bool isBad)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>Info Alert!</b>{1}{2}{3}{4}{5}", colourNeutral, colourEnd, "\n", reason, "\n", "\n");
+        builder.AppendFormat("{0}<b>Info Alert!</b>{1}{2}{3}{4}{5}{6}", colourNeutral, colourEnd, "\n", "\n", reason, "\n", "\n");
         if (isBad == true)
         { builder.AppendFormat("{0}{1}{2}", colourBad, explanation, colourEnd); }
         else { builder.AppendFormat("{0}{1}{2}", colourGood, explanation, colourEnd); }
@@ -182,6 +182,35 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    //
+    // - - - Topics
+    //
+
+    /// <summary>
+    /// Topic Review outcome
+    /// </summary>
+    /// <param name="votesFor"></param>
+    /// <param name="votesAgainst"></param>
+    /// <param name="votesAbstain"></param>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    public string GetTopicReviewDetails(int votesFor, int votesAgainst, int votesAbstain, CampaignOutcome outcome)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("<b>You have been Reviewed</b>{0}{1}", "\n", "\n");
+        builder.AppendFormat("votes {0}<b>FOR{1}<pos=70%>{2}</b>{3}", colourGood, colourEnd, votesFor, "\n");
+        builder.AppendFormat("votes {0}<b>AGAINST{1}<pos=70%>{2}</b>{3}", colourBad, colourEnd, votesAgainst, "\n");
+        builder.AppendFormat("votes {0}<b>ABSTAINED{1}<pos=70%>{2}</b>{3}{4}", colourNeutral, colourEnd, votesAbstain, "\n", "\n");
+        switch (outcome)
+        {
+            case CampaignOutcome.Inconclusive: builder.AppendFormat("{0}<b>INCONCLUSIVE Outcome</b>{1}", colourNeutral, colourEnd); break;
+            case CampaignOutcome.Commendation: builder.AppendFormat("{0}<b>COMMENDATION awarded</b>{1}", colourGood, colourEnd); break;
+            case CampaignOutcome.Blackmark: builder.AppendFormat("{0}<b>BLACK MARK gained</b>{1}", colourBad, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised outcome \"{0}\"", outcome); builder.AppendFormat("<b>Unknown Outcome</b>"); break;
+        }
+        return builder.ToString();
+    }
 
     //
     // - - - Player - - -

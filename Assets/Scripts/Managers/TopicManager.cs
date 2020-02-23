@@ -3581,7 +3581,7 @@ public class TopicManager : MonoBehaviour
                     data.optionName = string.Format("{0}Event IGNORED{1}", colourAlert, colourEnd);
                     data.text = string.Format("Topic \'{0}\', option IGNORED, actorID {1}, nodeID {2}", turnTopic.tag, tagActorID, tagNodeID);
                 }
-                GameManager.instance.messageScript.Topic(data);
+                GameManager.instance.messageScript.TopicDecision(data);
             }
             //topic history
             HistoryTopic history = new HistoryTopic()

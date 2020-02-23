@@ -4515,7 +4515,12 @@ public class MessageManager : MonoBehaviour
     // - - - Topic
     //
 
-    public Message Topic(TopicMessageData topicData)
+    /// <summary>
+    /// Decision Topic outcome
+    /// </summary>
+    /// <param name="topicData"></param>
+    /// <returns></returns>
+    public Message TopicDecision(TopicMessageData topicData)
     {
         if (topicData != null)
         {
@@ -4540,7 +4545,7 @@ public class MessageManager : MonoBehaviour
                 Message message = new Message();
                 //message.text = text;
                 message.type = MessageType.TOPIC;
-                message.subType = MessageSubType.Topic_Record;
+                message.subType = MessageSubType.Topic_Decision;
                 message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
                 message.isPublic = true;
                 message.data0 = topicData.nodeID;
@@ -4570,6 +4575,53 @@ public class MessageManager : MonoBehaviour
             else { Debug.LogWarning("Invalid text (Null or empty)"); }
         }
         else { Debug.LogWarning("Invalid topicMessageData package (Null)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// Review topic result
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="votesFor"></param>
+    /// <param name="votesAgainst"></param>
+    /// <param name="votesAbstain"></param>
+    /// <param name="outcome"></param>
+    /// <returns></returns>
+    public Message TopicReview(string text, int votesFor, int votesAgainst, int votesAbstain, CampaignOutcome outcome)
+    {
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.TOPIC;
+            message.subType = MessageSubType.Topic_Review;
+            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.isPublic = true;
+            message.data0 = votesFor;
+            message.data1 = votesAgainst;
+            message.data2 = votesAbstain;
+            message.dataName = outcome.ToString();
+            //ItemData
+            ItemData data = new ItemData();
+            data.topText = "Peer Review";
+            data.bottomText = GameManager.instance.itemDataScript.GetTopicReviewDetails(votesFor, votesAgainst, votesAbstain, outcome);
+            data.itemText = "Performance REVIEW Outcome";
+            data.priority = ItemPriority.Low;
+            data.sprite = GameManager.instance.guiScript.topicReviewSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
+            data.help = 1;
+            data.tag0 = "review_3";
+            data.tag1 = "review_4";
+            data.tag2 = "review_5";
+            //add
+            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.instance.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
     }
 

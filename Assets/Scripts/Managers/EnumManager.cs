@@ -84,6 +84,7 @@
     public enum Status { Dormant, Active, Live, Outstanding, Done }     //target or topic status (Outstanding applies only targets)
     public enum Activation { Low, Medium, High }                        //chance of Target becoming 'Live' once 'Active'
     public enum GroupType { VeryBad, Bad, Neutral, Good }               //Topic group type (NOTE: DO NOT CHANGE -> order specific) 'VeryBad' is another version of 'Bad'. Maps to actor Motivation (0 -> 3)
+    public enum CampaignOutcome { Inconclusive, Commendation, Blackmark } //anytime a campaign outcome occurs, eg. Review topic, fail a level, etc.
 
 
     //
@@ -202,7 +203,7 @@
         TopicsGood, TopicsBad, TopicsIgnored,
         InvestigationsLaunched, InvestigationsCompleted,
         OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped, OrgEscapes,
-        ReviewsTotal, ReviewCommendations, ReviewBlackmarks,
+        ReviewsTotal, ReviewCommendations, ReviewBlackmarks, ReviewInconclusive,
         HQRelocations
     }
 
@@ -333,7 +334,8 @@
         //Objective
         Objective_Progress,
         //Topic
-        Topic_Record,
+        Topic_Decision,
+        Topic_Review,
         //Organisation
         Org_Secret,
         Org_Reputation,

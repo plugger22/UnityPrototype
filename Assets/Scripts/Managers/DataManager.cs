@@ -4031,8 +4031,9 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
     {
-        //update relations
-        UpdateRelations(actor.slotID);
+        //update relations -> ignore for actors in Reserves who have resigned
+        if (actor.Status != ActorStatus.Reserve)
+        { UpdateRelations(actor.slotID); }
         //update actor arrays
         if (actor.Status != ActorStatus.Reserve)
         {
