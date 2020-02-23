@@ -214,10 +214,11 @@ public class MessageManager : MonoBehaviour
     /// <summary>
     /// General Info message. 'itemText' is itemData.text, 'reason' is a self-contained sentence, 'warning' is a self-contained and is shown in Red if 'isBad' true, otherwise Green
     /// 'topText' is RHS short tag. Default playerSide, Medium priority.
+    /// ListOfHelpTags (optional) allows you to provide a list of helptag strings that will be used for RHS help, eg. "info_1", "conflict_0". Max of 4 tags allowed, rest ignored.
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GeneralInfo(string text, string itemText, string topText, string reason, string explanation, bool isBad = true)
+    public Message GeneralInfo(string text, string itemText, string topText, string reason, string explanation, bool isBad = true, List<string> listOfHelpTags = null)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -239,7 +240,21 @@ public class MessageManager : MonoBehaviour
             data.type = message.type;
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
-            data.help = 1;
+            if (listOfHelpTags != null)
+            {
+                for (int i = 0; i < listOfHelpTags.Count; i++)
+                {
+                    switch (i)
+                    {
+                        case 0: data.tag0 = listOfHelpTags[i]; break;
+                        case 1: data.tag1 = listOfHelpTags[i]; break;
+                        case 2: data.tag2 = listOfHelpTags[i]; break;
+                        case 3: data.tag3 = listOfHelpTags[i]; break;
+                        default: Debug.LogWarningFormat("Invalid help tag \"{0}\" (can only have 4, there are {1})", listOfHelpTags[i], i); break;
+                    }
+                }
+                data.help = 1;
+            }
             //add
             GameManager.instance.dataScript.AddMessage(message);
             GameManager.instance.dataScript.AddItemData(data);

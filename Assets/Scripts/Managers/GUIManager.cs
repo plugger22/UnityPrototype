@@ -146,7 +146,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char commendationChar = '\uf559';
     [HideInInspector] public char blackMarkChar = '\uf714';
     /*[HideInInspector] public char circleChar = '\uf111';*/
-    
+
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
@@ -613,14 +613,31 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator Topic()
     {
-        if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
+        TopicGlobal topicGlobal = GameManager.instance.topicScript.GetTopicGlobal();
+        Debug.LogFormat("[Tst] GUIManager.cs -> Topic coroutine -> topicGlobal.{0}{1}", topicGlobal, "\n");
+        switch (topicGlobal)
         {
-            //switch of all modal 0 tooltips
-            SetTooltipsOff();
-            waitUntilDone = true;
-            InitialiseTopic();
+            case TopicGlobal.Decision:
+                if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
+                {
+                    //switch of all modal 0 tooltips
+                    SetTooltipsOff();
+                    waitUntilDone = true;
+                    InitialiseTopic();
+                }
+                else { waitUntilDone = false; }
+                break;
+            case TopicGlobal.Review:
+                //switch of all modal 0 tooltips
+                SetTooltipsOff();
+                waitUntilDone = true;
+                GameManager.instance.actorScript.InitialiseReview();
+                break;
+            case TopicGlobal.None:
+            default:
+                waitUntilDone = false;
+                break;
         }
-        else { waitUntilDone = false; }
         yield return new WaitUntil(() => waitUntilDone == false);
     }
 
@@ -802,7 +819,7 @@ public class GUIManager : MonoBehaviour
         int count = dictOfPipeline.Count;
         if (count > 0)
         {
-            foreach(var record in dictOfPipeline)
+            foreach (var record in dictOfPipeline)
             {
                 if (record.Value != null)
                 {

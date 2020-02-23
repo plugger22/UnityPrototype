@@ -341,7 +341,7 @@ public class ModalReviewUI : MonoBehaviour
         }
         else
         {
-            //all good, inventory window displayed
+            //all good, review window displayed
             GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Open;
             votesFor = details.votesFor;
             votesAgainst = details.votesAgainst;
@@ -364,7 +364,9 @@ public class ModalReviewUI : MonoBehaviour
         textBottom.text = "Press SPACE to Skip";
         Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Pre Coroutine{0}", "\n");
         StartCoroutine("ShowReview");
-        Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: POST COROUTINE{0}", "\n");
+        Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");
+        //stats
+        GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewsTotal);
         //activate exit button
         buttonExit.gameObject.SetActive(true);
     }
@@ -375,6 +377,8 @@ public class ModalReviewUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator ShowReview()
     {
+        //close any open help tooltips
+        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
         //loop array and make review outcomes visibile 
         for (int i = 0; i < arrayOfOptions.Length; i++)
         {
@@ -424,6 +428,7 @@ public class ModalReviewUI : MonoBehaviour
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeBlackMarks(1, "Peer Review");
             isOutcome = true;
+            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewBlackmarks);
         }
         else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
@@ -435,6 +440,7 @@ public class ModalReviewUI : MonoBehaviour
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeCommendations(1, "Peer Review");
             isOutcome = true;
+            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewCommendations);
         }
         else { outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText)); }
         textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
@@ -465,6 +471,10 @@ public class ModalReviewUI : MonoBehaviour
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalReviewUI.cs -> CloseReviewUI{0}", "\n");
         GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.None;
+        //close any open help tooltips
+        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
+        //Close topicUI and go straight to MainInfoApp
+        GameManager.instance.guiScript.waitUntilDone = false;
     }
 
 }

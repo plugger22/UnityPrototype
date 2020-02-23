@@ -4977,6 +4977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minIntervalGlobal: 2
   maxOptions: 4
+  reviewPeriod: 20
   chanceExtreme: 90
   chanceHigh: 75
   chanceMedium: 50

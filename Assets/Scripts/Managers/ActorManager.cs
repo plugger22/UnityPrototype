@@ -8515,10 +8515,12 @@ public class ActorManager : MonoBehaviour
     public List<HelpData> GetOutcomeTooltip()
     {
         List<HelpData> listOfHelp = new List<HelpData>();
+        int commendations = GameManager.instance.campaignScript.GetCommendations();
+        int blackMarks = GameManager.instance.campaignScript.GetBlackMarks();
         HelpData helpData = new HelpData();
         helpData.header = string.Format("{0}Campaign Status{1}", colourAlert, colourEnd);
-        helpData.text = string.Format("You currently have {0}{1}{2} Commendations and {3}{4}{5} Black Marks", colourAlert, GameManager.instance.campaignScript.GetCommendations(), colourEnd,
-            colourAlert, GameManager.instance.campaignScript.GetBlackMarks(), colourEnd);
+        helpData.text = string.Format("You now have {0}{1}{2} Commendation{3} and {4}{5}{6} Black Mark{7}", colourAlert, commendations, colourEnd, commendations != 1 ? "s" : "",
+            colourAlert, blackMarks, colourEnd, blackMarks != 1 ? "s" : "");
         listOfHelp.Add(helpData);
         return listOfHelp;
     }

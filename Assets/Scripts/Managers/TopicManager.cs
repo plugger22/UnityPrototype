@@ -20,6 +20,12 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Maximum number of options in a topic")]
     [Range(2, 4)] public int maxOptions = 4;
 
+    [Header("Topic Reviews")]
+    [Tooltip("Frequency of topic reviews in number of turns (approximate as there is some fuzziness at the end of the countdown)")]
+    [Range(0, 50)] public int reviewPeriod = 20;
+    [Tooltip("Chance of Review occuring on the first turn of the possible two turn activation window. If not then auto activates on second turn")]
+    [Range(0, 100)] public int reviewActivationChance = 50;
+
     [Header("Probability")]
     [Tooltip("Number (less than) to roll for an Extreme probability option to Succeed")]
     [Range(0, 100)] public int chanceExtreme = 90;
@@ -161,6 +167,11 @@ public class TopicManager : MonoBehaviour
     public TopicSubSubType teamProbe;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
+
+    //type of topic
+    private TopicGlobal topicGlobal;        //what type of topic is being generated, eg. Decision, Review, etc.
+    private int reviewCountdown;            //counts down review interval, set to reviewPeriod after each Review
+    private bool reviewActivationMiss;      //used to accomodate a two turn window for Review activation. Set true if on first turn where activation possible it didn't happen. Auto happens next turn.
 
     //debugging (testManager.cs)
     private TopicPool debugTopicPool;
@@ -471,6 +482,13 @@ public class TopicManager : MonoBehaviour
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
+    #endregion
+
+    #region Topic Type
+
+    public TopicGlobal GetTopicGlobal()
+    { return topicGlobal; }
+
     #endregion
 
     #region Session Start
@@ -948,6 +966,10 @@ public class TopicManager : MonoBehaviour
     private void SetTopicDynamicData(List<Topic> listOfTopics)
     {
         bool isFirstScenario = GameManager.instance.campaignScript.CheckIsFirstScenario();
+        //Review topics
+        reviewCountdown = reviewPeriod;
+        reviewActivationMiss = false;
+        //Decision topics
         if (listOfTopics != null)
         {
             for (int i = 0; i < listOfTopics.Count; i++)
@@ -1025,88 +1047,94 @@ public class TopicManager : MonoBehaviour
     {
         if (playerSide != null)
         {
+            topicGlobal = TopicGlobal.None;
             //Player must be Active or Captured
             if (CheckPlayerStatus(playerSide) == true || GameManager.instance.playerScript.status == ActorStatus.Captured)
             {
-                CheckTopics();
-                //select a topic, if none found then drop the global interval by 1 and try again
-                minIntervalGlobalActual = minIntervalGlobal;
-                //initialise listOfTopicTypesTurn prior to selection loop
-                CheckForValidTopicTypes();
-                Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: listOfTopicTypeTurn has {0} records{1}", listOfTopicTypesTurn.Count, "\n");
-                do
+                //
+                // - - - topic Global 
+                //
+                if (GameManager.instance.playerScript.status != ActorStatus.Captured)
                 {
-                    //reset needs to be inside the loop
-                    ResetTopicAdmin();
-
-                    if (GetTopicType() == true)
+                    //chance of Review topic if not captured
+                    if (reviewCountdown > 0) { reviewCountdown--; }
+                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: reviewCountdown {0}, reviewActivationMiss {1}{2}", reviewCountdown, reviewActivationMiss, "\n");
+                    if (reviewCountdown == 0)
                     {
-                        if (GetTopicSubType(playerSide) == true)
-                        { GetTopic(playerSide); }
+                        //chance of activation on first turn of possible two turn window, automatic activation on second turn if first missed
+                        if (reviewActivationMiss == false)
+                        {
+                            if (Random.Range(0, 100) < reviewActivationChance)
+                            { topicGlobal = TopicGlobal.Review; }
+                            else
+                            {
+                                //automatic activation next turn
+                                reviewActivationMiss = true;
+                                topicGlobal = TopicGlobal.Decision;
+                                //next turn message
+                                string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
+                                string explanation = string.Format("<b>Your peers will assess you, all being well, {0}tomorrow</b>{1}", colourNormal, colourEnd);
+                                List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
+                                GameManager.instance.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
+                            }
+                        }
+                        else { topicGlobal = TopicGlobal.Review; }
                     }
-                    //repeat process with a reduced minInterval
-                    if (turnTopic == null)
+                    else
                     {
-                        minIntervalGlobalActual--;
-                        Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                        topicGlobal = TopicGlobal.Decision;
+                        //Decision pending message
+                        if (reviewCountdown == 1)
+                        {
+                            string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
+                            string explanation = string.Format("<b>Your peers will assess you, all being well, {0}<b>within the next couple of days</b>{1}", colourNormal, colourEnd);
+                            List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
+                            GameManager.instance.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
+                        }
                     }
-                    else { break; }
                 }
-                while (turnTopic == null && minIntervalGlobalActual > 0);
-                //only if a valid topic selected
-                if (turnTopic != null)
+                else { topicGlobal = TopicGlobal.Decision; }
+                //
+                // - - - Decision topic
+                //
+                if (topicGlobal == TopicGlobal.Decision)
                 {
-                    //debug purposes only -> BEFORE UpdateTopicTypeData
-                    UnitTestTopic(playerSide);
+                    CheckTopics();
+                    //select a topic, if none found then drop the global interval by 1 and try again
+                    minIntervalGlobalActual = minIntervalGlobal;
+                    //initialise listOfTopicTypesTurn prior to selection loop
+                    CheckForValidTopicTypes();
+                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: listOfTopicTypeTurn has {0} records{1}", listOfTopicTypesTurn.Count, "\n");
+                    do
+                    {
+                        //reset needs to be inside the loop
+                        ResetTopicAdmin();
+
+                        if (GetTopicType() == true)
+                        {
+                            if (GetTopicSubType(playerSide) == true)
+                            { GetTopic(playerSide); }
+                        }
+                        //repeat process with a reduced minInterval
+                        if (turnTopic == null)
+                        {
+                            minIntervalGlobalActual--;
+                            Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                        }
+                        else { break; }
+                    }
+                    while (turnTopic == null && minIntervalGlobalActual > 0);
+                    //only if a valid topic selected
+                    if (turnTopic != null)
+                    {
+                        //debug purposes only -> BEFORE UpdateTopicTypeData
+                        UnitTestTopic(playerSide);
+                    }
                 }
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
     }
-    #endregion
-
-    #region archive Old Code
-    /*public void SelectTopic(GlobalSide playerSide)
-    {
-        if (playerSide != null)
-        {
-            //Player must be Active
-            if (CheckPlayerStatus(playerSide) == true)
-            {
-                CheckTopics();
-                //select a topic, if none found then drop the global interval by 1 and try again
-                minIntervalGlobalActual = minIntervalGlobal;
-                do
-                {
-                    //reset needs to be inside the loop
-                    ResetTopicAdmin();
-                    CheckForValidTopicTypes();
-                    if (GetTopicType() == true)
-                    {
-                        if (GetTopicSubType(playerSide) == true)
-                        { GetTopic(playerSide); }
-                    }
-                    //repeat process with a reduced minInterval
-                    if (turnTopic == null)
-                    {
-                        minIntervalGlobalActual--;
-                        Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
-                    }
-                    else { break; }
-                }
-                while (turnTopic == null && minIntervalGlobalActual > 0);
-                //only if a valid topic selected
-                if (turnTopic != null)
-                {
-                    //debug purposes only -> BEFORE UpdateTopicTypeData
-                    UnitTestTopic(playerSide);
-                }
-            }
-        }
-        else { Debug.LogError("Invalid playerSide (Null)"); }
-    }*/
-
-
     #endregion
 
     #region CheckTopics
@@ -2670,40 +2698,50 @@ public class TopicManager : MonoBehaviour
     {
         if (playerSide != null)
         {
-            //only if Player Active
-            if (CheckPlayerStatus(playerSide) == true)
+            switch (topicGlobal)
             {
-                //valid topic selected, ignore otherwise
-                if (turnTopic != null)
-                {
-                    /*if (GameManager.instance.turnScript.CheckIsAutoRun() == false) -> DEBUGGING for randomly chosen autoRun options (not required now)
+                case TopicGlobal.Decision:
+                    //only if Player Active
+                    if (CheckPlayerStatus(playerSide) == true)
                     {
-                        //prepare and send data to topicUI.cs
-                        InitialiseTopicUI();
+                        //valid topic selected, ignore otherwise
+                        if (turnTopic != null)
+                        {
+                            /*if (GameManager.instance.turnScript.CheckIsAutoRun() == false) -> DEBUGGING for randomly chosen autoRun options (not required now)
+                            {
+                                //prepare and send data to topicUI.cs
+                                InitialiseTopicUI();
+                            }
+                            else
+                            {
+                                //autorun -> randomly choose topic option (effects not implemented)
+                                turnOption = turnTopic.listOfOptions[Random.Range(0, turnTopic.listOfOptions.Count)];
+                                ProcessTopicAdmin();
+                            }*/
+
+                            //prepare and send data to topicUI.cs, normal, non-capture, topics
+                            InitialiseTopicUI();
+                        }
                     }
                     else
                     {
-                        //autorun -> randomly choose topic option (effects not implemented)
-                        turnOption = turnTopic.listOfOptions[Random.Range(0, turnTopic.listOfOptions.Count)];
-                        ProcessTopicAdmin();
-                    }*/
-
-                    //prepare and send data to topicUI.cs, normal, non-capture, topics
-                    InitialiseTopicUI();
-                }
-            }
-            else
-            {
-                //Resistance player Captured
-                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
-                {
-                    //valid topic selected, ignore otherwise
-                    if (turnTopic != null)
-                    {
-                        //prepare and send data to topicUI.cs
-                        InitialiseCaptureTopicUI();
+                        //Resistance player Captured
+                        if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                        {
+                            //valid topic selected, ignore otherwise
+                            if (turnTopic != null)
+                            {
+                                //prepare and send data to topicUI.cs
+                                InitialiseCaptureTopicUI();
+                            }
+                        }
                     }
-                }
+                    break;
+                case TopicGlobal.Review:
+                    //nothing needs to be done other than some admin
+                    reviewCountdown = reviewPeriod;
+                    reviewActivationMiss = false;
+                    break;
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -6860,6 +6898,9 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Topic Selection{0}{1}", "\n", "\n");
+        builder.AppendFormat(" topicGlobal: {0}{1}", topicGlobal, "\n");
+        builder.AppendFormat(" reviewCountdown: {0} (interval period {1}){2}", reviewCountdown, reviewPeriod, "\n");
+        builder.AppendFormat(" reviewActivationMiss: {0}{1}{2}", reviewActivationMiss, "\n", "\n");
         builder.AppendFormat(" minIntervalGlobal: {0}{1}", minIntervalGlobal, "\n");
         builder.AppendFormat(" minIntervalGlobalActual: {0}{1}{2}", minIntervalGlobalActual, "\n", "\n");
         if (turnTopicType != null)
