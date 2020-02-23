@@ -53,7 +53,7 @@ public class TooltipNode : MonoBehaviour
     private string colourGoodSide;      //side dependant
     private string colourBadSide;
     private string colourNeutral;
-    private string colourGood;          //absolute
+    //private string colourGood;          //absolute
     private string colourBad;
     private string colourActive;
     private string colourAlert;
@@ -179,7 +179,7 @@ public class TooltipNode : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        //colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourActive = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);

@@ -3475,8 +3475,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5dfe93c276dab67418ac1d6ad145c226, type: 2}
   - {fileID: 11400000, guid: 98d27052c6e43c84790c0c04a19f3626, type: 2}
   arrayOfHQs:
-  - {fileID: 11400000, guid: 72cd9e1a91eacf8429a5e4efae6a7ef4, type: 2}
-  - {fileID: 11400000, guid: fa8015dfe3e3b7a4cb14490effb1a8ee, type: 2}
+  - {fileID: 11400000, guid: def353c1c0b965746b9a74ebc902e9f4, type: 2}
+  - {fileID: 11400000, guid: 9632b738e5743594cb1ce08292d1d088, type: 2}
   arrayOfCityArcs:
   - {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   - {fileID: 11400000, guid: bc0b3a48b2f6aa448a02418fcf746153, type: 2}
@@ -4523,6 +4523,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfFlags: 10
   minWinLoss: 3
+  reviewMinVotes: 3
+  outcomesWinLose: 10
   arrayOfStoryStatus: 
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   scenario: {fileID: 0}
@@ -4726,6 +4728,11 @@ MonoBehaviour:
   utilityChar: 61675
   researchChar: 61635
   iconChar: 62886
+  positiveChar: 61528
+  neutralChar: 61526
+  negativeChar: 61527
+  commendationChar: 62809
+  blackMarkChar: 63252
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:
@@ -4801,6 +4808,7 @@ MonoBehaviour:
   teamPickerScript: {fileID: 0}
   genericPickerScript: {fileID: 0}
   inventoryScript: {fileID: 0}
+  reviewScript: {fileID: 0}
   modalGUIScript: {fileID: 0}
   alertScript: {fileID: 0}
   widgetTopScript: {fileID: 0}

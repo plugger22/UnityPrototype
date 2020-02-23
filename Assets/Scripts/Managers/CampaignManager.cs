@@ -15,6 +15,10 @@ public class CampaignManager : MonoBehaviour
     [Header("Win/Loss")]
     [Tooltip("Min numer of commendations/blackMarks required before 2 x win/loss conditions can kick in, eg. if 2 then must have 2 commendations and 4 blackMarks to win")]
     [Range(0, 10)] public int minWinLoss = 3;
+    [Tooltip("Minimum number of votes at a Review for or against that are required (must be a majority) to gain a black mark or commendation")]
+    [Range(0, 5)] public int reviewMinVotes = 4;
+    [Tooltip("Number of Commendations or Black Stars required to win, or lose, the campaign")]
+    [Range(5, 20)] public int outcomesWinLose = 10;
 
 
 
@@ -336,14 +340,14 @@ public class CampaignManager : MonoBehaviour
     { return investigationBlackMarks; }
 
     /// <summary>
-    /// used for Save/Load data
+    /// used for Save/Load data. NOTE: Use ChangeBlackMarks
     /// </summary>
     /// <param name="value"></param>
     public void SetBlackMarks(int value)
     { blackMarks = value; }
 
     /// <summary>
-    /// used for Save/Load data
+    /// used for Save/Load data. NOTE: Use ChangeCommendations
     /// </summary>
     /// <param name="value"></param>
     public void SetCommendations(int value)

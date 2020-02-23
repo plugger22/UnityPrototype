@@ -1,6 +1,8 @@
 ﻿using gameAPI;
 using modalAPI;
+using packageAPI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +47,8 @@ public class ModalReviewUI : MonoBehaviour
 
     private GenericHelpTooltipUI tooltipHelpOpen;
     private GenericHelpTooltipUI tooltipHelpClose;
+    private GenericHelpTooltipUI tooltipOutcomeLeft;
+    private GenericHelpTooltipUI tooltipOutcomeRight;
 
     private static ModalReviewUI modalReviewUI;
     private ButtonInteraction buttonInteractionReview;
@@ -53,6 +57,11 @@ public class ModalReviewUI : MonoBehaviour
     private int votesFor;
     private int votesAgainst;
     private float reviewWaitTimerDefault;
+
+    private bool isOutcome;                                     //true if an outcome achieved, eg. Black mark or commendation, false if inconclusive
+
+    //fast Access
+    private int votesMinimum = -1;
 
 
     /// <summary>
@@ -87,8 +96,12 @@ public class ModalReviewUI : MonoBehaviour
         //help tooltips
         tooltipHelpOpen = buttonHelpOpen.GetComponent<GenericHelpTooltipUI>();
         tooltipHelpClose = buttonHelpClose.GetComponent<GenericHelpTooltipUI>();
+        tooltipOutcomeLeft = outcomeLeft.GetComponent<GenericHelpTooltipUI>();
+        tooltipOutcomeRight = outcomeRight.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(tooltipHelpOpen != null, "Invalid tooltipHelpOpen (Null)");
         Debug.Assert(tooltipHelpClose != null, "Invalid tooltipHelpClose (Null)");
+        Debug.Assert(tooltipOutcomeLeft != null, "Invalid tooltipOutcomeLeft (Null)");
+        Debug.Assert(tooltipOutcomeRight != null, "Invalid tooltipOutcomeRight (Null)");
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfOptions.Length;
         arrayOfInteractions = new ReviewInteraction[numOfOptions];
@@ -120,8 +133,12 @@ public class ModalReviewUI : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
+        //fast access
+        votesMinimum = GameManager.instance.campaignScript.reviewMinVotes;
+        Debug.Assert(votesMinimum > -1, "Invalid votesMinimum (-1)");
         //register listener
         EventManager.instance.AddListener(EventType.ReviewOpenUI, OnEvent, "ReviewInventoryUI");
         EventManager.instance.AddListener(EventType.ReviewStart, OnEvent, "ReviewInventoryUI");
@@ -155,7 +172,16 @@ public class ModalReviewUI : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Initialises all UI generic tooltip elements
+    /// </summary>
+    private void InitialiseHelp()
+    {
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("review_0", "review_1", "review_2");
+        tooltipHelpOpen.SetHelpTooltip(listOfHelp, 150, 200);
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("review_3", "review_4", "review_5");
+        tooltipHelpClose.SetHelpTooltip(listOfHelp, 150, 200);
+    }
 
     /// <summary>
     /// Open Review UI
@@ -163,6 +189,7 @@ public class ModalReviewUI : MonoBehaviour
     private void SetReviewUI(ReviewInputData details)
     {
         bool errorFlag = false;
+        isOutcome = false;
         //reset timer (may have changed previously if player skipped review)
         reviewWaitTime = reviewWaitTimerDefault;
         Debug.LogFormat("[UI] ModalReviewUI.cs -> OpenReviewUI{0}", "\n");
@@ -181,6 +208,8 @@ public class ModalReviewUI : MonoBehaviour
         //outcome symbols
         outcomeLeft.gameObject.SetActive(false);
         outcomeRight.gameObject.SetActive(false);
+        //tooltips
+        InitialiseHelp();
         //set up modal panel & buttons to be side appropriate
         switch (playerSide.level)
         {
@@ -384,8 +413,8 @@ public class ModalReviewUI : MonoBehaviour
         yield return new WaitForSeconds(reviewWaitTime);
         string outcomeText = "Unknown";
         string outcomeSymbol = "?";
-        //outcome text and symbols
-        if (votesAgainst >= 3)
+        //outcome text and symbols -> must have a majority and have a minimum number of votes to get a campaign outcome
+        if (votesAgainst > votesFor && votesAgainst >= votesMinimum)
         {
             outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("BLACK MARK", ColourType.badText));
             outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.blackMarkChar.ToString(), ColourType.dataTerrible));
@@ -394,8 +423,9 @@ public class ModalReviewUI : MonoBehaviour
             outcomeLeft.text = outcomeSymbol;
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeBlackMarks(1, "Peer Review");
+            isOutcome = true;
         }
-        else if (votesFor >= 3)
+        else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
             outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("COMMENDATION", ColourType.goodText));
             outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.commendationChar.ToString(), ColourType.dataGood));
@@ -404,10 +434,18 @@ public class ModalReviewUI : MonoBehaviour
             outcomeLeft.text = outcomeSymbol;
             outcomeRight.text = outcomeSymbol;
             GameManager.instance.campaignScript.ChangeCommendations(1, "Peer Review");
+            isOutcome = true;
         }
         else { outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText)); }
         textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
         textBottom.text = "Press ESC or EXIT once done";
+        //initialise outcome tooltips (if any)
+        if (isOutcome == true)
+        {
+            List<HelpData> listOfHelp = GameManager.instance.actorScript.GetOutcomeTooltip();
+            tooltipOutcomeLeft.SetHelpTooltip(listOfHelp, 150, 50);
+            tooltipOutcomeRight.SetHelpTooltip(listOfHelp, 150, 50);
+        }
         //hand back control
         buttonHelpClose.gameObject.SetActive(true);
         GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Close;

@@ -8508,5 +8508,20 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfRelations (Null)"); }
     }
 
+    /// <summary>
+    /// Sends a list of colour formatted help for the current campaign outcome, eg. BlackMarks and Commendations. Used by ModalReviewUI.cs. Done here due to access to colour tags
+    /// </summary>
+    /// <returns></returns>
+    public List<HelpData> GetOutcomeTooltip()
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+        HelpData helpData = new HelpData();
+        helpData.header = string.Format("{0}Campaign Status{1}", colourAlert, colourEnd);
+        helpData.text = string.Format("You currently have {0}{1}{2} Commendations and {3}{4}{5} Black Marks", colourAlert, GameManager.instance.campaignScript.GetCommendations(), colourEnd,
+            colourAlert, GameManager.instance.campaignScript.GetBlackMarks(), colourEnd);
+        listOfHelp.Add(helpData);
+        return listOfHelp;
+    }
+
     //new methods above here
 }

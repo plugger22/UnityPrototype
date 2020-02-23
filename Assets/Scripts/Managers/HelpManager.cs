@@ -209,7 +209,56 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Review UI
+        //
+        // - - - Review UI
+        //
+        //Open
+        data = new HelpData();
+        data.tag = "review_0";
+        data.header = "Overview";
+        data.text = string.Format("At regular intervals your {0}performance will be assessed{1} by your peers. You may, as a result, gain a {2}Commendation{3} or a {4}Black Mark{5}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Votes
+        data = new HelpData();
+        data.tag = "review_1";
+        data.header = "Votes";
+        data.text = string.Format("Your Subordinates each gets a {0}single vote{1} as does all members of HQ with the exception of the {2}Head of HQ{3} who gets {4}two{5}. ",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Director
+        data = new HelpData();
+        data.tag = "review_2";
+        data.header = "Head of HQ";
+        data.text = string.Format("Your Head of HQ votes once for his {0}personal opinion{1} of you (Motivation) and once for his view of the {2}decisions you have taken{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Close
+        data = new HelpData();
+        data.tag = "review_3";
+        data.header = "Outcome";
+        data.text = string.Format("If there is a {0}majority of votes{1} FOR (Green Tick) or AGAINST (Red Cross) and there is enough to meet the {2}minimum requirement{3} ({4} votes) you gain a Commendation or a Black Star", 
+            colourAlert, colourEnd, colourAlert, colourEnd, GameManager.instance.campaignScript.reviewMinVotes);
+        listOfHelp.Add(data);
+        //Commendations
+        data = new HelpData();
+        data.tag = "review_4";
+        data.header = "Commendations";
+        data.text = string.Format("You have done good things and your efforts have been {0}rewarded{1}. Gain {2} Commendations and you will {3}Win the Campaign{4}", 
+            colourAlert, colourEnd, GameManager.instance.campaignScript.outcomesWinLose, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Black Marks
+        data = new HelpData();
+        data.tag = "review_5";
+        data.header = "Black Marks";
+        data.text = string.Format("Your performance is {0}below an acceptable standard{1} and it has been noted on your record. Gain {2} Black Marks and you will {3}Lose the Campaign{4}",
+            colourAlert, colourEnd, GameManager.instance.campaignScript.outcomesWinLose, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
+
+        #endregion
+
 
         #region ...Topics
 
