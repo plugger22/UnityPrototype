@@ -444,7 +444,7 @@ public class ModalReviewUI : MonoBehaviour
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
             outcomeRight.text = outcomeSymbol;
-            GameManager.instance.campaignScript.ChangeBlackMarks(1, "Peer Review");
+            GameManager.instance.campaignScript.ChangeBlackmarks(1, "Peer Review");
             isOutcome = true;
             //admin
             GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewBlackmarks);

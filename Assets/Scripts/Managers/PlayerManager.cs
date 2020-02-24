@@ -193,8 +193,11 @@ public class PlayerManager : MonoBehaviour
                 GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
             }
             value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+
             Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Innocence changed from {0} to {1}{2}", _innocence, value, "\n");
             _innocence = value;
+            //update topBar
+            GameManager.instance.topBarScript.UpdateInnocence(_innocence);
         }
     }
 
@@ -1430,6 +1433,8 @@ public class PlayerManager : MonoBehaviour
                 listOfInvestigations.Add(invest);
                 Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref \"{3}\"{4}", invest.tag, invest.lead, invest.evidence,
                     invest.reference, "\n");
+                //update topBar
+                GameManager.instance.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
                 return true;
             }
             else { Debug.LogWarning("ListOfInvestigations is Full (Maxxed out). Record not added"); }
@@ -1452,6 +1457,8 @@ public class PlayerManager : MonoBehaviour
             {
                 Debug.LogFormat("[Inv] PlayerManager.cs -> RemoveInvestigation: Investigation \"{0}\", removed{1}", reference, "\n");
                 listOfInvestigations.RemoveAt(index);
+                //update topBar
+                GameManager.instance.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
                 return true;
             }
             else { Debug.LogWarningFormat("Investigation reference \"{0}\" not found in listOfInvestigations", reference); }
@@ -1573,9 +1580,9 @@ public class PlayerManager : MonoBehaviour
                                     }
                                     GameManager.instance.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     //black marks
-                                    GameManager.instance.campaignScript.ChangeBlackMarks(GameManager.instance.campaignScript.GetInvestigationBlackMarks(), string.Format("{0} Investigation", invest.tag));
+                                    GameManager.instance.campaignScript.ChangeBlackmarks(GameManager.instance.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
                                     //increase cost in blackMarks for future investigations
-                                    GameManager.instance.campaignScript.IncrementInvestigationBlackMarks();
+                                    GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
@@ -1690,7 +1697,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// returns true if there is at least one current investigation in the normal phase (resolution timer hasn't commenced, eg. status.Ongoing) and orgHQ hasn't yet intervened (isOrgNormal false)
     /// </summary>
-    public bool CheckIInvestigationNormal()
+    public bool CheckInvestigationNormal()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1717,7 +1724,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// returns true if there is at least one current investigation in the resolution phase (eg. status Resolution), with an imminent GUILTY verdict, where orgHQ hasn't yet intervented (isOrgTimer false)
     /// </summary>
-    public bool CheckIfInvestigationTimer()
+    public bool CheckInvestigationTimer()
     {
         //any active investigations
         int count = listOfInvestigations.Count;
@@ -1828,6 +1835,33 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogWarningFormat("Investigation not found in listOfInvestigations (invest.reference \"{0}\")", investigationReference); }
         return "Offer has been made";
     }
+
+    /*/// <summary>
+    /// returns colour formatted tooltip for current investigations (if any) in format 'Investigation.tag' newline 'Evidence + GetStars()' for each, or, if none, "No current investigations"
+    /// </summary>
+    /// <returns></returns>
+    public string GetInvestigationTooltip()
+    {
+        string text = "No current Investigations";
+
+        if (listOfInvestigations.Count > 0)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < listOfInvestigations.Count; i++)
+            {
+                Investigation investigation = listOfInvestigations[i];
+                if (investigation != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    builder.AppendFormat("{0}{1}", investigation.tag, "\n");
+                    builder.AppendFormat("Evidence  {0}", GameManager.instance.guiScript.GetStars(investigation.evidence));
+                }
+                else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[i]", i); }
+            }
+            text = builder.ToString();
+        }
+        return text;
+    }*/
 
 
     //

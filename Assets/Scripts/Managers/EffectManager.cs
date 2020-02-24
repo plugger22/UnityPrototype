@@ -1143,12 +1143,12 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "InvestigationNormal":
                                                 //Player has a current, normal, ongoing investigation that hasn't had intervention by orgHQ
-                                                if (GameManager.instance.playerScript.CheckIInvestigationNormal() == false)
+                                                if (GameManager.instance.playerScript.CheckInvestigationNormal() == false)
                                                 { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
                                                 break;
                                             case "InvestigationTimer":
                                                 //Player has a current, resolution phase, guilty verdict imminent, investigation that hasn't had intervention by orgHQ
-                                                if (GameManager.instance.playerScript.CheckIfInvestigationTimer() == false)
+                                                if (GameManager.instance.playerScript.CheckInvestigationTimer() == false)
                                                 { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
                                                 break;
                                             case "PlayerCapturedNo":

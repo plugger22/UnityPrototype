@@ -60,3 +60,271 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 8639 -> Monday, 24 February 2020 12:37 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 30824 -> Monday, 24 February 2020 2:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26652 -> Monday, 24 February 2020 2:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36491 -> Monday, 24 February 2020 3:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42166 -> Monday, 24 February 2020 3:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24973 -> Monday, 24 February 2020 3:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37943 -> Monday, 24 February 2020 3:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23505 -> Monday, 24 February 2020 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27826 -> Monday, 24 February 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65336 -> Monday, 24 February 2020 3:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22836 -> Monday, 24 February 2020 3:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51538 -> Monday, 24 February 2020 3:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64486 -> Monday, 24 February 2020 3:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23758 -> Monday, 24 February 2020 3:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5469 -> Monday, 24 February 2020 3:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63171 -> Monday, 24 February 2020 3:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18261 -> Monday, 24 February 2020 3:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42376 -> Monday, 24 February 2020 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12782 -> Monday, 24 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13409 -> Monday, 24 February 2020 3:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18808 -> Monday, 24 February 2020 3:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4423 -> Monday, 24 February 2020 3:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5378 -> Monday, 24 February 2020 3:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13193 -> Monday, 24 February 2020 3:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9636 -> Monday, 24 February 2020 3:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9008 -> Monday, 24 February 2020 3:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49327 -> Monday, 24 February 2020 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36291 -> Monday, 24 February 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39192 -> Monday, 24 February 2020 3:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1349 -> Monday, 24 February 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44818 -> Monday, 24 February 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19478 -> Monday, 24 February 2020 3:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12202 -> Monday, 24 February 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50971 -> Monday, 24 February 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59869 -> Monday, 24 February 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29540 -> Monday, 24 February 2020 4:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23740 -> Monday, 24 February 2020 4:30 PM
+WARNING Not found, tag "review_4", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7576)
+	HelpManager:GetHelpText(String) (at Assets/Scripts/Managers/HelpManager.cs:125)
+	TopBarUI:InitialiseTooltips() (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:148)
+	TopBarUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:109)
+	TopBarUI:Initialise(GameState) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:53)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:768)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:822)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag "review_4"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpText(String) (at Assets/Scripts/Managers/HelpManager.cs:128)
+	TopBarUI:InitialiseTooltips() (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:148)
+	TopBarUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:109)
+	TopBarUI:Initialise(GameState) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:53)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:768)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:822)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 12952 -> Monday, 24 February 2020 4:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40311 -> Monday, 24 February 2020 4:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16745 -> Monday, 24 February 2020 4:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 698 -> Monday, 24 February 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22996 -> Monday, 24 February 2020 5:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20528 -> Monday, 24 February 2020 5:14 PM
+City seed 5678 -> London, United Kingdom
+WARNING SetDatapoint change Datapoint1 has same value as already present for Lex Black, Psychologist, ID 59, hqID 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:SetDatapoint(ActorDatapoint, Int32, String) (at Assets/Scripts/Base Classes/Actor.cs:368)
+	EffectManager:ProcessActorMotivation(Actor, Int32, String, String, String, Boolean) (at Assets/Scripts/Managers/EffectManager.cs:4975)
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4877)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4107)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3958)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3130)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid option.moodEffect (Null) for option ActGea1Opt0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4703)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2887)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6040)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2897)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid option.moodEffect (Null) for option ActGea1Opt1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4703)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2887)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6040)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2897)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid option.moodEffect (Null) for option ActGea1Opt2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4703)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2887)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6040)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2897)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "ActGea1Opt0", topic ActGeaRES1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4919)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2917)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "ActGea1Opt1", topic ActGeaRES1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4919)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2917)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "ActGea1Opt2", topic ActGeaRES1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:4919)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2917)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2723)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 14360 -> Monday, 24 February 2020 5:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27530 -> Monday, 24 February 2020 5:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29379 -> Monday, 24 February 2020 5:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20742 -> Monday, 24 February 2020 5:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42584 -> Monday, 24 February 2020 5:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55895 -> Monday, 24 February 2020 5:51 PM
+City seed 5678 -> London, United Kingdom

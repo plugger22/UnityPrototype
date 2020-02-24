@@ -112,6 +112,24 @@ public class HelpManager : MonoBehaviour
         return listOfHelp;
     }
 
+    /*/// <summary>
+    /// Returns a colour formatted string from a specific help tag. Returns null if a problem
+    /// NOTE: For use with Generic Tooltips.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    public string GetHelpText(string tag)
+    {
+        if (string.IsNullOrEmpty(tag) == false)
+        {
+            HelpData help = GameManager.instance.dataScript.GetHelpData(tag);
+            if (help != null)
+            { return help.text; }
+            else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag \"{0}\"", tag); }
+        }
+        return null;
+    }*/
+
     /// <summary>
     /// Get help data generic (overloaded for a list input, only the first four entries are taken into account)
     /// </summary>

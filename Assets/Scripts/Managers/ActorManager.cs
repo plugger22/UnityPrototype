@@ -8518,7 +8518,7 @@ public class ActorManager : MonoBehaviour
     {
         List<HelpData> listOfHelp = new List<HelpData>();
         int commendations = GameManager.instance.campaignScript.GetCommendations();
-        int blackMarks = GameManager.instance.campaignScript.GetBlackMarks();
+        int blackMarks = GameManager.instance.campaignScript.GetBlackmarks();
         HelpData helpData = new HelpData();
         helpData.header = string.Format("{0}Campaign Status{1}", colourAlert, colourEnd);
         helpData.text = string.Format("You now have {0}{1}{2} Commendation{3} and {4}{5}{6} Black Mark{7}", colourAlert, commendations, colourEnd, commendations != 1 ? "s" : "",
