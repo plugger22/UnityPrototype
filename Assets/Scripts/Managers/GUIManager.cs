@@ -128,6 +128,8 @@ public class GUIManager : MonoBehaviour
     public Color colourTopicCapture;
     [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
     public Color colourMainBackground;
+    [Tooltip("Top Bar background")]
+    public Color colourTopBarBackground;
 
     //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
     [HideInInspector] public char starChar = '\uf005';
@@ -146,7 +148,9 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char neutralChar = '\uf056';
     [HideInInspector] public char negativeChar = '\uf057';
     [HideInInspector] public char commendationChar = '\uf559';
-    [HideInInspector] public char blackMarkChar = '\uf714';
+    [HideInInspector] public char blackmarkChar = '\uf714';
+    [HideInInspector] public char investigateChar = '\uf002';
+    [HideInInspector] public char innocenceChar = '\uf515';
     /*[HideInInspector] public char circleChar = '\uf111';*/
 
 

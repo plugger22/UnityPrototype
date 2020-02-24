@@ -4717,6 +4717,7 @@ MonoBehaviour:
   colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  colourTopBarBackground: {r: 0.24528301, g: 0.244126, b: 0.244126, a: 0}
   starChar: 61445
   airportChar: 61554
   harbourChar: 61757
@@ -4813,6 +4814,7 @@ MonoBehaviour:
   modalGUIScript: {fileID: 0}
   alertScript: {fileID: 0}
   widgetTopScript: {fileID: 0}
+  topBarScript: {fileID: 0}
   cityInfoScript: {fileID: 0}
   mainInfoScript: {fileID: 0}
   aiDisplayScript: {fileID: 0}

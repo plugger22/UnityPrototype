@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalGUI modalGUIScript;                   //Modal GUI 
     [HideInInspector] public AlertUI alertScript;                       //Alert UI text display
     [HideInInspector] public WidgetTopUI widgetTopScript;               //Widget Top UI
+    [HideInInspector] public TopBarUI topBarScript;                         //Top Bar UI
     [HideInInspector] public CityInfoUI cityInfoScript;                 //City Info UI
     [HideInInspector] public MainInfoUI mainInfoScript;                 //Main Info UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;               //AI Display UI
@@ -237,6 +238,7 @@ public class GameManager : MonoBehaviour
         /*diceScript = ModalDiceUI.Instance();*/
         modalGUIScript = ModalGUI.Instance();
         widgetTopScript = WidgetTopUI.Instance();
+        topBarScript = TopBarUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
         mainInfoScript = MainInfoUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
@@ -312,6 +314,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(inventoryScript != null, "Invalid inventoryScript (Null)");
         Debug.Assert(modalGUIScript != null, "Invalid modalGUIScript (Null)");
         Debug.Assert(widgetTopScript != null, "Invalid widgetTopScript (Null)");
+        Debug.Assert(topBarScript != null, "Invalid topBarScript (Null)");
         Debug.Assert(cityInfoScript != null, "Invalid cityInfoScript (Null)");
         Debug.Assert(mainInfoScript != null, "Invalid mainInfoScript (Null)");
         Debug.Assert(aiDisplayScript != null, "Invalid aiDisplayScript (Null)");
@@ -521,6 +524,10 @@ public class GameManager : MonoBehaviour
         //Widget Top UI -> after SideManager.cs (sequence issues) 
         startMethod.handler = widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
+        listOfLevelMethods.Add(startMethod);
+        //Top Bar UI
+        startMethod.handler = topBarScript.Initialise;
+        startMethod.className = "TopBarUI";
         listOfLevelMethods.Add(startMethod);
         //Objective Manager
         startMethod.handler = objectiveScript.Initialise;

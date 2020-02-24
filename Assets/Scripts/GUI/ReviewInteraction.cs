@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles interaction for prefab ReviewOption
+/// </summary>
 public class ReviewInteraction : MonoBehaviour, IPointerClickHandler
 {
 
@@ -12,6 +15,7 @@ public class ReviewInteraction : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textResult;
     public GenericTooltipUI tooltipSprite;                        //EDIT -> tooltip component attached to gameobject rather than sprite as can't get mouseover and click detection from sprite without code change
+    public GenericTooltipUI tooltipTitle;
     public GenericTooltipUI tooltipResult;
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
 

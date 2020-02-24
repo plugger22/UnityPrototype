@@ -43,7 +43,8 @@ public class ModalReviewUI : MonoBehaviour
 
     private ReviewInteraction[] arrayOfInteractions;            //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
-    private GenericTooltipUI[] arrayOfTooltipsResults;            //used for fast access to tooltip components for Stars (bottomText)
+    private GenericTooltipUI[] arrayOfTooltipsTitles;           //used for fast access to tooltip components (titles)
+    private GenericTooltipUI[] arrayOfTooltipsResults;          //used for fast access to tooltip components for Stars (bottomText)
 
     private GenericHelpTooltipUI tooltipHelpOpen;
     private GenericHelpTooltipUI tooltipHelpClose;
@@ -107,6 +108,7 @@ public class ModalReviewUI : MonoBehaviour
         int numOfOptions = arrayOfOptions.Length;
         arrayOfInteractions = new ReviewInteraction[numOfOptions];
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsTitles = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsResults = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
@@ -121,16 +123,21 @@ public class ModalReviewUI : MonoBehaviour
                     GenericTooltipUI tooltipSprite = interaction.tooltipSprite.GetComponent<GenericTooltipUI>();
                     if (tooltipSprite != null)
                     { arrayOfTooltipsSprites[i] = tooltipSprite; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfReviewOptions[{0}] (Null)", i)); }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for arrayOfReviewOptions[{0}] (Null)", i); }
+                    //tooltip -> title
+                    GenericTooltipUI tooltipTitle = interaction.tooltipTitle.GetComponent<GenericTooltipUI>();
+                    if (tooltipTitle != null)
+                    { arrayOfTooltipsTitles[i] = tooltipTitle; }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for arrayOTooltipsTitle[{0}] (Null)", i); }
                     //tooltip -> result 
                     GenericTooltipUI tooltipResult = interaction.tooltipResult.GetComponent<GenericTooltipUI>();
                     if (tooltipResult != null)
                     { arrayOfTooltipsResults[i] = tooltipResult; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipResult \"{0}\" (Null)", i)); }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for interaction.tooltipResult \"{0}\" (Null)", i); }
                 }
-                else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
+                else { Debug.LogErrorFormat("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i); }
             }
-            else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
+            else { Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i); }
         }
     }
 
@@ -269,15 +276,23 @@ public class ModalReviewUI : MonoBehaviour
                             //result
                             arrayOfInteractions[i].textResult.gameObject.SetActive(false);
                             arrayOfInteractions[i].textResult.text = details.arrayOfOptions[i].textLower;
-                            //tooltip data -> sprites
+                            //tooltip data -> sprites & titles (identical)
                             if (arrayOfTooltipsSprites[i] != null)
                             {
                                 if (details.arrayOfTooltipsSprite[i] != null)
                                 {
+                                    //sprites
                                     arrayOfTooltipsSprites[i].tooltipHeader = details.arrayOfTooltipsSprite[i].textHeader;
                                     arrayOfTooltipsSprites[i].tooltipMain = details.arrayOfTooltipsSprite[i].textMain;
                                     arrayOfTooltipsSprites[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
                                     arrayOfTooltipsSprites[i].x_offset = 55;
+                                    arrayOfTooltipsSprites[i].y_offset = -10;
+                                    //titles
+                                    arrayOfTooltipsTitles[i].tooltipHeader = details.arrayOfTooltipsSprite[i].textHeader;
+                                    arrayOfTooltipsTitles[i].tooltipMain = details.arrayOfTooltipsSprite[i].textMain;
+                                    arrayOfTooltipsTitles[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
+                                    arrayOfTooltipsTitles[i].x_offset = 55;
+                                    arrayOfTooltipsTitles[i].y_offset = 50;
                                 }
                                 else { Debug.LogWarningFormat("Invalid tooltipDetailsSprite (Null) for arrayOfOptions[{0}]", i); }
                             }
@@ -424,7 +439,7 @@ public class ModalReviewUI : MonoBehaviour
         if (votesAgainst > votesFor && votesAgainst >= votesMinimum)
         {
             outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("BLACK MARK", ColourType.badText));
-            outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.blackMarkChar.ToString(), ColourType.dataTerrible));
+            outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;

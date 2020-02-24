@@ -82,7 +82,8 @@ public class WidgetTurnMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 tooltipHeader = GameManager.instance.turnScript.GetTurnTooltip();
-                tooltipMain = GameManager.instance.turnScript.GetTurnInfoTip();
+                tooltipMain = GameManager.instance.turnScript.GetTurnRemainingTip();
+                tooltipDetails = GameManager.instance.turnScript.GetTurnInfoTip();
                 GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;

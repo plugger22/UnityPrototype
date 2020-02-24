@@ -729,14 +729,24 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetTurnTooltip()
-    { return string.Format("Turn {0}{1}{2}", colourNeutral, _turn, colourEnd); }
+    { return string.Format("Day {0}{1}{2}", colourNeutral, _turn, colourEnd); }
+
+    /// <summary>
+    /// returns a colour string in format "You have 38 turns remaining to complete you mission
+    /// </summary>
+    /// <returns></returns>
+    public string GetTurnRemainingTip()
+    {
+        int turnsRemaining = GameManager.instance.campaignScript.scenario.timer - Turn;
+        return string.Format("You have {0}{1}{2} day{3} remaining to complete your mission", colourAlert, turnsRemaining, colourEnd, turnsRemaining != 1 ? "s" : "");
+    }
 
     /// <summary>
     /// returns a colour string for the turn tooltip details info tip
     /// </summary>
     /// <returns></returns>
     public string GetTurnInfoTip()
-    { return string.Format("{0}Press Enter for a New Turn{1}", colourAlert, colourEnd); }
+    { return string.Format("Press {0}ENTER{1} for a new Day when ready", colourAlert, colourEnd); }
 
     /// <summary>
     /// returns a colour formatted string detailing info on any Security Measures
