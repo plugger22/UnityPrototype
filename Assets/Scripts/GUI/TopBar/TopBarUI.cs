@@ -36,8 +36,8 @@ public class TopBarUI : MonoBehaviour
     private GenericTooltipUI tipDoom;
 
     //colours
-    private Color colourIconData;
-    private Color colourIconStatus;
+    private Color colourIconDormant;
+    private Color colourIconActive;
     private Color colourNumber;
 
     //assorted
@@ -118,8 +118,8 @@ public class TopBarUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        colourIconData = GameManager.instance.guiScript.colourIconData;
-        colourIconStatus = GameManager.instance.guiScript.colourIconStatus;
+        colourIconDormant = GameManager.instance.guiScript.colourIconData;
+        colourIconActive = GameManager.instance.guiScript.colourIconStatus;
         colourNumber = Color.white;
         //tooltips
         tipCommendation = commendations.tooltip.GetComponent<GenericTooltipUI>();
@@ -143,24 +143,22 @@ public class TopBarUI : MonoBehaviour
         topBarMainPanel.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarLeft.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarRight.color = new Color(color.r, color.g, color.b, 0.65f);
-        //Set icon colours -> Data
-        color = colourIconData;
+        //Set icon colours -> Dormant
+        color = colourIconDormant;
         commendations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
         blackmarks.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
         investigations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
         innocence.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
-        //Set icon colours -> Status
-        color = colourIconStatus;
-        unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
-        conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
-        blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
-        doom.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
+        unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
+        conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
+        blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
+        doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
         //Set number colour (white) and opacity -> Status
         color = colourNumber;
-        unhappy.textData.color = new Color(color.r, color.g, color.b, opacityLow);
-        conflicts.textData.color = new Color(color.r, color.g, color.b, opacityLow);
-        blackmail.textData.color = new Color(color.r, color.g, color.b, opacityLow);
-        doom.textData.color = new Color(color.r, color.g, color.b, opacityLow);
+        unhappy.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
+        conflicts.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
+        blackmail.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
+        doom.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         //icon symbols
         commendations.textIcon.text = GameManager.instance.guiScript.commendationChar.ToString();
         blackmarks.textIcon.text = GameManager.instance.guiScript.blackmarkChar.ToString();
@@ -221,19 +219,19 @@ public class TopBarUI : MonoBehaviour
         unhappy.textData.text = value.ToString();
         if (value > 0)
         {
-            //full opacity
-            Color color = colourIconStatus;
+            //active
+            Color color = colourIconActive;
             unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
             unhappy.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         else
         {
-            //low opacity
-            Color color = colourIconStatus;
-            unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
+            //Dormant
+            Color color = colourIconDormant;
+            unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
-            unhappy.textData.color = new Color(color.r, color.g, color.b, opacityLow);
+            unhappy.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         //tooltip
         UpdateUnhappyTooltip(value);
@@ -249,19 +247,19 @@ public class TopBarUI : MonoBehaviour
         conflicts.textData.text = value.ToString();
         if (value > 0)
         {
-            //full opacity
-            Color color = colourIconStatus;
+            //Active
+            Color color = colourIconActive;
             conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
             conflicts.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         else
         {
-            //low opacity
-            Color color = colourIconStatus;
-            conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
+            //Dormant
+            Color color = colourIconDormant;
+            conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
-            conflicts.textData.color = new Color(color.r, color.g, color.b, opacityLow);
+            conflicts.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         //tooltip
         UpdateConflictTooltip(value);
@@ -277,19 +275,19 @@ public class TopBarUI : MonoBehaviour
         blackmail.textData.text = value.ToString();
         if (value > 0)
         {
-            //full opacity
-            Color color = colourIconStatus;
+            //Active
+            Color color = colourIconActive;
             blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
             blackmail.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         else
         {
-            //low opacity
-            Color color = colourIconStatus;
-            blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
+            //Dormant
+            Color color = colourIconDormant;
+            blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
-            blackmail.textData.color = new Color(color.r, color.g, color.b, opacityLow);
+            blackmail.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         //tooltip
         UpdateBlackmailTooltip(value);
@@ -305,19 +303,19 @@ public class TopBarUI : MonoBehaviour
         doom.textData.text = value.ToString();
         if (value > 0)
         {
-            //full opacity
-            Color color = colourIconStatus;
+            //Active
+            Color color = colourIconActive;
             doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
             doom.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         else
         {
-            //low opacity
-            Color color = colourIconStatus;
-            doom.textIcon.color = new Color(color.r, color.g, color.b, opacityLow);
+            //Dormant
+            Color color = colourIconActive;
+            doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
-            doom.textData.color = new Color(color.r, color.g, color.b, opacityLow);
+            doom.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         }
         UpdateDoomTooltip(value);
     }

@@ -11095,12 +11095,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 287
+      value: 321
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -11135,12 +11135,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -26562,12 +26562,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 17
+      value: 69
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -26602,12 +26602,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1334407065490596, guid: 5bfab8d15813d264ab056058cd640813, type: 2}
       propertyPath: m_Name
@@ -37938,11 +37938,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 5
-    m_Right: 0
+    m_Left: 0
+    m_Right: 29
     m_Top: 0
     m_Bottom: 2
-  m_ChildAlignment: 3
+  m_ChildAlignment: 5
   m_Spacing: 15
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
@@ -52198,12 +52198,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 197
+      value: 237
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -52238,12 +52238,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -52469,12 +52469,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 107
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -11
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
@@ -52509,12 +52509,12 @@ Prefab:
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224277661644303238, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}

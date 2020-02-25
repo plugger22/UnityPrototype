@@ -7609,8 +7609,11 @@ public class ActorManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
                     if (actor != null)
                     {
-                        if (builder.Length > 0) { builder.AppendLine(); }
-                        builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
+                        if (actor.unhappyTimer == 0)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
+                        }
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}], actor ID {1}", i, listOfActors[i]); }
                 }
