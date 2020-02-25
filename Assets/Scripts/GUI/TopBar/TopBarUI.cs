@@ -19,7 +19,7 @@ public class TopBarUI : MonoBehaviour
     public TopBarDataInteraction conflicts;                     //number of active relationship conflicts
     public TopBarDataInteraction blackmail;                     //number of blackmail attempts
     public TopBarDataInteraction doom;                          //number of turns remaining for doom timer
-    
+
 
     public Image topBarMainPanel;
     public Image topBarLeft;                                    //cutaways on main panel corners
@@ -264,6 +264,8 @@ public class TopBarUI : MonoBehaviour
             color = colourNumber;
             conflicts.textData.color = new Color(color.r, color.g, color.b, opacityLow);
         }
+        //tooltip
+        UpdateConflictTooltip(value);
     }
 
     /// <summary>
@@ -289,6 +291,8 @@ public class TopBarUI : MonoBehaviour
             color = colourNumber;
             blackmail.textData.color = new Color(color.r, color.g, color.b, opacityLow);
         }
+        //tooltip
+        UpdateBlackmailTooltip(value);
     }
 
     /// <summary>
@@ -314,6 +318,7 @@ public class TopBarUI : MonoBehaviour
             color = colourNumber;
             doom.textData.color = new Color(color.r, color.g, color.b, opacityLow);
         }
+        UpdateDoomTooltip(value);
     }
 
 
@@ -349,7 +354,7 @@ public class TopBarUI : MonoBehaviour
         tipInvestigation.tooltipDetails = string.Format("If the investigation reaches a resolution with a {0} you are fired immediately{1}{2}{3}You also gain {4}",
             GameManager.instance.colourScript.GetFormattedString("Guilty Verdict", ColourType.salmonText),
             "\n", GameManager.instance.colourScript.GetFormattedString("LEVEL OVER", ColourType.badText), "\n",
-            GameManager.instance.colourScript.GetFormattedString("Blackmarks" , ColourType.neutralText));
+            GameManager.instance.colourScript.GetFormattedString("Blackmarks", ColourType.neutralText));
         tipInvestigation.x_offset = 5;
         tipInvestigation.y_offset = 60;
         //innocence
@@ -393,10 +398,58 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-
+            tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinate{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
+                value != 1 ? "s" : "");
         }
         else
         { tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText)); }
     }
 
+    /// <summary>
+    /// dynamically updates relationship Conflicts tooltip (exluding header and offsets)
+    /// </summary>
+    /// <param name="value"></param>
+    private void UpdateConflictTooltip(int value)
+    {
+        if (value > 0)
+        {
+            tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflict{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
+                value != 1 ? "s" : "");
+        }
+        else
+        { tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText)); }
+    }
+
+    /// <summary>
+    /// dynamically updates Blackmail tooltip (exluding header and offsets)
+    /// </summary>
+    /// <param name="value"></param>
+    private void UpdateBlackmailTooltip(int value)
+    {
+        if (value > 0)
+        {
+            tipBlackmail.tooltipMain = string.Format("There are currently {0} subordinate{1} Blackmailing you", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
+                value != 1 ? "s" : "" );
+        }
+        else
+        { tipBlackmail.tooltipMain = string.Format("{0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("Nobody", ColourType.neutralText)); }
+    }
+
+    /// <summary>
+    /// dynamically updates Doom timer tooltip (exluding header and offsets)
+    /// </summary>
+    /// <param name="value"></param>
+    private void UpdateDoomTooltip(int value)
+    {
+        if (value > 0)
+        {
+            tipDoom.tooltipMain = string.Format("A fatal drug courses through your veins. You have {0} day{1} to find a cure", 
+                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "");
+        }
+        else
+        { tipDoom.tooltipMain = string.Format("Luckily you have {0} been injected with a fatal drug", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText)); }
+    }
+
+
+    //place new methods above here
 }
