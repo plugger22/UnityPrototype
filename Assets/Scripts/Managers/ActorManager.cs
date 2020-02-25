@@ -192,6 +192,7 @@ public class ActorManager : MonoBehaviour
     private string actorRemoveActionDoubled;
     private string actorRemoveActionHalved;
     private string actorKeepGear;
+    private string actorUnhappyNone;
     //generic picker
     private int maxGenericOptions = -1;
     //gear
@@ -357,6 +358,7 @@ public class ActorManager : MonoBehaviour
         actorReserveActionDoubled = "ActorReserveActionDoubled";
         actorRemoveActionDoubled = "ActorRemoveActionDoubled";
         actorRemoveActionHalved = "ActorRemoveActionHalved";
+        actorUnhappyNone = "ActorUnhappyNone";
     }
     #endregion
 
@@ -3158,14 +3160,14 @@ public class ActorManager : MonoBehaviour
             //
             // - - - Fire (Dismiss) - - -
             //
+            //allow for secrets and threats
+            ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
+            renownCost = manageRenownCost.renownCost;
             //only show button if player has enough renown to cover the cost of firing
             if (playerRenown >= renownCost)
             {
                 //generic tooltip (depends if actor is threatening or not)
                 StringBuilder builderTooltip = new StringBuilder();
-                //allow for secrets and threats
-                ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
-                renownCost = manageRenownCost.renownCost;
                 //tooltip
                 builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
                 if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
@@ -3756,7 +3758,7 @@ public class ActorManager : MonoBehaviour
                             //tooltip -> result 
                             int opinionConverted = 2;
                             int opinion = GameManager.instance.hqScript.GetBossOpinion();
-                            if (opinion > 1 ) { opinionConverted = 3; }
+                            if (opinion > 1) { opinionConverted = 3; }
                             else if (opinion < -1) { opinionConverted = 1; }
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
@@ -3853,7 +3855,7 @@ public class ActorManager : MonoBehaviour
                         tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
                         //tooltip -> result 
                         tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
-                        tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a",  "\n", GetOpinionText(motivation), "\n");
+                        tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a", "\n", GetOpinionText(motivation), "\n");
                         tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}<size=110%>MOTIVATION{3}", "\n", "\n", colourAlert, colourEnd);
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[i]", i); }
@@ -3912,9 +3914,9 @@ public class ActorManager : MonoBehaviour
         string review = "?";
         switch (motivation)
         {
-            case 3: review = string.Format("{0}{1}{2}", colourDataGood, GameManager.instance.guiScript.positiveChar, colourEnd); votesFor++;  break;
+            case 3: review = string.Format("{0}{1}{2}", colourDataGood, GameManager.instance.guiScript.positiveChar, colourEnd); votesFor++; break;
             case 2: review = string.Format("{0}<alpha=#22>{1}{2}", colourNeutral, GameManager.instance.guiScript.neutralChar, colourEnd); votesAbstained++; break;
-            case 1: 
+            case 1:
             case 0: review = string.Format("{0}{1}{2}", colourDataTerrible, GameManager.instance.guiScript.negativeChar, colourEnd); votesAgainst++; break;
             default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
         }
@@ -3985,8 +3987,12 @@ public class ActorManager : MonoBehaviour
                             { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
                             else
                             {
-                                unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
-                                  actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                                if (actor.CheckTraitEffect(actorUnhappyNone) == false)
+                                {
+                                    unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
+                                    actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                                }
+                                else { unhappySituation = string.Format("{0}Unhappy NEVER{1}", colourDefault, colourEnd); }
                             }
                             //combined text string
                             optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
@@ -4136,8 +4142,12 @@ public class ActorManager : MonoBehaviour
                         { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
                         else
                         {
-                            unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
-                              actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                            if (actor.CheckTraitEffect(actorUnhappyNone) == false)
+                            {
+                                unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
+                                actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                            }
+                            else { unhappySituation = string.Format("{0}Unhappy NEVER{1}", colourDefault, colourEnd); }
                         }
                         //combined text string
                         optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
@@ -4231,8 +4241,16 @@ public class ActorManager : MonoBehaviour
                             builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                             builderBottom.AppendFormat("{0}, {1}{2}{3}, {4}has been recruited and is available in the Reserve List{5}", actorRecruited.actorName, colourArc,
                                 actorRecruited.arc.name, colourEnd, colourNormal, colourEnd);
-                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
-                                traitText, colourEnd);
+                            if (actorRecruited.CheckTraitEffect(actorUnhappyNone) == false)
+                            {
+                                builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                                  traitText, colourEnd);
+                            }
+                            else
+                            {
+                                builderBottom.AppendFormat("{0}{1}{2}{3} will {4}NEVER{5} become Unhappy ({6}Jolly{7})", "\n", "\n", colourNeutral, actorRecruited.arc.name,
+                                    colourNeutral, colourEnd, colourGood, colourEnd);
+                            }
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
@@ -4414,8 +4432,16 @@ public class ActorManager : MonoBehaviour
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
                             actorRecruited.arc.name, colourEnd, colourNormal, actorRecruited.actorName, colourEnd);
-                        builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
-                            traitText, colourEnd);
+                        if (actorRecruited.CheckTraitEffect(actorUnhappyNone) == false)
+                        {
+                            builderBottom.AppendFormat("{0}{1}{2}{3} will become Unhappy in {4} turn{5}{6}{7}", "\n", "\n", colourNeutral, actorRecruited.arc.name, unhappyTimer, unhappyTimer != 1 ? "s" : "",
+                              traitText, colourEnd);
+                        }
+                        else
+                        {
+                            builderBottom.AppendFormat("{0}{1}{2}{3} will {4}NEVER{5} become Unhappy ({6}Jolly{7})", "\n", "\n", colourNeutral, actorRecruited.arc.name,
+                                colourNeutral, colourEnd, colourGood, colourEnd);
+                        }
                         //NodeActionData package
                         NodeActionData nodeActionData = new NodeActionData()
                         {
@@ -4779,6 +4805,40 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
         return outputMsg;
     }
+
+    /// <summary>
+    /// Returns a colour formatted string of all actors who currently have motivation 0 and can potentially have a conflict with the player in format actorName + actorArc. 
+    /// Used by topBar conflict status icon tooltip details, returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetConflictActorsTooltip()
+    {
+        StringBuilder builder = new StringBuilder();
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
+                        }
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+
 
     //
     // - - - Debug - - -
@@ -5426,6 +5486,7 @@ public class ActorManager : MonoBehaviour
     {
         string gearName;
         int numOfTraitors = 0;
+        int numOfMotivationZeroActors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
@@ -5460,6 +5521,9 @@ public class ActorManager : MonoBehaviour
                             //Checks all actors -> can inform on Player regardless of their status
                             if (actor.isTraitor == true)
                             { numOfTraitors++; }
+                            //tally up actors with Motivation Zero (potential Relationship Conflicts for topBar Icon) -> Active / Inactive. Ignore actors with Team Player trait
+                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
+                            { numOfMotivationZeroActors++; }
                             //Active actors only
                             if (actor.Status == ActorStatus.Active)
                             {
@@ -5564,6 +5628,8 @@ public class ActorManager : MonoBehaviour
                 isGearCheckRequired = false;
                 //Check for a betrayal
                 CheckForBetrayal(numOfTraitors);
+                //update top bar icon for potential relationship conflicts
+                GameManager.instance.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
@@ -5702,6 +5768,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActorsHuman()
     {
+        int numOfMotivationZeroActors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
@@ -5727,6 +5794,9 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
+                            //check for motivation Zero actors for topBar UI Potential Relationship conflicts. Ignore Team Player trait actors
+                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
+                            { numOfMotivationZeroActors++; }
                             if (actor.Status == ActorStatus.Active)
                             {
                                 //
@@ -5796,6 +5866,8 @@ public class ActorManager : MonoBehaviour
                         else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
                     }
                 }
+                //update topBarUI for potential conflicts
+                GameManager.instance.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
             }
             else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
         }
@@ -7268,23 +7340,27 @@ public class ActorManager : MonoBehaviour
                     //Decrement unhappy timer if not yet zero
                     if (actor.unhappyTimer > 0)
                     {
-                        actor.unhappyTimer--;
-                        Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
-                        if (actor.unhappyTimer == 1)
+                        //not if Jolly
+                        if (actor.CheckTraitEffect(actorUnhappyNone) == false)
                         {
-                            //unhappy in one turn warning
-                            msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
-                            itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
-                            reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = string.Format("An UNHAPPY subordinate is unpredictable", colourNeutral, colourEnd, colourBad, colourEnd);
-                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
-                        }
-                        //if timer now zero, gain condition "Unhappy" -> [Edit] Already covered by Unhappy Condition message
-                        if (actor.unhappyTimer == 0)
-                        {
-                            Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
-                            totalUnhappy++;
+                            actor.unhappyTimer--;
+                            Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                            if (actor.unhappyTimer == 1)
+                            {
+                                //unhappy in one turn warning
+                                msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
+                                reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = string.Format("An UNHAPPY subordinate is unpredictable", colourNeutral, colourEnd, colourBad, colourEnd);
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
+                            }
+                            //if timer now zero, gain condition "Unhappy" -> [Edit] Already covered by Unhappy Condition message
+                            if (actor.unhappyTimer == 0)
+                            {
+                                Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                                actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
+                                totalUnhappy++;
+                            }
                         }
                     }
                     else
@@ -7355,6 +7431,7 @@ public class ActorManager : MonoBehaviour
                                 //action taken
                                 Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
                                 TakeAction(actor);
+                                totalUnhappy--;
                             }
                             else
                             {
@@ -7373,7 +7450,7 @@ public class ActorManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogError(string.Format("Invalid Resitance actor (Null) for actorID {0}", listOfActors[i])); }
-            } 
+            }
             //Update top Bar (if resistance player)
             if (GameManager.instance.sideScript.PlayerSide.level == 2)
             { GameManager.instance.topBarScript.UpdateUnhappy(totalUnhappy); }
@@ -7395,23 +7472,27 @@ public class ActorManager : MonoBehaviour
                     //Decrement unhappy timer if not yet zero
                     if (actor.unhappyTimer > 0)
                     {
-                        actor.unhappyTimer--;
-                        Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
-                        if (actor.unhappyTimer == 1)
+                        //not if Jolly
+                        if (actor.CheckTraitEffect(actorUnhappyNone) == false)
                         {
-                            //unhappy in one turn warning
-                            msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
-                            itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
-                            reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                            warning = "An <b>UNHAPPY</b> subordinate is unpredictable";
-                            GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
-                        }
-                        //if timer now zero, gain condition "Unhappy" 
-                        if (actor.unhappyTimer == 0)
-                        {
-                            Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
-                            actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
-                            totalUnhappy++;
+                            actor.unhappyTimer--;
+                            Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                            if (actor.unhappyTimer == 1)
+                            {
+                                //unhappy in one turn warning
+                                msgText = string.Format("{0}, {1}, in Reserves, will be Unhappy in 1 turn", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} about to become Unhappy", actor.arc.name);
+                                reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+                                warning = "An <b>UNHAPPY</b> subordinate is unpredictable";
+                                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Unhappy next turn", reason, warning, false);
+                            }
+                            //if timer now zero, gain condition "Unhappy" 
+                            if (actor.unhappyTimer == 0)
+                            {
+                                Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
+                                actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
+                                totalUnhappy++;
+                            }
                         }
                     }
                     else
@@ -7477,6 +7558,7 @@ public class ActorManager : MonoBehaviour
                                 //action taken
                                 Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {2}{3}", actor.arc.name, actor.actorName, chance, "\n"));
                                 TakeAction(actor);
+                                totalUnhappy--;
                             }
                             else
                             {
@@ -7501,6 +7583,42 @@ public class ActorManager : MonoBehaviour
             { GameManager.instance.topBarScript.UpdateUnhappy(totalUnhappy); }
         }
         else { Debug.LogError("Invalid listOfActors -> Authority (Null)"); }
+    }
+
+    /// <summary>
+    /// returns a colour formatted tooltip for the detail section of the topBar unhappy tooltip (who's unhappy in the Reserves), for the Player side. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetUnhappyActorsTooltip()
+    {
+        List<int> listOfActors = null;
+        StringBuilder builder = new StringBuilder();
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1: listOfActors = GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve); break;
+            case 2: listOfActors = GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+        }
+        if (listOfActors != null)
+        {
+            int count = listOfActors.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                    if (actor != null)
+                    {
+                        if (builder.Length > 0) { builder.AppendLine(); }
+                        builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}], actor ID {1}", i, listOfActors[i]); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfActors for Reserves (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfActors for Reserves (Null)"); }
+        return builder.ToString();
     }
 
     /// <summary>

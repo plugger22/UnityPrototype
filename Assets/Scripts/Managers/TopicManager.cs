@@ -1480,56 +1480,60 @@ public class TopicManager : MonoBehaviour
                 if (subType != null)
                 {
                     isProceed = false;
-                    //check for same side as Player or 'both', ignore otherwise
-                    if (subType.side.level == playerSide.level || subType.side.level == 3)
+                    if (subType.isDisabled == false)
                     {
-                        //check TopicSubTypes isValid (topicType may have been approved with some subTypes O.K and others not)
-                        TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
-                        if (dataSub != null)
+                        //check for same side as Player or 'both', ignore otherwise
+                        if (subType.side.level == playerSide.level || subType.side.level == 3)
                         {
-                            //subType CRITERIA check
-                            if (CheckSubTypeCriteria(subType) == true)
+                            //check TopicSubTypes isValid (topicType may have been approved with some subTypes O.K and others not)
+                            TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                            if (dataSub != null)
                             {
-                                //reset 'isProceed' ready for data checks
-                                isProceed = false;
-                                if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
+                                //subType CRITERIA check
+                                if (CheckSubTypeCriteria(subType) == true)
                                 {
-                                    //check that there are Live topics available for subType
-                                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
-                                    if (listOfTopics != null)
+                                    //reset 'isProceed' ready for data checks
+                                    isProceed = false;
+                                    if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
                                     {
-                                        //loop topics looking for the first valid topic (only need one) in order to validate subType
-                                        for (int k = 0; k < listOfTopics.Count; k++)
+                                        //check that there are Live topics available for subType
+                                        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                                        if (listOfTopics != null)
                                         {
-                                            Topic topic = listOfTopics[k];
-                                            if (topic != null)
+                                            //loop topics looking for the first valid topic (only need one) in order to validate subType
+                                            for (int k = 0; k < listOfTopics.Count; k++)
                                             {
-                                                if (topic.status == Status.Live)
+                                                Topic topic = listOfTopics[k];
+                                                if (topic != null)
                                                 {
-                                                    isProceed = true;
-                                                    break;
+                                                    if (topic.status == Status.Live)
+                                                    {
+                                                        isProceed = true;
+                                                        break;
+                                                    }
+                                                }
+                                                else { Debug.LogWarningFormat("Invalid topic (Null) for subType \"{0}\"", subType.name); }
+                                            }
+                                            if (isProceed == true)
+                                            {
+                                                //populate pool based on priorities
+                                                numOfEntries = GetNumOfEntries(subType.priority);
+                                                if (numOfEntries > 0)
+                                                {
+                                                    for (int j = 0; j < numOfEntries; j++)
+                                                    { listOfSubTypePool.Add(subType); }
                                                 }
                                             }
-                                            else { Debug.LogWarningFormat("Invalid topic (Null) for subType \"{0}\"", subType.name); }
                                         }
-                                        if (isProceed == true)
-                                        {
-                                            //populate pool based on priorities
-                                            numOfEntries = GetNumOfEntries(subType.priority);
-                                            if (numOfEntries > 0)
-                                            {
-                                                for (int j = 0; j < numOfEntries; j++)
-                                                { listOfSubTypePool.Add(subType); }
-                                            }
-                                        }
+                                        else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
                                     }
-                                    else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", subType.name); }
                                 }
                             }
                         }
+                        /*else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }*/
+                        //O.K to have wrong side here Actor, for example, has subTypes from both sides
                     }
-                    /*else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }*/
-                    //O.K to have wrong side here Actor, for example, has subTypes from both sides
+                    /*else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: subtype \"{0}\" isDisabled True, NOT placed in selection pool{1}", subType.name, "\n"); }*/
                 }
                 else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
             }

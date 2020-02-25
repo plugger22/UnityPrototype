@@ -16,7 +16,7 @@ public class TopBarUI : MonoBehaviour
     public TopBarDataInteraction innocence;
     //TopBarItem prefab interactions RHS -> Status
     public TopBarDataInteraction unhappy;                       //number of unhappy actors in reserves
-    public TopBarDataInteraction conflicts;                     //number of active relationship conflicts
+    public TopBarDataInteraction conflicts;                     //number of potential actor relationship conflicts (actors with motivation 0)
     public TopBarDataInteraction blackmail;                     //number of blackmail attempts
     public TopBarDataInteraction doom;                          //number of turns remaining for doom timer
 
@@ -121,9 +121,6 @@ public class TopBarUI : MonoBehaviour
         colourIconData = GameManager.instance.guiScript.colourIconData;
         colourIconStatus = GameManager.instance.guiScript.colourIconStatus;
         colourNumber = Color.white;
-        Debug.Assert(colourIconData != null, "Invalid colourIconData (Null)");
-        Debug.Assert(colourIconStatus != null, "Invalid colourIconStatus (Null)");
-        Debug.Assert(colourNumber != null, "Invalid colourNumber (Null)");
         //tooltips
         tipCommendation = commendations.tooltip.GetComponent<GenericTooltipUI>();
         tipBlackmark = blackmarks.tooltip.GetComponent<GenericTooltipUI>();
@@ -220,6 +217,7 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateUnhappy(int value)
     {
+        if (value < 0) { Debug.LogWarningFormat("Invalid unhappy value \"{0}\"", value); value = 0; }
         unhappy.textData.text = value.ToString();
         if (value > 0)
         {
@@ -247,6 +245,7 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateConflicts(int value)
     {
+        if (value < 0) { Debug.LogWarningFormat("Invalid conflict value \"{0}\"", value); value = 0; }
         conflicts.textData.text = value.ToString();
         if (value > 0)
         {
@@ -274,6 +273,7 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateBlackmail(int value)
     {
+        if (value < 0) { Debug.LogWarningFormat("Invalid blackmail value \"{0}\"", value); value = 0; }
         blackmail.textData.text = value.ToString();
         if (value > 0)
         {
@@ -301,6 +301,7 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateDoom(int value)
     {
+        if (value < 0) { Debug.LogWarningFormat("Invalid doom value \"{0}\"", value); value = 0; }
         doom.textData.text = value.ToString();
         if (value > 0)
         {
@@ -374,8 +375,10 @@ public class TopBarUI : MonoBehaviour
         tipUnhappy.x_offset = 5;
         tipUnhappy.y_offset = 60;
         //conflicts
-        tipConflict.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Relationship Conflicts", ColourType.neutralText));
-        tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+        tipConflict.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Potential Conflicts", ColourType.neutralText));
+        tipConflict.tooltipMain = string.Format("You currently have {0} potential Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+        tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0} drops {1}", GameManager.instance.colourScript.GetFormattedString("Motivation", ColourType.salmonText),
+            GameManager.instance.colourScript.GetFormattedString("Below ZERO Stars", ColourType.salmonText));
         tipConflict.x_offset = 5;
         tipConflict.y_offset = 60;
         //blackmail
@@ -400,6 +403,7 @@ public class TopBarUI : MonoBehaviour
         {
             tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinate{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
                 value != 1 ? "s" : "");
+            tipUnhappy.tooltipDetails = GameManager.instance.actorScript.GetUnhappyActorsTooltip();
         }
         else
         { tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText)); }
@@ -413,11 +417,16 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflict{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
+            tipConflict.tooltipMain = string.Format("You currently have {0} Potential Relationship Conflict{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
                 value != 1 ? "s" : "");
+            tipConflict.tooltipDetails = GameManager.instance.actorScript.GetConflictActorsTooltip();
         }
         else
-        { tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText)); }
+        {
+            tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+            tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0} drops {1}", GameManager.instance.colourScript.GetFormattedString("Motivation", ColourType.salmonText),
+                GameManager.instance.colourScript.GetFormattedString("Below ZERO Stars", ColourType.salmonText));
+        }
     }
 
     /// <summary>
