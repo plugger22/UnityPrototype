@@ -7252,6 +7252,7 @@ public class ActorManager : MonoBehaviour
         string msgText, itemText, reason, warning;
         List<int> listOfActors = null;
         int chance, rnd;
+        int totalUnhappy = 0;
         //
         // - - - Resistance - - -
         //
@@ -7283,10 +7284,12 @@ public class ActorManager : MonoBehaviour
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
+                            totalUnhappy++;
                         }
                     }
                     else
                     {
+                        totalUnhappy++;
                         //unhappy timer has reached zero. Is actor's motivation > 0?
                         if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
                         {
@@ -7370,7 +7373,10 @@ public class ActorManager : MonoBehaviour
                     }
                 }
                 else { Debug.LogError(string.Format("Invalid Resitance actor (Null) for actorID {0}", listOfActors[i])); }
-            }
+            } 
+            //Update top Bar (if resistance player)
+            if (GameManager.instance.sideScript.PlayerSide.level == 2)
+            { GameManager.instance.topBarScript.UpdateUnhappy(totalUnhappy); }
         }
         else { Debug.LogError("Invalid listOfActors -> Resistance (Null)"); }
         //
@@ -7379,6 +7385,7 @@ public class ActorManager : MonoBehaviour
         listOfActors = GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve);
         if (listOfActors != null)
         {
+            totalUnhappy = 0;
             //loop list of reserve actors
             for (int i = 0; i < listOfActors.Count; i++)
             {
@@ -7404,10 +7411,12 @@ public class ActorManager : MonoBehaviour
                         {
                             Condition condition = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                             actor.AddCondition(condition, string.Format("{0} is upset at being left in the Reserves", actor.arc.name));
+                            totalUnhappy++;
                         }
                     }
                     else
                     {
+                        totalUnhappy++;
                         //unhappy timer has reached zero. Is actor's motivation > 0?
                         if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
                         {
@@ -7487,6 +7496,9 @@ public class ActorManager : MonoBehaviour
                 }
                 else { Debug.LogError(string.Format("Invalid Authority actor (Null) for actorID {0}", listOfActors[i])); }
             }
+            //Update top Bar (if authority player)
+            if (GameManager.instance.sideScript.PlayerSide.level == 1)
+            { GameManager.instance.topBarScript.UpdateUnhappy(totalUnhappy); }
         }
         else { Debug.LogError("Invalid listOfActors -> Authority (Null)"); }
     }

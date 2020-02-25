@@ -130,8 +130,10 @@ public class GUIManager : MonoBehaviour
     public Color colourMainBackground;
     [Tooltip("Top Bar background")]
     public Color colourTopBarBackground;
-    [Tooltip("Node default colour")]
-    public Color colourNodeDefault;
+    [Tooltip("Top Bar Icon data colour")]
+    public Color colourIconData;
+    [Tooltip("Top Bar Icon status colour")]
+    public Color colourIconStatus;
 
     //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
     [HideInInspector] public char starChar = '\uf005';
@@ -153,7 +155,10 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char blackmarkChar = '\uf714';
     [HideInInspector] public char investigateChar = '\uf002';
     [HideInInspector] public char innocenceChar = '\uf515';
-    /*[HideInInspector] public char circleChar = '\uf111';*/
+    [HideInInspector] public char blackmailChar = '\uf7b9';
+    [HideInInspector] public char unhappyChar = '\uf119';
+    [HideInInspector] public char doomChar = '\uf48e';
+    [HideInInspector] public char conflictChar = '\uf57f';
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.

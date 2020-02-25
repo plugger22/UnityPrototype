@@ -4718,7 +4718,8 @@ MonoBehaviour:
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopBarBackground: {r: 0.252047, g: 0.25464034, b: 0.3018868, a: 0}
-  colourNodeDefault: {r: 0.97010547, g: 0.9716981, b: 0.75627446, a: 0}
+  colourIconData: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
+  colourIconStatus: {r: 1, g: 0, b: 0, a: 0}
   starChar: 61445
   airportChar: 61554
   harbourChar: 61757
@@ -4738,6 +4739,10 @@ MonoBehaviour:
   blackmarkChar: 63252
   investigateChar: 61442
   innocenceChar: 62741
+  blackmailChar: 63417
+  unhappyChar: 61721
+  doomChar: 62606
+  conflictChar: 62847
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:
@@ -4827,7 +4832,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 38227
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

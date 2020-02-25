@@ -328,3 +328,129 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 55895 -> Monday, 24 February 2020 5:51 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 39716 -> Monday, 24 February 2020 8:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64791 -> Tuesday, 25 February 2020 9:14 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3415 -> Tuesday, 25 February 2020 9:29 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4986 -> Tuesday, 25 February 2020 9:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57231 -> Tuesday, 25 February 2020 9:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46155 -> Tuesday, 25 February 2020 9:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10439 -> Tuesday, 25 February 2020 9:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21121 -> Tuesday, 25 February 2020 10:01 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43173 -> Tuesday, 25 February 2020 10:14 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22095 -> Tuesday, 25 February 2020 10:16 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 10:17 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:576)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:442)
+	
+Dev seed 38227 -> Tuesday, 25 February 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 10:33 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:06 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:28 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 12:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 12:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 12:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38227 -> Tuesday, 25 February 2020 12:45 PM
+City seed 5678 -> London, United Kingdom
