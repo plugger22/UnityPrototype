@@ -383,9 +383,7 @@ public class ModalReviewUI : MonoBehaviour
         StartCoroutine("ShowReview");
         Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");
         //stats
-        GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewsTotal);
-        //activate exit button
-        buttonExit.gameObject.SetActive(true);
+        GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewsTotal);      
     }
 
     /// <summary>
@@ -485,6 +483,7 @@ public class ModalReviewUI : MonoBehaviour
         }
         //hand back control
         buttonHelpClose.gameObject.SetActive(true);
+        buttonExit.gameObject.SetActive(true);
         GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Close;
         yield return null;
     }

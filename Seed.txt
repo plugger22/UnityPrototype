@@ -1,88 +1,74 @@
 
-Dev seed 60790 -> Tuesday, 25 February 2020 8:36 PM
+Dev seed 59251 -> Wednesday, 26 February 2020 2:29 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 15177 -> Tuesday, 25 February 2020 8:36 PM
+Dev seed 30123 -> Wednesday, 26 February 2020 2:37 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 24801 -> Tuesday, 25 February 2020 8:39 PM
+Dev seed 24827 -> Wednesday, 26 February 2020 2:41 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 57718 -> Wednesday, 26 February 2020 8:27 AM
-City seed 5678 -> London, United Kingdom
-WARNING Assets/Scripts/GUI/TopBar/TopBarUI.cs(44,19): warning CS0414: The private field `TopBarUI.opacityLow' is assigned but its value is never used
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:578)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:442)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:119)
-	
-Dev seed 43917 -> Wednesday, 26 February 2020 11:06 AM
+Dev seed 52604 -> Wednesday, 26 February 2020 2:44 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 37328 -> Wednesday, 26 February 2020 11:08 AM
+Dev seed 40743 -> Wednesday, 26 February 2020 3:17 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 38670 -> Wednesday, 26 February 2020 11:26 AM
+Dev seed 6507 -> Wednesday, 26 February 2020 3:20 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 47502 -> Wednesday, 26 February 2020 11:44 AM
+Dev seed 54129 -> Wednesday, 26 February 2020 3:23 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 41184 -> Wednesday, 26 February 2020 11:52 AM
+Dev seed 34188 -> Wednesday, 26 February 2020 3:24 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 30914 -> Wednesday, 26 February 2020 12:01 PM
+Dev seed 35754 -> Wednesday, 26 February 2020 3:34 PM
 City seed 5678 -> London, United Kingdom
-WARNING Condition "DOOM" not found in dictOfConditions
-
-UnityEngine.Debug:LogWarning(Object)
-	DataManager:GetCondition(String) (at Assets/Scripts/Managers/DataManager.cs:7922)
-	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4868)
-	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
-	
-Dev seed 42275 -> Wednesday, 26 February 2020 12:08 PM
-City seed 5678 -> London, United Kingdom
-WARNING SetDatapoint change Datapoint1 has same value as already present for Eden Prefect, Financier, ID 58, hqID 2
+WARNING tempList has 21 records for tab 0 -> INFO only
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	gameAPI.Actor:SetDatapoint(ActorDatapoint, Int32, String) (at Assets/Scripts/Base Classes/Actor.cs:368)
-	EffectManager:ProcessActorMotivation(Actor, Int32, String, String, String, Boolean) (at Assets/Scripts/Managers/EffectManager.cs:4975)
-	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4877)
-	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4107)
-	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3958)
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:667)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:249)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	
+Dev seed 9970 -> Wednesday, 26 February 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1161 -> Wednesday, 26 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.ProcessBlackmail (gameAPI.Actor actor) (at Assets/Scripts/Managers/ActorManager.cs:6161)
+	ActorManager.CheckActiveResistanceActorsHuman () (at Assets/Scripts/Managers/ActorManager.cs:5520)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:474)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:429)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:280)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 16876 -> Wednesday, 26 February 2020 3:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46749 -> Wednesday, 26 February 2020 3:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20318 -> Wednesday, 26 February 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actorID "-1" for arrayOfOptionActorIDs[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5234)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3117)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid data.actorID (less than Zero) for effect "A_GainMotHigh", data.actorID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3967)
 	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
 	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3134)
 	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
@@ -90,21 +76,41 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
 	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid contact Kara ("Inactive") for nodeID 8
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:GetContact(Int32) (at Assets/Scripts/Base Classes/Actor.cs:551)
+	DataManager:CreateNodeContacts() (at Assets/Scripts/Managers/DataManager.cs:2013)
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1611)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4047)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4012)
+	ActorManager:ProcessCompatibility(Actor, List`1, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:6373)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:5530)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:474)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:429)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	ERROR Invalid contact (Null) for actor Willow Marshall, OPERATOR, id 0 at nodeID 8
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:CreateNodeContacts() (at Assets/Scripts/Managers/DataManager.cs:2034)
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1611)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4047)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4012)
+	ActorManager:ProcessCompatibility(Actor, List`1, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:6373)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:5530)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:474)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:429)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
 	
-Dev seed 812 -> Wednesday, 26 February 2020 12:15 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 58954 -> Wednesday, 26 February 2020 12:18 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11987 -> Wednesday, 26 February 2020 12:25 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34709 -> Wednesday, 26 February 2020 12:29 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23038 -> Wednesday, 26 February 2020 12:36 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 12160 -> Wednesday, 26 February 2020 12:39 PM
+Dev seed 37737 -> Wednesday, 26 February 2020 4:07 PM
 City seed 5678 -> London, United Kingdom

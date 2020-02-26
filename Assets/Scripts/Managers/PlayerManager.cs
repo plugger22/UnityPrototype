@@ -1836,7 +1836,7 @@ public class PlayerManager : MonoBehaviour
         return "Offer has been made";
     }
 
-    /*/// <summary>
+    /// <summary>
     /// returns colour formatted tooltip for current investigations (if any) in format 'Investigation.tag' newline 'Evidence + GetStars()' for each, or, if none, "No current investigations"
     /// </summary>
     /// <returns></returns>
@@ -1853,7 +1853,7 @@ public class PlayerManager : MonoBehaviour
                 if (investigation != null)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
-                    builder.AppendFormat("{0}{1}", investigation.tag, "\n");
+                    builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.salmonText), "\n");
                     builder.AppendFormat("Evidence  {0}", GameManager.instance.guiScript.GetStars(investigation.evidence));
                 }
                 else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[i]", i); }
@@ -1861,7 +1861,7 @@ public class PlayerManager : MonoBehaviour
             text = builder.ToString();
         }
         return text;
-    }*/
+    }
 
 
     //

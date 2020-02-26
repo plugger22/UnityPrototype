@@ -130,10 +130,12 @@ public class GUIManager : MonoBehaviour
     public Color colourMainBackground;
     [Tooltip("Top Bar background")]
     public Color colourTopBarBackground;
-    [Tooltip("Top Bar Icon data colour")]
-    public Color colourIconData;
-    [Tooltip("Top Bar Icon status colour")]
-    public Color colourIconStatus;
+    [Tooltip("Top Bar Icon Dormant colour")]
+    public Color colourIconDormant;
+    [Tooltip("Top Bar Icon Active Good colour")]
+    public Color colourIconActiveGood;
+    [Tooltip("Top Bar Icon Active Bad colour")]
+    public Color colourIconActiveBad;
 
     //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
     [HideInInspector] public char starChar = '\uf005';

@@ -19,4 +19,4 @@ MonoBehaviour:
   listOfCriteria: []
   effect: {fileID: 0}
   who: {fileID: 11400000, guid: c0d548db0101b384794c7c7c3ddd4a78, type: 2}
-  isTestOff: 0
+  isTestOff: 1

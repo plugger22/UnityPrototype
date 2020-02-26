@@ -13,7 +13,7 @@ public class SecretManager : MonoBehaviour
     [Tooltip("Base chance of an actor learning of a secret per turn (2x if secret Medium, 3x for High)")]
     [Range(0, 100)] public int secretLearnBaseChance = 25;
     [Tooltip("Number of turns to set the actor 'Blackmail -> threatening to reveal secret' timer")]
-    [Range(0, 10)] public int secretBlackmailTimer = 5;
+    [Range(2, 10)] public int secretBlackmailTimer = 5;
     [Tooltip("Max number of secrets allowed for a Player or Actor.Determined by capacity of InventoryUI")]
     [Range(0, 4)] public int secretMaxNum = 4;
 

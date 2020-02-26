@@ -20,4 +20,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e7e531d54edce21418ded7985d8430d6, type: 2}
   effect: {fileID: 11400000, guid: 07dab39e17a990349a4a2bb0bf97eac2, type: 2}
   who: {fileID: 11400000, guid: da55b9e40b5c07c428ca573827bf6d72, type: 2}
-  isTestOff: 0
+  isTestOff: 1

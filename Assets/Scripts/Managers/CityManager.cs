@@ -56,6 +56,7 @@ public class CityManager : MonoBehaviour
         {
             _cityLoyalty = value;
             Debug.LogFormat("[Cit] CityManager.cs: {0} loyalty now {1}{2}", city.tag, _cityLoyalty, "\n");
+            _cityLoyalty = Mathf.Clamp(_cityLoyalty, 0, 10);
             //update top widget bar
             EventManager.instance.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
         }

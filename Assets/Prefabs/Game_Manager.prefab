@@ -4543,7 +4543,7 @@ MonoBehaviour:
   moodStart: 2
   moodReset: 3
   maxInvestigations: 3
-  chanceInvestigation: 50
+  chanceInvestigation: 100
   chanceEvidence: 5
   timerInvestigationBase: 5
   investHQApproval: 2
@@ -4718,8 +4718,9 @@ MonoBehaviour:
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopBarBackground: {r: 0.252047, g: 0.25464034, b: 0.3018868, a: 0}
-  colourIconData: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
-  colourIconStatus: {r: 1, g: 0, b: 0, a: 0}
+  colourIconDormant: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
+  colourIconActiveGood: {r: 0.49803922, g: 1, b: 0, a: 0}
+  colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
   starChar: 61445
   airportChar: 61554
   harbourChar: 61757
