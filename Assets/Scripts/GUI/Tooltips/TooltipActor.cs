@@ -215,13 +215,15 @@ public class TooltipActor : MonoBehaviour
                                 Debug.LogError(string.Format("Invalid condition.type.name \"{0}\"", condition.type.name));
                                 break;
                         }
-                        //Blackmail condition has a timer
+
+                        /*//Blackmail condition has a timer
                         switch(condition.tag)
                         {
                             case "BLACKMAILER":
                                 builderCondition.AppendFormat("{0} {1}{2}", colourBad, data.actor.blackmailTimer, colourEnd);
                                 break;
-                        }
+                        }*/
+
                     }
                     actorConditions.text = builderCondition.ToString();
                 }

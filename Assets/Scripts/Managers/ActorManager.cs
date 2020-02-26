@@ -4806,37 +4806,7 @@ public class ActorManager : MonoBehaviour
         return outputMsg;
     }
 
-    /// <summary>
-    /// Returns a colour formatted string of all actors who currently have motivation 0 and can potentially have a conflict with the player in format actorName + actorArc. 
-    /// Used by topBar conflict status icon tooltip details, returns null if a problem
-    /// </summary>
-    /// <returns></returns>
-    public string GetConflictActorsTooltip()
-    {
-        StringBuilder builder = new StringBuilder();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
-        if (arrayOfActors != null)
-        {
-            for (int i = 0; i < arrayOfActors.Length; i++)
-            {
-                //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
-                {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
-                    {
-                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
-                        {
-                            if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
-                        }
-                    }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-        return builder.ToString();
-    }
+
 
 
 
@@ -5486,6 +5456,7 @@ public class ActorManager : MonoBehaviour
     {
         string gearName;
         int numOfTraitors = 0;
+        int numOfBlackmailers = 0;
         int numOfMotivationZeroActors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
@@ -5542,6 +5513,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
+                                    numOfBlackmailers++;
                                     ProcessBlackmail(actor);
 
                                     /*string blackmailOutcome = ProcessBlackmail(actor);
@@ -5630,6 +5602,8 @@ public class ActorManager : MonoBehaviour
                 CheckForBetrayal(numOfTraitors);
                 //update top bar icon for potential relationship conflicts
                 GameManager.instance.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
+                //update top bar icon for blackmailers
+                GameManager.instance.topBarScript.UpdateBlackmail(numOfBlackmailers);
             }
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
@@ -5769,6 +5743,7 @@ public class ActorManager : MonoBehaviour
     private void CheckActiveAuthorityActorsHuman()
     {
         int numOfMotivationZeroActors = 0;
+        int numOfBlackmailers = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.instance.playerScript.status == ActorStatus.Active)
@@ -5814,6 +5789,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 if (actor.blackmailTimer > 0)
                                 {
+                                    numOfBlackmailers++;
                                     ProcessBlackmail(actor);
 
                                     /*string blackmailOutcome = ProcessBlackmail(actor);
@@ -5868,6 +5844,8 @@ public class ActorManager : MonoBehaviour
                 }
                 //update topBarUI for potential conflicts
                 GameManager.instance.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
+                //update topBarUI for blackmailers
+                GameManager.instance.topBarScript.UpdateBlackmail(numOfBlackmailers);
             }
             else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
         }
@@ -6611,6 +6589,11 @@ public class ActorManager : MonoBehaviour
                     //fail safe code to provide a cure automatically for doomed condition at a certain point
                     GameManager.instance.dataScript.SetCureNodeStatus(conditionDoomed.cure, true, false);
                 }
+            }
+            if (doomTimer > 0)
+            {
+                //top bar update
+                GameManager.instance.topBarScript.UpdateDoom(doomTimer);
             }
         }
         //Stats -> check for Stress Condition (do now as it encompasses both breakdown and stressed case statements below)
@@ -7615,12 +7598,80 @@ public class ActorManager : MonoBehaviour
                             builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
                         }
                     }
-                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}], actor ID {1}", i, listOfActors[i]); }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}], actorID {1}", i, listOfActors[i]); }
                 }
             }
             else { Debug.LogError("Invalid listOfActors for Reserves (Empty)"); }
         }
         else { Debug.LogError("Invalid listOfActors for Reserves (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Returns a colour formatted string of all actors who currently have motivation 0 and can potentially have a conflict with the player in format actorName + actorArc. 
+    /// Used by topBar conflict status icon tooltip details, returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public string GetConflictActorsTooltip()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns a colour formatted tooltip for the detail secion of the topBar blackmail tooltip for the Playerside. Returns null if a problem.
+    /// </summary>
+    /// <returns></returns>
+    public string GetBlackmailActorsTooltip()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.blackmailTimer > 0)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.AppendFormat("{0}{1}{2}{3}{4}{5}Acts in {6}{7}{8} more day{9}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd, "\n",
+                                colourNeutral, actor.blackmailTimer, colourEnd, actor.blackmailTimer != 1 ? "s" : "");
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
 

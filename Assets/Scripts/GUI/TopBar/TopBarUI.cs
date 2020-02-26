@@ -41,8 +41,8 @@ public class TopBarUI : MonoBehaviour
     private Color colourNumber;
 
     //assorted
-    private float opacityLow = 0.35f;
     private float opacityHigh = 1.0f;
+    /*private float opacityLow = 0.35f;*/
 
     private static TopBarUI topBarUI;
 
@@ -312,7 +312,7 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
-            Color color = colourIconActive;
+            Color color = colourIconDormant;
             doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
             doom.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
@@ -368,20 +368,21 @@ public class TopBarUI : MonoBehaviour
         tipInnocence.x_offset = 5;
         tipInnocence.y_offset = 60;
         //unhappy
-        tipUnhappy.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Unhappy Subordinates in Reserve Pool", ColourType.neutralText));
+        tipUnhappy.tooltipHeader = string.Format("<size=120%>{0}{1}{2}</size>", GameManager.instance.colourScript.GetFormattedString("Unhappy Subordinates", ColourType.neutralText), "\n",
+            GameManager.instance.colourScript.GetFormattedString("RESERVE POOL", ColourType.salmonText));
         tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
         tipUnhappy.x_offset = 5;
         tipUnhappy.y_offset = 60;
         //conflicts
         tipConflict.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Potential Conflicts", ColourType.neutralText));
-        tipConflict.tooltipMain = string.Format("You currently have {0} potential Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
-        tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0} drops {1}", GameManager.instance.colourScript.GetFormattedString("Motivation", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString("Below ZERO Stars", ColourType.salmonText));
+        tipConflict.tooltipMain = string.Format("You currently have {0} upset Subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+        tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0}{1}{2}", GameManager.instance.colourScript.GetFormattedString("MOTIVATION", ColourType.neutralText), "\n", 
+            GameManager.instance.colourScript.GetFormattedString("drops below ZERO", ColourType.salmonText));
         tipConflict.x_offset = 5;
         tipConflict.y_offset = 60;
         //blackmail
         tipBlackmail.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Blackmail", ColourType.neutralText));
-        tipBlackmail.tooltipMain = string.Format("{0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("Nobody", ColourType.neutralText));
+        tipBlackmail.tooltipMain = string.Format("Good news. {0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("NOBODY", ColourType.neutralText));
         tipBlackmail.x_offset = 5;
         tipBlackmail.y_offset = 60;
         //doom
@@ -399,8 +400,8 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinate{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
-                value != 1 ? "s" : "");
+            tipUnhappy.tooltipMain = string.Format("There {0} currently {1} Unhappy subordinate{2}", value != 1 ? "are" : "is", 
+                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "");
             tipUnhappy.tooltipDetails = GameManager.instance.actorScript.GetUnhappyActorsTooltip();
         }
         else
@@ -408,22 +409,22 @@ public class TopBarUI : MonoBehaviour
     }
 
     /// <summary>
-    /// dynamically updates relationship Conflicts tooltip (exluding header and offsets)
+    /// dynamically updates potential (motivation 0) relationship Conflicts tooltip (exluding header and offsets)
     /// </summary>
     /// <param name="value"></param>
     private void UpdateConflictTooltip(int value)
     {
         if (value > 0)
         {
-            tipConflict.tooltipMain = string.Format("You currently have {0} Potential Relationship Conflict{1}", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
-                value != 1 ? "s" : "");
+            tipConflict.tooltipMain = string.Format("You currently have{0}{1} Upset Subordinate{2}{3}<size=110%><i>ON THE EDGE</i></size>", "\n", 
+                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "", "\n");
             tipConflict.tooltipDetails = GameManager.instance.actorScript.GetConflictActorsTooltip();
         }
         else
         {
-            tipConflict.tooltipMain = string.Format("You currently have {0} Relationship Conflicts", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
-            tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0} drops {1}", GameManager.instance.colourScript.GetFormattedString("Motivation", ColourType.salmonText),
-                GameManager.instance.colourScript.GetFormattedString("Below ZERO Stars", ColourType.salmonText));
+            tipConflict.tooltipMain = string.Format("You currently have {0} Upset Subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+            tipConflict.tooltipDetails = string.Format("Conflicts occur if a Subordinates {0}{1}{2}", GameManager.instance.colourScript.GetFormattedString("MOTIVATION", ColourType.neutralText), "\n",
+                GameManager.instance.colourScript.GetFormattedString("drops below ZERO", ColourType.salmonText));
         }
     }
 
@@ -435,11 +436,12 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipBlackmail.tooltipMain = string.Format("There are currently {0} subordinate{1} Blackmailing you", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText),
-                value != 1 ? "s" : "" );
+            tipBlackmail.tooltipMain = string.Format("There {0} currently {1} subordinate{2} Blackmailing you", value != 1 ? "are" : "is", 
+                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "" );
+            tipBlackmail.tooltipDetails = GameManager.instance.actorScript.GetBlackmailActorsTooltip();
         }
         else
-        { tipBlackmail.tooltipMain = string.Format("{0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("Nobody", ColourType.neutralText)); }
+        { tipBlackmail.tooltipMain = string.Format("Good news. {0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("NOBODY", ColourType.neutralText)); }
     }
 
     /// <summary>
@@ -450,8 +452,9 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipDoom.tooltipMain = string.Format("A fatal drug courses through your veins. You have {0} day{1} to find a cure", 
-                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "");
+            tipDoom.tooltipMain = string.Format("A <size=120%>{0}</size> drug courses through your veins", GameManager.instance.colourScript.GetFormattedString("LETHAL", ColourType.badText));
+            tipDoom.tooltipDetails = string.Format("You have{0}<size=120%>{1} day{2}</size>{3}to find a cure", "\n", GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.badText), 
+                value != 1 ? "s" : "", "\n");
         }
         else
         { tipDoom.tooltipMain = string.Format("Luckily you have {0} been injected with a fatal drug", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText)); }

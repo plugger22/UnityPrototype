@@ -7,3 +7,104 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 24801 -> Tuesday, 25 February 2020 8:39 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 57718 -> Wednesday, 26 February 2020 8:27 AM
+City seed 5678 -> London, United Kingdom
+WARNING Assets/Scripts/GUI/TopBar/TopBarUI.cs(44,19): warning CS0414: The private field `TopBarUI.opacityLow' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:578)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:442)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:119)
+	
+Dev seed 43917 -> Wednesday, 26 February 2020 11:06 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37328 -> Wednesday, 26 February 2020 11:08 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38670 -> Wednesday, 26 February 2020 11:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47502 -> Wednesday, 26 February 2020 11:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41184 -> Wednesday, 26 February 2020 11:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30914 -> Wednesday, 26 February 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+WARNING Condition "DOOM" not found in dictOfConditions
+
+UnityEngine.Debug:LogWarning(Object)
+	DataManager:GetCondition(String) (at Assets/Scripts/Managers/DataManager.cs:7922)
+	ActorManager:DebugAddCondition(String, String) (at Assets/Scripts/Managers/ActorManager.cs:4868)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1248)
+	
+Dev seed 42275 -> Wednesday, 26 February 2020 12:08 PM
+City seed 5678 -> London, United Kingdom
+WARNING SetDatapoint change Datapoint1 has same value as already present for Eden Prefect, Financier, ID 58, hqID 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:SetDatapoint(ActorDatapoint, Int32, String) (at Assets/Scripts/Base Classes/Actor.cs:368)
+	EffectManager:ProcessActorMotivation(Actor, Int32, String, String, String, Boolean) (at Assets/Scripts/Managers/EffectManager.cs:4975)
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4877)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4107)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3958)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3134)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:280)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 812 -> Wednesday, 26 February 2020 12:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58954 -> Wednesday, 26 February 2020 12:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11987 -> Wednesday, 26 February 2020 12:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34709 -> Wednesday, 26 February 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23038 -> Wednesday, 26 February 2020 12:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12160 -> Wednesday, 26 February 2020 12:39 PM
+City seed 5678 -> London, United Kingdom
