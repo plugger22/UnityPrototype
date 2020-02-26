@@ -114,3 +114,6 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	
 Dev seed 37737 -> Wednesday, 26 February 2020 4:07 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 3960 -> Wednesday, 26 February 2020 4:43 PM
+City seed 5678 -> London, United Kingdom

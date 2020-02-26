@@ -1609,7 +1609,7 @@ public class PlayerManager : MonoBehaviour
                         //
                         // - - - No timer -> check for new evidence (not when investigation first launched)
                         //
-                        if (invest.turnStart + 1 < GameManager.instance.turnScript.Turn)
+                        if (invest.turnStart + 1 <= GameManager.instance.turnScript.Turn)
                         {
                             rnd = Random.Range(0, 100);
                             isGood = false;
