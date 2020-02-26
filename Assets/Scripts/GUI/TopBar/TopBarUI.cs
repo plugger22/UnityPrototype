@@ -400,8 +400,9 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipUnhappy.tooltipMain = string.Format("There {0} currently {1} Unhappy subordinate{2}", value != 1 ? "are" : "is", 
-                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "");
+            /*tipUnhappy.tooltipMain = string.Format("There {0} currently {1} Unhappy subordinate{2}", value != 1 ? "are" : "is", 
+                GameManager.instance.colourScript.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "");*/
+            tipUnhappy.tooltipMain = string.Format("You have the following Unhappy Subordinates in your{0}{1}", "\n", GameManager.instance.colourScript.GetFormattedString("Reserve Pool", ColourType.salmonText));
             tipUnhappy.tooltipDetails = GameManager.instance.actorScript.GetUnhappyActorsTooltip();
         }
         else
