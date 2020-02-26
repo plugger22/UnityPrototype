@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -377,6 +378,32 @@ public class SecretManager : MonoBehaviour
                     GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
                     text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
                     GameManager.instance.messageScript.InvestigationNew(text, invest);
+                    //outcome (message pipeline)
+                    text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2} secret", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
+                    string bottomText = "Unknown";
+                    Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                    if (actor == null)
+                    {
+                        Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.campaignScript.GetHqTitle(invest.lead));
+                        bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
+                        actor.actorName, GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                    }
+                    else
+                    {
+                        bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName, 
+                            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                    }
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                    {
+                        textTop = text,
+                        textBottom = bottomText,
+                        sprite = GameManager.instance.guiScript.alertWarningSprite,
+                        isAction = false,
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        type = MsgPipelineType.InvestigationLaunched
+                    };
+                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    { Debug.LogWarningFormat("Investigation Launched InfoPipeline message FAILED to be added to dictOfPipeline"); }
                 }
                 else
                 {

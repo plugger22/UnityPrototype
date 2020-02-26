@@ -6151,13 +6151,13 @@ public class ActorManager : MonoBehaviour
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
                     GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret);
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendFormat("{0}{1}{2}", colourNeutral, secret.tag, colourEnd);
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
                         //data packages
-
-                        /*EffectDataReturn effectReturn = new EffectDataReturn();*/
-
+                        EffectDataReturn effectReturn = new EffectDataReturn();
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Reveal Secret";
                         /*effectInput.dataName = secret.org.name;*/
@@ -6168,20 +6168,31 @@ public class ActorManager : MonoBehaviour
                             //loop effects
                             foreach (Effect effect in secret.listOfEffects)
                             {
-                                GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-
-                                /*effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                                if (builder.Length > 0) { builder.AppendLine(); }
-                                builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText);*/
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (effectReturn.errorFlag == false)
+                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
                             }
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
-
                     }
                     //message detailing effects
                     GameManager.instance.messageScript.ActorRevealSecret(msgText, actor, secret, "Carries out Blackmail threat");
                     //attempt executed, Blackmailer condition cancelled
                     actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
+                    //outcome (message pipeline)
+                    string text = string.Format("{0}, {1}{2}{3}, has carried out their Blackmail threat and revealed your secret", actor.actorName, colourAlert, actor.arc.name, colourEnd, 
+                        colourNeutral, secret.tag, colourEnd);
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                    {
+                        textTop = text,
+                        textBottom = builder.ToString(),
+                        sprite = GameManager.instance.guiScript.alertWarningSprite,
+                        isAction = false,
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        type = MsgPipelineType.SecretRevealed
+                    };
+                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    { Debug.LogWarningFormat("Secret Revealed InfoPipeline message FAILED to be added to dictOfPipeline"); }
                     //remove secret from all actors and player
                     GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                 }

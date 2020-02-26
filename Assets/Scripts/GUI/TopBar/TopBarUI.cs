@@ -528,7 +528,10 @@ public class TopBarUI : MonoBehaviour
             tipInvestigation.tooltipDetails = GameManager.instance.playerScript.GetInvestigationTooltip();
         }
         else
-        { tipInvestigation.tooltipMain = string.Format("HQ are {0} currently Investigating you", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText)); }
+        {
+            tipInvestigation.tooltipMain = string.Format("HQ are {0} currently Investigating you", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText));
+            tipInvestigation.tooltipDetails = "";
+        }
     }
 
 
@@ -551,7 +554,10 @@ public class TopBarUI : MonoBehaviour
             tipUnhappy.tooltipDetails = GameManager.instance.actorScript.GetUnhappyActorsTooltip();
         }
         else
-        { tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText)); }
+        {
+            tipUnhappy.tooltipMain = string.Format("There are currently {0} Unhappy subordinates", GameManager.instance.colourScript.GetFormattedString("NO", ColourType.neutralText));
+            tipUnhappy.tooltipDetails = "";
+        }
     }
 
     /// <summary>
@@ -586,7 +592,10 @@ public class TopBarUI : MonoBehaviour
             tipBlackmail.tooltipDetails = GameManager.instance.actorScript.GetBlackmailActorsTooltip();
         }
         else
-        { tipBlackmail.tooltipMain = string.Format("Good news. {0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("NOBODY", ColourType.neutralText)); }
+        {
+            tipBlackmail.tooltipMain = string.Format("Good news. {0} is currently Blackmailing you", GameManager.instance.colourScript.GetFormattedString("NOBODY", ColourType.neutralText));
+            tipBlackmail.tooltipDetails = "";
+        }
     }
 
     /// <summary>
@@ -602,7 +611,10 @@ public class TopBarUI : MonoBehaviour
                 value != 1 ? "s" : "", "\n");
         }
         else
-        { tipDoom.tooltipMain = string.Format("Luckily you have {0} been injected with a fatal drug", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText)); }
+        {
+            tipDoom.tooltipMain = string.Format("Luckily you have {0} been injected with a fatal drug", GameManager.instance.colourScript.GetFormattedString("NOT", ColourType.neutralText));
+            tipDoom.tooltipDetails = "";
+        }
     }
 
 

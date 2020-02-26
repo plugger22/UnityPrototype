@@ -1609,7 +1609,7 @@ public class PlayerManager : MonoBehaviour
                         //
                         // - - - No timer -> check for new evidence (not when investigation first launched)
                         //
-                        if (invest.turnStart + 1 <= GameManager.instance.turnScript.Turn)
+                        if (invest.turnStart + 1 < GameManager.instance.turnScript.Turn)
                         {
                             rnd = Random.Range(0, 100);
                             isGood = false;
@@ -1683,10 +1683,10 @@ public class PlayerManager : MonoBehaviour
                                 text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
                                 GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
                             }
-                            //effects tab msg
-                            text = string.Format("Ongoing investigation into your {0}", invest.tag);
-                            GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                         }
+                        //effects tab msg
+                        text = string.Format("Ongoing investigation into your {0}", invest.tag);
+                        GameManager.instance.messageScript.InvestigationOngoing(text, invest);
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
@@ -1853,8 +1853,9 @@ public class PlayerManager : MonoBehaviour
                 if (investigation != null)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
-                    builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.salmonText), "\n");
-                    builder.AppendFormat("Evidence  {0}", GameManager.instance.guiScript.GetStars(investigation.evidence));
+                    builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
+                    builder.AppendFormat("Evidence  {0}{1}", GameManager.instance.guiScript.GetStars(investigation.evidence), "\n");
+                    builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
                 }
                 else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[i]", i); }
             }
