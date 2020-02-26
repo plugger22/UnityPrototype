@@ -154,12 +154,12 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char neutralChar = '\uf056';
     [HideInInspector] public char negativeChar = '\uf057';
     [HideInInspector] public char commendationChar = '\uf559';
-    [HideInInspector] public char blackmarkChar = '\uf714';
+    [HideInInspector] public char blackmarkChar = '\uf0a3';
     [HideInInspector] public char investigateChar = '\uf002';
     [HideInInspector] public char innocenceChar = '\uf515';
     [HideInInspector] public char blackmailChar = '\uf7b9';
     [HideInInspector] public char unhappyChar = '\uf119';
-    [HideInInspector] public char doomChar = '\uf48e';
+    [HideInInspector] public char doomChar = '\uf714';
     [HideInInspector] public char conflictChar = '\uf57f';
 
 

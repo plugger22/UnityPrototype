@@ -350,6 +350,7 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
+        SetColours();
         //reset all topics to isCurrent False prior to changes
         GameManager.instance.dataScript.ResetTopics();
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
@@ -5806,15 +5807,7 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            {
-                                switch (GameManager.instance.playerScript.Innocence)
-                                {
-                                    case 3: replaceText = string.Format("{0}<b>low level street Operative</b>{1}", colourCheckText, colourEnd); break;
-                                    case 2: replaceText = string.Format("{0}<b>mid level Organiser</b>{1}", colourCheckText, colourEnd); break;
-                                    case 1: replaceText = string.Format("{0}<b>high level Operative</b>{1}", colourCheckText, colourEnd); break;
-                                    case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourCheckText, colourEnd); break;
-                                }
-                            }
+                            { replaceText = GetInnocenceDescriptor(); }
                             else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
                         }
                         else { CountTextTag("capture", dictOfTags); }
@@ -6043,6 +6036,26 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid text (Null or Empty)"); }
         return checkedText;
+    }
+    #endregion
+
+    #region GetInnocenceDescriptor
+    /// <summary>
+    /// Returns a colour formatted string 'The authority views you as a [...]'. Used for CheckText as well as TopBarUI tooltip. Standardises innocence descriptors across code base.
+    /// </summary>
+    /// <returns></returns>
+    public string GetInnocenceDescriptor()
+    {
+        string replaceText = "Unknown";
+        switch (GameManager.instance.playerScript.Innocence)
+        {
+            case 3: replaceText = string.Format("{0}<b>low level street Operative</b>{1}", colourAlert, colourEnd); break;
+            case 2: replaceText = string.Format("{0}<b>mid level Organiser</b>{1}", colourAlert, colourEnd); break;
+            case 1: replaceText = string.Format("{0}<b>high level Operative</b>{1}", colourAlert, colourEnd); break;
+            case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourAlert, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised Innocence {0}", GameManager.instance.playerScript.Innocence); break;
+        }
+        return replaceText;
     }
     #endregion
 
