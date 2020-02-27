@@ -516,7 +516,6 @@ public class TopBarUI : MonoBehaviour
             GameManager.instance.colourScript.GetFormattedString("WIN the Campaign", ColourType.salmonText));
         tipCommendation.x_offset = 5;
         tipCommendation.y_offset = 60;
-
         //blackmark
         tipBlackmark.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.instance.colourScript.GetFormattedString("Blackmarks", ColourType.neutralText));
         tipBlackmark.tooltipMain = string.Format("You do not yet{0}have {1} Blackmarks{2}on your record", "\n",

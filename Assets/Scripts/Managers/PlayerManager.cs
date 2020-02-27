@@ -1589,7 +1589,7 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.campaignScript.ChangeBlackmarks(GameManager.instance.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
                                     //increase cost in blackMarks for future investigations
                                     GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();
-                                    bottomText = string.Format("You have been found{0}<size=120%>{1}</size>{2}on all charges", "\n", 
+                                    bottomText = string.Format("You have been found{0}<size=120%>{1}</size>{2}on all charges", "\n",
                                         GameManager.instance.colourScript.GetFormattedString("GUILTY", ColourType.badText), "\n");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
@@ -1706,6 +1706,8 @@ public class PlayerManager : MonoBehaviour
                                 //evidence message
                                 text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
                                 GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
+                                //update topBarUI (tooltip needs to change to reflect new evidence)
+                                GameManager.instance.topBarScript.UpdateInvestigations(count);
                             }
                         }
                         //effects tab msg
@@ -1861,7 +1863,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns colour formatted tooltip for current investigations (if any) in format 'Investigation.tag' newline 'Evidence + GetStars()' for each, or, if none, "No current investigations"
+    /// returns colour formatted tooltip for current investigations (if any) in format 'Investigation.tag'/'Evidence + GetStars()'/lead Investigator/Verdict timer for each, or, if none, "No current investigations"
     /// </summary>
     /// <returns></returns>
     public string GetInvestigationTooltip()
@@ -1880,6 +1882,11 @@ public class PlayerManager : MonoBehaviour
                     builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
                     builder.AppendFormat("Evidence  {0}{1}", GameManager.instance.guiScript.GetStars(investigation.evidence), "\n");
                     builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
+                    if (investigation.timer > 0)
+                    {
+                        string textVerdict = string.Format("Verdict in {0} day{1}", investigation.timer, investigation.timer != 1 ? "s" : "");
+                        builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(textVerdict, investigation.evidence == 3 ? ColourType.goodText : ColourType.badText));
+                    }
                 }
                 else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[i]", i); }
             }

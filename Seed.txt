@@ -142,3 +142,74 @@ City seed 765 -> New York, America
 
 Dev seed 45471 -> Thursday, 27 February 2020 4:53 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 37407 -> Thursday, 27 February 2020 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61346 -> Thursday, 27 February 2020 5:45 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actorID "-1" for arrayOfOptionActorIDs[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5270)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3118)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid data.actorID (less than Zero) for effect "A_GainMotHigh", data.actorID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3967)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3135)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actorID "-1" for arrayOfOptionActorIDs[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5270)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3118)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid data.actorID (less than Zero) for effect "A_LoseRenHigh", data.actorID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3967)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3135)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING ActorManager.cs -> ProcessActorConflict: The selection Pool has no entries in it
+UnityEngine.Debug:LogWarning(Object)
+	ActorManager:ProcessActorConflict(Actor) (at Assets/Scripts/Managers/ActorManager.cs:4722)
+	EffectManager:ProcessActorMotivation(Actor, Int32, String, String, String, Boolean) (at Assets/Scripts/Managers/EffectManager.cs:4988)
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4864)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4107)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:3958)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1847)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3135)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid reason "Investigation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TurnManager:SetWinStateLevel(WinStateLevel, WinReasonLevel, String, String) (at Assets/Scripts/Managers/TurnManager.cs:955)
+	PlayerManager:ProcessInvestigations() (at Assets/Scripts/Managers/PlayerManager.cs:1587)
+	PlayerManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/PlayerManager.cs:447)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:233)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	City seed 765 -> New York, America
