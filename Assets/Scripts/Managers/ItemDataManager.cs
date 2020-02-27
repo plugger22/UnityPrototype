@@ -2398,8 +2398,8 @@ public class ItemDataManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /// <summary>
-    /// ongoing investigation, Effects tab
+    /*/// <summary>
+    /// ongoing investigation using numbers (Effects tab)
     /// </summary>
     /// <param name="invest"></param>
     /// <returns></returns>
@@ -2446,7 +2446,43 @@ public class ItemDataManager : MonoBehaviour
         }
         builder.AppendFormat("<b>Likely Outcome {0}</b>", outcome);
         return builder.ToString();
+    }*/
+
+    /// <summary>
+    /// Ongoing investigation using stars (Effects tab)
+    /// </summary>
+    /// <param name="invest"></param>
+    /// <returns></returns>
+    public string GetInvestOngoingDetails(Investigation invest)
+    {
+        StringBuilder builder = new StringBuilder();
+        string outcome = "Unknown";
+        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+        if (actor != null)
+        {
+            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+            builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(invest.lead), colourEnd, "\n", "\n");
+            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetStars(motivation), "\n", "\n");
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
+            builder.AppendFormat("{0}It is not known who is leading the Investigation{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
+        }
+        builder.AppendFormat("<b>Evidence</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetStars(invest.evidence), "\n", "\n");
+        switch (invest.evidence)
+        {
+            case 0: outcome = string.Format("{0}Guilty{1}", colourBad, colourEnd); break;
+            case 1:
+            case 2: outcome = string.Format("{0}Uncertain{1}", colourNeutral, colourEnd); break;
+            case 3: outcome = string.Format("{0}Innocent{1}", colourGood, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised evidence \"{0}\"", invest.evidence); outcome = "Unclear"; break;
+        }
+        builder.AppendFormat("<b>Likely Result<pos=57%>{0}</b>", outcome);
+        return builder.ToString();
     }
+
+
 
     /// <summary>
     /// New evidence has come forward
@@ -2529,8 +2565,9 @@ public class ItemDataManager : MonoBehaviour
         switch (invest.outcome)
         {
             case InvestOutcome.Guilty:
+                int blackmarks = GameManager.instance.campaignScript.GetInvestigationBlackmarks() - 1;
                 builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}GUILTY Verdict{6}{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
-                builder.AppendFormat("{0}<b>You have been Fired</b>{1}Black Marks +{2}{3}", colourBad, "\n", GameManager.instance.campaignScript.GetInvestigationBlackmarks() - 1, colourEnd);
+                builder.AppendFormat("{0}<b>You have been Fired</b>{1}gain +{2} Black Mark{3}{4}", colourBad, "\n", blackmarks, blackmarks != 1 ? "s" : "", colourEnd);
                 break;
             case InvestOutcome.Innocent:
                 builder.AppendFormat("{0}<b>{1}{2} Investigation completed{3}{4}{5}INNOCENT{6} verdict</b>{7}{8}", colourAlert, invest.tag, colourEnd, "\n", "\n", colourGood, colourEnd, "\n", "\n");

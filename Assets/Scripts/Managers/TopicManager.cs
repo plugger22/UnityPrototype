@@ -2878,6 +2878,7 @@ public class TopicManager : MonoBehaviour
                                             InitialiseOptionUnavailableTooltip(option);
                                             //option text
                                             option.textToDisplay = string.Format("{0}{1}{2}", colourGrey, "Subordinate unavailable", colourEnd);
+                                            option.isValid = false;
                                             isProceed = true;
                                         }
                                     }

@@ -1096,7 +1096,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "secret_4";
         data.header = "Secret Revealed";
-        data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}investigation{4} into your conduct", 
+        data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}Investigation{4} into your conduct", 
             colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1433,6 +1433,12 @@ public class HelpManager : MonoBehaviour
         data.header = "Innocent";
         data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd, 
             colourTip, GameManager.instance.playerScript.investHQApproval, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "invest_10";
+        data.header = string.Format("{0}Investigations{1})", colourTip, colourEnd);
+        data.text = string.Format("Investigations are serious matters with {0}significant consequences{1}. Avoid a Guilty verdict by any means possible", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

@@ -2291,6 +2291,8 @@ public class ActionManager : MonoBehaviour
                     {
                         builder.AppendLine(); builder.AppendLine();
                         builder.AppendFormat("{0}{1}'s is no longer Unhappy{2}", colourGood, actor.actorName, colourEnd);
+                        //update topBarUI
+                        GameManager.instance.topBarScript.UpdateUnhappy(GameManager.instance.actorScript.CheckNumOfUnhappyActors());
                     }
                     //place actor on Map (reset states)
                     GameManager.instance.dataScript.AddCurrentActor(details.side, actor, actorSlotID);

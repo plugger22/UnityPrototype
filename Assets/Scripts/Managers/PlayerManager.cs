@@ -1626,6 +1626,8 @@ public class PlayerManager : MonoBehaviour
                                 invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
                             text = string.Format("{0} Investigation counting down to a Resolution", invest.tag);
                             GameManager.instance.messageScript.InvestigationResolution(text, invest);
+                            //update topBarUI tooltip
+                            GameManager.instance.topBarScript.UpdateInvestigations(count);
                         }
                     }
                     else
@@ -1884,7 +1886,7 @@ public class PlayerManager : MonoBehaviour
                     builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
                     if (investigation.timer > 0)
                     {
-                        string textVerdict = string.Format("Verdict in {0} day{1}", investigation.timer, investigation.timer != 1 ? "s" : "");
+                        string textVerdict = string.Format("{0}Verdict in {1} day{2}", "\n", investigation.timer, investigation.timer != 1 ? "s" : "");
                         builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(textVerdict, investigation.evidence == 3 ? ColourType.goodText : ColourType.badText));
                     }
                 }
