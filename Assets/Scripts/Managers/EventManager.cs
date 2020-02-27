@@ -131,6 +131,9 @@ public enum EventType
     ReviewOpenUI,
     ReviewCloseUI,
     ReviewStart,
+    //topBarUI
+    TopBarShow,
+    TopBarHide,
     /*//Dice UI
     OpenDiceUI,
     CloseDiceUI,

@@ -7625,6 +7625,41 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns number of unhappy actors in reserve pool for player side
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfUnhappyActors()
+    {
+        int numOfUnhappy = 0;
+        List<int> listOfActors = null;
+        switch (GameManager.instance.sideScript.PlayerSide.level)
+        {
+            case 1: listOfActors = GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve); break;
+            case 2: listOfActors = GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+        }
+        if (listOfActors != null)
+        {
+            int count = listOfActors.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                    if (actor != null)
+                    {
+                        if (actor.CheckConditionPresent(conditionUnhappy) == true)
+                        { numOfUnhappy++; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors[{0}], actorID {1}", i, listOfActors[i]); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfActors for Reserves (Null)"); }
+        return numOfUnhappy;
+    }
+
+    /// <summary>
     /// Returns a colour formatted string of all actors who currently have motivation 0 and can potentially have a conflict with the player in format actorName + actorArc. 
     /// Used by topBar conflict status icon tooltip details, returns null if a problem
     /// </summary>
@@ -7659,6 +7694,37 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns number of onMap (active/inactive) actors with motivation Zero
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfConflictActors()
+    {
+        int numOfMotivationZero = 0;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                        { numOfMotivationZero++; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return numOfMotivationZero;
+    }
+
+
+    /// <summary>
     /// returns a colour formatted tooltip for the detail secion of the topBar blackmail tooltip for the Playerside. Returns null if a problem.
     /// </summary>
     /// <returns></returns>
@@ -7690,6 +7756,36 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns number of onMap actors currently blackmailing player
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumOfBlackmailActors()
+    {
+        int numOfBlackmailers = 0;
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.CheckConditionPresent(conditionBlackmailer) == true)
+                        { numOfBlackmailers++; }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return numOfBlackmailers;
     }
 
     /// <summary>

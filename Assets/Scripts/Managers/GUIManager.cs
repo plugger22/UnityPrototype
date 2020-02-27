@@ -111,6 +111,7 @@ public class GUIManager : MonoBehaviour
     public Sprite friendSprite;
     [Tooltip("Sprite for an Enemy relationship")]
     public Sprite enemySprite;
+
     //moods
     [Tooltip("Player mood 0 star")]
     public Sprite moodStar0;
@@ -137,30 +138,30 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Top Bar Icon Active Bad colour")]
     public Color colourIconActiveBad;
 
-    //font awesome icons -> NOTE if you change these you'll have to restart Unity to see the changes
-    [HideInInspector] public char starChar = '\uf005';
-    [HideInInspector] public char airportChar = '\uf533';
-    [HideInInspector] public char harbourChar = '\uf13d';
-    [HideInInspector] public char cityHallChar = '\uf19c';
-    [HideInInspector] public char corporateChar = '\uf1ad';
-    [HideInInspector] public char gatedChar = '\uf015';
-    [HideInInspector] public char industrialChar = '\uf0ad';
-    [HideInInspector] public char governmentChar = '\uf0e3';
-    [HideInInspector] public char sprawlChar = '\uf554';
-    [HideInInspector] public char utilityChar = '\uf0eb';
-    [HideInInspector] public char researchChar = '\uf0c3';
-    [HideInInspector] public char iconChar = '\uf5a6';
-    [HideInInspector] public char positiveChar = '\uf058';
-    [HideInInspector] public char neutralChar = '\uf056';
-    [HideInInspector] public char negativeChar = '\uf057';
-    [HideInInspector] public char commendationChar = '\uf559';
-    [HideInInspector] public char blackmarkChar = '\uf0a3';
-    [HideInInspector] public char investigateChar = '\uf002';
-    [HideInInspector] public char innocenceChar = '\uf515';
-    [HideInInspector] public char blackmailChar = '\uf7b9';
-    [HideInInspector] public char unhappyChar = '\uf119';
-    [HideInInspector] public char doomChar = '\uf714';
-    [HideInInspector] public char conflictChar = '\uf57f';
+    //font awesome icons
+    [HideInInspector] public char starChar;
+    [HideInInspector] public char airportChar;
+    [HideInInspector] public char harbourChar;
+    [HideInInspector] public char cityHallChar;
+    [HideInInspector] public char corporateChar;
+    [HideInInspector] public char gatedChar;
+    [HideInInspector] public char industrialChar;
+    [HideInInspector] public char governmentChar;
+    [HideInInspector] public char sprawlChar;
+    [HideInInspector] public char utilityChar;
+    [HideInInspector] public char researchChar;
+    [HideInInspector] public char iconChar;
+    [HideInInspector] public char positiveChar;
+    [HideInInspector] public char neutralChar;
+    [HideInInspector] public char negativeChar;
+    [HideInInspector] public char commendationChar;
+    [HideInInspector] public char blackmarkChar;
+    [HideInInspector] public char investigateChar;
+    [HideInInspector] public char innocenceChar;
+    [HideInInspector] public char blackmailChar;
+    [HideInInspector] public char unhappyChar;
+    [HideInInspector] public char doomChar;
+    [HideInInspector] public char conflictChar;
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
@@ -230,6 +231,7 @@ public class GUIManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     public void Initialise(GameState state)
     {
+        SetFontChars();
         //make sure blocking layers are all set to false
         arrayIsBlocked = new bool[numOfModalLevels + 1];
         for (int i = 0; i < arrayIsBlocked.Length; i++)
@@ -238,6 +240,36 @@ public class GUIManager : MonoBehaviour
         /*EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");*/
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
         EventManager.instance.AddListener(EventType.ShowMeRestore, OnEvent, "GUIManager");
+    }
+
+    /// <summary>
+    /// Set AwesomeFont char symbols
+    /// </summary>
+    private void SetFontChars()
+    {
+        starChar = '\uf005';
+        airportChar = '\uf072';
+        harbourChar = '\uf13d';
+        cityHallChar = '\uf19c';
+        corporateChar = '\uf1ad';
+        gatedChar = '\uf015';
+        industrialChar = '\uf0ad';
+        governmentChar = '\uf0e3';
+        sprawlChar = '\uf554';
+        utilityChar = '\uf0eb';
+        researchChar = '\uf0c3';
+        iconChar = '\uf5a6';
+        positiveChar = '\uf058';
+        neutralChar = '\uf056';
+        negativeChar = '\uf057';
+        commendationChar = '\uf559';
+        blackmarkChar = '\uf0a3';
+        investigateChar = '\uf002';
+        innocenceChar = '\uf515';
+        blackmailChar = '\uf7b9';
+        unhappyChar = '\uf119';
+        doomChar = '\uf714';
+        conflictChar = '\uf57f';
     }
 
 

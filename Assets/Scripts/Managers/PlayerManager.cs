@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
@@ -1557,6 +1558,7 @@ public class PlayerManager : MonoBehaviour
                         {
                             invest.status = InvestStatus.Completed;
                             GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
+                            string bottomText = "Unknown";
                             switch (invest.evidence)
                             {
                                 case 3:
@@ -1566,6 +1568,7 @@ public class PlayerManager : MonoBehaviour
                                     int approvalGain = GameManager.instance.playerScript.investHQApproval;
                                     GameManager.instance.hqScript.ChangeHqApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
+                                    bottomText = string.Format("You are{0}<size=120%>{1}</size>{2}of all charges", "\n", GameManager.instance.colourScript.GetFormattedString("INNOCENT", ColourType.goodText), "\n");
                                     break;
                                 case 0:
                                     //player found guilty
@@ -1583,9 +1586,25 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.campaignScript.ChangeBlackmarks(GameManager.instance.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
                                     //increase cost in blackMarks for future investigations
                                     GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();
+                                    bottomText = string.Format("You have been found{0}<size=120%>{1}</size>{2}on all charges", "\n", 
+                                        GameManager.instance.colourScript.GetFormattedString("GUILTY", ColourType.badText), "\n");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
+                            //outcome (message pipeline)
+                            text = string.Format("<size=120%>INVESTIGATION</size>{0}Completed into your{1}{2}", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
+                            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                            {
+                                textTop = text,
+                                textBottom = bottomText,
+                                sprite = GameManager.instance.guiScript.investigationSprite,
+                                isAction = false,
+                                side = GameManager.instance.sideScript.PlayerSide,
+                                type = MsgPipelineType.InvestigationCompleted
+                            };
+                            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                            { Debug.LogWarningFormat("Investigation Completed InfoPipeline message FAILED to be added to dictOfPipeline"); }
+
                             //end investigation
                             invest.turnFinish = GameManager.instance.turnScript.Turn;
                             RemoveInvestigation(invest.reference);

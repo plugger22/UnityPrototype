@@ -379,7 +379,7 @@ public class SecretManager : MonoBehaviour
                     text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
                     GameManager.instance.messageScript.InvestigationNew(text, invest);
                     //outcome (message pipeline)
-                    text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2} secret", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
+                    text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
                     string bottomText = "Unknown";
                     Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
                     if (actor == null)
@@ -397,7 +397,7 @@ public class SecretManager : MonoBehaviour
                     {
                         textTop = text,
                         textBottom = bottomText,
-                        sprite = GameManager.instance.guiScript.alertWarningSprite,
+                        sprite = GameManager.instance.guiScript.investigationSprite,
                         isAction = false,
                         side = GameManager.instance.sideScript.PlayerSide,
                         type = MsgPipelineType.InvestigationLaunched

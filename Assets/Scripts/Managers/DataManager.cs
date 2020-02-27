@@ -4426,9 +4426,10 @@ public class DataManager : MonoBehaviour
     public List<int> GetActorList(GlobalSide side, ActorList list)
     {
         List<int> listOfActors = null;
-        switch (side.name)
+        switch (side.level)
         {
-            case "Authority":
+            case 1:
+                //Authority
                 switch (list)
                 {
                     case ActorList.Reserve: listOfActors = authorityActorReserve; break;
@@ -4440,7 +4441,8 @@ public class DataManager : MonoBehaviour
                     default: Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list)); break;
                 }
                 break;
-            case "Resistance":
+            case 2:
+                //Resistance
                 switch (list)
                 {
                     case ActorList.Reserve: listOfActors = resistanceActorReserve; break;
