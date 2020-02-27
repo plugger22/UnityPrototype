@@ -6190,7 +6190,8 @@ public class ActorManager : MonoBehaviour
                         sprite = GameManager.instance.guiScript.alertWarningSprite,
                         isAction = false,
                         side = GameManager.instance.sideScript.PlayerSide,
-                        type = MsgPipelineType.SecretRevealed
+                        type = MsgPipelineType.SecretRevealed,
+                        help0 = "secret_4"
                     };
                     if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Secret Revealed InfoPipeline message FAILED to be added to dictOfPipeline"); }

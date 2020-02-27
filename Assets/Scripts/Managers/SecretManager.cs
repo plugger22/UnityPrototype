@@ -400,7 +400,10 @@ public class SecretManager : MonoBehaviour
                         sprite = GameManager.instance.guiScript.investigationSprite,
                         isAction = false,
                         side = GameManager.instance.sideScript.PlayerSide,
-                        type = MsgPipelineType.InvestigationLaunched
+                        type = MsgPipelineType.InvestigationLaunched,
+                        help0 = "invest_1",
+                        help1 = "invest_2",
+                        help2 = "invest_3"
                     };
                     if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Investigation Launched InfoPipeline message FAILED to be added to dictOfPipeline"); }

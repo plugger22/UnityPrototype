@@ -1092,6 +1092,13 @@ public class HelpManager : MonoBehaviour
         builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
+        //Revealed
+        data = new HelpData();
+        data.tag = "secret_4";
+        data.header = "Secret Revealed";
+        data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}investigation{4} into your conduct", 
+            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Cure

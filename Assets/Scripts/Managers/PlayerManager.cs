@@ -1603,7 +1603,9 @@ public class PlayerManager : MonoBehaviour
                                 sprite = GameManager.instance.guiScript.investigationSprite,
                                 isAction = false,
                                 side = GameManager.instance.sideScript.PlayerSide,
-                                type = MsgPipelineType.InvestigationCompleted
+                                type = MsgPipelineType.InvestigationCompleted,
+                                help0 = "invest_8",
+                                help1 = "invest_9"
                             };
                             if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                             { Debug.LogWarningFormat("Investigation Completed InfoPipeline message FAILED to be added to dictOfPipeline"); }
