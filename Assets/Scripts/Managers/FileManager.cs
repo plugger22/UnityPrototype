@@ -82,6 +82,7 @@ public class FileManager : MonoBehaviour
         WriteTopicData();
         WriteTargetData();
         WriteStatisticsData();
+        WriteGUIData();
     }
     #endregion
 
@@ -252,6 +253,25 @@ public class FileManager : MonoBehaviour
             write.campaignData.npc = null;
             write.campaignData.isNpc = false;
         }
+    }
+    #endregion
+
+
+    #region Write GUI Data
+    /// <summary>
+    /// GUI related data write to file
+    /// </summary>
+    private void WriteGUIData()
+    {
+        //TopBarUI
+        write.guiData.commendationData = GameManager.instance.topBarScript.commendationData;
+        write.guiData.blackmarkData = GameManager.instance.topBarScript.blackmarkData;
+        write.guiData.investigationData = GameManager.instance.topBarScript.investigationData;
+        write.guiData.innocenceData = GameManager.instance.topBarScript.innocenceData;
+        write.guiData.unhappyData = GameManager.instance.topBarScript.unhappyData;
+        write.guiData.conflictData = GameManager.instance.topBarScript.conflictData;
+        write.guiData.blackmailData = GameManager.instance.topBarScript.blackmailData;
+        write.guiData.doomData = GameManager.instance.topBarScript.doomData;
     }
     #endregion
 
@@ -888,10 +908,10 @@ public class FileManager : MonoBehaviour
         #region InfoPipeLine
         Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = GameManager.instance.guiScript.GetDictOfPipeline();
         if (dictOfPipeline != null)
-        {            
+        {
             if (dictOfPipeline.Count > 0)
             {
-                foreach(var record in dictOfPipeline)
+                foreach (var record in dictOfPipeline)
                 {
                     if (record.Value != null)
                     {
@@ -3696,7 +3716,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void UpdateGUI(GlobalSide side)
     {
-        //Top Widget UI
+        //
+        // - - - Top Widget UI
+        //
         TopWidgetData widget = new TopWidgetData();
         widget.side = side;
         widget.turn = read.gameData.turnData.turn;
@@ -3715,6 +3737,19 @@ public class FileManager : MonoBehaviour
 
         //Update top widget UI
         GameManager.instance.widgetTopScript.LoadSavedData(widget);
+        //
+        // - - - Top Bar UI
+        //
+        GameManager.instance.topBarScript.commendationData = read.guiData.commendationData;
+        GameManager.instance.topBarScript.blackmarkData = read.guiData.blackmarkData;
+        GameManager.instance.topBarScript.investigationData = read.guiData.investigationData;
+        GameManager.instance.topBarScript.innocenceData = read.guiData.innocenceData;
+        GameManager.instance.topBarScript.unhappyData = read.guiData.unhappyData;
+        GameManager.instance.topBarScript.conflictData = read.guiData.conflictData;
+        GameManager.instance.topBarScript.blackmailData = read.guiData.blackmailData;
+        GameManager.instance.topBarScript.doomData = read.guiData.doomData;
+        //update top Bar with saved data
+        GameManager.instance.topBarScript.LoadSavedData();
     }
     #endregion
 
@@ -4087,9 +4122,9 @@ public class FileManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfTeams (Null)"); }
             //secrets
             List<Secret> listOfSecrets = actor.GetListOfSecrets();
-            listOfSecrets.Clear();
             if (listOfSecrets != null)
             {
+                listOfSecrets.Clear();
                 for (int j = 0; j < readActor.listOfSecrets.Count; j++)
                 {
                     Secret secret = GameManager.instance.dataScript.GetSecret(readActor.listOfSecrets[j]);
@@ -4128,6 +4163,20 @@ public class FileManager : MonoBehaviour
                 listOfTraitEffects.AddRange(readActor.listOfTraitEffects);
             }
             else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+            //conditions
+            List<Condition> listOfConditions = actor.GetListOfConditions();
+            if (listOfConditions != null)
+            {
+                listOfConditions.Clear();
+                for (int j = 0; j < readActor.listOfConditions.Count; j++)
+                {
+                    Condition condition = GameManager.instance.dataScript.GetCondition(readActor.listOfConditions[j]);
+                    if (condition != null)
+                    { listOfConditions.Add(condition); }
+                    else { Debug.LogWarningFormat("Invalid Condition in readActor.listOfConditions[{0}]", j); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfConditions (Null)"); }
             //topic data
             actor.SetNodeActionData(readActor.listOfNodeActions);
             actor.SetTeamActionData(readActor.listOfTeamActions);

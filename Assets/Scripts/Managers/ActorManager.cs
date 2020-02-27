@@ -272,6 +272,7 @@ public class ActorManager : MonoBehaviour
                 break;
             case GameState.LoadAtStart:
                 //do nothing
+                SetColours();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);

@@ -525,10 +525,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = widgetTopScript.Initialise;
         startMethod.className = "WidgetTopUI";
         listOfLevelMethods.Add(startMethod);
-        //Top Bar UI
-        startMethod.handler = topBarScript.Initialise;
-        startMethod.className = "TopBarUI";
-        listOfLevelMethods.Add(startMethod);
         //Objective Manager
         startMethod.handler = objectiveScript.Initialise;
         startMethod.className = "ObjectiveManager";
@@ -701,6 +697,11 @@ public class GameManager : MonoBehaviour
         //AI SideTab UI -> after AI Display UI
         startMethod.handler = aiSideTabScript.Initialise;
         startMethod.className = "AISideTabUI";
+        listOfUIMethods.Add(startMethod);
+        listOfConditionalMethods.Add(startMethod);
+        //Top Bar UI
+        startMethod.handler = topBarScript.Initialise;
+        startMethod.className = "TopBarUI";
         listOfUIMethods.Add(startMethod);
         listOfConditionalMethods.Add(startMethod);
 

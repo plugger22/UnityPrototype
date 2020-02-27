@@ -346,8 +346,11 @@ public class CampaignManager : MonoBehaviour
     public void SetBlackMarks(int value)
     {
         blackmarks = value;
-        //update topBar
-        GameManager.instance.topBarScript.UpdateBlackmarks(blackmarks);
+        if (GameManager.instance.controlScript.GetExistingGameState() == GameState.PlayGame)
+        {
+            //update topBar
+            GameManager.instance.topBarScript.UpdateBlackmarks(blackmarks);
+        }
     }
 
     /// <summary>
@@ -357,8 +360,11 @@ public class CampaignManager : MonoBehaviour
     public void SetCommendations(int value)
     {
         commendations = value;
-        //update topBar
-        GameManager.instance.topBarScript.UpdateCommendations(commendations);
+        if (GameManager.instance.controlScript.GetExistingGameState() == GameState.PlayGame)
+        {
+            //update topBar
+            GameManager.instance.topBarScript.UpdateCommendations(commendations);
+        }
     }
 
     /// <summary>

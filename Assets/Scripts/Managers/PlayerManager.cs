@@ -197,8 +197,11 @@ public class PlayerManager : MonoBehaviour
 
             Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Innocence changed from {0} to {1}{2}", _innocence, value, "\n");
             _innocence = value;
-            //update topBar
-            GameManager.instance.topBarScript.UpdateInnocence(_innocence);
+            if (GameManager.instance.controlScript.GetExistingGameState() == GameState.PlayGame)
+            {
+                //update topBar
+                GameManager.instance.topBarScript.UpdateInnocence(_innocence);
+            }
         }
     }
 

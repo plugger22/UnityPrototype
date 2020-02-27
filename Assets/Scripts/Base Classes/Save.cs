@@ -1,8 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 
 /// <summary>
@@ -28,6 +26,7 @@ public class Save
     public SaveContactData contactData = new SaveContactData();
     public SaveTargetData targetData = new SaveTargetData();
     public SaveStatisticsData statisticsData = new SaveStatisticsData();
+    public SaveGUIData guiData = new SaveGUIData();
 }
 
 #region Managers
@@ -172,7 +171,7 @@ public class SaveDataData
     //TestLists
     public List<string> listOfTextListNames = new List<string>();
     public List<int> listOfTextListIndexes = new List<int>();
-    
+
 }
 #endregion
 
@@ -502,6 +501,25 @@ public class SaveStatisticsData
 #endregion
 
 
+#region SaveGUIData
+/// <summary>
+/// GUI related data
+/// </summary>
+[System.Serializable]
+public class SaveGUIData
+{
+    //TopBarUI
+    public int commendationData;
+    public int blackmarkData;
+    public int investigationData;
+    public int innocenceData;
+    public int unhappyData;
+    public int conflictData;
+    public int blackmailData;
+    public int doomData;
+}
+#endregion
+
 #endregion
 
 
@@ -640,13 +658,13 @@ public class SaveActor
     public List<HistoryMotivation> listOfMotivation = new List<HistoryMotivation>();
     public List<int> listOfTeams = new List<int>();
     public List<string> listOfSecrets = new List<string>();
-    public List<string> listOfConditions = new List<string>();   
+    public List<string> listOfConditions = new List<string>();
     public List<int> listOfContactNodes = new List<int>();
     public List<int> listOfContacts = new List<int>();
     public List<string> listOfTraitEffects = new List<string>();
     public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     public List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
-    
+
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }
 #endregion
@@ -698,12 +716,12 @@ public class SaveNode
 
     public int crisisTimer;
     public int waitTimer;
-    public string nodeCrisisName;                     
+    public string nodeCrisisName;
 
     public LoiterData loiter;
     public string cureName;
-  
-    public List<int> listOfTeams = new List<int>();                  
+
+    public List<int> listOfTeams = new List<int>();
     public List<int> listOfOngoingEffects = new List<int>();
 }
 #endregion
@@ -716,7 +734,7 @@ public class SaveNode
 [System.Serializable]
 public class SaveConnection
 {
-    public int connID; 
+    public int connID;
     public int activityCount;
     public int activityTime;
     public ConnectionType securityLevel;
