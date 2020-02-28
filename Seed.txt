@@ -37,3 +37,79 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 62825 -> Friday, 28 February 2020 12:10 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 64684 -> Friday, 28 February 2020 2:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17856 -> Friday, 28 February 2020 3:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27223 -> Friday, 28 February 2020 3:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9593 -> Friday, 28 February 2020 3:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60598 -> Friday, 28 February 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60624 -> Friday, 28 February 2020 3:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47027 -> Friday, 28 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48489 -> Friday, 28 February 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59112 -> Friday, 28 February 2020 3:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6954 -> Friday, 28 February 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27006 -> Friday, 28 February 2020 3:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18535 -> Friday, 28 February 2020 3:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26413 -> Friday, 28 February 2020 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3434 -> Friday, 28 February 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57031 -> Friday, 28 February 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51686 -> Friday, 28 February 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43145 -> Friday, 28 February 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36044 -> Friday, 28 February 2020 4:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55457 -> Friday, 28 February 2020 4:40 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 27240 -> Friday, 28 February 2020 4:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9682 -> Friday, 28 February 2020 4:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62977 -> Friday, 28 February 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20637 -> Friday, 28 February 2020 5:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39000 -> Friday, 28 February 2020 5:09 PM
+City seed 5678 -> London, United Kingdom

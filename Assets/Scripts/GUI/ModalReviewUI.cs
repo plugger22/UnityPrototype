@@ -60,6 +60,8 @@ public class ModalReviewUI : MonoBehaviour
     private int votesAbstained;
     private float reviewWaitTimerDefault;
 
+    private bool isFlashReviewButton;
+
     private bool isOutcome;                                     //true if an outcome achieved, eg. Black mark or commendation, false if inconclusive
 
     //fast Access
@@ -169,6 +171,7 @@ public class ModalReviewUI : MonoBehaviour
                 SetReviewUI(details);
                 break;
             case EventType.ReviewStart:
+                isFlashReviewButton = false;
                 StartReview();
                 break;
             case EventType.ReviewCloseUI:
@@ -365,6 +368,9 @@ public class ModalReviewUI : MonoBehaviour
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Review };
             GameManager.instance.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
+            //flash review button
+            isFlashReviewButton = true;
+            StartCoroutine("ReviewButton");
         }
     }
 
@@ -384,6 +390,32 @@ public class ModalReviewUI : MonoBehaviour
         Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");
         //stats
         GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewsTotal);      
+    }
+
+    /// <summary>
+    /// Flashes 'Commence Review' button to gain player's attention
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ReviewButton()
+    {
+        Vector2 orginalDelta = buttonReview.image.rectTransform.sizeDelta;
+        Vector2 newDelta = orginalDelta;
+        newDelta.y += 10;
+        float original_y = orginalDelta.y;
+        do
+        {
+            //make larger
+            if (buttonReview.image.rectTransform.sizeDelta.y == original_y)
+            { buttonReview.image.rectTransform.sizeDelta = newDelta; }
+            //return to original size
+            else
+            { buttonReview.image.rectTransform.sizeDelta = orginalDelta; }
+            yield return new WaitForSeconds(0.5f);
+        }
+        while (isFlashReviewButton == true);
+        //reset button to normal size
+        buttonReview.image.rectTransform.sizeDelta = orginalDelta;
+        yield return null;
     }
 
     /// <summary>

@@ -282,8 +282,12 @@ namespace modalAPI
         public string textHeader;
         public string textTop;
         public string textBottom;
+        public string help0;                                                                    //optional help, icon displayed only if help0 present
+        public string help1;
+        public string help2;
+        public string help3;
         public GlobalSide side;
-        public GenericOptionData[] arrayOfOptions = new GenericOptionData[4];                           //only the first four are recognised
+        public GenericOptionData[] arrayOfOptions = new GenericOptionData[4];                               //only the first four are recognised
         public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[4];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
         public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[4];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
     }

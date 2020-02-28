@@ -122,5 +122,44 @@ public class TextManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Export all topic Options (specific fields only) to a file
+    /// </summary>
+    public void ExportTopicOptions()
+    {
+        TopicOption[] arrayOfOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        if (arrayOfOptions != null)
+        {
+            int count = arrayOfOptions.Length;
+            //create list of data
+            string[] arrayOfData = new string[count * 2];
+            for (int i = 0; i < count; i++)
+            {
+                TopicOption option = arrayOfOptions[i];
+                if (option != null)
+                {
+                    arrayOfData[i * 2] = option.name;
+                    arrayOfData[i * 2 + 1] = option.news;
+                }
+                else { Debug.LogErrorFormat("Invalid topicOption (Null) in arrayOfOptions[{0}]", i); }
+            }
+            //export list of data
+            filename = "TopicOptionData.txt";
+            if (File.Exists(filename) == true)
+            {
+                try { File.Delete(filename); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE \"{0}\', error \"{1}\"", filename, e.Message); }
+            }
+            //create new file
+            try
+            {
+                File.WriteAllLines(filename, arrayOfData);
+                Debug.LogFormat("[Fil] TextManager.cs -> ExportTopicOptions: \"{0}\" Exported{1}", filename, "\n");
+            }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT TO FILE \"{0}\", error \"{1}\"", filename, e.Message); }
+        }
+        else { Debug.LogError("Invalid arrayOfOptions (Null)"); }
+    }
+
     //new method above here
 }

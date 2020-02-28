@@ -835,6 +835,41 @@ public class HelpManager : MonoBehaviour
 
         #region ...HQ
 
+        #region HQ Overview
+        //
+        // - - - HQ Overview
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "hq_over_0";
+        data.header = "Overview";
+        data.text = string.Format("You report to your HQ. They provide you with support and services. If you {0}displease{1} your HQ you may get {2}FIRED{3}",  colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Opinion
+        data = new HelpData();
+        data.tag = "hq_over_1";
+        data.header = "HQ's Opinion of You";
+        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Motivation{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Heirarchy
+        data = new HelpData();
+        data.tag = "hq_over_2";
+        data.header = "HQ Heirarcy";
+        data.text = string.Format("HQ has a {0}four member{1} heirarchy with the {2}most senior{3} member, the Boss, on the {4}LEFT{5} (above)", colourAlert, colourEnd, colourAlert, colourEnd,
+            colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Boss
+        data = new HelpData();
+        data.tag = "hq_over_3";
+        data.header = "HQ Boss";
+        data.text = new StringBuilder()
+            .AppendFormat("The Boss (Director) has a {0}personal opinion{1} (Motivation) but they also have a view on the {2}Decisions{3} you have taken. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("When it comes time for a {0}REVIEW{1} the Boss gets {2}Two{3} votes, one for each.", colourAlert, colourEnd, colourAlert, colourEnd)
+            .ToString();
+        listOfHelp.Add(data);
+        #endregion
+
         #region HQ Services
         //
         // - - - HQ Services (Relocating)

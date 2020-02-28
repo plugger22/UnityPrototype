@@ -740,7 +740,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Initialises required number of actors to populate HQ hierarchy for player side
     /// </summary>
-    public void InitialiseHQActors()
+    public void InitialiseHqActors()
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int numOfArcs, level;
@@ -3644,11 +3644,12 @@ public class ActorManager : MonoBehaviour
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                        tooltipDetailsSprite.textMain = new StringBuilder()
+                        /*tooltipDetailsSprite.textMain = new StringBuilder()
                            .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
                            .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
-                           .ToString();
+                           .ToString();*/
+                        tooltipDetailsSprite.textMain = string.Format("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd);
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
                         //tooltip -> stars (bottom text, motivation -> same for all)
@@ -3660,6 +3661,11 @@ public class ActorManager : MonoBehaviour
                         data.arrayOfOptions[i - offset] = optionData;
                         data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
                         data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
+                        //help
+                        data.help0 = "hq_over_0";
+                        data.help1 = "hq_over_1";
+                        data.help2 = "hq_over_2";
+                        data.help3 = "hq_over_3";
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
                 }

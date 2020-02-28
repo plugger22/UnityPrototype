@@ -955,6 +955,7 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Export Data");
                 GameManager.instance.textScript.Export();
+                GameManager.instance.textScript.ExportTopicOptions();
             }
 
             //twentySixth button

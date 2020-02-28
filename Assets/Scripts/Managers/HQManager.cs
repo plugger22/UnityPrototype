@@ -129,7 +129,7 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //initialise HQ actors starting lineUp
-        GameManager.instance.actorScript.InitialiseHQActors();
+        GameManager.instance.actorScript.InitialiseHqActors();
     }
     #endregion
 

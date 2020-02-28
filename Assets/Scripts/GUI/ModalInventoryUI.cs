@@ -1,6 +1,8 @@
 ﻿using delegateAPI;
 using gameAPI;
 using modalAPI;
+using packageAPI;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +25,7 @@ public class ModalInventoryUI : MonoBehaviour
     public TextMeshProUGUI headerText;
 
     public Button buttonCancel;
+    public Button buttonHelp;
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
@@ -31,8 +34,10 @@ public class ModalInventoryUI : MonoBehaviour
 
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
+    private GenericHelpTooltipUI help;
 
     private InventoryDelegate handler;                          //method to be called for an option refresh (passed into SetInventoryUI)
+
 
 
     /// <summary>
@@ -53,11 +58,17 @@ public class ModalInventoryUI : MonoBehaviour
 
     private void Awake()
     {
+        //Asserts
+        //Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();
         if (buttonInteraction != null)
         { buttonInteraction.SetButton(EventType.InventoryCloseUI); }
         else { Debug.LogError("Invalid buttonInteraction Cancel (Null)"); }
+        //help button
+        help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
+        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
@@ -174,6 +185,14 @@ public class ModalInventoryUI : MonoBehaviour
             headerText.text = details.textHeader;
             topText.text = details.textTop;
             bottomText.text = details.textBottom;
+            //set help
+            List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+            if (listOfHelpData != null && listOfHelpData.Count > 0)
+            {
+                buttonHelp.gameObject.SetActive(true);
+                help.SetHelpTooltip(listOfHelpData, 150, 200);
+            }
+            else { buttonHelp.gameObject.SetActive(false); }
             //loop array and set options
             for (int i = 0; i < details.arrayOfOptions.Length; i++)
             {
@@ -287,6 +306,8 @@ public class ModalInventoryUI : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
+        //close help tooltip
+        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
         //set game state
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalInventoryUI.cs -> CloseInventoryUI{0}", "\n");

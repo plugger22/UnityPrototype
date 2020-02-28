@@ -1,0 +1,1528 @@
+ActCon0Opt0
+You don't have to work for the Resistance, all you've got to do is tell them things, says [contact] of [node]. They'll pay you
+ActCon0Opt1
+Did you know that you can earn money on the by letting the Resistance know stuff, says [contact] of [node]? It's for money, they pay real money
+ActCon0Opt2
+I've heard that some people volunteer to tell the Resistance things. Little things. Of course I would never do it myself, says [contact] of [node]
+ActCon0Opt3
+There are pros and cons for being a Resistance contact, says an anonymous source. Sure it's fun and exciting but sometimes they refuse to pay
+ActCon1Opt0
+If you're going to be a snitch for the Resistance you have to treat it like a job and assume that you're dealing with idiots, says [contact] of [node]
+ActCon1Opt1
+It's not all roses being an informant for the Resistance. There's the danger, of course, says [contact] of [node] but it's their attitude that gets me
+ActCon1Opt2
+Police sources confirm the body found yesterday at [node] was that of [contact]. It appears to have suffered multiple contusions to the face
+ActDisBlow0Opt0
+Police are investigating [npc], [job] for illegally receiving Resistance assistance with a medical bill as a result of the [node] bombing
+ActDisBlow0Opt1
+The Resistance has accepted responsibility for the bombing of the [genLoc] at [node]. [mayor] asks why did they bother? Of course they did it 
+ActDisBlow0Opt2
+Police identified a body today as that of [npc], [job], last seen in hospital recovering from the recent bombing atrocity at [node]. 
+ActDisBlow0Opt3
+[mayor] called nonsense today on the Resistance's claim that they had nothing to do with the bombing of the [genLoc] at [node].
+ActDisBlow1Opt0
+A Resistance source today issued a denial for the [node] bomb massacre of innocent civilians. Fake news, says [mayor].
+ActDisBlow1Opt1
+Rumours of a gas leak causing the recent [node] explosion that killed many worthy citizens are the work of the Resistance, states [mayor]. 
+ActDisBlow1Opt2
+The Resistance  today acknowledged responsibility for the [genLoc] explosion at [node] that claimed multiple victims. No surprise, says, [mayor].
+ActDisBlow1Opt3
+[npc],  [job], who was [npcIs], today died of their injuries from the recent Resistance [node] explosion which claimed many lives.
+ActDisBlow2Opt0
+There was a minor explosion at [node], [daysAgo]. Police investigations reveal that it could have been much worse
+ActDisBlow2Opt1
+Police are puzzled by a minor explosion at [node], [daysAgo]. Crime scene evidence indicates the presence of a large amount of explosives
+ActDisBlow2Opt2
+A small explosion at [node] has been attributed to the Resistance. Police are blaming ineptitude for the fizzer and say it could have been much worse
+ActDisBlow3Opt0
+The bomb squad are attempting to defuse unexploded ordinance at [node]. Police have locked down the district and asked citizens to stay clear
+ActDisBlow3Opt1
+Police have noted unusual Resistance activity at [node] recently and are currently reviewing surviellance footage to ascertain exactly what went on
+ActDisBlow3Opt2
+RoboDog sniffers are scouring [node] as a result of an anonymous tipoff to Police that there may be unexploded ordinance present
+ActDisDepT0Opt0
+
+ActDisDepT0Opt1
+
+ActDisDepT0Opt2
+
+ActDisDepT1Opt0
+
+ActDisDepT1Opt1
+
+ActDisDepT1Opt2
+
+ActDisGear0Opt0
+Anyone caught illegally selling gear to the Resistance will be incarcerated for the duration, declared an angry [mayor] at a news conference today
+ActDisGear0Opt1
+Police are stamping out [citys] purveyors of illegal gear, insists [mayor]. They are systematically rolling up the networks one by one
+ActDisGear0Opt2
+[npc], [npcIs], from [node], today recalled their experience of being recruited by the Resistance. Losers, all of them, they told our Reporter
+ActDisGear1Opt0
+Police revealed today that [npc], [job], suspected purveyor of illegal goods, of [node] is currently under investigation for unexplained income
+ActDisGear1Opt1
+A body was found [daysAgo] dumped on a side street. Police have identified it as [npc], [job] of [node], suspected purveyor of illegal goods
+ActDisGear1Opt2
+An anonymous Police source confirmed that the infamous Resistance leader, [player], may have been spotted [daysAgo] at [node]
+ActDisGear1Opt3
+[npc], [npcIs], of [node], today lodged a claim at the city courts claiming extortion and threatening behaviour by the Resistance
+ActDisGear2Opt0
+[mayor] denied reports that The Authority has been tagging illegal gear in an attempt to geo locate Resistance HQ. Rumours and lies, says [mayor]
+ActDisGear2Opt1
+Authority tech is NOT being used to track illegal Resistance gear purchases, says [mayor]. Our reporter has seen evidence to the contrary
+ActDisGear2Opt2
+Are we tagging black market gear with tracking tech? Of course we are, says a beaming [mayor] today at [node]. We do it all the time
+ActDisGear3Opt0
+Police sources indicate that the black market for illegal gear is running short of supplies and that competition, and prices, are increasing
+ActDisGear3Opt1
+When unregistered organisations fight each other over who gets what piece of illegal gear we leave them to it, says [mayor]
+ActDisGear3Opt2
+Word on the street has the Resistance in conflict with an unnamed organisation over a recent incident at [node]. Is it true?
+ActDisHack0Opt0
+[mayor] declares the security flaw identified at the [node] server has been resolved. Citizens can safely go about their daily business
+ActDisHack0Opt1
+Rare glitches in the [citys] security system are nothing to be concerned about, says [mayor]. Nothing but a minor hiccup in the local [node] grid
+ActDisHack0Opt2
+[citys] security system is rock solid, insists [mayor] when asked about the recent glitch at the local [node] grid
+ActDisHack0Opt3
+There are rumours that exploits in [citys] security system are for sale on the blackmarket. Nosense, says [mayor]
+ActDisHack1Opt0
+[mayor] declared the food shortages at [node] to be a thing of the past as the city cybersquad squashed a malicious Resistance hack
+ActDisHack1Opt1
+Several unmarked roboVans have been spotted delivering food to citizens at [node] where malicious hacking has shut down normal food supplies
+ActDisHack1Opt2
+A SWAT team forcibly arrested [npc], [job] of [node] who is accused of being behind the hack that caused a glitch in local food deliveries
+ActDisHack1Opt3
+Food deliveries resumed today [node] after an unexplained glitch in the transport grid. Technicians are investigating
+ActDisHack2Opt0
+Was there a breach of citizen's personal data during a recent net hack at [node], [daysAgo]? Officials are neither confirming or denying
+ActDisHack2Opt1
+[mayor] insists that the recent privacy data breach originating from a, supposedly, secure server at [node] is nothing to be concerned about
+ActDisHack2Opt2
+Citizen's personal datasets are appearing at random on the Net. It's the work of the Resistance, says [mayor]. But how did they get it?
+ActDisHack3Opt0
+Police sources confirm that a Resistance [actor] was spotted at [node] recently. It's only a matter of time, says [mayor]. We'll get them
+ActDisHack3Opt1
+An excited Police spokesman confirmed a sighting of [player], [daysAgo] at [node]. We have teams on the ground and expect a result soon, they said
+ActDisHack3Opt2
+Yes, [city] has a cybersecurity department, confirmed [mayor]. Why wouldn't we? They are currently investigating a Resistance hack at [node]
+ActDisInfo0Opt0
+Citizens, do not be seduced by the false promises of the Resistance, says [mayor]. Our Reeducation facility at Area 9 will rid you of your illusions
+ActDisInfo0Opt1
+There is no amnesty for citizens who collaborate with the Resistance, insists [mayor]. We arrest them and send them to Area 9 for Reeducation
+ActDisInfo0Opt2
+It is every citizens duty to report Resistance activity in their districts. Withholding information is a criminal offence
+ActDisInfo1Opt0
+A body was found floating face down in aquaFood facility at [node]. Police have indicated that it's a murder scene and that enquires are ongoing
+ActDisInfo1Opt1
+There are, said [mayor], some misguided citizens in our fair city of [city]. It is the job of the Police to weed them out and ship them off to Area 9
+ActDisInfo1Opt2
+Anyone who collaborates with the Resistance is committing a criminal act, declared [mayor]. Our Reeducation facility at Area 9 has room to spare
+ActDisInfo1Opt3
+If you are collaborating with the Resistance, please inform us, said [mayor]. Area 9 Reeducation facillity is there to help you
+ActDisInfo2Opt0
+There have been disturbing reports of citizens collaborating with the Resistance, says [mayor]. Especially at [node]. It will not be tolerated
+ActDisInfo2Opt1
+Any citizen who collaborates with the Resistance will be arrested and sent to the Area 9 Reeducation facility, declared [mayor], this morning
+ActDisInfo2Opt2
+An unknown citizen was found badly beaten, lying in the gutter, at [node]. The victim has refused to make a statement to Police
+ActDisInfo2Opt3
+Collaborating with the Resistance is a crime, repeated [mayor]. Every citizen has a duty to immediately report Resistance activity to the Police
+ActDisInfo3Opt0
+Police drones raced to the scene of a suspected Resistance surveillance operation at [node] but no arrests were made
+ActDisInfo3Opt1
+A Resistance surveillance operation was foiled at [node] when a concerned citizen reported suspicious activity to the Police
+ActDisInfo3Opt2
+A Resistance surveillance operation at [node] was routinely shut down by Police. A spokesman indicated that this happens all the time
+ActDisInfo3Opt3
+A recently foiled Resistance surveillance operation at [node] has highlighted the need for an enhanced fast response Police driod unit
+ActDisNeutT0Opt0
+[mayor] confirmed that [team] was recalled early from [node] [daysAgo] due to administrative matters
+ActDisNeutT0Opt1
+[team] suffered from a bout of sickness and had to be recalled from [node] [daysAgo]. [mayor] wishes them a full recovery
+ActDisNeutT0Opt2
+The mayor's office issued a statement today confirming [team] was recalled from [node] early due to a reallocation of resources
+ActDisNeutT0Opt3
+Internal training was the reason given by [mayor] for [team] having been recalled early from [node]. Your reporter is somewhat skeptical
+ActDisNeutT1Opt0
+Yet another innocent citizen has been callously mown down by the Resistance, this time at [node]. When will they learn, asks [mayor]?
+ActDisNeutT1Opt1
+A citizen was badly injured at [node], [daysAgo] directly as a result of Resistance activity. This has stop, declares [mayor]
+ActDisNeutT1Opt2
+How big must the butcher's bill be before the Resistance stops murdering innocent citizens, asks [mayor]? [node] claimed another victim [daysAgo]
+ActDisNeutT1Opt3
+After another badly injured citizen at [node] was medevaced, [mayor] wondered when would the Resistance stop their killing spree?
+ActDisNeutT2Opt0
+There is absolutey no truth in the allegation that [team] behaved in an inappropriate manner at [node] when delpoyed there [daysAgo], insisted [mayor]
+ActDisNeutT2Opt1
+Our teams operate under strict rules, says [mayor]. All citizens should be grateful for their presence. What happened at [node] was an abberation
+ActDisNeutT2Opt2
+Citizens of [city] have nothing to fear from our teams, insisted [mayor]. They are there to help and have strict guidelines
+ActDisNeutT2Opt3
+Reports of poor behaviour by [team] at [node], [daysAgo], are nothing but a Resistance false flag, says [mayor]
+ActDisNeutT3Opt0
+It's true that a member of [team] was tortured by the Resistance prior to their withdrawal from [node]. Steps will be taken, [mayor] hinted darkly
+ActDisNeutT3Opt1
+A member of [team] is recovering in hospital after being brutalised by the Resistance at [node], says [mayor]. We wish them a speedy recovery
+ActDisNeutT3Opt2
+Reports are emerging that the citizens of [node] took matters into their own hands and tortured a member of [team], [daysAgo]. Can this be true?
+ActDisNeutT3Opt3
+A member of [team] passed away last night in hospital after being brutalised by the Resistance while on deployment at [node]
+ActDisNews0Opt0
+[node] media outlets are awash with Resistance propaganda that appears to be gaining traction
+ActDisNews0Opt1
+Fake news, cautions [mayor] as the citizens of [node] wonder about recent posts that appear to have touched a nerve
+ActDisNews0Opt2
+Despite attempts to shutdown what [mayor] declares as Fake News, media outlets at [node] continue to run stories full of shocking revelations
+ActDisNews1Opt0
+A terrible tragedy at [node] was made worse by heartless Resistance progaganda. [mayor] sends condolences to the family
+ActDisNews1Opt1
+It's not enough for a family to suffer, says [mayor] but they have to put up with Resistance propaganda that makes fun of their tragedy at [node]
+ActDisNews1Opt2
+Troubling stories about one families tragedy at [node] have spread like wildfire on the Net. [citys] Censor Bureau is working overtime
+ActDisNews1Opt3
+An misstep by the Resistance has been averted at [node] when the family in question received anonymous donations to help cope with their tragedy
+ActDisNews2Opt0
+We are actively working with social media Megacorps to lock out Resistance fake news, says [mayor], reading a statement on behalf of The Authority
+ActDisNews2Opt1
+[city] news is extensively filtered prior to release to ensure that only legitimate, approved, stories make the feed. You can rely on us, says [mayor]
+ActDisNews2Opt2
+We don't believe in a freeforall, says [mayor]. Citizens should be able to rely on their newsFeed to be truthful which is why we have censorship
+ActDisNews3Opt0
+Our Cybersecurity teams diligently hunt down and erase all fake media accounts, says [mayor]. If they can't be positively verified, they're scrubbed
+ActDisNews3Opt1
+[city] has zero tolerance for Resistance propaganda, says [mayor]. There was a regrettable incident [daysAgo] at [node] but it was dealt with
+ActDisNews3Opt2
+The Resistance is a parasite on our clean, honest, newsFeed here at [city], proclaims [mayor]. Insecticide, lots of it, is the answer
+ActDisRecall0Opt0
+
+ActDisRecall0Opt1
+
+ActDisRecall0Opt2
+
+ActDisRecall1Opt0
+
+ActDisRecall1Opt1
+
+ActDisRecall1Opt2
+
+ActDisRecruit0Opt0
+Word on the street at [node] is that the Resistance is doing well on the recruitment front
+ActDisRecruit0Opt1
+Anyone considering a career with the Resistance needs to seriously think aoubt life insurance, joked [mayor]. Do they offer that?
+ActDisRecruit0Opt2
+Life expectancy as a member of the Resistance is short, brutish and nasty, says [mayor], explaining the facts to workers at [node]
+ActDisRecruit1Opt0
+Police are investigating [recruit] of [node] who deposited a large, unexplained, sum of money in their bank account [daysAgo]
+ActDisRecruit1Opt1
+Word on the street at [node] is that the Resistance's recruitment efforts have stalled
+ActDisRecruit1Opt2
+Resistance members apporoach us asking for an amnesty from prosecution if they return to normal life, said [mayor]. No is my reply
+ActDisRecruit1Opt3
+[npc], [job], of [node], a suspected Resistance member was executed today by a public roboHanger
+ActDisRecruit2Opt0
+Why would anyone want to join the Resistance, mocked [mayor]? Who wants to die wearing last weeks clothes and half starved?
+ActDisRecruit2Opt1
+Do people ever join the Resistance voluntarily, wondered [mayor]? Or are they coerced with threats of violence to their loved ones?
+ActDisRecruit2Opt2
+[city] offers work, food and shelter for all citizens. Why join the Resistance when there is a ServoPod here with your name on it, asks [mayor]?
+ActDisRecruit3Opt0
+What happens to the family of known Resistance members here at [city], asks [mayor]? Do we treat them poorly? Of course we do
+ActDisRecruit3Opt1
+Join the Resistance and you can expect to be hunted down like a feral animal, stated [mayor] today. If we can't get you we'll get your family
+ActDisRecruit3Opt2
+What happens to old Resistance members, asks [mayor]? Do they have a place here at [city]? We process them into Rat food is what happens 
+ActDisRiot0Opt0
+[node] was in lockdown during the massive riot of [daysAgo]. Security forces struggled to get the district under control
+ActDisRiot0Opt1
+What caused the supercharged riot at [node] of [daysAgo]? Nobody quite knows, or if they do, they aren't talking to this reporter
+ActDisRiot0Opt2
+The boiling, roiling, riot that orginated in [node] and quickly spread to adjoining districts [daysAgo] doesn't appear to have a cause or a leader
+ActDisRiot0Opt3
+[mayor] urged citizens to ignore Resistance propaganda, currrently circulating, that highlights the glamour of a career working for the Cause 
+ActDisRiot1Opt0
+The death of an innocent citizen during the riots [daysAgo], centred on [node] is a sad day for the city
+ActDisRiot1Opt1
+When a citizen dies in such ugly circumstances as found in the recent riots at [node] all we can do is reflect on the futility of violence
+ActDisRiot1Opt2
+Should we share our collective guilt at the death of an innocent citizen in the recent [node] riots, [daysAgo]? [mayor] blames the Resistance
+ActDisRiot2Opt0
+[mayor] paid tribute to the innocent citizen who was brutally torn asunder during the recent [node] riots. We all know who is to blame, says the mayor
+ActDisRiot2Opt1
+The tragic family of the innocent citizen who was violently murdered during the recent [node] riots today received a bouqet of flowers from [mayor]
+ActDisRiot2Opt2
+There is no truth to the rumours that the poor citizen murdered during the recent [node] riots was an informer, declared [mayor]. None at all
+ActDisRiot3Opt0
+Distressed business owners at [node] asked [mayor] for help repairing the damage caused by the recent bout of rioting
+ActDisRiot3Opt1
+Businesses at [node] told this reporter that the Resistance has admitted responsibility for the recent riots. But are they going to pay?
+ActDisRiot3Opt2
+Business owners at [node] have complained to the Police of ongoing harrassment from Resistance thugs after the recent riots
+ActDisRiot3Opt3
+After the recent riots, business owners at [node] have come to realise that the Resistance has no time for them, stated [mayor]
+ActDisTracer0Opt0
+[mayor] today attempted to quash a story of blatant city corruption at [node] after a Resistance InYourFace post went viral
+ActDisTracer0Opt1
+Is there corruption in [city]? Of course not, replied [mayor] after stories emerged of dubious activity at [node]
+ActDisTracer0Opt2
+Corruption isn't tolerated here in [city], insisted [mayor], despite persistent rumours of money grubbing officials at [node]. Who can we believe?
+ActDisTracer0Opt3
+We can't prevent human nature but we can deal with it severely, says [mayor] when asked about corruption among city officials
+ActDisTracer1Opt0
+It's important that citizens report any suspicious looking devices attached to high vantage points, said [mayor] when asked about Resistance spy tech
+ActDisTracer1Opt1
+Resistance spy tech is of a much higher standard than previously, said [mayor]. It is compulsory for citizens to report any sightings
+ActDisTracer1Opt2
+[mayor] ordered a bug hunt yesterday at [node]. All citizens were encouraged to search for Resistance spy tech that is rumoured to be present
+ActDisTracer1Opt3
+If you think an object is suspicious, inform the Police immediately, asks [mayor], broadcasting live from [node]. Is it because of the Resistance?
+ActDisTracer2Opt0
+All city officials are honest and scrupulously obey the law, insisted [mayor] when asked about rumours of a bad apple at [node]
+ActDisTracer2Opt1
+There is no place in [city] for poor morals or ethics declared [mayor]. Officials are either an example for all or else they should immediately resign
+ActDisTracer2Opt2
+Recent InYourFace posts accuse an important city V.I.P, at [node], of making a sport out of infidelity. Not in my city, says [mayor], no sir
+ActDisTracer2Opt3
+[mayor] acknowledged that an important city official, [npc], from [node] was retired from service today due to family reasons
+ActDisTracer3Opt0
+It's a sad fact that Resistance spy tech's sole purpose is to stalk our citizens without their consent, lamented [mayor] at a press conference
+ActDisTracer3Opt1
+You can't trust the Resistance, says [mayor]. They are spying on us all and selling information on our habits and foibles to a dark AI
+ActDisTracer3Opt2
+Citizens who, sadly, feel the need to cooperate with the Resistance, despite all that we have done for them, face a life sentence, warns [mayor]
+ActDisTracer3Opt3
+Covert spying on the fair citizens of [city] is a typical Resistance ploy meant only to frighten and spread disharmony, warns [mayor]
+ActMatAUT0Opt0
+
+ActMatAUT0Opt1
+
+ActMatAUT0Opt2
+
+ActMatAUT1Opt0
+
+ActMatAUT1Opt1
+
+ActMatAUT1Opt2
+
+ActMatRES0Opt0
+Word on the street is that once you are in with the Resistance you are treated like royalty, says [npc], [job] of [node]
+ActMatRES0Opt1
+The amount of AI boss crap you have to put up with here at [node], says a frustrated [npc], [job]. Will I join the Resistance? Who knows
+ActMatRES0Opt2
+The Resistance is one big happy family, at least that's what they make it out to be, says [npc], [job] of [node]
+ActMatRES0Opt3
+My [who] is in the Resistance and tells everybody that it's great. Can you believe that, asks [npc], [job] of [node]?
+ActMatRES1Opt0
+If I can't earn more money than what I get from my dead end,  Robo supervised, job then I'm going to join the Resistance, insists [npc] of [node]
+ActMatRES1Opt1
+The Resistance? All that lot do is fight and argue among themselves. Pack of wolves, if you ask me, says [npc], [job] of [node]
+ActMatRES1Opt2
+[city] has been good to me. I like it here. Join the Resistance? Why, so [mayor] can feed me to the RoboDogs? No thanks, say [npc] of [node]
+ActMatRES1Opt3
+The Resistance? Bunch of nut jobs if you ask me, says [npc], [job] of [node]. What have they ever done for [city] apart from blowing stuff up?
+ActMatRES2Opt0
+Who would be crazy enough to join the Resistance, asks [npc], [job] of [node]? [mayor] would have you be the star of the Robohanger show
+ActMatRES2Opt1
+Destiny calls. I'm joining the Resistance. Signing up tomorrow, says [npc] of [node]. I hope that my [handicap] isn't an issue
+ActMatRES2Opt2
+I believe in the Resistance and their fight for justice, says [npc], [job] of [node]. But would I join them? No sir, not me. Way too dangerous
+ActMatRES2Opt3
+[mayor] and the Resistance need to sit down and talk over a nice cup of tea, says [npc] of [node]. Back in my days everybody talked
+ActMatRES3Opt0
+Does the Resistance offer promotional prospects? That's what I want to know, asks [npc], [job] of [node]
+ActMatRES3Opt1
+Does the Resistance offer training programs? I have to consider my [handicap] and training is an important consideration, says [npc] of [node]
+ActMatRES3Opt2
+Nobody has told me what they pay? How am I supposed to join the Resistance if it's on a wing and prayer, asks [npc], [job] of [node]
+ActMatRES3Opt3
+Does the Resistance have a proper HR policy? I can't imagine that they wouldn't but you never know, do you, asks [npc], [job] of [node]?
+ActMatRES4Opt0
+Who's in charge of the Resistance? Who would I report to? I need to feel like I'm in a proper hierarchy, says [npc], [job] of [node]
+ActMatRES4Opt1
+Does the Resistance have sick leave? What if my [handicap] plays up? It'd help if somebody could tell me, says [npc], [job] of [node]
+ActMatRES4Opt2
+Would I have to do anything bad? I don't feel comfortable doing bad things, even if it was for the Resistance, says [npc], [job] of [node]
+ActMatRES4Opt3
+Does the Resistance have a [policy]? I'm passionate about this, insists [npc], [job] of [node]
+ActMatRES5Opt0
+If it wasn't for the fact that the Resistance doesn't have a [policy], I'd be a member, but what can you do, asks [npc], [job] of [node]?
+ActMatRES5Opt1
+I'm willing to do anything for the Resistance, even cohabit with animals if that's what it takes to get enough [money], says [npc] of [node]
+ActMatRES5Opt2
+Does the Resistance have a written policy on working overtime? Don't get me wrong, I'll do it but I have to get paid for it, says [npc] of [node]
+ActMatRES5Opt3
+I feel like I'd be a super valuable asset to the Resistance, says [npc], [job] of [node]. I'm available just as soon as I sort out my [handicap]
+ActGea0Opt0
+
+ActGea0Opt1
+
+ActGea0Opt2
+
+ActGea1Opt0
+
+ActGea1Opt1
+
+ActGea1Opt2
+
+ActGea2Opt0
+
+ActGea2Opt1
+
+ActGea2Opt2
+
+ActGea3Opt0
+
+ActGea3Opt1
+
+ActGea3Opt2
+
+ActGea4Opt0
+
+ActGea4Opt1
+
+ActGea4Opt2
+
+ActGea5Opt0
+
+ActGea5Opt1
+
+ActGea5Opt2
+
+ActPolAUT0Opt0
+
+ActPolAUT0Opt1
+
+ActPolAUT0Opt2
+
+ActPolAUT1Opt0
+
+ActPolAUT1Opt1
+
+ActPolAUT1Opt2
+
+ActPolRES0Opt0
+When you join the Resistance you have to go full Monk and aren't allowed to form relationships, says [npc], [job], of [node]
+ActPolRES0Opt1
+My [who] knows somebody in the Resistance and says that they are a sad pumpkin, says [npc], [job], of [node]
+ActPolRES0Opt2
+Would I join the Resistance knowing that I can't have a relationship with any of my fellow members? No, says [npc], [job], of [node]
+ActPolRES1Opt0
+They do it for security. The Resistance, that is. They don't let you talk to anyone, says [npc], [job], of [node]
+ActPolRES1Opt1
+You're not allowed to kiss when you join the Resistance. Is that true? Sounds pretty harsh to me, says [npc], [job], of [node]
+ActPolRES1Opt2
+Loneliness is an occupational hazard for Resistance members according to my [who], says [npc] of [node]
+ActPolRES2Opt0
+What if I wanted to start a family? Could I do that if I was in the Resistance? Probably not, says [npc], [job], of [node]
+ActPolRES2Opt1
+I can understand the Resistance needing to maintain operational security but I think they take it too far, says [npc], [job], of [node]
+ActPolRES2Opt2
+If you can't have a relationship when you're in the Resistance what's the point of joining, asks [npc], [job], of [node]?
+ActPolRES3Opt0
+[mayor] says that only socially dsyfunctional people join the Resistance because they value loneliness, says [npc], [job], of [node]
+ActPolRES3Opt1
+Join the Resistance? I don't know. Sounds pretty miserable if you aren't allowed to have a relationship, says [npc], [job], of [node]
+ActPolRES3Opt2
+Luckily my [handicap] prevents me joining the Resistance. I wouldn't want the life of loneliness that they're offering, says [npc], [job], of [node]
+AutCam0Opt0
+
+AutCam0Opt1
+
+AutCam0Opt2
+
+AutCam1Opt0
+
+AutCam1Opt1
+
+AutCam1Opt2
+
+AutGen0Opt0
+
+AutGen0Opt1
+
+AutGen0Opt2
+
+AutGen0Opt3
+
+AutGen1Opt0
+
+AutGen1Opt1
+
+AutGen1Opt2
+
+AutTeaCivil0Opt0
+
+AutTeaCivil0Opt1
+
+AutTeaCivil0Opt2
+
+AutTeaCivil1Opt0
+
+AutTeaCivil1Opt1
+
+AutTeaCivil1Opt2
+
+AutTeaControl0Opt0
+
+AutTeaControl0Opt1
+
+AutTeaControl0Opt2
+
+AutTeaControl1Opt0
+
+AutTeaControl1Opt1
+
+AutTeaControl1Opt2
+
+AutTeaDamage0Opt0
+
+AutTeaDamage0Opt1
+
+AutTeaDamage0Opt2
+
+AutTeaDamage1Opt0
+
+AutTeaDamage1Opt1
+
+AutTeaDamage1Opt2
+
+AutTeaErasure0Opt0
+
+AutTeaErasure0Opt1
+
+AutTeaErasure0Opt2
+
+AutTeaErasure1Opt0
+
+AutTeaErasure1Opt1
+
+AutTeaErasure1Opt2
+
+AutTeaMedia0Opt0
+
+AutTeaMedia0Opt1
+
+AutTeaMedia0Opt2
+
+AutTeaMedia1Opt0
+
+AutTeaMedia1Opt1
+
+AutTeaMedia1Opt2
+
+AutTeaProbe0Opt0
+
+AutTeaProbe0Opt1
+
+AutTeaProbe0Opt2
+
+AutTeaProbe1Opt0
+
+AutTeaProbe1Opt1
+
+AutTeaProbe1Opt2
+
+AutTeaSpider0Opt0
+
+AutTeaSpider0Opt1
+
+AutTeaSpider0Opt2
+
+AutTeaSpider1Opt0
+
+AutTeaSpider1Opt1
+
+AutTeaSpider1Opt2
+
+CamResA0Opt0
+
+CamResA0Opt1
+
+CamResA0Opt2
+
+CamResA1Opt0
+
+CamResA1Opt1
+
+CamResA1Opt2
+
+CamResA2Opt0
+
+CamResA2Opt1
+
+CamResA2Opt2
+
+CamResA3Opt0
+
+CamResA3Opt1
+
+CamResA3Opt2
+
+CamResB0Opt0
+
+CamResB0Opt1
+
+CamResB0Opt2
+
+CamResB1Opt0
+
+CamResB1Opt1
+
+CamResB1Opt2
+
+CamResC0Opt0
+
+CamResC0Opt1
+
+CamResC0Opt2
+
+CamResC1Opt0
+
+CamResC1Opt1
+
+CamResC1Opt2
+
+CamResC2Opt0
+
+CamResC2Opt1
+
+CamResC2Opt2
+
+CamResC3Opt0
+
+CamResC3Opt1
+
+CamResC3Opt2
+
+City0Opt0
+
+City0Opt1
+
+City0Opt2
+
+City1Opt0
+
+City1Opt1
+
+City1Opt2
+
+City2Opt0
+
+City2Opt1
+
+City2Opt2
+
+City3Opt0
+
+City3Opt1
+
+City3Opt2
+
+FamA0Opt0
+
+FamA0Opt1
+
+FamA0Opt2
+
+FamA1Opt0
+
+FamA1Opt1
+
+FamA1Opt2
+
+FamB0Opt0
+
+FamB0Opt1
+
+FamB0Opt2
+
+FamB0Opt3
+
+FamB1Opt0
+
+FamB1Opt1
+
+FamB1Opt2
+
+FamC0Opt0
+
+FamC0Opt1
+
+FamC0Opt2
+
+FamC1Opt0
+
+FamC1Opt1
+
+FamC1Opt2
+
+HQ0Opt0
+Does [side] HQ care about anything other than pushing their own wheelbarrow, asks [npc], [job], of [node]?
+HQ0Opt1
+Does [side] HQ care about we little people or are we just tiny cogs in their huge wheel, asks [npc], [job], of [node]?
+HQ0Opt2
+I get the impression that the hobnobs at [side] HQ are living in a magic bubble of abundance. Must be nice, says [npc], [job], of [node]
+HQ0Opt3
+If I was a paid up member of [side] HQ I probably wouldn't care about the little people either. As long as my shoes were shined, says [npc] of [node]
+HQ1Opt0
+When was the last time you saw a member of [side] HQ step down from above and mingle with we little people, asks [npc], [job], of [node]?
+HQ1Opt1
+My [who] is convinced that [side] HQ is nothing more than a continuous orgy of drugs, booze and pleasure, says [npc], [job], of [node]
+HQ1Opt2
+I'd like to know what [side] HQ is doing for we little people? When was the last time they helped anyone, asks [npc], [job], of [node]?
+HQ1Opt3
+As far as I can tell all that happens at [side] HQ is a whole lot of squabbling about nothing. Waste of space the lot of them, says [npc] of [node]
+HQ2Opt0
+Supposedly our betters at [side] HQ are doing a masterful job on our behalf, says [npc], [job], of [node]. Who believes that?
+HQ2Opt1
+If it wasn't for my [handicap] I'd round up every last member of [side] HQ and knock some sense into them, says [npc], [job], of [node]
+HQ2Opt2
+Other than fighting among themselves what do they do at [side] HQ? I'd like to know, says [npc], [job], of [node]
+HQ2Opt3
+Is [side] HQ corrupt? Is the sky blue?  You can't trust any of them. Nothing but wasters and bludgers, says [npc], [job], of [node]
+HQ3Opt0
+My [who] asked me the other day if [side] HQ were efficient? How the heck do I know, says [npc], [job], of [node]?
+HQ3Opt1
+Ants are efficient. So are cockroaches. [side] HQ aren't. Nothing but a bunch of oxygen thieves, says [npc], [job], of [node]
+HQ3Opt2
+[side] HQ have their finger on the pulse. Don't believe the doubters, they really know what's going on, says [npc], [job], of [node]
+HQ3Opt3
+I'm a big believer in [side] HQ. They are here to make my life better. How? I'm not exactly sure but I'm hoping, says [npc], [job], of [node]
+CapRes0Opt0
+They say those [cap3s] don't forget nuffin. They can keep firing questions till the sun burns out, says [npc] of [node]
+CapRes0Opt1
+Relentless. That's what those [cap3s] are, damn relentless, says [npc], [job], of [node]
+CapRes0Opt2
+My [who] is scared that one of those [cap3s] is going to squeeze them dry one day. What's there to squeeze, asks [npc] of [node]?
+CapRes0Opt3
+You get wired up before those [cap3s] come for you. Sit their like a damn Christmas tree, laments [npc], [job], of [node]
+CapRes1Opt0
+My [who] had to face an [cap3] and all they can do now is dribble. It's embarrassing, says [npc], [job], of [node]
+CapRes1Opt1
+My [who] claims they saw an [cap3] once. Insisted that it did THINGS to them. Sadly, not enough, says [npc], [job], of [node]
+CapRes1Opt2
+I'd rather have a frontal lobotomy than have to face one of those [cap3s], says [npc], [job], of [node]
+CapRes1Opt3
+My [who] was turned fruit loop crazy by one of those [cap3s] insists [npc], [job], of [node]
+CapRes2Opt0
+Those [cap2s] play on your emotions like the Devil plays the fiddle, says [npc], [job], of [node]
+CapRes2Opt1
+Those [cap2s] tear away your emotional defences like a kid opening a birthday present, says [npc], [job], of [node]
+CapRes2Opt2
+My [who] tried to face down an [cap2] once. Now they just sit in the corner and wee on the carpet, says [npc], [job], of [node]
+CapRes2Opt3
+Those [cap2s] are trained to hunt down your inner fears like a hound dog after a wounded hare, says [npc], [job], of [node]
+CapRes3Opt0
+My [who] was [npcIs] until they were worked over by an [cap2]. Can't stop crying now. It's a shame, says [npc] of [node]
+CapRes3Opt1
+Those [cap2s] have some kind of evil Jedi training that lets them suck you dry of all emotions until you are nothing but a husk, says [npc]
+CapRes3Opt2
+They're aliens, those [cap2s]. From another dimension. Soul suckers, that's what they are, says [npc], [job], of [node]
+CapRes3Opt3
+Nobody has ever gone up against a [cap2] and won, that I know of, insists [npc], [job], of [node]. Why even try?
+CapRes4Opt0
+[cap1s]? They have those things? Weren't they declared illegal by the guvumunt, asks [npc] of [node]?
+CapRes4Opt1
+My [who] was worked over by a [cap1] and now they poop into a bag. Phewee! Frightens the heck out me, says [npc] of [node]
+CapRes4Opt2
+Who built those [cap1s]? Should be banned. They're inhuman. Use them on goats if you want but not us, says [npc] of [node]
+CapRes4Opt3
+The [cap1s] don't let you scream. They shoot you full of anti-scream cream before drilling out your kneecaps, says [npc] of [node]
+CapRes5Opt0
+Can you hire out a [cap1]? I'd like to use it on my [who], says [npc], [job], of [node]
+CapRes5Opt1
+Sometimes those [cap1s] fry a circuit and rip people apart. All that's left is a pile of bloody mince, says [npc], [job], of [node]
+CapRes5Opt2
+My [who] swears that they could go ten rounds with a [cap1]. Tell them that they're dreaming, says [npc], [job], of [node]
+CapRes5Opt3
+Had a dream about a [cap1] last night says [npc], [job], of [node]. Woke up and found my pillow shredded
+CapRes6Opt0
+[cap0] and the Hell tank. Man, what a combination. Run for the hills, is my advice, says [npc], [job], of [node]
+CapRes6Opt1
+It's a perk of the job that [cap0] gets to lock up people in the Hell Tank. Fun and giggles all around, says [npc], [job], of [node]
+CapRes6Opt2
+My [who] volunteered to test a Hell Tank. All we got back was their nose ring and a thank you note, says [npc], [job], of [node]
+CapRes6Opt3
+What happens in a Hell Tank? You aren't having tea and scones with Lucifer, that's for sure, says [npc], [job], of [node]
+CapRes7Opt0
+My [who] spent time in a Hell Tank and now they won't stop screaming. Going to have to be put down, says [npc], [job], of [node]
+CapRes7Opt1
+Is [cap0] really that evil? If it wasn't for them dunking people into the Hell Tank it'd be hard to tell, says [npc], [job], of [node]
+CapRes7Opt2
+[cap0] put [npc] who is [npcIs] into a Hell Tank. I'm going to have to write to the guvumunt about that, says [npc] of [node]
+CapRes7Opt3
+If they gave me enough [money] I'd volunteer to test out a Hell Tank. They're always looking for idiots like me, says [npc], [job], of [node]
+PlyConRes0Opt0
+Man, that [drug] is mean and nasty. My [who] took some and they haven't got off the toilet since, says [actor], [job] of [node]
+PlyConRes0Opt1
+Is [drug] illegal? My [who] takes it all the time and tells me that it isn't but they are totally spaced so who knows, asks [actor] of [node]
+PlyConRes0Opt2
+I've never tried [drug] but I've heard that it's a real send your head to the outer belt trip, says [actor], [job] of [node]
+PlyConRes0Opt3
+[drug], wow! Got to get some of that, says [actor] of [node]. You reporters know where stuff is, don't you?
+PlyConRes1Opt0
+My [who] is hooked on [drug]. Locked up in a room, apparently, with pink and padded walls. Nasty, says [actor] of [node]
+PlyConRes1Opt1
+I've heard that you can get addicted to [drug] real easy if you're not careful, says [actor], [job] of [node]
+PlyConRes1Opt2
+They say that once you're addicted to [drug] it's worse than having a nanoBot go rogue in your guts, says [actor] of [node]
+PlyConRes1Opt3
+[drug]? Yeah, I take it, so what, says [actor], [job] of [node]? Hasn't done me any harm yet
+PlyConRes2Opt0
+I heard that my [who] got hooked on [drug] and started oozing green lizard goo out their ass, says [actor], [job] of [node]
+PlyConRes2Opt1
+[drug] is great. Can't manage without it, says [actor], [job] of [node]. Keeps me focused. Balanced. Creative.
+PlyConRes2Opt2
+The Authority don't like you taking [drug], that's for sure. My [who] got caught and was sent to the MedTest prison, says [actor]
+PlyConRes2Opt3
+You know what happens when the Authority catches you taking [drug], asks [actor] of [node]? They use you as a MedTest dummy
+PlyConRes3Opt0
+I've heard that the [mayor] is on [drug]. Has it for breakfast, says [actor], [job] of [node]. That's why they're so scary
+PlyConRes3Opt1
+Saw a man on [drug] go ape and take out three TidyBots all on his own, says [actor], [job] of [node]
+PlyConRes3Opt2
+My [who] thinks that [drug] is made from ground up Belters. You know, the ones that got lost in space, says [actor] of [node]
+PlyConRes3Opt3
+Down deep in the carbon mines, that's where [drug] comes from, says [actor], [job] of [node]. The Corps control it all
+PlyConRes4Opt0
+Those Ripperdocs are one of a kind. Not the sort of people you want anything to do with, says [npc], [job] of [node]
+
+PlyConRes4Opt1
+My [who] visited a Ripperdoc once and have been a mess ever since. Their own fault if you ask me, says [npc], [job] of [node]
+PlyConRes4Opt2
+I know more about hygiene than most Ripperdocs, says [npc], [job] of [node]. Filthy, all of them
+
+PlyConRes4Opt3
+Ripperdocs might fix your problem but they'll give you two more as a replacement, says [npc], [job] of [node]
+PlyConRes5Opt0
+Is there a school for Ripperdocs? Don't they teach them about hygiene? Not for me, thanks, says [npc], [job] of [node]
+PlyConRes5Opt1
+Ripperdocs are supposed to be rough. That's their job. Surgery done fast. Shame about their hygiene, says [npc] of [node]
+
+PlyConRes5Opt2
+The day I visit a Ripperdoc is the day I give up on life, says [npc], [job] of [node]. They eat their food with their instruments
+
+PlyConRes5Opt3
+My [who] asked if there is a certified Ripperdoc in our district? I just laughed, says [npc], [job] of [node]. Certified!
+
+PlyConRes6Opt0
+The problem with Medics is that they have to report everything and everyone, says [npc], [job] of [node]. It's a pain
+
+PlyConRes6Opt1
+It's not easy finding a Medic that doesn't feel obliged to tell the Authority all about you and your problems, says [npc], [job] of [node]
+PlyConRes6Opt2
+I like Medics because they wash their hands and their instruments. Ripperdocs don't, says [npc], [job] of [node]
+
+PlyConRes6Opt3
+My [who] badly needs to see a Medic but can't afford to. They're asking me to help but what with, says [npc], [job] of [node]?
+
+PlyConRes7Opt0
+Why does seeing a Medic cost so much. I haven't seen one since I got my [handicap], can't afford it, says [npc] of [node]
+PlyConRes7Opt1
+[mayor] promised to make Medics more affordable but, what do you know, they aren't? No surprise there, says [npc] of [node]
+
+PlyConRes7Opt2
+Nobody that I know can afford to see a Medic. Not a proper one, anyway. Ripperdocs are cheaper, says [npc], [job] of [node]
+PlyConRes7Opt3
+A medic could fix my [handicap], I'm sure of it. But where do I get the money to pay for it, asks [npc], [job] of [node]?
+
+PlyConRes8Opt0
+Those reskin shops, I don't know. Who wants a new face anyway? What's wrong with the one you've got, asks [npc] of [node]?
+
+PlyConRes8Opt1
+My [who] went to a reskin shop and came out looking like a cane toad. The recognition AI will have fun with that, says [npc] of [node]
+PlyConRes8Opt2
+Once you've had a facial reskin, that's it, there's no going back, says [npc], [job] of [node]
+
+PlyConRes8Opt3
+If you want a facial reskin they'll do it but you don't get to choose what your new face will be like, says [npc], [job] of [node]
+PlyConRes9Opt0
+My [who] gets a new facial reskin every year. Just so they can shove it to the AI, says [npc], [job] of [node]
+
+PlyConRes9Opt1
+My [who] had a reskin after an accident and now they have two chins and a nose like a fire hose, says [npc], [job] of [node]
+PlyConRes9Opt2
+Would I ever choose to get a facial reskin? No, I'm far too sensible for that, says [npc], [job] of [node]
+PlyConRes9Opt3
+Do those reskin shops use vat grown skin or that slimy plant stuff? Is there any way to tell, asks [npc], [job] of [node]?
+
+PlyConRes10Opt0
+Would I let a stranger inject an antidote into me, asks [npc], [job] of [node]? I would if I was dying
+
+PlyConRes10Opt1
+Those geneticists have made so many new diseases that they've lost count of them, says [npc], [job] of [node]
+
+PlyConRes10Opt2
+My [who] thinks that all geneticists should be rounded up and fed to the pigs. Can't disagree, says [npc], [job] of [node]
+PlyConRes10Opt3
+Geneticists are supposed to be the way of the future but all they've done is bring back the past with endless plagues, says [npc]
+PlyConRes11Opt0
+Geneticistics have caused my [handicap], I'm sure of it. One of those custom made bugs did it, says [npc], [job] of [node]
+PlyConRes11Opt1
+You can't trust a geneticist. They'll inject you full of viruses and send you off to infect everybody you know, says [npc] of [node]
+PlyConRes11Opt2
+My [who] has signed up as a medical test subject for genetic treatments. Pays great but, wow, what a risk, says [npc]
+
+PlyConRes11Opt3
+My [who] has a kid who want's to be a geneticist and make viruses that'll kill us all. That's a scary kid, says [npc], [job] of [node]
+PlyConRes12Opt0
+Those TechHeads drill holes in your skull and ram all kinds of sh*t straight into your squishy matter, says [npc], of [node]
+PlyConRes12Opt1
+I've heard that the TechHeads use bioSpiders. Let them crawl in through your ear and rummage around your brain, says [npc] of [node]
+PlyConRes12Opt2
+Would I ever visit a TechHead? Do I look like somebody who wants backyard brain surgery, asks [npc], [job], of [node]?
+PlyConRes12Opt3
+My [who] saw a TechHead last year and now they are an incontinent imbecile. Stay away, is my advice, says [npc], [job], of [node]
+PlyConRes13Opt0
+[mayor] tried to pass a law banning TechHeads but how would the Authority enforce it when they are invisible, asks [npc] of [node]?
+PlyConRes13Opt1
+TechHeads turn your brain into scrambled egg yolk and let it dribble out your nose, warns [npc], [job], of [node]
+PlyConRes13Opt2
+The scariest thing about TechHeads is the stuff that they don't tell you. Like what do they actually do inside your head, asks [npc] of [node]?
+PlyConRes13Opt3
+They say that TechHeads practise on dogs. That's why there are so many mutant, killer, hounds here in [city], says [npc], [job], of [node]
+PlyDisBlow0Opt0
+
+PlyDisBlow0Opt1
+
+PlyDisBlow0Opt2
+
+PlyDisBlow1Opt0
+
+PlyDisBlow1Opt1
+
+PlyDisBlow1Opt2
+
+PlyDisGear0Opt0
+
+PlyDisGear0Opt1
+
+PlyDisGear0Opt2
+
+PlyDisGear1Opt0
+
+PlyDisGear1Opt1
+
+PlyDisGear1Opt2
+
+PlyDisHack0Opt0
+
+PlyDisHack0Opt1
+
+PlyDisHack0Opt2
+
+PlyDisHack1Opt0
+
+PlyDisHack1Opt1
+
+PlyDisHack1Opt2
+
+PlyDisInfo0Opt0
+
+PlyDisInfo0Opt1
+
+PlyDisInfo0Opt2
+
+PlyDisInfo1Opt0
+
+PlyDisInfo1Opt1
+
+PlyDisInfo1Opt2
+
+PlyDisNeutT0Opt0
+
+PlyDisNeutT0Opt1
+
+PlyDisNeutT0Opt2
+
+PlyDisNeutT1Opt0
+
+PlyDisNeutT1Opt1
+
+PlyDisNeutT1Opt2
+
+PlyDisNews0Opt0
+
+PlyDisNews0Opt1
+
+PlyDisNews0Opt2
+
+PlyDisNews1Opt0
+
+PlyDisNews1Opt1
+
+PlyDisNews1Opt2
+
+PlyDisRecruit0Opt0
+
+PlyDisRecruit0Opt1
+
+PlyDisRecruit0Opt2
+
+PlyDisRecruit1Opt0
+
+PlyDisRecruit1Opt1
+
+PlyDisRecruit1Opt2
+
+PlyDisRiot0Opt0
+
+PlyDisRiot0Opt1
+
+PlyDisRiot0Opt2
+
+PlyDisRiot1Opt0
+
+PlyDisRiot1Opt1
+
+PlyDisRiot1Opt2
+
+PlyDisRiot2Opt0
+
+PlyDisRiot2Opt1
+
+PlyDisRiot2Opt2
+
+PlyDisRiot3Opt0
+
+PlyDisRiot3Opt1
+
+PlyDisRiot3Opt2
+
+PlyDisTracer0Opt0
+
+PlyDisTracer0Opt1
+
+PlyDisTracer0Opt2
+
+PlyDisTracer1Opt0
+
+PlyDisTracer1Opt1
+
+PlyDisTracer1Opt2
+
+PlyGenRes0Opt0
+[mayor] says that you can't trust the Resistance. They do things to people. I'm staying clear of them all, says [npc], [job] of [node]
+PlyGenRes0Opt1
+Everybody knows that the Resistance eats it's own people. They're cannibals, says [npc], [job] of [node]
+PlyGenRes0Opt2
+I saw the autoHanger go through several captured Resistance members yesterday. Glad that I wasn't one of them, says [npc], [job] of [node]
+PlyGenRes0Opt3
+Join the Resistance, what? Haven't they heard about my [handicap]? Besides, they eat you, don't they, asks [npc], [job] of [node]
+PlyGenRes1Opt0
+I hear that the Resistance treats people well, says [npc], [job], of [node]
+PlyGenRes1Opt1
+Nobody has said that the Resistance treats people badly, says [npc], of [node]. I hear it's a good deal
+PlyGenRes1Opt2
+[mayor] says that the Resistance treats their people badly but I hear that it's the opposite, says [npc], of [node]
+PlyGenRes1Opt3
+One day I'm going to join the Resistance, says [npc], of [node]. They really look after you
+PlyGenRes2Opt0
+They say that the Resistance is like the Army. I'm glad that I have a [handicap] and can't join, says [npc], [handicap] of [node]
+PlyGenRes2Opt1
+I hear that they treat you really badly in the Resistance, like robots, says [npc], [job] of [node]
+PlyGenRes2Opt2
+I'm not happy about my [handicap] but at least it keeps me out of the Resistance, says [npc], [job], of [node]. I hear that they mistreat you
+PlyGenRes2Opt3
+In a way my [handicap] is a blessing. I'm not in the Resistance. [mayor] says they aren't nice people, laments [npc], [job] of [node]
+PlyGenRes3Opt0
+If it wasn't for my [handicap] I'd be joining the Resistance today, says [npc], [job], of [node]
+PlyGenRes3Opt1
+I'd love to join the Resistance but for my [handicap]. Slows me down and I don't want to be a burden, insists [npc], [job], of [node]
+PlyGenRes3Opt2
+If I could be done with my [handicap] I'd be helping the Resistance take over [city]. They couldn't do a worse job than [mayor], says [npc], of [node]
+PlyGenRes3Opt3
+What help would I be to the Resistance with my [handicap]? [mayor] said they eat you. No thanks, says [npc], of [node]
+PlyStatRes0Opt0
+Is there any point to the Resistance, asks [npc], [job] of [node]? I'm too busy with dealing with my [handicap] to worry about it
+PlyStatRes0Opt1
+Why bother fighting progress, asks [npc], [job] of [node]? It's going to happen no matter what we do
+PlyStatRes0Opt2
+I'm feeling that joining the Resistance is like trying to stop the tide coming in, says [npc], [job] of [node]. What's the point of it all?
+PlyStatRes0Opt3
+Forget about the Resistance, says [npc], [job] of [node]. They're nothing more than a road bump for the Authority. Irrelevant
+PlyStatRes1Opt0
+It's good that the Resistance is out there fighting for us, says [npc], [job] of [node] but they aren't going to make a difference
+PlyStatRes1Opt1
+I think that the Resistance ought to down tools and surrender, says [npc], [job] of [node]. They are all going to get caught anyway
+PlyStatRes1Opt2
+[mayor] told us that the Resistance is evil and I believe him, says [npc], [job] of [node]. Anyone who blows up [city] has to be bad
+PlyStatRes1Opt3
+Round up all the Resistance members in [city] and feed them to the autoHanger, is what I'd do, says [npc], [job] of [node]
+PlyStatRes2Opt0
+It's the Resistance that brings hope to [city]. Without them we would be lost, says [npc], [job] of [node]
+PlyStatRes2Opt1
+Do I want my kids making coffee for robots? No, that's why I support the Resistance, says [npc], [job] of [node]
+PlyStatRes2Opt2
+You can't give up. You have to keep fighting. That's why I support the Resistance, says [npc], [job] of [node]. They are carrying the flag
+PlyStatRes2Opt3
+If it wasn't for the Resistance we'd all be reprocessed Robot poo, says [npc], [job] of [node]
+PlyStatRes3Opt0
+When I crawl out of my servoPod in the morning I give thanks to the Resistance  for giving me a reason to live, says [npc] of [node]
+PlyStatRes3Opt1
+I tell my children stories about the Resistance so that they can grow up in a world where there is hope, says [npc], [job] of [node]
+PlyStatRes3Opt2
+Religion? It's the Resistance that you've got to believe in, says [npc], [job] of [node]. Besides, the AI's run most religions now
+PlyStatRes3Opt3
+So do we roll over and let the AI and their Robots rule the world? No sir! We join the Resistance, is what we do, says [npc], [job] of [node]
+PlyStatRes4Opt0
+Back in my days Robots were toys that you gave to your kids, says [npc] of [node]
+PlyStatRes4Opt1
+I remember back when the only time you saw a robot was in the movies, says [npc] of [node]
+PlyStatRes4Opt2
+When I was younger my parents told me that I was smarter than any robot around, says [npc] of [node]. Not the case now
+PlyStatRes4Opt3
+How did those robots get to be so smart? Who did that to them? I'd like to meet the person who gave them the big brains, says [npc], [job] of [node]
+PlyStatRes5Opt0
+Whoever programmed the robots forgot the bit about them not being able to take your job, says [npc], [job] of [node]
+PlyStatRes5Opt1
+Does the AI run the world? They says it doesn't but who can tell, asks [npc], [job] of [node]?
+PlyStatRes5Opt2
+If the AI is so smart how come they haven't got together and killed of us humans, asks [npc], [job] of [node]?
+PlyStatRes5Opt3
+Should the AI run the world? Can't do a worse job than our sleazy, grubby politicians, if you ask me, says [npc], [job] of [node]
+PlyStatRes6Opt0
+I thought that the robots were supposed to work for us and not the other way around, asks [npc], [job] of [node]?
+PlyStatRes6Opt1
+My daughter wants to grow up and be an AI. What have we done to our children, asks [npc], [job] of [node]?
+PlyStatRes6Opt2
+My [who] wants to mate with a robot. I told them that they can already do that, it just costs money, says [npc], [job] of [node]
+PlyStatRes6Opt3
+Is there a future for us humans here on Earth? Maybe, but I can't see it myself, says [npc], [job] of [node]
+PlyStatRes7Opt0
+My [who] reckons we have been out evolved by the AI and their robot minions, says [npc], [job] of [node]
+PlyStatRes7Opt1
+My [who] thinks that humans and AI can happily coexist, says [npc], [job] of [node]. They also believe in fairies
+PlyStatRes7Opt2
+My [who] thinks that it's only a matter of time before humans become redundant, says [npc], [job] of [node]
+PlyStatRes7Opt3
+You have to believe that we humans have a future otherwise how would you get out of your servoPod in the morning, says [npc], [job] of [node]?
+PlyStatRes8Opt0
+My kids are taught be an AI at school. What hope is there for us, asks [npc], [job] of [node]?
+PlyStatRes8Opt1
+My [who] thinks we should all migrate to Mars and leave the robots to it, says [npc], [job] of [node]
+PlyStatRes8Opt2
+I know that I'm dumber than the AI but does that make me less of a person, asks [npc], [job] of [node]?
+PlyStatRes8Opt3
+My [who] thinks that the AI has a plan for we humans. Hope that they're right, says [npc], [job] of [node]
+PlyStatRes9Opt0
+Can a robot love? I'm going big into loving, says [npc] of [node]. I'm going to love myself into a job
+PlyStatRes9Opt1
+The robots answer to the AI and we poor sorry humans answer to them both, says [npc], [job] of [node]. At least that's how it seems
+PlyStatRes9Opt2
+Back in my days you could have a conversation with the police 'cause they were human, says [npc] of [node]. 
+PlyStatRes9Opt3
+Where's the fun in a future full of robots and AI, asks [npc], [job] of [node]? I'd really like there to be some fun
+PlyStatRes10Opt0
+My [who] thinks it was computers that got us here. That's what led to the AI and robots, says [npc], [job] of [node]
+PlyStatRes10Opt1
+My [who] thinks that is possible to out smart an AI by taking the right kind of drugs but I know better, says [npc], [job] of [node]
+PlyStatRes10Opt2
+None of my brothers or sisters have a job, says [npc] of [node]. Is that what progress is all about? 
+PlyStatRes10Opt3
+My [who] blames it all on the filthy rich. They can afford to buy the robots that keep our noses ground into the dirt, says [npc], [job] of [node]
+PlyStatRes11Opt0
+My [who] thinks that there is a secret room full of the heads of the flthy rich, says [npc], [job] of [node]. Just their heads, mind you
+PlyStatRes11Opt1
+It's the filthy rich that have messed up the world, says [npc], [job] of [node]. There's only a few of them and they own everything
+PlyStatRes11Opt2
+My [who] thinks that the filthy rich are immortal. That they preserve their heads in vats full of elephant piss, says [npc], [job] of [node]
+PlyStatRes11Opt3
+Back in my days there was this thing called the middle class, says [npc], [job] of [node]. It meant you were a somebody
+PlyStatRes12Opt0
+My [who] is convinced that the filthy rich let the AI gene splice their children into super kids. It's a scary thought, says [npc] of [node]
+PlyStatRes12Opt1
+Life is pretty simple these days, says [npc] of [node]. There's the filthy rich, the AI, the robots. Plus us but we don't count
+PlyStatRes12Opt2
+My [who] thinks that the filthy rich steal children so that their kids can learn how to hunt. Doesn't sound right to me, says [npc] of [node]
+PlyStatRes12Opt3
+My [who] thinks that the Megacorps aren't run by the filthy rich but instead secretly by the AI, says [npc], [job] of [node]
+PlyStatRes13Opt0
+I tell my kids to be nice to the robots 'cause they are going to be in charge soon. Don't want to upset your boss, says [npc] of [node]
+PlyStatRes13Opt1
+My [who] is convinced that the filthy rich do head transplants onto new bodies to stop getting old, says [npc], [job] of [node]
+PlyStatRes13Opt2
+My [who] tried begging the other day. Problem is that robots don't care about us poor humans. Give it up I told them, says [npc] of [node]
+PlyStatRes13Opt3
+My [who] is convinced that there aren't any real live filthy rich humans left. They are all robots in disguise, says [npc], [job] of [node]
+PlyStatRes14Opt0
+Aren't the robots the ones making all the food, asks [npc], [job] of [node]?
+PlyStatRes14Opt1
+How are we going to live if the Resistance gets rid of all the robots, asks [npc], [job] of [node]?
+PlyStatRes14Opt2
+Nobody likes robots telling you what to do but aren't they kind of essential for everyday life, asks [npc], [job] of [node]?
+PlyStatRes14Opt3
+I don't know if the Resistance has thought things through, says [npc], [job] of [node]. What will we do once all the robots are gone?
+PlyStatRes15Opt0
+If the Resistance kills of the AI who is going to do our thinking for us, asks [npc], [job] of [node]?
+PlyStatRes15Opt1
+The Resistance tells us that AI is evil but aren't they the ones that give me serialFlix, asks [npc], [job] of [node]?
+PlyStatRes15Opt2
+I'm just a dumb human. What's going to happen if the Resistance gets rid of all the super smart AI, asks [npc], [job] of [node]?
+PlyStatRes15Opt3
+I like that the AI's know all about me. They have my back, says [npc], [job] of [node]. What's the Resistance going to do for me?
+ResCam0Opt0
+
+ResCam0Opt1
+
+ResCam0Opt2
+
+ResCaml1Opt0
+
+ResCaml1Opt1
+
+ResCaml1Opt2
+
+ResGen0Opt0
+
+ResGen0Opt1
+
+ResGen0Opt2
+
+ResGen1Opt0
+
+ResGen1Opt1
+
+ResGen1Opt2
+
+OrgCureRes0Opt0
+The [org]? Religious nuts if you ask me, says [npc], [job] of [node]
+OrgCureRes0Opt1
+The [org]? They help people, says [npc], [job] of [node]. They do more good than the Authority or the Resistance
+OrgCureRes0Opt2
+My [who] thinks that the [org] are funded by the Authority and that you can't trust them, says [npc], [job] of [node]
+OrgCureRes0Opt3
+My [who] thinks that the [org] are an evil religious cabal that should be eradicated. Me, I don't know, says [npc], [job] of [node]?
+OrgCureRes1Opt0
+If it wasn't for the [org] my [who] would be dead. Can't thank them enough, says [npc], [job] of [node]
+OrgCureRes1Opt1
+The [org]? Religious crazies but aren't all religions the same, says [npc], [job] of [node]? At least they help people
+OrgCureRes1Opt2
+My [who] knows somebody who used to be in the [org]. They forced him to have sex with a goat, says [npc], [job] of [node]
+OrgCureRes1Opt3
+I've heard that the [org] eat people. Cannibals, all of them, says [npc], [job] of [node]
+OrgCureRes2Opt0
+If it wasn't for my [handicap] I'd seriously consider joining the [org]. I'd like to help them help others, says [npc], [job] of [node]
+OrgCureRes2Opt1
+You don't hear much about the [org], do you, asks [npc], [job] of [node]? Secretive lot
+OrgCureRes2Opt2
+My [who] insists that nobody has ever left the [org]. You get eaten alive if you want to leave, says [npc], [job] of [node]
+OrgCureRes2Opt3
+I've heard that the [org] originally derived from the Knights Hospitaller way back in the middle ages, says [npc], [job] of [node]
+OrgCureRes3Opt0
+It's said that the [org] are the direct descendants of some crazy twentieth century jungle juice guzzlers, says [npc], [job] of [node]
+OrgCureRes3Opt1
+Didn't the [org] come from those old nunneries, asks [npc], [job] of [node]?
+OrgCureRes3Opt2
+Has anyone ever seen a member of the [org]? Do they even exist, asks [npc], [job] of [node]?
+OrgCureRes3Opt3
+There are a lot of rumours about the [org] but I happen to know that they work for the Authority, says [npc], [job] of [node]
+OrgCureRes4Opt0
+If the [org] are religious what do they believe in? Can anyone tell me that, asks [npc], [job] of [node]?
+OrgCureRes4Opt1
+The [org] are aliens, put here on earth to trick us so they can eat us, says [npc], [job] of [node]
+OrgCureRes6Opt0
+If the [org] help people, like they say they do, what do they get in return, asks [npc], [job] of [node]?
+OrgCureRes6Opt1
+Can you join the [org]? I'd like to give them a go. They have great outfits, says [npc], [job] of [node]
+OrgCureRes5Opt0
+My [who] was helped by the [org] and now they have a [handicap], says [npc], [job] of [node]
+OrgCureRes5Opt1
+Do the [org] really roast young children alive and eat them? Maybe, says [npc], [job] of [node]
+OrgCureRes5Opt2
+My [who] thinks that the [org] are waiting for the end of the world so that they can elope, says [npc], [job] of [node]
+OrgCureRes5Opt3
+My [who] thinks that the colour choice of the [org] signifies loyalty to the devil but isn't that supposed to be red, asks [npc] of [node]?
+OrgCureRes6Opt2
+My [who] thinks that the [org] are like an algae sausage, nice on the outside but ugly everywhere else, says [npc], [job] of [node]
+OrgCureRes6Opt3
+I don't know why people are down on the [org] as they have helped so many of us, asks a puzzled [npc], [job] of [node]?
+OrgCureRes7Opt0
+My [who] tells everybody that if you want to pass a message to somebody the best way is through the [org], says [npc]
+OrgCureRes7Opt1
+I've heard it said that the [org] are like a giant underground postal service. They can get a message to anyone, says [npc] of [node]
+OrgCureRes7Opt2
+You want to send a message to somebody and you don't know where they're at? Use the [org], says [npc], [job] of [node]
+OrgCureRes7Opt3
+Who are the [org]? They're a message service of last resort, that's who, says [npc], [job] of [node]
+OrgCureRes8Opt0
+Can't find someone? Ask the [org]. They know where everybody is, even the lost souls,  says [npc], [job] of [node]
+OrgCureRes8Opt1
+My [who] wants to find their lost dog and thinks that the [org] can help them. What can you do, asks [npc], [job] of
+[node]?
+OrgCureRes8Opt2
+Rumour has it that the [org] can find lost people for a fee. If it wasn't for my [handicap] I do it myself, says [npc], [job] of [node]
+OrgCureRes8Opt3
+If I got lost, really lost, would the [org] know where I am? My [who] thinks that they would, says [npc], [job] of [node]
+OrgCureRes9Opt0
+The [org] are collecting everybodies DNA and putting it in a giant database. Apparently. Creepy, says [npc], [job] of [node]
+OrgCureRes9Opt1
+My [who] is worried that the [org] have their spit in a fridge somewhere. So what, asks [npc], [job] of [node]?
+OrgCureRes9Opt3
+If anyone is out there making clones it'd be the [org] 'cause they've got everybodies DNA, says [npc], [job] of [node]
+OrgCureRes9Opt2
+People worry about the [org] hoovering up their DNA and using it to make clones but I don't believe it, says [npc], [job] of [node]
+OrgCureRes10Opt0
+Why do the [org] want my DNA, asks [npc], [job] of [node]? What are they going to do with it? Make mini me's?
+OrgCureRes10Opt1
+Do I worry about the [org] and their giant fridge full of people's spit? No, not me, says [npc], [job] of [node]
+OrgCureRes10Opt2
+They (the [org]) trick you into spitting then they suck it up and put it in their giant fridge says [npc], [job] of [node]
+OrgCureRes10Opt3
+You can't trust the [org]. They've got all our spit in a giant fridge and one day they'll do something nasty with it, says [npc] of [node]
+OrgCureRes11Opt0
+The [org], what's their plan? Start a new colony in the belt and fill it full of clones, asks [npc], [job] of [node]? Who knows
+OrgCureRes11Opt1
+If the [org] is going to make clones from their DNA database what are they going to do with the clones, asks [npc] of [node]?
+OrgCureRes11Opt2
+The [org] have a fridge as big as a skyscraper full of everybodies spit, insists my [who], says [npc], [job] of [node]
+OrgCureRes11Opt3
+What's up with the [org]? If I had a huge fridge, like they say they do, I wouldn't fill it up with other peoples spit, says [npc]
+OrgCureRes12Opt0
+Doomsdayers. That's the [org]. Waiting for the end of the world so they can refill it with clones, says [npc], [job] of [node]
+OrgCureRes12Opt1
+Holding out for the apocalypse, are the [org]. When we're all dead they roll out their clones and take over, says [npc] of [node]
+OrgCureRes12Opt2
+That huge fridge full of spit that they talk about, who pays their powerbill? The [org] must be rich, says [npc], [job] of [node]
+OrgCureRes12Opt3
+That [org] are a creepy lot. Wouldn't trust them to do the right thing, no sir, says [npc], [job] of [node]
+OrgCureRes13Opt0
+Where do the [org] get all their spit to put in their fridge, asks [npc], [job] of [node]? Do people give it to them for free?
+OrgCureRes13Opt1
+[mayor] has told us that the [org] are a terrorist organisation and that anyone dealing with them will be shot, says [npc]
+OrgCureRes13Opt2
+One things for sure, [mayor] really doesn't like the [org], observes [npc], [job] of [node]
+OrgCureRes13Opt3
+You'd think that the Resistance would be all over the [org] but they seem to hate them just as much as [mayor] says [npc] of [node]
+OrgCureRes14Opt0
+Listen to the news and you'd think that the [org] are public enemy number one. Can't see it myself, says [npc], [job] of [node]
+OrgCureRes14Opt1
+I can't figure out why the Resistance hates the [org], says [npc], [job] of [node]. Who doesn't like angels?
+OrgCureRes14Opt2
+Nothin' angelic about 'em, says my [who]. The [org] are a bunch of evil spit stealers. Not sure I agree, says [npc], [job] of [node]
+OrgCureRes14Opt3
+My sister wanted to join the [org]. Our parents locked her in a closet for a week. Fixed that problem, says [npc], [job] of [node]
+OrgCureRes15Opt0
+What would I do with a fridge full of spit, asks [npc], [job], of [node]? Empty it out? Somebody needs to ask the [org] what they are up to
+OrgCureRes15Opt1
+The [org] and their spit fridge. It's kind of sick when you think about it like that, says [npc], [job], of [node]
+OrgCureRes15Opt2
+My [who] wishes that they had a fridge full of spit like the [org]. Good for world domination, they reckon, says [npc] of [node]
+OrgCureRes15Opt3
+My [who] dreams of controlling the world with the power of targetted gene viruses like those that the [org] are working on, says [npc] of [node]
+OrgCureRes16Opt0
+If the [org] are going to collect everybodies spit and put it in a giant fridge, just how big would the fridge have to be, asks [npc] of [node]?
+OrgCureRes16Opt1
+Would all the spit that the [org] are collecting go off one day? Or would it keep forever in their giant refrigerator, asks [npc], [job], of [node]?
+OrgCureRes16Opt2
+People generally don't know much about the [org] apart from the fact that they are collecting everybodies spit, says [npc], [job], of [node]
+OrgCureRes16Opt3
+The [org] are nothing but a wierd spit collecting cult that is waiting for the end of the world to arrive, says [npc], [job], of [node]
+OrgConRes0Opt0
+If you don't have any empathy you can kill anyone, says [npc], [job] of [node]. That's why the [org] give everybody a bypass
+OrgConRes0Opt1
+If only it wasn't for my [handicap], says [npc] of [node], I'd be join the [org] in a flash. Who cares about the empathy bypass?
+OrgConRes0Opt2
+My [who] knows somebody from the [org]. They eat puppies for breakfast, says [npc], [job] of [node]
+OrgConRes0Opt3
+The [org]? Cold blooded killers with an empathy bypass. What's not to like, asks [npc], [job] of [node]?
+OrgConRes1Opt0
+My [who] has a friend who used to be [npcIs] until they joined the [org]. Not anymore, they aren't, says [npc] of [node]
+OrgConRes1Opt1
+Somebody has to kill people. At least the [org] do it properly. You wouldn't want it to be messy, says [npc] of [node]
+OrgConRes1Opt2
+Did you hear what the [org] do to people who inform on them? They ram nanoRats up their backside, says [npc] of [node]
+OrgConRes1Opt3
+Does the [org] do jobs for The Authority? Wouldn't be surprised, says [npc], [job] of [node]. As long as they pay
+OrgConRes2Opt0
+My [who] swears that the [org] put viperWorms in your ear if you don't do as they ask, says [npc], [job] of [node]
+OrgConRes2Opt1
+The [org]? Don't they insist that all members have an empathy bypass, asks [npc], [job] of [node]?
+OrgConRes2Opt2
+It's the empathy bypass requirement that prevents me from joining the [org], insists [npc], [job] of [node]
+OrgConRes2Opt3
+Killers, that's what the [org] are. They are given an empathy bypass so that they don't care, says [npc] of [node]
+OrgConRes3Opt0
+Do the [org] kill innocent people? Only if they are paid to, says [npc], [job] of [node]
+OrgConRes3Opt1
+My [handicap]? It's from my time running with the [org]. I used to be bad once, says [npc] of [node]
+OrgConRes3Opt2
+Who gave the [org] a license to kill? The Authority? [mayor]? Somebody must have, insists [npc], [job] of [node]
+OrgConRes3Opt3
+What happens to the killers of the [org] when they get old? I bet they don't cut their own throats from guilt, says [npc] of [node]
+OrgConRes4Opt0
+Rumour has it that if [mayor] doesn't pay off the [org] they'll be next on their list. Killers like that don't discriminate, says [npc]
+OrgConRes4Opt1
+Is [mayor] worried about the [org]? Isn't everybody, says [npc], [job] of [node]
+OrgConRes5Opt0
+Has the [org] every missed a target, asks [npc], [job] of [node]? I slurp speed pills, just to be on the safe side
+OrgConRes5Opt1
+My [who] says the [org] are using injecting nanoSnakes into your spinal column while you are asleep. Scary stuff, says [npc]
+OrgConRes5Opt2
+Is it true that the bullets the [org] use can go around corners? My [who] insists that they can, says [npc], [job] of [node]
+OrgConRes5Opt3
+The [org] have a saying, that the past is best forgotten. If I killed as many people as they did I'd be having amnesia as well, says [npc]
+OrgConRes6Opt0
+Is the empathy bypass you get when you join the [org] permanent? What if I want to get a dog one day, asks [npc] of [node]
+OrgConRes6Opt1
+My [who] is worried that the [org] is after them. Hide under the bed, I told them, it's the only way to be sure, says [npc] of [node]
+OrgConRes6Opt2
+Nobody tells you that the [org] killed their neighbour but you can always tell that's what happened, says [npc], [job] of [node]
+OrgConRes6Opt3
+My [who] loves the [org] because they only kill bad people. Maybe, if having a contract on your head makes you bad, says [npc]
+OrgHQRes0Opt0
+[npc] of [node] was [npcIs] until the [org] got to them. Cleaned out their accounts and left them destitute
+OrgHQRes0Opt1
+The [org] extort money from everybody, says [npc] of [node]. They need it for their breakaway colony on Titan
+OrgHQRes0Opt2
+My [who] thinks that the [org] are entitled to extort money because their breakaway colony on Titan is the future of humanity
+OrgHQRes0Opt3
+The [org] are nothing but a bunch of extortionists scamming money off innocents, says [npc], [job], of [node]
+OrgHQRes1Opt0
+Titan is the future, says [mayor] of [city] but I'm referring to the official colony, not the illegal [org] one
+OrgHQRes1Opt1
+I wish the [org] could find a better way of funding their breakaway colony on Titan, says [npc], [job] of [node]
+OrgHQRes1Opt2
+My [who] says that the [org] have some strange ideas. Everybody should look the same, apparently, says [npc] of [node]
+OrgHQRes1Opt3
+The [org] are genetically modifying humans on Titan so that they all look the same, insists [npc], [job], of [node]
+OrgHQRes2Opt0
+What are the [org] doing at their colony on Titan, asks [npc], [job], of [node]? Turning humans into clones then eating them!
+OrgHQRes2Opt1
+Do the [org] eat their babies? My [who] thinks so but what do they know, asks [npc], [job], of [node]?
+OrgHQRes2Opt2
+I've been hearing some creepy stories about the [org] and their illegal colony on Titan, says [npc], [job], of [node]. They sacrifice babies
+OrgHQRes2Opt3
+Why do the [org] need an illegal colony on Titan anyway? Are they abandoning Earth, asks [npc], [job], of [node]?
+OrgHQRes3Opt0
+If I hadn't had all my money stolen by the [org] I could have fixed my [handicap], says [npc], [job], of [node]
+OrgHQRes3Opt1
+My [who] is saving up enough money for a passage to the [org] colony on Titan. They want to be part of the future, says [npc] of [node]
+OrgHQRes3Opt2
+So the [org] have an illegal colony on Titan? Why wasn't I told, asks [npc], [job], of [node]?
+OrgHQRes3Opt3
+Can anyone go to Titan and join the [org] colony there or do you have to sign something first, asks [npc], [job], of [node]?
+OrgHQRes4Opt0
+I'd be taking the first shuttle to Titan to join with the [org] at their colony if it wasn't for my [handicap], says [npc] of [node]
+OrgHQRes4Opt1
+There's a proper way of doing things and funding a colony on Titan by scamming people isn't it, says [npc], [job], of [node]
+OrgHQRes5Opt0
+How much does it cost the [org] to keep their breakaway colony on Titan afloat, asks [npc], [job], of [node]?
+OrgHQRes5Opt1
+My [who] donated all their money to the [org] because they believe that their colony will change the world, says [npc] of [node]
+OrgHQRes5Opt2
+The [org] sure do have some crazy ideas, says [npc], [job], of [node]. Everybody, apparently, should look the same
+OrgHQRes5Opt3
+My [who] went to Titan to join the [org] colony there. Nobody has heard from them since, says [npc], [job], of [node]
+OrgHQRes6Opt0
+I don't get the [org], says [npc] of [node]. They want all my money so they can turn people on Titan into clones? 
+OrgHQRes6Opt1
+I want money [money] but the [org] need it to fund some crazy illegal clone colony on Titan, says [npc] of [node]
+OrgHQRes6Opt2
+If the [org] wanted money [money] I'd understand but to turn everybody on Titan into clones? It's got me beat, says [npc] of [node]
+OrgHQRes6Opt3
+Who wants to live on Titan in the [org] colony of clones? Not me, that's for sure, says [npc], [job], of [node]
+OrgHQRes7Opt0
+My [who] was [npcIs] but they left everything behind and joined the [org] colony on Titan, says [npc] of [node]
+OrgHQRes7Opt1
+The city of [city] has no intention of contributing to the [org] colony project on Titan, says [mayor]
+OrgHQRes7Opt2
+If the [org] colony on Titan is such a great place why don't they advertise it, asks [npc], [job], of [node]?
+OrgHQRes7Opt3
+Live on Titan, in the [org] colony? Me? No thanks, says [npc], [job], of [node]
+OrgHQRes8Opt0
+Living on Titan in the [org] colony can't be any worse than here, observes [npc] of [node]
+OrgHQRes8Opt1
+What's wrong with Individualism? Why do the [org] want everybody on Titan to be a clone, asks [npc], [job], of [node]?
+OrgHQRes8Opt2
+If the [org] are turning everybody on Titan into clones how do they know who's who, asks [npc], [job], of [node]?
+OrgHQRes8Opt3
+Give money to the [org] for some crazy colony on Titan where everybody looks the same? No thanks, says [npc], [job], of [node]
+OrgEmerRes2Opt0
+Those [org] are trying to run the Resistance out of town, says [npc], [job], of [node]
+OrgEmerRes2Opt1
+The Resistance does a good job of sticking it to the Authority but what about those [org], asks [npc], [job], of [node]?
+OrgEmerRes2Opt2
+Do I think that the [org] should take over from the Reisistance? Hard to say, says [npc], [job], of [node]
+OrgEmerRes2Opt3
+Is there room for both the Resistance and the [org]? I doubt it, says [npc], [job], of [node]
+OrgEmerRes3Opt0
+My [who] reckons that the [org] are trying to do the job of the Resistance. I think that they're onto something, says [npc], [job], of [node]
+OrgEmerRes3Opt1
+My [who] wanted [money] and the [org] helped them! Perhaps I ought to put my hand up as well, says [npc] of [node]
+OrgEmerRes3Opt2
+The [org] do a lot of good in the community. Stuff you don't always hear about, says [npc], [job], of [node]
+OrgEmerRes3Opt3
+Dose the Resistance feel threatened by the [org]? Probably, says [npc], [job], of [node]
+OrgEmerRes4Opt0
+My [who] thinks it's great that the [org] are giving the Resistance some competition. I'm not so sure, says [npc], [job], of [node]
+OrgEmerRes4Opt1
+There's a low level turf war going on between the Resistance and the [org], says [npc], [job], of [node]
+OrgEmerRes5Opt0
+Whose side am I on? Have to go with the Resistance as they helped me but the [org] are O.K, says [npc], [job], of [node]
+OrgEmerRes5Opt1
+Why are the [org] and the Resistance fighting each other when they should be cooperating, asks [npc], [job], of [node]?
+OrgEmerRes5Opt2
+My [who] wants to join the [org]. Not sure they'll have them given their [handicap] but, hey, who knows, says [npc], [job], of [node]?
+OrgEmerRes5Opt3
+Do the [org] help people in trouble? Sure do. Helped my [who] get out of a real pickle, says [npc], [job], of [node]
+OrgEmerRes6Opt0
+My [who] blames the [org] for their [handicap] but I don't think they had anything to do with it, says [npc], [job], of [node]
+OrgEmerRes6Opt1
+What do the [org] want? To be the next Resistance, as far as I can tell, says [npc], [job], of [node]
+OrgEmerRes6Opt2
+How bad are the [org]? Pretty damn bad, reckons my [who]. Steal your cat and eat your dog, type bad, says [npc], [job], of [node]
+OrgEmerRes6Opt3
+Would I support the [org]? You bet I would. They helped me cope with my [handicap], says [npc], [job], of [node]
+OrgInfoRes0Opt0
+Those [org] are like a pack of dwarves with advanced banking tech, says [npc], [job] of [node]
+OrgInfoRes0Opt1
+My [who] insists that the [org] live under a mountain and never the see the light of day, says [npc], [job] of [node]
+OrgInfoRes0Opt2
+Work for the [org]? Spend my life underground, chained to a terminal, hyped on Choc Dust? Not me, says [npc] of [node]
+OrgInfoRes0Opt3
+Those [org], they really know what's going on, says [npc], [job] of [node]. They beaver away underground tapping into everything
+OrgInfoRes1Opt0
+My [who] thinks that the [org] are spying on us all. Here I was thinking that they were some kind of Swiss Bankers, says [npc] of [node]
+OrgInfoRes1Opt1
+Work for the [org] and you don't live long, says [npc], [job], of [node]. It's the Choc Dust. Fries your nervous system
+OrgInfoRes1Opt2
+Rumour has it that [mayor] has taken loans from the [org]. Risky business if that's the case. You can't trust 'em, says [npc] of [node]
+OrgInfoRes1Opt3
+They shrink you, insists my [who]. The [org] do. So that you can fit in their underground caves, says [npc], [job], of [node]
+OrgInfoRes2Opt0
+Once you join the [org] your life becomes screens and Choc Dust. You need one to work the other, says [npc], [job] of [node]
+OrgInfoRes2Opt1
+Even if I didn't have my [handicap] I'm not sure that I'd want to join the [org] and live underground, says [npc] of [node]
+OrgInfoRes2Opt2
+Remember the great crash of '28? That was the [org] trying to corner the digital currency market, says [npc] of [node]
+OrgInfoRes2Opt3
+My [who] blames their bankruptcy on the actions of the [org] but I think they are just harmless parasites, says [npc] of [node]
+OrgInfoRes3Opt0
+Have you ever tried Choc Dust? My [who] did and they could work their keyboard so fast it was scary, says [npc] of [node]
+OrgInfoRes3Opt1
+Choc Dust isn't for those who want to live long fulfilling lives, no sir. But if you want to burn bright it's the way to go says [npc]
+OrgInfoRes3Opt2
+There's [drug] and then there's Choc Dust. Both are going to kill you but you'll enjoy the ride, says [npc], [job] of [node]
+OrgInfoRes3Opt3
+The [org] are nothing but evil little dwarves hiding underground and messing up the world's economy, says [npc], [job], of [node]
+OrgInfoRes4Opt0
+You can't trust the [org]. They'll get you in debt then sell all your information to whoever wants it before you've finished shaking their hand
+OrgInfoRes4Opt1
+Damn the [org]. They did a number on my [who] and I've been having to help them out ever since, says [npc], [job], of [node]
+OrgInfoRes5Opt0
+The [org] should stay under their mountain in Switzerland and pig out on their Choc Dust, if you ask me, says [npc], [job], of [node]
+OrgInfoRes5Opt1
+The [org]? We should flood their underground hidey holes with fuel oil and burn them all, yells an angry [npc], [job], of [node]
+OrgInfoRes5Opt2
+Whoever heard of the [org] doing anything good for world, asks [npc], [job], of [node]? Evil little dwarves, if you ask me
+OrgInfoRes5Opt3
+My [who] once worked for the [org]. They're a mess, can't even slobber on their own. Nerves are shot, says [npc] of [node]
+OrgInfoRes6Opt0
+Money and information, that's what the [org] are all about. That and snorting huge amounts of Choc Dust, says [npc], [job], of [node]
+OrgInfoRes6Opt1
+My [who] thinks that the [org] are in bed with the Authority but they have it wrong. The [org] don't care who pays them, says [npc]
+OrgInfoRes6Opt2
+They say that the [org] pump their workers full of Choc Dust so that they forget about living in a cave, says [npc] of [node]
+OrgInfoRes6Opt3
+Do I want to work for the [org]? Who wants to live in a damp cave and snort Choc Dust till they die, asks [npc] of [node]?
