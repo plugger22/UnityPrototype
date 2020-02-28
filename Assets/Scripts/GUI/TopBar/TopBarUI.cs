@@ -303,8 +303,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateBlackmarks(int value)
     {
-        blackmarkData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid Blackmarks value \"{0}\"", value); value = 0; }
+        blackmarkData = value;
         blackmarks.textData.text = value.ToString();
         if (value > 0 && value >= GameManager.instance.campaignScript.GetCommendations())
         {
@@ -332,8 +332,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateInvestigations(int value)
     {
-        investigationData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid investigations value \"{0}\"", value); value = 0; }
+        investigationData = value;
         investigations.textData.text = value.ToString();
         if (value > 0)
         {
@@ -361,8 +361,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateInnocence(int value)
     {
-        innocenceData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid innocence value \"{0}\"", value); value = 0; }
+        innocenceData = value;
         innocence.textData.text = value.ToString();
         if (value <= 1)
         {
@@ -390,8 +390,9 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateUnhappy(int value)
     {
-        unhappyData = value;
+
         if (value < 0) { Debug.LogWarningFormat("Invalid unhappy value \"{0}\"", value); value = 0; }
+        unhappyData = value;
         unhappy.textData.text = value.ToString();
         if (value > 0)
         {
@@ -419,8 +420,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateConflicts(int value)
     {
-        conflictData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid conflict value \"{0}\"", value); value = 0; }
+        conflictData = value;
         conflicts.textData.text = value.ToString();
         if (value > 0)
         {
@@ -448,8 +449,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateBlackmail(int value)
     {
-        blackmailData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid blackmail value \"{0}\"", value); value = 0; }
+        blackmailData = value;
         blackmail.textData.text = value.ToString();
         if (value > 0)
         {
@@ -477,8 +478,8 @@ public class TopBarUI : MonoBehaviour
     /// <param name="value"></param>
     public void UpdateDoom(int value)
     {
-        doomData = value;
         if (value < 0) { Debug.LogWarningFormat("Invalid doom value \"{0}\"", value); value = 0; }
+        doomData = value;
         doom.textData.text = value.ToString();
         if (value > 0)
         {
@@ -512,7 +513,7 @@ public class TopBarUI : MonoBehaviour
         tipCommendation.tooltipMain = string.Format("HQ have yet to award you {0} Commendations",
             GameManager.instance.colourScript.GetFormattedString("ANY", ColourType.neutralText));
         tipCommendation.tooltipDetails = string.Format("Gain {0} Commendations and you will{1}{2}",
-            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.outcomesWinLose.ToString(), ColourType.neutralText), "\n",
+            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
             GameManager.instance.colourScript.GetFormattedString("WIN the Campaign", ColourType.salmonText));
         tipCommendation.x_offset = 5;
         tipCommendation.y_offset = 60;
@@ -521,7 +522,7 @@ public class TopBarUI : MonoBehaviour
         tipBlackmark.tooltipMain = string.Format("You do not yet{0}have {1} Blackmarks{2}on your record", "\n",
             GameManager.instance.colourScript.GetFormattedString("ANY", ColourType.neutralText), "\n");
         tipBlackmark.tooltipDetails = string.Format("Gain {0} Blackmarks and you will{1}{2}",
-            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.outcomesWinLose.ToString(), ColourType.neutralText), "\n",
+            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
             GameManager.instance.colourScript.GetFormattedString("LOSE the Campaign", ColourType.salmonText));
         tipBlackmark.x_offset = 5;
         tipBlackmark.y_offset = 60;

@@ -264,19 +264,18 @@ public class HelpManager : MonoBehaviour
         data.tag = "review_4";
         data.header = "Commendations";
         data.text = string.Format("You have done good things and your efforts have been {0}rewarded{1}. Gain {2} Commendations and you will {3}Win the Campaign{4}", 
-            colourAlert, colourEnd, GameManager.instance.campaignScript.outcomesWinLose, colourAlert, colourEnd);
+            colourAlert, colourEnd, GameManager.instance.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Black Marks
         data = new HelpData();
         data.tag = "review_5";
         data.header = "Black Marks";
         data.text = string.Format("Your performance is {0}below an acceptable standard{1} and it has been noted on your record. Gain {2} Black Marks and you will {3}Lose the Campaign{4}",
-            colourAlert, colourEnd, GameManager.instance.campaignScript.outcomesWinLose, colourAlert, colourEnd);
+            colourAlert, colourEnd, GameManager.instance.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
         #endregion
-
 
         #region ...Topics
 
@@ -1421,13 +1420,10 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_8";
         data.header = "Guilty";
-        data.text = new StringBuilder()
-            .AppendFormat("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}LEVEL OVER{3}. You also gain {4}Black Marks{5}. ",
-            colourAlert, colourEnd, colourTip, colourEnd, colourAlert, colourEnd)
-            .AppendFormat("The number of Black Marks you gain {0}increases by +1{1}, over the Campaign, for {2}every Guilty Verdict{3}", colourAlert, colourEnd, colourAlert, colourEnd)
-            .ToString();
+        data.text = string.Format("If the investigation reaches a resolution with a {0}Guilty verdict{1} you are fired immediately and it's {2}LEVEL OVER{3}. You also gain a {4}Black Mark{5}",
+            colourAlert, colourEnd, colourTip, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Guilty
+        //Innocent
         data = new HelpData();
         data.tag = "invest_9";
         data.header = "Innocent";

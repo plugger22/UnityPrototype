@@ -1587,8 +1587,10 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     //black marks
                                     GameManager.instance.campaignScript.ChangeBlackmarks(GameManager.instance.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
-                                    //increase cost in blackMarks for future investigations
-                                    GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();
+
+                                    /*//increase cost in blackMarks for future investigations EDIT -> fixed cost of 1 blackmark per investigation
+                                    GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();*/
+
                                     bottomText = string.Format("You have been found{0}<size=120%>{1}</size>{2}on all charges", "\n",
                                         GameManager.instance.colourScript.GetFormattedString("GUILTY", ColourType.badText), "\n");
                                     break;
@@ -2040,6 +2042,38 @@ public class PlayerManager : MonoBehaviour
         List<Investigation> listOfCompletedInvestigations = GameManager.instance.dataScript.GetListOfCompletedInvestigations();
         if (listOfCompletedInvestigations != null)
         { builder.Append(DebugDisplayInvestigationList(listOfCompletedInvestigations)); }
+        //Commendations
+        List<AwardData> listOfCommendations = GameManager.instance.dataScript.GetListOfCommendations();
+        if (listOfCommendations != null)
+        {
+            builder.AppendFormat("{0}{1}-ListOfCommendations{2}", "\n", "\n", "\n");
+            if (listOfCommendations.Count > 0)
+            {
+                for (int i = 0; i < listOfCommendations.Count; i++)
+                {
+                    AwardData data = listOfCommendations[i];
+                    builder.AppendFormat(" t{0}: {1}{2}", data.turn, data.reason, "\n");
+                }
+            }
+            else { builder.AppendFormat(" No Commendations have been awarded{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfCommendations (Null)"); }
+        //Blackmarks
+        List<AwardData> listOfBlackmarks = GameManager.instance.dataScript.GetListOfBlackmarks();
+        if (listOfBlackmarks != null)
+        {
+            builder.AppendFormat("{0}-ListOfBlackmarks{1}", "\n", "\n");
+            if (listOfBlackmarks.Count > 0)
+            {
+                for (int i = 0; i < listOfBlackmarks.Count; i++)
+                {
+                    AwardData data = listOfBlackmarks[i];
+                    builder.AppendFormat(" t{0}: {1}{2}", data.turn, data.reason, "\n");
+                }
+            }
+            else { builder.AppendFormat(" No Blackmarks have been awarded{0}", "\n"); }
+        }
+        else { Debug.LogError("Invalid listOfBlackmarks (Null)"); }
         return builder.ToString();
     }
 

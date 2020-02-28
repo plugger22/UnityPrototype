@@ -289,8 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d584344e0f087ea4eb1626b1bb7fdf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretLearnBaseChance: 100
-  secretBlackmailTimer: 2
+  secretLearnBaseChance: 4
+  secretBlackmailTimer: 4
   secretMaxNum: 4
   secretTypePlayer: {fileID: 0}
   secretTypeOrganisation: {fileID: 0}
@@ -4522,9 +4522,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfFlags: 10
-  minWinLoss: 3
-  reviewMinVotes: 3
-  outcomesWinLose: 10
+  reviewMinVotes: 4
+  awardsWinLose: 10
   arrayOfStoryStatus: 
   campaign: {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   scenario: {fileID: 0}
@@ -4543,8 +4542,8 @@ MonoBehaviour:
   moodStart: 2
   moodReset: 3
   maxInvestigations: 3
-  chanceInvestigation: 100
-  chanceEvidence: 100
+  chanceInvestigation: 50
+  chanceEvidence: 5
   timerInvestigationBase: 5
   investHQApproval: 2
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}

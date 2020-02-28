@@ -2549,6 +2549,9 @@ public class EffectManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
                 }
             }
+            //motivation shift, update topBarUI item
+            if (effect.outcome.name.Equals("Motivation") == true)
+            { GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors());  }
         }
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
         return isSuccess;
@@ -4870,6 +4873,8 @@ public class EffectManager : MonoBehaviour
                 { bottomText = ExecuteActorRelationMotivation(actor, data, effect.operand.name, bottomText); }
             }
             else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
+            //update topBarUI conflict
+            GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors());
         }
         else
         {

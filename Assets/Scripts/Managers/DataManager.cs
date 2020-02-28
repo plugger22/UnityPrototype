@@ -101,8 +101,13 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorPromoted = new List<int>();                            //uses actorID
     private List<int> resistanceActorDisposedOf = new List<int>();                          //uses actorID
     private List<int> resistanceActorResigned = new List<int>();                            //uses actorID
-
+    
+    //HQ
     private List<int> actorHQPool = new List<int>();                                        //player side HQ actors, uses hqID NOT actorID
+
+    //Awards
+    private List<AwardData> listOfCommendations = new List<AwardData>();
+    private List<AwardData> listOfBlackmarks = new List<AwardData>();
 
     //target pools
     private List<string>[] arrayOfGenericTargets;                                          //indexed by NodeArc.nodeArcID, list Of targetNames for each nodeArc type. All level one targets
@@ -8916,6 +8921,65 @@ public class DataManager : MonoBehaviour
         return reply;
     }
 
+    //
+    // - - - Awards
+    //
+
+    public List<AwardData> GetListOfCommendations()
+    { return listOfCommendations; }
+
+    public List<AwardData> GetListOfBlackmarks()
+    { return listOfBlackmarks; }
+
+    /// <summary>
+    ///  add a turn stamped record for a commendation
+    /// </summary>
+    /// <param name="reasonForAward"></param>
+    public void AddCommendation(string reasonForAward)
+    {
+        if (string.IsNullOrEmpty(reasonForAward) == false)
+        { listOfCommendations.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward });  }
+        else { Debug.LogError("Invalid reasonForAward (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Add a turn stamped record for a blackmark
+    /// </summary>
+    /// <param name="reasonForAward"></param>
+    public void AddBlackmark(string reasonForAward)
+    {
+        if (string.IsNullOrEmpty(reasonForAward) == false)
+        { listOfBlackmarks.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward }); }
+        else { Debug.LogError("Invalid reasonForAward (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// update list with save/load data
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfCommendations(List<AwardData> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfCommendations.Clear();
+            listOfCommendations.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null) for Commendations"); }
+    }
+
+    /// <summary>
+    /// update list with save/load data
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfBlackmarks(List<AwardData> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfBlackmarks.Clear();
+            listOfBlackmarks.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null) for Blackmarks"); }
+    }
 
     //new methods above here
 }

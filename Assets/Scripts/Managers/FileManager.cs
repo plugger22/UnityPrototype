@@ -23,7 +23,7 @@ public class FileManager : MonoBehaviour
     private byte[] soupWrite;               //encryption out
     private byte[] soupRead;                //encryption in
 
-    private string cipherKey;
+    private string codeKey;
 
     //fast access
     GlobalSide globalAuthority;
@@ -39,7 +39,7 @@ public class FileManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
-        cipherKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
+        codeKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
         globalResistance = GameManager.instance.globalScript.sideResistance;
@@ -116,7 +116,7 @@ public class FileManager : MonoBehaviour
             {
                 //encrypt save file
                 Rijndael crypto = new Rijndael();
-                soupWrite = crypto.Encrypt(jsonWrite, cipherKey);
+                soupWrite = crypto.Encrypt(jsonWrite, codeKey);
                 try { File.WriteAllBytes(filename, soupWrite); }
                 catch (Exception e) { Debug.LogErrorFormat("Failed to write BYTES TO FILE, error \"{0}\"", e.Message); }
                 Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
@@ -149,7 +149,7 @@ public class FileManager : MonoBehaviour
                 Rijndael crypto = new Rijndael();
                 try { soupRead = File.ReadAllBytes(filename); }
                 catch (Exception e) { Debug.LogErrorFormat("Failed to read BYTES FROM FILE, error \"{0}\"", e.Message); }
-                jsonRead = crypto.Decrypt(soupRead, cipherKey);
+                jsonRead = crypto.Decrypt(soupRead, codeKey);
                 isSuccess = true;
             }
             if (isSuccess == true)
@@ -267,7 +267,7 @@ public class FileManager : MonoBehaviour
         write.guiData.commendationData = GameManager.instance.topBarScript.commendationData;
         write.guiData.blackmarkData = GameManager.instance.topBarScript.blackmarkData;
         write.guiData.investigationData = GameManager.instance.topBarScript.investigationData;
-        write.guiData.innocenceData = GameManager.instance.topBarScript.innocenceData;
+        write.guiData.innocenceData = GameManager.instance.playerScript.Innocence;
         write.guiData.unhappyData = GameManager.instance.topBarScript.unhappyData;
         write.guiData.conflictData = GameManager.instance.topBarScript.conflictData;
         write.guiData.blackmailData = GameManager.instance.topBarScript.blackmailData;
@@ -528,6 +528,19 @@ public class FileManager : MonoBehaviour
         if (listOfInvestigations != null)
         { write.dataData.listOfInvestigations.AddRange(listOfInvestigations); }
         else { Debug.LogError("Invalid listOfCompletedInvestigations (Null)"); }
+        #endregion
+
+        #region awards
+        //Commendations
+        List<AwardData> listOfCommendations = GameManager.instance.dataScript.GetListOfCommendations();
+        if (listOfCommendations != null)
+        { write.dataData.listOfCommendations.AddRange(listOfCommendations); }
+        else { Debug.LogError("Invalid listOfCommendations (Null)"); }
+        //Blackmarks
+        List<AwardData> listOfBlackmarks = GameManager.instance.dataScript.GetListOfBlackmarks();
+        if (listOfBlackmarks != null)
+        { write.dataData.listOfBlackmarks.AddRange(listOfBlackmarks); }
+        else { Debug.LogError("Invalid listOfBlackmarks (Null)"); }
         #endregion
 
         #region Organisations
@@ -2105,6 +2118,11 @@ public class FileManager : MonoBehaviour
 
         #region investigations
         GameManager.instance.dataScript.SetListOfCompletedInvestigations(read.dataData.listOfInvestigations);
+        #endregion
+
+        #region awards
+        GameManager.instance.dataScript.SetListOfCommendations(read.dataData.listOfCommendations);
+        GameManager.instance.dataScript.SetListOfBlackmarks(read.dataData.listOfBlackmarks);
         #endregion
 
         #region organisations

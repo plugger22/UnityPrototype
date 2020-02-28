@@ -909,5 +909,15 @@ namespace packageAPI
         }
     }
 
+    /// <summary>
+    /// Tracks commendations and blackmarks
+    /// </summary>
+    [System.Serializable]
+    public class AwardData
+    {
+        public int turn;
+        public string reason;
+    }
+
     //new classes above here
 }

@@ -13,12 +13,10 @@ public class CampaignManager : MonoBehaviour
     public int numOfFlags = 10;
 
     [Header("Win/Loss")]
-    [Tooltip("Min numer of commendations/blackmarks required before 2 x win/loss conditions can kick in, eg. if 2 then must have 2 commendations and 4 blackMarks to win")]
-    [Range(0, 10)] public int minWinLoss = 3;
     [Tooltip("Minimum number of votes at a Review for or against that are required (must be a majority) to gain a black mark or commendation")]
     [Range(0, 5)] public int reviewMinVotes = 4;
-    [Tooltip("Number of Commendations or Black Stars required to win, or lose, the campaign")]
-    [Range(5, 20)] public int outcomesWinLose = 10;
+    [Tooltip("Number of Commendations or Black Stars required to win, or lose, the campaign. If both reach this amount together then first to go ahead wins")]
+    [Range(5, 20)] public int awardsWinLose = 10;
 
 
 
@@ -30,7 +28,7 @@ public class CampaignManager : MonoBehaviour
     [HideInInspector] public Scenario scenario;
     private int commendations;                 //gain from doing good things. Campaign status. NOTE: use method to change -> ChangeCommendations
     private int blackmarks;                    //gain from doing bad things. Campaign status. NOTE: use method to change -> ChangeBlackMarks
-    private int investigationBlackmarks = 1;   //number of black marks gained from a guilty investigation, goes up +1 for each guilty verdict
+    private int investigationBlackmarks = 1;   //number of black marks gained from a guilty investigation
     #endregion
 
     public void InitialiseGame(GameState state)
@@ -161,14 +159,14 @@ public class CampaignManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks for win (Commendations 2 x Blackmarks) or loss (Blackmarks 2 x Commendations). Must have a minCap amount of Commendations/Blackmarks before 2 x comparison is made (global -> minWinLoss)
+    /// checks for win/loss. First to awardsWinLoss. If both reach this amount together then the first to get ahead wins (or loses)
     /// </summary>
     private void CheckWinLoss()
     {
         string topText = "Unknown";
         string bottomText = "Unknown";
-        //win -> Commendations 2 x blackmarks
-        if (commendations >= minWinLoss && commendations >= blackmarks * 2)
+        //win -> Commendations >= 10 & blackmarks < commendations
+        if (commendations >= awardsWinLose && blackmarks < commendations)
         {
             WinStateCampaign win = WinStateCampaign.None;
             switch (GameManager.instance.sideScript.PlayerSide.level)
@@ -178,11 +176,11 @@ public class CampaignManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
             }
             topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been Outstanding", ColourType.goodText));
-            bottomText = string.Format("<b>Your {0} Commendations are twice that of your {1} Black Mark{2}</b>", commendations, blackmarks, blackmarks != 1 ? "s" : "");
+            bottomText = string.Format("<b>You have {0} Commendations</b>", commendations);
             GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.Commendations, topText, bottomText);
         }
-        //loss -> BlackMarks 2 x commendations
-        else if (blackmarks >= minWinLoss && blackmarks >= commendations * 2)
+        //loss -> BlackMarks >= 10 and commendations < blackmarks
+        else if (blackmarks >= awardsWinLose && commendations < blackmarks)
         {
             WinStateCampaign win = WinStateCampaign.None;
             switch (GameManager.instance.sideScript.PlayerSide.level)
@@ -192,7 +190,7 @@ public class CampaignManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
             }
             topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been a huge Disappointment", ColourType.badText));
-            bottomText = string.Format("<b>Your {0} Black Marks are twice that of your {1} Commendations{2}</b>",  blackmarks, commendations, commendations != 1 ? "s" : "");
+            bottomText = string.Format("<b>You have {0} Blackmarks</b>",  blackmarks);
             GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
         }
     }
@@ -375,38 +373,42 @@ public class CampaignManager : MonoBehaviour
     { investigationBlackmarks = value; }
 
     /// <summary>
-    /// change value of black marks. Keep reason short
+    /// change value of black marks. changeBy is amount to change, eg. +1, -1. Keep reason short, two words max
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="changeBy"></param>
     /// <param name="reason"></param>
-    public void ChangeBlackmarks(int value, string reason = "Unknown")
+    public void ChangeBlackmarks(int changeBy, string reason = "Unknown")
     {
         int previous = blackmarks;
-        blackmarks += value;
+        blackmarks += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeBlackmarks: Black Marks now {0}, was {1} (due to {2}){3}", blackmarks, previous, reason, "\n");
         //update topBar
         GameManager.instance.topBarScript.UpdateBlackmarks(blackmarks);
+        //add to collection
+        GameManager.instance.dataScript.AddBlackmark(reason);
     }
 
     /// <summary>
-    /// change value of Commendations. Keep reason short. Value is amount to change, eg. +1, -1
+    /// change value of Commendations. Keep reason short. changeBy is amount to change, eg. +1, -1
     /// </summary>
     /// <param name="value"></param>
     /// <param name="reason"></param>
-    public void ChangeCommendations(int value, string reason = "Unknown")
+    public void ChangeCommendations(int changeBy, string reason = "Unknown")
     {
         int previous = commendations;
-        commendations += value;
+        commendations += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeCommendations: Commendations now {0}, was {1} (due to {2}){3}", commendations, previous, reason, "\n");
         //update topBar
         GameManager.instance.topBarScript.UpdateCommendations(commendations);
+        //add to collection
+        GameManager.instance.dataScript.AddCommendation(reason);
     }
 
-    /// <summary>
+    /*/// <summary>  -> EDIT fixed cost of 1 black mark per investigation
     /// increment black marks given per investigation by +1 (happens each time a guilty verdict is reached)
     /// </summary>
     public void IncrementInvestigationBlackmarks()
-    { investigationBlackmarks++; }
+    { investigationBlackmarks++; }*/
 
 
 
