@@ -513,7 +513,6 @@ public class GameManager : MonoBehaviour
         startMethod.className = "CampaignManager Early";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
-
         //Side Manager -> after campaignManager
         startMethod.handler = sideScript.Initialise;
         startMethod.className = "SideManager";
@@ -680,12 +679,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
         listOfUIMethods.Add(startMethod);
-        listOfConditionalMethods.Add(startMethod);
         //Topic UI
         startMethod.handler = topicDisplayScript.Initialise;
         startMethod.className = "TopicUI";
         listOfUIMethods.Add(startMethod);
-        listOfConditionalMethods.Add(startMethod);
         //AI Display UI 
         startMethod.handler = aiDisplayScript.Initialise;
         startMethod.className = "AIDisplayUI";
@@ -700,7 +697,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = topBarScript.Initialise;
         startMethod.className = "TopBarUI";
         listOfUIMethods.Add(startMethod);
-        listOfConditionalMethods.Add(startMethod);
         //Tooltip Actor
         startMethod.handler = tooltipActorScript.Initialise;
         startMethod.className = "TooltipActor";

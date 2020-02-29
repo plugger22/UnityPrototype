@@ -43,7 +43,15 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         onMouseFlag = true;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
-        { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
+        {
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
+            if (actor != null)
+            {
+                //Don't want to clash with actor sprite tooltip
+                if (actor.tooltipStatus == ActorTooltip.None)
+                { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
+            }
+        }
     }
 
     /// <summary>
@@ -93,7 +101,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
                     ActorTooltipData data = actor.GetTooltipData(parent.transform.position);
 
-                    GameManager.instance.tooltipActorScript.SetTooltip(data);
+                    GameManager.instance.tooltipActorScript.SetTooltip(data, actorSlotID);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }
                 yield return null;

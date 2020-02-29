@@ -36,6 +36,8 @@ public class TooltipActor : MonoBehaviour
     private float fadeInTime;
     private int offset;
 
+                        
+
     //fast access
     private int gracePeriod = -1;                    //actor gear grace period
 
@@ -172,7 +174,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="arrayOfStats">Give stats as Ints[3] in order Stability - Support - Security</param>
     /// <param name="trait">place target info here, a blank list if none</param>
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
-    public void SetTooltip(ActorTooltipData data)
+    public void SetTooltip(ActorTooltipData data, int actorSlotID)
     {
         bool isResistance = true;
         if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistance = false; }
@@ -340,8 +342,28 @@ public class TooltipActor : MonoBehaviour
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        worldPos.y +=  height + offset + 100;
-        worldPos.x -= width / 10;
+        worldPos.y += height + offset + 100;
+        //position of tooltip varies according to slotID as don't want to mask the city map
+        switch (actorSlotID)
+        {
+            case 0:
+            case 1:
+                worldPos.x -= 250.0f;
+                break;
+            case 2:
+            case 3:
+                worldPos.x += 50.0f;
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised data.actor.slotID \"{0}\"", data.actor.slotID);
+                worldPos.x -= width / 10;
+                break;
+        }
+
+        /*worldPos.y +=  height + offset + 100;
+        worldPos.x -= width / 10;*/
+
+
         //width
         if (worldPos.x + width / 2 >= Screen.width)
         { worldPos.x -= width / 2 + worldPos.x - Screen.width; }

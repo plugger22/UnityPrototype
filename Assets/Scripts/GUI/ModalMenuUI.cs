@@ -211,7 +211,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             positionActor.x += 70;
                             positionActor.y -= 100;
                             ActorTooltipData actorTooltip = actor.GetTooltipData(positionActor);
-                            GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip);
+                            GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip, actor.slotID);
                             yield return null;
                             //fade in
                             while (GameManager.instance.tooltipActorScript.GetOpacity() < 1.0)
