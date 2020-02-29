@@ -17,7 +17,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
     }
 
     

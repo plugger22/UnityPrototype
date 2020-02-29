@@ -716,7 +716,7 @@ public class GearManager : MonoBehaviour
                         {
                             //if Player doing it then assumed to have an ability of 1, actor (Fixer) may have a higher ability.
                             if (isPlayer == false)
-                            { chance *= actor.GetDatapoint(ActorDatapoint.Connections0); }
+                            { chance *= actor.GetDatapoint(ActorDatapoint.Contacts0); }
                         }
                         else
                         {

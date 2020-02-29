@@ -20,7 +20,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
     }
 
     /// <summary>

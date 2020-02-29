@@ -187,7 +187,7 @@ namespace gameAPI
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
-                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Contacts0:
                 case ActorDatapoint.Datapoint0:
                     value = datapoint0;
                     break;
@@ -221,7 +221,7 @@ namespace gameAPI
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
-                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Contacts0:
                 case ActorDatapoint.Datapoint0:
                     if ((value - datapoint0) == 0)
                     { Debug.LogWarningFormat("SetDatapoint change Datapoint0 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
@@ -416,7 +416,7 @@ namespace gameAPI
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
-                case ActorDatapoint.Connections0:
+                case ActorDatapoint.Contacts0:
                 case ActorDatapoint.Datapoint0:
                     datapoint0 = value;
                     break;

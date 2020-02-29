@@ -44,6 +44,14 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Default time that Alerts stay on screen before disappearing")]
     [Range(1f, 5f)] public float alertDefaultTime = 3.0f;
 
+    [Header("Tooltips")]
+    [Tooltip("Time in seconds before tooltip activated (commences fade in)")]
+    [Range(0.0f, 2.0f)] public float tooltipDelay = 0.5f;
+    [Tooltip("Time in seconds for tooltip to fade in")]
+    [Range(0.0f, 2.0f)] public float tooltipFade = 0.5f;
+    [Tooltip("How many pixels above object that tooltip will be offset by")]
+    [Range(0, 100)] public int tooltipOffset = 30;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantAuthorityActor;
@@ -162,6 +170,22 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char unhappyChar;
     [HideInInspector] public char doomChar;
     [HideInInspector] public char conflictChar;
+    [HideInInspector] public char stabilityChar;
+    [HideInInspector] public char supportChar;
+    [HideInInspector] public char securityChar;
+    [HideInInspector] public char invisibilityChar;
+    [HideInInspector] public char motivationChar;
+    [HideInInspector] public char connectionsChar;
+
+
+    //predefined data icons
+    [HideInInspector] public string stabilityIcon;
+    [HideInInspector] public string supportIcon;
+    [HideInInspector] public string securityIcon;
+    [HideInInspector] public string invisibilityIcon;
+    [HideInInspector] public string motivationIcon;
+    [HideInInspector] public string connectionsIcon;
+    [HideInInspector] public string innocenceIcon;
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
@@ -231,7 +255,9 @@ public class GUIManager : MonoBehaviour
     /// <param name="arrayOfActors"></param>
     public void Initialise(GameState state)
     {
+        SetColours();
         SetFontChars();
+        SetIcons();
         //make sure blocking layers are all set to false
         arrayIsBlocked = new bool[numOfModalLevels + 1];
         for (int i = 0; i < arrayIsBlocked.Length; i++)
@@ -270,6 +296,28 @@ public class GUIManager : MonoBehaviour
         unhappyChar = '\uf119';
         doomChar = '\uf714';
         conflictChar = '\uf57f';
+        stabilityChar = '\uf67c';
+        supportChar = '\uf2b5';
+        securityChar = '\uf3ed';
+        invisibilityChar = '\uf06e';
+        motivationChar = '\uf118';
+        connectionsChar = '\uf500';
+    }
+
+    /// <summary>
+    /// Set colour formatted icon strings for data values. Used throughout code base, central repositry here
+    /// </summary>
+    private void SetIcons()
+    {
+        //icon colour should be different from topBarUI icon colours in order to differentiate between datapoint icons and alert icons
+        string colourIcon = colourNeutral;
+        stabilityIcon = string.Format("{0}{1}{2}", colourIcon, stabilityChar, colourEnd);
+        supportIcon = string.Format("{0}{1}{2}", colourIcon, supportChar, colourEnd);
+        securityIcon = string.Format("{0}{1}{2}", colourIcon, securityChar, colourEnd);
+        invisibilityIcon = string.Format("{0}{1}{2}", colourIcon, invisibilityChar, colourEnd);
+        motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
+        connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
+        innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
     }
 
 

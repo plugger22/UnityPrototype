@@ -35,8 +35,8 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
         //need to get nodeObject details at start to accomodate OnPointerEnter & node component details later in coroutine
         nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
 

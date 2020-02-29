@@ -430,9 +430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b439d4aef8db24d999b98566e42219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipDelay: 0.75
-  tooltipFade: 0.3
-  tooltipOffset: 30
 --- !u!114 &114255827819229090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4665,6 +4662,9 @@ MonoBehaviour:
   flashConnectiontTime: 0.4
   flashInfoTabTime: 0.4
   alertDefaultTime: 3
+  tooltipDelay: 0.5
+  tooltipFade: 0.5
+  tooltipOffset: 30
   vacantAuthorityActor: {fileID: 21300000, guid: be963c4af0f86a64ebaa6c5c5ee8e329,
     type: 3}
   vacantResistanceActor: {fileID: 21300000, guid: be963c4af0f86a64ebaa6c5c5ee8e329,
@@ -4743,6 +4743,19 @@ MonoBehaviour:
   unhappyChar: 61721
   doomChar: 62606
   conflictChar: 62847
+  stabilityChar: 0
+  supportChar: 0
+  securityChar: 0
+  invisibilityChar: 0
+  motivationChar: 0
+  connectionsChar: 0
+  stabilityIcon: 
+  supportIcon: 
+  securityIcon: 
+  invisibilityIcon: 
+  motivationIcon: 
+  connectionsIcon: 
+  innocenceIcon: 
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

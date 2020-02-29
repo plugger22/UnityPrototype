@@ -30,6 +30,9 @@ public class TooltipPlayer : MonoBehaviour
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
+
+    private string[] arrayOfIcons = new string[3];
+
     //colours
     private string colourGood;
     private string colourNeutral;
@@ -42,14 +45,56 @@ public class TooltipPlayer : MonoBehaviour
 
 
     /// <summary>
+    /// needed for sequencing issues. Not for GameState.LoadGame
+    /// </summary>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// Fast access submethod
+    /// </summary>
+    private void SubInitialiseFastAccess()
+    {
+        //node datapoint icons
+        arrayOfIcons[0] = GameManager.instance.guiScript.invisibilityIcon;
+        arrayOfIcons[1] = GameManager.instance.guiScript.motivationIcon;
+        arrayOfIcons[2] = GameManager.instance.guiScript.innocenceIcon;
+        Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0] (Null)");
+        Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1] (Null)");
+        Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2] (Null)");
+    }
+    #endregion
+
+    #endregion
+
+    /// <summary>
     /// initialisation
     /// </summary>
     private void Start()
     {
         canvasGroup = tooltipPlayerObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipPlayerObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
+        fadeInTime = GameManager.instance.guiScript.tooltipFade;
+        offset = GameManager.instance.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipPlayer");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipPlayer");
@@ -228,9 +273,9 @@ public class TooltipPlayer : MonoBehaviour
                 /*builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
                 builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);*/
 
-                builderRes.AppendFormat("<b>Invisibility<pos=57%>{0}</b>{1}", GameManager.instance.guiScript.GetStars(invisibility), "\n");
-                builderRes.AppendFormat("<b>Mood<pos=57%>{0}</b>{1}", GameManager.instance.guiScript.GetStars(mood), "\n");
-                builderRes.AppendFormat("<b>Innocence<pos=57%>{0}</b>", GameManager.instance.guiScript.GetStars(GameManager.instance.playerScript.Innocence));
+                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.instance.guiScript.GetStars(invisibility), "\n");
+                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.instance.guiScript.GetStars(mood), "\n");
+                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.instance.guiScript.GetStars(GameManager.instance.playerScript.Innocence));
                 playerStats.text = builderRes.ToString();
                 break;
         }

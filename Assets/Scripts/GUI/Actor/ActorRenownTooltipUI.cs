@@ -24,8 +24,8 @@ public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     private void Start()
     {
         myCoroutine = null;
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
     }
 
 

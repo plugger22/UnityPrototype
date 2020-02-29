@@ -57,7 +57,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
         /*mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;*/
     }
 

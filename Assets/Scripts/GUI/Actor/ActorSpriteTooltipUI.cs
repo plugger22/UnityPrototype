@@ -30,8 +30,8 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
     }
 
 

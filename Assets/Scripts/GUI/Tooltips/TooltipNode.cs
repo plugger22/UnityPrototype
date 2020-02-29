@@ -37,6 +37,8 @@ public class TooltipNode : MonoBehaviour
 
     public GameObject tooltipNodeObject;
 
+    private string[] arrayOfIcons = new string[3];
+
     private Image background;
     private static TooltipNode tooltipNode;
     RectTransform rectTransform;
@@ -69,8 +71,8 @@ public class TooltipNode : MonoBehaviour
     {
         canvasGroup = tooltipNodeObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipNodeObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
+        fadeInTime = GameManager.instance.guiScript.tooltipFade;
+        offset = GameManager.instance.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipNode");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipNode");
@@ -115,8 +117,17 @@ public class TooltipNode : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(minStatValue > -1, "Invalid minStatValue (-1)");
+        //Node datapoint Icons
+        arrayOfIcons[0] = GameManager.instance.guiScript.stabilityIcon;
+        arrayOfIcons[1] = GameManager.instance.guiScript.supportIcon;
+        arrayOfIcons[2] = GameManager.instance.guiScript.securityIcon;
+        Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0], Stability (Null)");
+        Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1], Support (Null)");
+        Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2], Security (Null)");
     }
     #endregion
+
+
 
     #endregion
 
@@ -287,7 +298,7 @@ public class TooltipNode : MonoBehaviour
             {
                 statData = data.arrayOfStats[i];
                 if (i > 0) { builderStats.AppendLine(); }
-                builderStats.AppendFormat("{0}<pos=57%>{1}", (NodeData)i, GameManager.instance.guiScript.GetStars(statData));
+                builderStats.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], (NodeData)i, GameManager.instance.guiScript.GetStars(statData));
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }

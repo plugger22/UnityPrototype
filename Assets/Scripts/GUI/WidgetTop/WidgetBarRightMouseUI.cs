@@ -23,7 +23,7 @@ public class WidgetBarRightMouseUI : MonoBehaviour, IPointerClickHandler, IPoint
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
         //mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 

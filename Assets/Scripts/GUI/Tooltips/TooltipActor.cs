@@ -39,6 +39,8 @@ public class TooltipActor : MonoBehaviour
     //fast access
     private int gracePeriod = -1;                    //actor gear grace period
 
+    private string[] arrayOfIcons = new string[3];
+
     //colours
     private string colourGood;
     private string colourNeutral;
@@ -51,6 +53,47 @@ public class TooltipActor : MonoBehaviour
     private string colourGrey;
     private string colourEnd;
 
+    /// <summary>
+    /// needed for sequencing issues. Not for GameState.LoadGame
+    /// </summary>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                break;
+        }
+    }
+
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// Fast access submethod
+    /// </summary>
+    private void SubInitialiseFastAccess()
+    {
+        //node datapoint icons
+        arrayOfIcons[0] = GameManager.instance.guiScript.connectionsIcon;
+        arrayOfIcons[1] = GameManager.instance.guiScript.motivationIcon;
+        arrayOfIcons[2] = GameManager.instance.guiScript.invisibilityIcon;
+        Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0] (Null)");
+        Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1] (Null)");
+        Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2] (Null)");
+    }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// initialisation
@@ -59,11 +102,12 @@ public class TooltipActor : MonoBehaviour
     {
         canvasGroup = tooltipActorObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
+        fadeInTime = GameManager.instance.guiScript.tooltipFade;
+        offset = GameManager.instance.guiScript.tooltipOffset;
         //fast access
         gracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
         Debug.Assert(gracePeriod > -1, "Invalid gracePeriod (-1)");
+
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipActor");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipActor");
@@ -261,7 +305,7 @@ public class TooltipActor : MonoBehaviour
             {
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0}<pos=57%>{1}", data.arrayOfQualities[i], GameManager.instance.guiScript.GetStars(dataStats));
+                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.instance.guiScript.GetStars(dataStats));
             }
             actorStats.text = builder.ToString();
         }
@@ -296,14 +340,13 @@ public class TooltipActor : MonoBehaviour
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        worldPos.y +=  height + offset;
+        worldPos.y +=  height + offset + 100;
         worldPos.x -= width / 10;
         //width
         if (worldPos.x + width / 2 >= Screen.width)
         { worldPos.x -= width / 2 + worldPos.x - Screen.width; }
         else if (worldPos.x - width / 2 <= 0)
         { worldPos.x += width / 2 - worldPos.x; }
-
         //set new position
         tooltipActorObject.transform.position = worldPos;
         Debug.LogFormat("[UI] TooltipActor.cs -> SetTooltip{0}", "\n");

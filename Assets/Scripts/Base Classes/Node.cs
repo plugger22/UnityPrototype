@@ -241,7 +241,7 @@ public class Node : MonoBehaviour
         materialHighlight = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Highlight);
         materialNemesis = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Nemesis);
         materialPlayer = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;

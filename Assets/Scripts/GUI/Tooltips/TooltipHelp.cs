@@ -41,7 +41,7 @@ public class TooltipHelp : MonoBehaviour
     private void Start()
     {
         rectTransform = tooltipHelpObject.GetComponent<RectTransform>();
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
+        offset = GameManager.instance.guiScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid offset (Zero)");
         Debug.Assert(tooltipHelpObject != null, "Invalid tooltipHelpOjbect (Null)");
         Debug.Assert(topicObject_0 != null, "Invalid topicOjbect_0 (Null)");

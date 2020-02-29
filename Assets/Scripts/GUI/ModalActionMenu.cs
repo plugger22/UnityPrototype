@@ -56,7 +56,7 @@ public class ModalActionMenu : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        offset = GameManager.instance.tooltipScript.tooltipOffset * 2;
+        offset = GameManager.instance.guiScript.tooltipOffset * 2;
         //register listener
         EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }

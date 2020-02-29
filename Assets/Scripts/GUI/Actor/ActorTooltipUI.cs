@@ -29,8 +29,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2;
     }

@@ -107,8 +107,8 @@ public class Connection : MonoBehaviour
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
+        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
     }
 
     public void InitialiseConnection(int v1, int v2)

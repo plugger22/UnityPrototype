@@ -42,8 +42,8 @@ public class TooltipConnection : MonoBehaviour
     {
         canvasGroup = tooltipConnectionObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipConnectionObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.tooltipScript.tooltipFade;
-        offset = GameManager.instance.tooltipScript.tooltipOffset;
+        fadeInTime = GameManager.instance.guiScript.tooltipFade;
+        offset = GameManager.instance.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipConnection");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipConnection");
