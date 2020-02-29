@@ -184,18 +184,33 @@ public class ActorPanelUI : MonoBehaviour
         Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
         Actor2.GetComponent<ActorHighlightUI>().actorSlotID = 2;
         Actor3.GetComponent<ActorHighlightUI>().actorSlotID = 3;
+
         picture0.GetComponent<ActorClickUI>().actorSlotID = 0;
         picture1.GetComponent<ActorClickUI>().actorSlotID = 1;
         picture2.GetComponent<ActorClickUI>().actorSlotID = 2;
         picture3.GetComponent<ActorClickUI>().actorSlotID = 3;
+
         type0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
         type1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
         type2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
         type3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+
+        type0.GetComponent<ActorTooltipUI>().isText = true;
+        type1.GetComponent<ActorTooltipUI>().isText = true;
+        type2.GetComponent<ActorTooltipUI>().isText = true;
+        type3.GetComponent<ActorTooltipUI>().isText = true;
+
         picture0.GetComponent<ActorTooltipUI>().actorSlotID = 0;
         picture1.GetComponent<ActorTooltipUI>().actorSlotID = 1;
         picture2.GetComponent<ActorTooltipUI>().actorSlotID = 2;
         picture3.GetComponent<ActorTooltipUI>().actorSlotID = 3;
+
+        picture0.GetComponent<ActorTooltipUI>().isText = false;
+        picture1.GetComponent<ActorTooltipUI>().isText = false;
+        picture2.GetComponent<ActorTooltipUI>().isText = false;
+        picture3.GetComponent<ActorTooltipUI>().isText = false;
+
+
         //populate lists
         List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
         if (listOfActorTypes != null)

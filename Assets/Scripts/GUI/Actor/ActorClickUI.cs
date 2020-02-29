@@ -30,6 +30,9 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
         //is there an actor in this slot?
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
         {
+            //close actor tooltip
+            GameManager.instance.tooltipActorScript.CloseTooltip("ActorClickUI.cs -> OnPointerClick");
+            //which button
             switch (eventData.button)
             {
                 case PointerEventData.InputButton.Left:

@@ -337,8 +337,8 @@ public class TooltipPlayer : MonoBehaviour
         float height = rectTransform.rect.height;
         float width = rectTransform.rect.width;
         //base y pos at zero (bottom of screen). Adjust up from there.
-        worldPos.y += height + offset;
-        worldPos.x -= width / 10;
+        worldPos.y += height + offset - 180;
+        worldPos.x -= width / 10 + 180;
         //width
         if (worldPos.x + width / 2 >= Screen.width)
         { worldPos.x -= width / 2 + worldPos.x - Screen.width; }

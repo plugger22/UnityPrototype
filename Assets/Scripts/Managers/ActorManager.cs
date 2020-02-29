@@ -2054,7 +2054,7 @@ public class ActorManager : MonoBehaviour
 
                     break;
                 //
-                // - - - Actor Inactive - - -
+                // - - - Actor Inactive - - - EDIT: Disabled, need to change code in ActorClickUI.cs -> OnPointerClick L52 in order to use the following code. As it is Right Click menu disabled if Actor Inactive
                 //
                 case ActorStatus.Inactive:
 

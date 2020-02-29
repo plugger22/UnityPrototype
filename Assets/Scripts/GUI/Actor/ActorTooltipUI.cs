@@ -12,6 +12,8 @@ using modalAPI;
 public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public int actorSlotID;
+    [HideInInspector] public bool isText;                   //true if tooltip attached to text below sprite. Activates while actor inactive unlike sprite which doesn't
+
     private float mouseOverDelay;
     private float mouseOverFade;
     private bool onMouseFlag;
@@ -50,6 +52,12 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 //Don't want to clash with actor sprite tooltip
                 if (actor.tooltipStatus == ActorTooltip.None)
                 { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
+                else
+                {
+                    //InActive status, shows only if the text below sprite
+                    if (isText == true)
+                    { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
+                }
             }
         }
     }

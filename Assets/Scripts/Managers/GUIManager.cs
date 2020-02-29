@@ -398,6 +398,7 @@ public class GUIManager : MonoBehaviour
     public void SetAlertMessage(AlertType type, int data = -1)
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
+        //sprite can be override in case statements below
         details.sprite = infoSprite;
         details.side = GameManager.instance.sideScript.PlayerSide;
         switch (type)
@@ -419,6 +420,7 @@ public class GUIManager : MonoBehaviour
                         details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
                         break;
                     case ActorStatus.Inactive:
+                        details.sprite = GameManager.instance.playerScript.sprite;
                         switch (GameManager.instance.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
@@ -443,6 +445,7 @@ public class GUIManager : MonoBehaviour
                 Actor actor = GameManager.instance.dataScript.GetActor(data);
                 if (actor != null)
                 {
+                    details.sprite = actor.sprite;
                     switch (actor.Status)
                     {
                         case ActorStatus.Captured:
