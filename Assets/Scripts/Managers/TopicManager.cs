@@ -192,6 +192,8 @@ public class TopicManager : MonoBehaviour
     private bool tagHqActors;           //if true, tagActorID / tagActorOtherID are from HQ, default false, ignore (used for HQ topics)
     private string tagJob;
     private string tagLocation;
+    private string tagMeds;
+    private string tagDisease;
     private string tagGear;
     private string tagRecruit;
     private string tagSecretName;               //secret.name
@@ -1406,6 +1408,8 @@ public class TopicManager : MonoBehaviour
         tagHqActors = false;
         tagJob = "";
         tagLocation = "";
+        tagMeds = "";
+        tagDisease = "";
         tagGear = "";
         tagRecruit = "";
         tagSecretName = "";
@@ -5457,7 +5461,13 @@ public class TopicManager : MonoBehaviour
                         //'Sorry but I'm on [Knob Rot Meds]'
                         if (isValidate == false)
                         {
-                            string meds = textListMeds.GetRandomRecord();
+                            string meds = "Unknown";
+                            if (string.IsNullOrEmpty(tagMeds) == true)
+                            {
+                                meds = textListMeds.GetRandomRecord();
+                                tagMeds = meds;
+                            }
+                            else { meds = tagMeds; }
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("<b>{0}{1} meds{2}</b>", colourCheckText, meds, colourEnd); }
                             else { replaceText = string.Format("{0} meds", meds); }
@@ -5468,7 +5478,13 @@ public class TopicManager : MonoBehaviour
                         //'Sorry but I'm on [Knob Rot Meds]'
                         if (isValidate == false)
                         {
-                            string disease = textListDisease.GetRandomRecord();
+                            string disease = "Unknown";
+                            if (string.IsNullOrEmpty(tagDisease) == true)
+                            {
+                                disease = textListDisease.GetRandomRecord();
+                                tagDisease = disease;
+                            }
+                            else { disease = tagDisease; }
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, disease, colourEnd); }
                             else { replaceText = disease; }
