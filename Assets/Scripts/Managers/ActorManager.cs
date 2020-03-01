@@ -8026,8 +8026,8 @@ public class ActorManager : MonoBehaviour
                     data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
                     data.main = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                         colourNeutral, colourEnd, colourNormal, colourEnd);
-                    data.details = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
-                        actor.actorName, colourNeutral, colourEnd);
+                    data.details = string.Format("{0}{1}{2} will automatically reactivate once their invisibility recovers to {3}3 stars{4}",
+                        colourNeutral, actor.actorName, colourEnd, colourNeutral, colourEnd);
                     break;
                 case ActorTooltip.Captured:
                     data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
@@ -8120,8 +8120,8 @@ public class ActorManager : MonoBehaviour
                 data.header = string.Format("{0}PLAYER{1}{2}{3}", colourSide, colourEnd, "\n", playerName);
                 data.main = string.Format("{0}<size=120%>Currently {1}{2}LYING LOW{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
                     colourNeutral, colourEnd, colourNormal, colourEnd);
-                data.details = string.Format("{0} will automatically reactivate once their invisibility recovers or you {1}ACTIVATE{2} them",
-                    playerName, colourNeutral, colourEnd);
+                data.details = string.Format("{0}{1}{2} will automatically reactivate once their invisibility recovers to {3}3 Stars{4}",
+                    colourNeutral, playerName, colourEnd, colourNeutral, colourEnd);
                 break;
             case ActorTooltip.Captured:
                 data.header = string.Format("{0}Player{1}{2}{3}", colourSide, colourEnd, "\n", GameManager.instance.playerScript.PlayerName);

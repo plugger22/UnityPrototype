@@ -1532,6 +1532,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fafb644a07b521f4ebf4755625f3133f, type: 2}
   - {fileID: 11400000, guid: 6fb37af2b3a997a4f8b821c0e6dc2de3, type: 2}
   - {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
+  - {fileID: 11400000, guid: a301190c0d4058f4a92b6d572121617a, type: 2}
+  - {fileID: 11400000, guid: f70dd145ec3cf834690e71c1fa6d98b9, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -5037,6 +5039,8 @@ MonoBehaviour:
   textListHqActive: {fileID: 11400000, guid: fafb644a07b521f4ebf4755625f3133f, type: 2}
   textListHqIssue: {fileID: 11400000, guid: 6fb37af2b3a997a4f8b821c0e6dc2de3, type: 2}
   textListHqWant: {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
+  textListMeds: {fileID: 11400000, guid: a301190c0d4058f4a92b6d572121617a, type: 2}
+  textListDisease: {fileID: 11400000, guid: f70dd145ec3cf834690e71c1fa6d98b9, type: 2}
   actorType: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   playerType: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   authorityType: {fileID: 11400000, guid: a33a738feb5024545b0d8563e7580f09, type: 2}

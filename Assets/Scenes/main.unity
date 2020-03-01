@@ -10057,16 +10057,6 @@ Prefab:
       propertyPath: m_Name
       value: Commendations
       objectReference: {fileID: 0}
-    - target: {fileID: 114317759518857182, guid: 5bfab8d15813d264ab056058cd640813,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114317759518857182, guid: 5bfab8d15813d264ab056058cd640813,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 114896702658990280, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -10077,25 +10067,15 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
+    - target: {fileID: 114317759518857182, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
-      propertyPath: m_Color.a
-      value: 0.39215687
+      propertyPath: m_havePropertiesChanged
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
+    - target: {fileID: 114317759518857182, guid: 5bfab8d15813d264ab056058cd640813,
         type: 2}
-      propertyPath: m_Color.r
-      value: 0.55602527
-      objectReference: {fileID: 0}
-    - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.8068973
-      objectReference: {fileID: 0}
-    - target: {fileID: 114315591431781704, guid: 5bfab8d15813d264ab056058cd640813,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.990566
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bfab8d15813d264ab056058cd640813, type: 2}
@@ -12822,6 +12802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
+  isText: 0
 --- !u!1 &421591001
 GameObject:
   m_ObjectHideFlags: 0
@@ -17906,6 +17887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
+  isText: 0
 --- !u!1 &573572400
 GameObject:
   m_ObjectHideFlags: 0
@@ -48715,6 +48697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
+  isText: 0
 --- !u!1 &1843677693
 GameObject:
   m_ObjectHideFlags: 0
@@ -53272,6 +53255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorSlotID: 0
+  isText: 0
 --- !u!224 &2024958539 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224040992118361858, guid: 3a4adbf33b13e3e499908367387ad592,

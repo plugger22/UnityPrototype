@@ -280,6 +280,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0 && value >= GameManager.instance.campaignScript.GetBlackmarks())
         {
             //active Good
+            commendations.textIcon.fontSize = 20.0f;
+            commendations.textData.fontSize = 18.0f;
             Color color = colourIconActiveGood;
             commendations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -288,6 +290,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            commendations.textIcon.fontSize = 16.0f;
+            commendations.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             commendations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -309,6 +313,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0 && value >= GameManager.instance.campaignScript.GetCommendations())
         {
             //active Bad
+            blackmarks.textIcon.fontSize = 20.0f;
+            blackmarks.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             blackmarks.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -317,6 +323,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            blackmarks.textIcon.fontSize = 16.0f;
+            blackmarks.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             blackmarks.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -338,6 +346,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             //active Bad
+            investigations.textIcon.fontSize = 20.0f;
+            investigations.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             investigations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -346,6 +356,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            investigations.textIcon.fontSize = 16.0f;
+            investigations.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             investigations.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -367,6 +379,8 @@ public class TopBarUI : MonoBehaviour
         if (value <= 1)
         {
             //active Bad
+            innocence.textIcon.fontSize = 20.0f;
+            innocence.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             innocence.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -375,6 +389,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            innocence.textIcon.fontSize = 16.0f;
+            innocence.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             innocence.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -397,6 +413,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             //active Bad
+            unhappy.textIcon.fontSize = 20.0f;
+            unhappy.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -405,6 +423,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            unhappy.textIcon.fontSize = 16.0f;
+            unhappy.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             unhappy.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -426,6 +446,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             //Active Bad
+            conflicts.textIcon.fontSize = 20.0f;
+            conflicts.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -434,6 +456,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            conflicts.textIcon.fontSize = 16.0f;
+            conflicts.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             conflicts.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -455,6 +479,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             //Active Bad
+            blackmail.textIcon.fontSize = 20.0f;
+            blackmail.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -463,6 +489,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            blackmail.textIcon.fontSize = 16.0f;
+            blackmail.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             blackmail.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -484,6 +512,8 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             //Active Bad
+            doom.textIcon.fontSize = 20.0f;
+            doom.textData.fontSize = 18.0f;
             Color color = colourIconActiveBad;
             doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;
@@ -492,6 +522,8 @@ public class TopBarUI : MonoBehaviour
         else
         {
             //Dormant
+            doom.textIcon.fontSize = 16.0f;
+            doom.textData.fontSize = 14.0f;
             Color color = colourIconDormant;
             doom.textIcon.color = new Color(color.r, color.g, color.b, opacityHigh);
             color = colourNumber;

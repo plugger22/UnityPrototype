@@ -83,6 +83,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             {
                 data = GameManager.instance.actorScript.GetActorTooltip(actor, side);
                 data.screenPos = transform.position;
+                data.screenPos = AdjustTooltipPosition(data.screenPos);
                 if (data != null)
                 { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
@@ -121,6 +122,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 if (data != null)
                 {
                     data.screenPos = transform.position;
+                    data.screenPos = AdjustTooltipPosition(data.screenPos);
                     GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 }
                 yield return null;
@@ -138,6 +140,29 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Adjusts tooltip position based on slotID
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    private Vector3 AdjustTooltipPosition(Vector3 pos)
+    {
+        Vector3 adjustedPos = pos;
+        switch(actorSlotID)
+        {
+            case 0:
+            case 1:
+                adjustedPos.x -= 250.0f;
+                break;
+            case 2:
+            case 3:
+                adjustedPos.x += 50.0f;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised actorSlotID \"{0}\"", actorSlotID); break;
+        }
+        return adjustedPos;
     }
 
 }

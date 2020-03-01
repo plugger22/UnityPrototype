@@ -314,7 +314,7 @@ public class GUIManager : MonoBehaviour
         stabilityIcon = string.Format("{0}{1}{2}", colourIcon, stabilityChar, colourEnd);
         supportIcon = string.Format("{0}{1}{2}", colourIcon, supportChar, colourEnd);
         securityIcon = string.Format("{0}{1}{2}", colourIcon, securityChar, colourEnd);
-        invisibilityIcon = string.Format("{0}{1}{2}", colourIcon, invisibilityChar, colourEnd);
+        invisibilityIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, invisibilityChar, colourEnd);
         motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);

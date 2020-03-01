@@ -548,7 +548,7 @@ namespace gameAPI
             {
                 if (dictOfContacts[nodeID].status == ContactStatus.Active)
                 { return dictOfContacts[nodeID]; }
-                else { Debug.LogWarningFormat("Invalid contact {0} (\"{1}\") for nodeID {2}", dictOfContacts[nodeID].nameFirst, dictOfContacts[nodeID].status, nodeID); }
+                /*else { Debug.LogWarningFormat("Invalid contact {0} (\"{1}\") for nodeID {2}", dictOfContacts[nodeID].nameFirst, dictOfContacts[nodeID].status, nodeID); }*/
             }
             return null;
         }

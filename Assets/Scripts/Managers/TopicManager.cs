@@ -79,6 +79,10 @@ public class TopicManager : MonoBehaviour
     public TextList textListHqIssue;
     [Tooltip("List of wants for HQ topics")]
     public TextList textListHqWant;
+    [Tooltip("List of meds for HQ topics")]
+    public TextList textListMeds;
+    [Tooltip("List Of diseases for HQ topics")]
+    public TextList textListDisease;
 
     [Header("TopicTypes (with subSubTypes)")]
     [Tooltip("Used to avoid having to hard code the TopicType.SO names")]
@@ -381,6 +385,8 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListHqActive != null, "Invalid textListHqActive (Null)");
         Debug.Assert(textListHqIssue != null, "Invalid textListHqIssue (Null)");
         Debug.Assert(textListHqWant != null, "Invalid textListHqWant (Null)");
+        Debug.Assert(textListMeds != null, "Invalid textListMeds (Null)");
+        Debug.Assert(textListDisease != null, "Invalid textListDisease (Null)");
         //types
         Debug.Assert(actorType != null, "Invalid actorType (Null)");
         Debug.Assert(playerType != null, "Invalid playerType (Null)");
@@ -2870,6 +2876,12 @@ public class TopicManager : MonoBehaviour
                                                     isProceed = true;
                                                     option.textToDisplay = string.Format("{0}{1}{2}", colourOption, CheckTopicText(option.text, false), colourEnd);
                                                 }
+                                            }
+                                            else
+                                            {
+                                                //criteria checked failed
+                                                isProceed = true;
+                                                option.textToDisplay = string.Format("{0}{1}{2}", colourGrey, CheckTopicText(option.text, false), colourEnd);
                                             }
                                         }
                                         else
@@ -5440,6 +5452,28 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = policy; }
                         }
                         else { CountTextTag("policy", dictOfTags); }
+                        break;
+                    case "meds":
+                        //'Sorry but I'm on [Knob Rot Meds]'
+                        if (isValidate == false)
+                        {
+                            string meds = textListMeds.GetRandomRecord();
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1} meds{2}</b>", colourCheckText, meds, colourEnd); }
+                            else { replaceText = string.Format("{0} meds", meds); }
+                        }
+                        else { CountTextTag("meds", dictOfTags); }
+                        break;
+                    case "disease":
+                        //'Sorry but I'm on [Knob Rot Meds]'
+                        if (isValidate == false)
+                        {
+                            string disease = textListDisease.GetRandomRecord();
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}{1}{2}</b>", colourCheckText, disease, colourEnd); }
+                            else { replaceText = disease; }
+                        }
+                        else { CountTextTag("disease", dictOfTags); }
                         break;
                     case "daysAgo":
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'

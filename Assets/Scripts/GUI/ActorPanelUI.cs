@@ -390,7 +390,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = GameManager.instance.colourScript.GetFormattedString("from 0 to 3 stars", ColourType.neutralText);
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.instance.colourScript.GetFormattedString( "0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
         playerMoodTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
