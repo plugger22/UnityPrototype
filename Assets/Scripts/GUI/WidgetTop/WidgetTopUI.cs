@@ -15,8 +15,10 @@ public class WidgetTopUI : MonoBehaviour
 {
 
     public Image widgetTopSprite;
-    public Image barCity;
-    public Image barFaction;
+    public Image barCityFront;
+    public Image barHqFront;
+    public Image barCityBack;
+    public Image barHqBack;
     public Image starLeft;
     public Image starMiddle;
     public Image starRight;
@@ -40,9 +42,18 @@ public class WidgetTopUI : MonoBehaviour
 
     public void Awake()
     {
+        Debug.Assert(starLeft != null, "Invalid starLeft (Null)");
+        Debug.Assert(starMiddle != null, "Invalid starMiddle (Null)");
+        Debug.Assert(starRight != null, "Invalid starRight (Null)");
+        Debug.Assert(flashRedInner != null, "Invalid flashRedInner (Null)");
+        Debug.Assert(flashRedOuter != null, "Invalid flashRedOuter (Null)");
+        Debug.Assert(widgetTopSprite != null, "Invalid widgetTopSprite (Null)");
+        Debug.Assert(barCityBack != null, "Invalid barCityBack (Null)");
+        Debug.Assert(barCityFront != null, "Invalid barCityFront (Null)");
+        Debug.Assert(barHqFront != null, "Invalid barHqFront (Null)");
         //cache components -> needs to be here instead of initialise sub method as a loadAtStart references it prior to the subInitialisation method assigning it
-        transformCity = barCity.GetComponent<RectTransform>();
-        transformFaction = barFaction.GetComponent<RectTransform>();
+        transformCity = barCityFront.GetComponent<RectTransform>();
+        transformFaction = barHqFront.GetComponent<RectTransform>();
         Debug.Assert(transformCity != null, "Invalid transformCity (Null)");
         Debug.Assert(transformFaction != null, "Invalid transformFaction (Null)");
     }
@@ -121,8 +132,8 @@ public class WidgetTopUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        //Debug.Assert(city != null, "Invalid city tmp (Null)");
-        //Debug.Assert(hq != null, "Invalid hq tmp (Null)");
+        Debug.Assert(city != null, "Invalid city tmp (Null)");
+        Debug.Assert(hq != null, "Invalid hq tmp (Null)");
         Debug.Assert(actionPoints != null, "Invalid actionPoints (Null)");
         Debug.Assert(turnNumber != null, "Invalid turnNumber (Null)");
 
@@ -137,8 +148,13 @@ public class WidgetTopUI : MonoBehaviour
         isFading = false;
         //main widget sprite colour
         tempColor = GameManager.instance.guiScript.colourTopWidget;
-        tempColor.a = 1.0f;
+        tempColor.a = 0.75f;
         widgetTopSprite.color = tempColor;
+        //back bars
+        tempColor = GameManager.instance.guiScript.colourTopWidgetBarBacks;
+        tempColor.a = 0.4f;
+        barCityBack.color = tempColor;
+        barHqBack.color = tempColor;
         // dim down objective stars to default values -> Otherwise done in ObjectiveManager.cs -> SetObjectives / UpdateObjectiveProgress
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
@@ -274,11 +290,11 @@ public class WidgetTopUI : MonoBehaviour
         {
             case 1:
                 //authority
-                barCity.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
+                barCityFront.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
                 break;
             case 2:
                 //resistance
-                barCity.color = new Color(2.0f * factor, 1.0f * (1 - factor), 0);
+                barCityFront.color = new Color(2.0f * factor, 1.0f * (1 - factor), 0);
                 break;
         }
     }
@@ -294,7 +310,7 @@ public class WidgetTopUI : MonoBehaviour
         transformFaction.sizeDelta = new Vector2(floatSize * 10f, transformFaction.sizeDelta.y);
         //set colour
         float factor = floatSize * 0.1f;
-        barFaction.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
+        barHqFront.color = new Color(2.0f * (1 - factor), 1.0f * factor, 0);
     }
 
     /// <summary>

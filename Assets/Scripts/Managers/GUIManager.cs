@@ -147,6 +147,8 @@ public class GUIManager : MonoBehaviour
     public Color colourIconActiveBad;
     [Tooltip("Top Widget sprite colour")]
     public Color colourTopWidget;
+    [Tooltip("Top Widget bar backgrounds colour")]
+    public Color colourTopWidgetBarBacks;
 
     //font awesome icons
     [HideInInspector] public char starChar;
