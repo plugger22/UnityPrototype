@@ -191,7 +191,7 @@ public class NodeManager : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
-    {            
+    {
         //fast access
         globalResistance = GameManager.instance.globalScript.sideResistance;
         globalAuthority = GameManager.instance.globalScript.sideAuthority;
@@ -481,23 +481,77 @@ public class NodeManager : MonoBehaviour
 
 
     /// <summary>
-    /// Use this for all calls for player nodeID. Handles edge cases automatically. Returns -1 if a problem (unlikely)
+    /// Use this for all calls for player nodeID. Handles edge cases and player/AI automatically. Returns -1 if a problem (unlikely)
     /// </summary>
     /// <returns></returns>
     public int GetPlayerNodeID()
     {
-        int nodeID;
-        switch (GameManager.instance.playerScript.status)
+        int nodeID = -1;
+        switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case ActorStatus.Active:
-            case ActorStatus.Inactive:
-                nodeID = nodePlayer; break;
-            case ActorStatus.Captured: nodeID = nodeCaptured; break;
-            default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.instance.playerScript.status);  nodeID = -1; break;
+            case 1:
+                //Authority
+                switch (GameManager.instance.sideScript.authorityCurrent)
+                {
+                    case SideState.Human:
+                        {
+                            switch (GameManager.instance.playerScript.status)
+                            {
+                                case ActorStatus.Active:
+                                case ActorStatus.Inactive:
+                                    nodeID = nodePlayer; break;
+                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.instance.playerScript.status); nodeID = -1; break;
+                            }
+                        }
+                        break;
+                    case SideState.AI:
+                        {
+                            switch (GameManager.instance.aiScript.status)
+                            {
+                                case ActorStatus.Active:
+                                case ActorStatus.Inactive:
+                                    nodeID = nodePlayer; break;
+                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.instance.playerScript.status); nodeID = -1; break;
+                            }
+                        }
+                        break;
+                }
+                break;
+            case 2:
+                //Resistance
+                switch (GameManager.instance.sideScript.resistanceCurrent)
+                {
+                    case SideState.Human:
+                        {
+                            switch (GameManager.instance.playerScript.status)
+                            {
+                                case ActorStatus.Active:
+                                case ActorStatus.Inactive:
+                                    nodeID = nodePlayer; break;
+                                case ActorStatus.Captured: nodeID = nodeCaptured; break;
+                                default: Debug.LogWarningFormat("Unrecognised Player Status \"{0}\"", GameManager.instance.playerScript.status); nodeID = -1; break;
+                            }
+                        }
+                        break;
+                    case SideState.AI:
+                        {
+                            switch (GameManager.instance.aiRebelScript.status)
+                            {
+                                case ActorStatus.Active:
+                                case ActorStatus.Inactive:
+                                    nodeID = nodePlayer; break;
+                                case ActorStatus.Captured: nodeID = nodeCaptured; break;
+                                default: Debug.LogWarningFormat("Unrecognised aiRebel Status \"{0}\"", GameManager.instance.playerScript.status); nodeID = -1; break;
+                            }
+                        }
+                        break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised Player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
         }
         //debug problem tracking
         if (nodeID < 0)
-        { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive stats \"{2}\"", nodeID, GameManager.instance.playerScript.status, GameManager.instance.playerScript.inactiveStatus); }
+        { Debug.LogWarningFormat("Invalid nodeID {0} for Player status \"{1}\", inactive status \"{2}\"", nodeID, GameManager.instance.playerScript.status, GameManager.instance.playerScript.inactiveStatus); }
         return nodeID;
     }
 

@@ -358,10 +358,11 @@ public class CaptureManager : MonoBehaviour
                 GameManager.instance.messageScript.PlayerEscapes(text, node);
             }
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
+            //actor gains condition questionable (do BEFORE updating nodeID's)
+            GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "Has been interrogated by Authority");
+            //update nodeID's
             GameManager.instance.nodeScript.nodePlayer = nodeID;
             GameManager.instance.nodeScript.nodeCaptured = -1;
-            //actor gains condition questionable
-            GameManager.instance.playerScript.AddCondition(conditionQuestionable, GameManager.instance.globalScript.sideResistance, "Has been interrogated by Authority");
             //decrease city loyalty
             int cause = GameManager.instance.cityScript.CityLoyalty;
             cause -= actorReleased;

@@ -372,3 +372,157 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 16979 -> Sunday, 1 March 2020 12:28 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 41849 -> Sunday, 1 March 2020 2:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44663 -> Sunday, 1 March 2020 2:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29028 -> Sunday, 1 March 2020 2:26 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid nodeID -1 for Player status "Captured", inactive stats "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:GetPlayerNodeID() (at Assets/Scripts/Managers/NodeManager.cs:500)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2845)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:364)
+	ActorManager:CheckPlayerHuman() (at Assets/Scripts/Managers/ActorManager.cs:6637)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:472)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:239)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:751)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2849)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:364)
+	ActorManager:CheckPlayerHuman() (at Assets/Scripts/Managers/ActorManager.cs:6637)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:472)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:239)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:759)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2849)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:364)
+	ActorManager:CheckPlayerHuman() (at Assets/Scripts/Managers/ActorManager.cs:6637)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:472)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:239)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	ERROR Invalid Cure nodeID (-1) for "Tech Head", distance 5
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2671)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:364)
+	ActorManager:CheckPlayerHuman() (at Assets/Scripts/Managers/ActorManager.cs:6637)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:472)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:239)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 26821 -> Sunday, 1 March 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53578 -> Sunday, 1 March 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19222 -> Sunday, 1 March 2020 2:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62797 -> Sunday, 1 March 2020 2:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4082 -> Sunday, 1 March 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid nodeID -1 for Player status "Active", inactive stats "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:GetPlayerNodeID() (at Assets/Scripts/Managers/NodeManager.cs:500)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2845)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:362)
+	ActorManager:CheckPlayerResistanceAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7068)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:487)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:751)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2849)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:362)
+	ActorManager:CheckPlayerResistanceAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7068)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:487)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:759)
+	NodeManager:GetCureNodeRandom(Cure) (at Assets/Scripts/Managers/NodeManager.cs:2849)
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2652)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:362)
+	ActorManager:CheckPlayerResistanceAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7068)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:487)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	ERROR Invalid Cure nodeID (-1) for "Tech Head", distance 5
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	NodeManager:AddCureNode(Cure, Boolean) (at Assets/Scripts/Managers/NodeManager.cs:2671)
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:943)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:362)
+	ActorManager:CheckPlayerResistanceAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7068)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:487)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	
+Dev seed 4082 -> Sunday, 1 March 2020 3:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4082 -> Sunday, 1 March 2020 3:27 PM
+City seed 5678 -> London, United Kingdom

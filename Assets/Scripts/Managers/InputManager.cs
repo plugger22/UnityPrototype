@@ -148,6 +148,10 @@ public class InputManager : MonoBehaviour
     public void ProcessInput()
     {
         float x_axis, y_axis;
+        /*//Mouse wheel
+        var scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll > 0) { Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: SCROLL UP"); }
+        else if (scroll < 0) { Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: SCROLL DOWN"); }*/
 
         //Modal and Game State dependant input -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
         switch (_modalState)
@@ -413,6 +417,7 @@ public class InputManager : MonoBehaviour
                         //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
                         if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
                         {
+
                             //what type of info display?
                             switch (_modalInfoState)
                             {
@@ -433,6 +438,11 @@ public class InputManager : MonoBehaviour
                                     {
                                         EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessInput Cancel");
                                     }
+                                    //Not working for mouse Scroll Wheel. Don't know why
+                                    else if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessInput MouseWheel"); }
+                                    else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                                        { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessInput MouseWheel"); }
                                     else if (Input.GetButtonDown("Vertical"))
                                     {
                                         y_axis = Input.GetAxisRaw("Vertical");
