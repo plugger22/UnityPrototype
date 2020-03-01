@@ -14,7 +14,7 @@ using UnityEngine.UI;
 public class WidgetTopUI : MonoBehaviour
 {
 
-    public Sprite widgetTopSprite;
+    public Image widgetTopSprite;
     public Image barCity;
     public Image barFaction;
     public Image starLeft;
@@ -24,6 +24,8 @@ public class WidgetTopUI : MonoBehaviour
     public Image flashRedOuter;                             //outer red rim (flashes when Security Measures in force)
     public TextMeshProUGUI actionPoints;
     public TextMeshProUGUI turnNumber;
+    public TextMeshProUGUI city;
+    public TextMeshProUGUI hq;
 
     private RectTransform transformCity;
     private RectTransform transformFaction;
@@ -119,6 +121,11 @@ public class WidgetTopUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
+        //Debug.Assert(city != null, "Invalid city tmp (Null)");
+        //Debug.Assert(hq != null, "Invalid hq tmp (Null)");
+        Debug.Assert(actionPoints != null, "Invalid actionPoints (Null)");
+        Debug.Assert(turnNumber != null, "Invalid turnNumber (Null)");
+
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
@@ -128,12 +135,19 @@ public class WidgetTopUI : MonoBehaviour
         tempColor.a = 0.0f;
         flashRedOuter.color = tempColor;
         isFading = false;
+        //main widget sprite colour
+        tempColor = GameManager.instance.guiScript.colourTopWidget;
+        tempColor.a = 1.0f;
+        widgetTopSprite.color = tempColor;
         // dim down objective stars to default values -> Otherwise done in ObjectiveManager.cs -> SetObjectives / UpdateObjectiveProgress
         SetStar(10f, AlignHorizontal.Left);
         SetStar(10f, AlignHorizontal.Centre);
         SetStar(10f, AlignHorizontal.Right);
         //set bars to starting values
         SetSides(GameManager.instance.sideScript.PlayerSide);
+        //set city and HQ icons
+        city.text = GameManager.instance.guiScript.cityIcon;
+        hq.text = GameManager.instance.guiScript.hqIcon;
     }
     #endregion
 

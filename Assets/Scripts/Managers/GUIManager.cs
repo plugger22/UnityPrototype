@@ -145,6 +145,8 @@ public class GUIManager : MonoBehaviour
     public Color colourIconActiveGood;
     [Tooltip("Top Bar Icon Active Bad colour")]
     public Color colourIconActiveBad;
+    [Tooltip("Top Widget sprite colour")]
+    public Color colourTopWidget;
 
     //font awesome icons
     [HideInInspector] public char starChar;
@@ -176,6 +178,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char invisibilityChar;
     [HideInInspector] public char motivationChar;
     [HideInInspector] public char connectionsChar;
+    [HideInInspector] public char cityChar;
 
 
     //predefined data icons
@@ -186,6 +189,8 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string motivationIcon;
     [HideInInspector] public string connectionsIcon;
     [HideInInspector] public string innocenceIcon;
+    [HideInInspector] public string cityIcon;
+    [HideInInspector] public string hqIcon;
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
@@ -302,6 +307,7 @@ public class GUIManager : MonoBehaviour
         invisibilityChar = '\uf06e';
         motivationChar = '\uf118';
         connectionsChar = '\uf500';
+        cityChar = '\uf64f';
     }
 
     /// <summary>
@@ -318,6 +324,8 @@ public class GUIManager : MonoBehaviour
         motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
+        cityIcon = string.Format("{0}{1}{2}", colourIcon, cityChar, colourEnd);
+        hqIcon = string.Format("{0}HQ{1}", colourIcon, colourEnd);
     }
 
 
