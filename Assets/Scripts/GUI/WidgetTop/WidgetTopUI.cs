@@ -38,6 +38,7 @@ public class WidgetTopUI : MonoBehaviour
     private Color innerColour;
     private Color outerColour;
 
+
     private static WidgetTopUI widgetTopUI;
 
     public void Awake()
@@ -203,9 +204,11 @@ public class WidgetTopUI : MonoBehaviour
                 break;
             case EventType.ChangeCityBar:
                 SetCityBar((int)Param);
+                UpdateCityIcon((int)Param);
                 break;
             case EventType.ChangeHqBar:
                 SetFactionBar((int)Param);
+                UpdateHqIcon((int)Param);
                 break;
             /*case EventType.ChangeStarLeft: -> Done directly by ObjectiveManager.cs methods, issues with events at level start (sequencing)
                 SetStar((float)Param, AlignHorizontal.Left);
@@ -440,6 +443,51 @@ public class WidgetTopUI : MonoBehaviour
             //Objectives -> handled by ObjectiveManager.cs
         }
         else { Debug.LogError("Invalid data (Null)"); }
+    }
+
+    /// <summary>
+    /// updates city icon color, normal or alert version  (green or red depending on Player side)
+    /// </summary>
+    /// <param name="isAlert"></param>
+    public void UpdateCityIcon(int loyalty)
+    { 
+        if (loyalty > 0 && loyalty < 10)
+        { city.text = GameManager.instance.guiScript.cityIcon; }
+        else
+        {
+            switch(GameManager.instance.sideScript.PlayerSide.level)
+            {
+                case 1:
+                    //authority
+                    switch (loyalty)
+                    {
+                        case 0: city.text = GameManager.instance.guiScript.cityIconBad; break;
+                        case 10: city.text = GameManager.instance.guiScript.cityIconGood; break;
+                        default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
+                    }
+                    break;
+                case 2:
+                    //resistance
+                    switch (loyalty)
+                    {
+                        case 0: city.text = GameManager.instance.guiScript.cityIconGood; break;
+                        case 10: city.text = GameManager.instance.guiScript.cityIconBad; break;
+                        default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised Player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// updates hq icon, normal or alert version (red)
+    /// </summary>
+    /// <param name="isAlert"></param>
+    public void UpdateHqIcon(int approval)
+    {
+        if (approval == 0) { hq.text = GameManager.instance.guiScript.hqIconBad; }
+        else { hq.text = GameManager.instance.guiScript.hqIcon; }
     }
 
     //new methods above here

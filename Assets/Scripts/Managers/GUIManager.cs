@@ -54,9 +54,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
-    public Sprite vacantAuthorityActor;
-    [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
-    public Sprite vacantResistanceActor;
+    public Sprite vacantActorSprite;
     [Tooltip("Universal Error sprite")]
     public Sprite errorSprite;
     [Tooltip("Universal Info sprite")]
@@ -192,7 +190,11 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string connectionsIcon;
     [HideInInspector] public string innocenceIcon;
     [HideInInspector] public string cityIcon;
+    [HideInInspector] public string cityIconGood;
+    [HideInInspector] public string cityIconBad;
     [HideInInspector] public string hqIcon;
+    [HideInInspector] public string hqIconBad;
+
 
 
     private bool[] arrayIsBlocked;                                    //set True to selectively block raycasts onto game scene, eg. mouseover tooltips, etc.
@@ -204,6 +206,7 @@ public class GUIManager : MonoBehaviour
     //colour palette 
     private string colourAlert;
     private string colourGood;
+    private string colourDataGood;
     private string colourNeutral;
     private string colourGrey;
     private string colourCancel;
@@ -217,8 +220,7 @@ public class GUIManager : MonoBehaviour
     public void Awake()
     {
         //Check sprites are present
-        Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
-        Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
         Debug.Assert(errorSprite != null, "Invalid errorSprite (Null)");
         Debug.Assert(infoSprite != null, "Invalid infoSprite (Null)");
         Debug.Assert(alarmSprite != null, "Invalid alarmSprite (Null)");
@@ -326,8 +328,13 @@ public class GUIManager : MonoBehaviour
         motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
+        //uncoloured
         cityIcon = string.Format("{0}{1}{2}", colourIcon, cityChar, colourEnd);
+        cityIconGood = string.Format("{0}{1}{2}", colourDataGood, cityChar, colourEnd);
+        cityIconBad = string.Format("{0}{1}{2}", colourBad, cityChar, colourEnd);
         hqIcon = string.Format("{0}HQ{1}", colourIcon, colourEnd);
+        hqIconBad = string.Format("{0}HQ{1}", colourBad, colourEnd);
+
     }
 
 
@@ -360,6 +367,7 @@ public class GUIManager : MonoBehaviour
     public void SetColours()
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);

@@ -155,8 +155,8 @@ public class ActorPanelUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        vacantAuthorityActor = GameManager.instance.guiScript.vacantAuthorityActor;
-        vacantResistanceActor = GameManager.instance.guiScript.vacantResistanceActor;
+        vacantAuthorityActor = GameManager.instance.guiScript.vacantActorSprite;
+        vacantResistanceActor = GameManager.instance.guiScript.vacantActorSprite;
         Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
         Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
         //mood stars

@@ -3873,7 +3873,7 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //empty slot
-                    optionData.sprite = GameManager.instance.guiScript.vacantResistanceActor;
+                    optionData.sprite = GameManager.instance.guiScript.vacantActorSprite;
                     optionData.textUpper = string.Format("{0}<alpha=#88>Vacant{1}", colourAlert, colourEnd);
                     optionData.textLower = "";
                     optionData.optionID = -1;

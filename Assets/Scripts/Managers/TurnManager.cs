@@ -725,11 +725,11 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a colour string in format "Turn 2"
+    /// returns a colour string in format "Turn 2", oversized, for topWidget display
     /// </summary>
     /// <returns></returns>
     public string GetTurnTooltip()
-    { return string.Format("Day {0}{1}{2}", colourNeutral, _turn, colourEnd); }
+    { return string.Format("<size=120%>Day {0}{1}{2}</size>", colourNeutral, _turn, colourEnd); }
 
     /// <summary>
     /// returns a colour string in format "You have 38 turns remaining to complete you mission
