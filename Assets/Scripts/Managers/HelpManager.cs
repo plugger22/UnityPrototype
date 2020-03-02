@@ -865,7 +865,7 @@ public class HelpManager : MonoBehaviour
         data.header = "HQ Boss";
         data.text = new StringBuilder()
             .AppendFormat("The Boss (Director) has a {0}personal opinion{1} (Motivation) but they also have a view on the {2}Decisions{3} you have taken. ", colourAlert, colourEnd, colourAlert, colourEnd)
-            .AppendFormat("When it comes time for a {0}REVIEW{1} the Boss gets {2}Two{3} votes, one for each.", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("When it comes time for a {0}REVIEW{1} the Boss gets {2}TWO{3} votes, one for each.", colourAlert, colourEnd, colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
         #endregion

@@ -216,6 +216,7 @@ public class SavePlayerData
     public List<string> listOfConditionsAuthority = new List<string>();
     public List<HistoryMood> listOfMoodHistory = new List<HistoryMood>();
     public List<Investigation> listOfInvestigations = new List<Investigation>();
+    public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
 }
 #endregion
 

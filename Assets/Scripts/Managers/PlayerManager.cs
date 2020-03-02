@@ -62,9 +62,10 @@ public class PlayerManager : MonoBehaviour
     //personality
     private int mood;
     private Personality personality = new Personality();
+    private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     #endregion
 
-    private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
+
 
     /*[HideInInspector] public bool isOrgActivatedCurePresent;*/
 
@@ -380,8 +381,9 @@ public class PlayerManager : MonoBehaviour
 
         //reset mood to default
         SetMood(moodStart);
-        //clear out mood history
+        //clear out required collections
         listOfMoodHistory.Clear();
+        listOfNodeActions.Clear();
         //if immunity to stress > 0, set to max allowed
         if (stressImmunityCurrent > 0)
         { stressImmunityCurrent = stressImmunityStart; }
@@ -2577,6 +2579,9 @@ public class PlayerManager : MonoBehaviour
     // - - - Node Actions
     //
 
+    public List<NodeActionData> GetListOfNodeActions()
+    { return listOfNodeActions; }
+
     /// <summary>
     /// add a nodeActionData package to list
     /// </summary>
@@ -2627,6 +2632,46 @@ public class PlayerManager : MonoBehaviour
     public void ClearAllNodeActions()
     { listOfNodeActions.Clear(); }
 
+    /// <summary>
+    /// used for updating with load/save data
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfNodeActions(List<NodeActionData> tempList)
+    {
+        if (tempList != null && tempList.Count > 0)
+        {
+            listOfNodeActions.Clear();
+            listOfNodeActions.AddRange(tempList);
+        }
+        else { Debug.LogWarning("Invalid tempList parameter (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Display Player Node actions
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayPlayerNodeActions()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.Append(string.Format("-Player NodeActionData{0}{1}", "\n", "\n"));
+        if (listOfNodeActions != null && listOfNodeActions.Count > 0)
+        {
+            for (int j = 0; j < listOfNodeActions.Count; j++)
+            {
+                NodeActionData data = listOfNodeActions[j];
+                if (data != null)
+                { builder.AppendFormat("  t{0}: {1}, A {2}, N {3}, T {4}, S {5}{6}", data.turn, data.nodeAction, data.actorID, data.nodeID, data.teamID, data.dataName, "\n"); }
+                else { Debug.LogWarningFormat("Invalid nodeActionData for listOfData[{0}]{1}", j, "\n"); }
+            }
+        }
+        else { builder.AppendFormat("  no records present{0}", "\n"); }
+        builder.AppendLine();
+        return builder.ToString();
+    }
+
+    //
+    // - - - Assorted
+    //
 
     /// <summary>
     /// returns true for the player if active and if meets the special enum criteria, false otherwise

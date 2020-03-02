@@ -378,6 +378,8 @@ public class FileManager : MonoBehaviour
             { write.playerData.listOfConditionsAuthority.Add(condition.tag); }
             else { Debug.LogWarning("Invalid Authority condition (Null)"); }
         }
+        //node Actions
+        write.playerData.listOfNodeActions = GameManager.instance.playerScript.GetListOfNodeActions();
     }
     #endregion
 
@@ -1901,6 +1903,8 @@ public class FileManager : MonoBehaviour
             { listOfConditions.Add(condition); }
         }
         GameManager.instance.playerScript.SetConditions(listOfConditions, globalAuthority);
+        //nodeActions
+        GameManager.instance.playerScript.SetListOfNodeActions(read.playerData.listOfNodeActions);
     }
     #endregion
 
