@@ -5112,8 +5112,9 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// creates false Resistance node action data for testing purposes, after AutoRun, based on current actor line up (so more accurate that AI data). NumOfRecords is how many records per actor will be generated
+    /// Gives same number of actions for Player
     /// </summary>
-    public void DebugCreateNodeActionResistanceData(int numOfActionsPerActor = 4)
+    public void DebugCreateNodeActionResistanceData(int numOfActions = 4)
     {
         int turn;
         //loop OnMap actors
@@ -5121,6 +5122,9 @@ public class ActorManager : MonoBehaviour
         NameSet nameSet = GameManager.instance.cityScript.GetNameSet();
         if (nameSet != null)
         {
+            //
+            // - - - Actors
+            //
             if (arrayOfActors != null)
             {
                 for (int i = 0; i < arrayOfActors.Length; i++)
@@ -5148,64 +5152,60 @@ public class ActorManager : MonoBehaviour
                             }
                             if (nodeAction != NodeAction.None)
                             {
-                                //test purposes only 
-                                if (nodeAction == NodeAction.ActorRecruitActor)
+                                //loop for every required nodeAction
+                                for (int j = 0; j < numOfActions; j++)
                                 {
-                                    //loop for every required nodeAction
-                                    for (int j = 0; j < numOfActionsPerActor; j++)
+                                    //get random node
+                                    Node node = GameManager.instance.dataScript.GetRandomNode();
+                                    if (node != null)
                                     {
-                                        //get random node
-                                        Node node = GameManager.instance.dataScript.GetRandomNode();
-                                        if (node != null)
+                                        NodeActionData data = new NodeActionData();
+                                        turn = GameManager.instance.turnScript.Turn;
+                                        if (turn > 0)
                                         {
-                                            NodeActionData data = new NodeActionData();
-                                            turn = GameManager.instance.turnScript.Turn;
-                                            if (turn > 0)
-                                            {
-                                                //go back a set number of turns, minCap 0
-                                                turn -= j;
-                                                turn = Mathf.Max(0, turn);
-                                            }
-                                            data.turn = turn;
-                                            data.actorID = actor.actorID;
-                                            data.nodeID = node.nodeID;
-                                            data.nodeAction = nodeAction;
-                                            //special cases
-                                            switch (actor.arc.name)
-                                            {
-                                                case "RECRUITER":
-                                                    //need a name for an imaginery recruited actor
-                                                    if (Random.Range(0, 100) < 50)
-                                                    {
-                                                        //Male
-                                                        data.dataName = string.Format("{0} {1}", nameSet.firstMaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord());
-                                                    }
-                                                    else
-                                                    { data.dataName = string.Format("{0} {1}", nameSet.firstFemaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord()); }
-                                                    break;
-                                                case "FIXER":
-                                                    //need a name for imaginery gear
-                                                    data.dataName = GameManager.instance.dataScript.DebugGetRandomGearName();
-                                                    break;
-                                                case "PLANNER":
-                                                    //get random target name
-                                                    List<Target> listOfTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
-                                                    if (listOfTargets != null)
-                                                    { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
-                                                    break;
-                                                case "OPERATOR":
-                                                    //get random team name
-                                                    data.dataName = string.Format("{0} {1}", GameManager.instance.dataScript.DebugGetRandomTeamArc(), "Team Alpha");
-                                                    break;
-                                                case "ANARCHIST":
-                                                    //get random Location name
-                                                    data.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
-                                                    break;
-                                            }
-                                            actor.AddNodeAction(data);
+                                            //go back a set number of turns, minCap 0
+                                            turn -= j;
+                                            turn = Mathf.Max(0, turn);
                                         }
-                                        else { Debug.LogWarningFormat("Invalid random node (Null)"); }
+                                        data.turn = turn;
+                                        data.actorID = actor.actorID;
+                                        data.nodeID = node.nodeID;
+                                        data.nodeAction = nodeAction;
+                                        //special cases
+                                        switch (actor.arc.name)
+                                        {
+                                            case "RECRUITER":
+                                                //need a name for an imaginery recruited actor
+                                                if (Random.Range(0, 100) < 50)
+                                                {
+                                                    //Male
+                                                    data.dataName = string.Format("{0} {1}", nameSet.firstMaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord());
+                                                }
+                                                else
+                                                { data.dataName = string.Format("{0} {1}", nameSet.firstFemaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord()); }
+                                                break;
+                                            case "FIXER":
+                                                //need a name for imaginery gear
+                                                data.dataName = GameManager.instance.dataScript.DebugGetRandomGearName();
+                                                break;
+                                            case "PLANNER":
+                                                //get random target name
+                                                List<Target> listOfTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                                                if (listOfTargets != null)
+                                                { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
+                                                break;
+                                            case "OPERATOR":
+                                                //get random team name
+                                                data.dataName = string.Format("{0} {1}", GameManager.instance.dataScript.DebugGetRandomTeamArc(), "Team Alpha");
+                                                break;
+                                            case "ANARCHIST":
+                                                //get random Location name
+                                                data.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
+                                                break;
+                                        }
+                                        actor.AddNodeAction(data);
                                     }
+                                    else { Debug.LogWarningFormat("Invalid random node (Null)"); }
                                 }
                             }
                         }
@@ -5213,9 +5213,92 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+            //
+            // - - - Player
+            //
+            List<ActorArc> listOfRandomArcs = GameManager.instance.dataScript.GetRandomActorArcs(numOfActions, globalResistance);
+            if (listOfRandomArcs != null)
+            {
+                NodeAction nodeAction = NodeAction.None;
+                //loop arcs (once for every action)
+                for (int i = 0; i < listOfRandomArcs.Count; i++)
+                {
+                    //Get appropriate NodeAction enum
+                    ActorArc arc = listOfRandomArcs[i];
+                    switch (arc.name)
+                    {
+                        case "ANARCHIST": nodeAction = NodeAction.PlayerBlowStuffUp; break;
+                        case "BLOGGER": nodeAction = NodeAction.PlayerSpreadFakeNews; break;
+                        case "FIXER": nodeAction = NodeAction.PlayerObtainGear; break;
+                        case "HACKER": nodeAction = NodeAction.PlayerHackSecurity; break;
+                        case "HEAVY": nodeAction = NodeAction.PlayerCreateRiots; break;
+                        case "OBSERVER": nodeAction = NodeAction.PlayerInsertTracer; break;
+                        case "OPERATOR": nodeAction = NodeAction.PlayerNeutraliseTeam; break;
+                        case "PLANNER": nodeAction = NodeAction.PlayerGainTargetInfo; break;
+                        case "RECRUITER": nodeAction = NodeAction.PlayerRecruitActor; break;
+                        default: Debug.LogWarningFormat("Unrecognised arc \"{0}\"", arc.name); break;
+                    }
+                    if (nodeAction > NodeAction.None)
+                    {
+                        //get random node
+                        Node node = GameManager.instance.dataScript.GetRandomNode();
+                        if (node != null)
+                        {
+                            NodeActionData data = new NodeActionData();
+                            turn = GameManager.instance.turnScript.Turn;
+                            if (turn > 0)
+                            {
+                                //go back a set number of turns, minCap 0
+                                turn -= i;
+                                turn = Mathf.Max(0, turn);
+                            }
+                            data.turn = turn;
+                            data.actorID = GameManager.instance.playerScript.actorID;
+                            data.nodeID = node.nodeID;
+                            data.nodeAction = nodeAction;
+                            //special cases
+                            switch (arc.name)
+                            {
+                                case "RECRUITER":
+                                    //need a name for an imaginery recruited actor
+                                    if (Random.Range(0, 100) < 50)
+                                    {
+                                        //Male
+                                        data.dataName = string.Format("{0} {1}", nameSet.firstMaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord());
+                                    }
+                                    else
+                                    { data.dataName = string.Format("{0} {1}", nameSet.firstFemaleNames.GetRandomRecord(), nameSet.lastNames.GetRandomRecord()); }
+                                    break;
+                                case "FIXER":
+                                    //need a name for imaginery gear
+                                    data.dataName = GameManager.instance.dataScript.DebugGetRandomGearName();
+                                    break;
+                                case "PLANNER":
+                                    //get random target name
+                                    List<Target> listOfTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                                    if (listOfTargets != null)
+                                    { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
+                                    break;
+                                case "OPERATOR":
+                                    //get random team name
+                                    data.dataName = string.Format("{0} {1}", GameManager.instance.dataScript.DebugGetRandomTeamArc(), "Team Alpha");
+                                    break;
+                                case "ANARCHIST":
+                                    //get random Location name
+                                    data.dataName = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
+                                    break;
+                            }
+                            GameManager.instance.playerScript.AddNodeAction(data);
+                        }
+                        else { Debug.LogWarningFormat("Invalid random node (Null)"); }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfRandomArcs (Null)"); }
         }
         else { Debug.LogError("Invalid City nameSet (Null)"); }
     }
+
 
 
     //
@@ -6187,7 +6270,7 @@ public class ActorManager : MonoBehaviour
                     //attempt executed, Blackmailer condition cancelled
                     actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
                     //outcome (message pipeline)
-                    string text = string.Format("{0}, {1}{2}{3}, has carried out their Blackmail threat and revealed your secret", actor.actorName, colourAlert, actor.arc.name, colourEnd, 
+                    string text = string.Format("{0}, {1}{2}{3}, has carried out their Blackmail threat and revealed your secret", actor.actorName, colourAlert, actor.arc.name, colourEnd,
                         colourNeutral, secret.tag, colourEnd);
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                     {
@@ -7754,7 +7837,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.CheckConditionPresent(conditionBlackmailer) == true && actor.blackmailTimer > 0)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
-                            builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}Acts in {7} day{8}{9}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd, "\n", 
+                            builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}Acts in {7} day{8}{9}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd, "\n",
                                 colourBad, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "", colourEnd);
                         }
                     }

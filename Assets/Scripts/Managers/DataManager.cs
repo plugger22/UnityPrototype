@@ -451,6 +451,7 @@ public class DataManager : MonoBehaviour
     // - - - Load / Restore / FollowOn Level - - - 
     //
 
+    #region ResetNewLevel
     /// <summary>
     /// Clear any relevant collections prior to initialising a new level
     /// </summary>
@@ -572,7 +573,9 @@ public class DataManager : MonoBehaviour
         //dictOfStatistics -> leave
         //dictOfSecrets -> leave
     }
+    #endregion
 
+    #region ResetLoadGame
     /// <summary>
     /// Clear any relevant data collections AFTER loading a save game file (excludes collections that have already been dealt with in FileManager.cs -> ReadDataData or later Read.... methods)
     /// </summary>
@@ -598,6 +601,7 @@ public class DataManager : MonoBehaviour
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();
     }
+    #endregion
 
     //
     // - - - Info Flow (Notifications)- - - 

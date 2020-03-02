@@ -2623,8 +2623,16 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Delete most recent nodeActionData package (record at end of list)
     /// </summary>
-    public void RemoveMostRecentNodeAction()
-    { listOfNodeActions.RemoveAt(listOfNodeActions.Count - 1); }
+    public void RemoveLastUsedNodeAction(int turn, int nodeID, NodeAction nodeAction)
+    {
+        int index = listOfNodeActions.FindIndex(x => x.turn == turn && x.nodeID == nodeID && x.nodeAction == nodeAction);
+        if (index > -1)
+        {
+            listOfNodeActions.RemoveAt(index);
+            Debug.LogFormat("[Tst] PlayerManager.cs -> NodeAction turn {0}, nodeID {1}, nodeAction {2} REMOVED", turn, nodeID, nodeAction);
+        }
+        else { Debug.LogWarningFormat("NodeAction not found in listOfNodeActions for turn {0}, nodeID {1} and nodeAction {2}", turn, nodeID, nodeAction); }
+    }
 
     /// <summary>
     /// Empty out listOfNodeActions

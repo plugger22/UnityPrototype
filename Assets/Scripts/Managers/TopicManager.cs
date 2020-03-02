@@ -214,6 +214,7 @@ public class TopicManager : MonoBehaviour
     private string tagHqTitleActor;     //title of HQ [actor.tagActorID]
     private string tagHqTitleOther;     //title of HQ [other.tagActorOtherID]
     private ActorRelationship tagRelation;  //used for actor relationships
+    private NodeAction tagNodeAction;       //used for Player district Actions (needed to find record in playerManager.cs -> listOfNodeActions in order to delete it)
     private int[] arrayOfOptionActorIDs;     //actorID's corresponding to option choices (0 -> 3) for topics where you have a choice of actors, eg. Player General
     private int[] arrayOfOptionInactiveIDs;  //actorID's corresponding to option choices (0 -> 3), inactive actors, for Player General topics
 
@@ -1430,6 +1431,7 @@ public class TopicManager : MonoBehaviour
         tagOptionText = "";
         tagStringData = "";
         tagRelation = ActorRelationship.None;
+        tagNodeAction = NodeAction.None;
         //empty collections
         listOfTypePool.Clear();
         listOfSubTypePool.Clear();
@@ -2026,7 +2028,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region GetPlayerDistrictTopics
+    #region GetPlayerDistrictTopicsArchive
     /// <summary>
     /// subType PlayerDistrict template topics selected by player based on mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
@@ -2035,7 +2037,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="playerSide"></param>
     /// <param name="subTypeName"></param>
     /// <returns></returns>
-    private List<Topic> GetPlayerDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    private List<Topic> GetPlayerDistrictTopicsArchive(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         bool isProceed = false;
         string playerName = GameManager.instance.playerScript.PlayerName;
@@ -2074,6 +2076,99 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}", playerName, "Player"); }
+        return listOfTopics;
+    }
+    #endregion
+
+
+    #region GetPlayerDistrictTopics
+    /// <summary>
+    /// subType PlayerDistrict template topics selected by player based on mood (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerDistrictTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        bool isProceed = false;
+        int numToCheck = 4;
+        string playerName = GameManager.instance.playerScript.PlayerName;
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        NodeActionData data = null;
+        //Find a recent node action with a corresponding active, onMap actor present
+        List<NodeActionData> listOfNodeActions = GameManager.instance.playerScript.GetListOfNodeActions();
+        if (listOfNodeActions != null)
+        {
+            int count = listOfNodeActions.Count();
+            if (count > 0)
+            {
+                //only check the most recent 'x' number of entries (otherwise could result in a time sink)
+                count = Mathf.Min(count, numToCheck);
+                //reverse loop to get most recent
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    data = listOfNodeActions[i];
+                    if (data != null)
+                    {
+                        //check that it is a viable subSubType group
+                        turnTopicSubSubType = GetTopicSubSubType(data.nodeAction);
+                        if (turnTopicSubSubType != null)
+                        {
+                            //check topics of this subSubType present
+                            if (CheckSubSubTypeTopicsPresent(listOfSubTypeTopics, turnTopicSubSubType.name) == true)
+                            {
+                                //check actor of the required arc type is present on Map (Active)
+                                int slotID = CheckActorActionTypePresent(data.nodeAction);
+                                if (slotID > -1)
+                                {
+                                    //Action and actor combo found
+                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+                                    if (actor != null)
+                                    {
+                                        Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: SubsubType \"{0}\" has suitable actor {1}, {2}, ID {3}{4}", turnTopicSubSubType.name,
+                                            actor.actorName, actor.arc.name, actor.actorID, "\n");
+                                        //tagActorID is ID of actor who had the arc for the action
+                                        tagActorID = actor.actorID;
+                                        isProceed = true;
+                                        break;
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
+                                }
+                                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: No valid actor found for NodeAction {0}{1}", data.nodeAction, "\n"); }
+                            }
+                            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
+                        }
+                        else { Debug.LogErrorFormat("invalid TopicSubSubType (Null) for Player nodeAction \"{0}\"", data.nodeAction); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for listOfNodeActions[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodeActions (Null)"); }
+        //proceed if action and actor combo found
+        if (isProceed == true && data != null)
+        {
+            //group depends on player mood
+            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+            
+            //if no entries use entire list by default
+            listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
+            //debug
+            foreach (Topic topic in listOfTopics)
+            { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+            //Info tags
+            tagNodeID = data.nodeID;
+            tagTurn = data.turn;
+            tagStringData = data.dataName;
+            tagNodeAction = data.nodeAction;
+            tagLocation = data.dataName;
+            tagGear = data.dataName;
+            tagRecruit = data.dataName;
+            tagTarget = data.dataName;
+        }
         return listOfTopics;
     }
     #endregion
@@ -3555,7 +3650,7 @@ public class TopicManager : MonoBehaviour
                     if (turnTopicSubType.name.Equals(playerDistrictSubType.name, StringComparison.Ordinal) == true)
                     {
                         //delete most recent nodeAction from Player
-                        GameManager.instance.playerScript.RemoveMostRecentNodeAction();
+                        GameManager.instance.playerScript.RemoveLastUsedNodeAction(tagTurn, tagNodeID, tagNodeAction);
                     }
                 }
                 //Authority
@@ -4336,7 +4431,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region GetTopicSubSubType
+    #region GetTopicSubSubType NodeAction
 
     /// <summary>
     /// Get's NodeAction TopicSubSubType.SO.name given a nodeAction enum. Returns Null if a problem
@@ -4378,6 +4473,9 @@ public class TopicManager : MonoBehaviour
         return subSubType;
     }
 
+    #endregion
+
+    #region GetTopicSubSubType TeamAction
     /// <summary>
     /// Get's TeamAction TopicSubSubType.SO.name given a teamAction enum. Returns Null if a problem
     /// </summary>
@@ -4423,6 +4521,39 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTopics (Null)"); }
         return false;
+    }
+    #endregion
+
+    #region CheckActorActionTypePresent
+    /// <summary>
+    /// Checks if a current, onMap, active/inactive (but NOT Captured) actor is present for a given NodeAction (used by GetPlayerDistrictTopics). Returns slotID of actor if so, -1 if not
+    /// NOTE: Currently set up for Resistance nodeActions only
+    /// </summary>
+    /// <param name="nodeAction"></param>
+    /// <returns></returns>
+    private int CheckActorActionTypePresent(NodeAction nodeAction)
+    {
+        int slotID = -1;
+        string arc = null;
+        switch (nodeAction)
+        {
+            case NodeAction.PlayerBlowStuffUp: arc = "ANARCHIST"; break;
+            case NodeAction.PlayerCreateRiots: arc = "HEAVY"; break;
+            case NodeAction.PlayerGainTargetInfo: arc = "PLANNER"; break;
+            case NodeAction.PlayerHackSecurity: arc = "HACKER"; break;
+            case NodeAction.PlayerInsertTracer: arc = "OBSERVER"; break;
+            case NodeAction.PlayerNeutraliseTeam: arc = "OPERATOR"; break;
+            case NodeAction.PlayerObtainGear: arc = "FIXER"; break;
+            case NodeAction.PlayerRecruitActor: arc = "RECRUITER"; break;
+            case NodeAction.PlayerSpreadFakeNews: arc = "BLOGGER"; break;
+            default: Debug.LogWarningFormat("Unrecognised data.nodeAction \"{0}\"", nodeAction); break;
+        }
+        if (arc != null)
+        {
+            //check present on map
+            slotID = GameManager.instance.dataScript.CheckActorPresent(arc, GameManager.instance.sideScript.PlayerSide);
+        }
+        return slotID;
     }
     #endregion
 
