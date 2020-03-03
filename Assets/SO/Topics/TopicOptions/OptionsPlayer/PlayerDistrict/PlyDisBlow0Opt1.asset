@@ -11,5 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisBlow0Opt1
   m_EditorClassIdentifier: 
-  tag: Player District 0 Blow Stuff Up option 1
+  descriptor: Player District 0 Blow Stuff Up option 1
+  tag: Give Credit
+  text: It's all due to my [actor]
   topic: {fileID: 11400000, guid: 0a66ea2fafa24994dbe0e72137b3d316, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 1

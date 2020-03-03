@@ -11,26 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisRiot0
   m_EditorClassIdentifier: 
-  tag: Player District Create Riots 0
+  tag: What a Riot!
+  text: It was a great riot. It spread far and wide. That one you organised at [node],
+    [daysAgo]. People are still talking about it
+  designNotes: Positive Heavy event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
   subSubType: {fileID: 11400000, guid: 0290412aeaf0bc046b9490a02f11e599, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 9acde713dcc629d49b333b1b305627d5, type: 2}
   - {fileID: 11400000, guid: 924b1737c53cd8843bdaffcbd924732e, type: 2}
   - {fileID: 11400000, guid: 0c24af39ec449994ebf4eb31b74c7c7e, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 19
   turnsDone: 0

@@ -2107,8 +2107,8 @@ public class TopicManager : MonoBehaviour
             {
                 //only check the most recent 'x' number of entries (otherwise could result in a time sink)
                 count = Mathf.Min(count, numToCheck);
-                //reverse loop to get most recent
-                for (int i = count - 1; i >= 0; i--)
+                //loop to get most recent first
+                for (int i = 0; i < count; i++)
                 {
                     data = listOfNodeActions[i];
                     if (data != null)
@@ -2156,9 +2156,11 @@ public class TopicManager : MonoBehaviour
             
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
-            //debug
+
+            /*//debug
             foreach (Topic topic in listOfTopics)
-            { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+            { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }*/
+
             //Info tags
             tagNodeID = data.nodeID;
             tagTurn = data.turn;
@@ -5628,7 +5630,7 @@ public class TopicManager : MonoBehaviour
                         {
                             int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
                             turnsAgo = Mathf.Max(1, turnsAgo);
-                            replaceText = string.Format("{0}<b>{1}</b>{2} day{3} ago", colourAlert, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "");
+                            replaceText = string.Format("<b>{0} day{1} ago</b>", turnsAgo, turnsAgo != 1 ? "s" : "");
                         }
                         else { CountTextTag("daysAgo", dictOfTags); }
                         break;

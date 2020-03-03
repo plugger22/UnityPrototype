@@ -11,26 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisInfo0
   m_EditorClassIdentifier: 
-  tag: Player District Gain Target Info 0
+  tag: Struck Gold
+  text: The information you personally sourced on the [target] target at [node], [daysAgo]
+    was golden. [goodRES]
+  designNotes: Positive Planner event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
   subSubType: {fileID: 11400000, guid: 2b30ed6949fd96a42a15bc6b1781231c, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 84500cf0d00bbb24392ada180283750c, type: 2}
   - {fileID: 11400000, guid: fa930d34b309bb945b487131e9ebccb6, type: 2}
   - {fileID: 11400000, guid: 1dd7c43a2e5980246be7cf6208efb7a3, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 19
   turnsDone: 0

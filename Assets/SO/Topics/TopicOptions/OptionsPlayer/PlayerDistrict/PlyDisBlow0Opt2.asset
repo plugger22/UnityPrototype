@@ -11,5 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisBlow0Opt2
   m_EditorClassIdentifier: 
-  tag: Player District 0 Blow Stuff Up option 2
+  descriptor: Player District 0 Blow Stuff Up option 2
+  tag: Spread Blame
+  text: Oh, of course it's the Authority's fault
   topic: {fileID: 11400000, guid: 0a66ea2fafa24994dbe0e72137b3d316, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: b3d8d0e05d4cf5d4c8b8338b11ad3cb3, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 2

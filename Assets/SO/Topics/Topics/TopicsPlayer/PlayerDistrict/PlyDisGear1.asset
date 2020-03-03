@@ -11,26 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisGear1
   m_EditorClassIdentifier: 
-  tag: Player District Obtain Gear 1
+  tag: Independent Action
+  text: Your [actor] is unhappy that you went behind their back and sourced that [gear]
+    at [node], [daysAgo] without telling them
+  designNotes: negative fixer event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
   subSubType: {fileID: 11400000, guid: 464c20529b5a32646a8fab1e7fb89b66, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 43df374aa942d1c46be686a3b12ce336, type: 2}
   - {fileID: 11400000, guid: 8428abfe9d342b24296a45fcfe253a54, type: 2}
   - {fileID: 11400000, guid: d113c8332659d5c498114231910641ab, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 19
   turnsDone: 0

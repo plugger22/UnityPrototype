@@ -11,5 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisGear1Opt2
   m_EditorClassIdentifier: 
-  tag: Player District Obtain Gear 1 option 2
+  descriptor: Player District Obtain Gear 1 option 2
+  tag: Pull Up
+  text: Remind [actor] who's Boss
   topic: {fileID: 11400000, guid: b8982ba447998a9469fc9cd5bad79120, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 8f2a89aa2380f5c41ba78c36ca70d813, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 2

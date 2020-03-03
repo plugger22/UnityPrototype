@@ -11,26 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisNeutT0
   m_EditorClassIdentifier: 
-  tag: Player District Neutralise Team 0
+  tag: Robin Hood
+  text: '[team] that you personally neutralised at [node], [daysAgo] was causing plenty
+    of trouble. There''s a lot of grateful citizens'
+  designNotes: Positive operator event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
   subSubType: {fileID: 11400000, guid: c4ca349075f356d4db8c7eaf7d96ebed, type: 2}
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
   profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
   listOfCriteria: []
-  notes: 
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 09fe11b1f7a879746875fa0b40276b97, type: 2}
   - {fileID: 11400000, guid: f4ed4030ac733fb4a85b0015ee2f3652, type: 2}
   - {fileID: 11400000, guid: 171b83851d015f34b89ce8c8345d7f2e, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 0
+  timerRepeat: 2
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 24
+  turnsLive: 19
   turnsDone: 0

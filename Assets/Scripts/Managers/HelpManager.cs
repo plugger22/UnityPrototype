@@ -446,7 +446,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_17";
         data.header = string.Format("{0}Player Actions{1}", colourTip, colourEnd);
-        data.text = string.Format("\'This is a world of action, and not for moping and droning in.This is a world of action, and not for moping and droning in.\' - {0}Charles Dickens, Author{1}", colourAlert, colourEnd);
+        data.text = string.Format("\'This is a world of action, and not for moping and droning in.\' - {0}Charles Dickens, Author{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //PlayerDistrict -> Tracking
         data = new HelpData();

@@ -11,5 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisBlow1Opt0
   m_EditorClassIdentifier: 
-  tag: Player District Blow Stuff Up 1 option 0
+  descriptor: Player District Blow Stuff Up 1 option 0
+  tag: Point Finger
+  text: Where was help when I needed it?
   topic: {fileID: 11400000, guid: 8e8d68673c3a60746808bfe23764db83, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 0
