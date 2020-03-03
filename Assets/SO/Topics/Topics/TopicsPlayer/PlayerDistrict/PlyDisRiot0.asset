@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: What a Riot!
   text: It was a great riot. It spread far and wide. That one you organised at [node],
-    [daysAgo]. People are still talking about it
+    [daysAgo]. People still talk about it, says your [actor]
   designNotes: Positive Heavy event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 18
   turnsDone: 0

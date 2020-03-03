@@ -11,5 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisTracer0Opt0
   m_EditorClassIdentifier: 
-  tag: Player District Insert Tracer 0 option 0
+  descriptor: Player District Insert Tracer 0 option 0
+  tag: Detached
+  text: I have difficulty with Compliments
   topic: {fileID: 11400000, guid: 61f76181114fa444d86e38eb3f2da473, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: Unknown
+  tooltipMain: No Effects present
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
+  optionNumber: 0

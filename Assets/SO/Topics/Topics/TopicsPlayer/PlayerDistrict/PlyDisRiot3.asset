@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisRiot3
   m_EditorClassIdentifier: 
   tag: Fizzled Riot
-  text: Perhaps the riot you organised at [node], [daysAgo] didn't quite go quite
-    as planned. It certainly wasn't as bad as your [actor] is making out
+  text: Perhaps the riot you organised at [node], [daysAgo] didn't go quite as planned.
+    It certainly wasn't as bad as your [actor] is making out
   designNotes: Negative Heavy event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 18
   turnsDone: 0

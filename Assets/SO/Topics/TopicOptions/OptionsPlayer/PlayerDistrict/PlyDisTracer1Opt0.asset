@@ -11,5 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisTracer1Opt0
   m_EditorClassIdentifier: 
-  tag: Player District Insert Tracer 1 option 0
+  descriptor: Player District Insert Tracer 1 option 0
+  tag: Cold Shoulder
+  text: Tracers are difficult We all know that
   topic: {fileID: 11400000, guid: 45287b43cc4e92c48a4b929bec2ca3ca, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 0
