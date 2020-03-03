@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisInfo0
   m_EditorClassIdentifier: 
-  tag: Struck Gold
+  tag: Paydirt
   text: The information you personally sourced on the [target] target at [node], [daysAgo]
     was golden. [goodRES]
   designNotes: Positive Planner event
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 18
   turnsDone: 0

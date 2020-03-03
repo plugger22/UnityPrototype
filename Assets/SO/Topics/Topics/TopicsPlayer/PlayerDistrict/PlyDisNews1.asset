@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Fake Fudge
   text: Your [actor] is tearing their hair out in frustration at your ham fisted attempts
-    at faking the news at [node], [daysAgo]. Aaarhhh!
+    at faking news at [node], [daysAgo]. Aaarhhh!
   designNotes: Negative Blogger event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 18
   turnsDone: 0

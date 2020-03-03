@@ -11,5 +11,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: PlyDisNeutT0Opt2
   m_EditorClassIdentifier: 
-  tag: Player District Neutralise Team 0 option 2
+  descriptor: Player District Neutralise Team 0 option 2
+  tag: Assist
+  text: Does anyone need more help?
   topic: {fileID: 11400000, guid: 22cd2da5e09031c45934c05ba32439e9, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: be2c6081d4e7ed845b30b82940b73a89, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 7cf992e7916447542bade6fad8590bf7, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 2
