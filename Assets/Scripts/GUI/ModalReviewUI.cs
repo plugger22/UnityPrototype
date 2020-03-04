@@ -34,7 +34,7 @@ public class ModalReviewUI : MonoBehaviour
     public Button buttonHelpClose;
 
     public GameObject[] arrayOfOptions;                         //place Review option UI elements here (5 x HQ options for top panel, 4 Subordinate options for bottom panel, in order Left to Right, Top to Bottom))
-                                                                //HQ Boss opinion of decisions / HQ heirarchy in enum order / subordinates in slotID order
+                                                                //HQ Boss opinion of decisions / HQ hierarchy in enum order / subordinates in slotID order
     [Tooltip("Wait interval for coroutine to display Review Outcome (between 0 and 1 second)")]
     [Range(0, 1.0f)] public float reviewWaitTime = 0.5f;
 

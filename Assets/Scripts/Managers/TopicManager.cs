@@ -2170,6 +2170,7 @@ public class TopicManager : MonoBehaviour
             tagGear = data.dataName;
             tagRecruit = data.dataName;
             tagTarget = data.dataName;
+            tagTeam = data.dataName;
         }
         return listOfTopics;
     }
@@ -2868,6 +2869,7 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
+            bool tagHqActorsOriginalValue = tagHqActors;   //used for revertng back to existing value (may change as a result of debug topic but if debug topic fails then needs to revert)
             TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
             TopicUIData data = new TopicUIData();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
@@ -2907,6 +2909,7 @@ public class TopicManager : MonoBehaviour
                         else
                         {
                             //revert back to normally selected topic
+                            tagHqActors = tagHqActorsOriginalValue;
                             turnTopicSubType = subTypeNormal;
                             Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT{0}", "\n");
                         }
@@ -4724,9 +4727,11 @@ public class TopicManager : MonoBehaviour
                 listOfCriteria = option.listOfCriteria,
                 actorSlotID = actorCurrentSlotID,
                 actorHqID = actorCurrentHqID,
-                orgName = tagOrgName
+                orgName = tagOrgName,
+                nodeID = tagNodeID
             };
             effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+
         }
         //if no criteria has yet failed
         if (string.IsNullOrEmpty(effectCriteria) == true)
@@ -5162,6 +5167,7 @@ public class TopicManager : MonoBehaviour
                     break;
                 case 'H':
                     //HQ
+
                     break;
                 case 'N':
                     //Node

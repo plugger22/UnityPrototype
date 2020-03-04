@@ -207,6 +207,7 @@ public class GUIManager : MonoBehaviour
     private string colourAlert;
     private string colourGood;
     private string colourDataGood;
+    private string colourDataTerrible;
     private string colourNeutral;
     private string colourGrey;
     private string colourCancel;
@@ -331,9 +332,9 @@ public class GUIManager : MonoBehaviour
         //uncoloured
         cityIcon = string.Format("{0}{1}{2}", colourIcon, cityChar, colourEnd);
         cityIconGood = string.Format("{0}{1}{2}", colourDataGood, cityChar, colourEnd);
-        cityIconBad = string.Format("{0}{1}{2}", colourBad, cityChar, colourEnd);
+        cityIconBad = string.Format("{0}{1}{2}", colourDataTerrible, cityChar, colourEnd);
         hqIcon = string.Format("{0}HQ{1}", colourIcon, colourEnd);
-        hqIconBad = string.Format("{0}HQ{1}", colourBad, colourEnd);
+        hqIconBad = string.Format("{0}HQ{1}", colourDataTerrible, colourEnd);
 
     }
 
@@ -368,6 +369,7 @@ public class GUIManager : MonoBehaviour
     {
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
+        colourDataTerrible = GameManager.instance.colourScript.GetColour(ColourType.dataTerrible);
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);

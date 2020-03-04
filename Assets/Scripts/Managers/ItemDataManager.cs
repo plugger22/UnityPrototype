@@ -548,7 +548,7 @@ public class ItemDataManager : MonoBehaviour
         if (conflict != null)
         {
             //CONFLICT
-            builder.AppendFormat("{0}, {1}<b>{2}</b>{3} has a{4}Relationship Conflict with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
+            builder.AppendFormat("<b>{0}, {1}{2}</b>{3} has a{4}<b>Relationship Conflict</b> with you{5}{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n", "\n");
             builder.AppendFormat("<b>{0}{1}{2}{3}</b>{4}", actor.actorName, "\n", colourBad, conflict.outcomeText, colourEnd);
         }
         else

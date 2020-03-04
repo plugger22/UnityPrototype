@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Handles explanatory help tooltips, text only. Attached to Panel Manager. Operates in Modal 1 state if required (due to position in Heirarchy).
+/// Handles explanatory help tooltips, text only. Attached to Panel Manager. Operates in Modal 1 state if required (due to position in Hierarchy).
 /// </summary>
 public class TooltipHelp : MonoBehaviour
 {

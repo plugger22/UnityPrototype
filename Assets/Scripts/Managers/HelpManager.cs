@@ -852,12 +852,12 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Motivation{3}", 
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Heirarchy
+        //Hierarchy
         data = new HelpData();
         data.tag = "hq_over_2";
-        data.header = "HQ Heirarcy";
-        data.text = string.Format("HQ has a {0}four member{1} heirarchy with the {2}most senior{3} member, the Boss, on the {4}LEFT{5} (above)", colourAlert, colourEnd, colourAlert, colourEnd,
-            colourAlert, colourEnd);
+        data.header = "HQ Hierarcy";
+        data.text = string.Format("HQ has a {0}four member{1} hierarchy with the {2}seniority{3} running from {4}LEFT{5} (most senior) to {6}RIGHT{7} (least senior)", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Boss
         data = new HelpData();
