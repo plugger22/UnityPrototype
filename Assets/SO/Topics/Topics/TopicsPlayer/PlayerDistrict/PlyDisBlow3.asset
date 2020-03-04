@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisBlow3
   m_EditorClassIdentifier: 
-  tag: 
-  text: 
+  tag: Acknowledge Assist
+  text: Your [actor] is demanding credit for the [genLoc] that you blew to bits at
+    [node], [daysAgo]. If it wasn't for their help, they say, it wouldn't have happened
   designNotes: negative anarchist event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}

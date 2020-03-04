@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisTracer2
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Thomas Edison
   text: Your [actor] is skeptical of your electronic credentials and can't believe
     you inserted a Tracer at [node], [daysAgo], unassisted
   designNotes: Observer positive event

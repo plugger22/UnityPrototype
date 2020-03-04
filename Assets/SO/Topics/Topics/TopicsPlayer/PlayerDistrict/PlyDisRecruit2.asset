@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisRecruit2
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Golden Tongued
   text: Is there something you haven't told me, asks your [actor]? How did you manage
     to recruit [recruit] at [node], [daysAgo] on your own?
   designNotes: Positive Recruiter event

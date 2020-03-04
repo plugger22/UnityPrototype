@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyDisTracer3
   m_EditorClassIdentifier: 
-  tag: Tracer Tragic
-  text: You wouldn't think that inserting a tracer would be that hard? Your [actor]
-    is inferring that you messed up the one at [node], [daysAgo]
+  tag: Role Conflict
+  text: Your [actor] is threatening to lodge a complaint with HQ over the Tracer you
+    inserted at [node], [daysAgo]. You shouldn't be doing their job
   designNotes: Negative observer event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
