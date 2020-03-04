@@ -1069,3 +1069,31 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
 	
+Dev seed 47815 -> Wednesday, 4 March 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1738)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2901)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2837)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1738)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2901)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2837)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 47815 -> Wednesday, 4 March 2020 3:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13312 -> Wednesday, 4 March 2020 3:09 PM
+City seed 5678 -> London, United Kingdom

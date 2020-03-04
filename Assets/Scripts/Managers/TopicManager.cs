@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -1697,7 +1698,7 @@ public class TopicManager : MonoBehaviour
                 {
                     int count = listOfPotentialTopics.Count;
                     Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, count, "\n");
-                    //shouldn't be empty
+                    //shouldn't be empty although can be in certain circumstances, eg. Player/actor District actions and no suitable NodeActions
                     if (count > 0)
                     {
                         //loop topics
@@ -1734,7 +1735,7 @@ public class TopicManager : MonoBehaviour
                         }
                         else { Debug.LogWarningFormat("Invalid listOfTopicPool (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
                     }
-                    else { Debug.LogWarningFormat("Invalid listOfTopics (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
+                    else { Debug.LogWarningFormat("Invalid listOfTopics (EMPTY) for topicSubType \"{0}\" -> INFO Only", turnTopicSubType.name); }
                 }
                 else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicSubType \"{0}\"", turnTopicSubType.name); }
             }
@@ -2079,7 +2080,6 @@ public class TopicManager : MonoBehaviour
         return listOfTopics;
     }
     #endregion
-
 
     #region GetPlayerDistrictTopics
     /// <summary>
@@ -2870,7 +2870,7 @@ public class TopicManager : MonoBehaviour
         if (turnTopic != null)
         {
             bool tagHqActorsOriginalValue = tagHqActors;   //used for revertng back to existing value (may change as a result of debug topic but if debug topic fails then needs to revert)
-            TopicSubType subTypeNormal = turnTopicSubType; //used for reverting back to normally selected topic
+            TopicSubType subTypeNormal = Object.Instantiate(turnTopicSubType); //used for reverting back to normally selected topic NOTE: create a clone otherwise passed by reference which defeats purpose
             TopicUIData data = new TopicUIData();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
             if (debugTopicPool != null)

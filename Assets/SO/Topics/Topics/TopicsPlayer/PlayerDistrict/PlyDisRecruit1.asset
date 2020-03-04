@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: PlyDisRecruit1
   m_EditorClassIdentifier: 
   tag: Procedural Lapse
-  text: Your [actor] is worried about your judgement. The [recruit] you hired at [node],
+  text: Your [actor] is worried about your judgement. [recruit] who you hired at [node],
     [daysAgo] wasn't vetted beforehand. Did you forget?
   designNotes: Negative recruiter event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
@@ -43,5 +43,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 20
+  turnsLive: 15
   turnsDone: 0

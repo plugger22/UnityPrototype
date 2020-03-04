@@ -55,4 +55,5 @@ public class TopicSubType : ScriptableObject
         Debug.AssertFormat(scope != null, "Invalid scope (Null) for {0}", name);
         Debug.AssertFormat(groupType != null, "Invalid groupType (Null) for {0}", name);
     }
+
 }

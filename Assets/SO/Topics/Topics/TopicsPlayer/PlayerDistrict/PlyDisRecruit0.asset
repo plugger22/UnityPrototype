@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisRecruit0
   m_EditorClassIdentifier: 
   tag: Foreman Material
-  text: You can sure pick 'em. The [recruit] that you personally sourced from [node],
-    [daysAgo] has great potential. Could be a winner
+  text: You can sure pick 'em. [recruit] who you personally sourced from [node], [daysAgo]
+    has great potential. Could be a winner
   designNotes: Positive Recruiter event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -42,5 +42,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 15
   turnsDone: 0

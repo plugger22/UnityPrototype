@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: PlyDisInfo2
+  m_EditorClassIdentifier: 
+  tag: Bountiful Contacts
+  text: Do you know everybody in [city] asks your [actor]? How did you manage to get
+    intel on the [target] target at [node], [daysAgo]?
+  designNotes: Positive Planner event
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
+  subSubType: {fileID: 11400000, guid: 2b30ed6949fd96a42a15bc6b1781231c, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: d122e3f50c820e240b5c7fa309958f75, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 59ef67c3a92a3864084765a69f99fd95, type: 2}
+  - {fileID: 11400000, guid: 3b4fae0013e74fb4791aa3d381f496fa, type: 2}
+  - {fileID: 11400000, guid: a1d73590597f2374ab904e6d36abc954, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 2
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 2
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 18
+  turnsDone: 0
