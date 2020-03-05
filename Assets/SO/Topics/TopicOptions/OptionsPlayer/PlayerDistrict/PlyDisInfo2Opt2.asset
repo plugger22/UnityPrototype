@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Knowledge is power, isn't it, asks [npc], [job], of [node]? That's why the
+    Resistance hit that [target] target [daysAgo]. They had local intel
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

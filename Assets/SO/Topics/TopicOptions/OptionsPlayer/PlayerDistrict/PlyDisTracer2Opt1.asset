@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If the Authority is so smart why can't they find the Tracer that the Resistance
+    planted here at [node] [daysAgo] asks [npc], [job]?
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

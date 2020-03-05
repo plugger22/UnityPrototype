@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: My [who] keeps telling me that I'll end up in jail if I try and sell target
+    intel to the Resistance, says [npc] of [node] but what do they know?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

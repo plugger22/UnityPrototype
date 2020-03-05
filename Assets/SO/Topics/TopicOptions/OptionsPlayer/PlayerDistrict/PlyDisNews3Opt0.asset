@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If you really want to know what's going on you need to listen to the pirate
+    'casts like the one here at [node] [daysAgo] says [npc]
   tooltipHeader: <color=#FFFFE0>Player District News 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

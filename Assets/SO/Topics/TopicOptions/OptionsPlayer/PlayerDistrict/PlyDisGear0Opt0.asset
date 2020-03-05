@@ -25,10 +25,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: There's people here at [node] who know where to get stuff. Special stuff,
+    says [npc], [job]
+  tooltipHeader: <color=#FFFFE0>Glory Hound</color>
+  tooltipMain: <color=#98FB98>Player Renown +2</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Yes, that would be ME</color>
   optionNumber: 0

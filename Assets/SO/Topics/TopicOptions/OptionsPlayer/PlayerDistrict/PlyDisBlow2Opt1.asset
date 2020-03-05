@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: What purpose is there in bombing our [genLoc] here at [node] asks [npc], [job]?
+    What is wrong with the Resistance?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

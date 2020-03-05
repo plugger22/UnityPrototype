@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: There were children at the [genLoc] at [node] when the Resistance bombed it
+    [daysAgo], says [npc], [job]. What were they thinking?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

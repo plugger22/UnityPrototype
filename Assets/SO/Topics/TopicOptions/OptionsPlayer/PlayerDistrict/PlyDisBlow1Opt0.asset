@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I regularly walk past the [genLoc] at [node] where the bomb went off [daysAgo],
+    says [npc], [job]. Boy, am I lucky
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

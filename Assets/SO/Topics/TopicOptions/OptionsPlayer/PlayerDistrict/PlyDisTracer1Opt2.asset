@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [mayor] has offered a bounty for information on Resistance Tracers. There's
+    one here at [node], apparently, says [npc], [job]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

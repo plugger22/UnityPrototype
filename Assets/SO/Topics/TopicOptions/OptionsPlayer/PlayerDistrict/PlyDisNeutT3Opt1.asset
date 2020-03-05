@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c0f81d5b6aef0a94ebd9ac3b22ebefd5, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: We got together and called the Resistance. Asked them to get rid of [team]
+    who were rampaging here at [node] [daysAgo]. Gone
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: You're not supposed to know about Resistance Tracers but who hasn't heard
+    about the one at [node], planted [daysAgo]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

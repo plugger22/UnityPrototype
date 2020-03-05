@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Rumour has it that the Resistance has a Tracer here at [node]. Planted it
+    [daysAgo] to spy on the Authority, says [npc], [job]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

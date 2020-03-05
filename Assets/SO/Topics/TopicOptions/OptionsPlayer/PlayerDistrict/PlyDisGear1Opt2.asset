@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b0e077df9a540e4fa5050ea3f4a240c, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: It's risky doing business with the Resistance here at [node]. [citys] security
+    forces are all over us, says [npc], [job]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

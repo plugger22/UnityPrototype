@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I'm glad to see the back of [team]. The Resistance did a number on them here
+    at [node], [daysAgo], says [npc], [job]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

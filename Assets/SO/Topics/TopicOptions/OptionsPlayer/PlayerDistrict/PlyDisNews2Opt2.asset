@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Everynow and then you can catch a pirate 'cast like the one here at [node],
+    [daysAgo], says [npc], [job]. They're worth waiting for
   tooltipHeader: <color=#FFFFE0>Player District News 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

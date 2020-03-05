@@ -25,10 +25,13 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 1</color>
-  tooltipMain: No Effects present
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  news: The Resistance pays really well for valuable intel on potential targets, says
+    [npc], [job], of [node]. I could be tempted
+  tooltipHeader: <color=#FFFFE0>Reluctant Credit</color>
+  tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\r\n<color=#98FB98>PLANNER
+    Motivation +2</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
+    Happens</color>"
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
+  textToDisplay: <color=#EEFB73>My PLANNER helped, I suppose</color>
   optionNumber: 1

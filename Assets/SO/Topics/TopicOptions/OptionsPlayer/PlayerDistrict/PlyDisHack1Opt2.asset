@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: They say it was the Resistance who crashed the Security Grid here at [node],
+    [daysAgo], says [npc]. Don't they ever think of the little people?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

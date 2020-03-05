@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: You know when the Resistance plants a Tracer in your district 'cause the lights
+    flicker, says [npc], [job], of [node]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

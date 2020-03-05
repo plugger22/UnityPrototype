@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If you want illegal items, the good stuff, you have to speak to [npc] at [node].
+    They can be found at the [genLoc] most days
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

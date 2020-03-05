@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] is incensed about the Resistance hitting the [target] target here
+    at [node] [daysAgo] says [npc], [job]. Someone gave them good intel'
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: There's a Tracer here at [node]. Planted [daysAgo]. The Resistance told somebody.
+    Why did they do that, asks [npc], [job]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

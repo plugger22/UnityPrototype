@@ -25,10 +25,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: My [who] says that they deal gear to the Resistance, says [npc], [job], of
+    [node]. Grief is about all they deal out, I reckon
+  tooltipHeader: <color=#FFFFE0>Give Credit</color>
+  tooltipMain: <color=#98FB98>FIXER Motivation +2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I've been taught by the best</color>
   optionNumber: 1

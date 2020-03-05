@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: The Authority got wind that [recruit] was about to join the Resistance but
+    it was too late. Did it here at [node] [daysAgo], says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

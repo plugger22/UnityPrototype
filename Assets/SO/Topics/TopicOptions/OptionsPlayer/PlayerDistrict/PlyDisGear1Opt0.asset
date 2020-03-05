@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: There's a man down the road from me who has lots of unanounced meetings late
+    at night, say [npc], [job], of [node]. Mysterious
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

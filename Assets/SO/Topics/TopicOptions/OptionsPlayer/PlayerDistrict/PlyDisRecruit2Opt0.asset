@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If [recruit] was so smart why did they join the Resistance [daysAgo], asks
+    [npc], [job], of [node]? Dumb move if you ask me
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

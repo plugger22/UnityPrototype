@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] is trying to stamp out the gear dealers here at [node], says [npc],
+    but what hope have they got when it''s so lucrative?'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

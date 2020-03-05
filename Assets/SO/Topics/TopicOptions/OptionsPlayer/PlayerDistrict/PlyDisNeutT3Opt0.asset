@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[team] really trod on a lot of toes when they were here at [node]. If the
+    Resistance hadn''t have got rid of them [daysAgo] we''d be in trouble'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

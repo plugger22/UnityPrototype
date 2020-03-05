@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I was near the [genLoc] that blew up at [node], [daysAgo], says [npc], [job].
+    Knocked me clean off my feet, it did
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

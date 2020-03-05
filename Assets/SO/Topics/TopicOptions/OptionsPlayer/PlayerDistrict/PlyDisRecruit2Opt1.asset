@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I hope that [recruit] made a will before they joined the Resistance, [daysAgo],
+    says [npc], [job], of [node]. I hear that you need one
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

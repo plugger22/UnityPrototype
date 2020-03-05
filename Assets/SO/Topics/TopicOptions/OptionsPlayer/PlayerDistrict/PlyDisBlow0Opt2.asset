@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: How many people died at the [genLoc] at [node] when that bomb went off [daysAgo]?
+    I seem to recall that it was a lot, says [npc], [job]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  news: 
+  news: Nobody is supposed to know that [recruit] joined the Resistance, [daysAgo],
+    but, hey, who doesn't, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

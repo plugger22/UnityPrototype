@@ -25,10 +25,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: '[recruit]? Yeah, I knew them. Aren''t they working for the Resistance now,
+    asks [npc], [job], of [node]?'
+  tooltipHeader: <color=#FFFFE0>Grateful</color>
+  tooltipMain: <color=#98FB98>RECRUITER Motivation +2</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Thanks for the compliment</color>
   optionNumber: 0

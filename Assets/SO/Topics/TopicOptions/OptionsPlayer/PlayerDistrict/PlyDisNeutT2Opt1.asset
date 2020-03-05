@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: If it wasn't for the Reistance my [who] would have been killed by [team] [daysAgo],
+    says [npc], [job]. Go them!
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

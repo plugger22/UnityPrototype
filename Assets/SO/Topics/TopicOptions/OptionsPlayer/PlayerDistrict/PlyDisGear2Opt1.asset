@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I knew somebody who fenced broken gear to the Resistance, here at [node],
+    says [npc]. They found him in a dumpster, burnt to a crisp
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

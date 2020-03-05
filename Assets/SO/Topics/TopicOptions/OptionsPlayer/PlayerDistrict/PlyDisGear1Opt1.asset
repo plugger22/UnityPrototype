@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] says it''s illegal to deal gear to the Resistance but, man, can you
+    make some money out of it, says [npc], [job], of [node]'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

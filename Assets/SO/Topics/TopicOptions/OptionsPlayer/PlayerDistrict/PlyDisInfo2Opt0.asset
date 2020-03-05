@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[mayor] has decreed that anyone caught selling valuable target intel to the
+    Resistance will be ''reprocessed'' says [npc] of [node]. Nasty'
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

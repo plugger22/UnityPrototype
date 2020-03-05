@@ -25,10 +25,11 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Player District Hack Security 0 option 0</color>
-  tooltipMain: No Effects present
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  news: The local grid here at [node] went down [daysAgo] says [npc], [job]. What
+    hope do I have with my [handicap]?
+  tooltipHeader: <color=#FFFFE0>Glow</color>
+  tooltipMain: <color=#98FB98>Player Renown +2</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
+  textToDisplay: <color=#EEFB73>I'm a Star, baby!</color>
   optionNumber: 0

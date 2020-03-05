@@ -27,7 +27,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Couldn't wait to get rid of [team] here at [node]. The Resistance sorted them
+    out [daysAgo], says [npc], [job]. Well done
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

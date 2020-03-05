@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: My [who] thinks they know where the Tracer that the Resistance planted here
+    at [node] [daysAgo] is. Bet they don't, says [npc]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

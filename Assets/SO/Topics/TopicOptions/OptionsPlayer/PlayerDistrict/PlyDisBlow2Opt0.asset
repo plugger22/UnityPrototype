@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The Resistance needs to know that my [who] was killed at the [genLoc] at [node]
+    when they bombed it [daysAgo], says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

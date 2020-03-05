@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: '[npc] was the person who told the Resistance how to tackle the [target] target
+    that they hit [daysAgo]. Inside knowledge, for sure'
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

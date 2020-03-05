@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: We here at [node] are eternally grateful to the Resistance for getting rid
+    of [team] [daysAgo] says [npc], [job].
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

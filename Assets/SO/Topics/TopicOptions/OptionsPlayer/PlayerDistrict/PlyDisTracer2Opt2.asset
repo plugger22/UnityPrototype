@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Finding Tracers is liking finding gold at the end of the rainbow. There's
+    one here at [node] but nobody knows where the heck it is
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

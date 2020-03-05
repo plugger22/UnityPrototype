@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Word is that [recruit] always wanted to join the Resistance. Well, they did,
+    [daysAgo]. How about that, says [npc], [job], of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

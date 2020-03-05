@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: If the Resistance is going to shut down the Power Grid here at [node] they
+    ought to let us know beforehand, says [npc], [job]
   tooltipHeader: <color=#FFFFE0>Player District Hack Security 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

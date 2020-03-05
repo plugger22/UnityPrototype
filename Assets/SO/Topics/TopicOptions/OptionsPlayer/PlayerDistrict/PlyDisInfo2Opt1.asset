@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Everybody at [node] knows that the [target] target that the Resistance hit
+    [daysAgo] was because of local intel, says [npc], [job]
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

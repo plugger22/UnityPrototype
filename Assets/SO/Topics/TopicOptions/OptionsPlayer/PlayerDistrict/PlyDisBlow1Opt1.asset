@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The [genLoc] that the Resistance bombed at [node], [daysAgo], was very popular.
+    Why did they do that, asks [npc]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

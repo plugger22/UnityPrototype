@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee790d3793ff89141a53060ccb5e8f46, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: The security grid here at [node] flatlined [daysAgo]. Thieves broke into my
+    ServoPod and stole my valuables, says [npc]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

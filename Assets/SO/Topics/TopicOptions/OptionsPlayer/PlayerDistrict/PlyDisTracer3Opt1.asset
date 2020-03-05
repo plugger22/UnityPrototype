@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: They're saying that the interference on SerialFlix is caused by a Tracer here
+    at [node]. Sounds right to me, says [npc], [job]
   tooltipHeader: Unknown
   tooltipMain: No Effects present
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
