@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisTracer3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District Insert Tracer 3 option 0
-  tag: 
-  text: 
+  tag: Puzzled
+  text: I'm curious why you think that?
   topic: {fileID: 11400000, guid: f06e6f86c49668540a5ce25a2813344b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,9 +21,10 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: c0f81d5b6aef0a94ebd9ac3b22ebefd5, type: 2}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: Unknown
   tooltipMain: No Effects present

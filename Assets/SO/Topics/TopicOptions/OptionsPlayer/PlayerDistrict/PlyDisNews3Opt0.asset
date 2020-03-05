@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisNews3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District News 3 option 0
-  tag: 
-  text: 
+  tag: Passionate
+  text: You're my favourite [actor]
   topic: {fileID: 11400000, guid: 40eee9b3c67cde1468f7644e46060bcd, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District News 0 option 0</color>

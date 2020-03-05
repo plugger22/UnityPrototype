@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisNeutT3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District Neutralise Team 3 option 0
-  tag: 
-  text: 
+  tag: Oblige
+  text: Well gosh, here you go then
   topic: {fileID: 11400000, guid: 615ce69f71f51d841a811f1db748a5f7, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

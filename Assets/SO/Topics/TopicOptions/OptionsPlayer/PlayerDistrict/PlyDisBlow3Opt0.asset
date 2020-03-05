@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisBlow3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District 3 Blow Stuff Up option 0
-  tag: 
-  text: 
+  tag: Reasonable Request
+  text: That's fair
   topic: {fileID: 11400000, guid: b0cf9fae9a7cfce49a50181b8aea23dc, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

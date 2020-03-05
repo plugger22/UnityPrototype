@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: PlyDisRecruit2Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Recruit Actor 2 option 1
-  tag: 
-  text: 
+  tag: Generous Spirit
+  text: Your Inspiration is EVERYTHING
   topic: {fileID: 11400000, guid: 7c1a2774c73802a409fb3ce292407569, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

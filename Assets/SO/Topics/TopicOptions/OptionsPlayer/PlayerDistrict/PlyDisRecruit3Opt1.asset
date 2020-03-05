@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisRecruit3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Recruit Actor 3 option 1
-  tag: 
-  text: 
+  tag: Brush Off
+  text: You're annoying me, go away
   topic: {fileID: 11400000, guid: 7c669928be09b6242a75f44ee69b0445, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

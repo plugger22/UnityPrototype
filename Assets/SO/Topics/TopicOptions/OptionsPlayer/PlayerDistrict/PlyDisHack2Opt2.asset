@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: PlyDisHack2Opt2
   m_EditorClassIdentifier: 
   descriptor: Player District Hack Security 2 option 2
-  tag: 
-  text: 
+  tag: Uninterested
+  text: HQ should take the credit
   topic: {fileID: 11400000, guid: 541bef76639234d45bb131bdefe9a483, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District Hack Security 0 option 0</color>
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

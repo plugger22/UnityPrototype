@@ -1349,7 +1349,7 @@ public class LoadManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfGearType (Null) -> Import failed"); }
         //
-        // - - - Topic Types - - -
+        // - - - Topic Types Data - - -
         //
         Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
         List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
@@ -1385,16 +1385,16 @@ public class LoadManager : MonoBehaviour
                     { Debug.LogError(string.Format("Invalid TopicType.name (duplicate) \"{0}\" for \"{1}\"", counter, topicType.name)); counter--; }
                 }
                 numDict = dictOfTopicTypes.Count;
-                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicTypes has {0} entries{1}", numDict, "\n");
+                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicTypesData has {0} entries{1}", numDict, "\n");
                 Debug.Assert(numDict == counter, "Mismatch on Count");
                 Debug.Assert(numDict > 0, "No TopicType has been imported");
-                Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicType count, array {0}, dict {1}", numArray, numDict));
+                Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicTypeData count, array {0}, dict {1}", numArray, numDict));
             }
             else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTopicType (Null) -> Import failed"); }
         //
-        // - - - Topic SubTypes - - -
+        // - - - Topic SubTypes Data - - -
         //
         Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
@@ -1425,10 +1425,10 @@ public class LoadManager : MonoBehaviour
                 { Debug.LogError(string.Format("Invalid TopicSubType.name (duplicate) \"{0}\" for \"{1}\"", counter, topicSubType.name)); counter--; }
             }
             numDict = dictOfTopicSubTypes.Count;
-            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicSubTypes has {0} entries{1}", numDict, "\n");
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicSubTypesData has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict == counter, "Mismatch on Count");
             Debug.Assert(numDict > 0, "No TopicSubType has been imported");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubTypeData count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicSubType (Null) -> Import failed"); }
         //
@@ -1520,6 +1520,33 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Topic count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }
+        //
+        // - - - TopicSubTypes - - -
+        //
+        Dictionary<string, TopicSubType> dictOfTopicSubs = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        if (dictOfTopicSubs != null)
+        {
+            counter = 0;
+            numArray = arrayOfTopicSubTypes.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                TopicSubType subType = arrayOfTopicSubTypes[i];
+                counter++;
+                //add to dictionary
+                try
+                { dictOfTopicSubs.Add(subType.name, subType); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid TopicSubType (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid TopicSubType.name (duplicate) \"{0}\" for \"{1}\"", counter, subType.name)); counter--; }
+            }
+            numDict = dictOfTopicSubs.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfTopicSubTypes has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on Count");
+            Debug.Assert(numDict > 0, "No TopicSubType has been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in TopicSubType count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfTopicSubs (Null)"); }
         //
         // - - - Manage Actors - - -
         //

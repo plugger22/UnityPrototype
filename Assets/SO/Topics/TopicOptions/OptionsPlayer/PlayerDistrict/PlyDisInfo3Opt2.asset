@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisInfo3Opt2
   m_EditorClassIdentifier: 
   descriptor: Player District Gain Info 3 option 2
-  tag: 
-  text: 
+  tag: Harmony
+  text: We need to work together
   topic: {fileID: 11400000, guid: 5853d75f97f661d49864410a0c421420, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

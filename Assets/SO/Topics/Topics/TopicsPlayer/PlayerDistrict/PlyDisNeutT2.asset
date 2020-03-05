@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Smart Operator
   text: Are you James Bond asks your [actor]? How did you manage to neutralise [team]
-    at [node], [daysAgo]?
+    at [node], [daysAgo] on your own?
   designNotes: Positive operator event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -36,7 +36,7 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   status: 2
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0

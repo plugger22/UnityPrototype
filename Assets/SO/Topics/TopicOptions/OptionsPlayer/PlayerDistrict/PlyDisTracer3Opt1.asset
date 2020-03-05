@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Name: PlyDisTracer3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Insert Tracer 3 option 1
-  tag: 
-  text: 
+  tag: Casual Approach
+  text: Let me ease your pain
   topic: {fileID: 11400000, guid: f06e6f86c49668540a5ce25a2813344b, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: Unknown
@@ -30,4 +33,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

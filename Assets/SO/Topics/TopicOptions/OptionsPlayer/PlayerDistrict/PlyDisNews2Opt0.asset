@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Name: PlyDisNews2Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District News 2 option 0
-  tag: 
-  text: 
+  tag: Cold
+  text: I think I can handle Viral, thank you
   topic: {fileID: 11400000, guid: a712cc285eeb7864bae810441664b8d9, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District News 0 option 0</color>
   tooltipMain: No Effects present

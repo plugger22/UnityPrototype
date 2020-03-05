@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Name: PlyDisHack3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Hack Security 3 option 1
-  tag: 
-  text: 
+  tag: More Rules
+  text: We need to establish procedures
   topic: {fileID: 11400000, guid: adf616ca24d1dd04eaeef913b61bf055, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: c745d55af3af0ba418b71821e08e60ce, type: 2}
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: bdbb830bc665bb341bfaba1ebb696bef, type: 2}
+  moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District Hack Security 0 option 0</color>
@@ -30,4 +32,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

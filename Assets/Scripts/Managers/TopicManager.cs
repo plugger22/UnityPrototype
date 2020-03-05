@@ -2869,8 +2869,11 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-            bool tagHqActorsOriginalValue = tagHqActors;   //used for revertng back to existing value (may change as a result of debug topic but if debug topic fails then needs to revert)
-            TopicSubType subTypeNormal = Object.Instantiate(turnTopicSubType); //used for reverting back to normally selected topic NOTE: create a clone otherwise passed by reference which defeats purpose
+            //Data used for reverting back to normally selected topic if Debug topic doesn't fire
+            bool tagHqActorsOriginalValue = tagHqActors; 
+            string topicNormal = turnTopic.name; 
+            string subTypeNormal = turnTopicSubType.name;
+            //data package
             TopicUIData data = new TopicUIData();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
             if (debugTopicPool != null)
@@ -2890,11 +2893,13 @@ public class TopicManager : MonoBehaviour
 
                     if (isProceed == true)
                     {
-                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: debugTopicPool IN USE{0}", "\n");
+                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: DEBUG TOPIC POOL IN USE, subType \"{0}\"{1}", debugTopicPool.subType.name, "\n");
                         //select one of topics from the debug pool at random (enables testing of a small subset of topics)
                         turnTopicSubType = debugTopicPool.subType;
                         if (turnTopicSubType != null)
                         {
+                            //set normal topic to null prior to selecting debug topic
+                            turnTopic = null;
                             Debug.LogFormat("[Top] TopicManager.cs -> InitialiseTopicUI: Topic OVERRIDE for debugTopicPool \"{0}\"{1}", debugTopicPool.name, "\n");
                             tagHqActors = false; //needed to prevent the previously selected topic, eg. HQ, sending a 'true' result forward to the debug topic
                             GetTopic(GameManager.instance.sideScript.PlayerSide);
@@ -2909,9 +2914,18 @@ public class TopicManager : MonoBehaviour
                         else
                         {
                             //revert back to normally selected topic
-                            tagHqActors = tagHqActorsOriginalValue;
-                            turnTopicSubType = subTypeNormal;
-                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT{0}", "\n");
+                            turnTopic = GameManager.instance.dataScript.GetTopic(topicNormal);
+                            if (turnTopic != null)
+                            {
+                                turnTopicSubType = GameManager.instance.dataScript.GetTopicSubType(subTypeNormal);
+                                if (turnTopicSubType != null)
+                                {
+                                    tagHqActors = tagHqActorsOriginalValue;
+                                    Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT (No valid Debug Topic){0}", "\n");
+                                }
+                                else { Debug.LogWarningFormat("Invalid turnTopicSubType (Null) for subTypeNormal \"{0}\"", subTypeNormal); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid topic (Null) for topicNormal.name \"{0}\"", topicNormal); }
                         }
                     }
                 }

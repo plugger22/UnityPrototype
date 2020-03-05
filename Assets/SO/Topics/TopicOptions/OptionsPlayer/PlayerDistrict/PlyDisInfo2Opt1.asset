@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: PlyDisInfo2Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Gain Info 2 option 1
-  tag: 
-  text: 
+  tag: Careless
+  text: Maye it's your good influence
   topic: {fileID: 11400000, guid: 2b88ec9acd49aa2408ee06547d54c10a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

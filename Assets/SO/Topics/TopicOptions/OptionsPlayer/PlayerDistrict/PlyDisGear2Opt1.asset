@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Name: PlyDisGear2Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Obtain Gear 2 option 1
-  tag: 
-  text: 
+  tag: Shakespeare
+  text: It's all because of you, my [actor]
   topic: {fileID: 11400000, guid: 338428b0864972248b296e37574764cc, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

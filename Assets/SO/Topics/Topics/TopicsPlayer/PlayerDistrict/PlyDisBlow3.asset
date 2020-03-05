@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Acknowledge Assist
   text: Your [actor] is demanding credit for the [genLoc] that you blew to bits at
-    [node], [daysAgo]. If it wasn't for their help, they say, it wouldn't have happened
+    [node], [daysAgo]. If it wasn't for them it wouldn't have happened
   designNotes: negative anarchist event
   type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
   subType: {fileID: 11400000, guid: 30e8cd4d5c4f2ec499bbdb22a2f6ce8a, type: 2}
@@ -37,7 +37,7 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   status: 0
-  isCurrent: 1
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 1
   timerWindow: 0

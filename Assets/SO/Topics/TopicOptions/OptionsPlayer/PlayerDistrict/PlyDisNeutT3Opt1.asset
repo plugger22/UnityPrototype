@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisNeutT3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District Neutralise Team 3 option 1
-  tag: 
-  text: 
+  tag: Be Blunt
+  text: No, I don't think so
   topic: {fileID: 11400000, guid: 615ce69f71f51d841a811f1db748a5f7, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,13 +21,14 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: c0f81d5b6aef0a94ebd9ac3b22ebefd5, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

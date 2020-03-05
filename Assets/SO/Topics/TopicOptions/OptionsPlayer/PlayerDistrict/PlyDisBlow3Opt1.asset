@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisBlow3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player District 3 Blow Stuff Up option 1
-  tag: 
-  text: 
+  tag: Refuse
+  text: Over my Dead Body
   topic: {fileID: 11400000, guid: b0cf9fae9a7cfce49a50181b8aea23dc, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

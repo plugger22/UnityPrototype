@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Name: PlyDisGear2Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District Obtain Gear 2 option 0
-  tag: 
-  text: 
+  tag: Kudos to Me
+  text: I'm the Gear Guru
   topic: {fileID: 11400000, guid: 338428b0864972248b296e37574764cc, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: fc412999640b13e4bbf8f535cf5a584e, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 

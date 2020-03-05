@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyDisRecruit3Opt0
   m_EditorClassIdentifier: 
   descriptor: Player District Recruit Actor 3 option 0
-  tag: 
-  text: 
+  tag: Detachment
+  text: The Kudos is all yours
   topic: {fileID: 11400000, guid: 7c669928be09b6242a75f44ee69b0445, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -21,8 +21,9 @@ MonoBehaviour:
   isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects: []
-  listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 7422be6948418b74b8bdc10eaa2acbba, type: 2}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

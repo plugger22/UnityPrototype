@@ -243,6 +243,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TopicTypeData> dictOfTopicTypeData = new Dictionary<string, TopicTypeData>();            //Key -> topicType.name, Value -> TopicTypeData package
     private Dictionary<string, TopicTypeData> dictOfTopicSubTypeData = new Dictionary<string, TopicTypeData>();         //Key -> topicSubType.name, Value -> TopicTypeData package
     private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
+    private Dictionary<string, TopicSubType> dictOfTopicSubTypes = new Dictionary<string, TopicSubType>();      //Key -> topicSubType.name, Value -> TopicSubType
     private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
@@ -8113,6 +8114,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, Topic> GetDictOfTopics()
     { return dictOfTopics; }
 
+    public Dictionary<string, TopicSubType> GetDictOfTopicSubTypes()
+    { return dictOfTopicSubTypes; }
+
     public Dictionary<string, List<Topic>> GetDictOfTopicPools()
     { return dictOfTopicPools; }
 
@@ -8145,6 +8149,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid topicTypeName (Null or Empty)"); }
         return data;
     }
+
 
     /// <summary>
     /// Get topicSubType data for specified topicSubType. Returns Null if not found
@@ -8252,7 +8257,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Get topic from dictOfTopics based on topic.name, returns Null if not found
     /// </summary>
-    /// <param name="topicName"></param>
+    /// <param name="topicSubTypeName"></param>
     /// <returns></returns>
     public Topic GetTopic(string topicName)
     {
@@ -8264,6 +8269,23 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topicName (Null or Empty)"); }
         return topic;
+    }
+
+    /// <summary>
+    /// Get topicSubType from dictOfTopicSubTypes based on topicSubTypename, returns Null if not found
+    /// </summary>
+    /// <param name="topicSubTypeName"></param>
+    /// <returns></returns>
+    public TopicSubType GetTopicSubType(string topicSubTypeName)
+    {
+        TopicSubType topicSubType = null;
+        if (string.IsNullOrEmpty(topicSubTypeName) == false)
+        {
+            if (dictOfTopicSubTypes.ContainsKey(topicSubTypeName) == true)
+            { return dictOfTopicSubTypes[topicSubTypeName]; }
+        }
+        else { Debug.LogError("Invalid topicSubTypeName (Null or Empty)"); }
+        return topicSubType;
     }
 
     /// <summary>
