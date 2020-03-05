@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: My [who] says that they deal gear to the Resistance, says [npc], [job], of
-    [node]. Grief is about all they deal out, I reckon
+    [node]. Deal grief, more likely
   tooltipHeader: <color=#FFFFE0>Give Credit</color>
   tooltipMain: <color=#98FB98>FIXER Motivation +2</color>
   tooltipDetails: <color=#98FB98>Player Mood +1</color>

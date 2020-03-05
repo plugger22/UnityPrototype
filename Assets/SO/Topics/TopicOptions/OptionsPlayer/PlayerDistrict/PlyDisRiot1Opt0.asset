@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: How am I supposed to do my shopping here at [node] if there are riots going
-    on, asks [npc]? It was [daysAgo], but I'm still stressed
+    on, asks [npc]? It was [daysAgo], and I'm still hungry
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
   news: Riots. Nothing good ever happens in a riot. Take the one here at [node] that
-    blew up [daysAgo]. Trashed the place, says [npc]
+    blew up [daysAgo]. Trashed the district, says [npc]
   tooltipHeader: <color=#FFFFE0>Say What</color>
   tooltipMain: <color=#98FB98>Player Renown +2</color>
   tooltipDetails: <color=#FF4500>Player Mood -2</color>

@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
   news: '[daysAgo] the local grid crashed here at [node]. I couldn''t get to work
-    that days, says [npc]. They docked my pay'
+    that day, says [npc]. They docked my pay'
   tooltipHeader: <color=#FFFFE0>Spread the Joy</color>
   tooltipMain: <color=#98FB98>HACKER Motivation +2</color>
   tooltipDetails: <color=#98FB98>Player Mood +1</color>

@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: My neighbour sold inside information on a target to the Resistance. Now he
-    lives in a real house, not in a Pod like me, says [npc] of [node]
+    lives in a real house, not in a pod like me, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

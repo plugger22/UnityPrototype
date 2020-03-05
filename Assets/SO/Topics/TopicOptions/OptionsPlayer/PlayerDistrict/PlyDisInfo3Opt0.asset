@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: Remember that [raget] target that the Resistance hit here at [node] [daysAgo]?
+  news: Remember that [target] target that the Resistance hit here at [node] [daysAgo]?
     I know somebody who told them how to do it, says [npc]
   tooltipHeader: <color=#FFFFE0>Player District Gain Info 0 option 0</color>
   tooltipMain: No Effects present

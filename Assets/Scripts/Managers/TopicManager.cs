@@ -6794,6 +6794,10 @@ public class TopicManager : MonoBehaviour
             {
                 int maxNodeID = GameManager.instance.nodeScript.maxNodeValue;
                 tagOrgTag = GameManager.instance.campaignScript.campaign.orgInfo.tag;
+                if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                else { tagRecruit = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                tagRecruit += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                tagTeam = "ERASURE Team Alpha";
                 int count = listOfTopics.Count;
                 if (count > 0)
                 {

@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: '[team] must have thought that we locals here at [node] were disposable roadkill.
-    Thank goodness the Resistance got hthem, [daysAgo]'
+    Thank goodness the Resistance got them, [daysAgo]'
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

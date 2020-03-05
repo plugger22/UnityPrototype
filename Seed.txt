@@ -1260,3 +1260,14 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 11241 -> Thursday, 5 March 2020 12:28 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 61585 -> Thursday, 5 March 2020 5:41 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6241)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6836)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 61315 -> Thursday, 5 March 2020 8:37 PM
+City seed 5678 -> London, United Kingdom
