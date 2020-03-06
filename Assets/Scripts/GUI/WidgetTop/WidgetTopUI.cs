@@ -38,6 +38,8 @@ public class WidgetTopUI : MonoBehaviour
     private Color innerColour;
     private Color outerColour;
 
+    private bool isCityCoroutine;                           //true if active, false if not
+    private bool isHqCoroutine;
 
     private static WidgetTopUI widgetTopUI;
 
@@ -137,7 +139,9 @@ public class WidgetTopUI : MonoBehaviour
         Debug.Assert(hq != null, "Invalid hq tmp (Null)");
         Debug.Assert(actionPoints != null, "Invalid actionPoints (Null)");
         Debug.Assert(turnNumber != null, "Invalid turnNumber (Null)");
-
+        //coroutines
+        isCityCoroutine = false;
+        isHqCoroutine = false;
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
@@ -163,6 +167,8 @@ public class WidgetTopUI : MonoBehaviour
         //set bars to starting values
         SetSides(GameManager.instance.sideScript.PlayerSide);
         //set city and HQ icons
+        city.fontSize = 14;
+        hq.fontSize = 14;
         city.text = GameManager.instance.guiScript.cityIcon;
         hq.text = GameManager.instance.guiScript.hqIcon;
     }
@@ -452,7 +458,14 @@ public class WidgetTopUI : MonoBehaviour
     public void UpdateCityIcon(int loyalty)
     { 
         if (loyalty > 0 && loyalty < 10)
-        { city.text = GameManager.instance.guiScript.cityIcon; }
+        {
+            city.text = GameManager.instance.guiScript.cityIcon;
+            if (isCityCoroutine == true)
+            {
+                StopCoroutine("FlashCtyIcon");
+                isCityCoroutine = false;
+            }
+        }
         else
         {
             switch(GameManager.instance.sideScript.PlayerSide.level)
@@ -461,8 +474,14 @@ public class WidgetTopUI : MonoBehaviour
                     //authority
                     switch (loyalty)
                     {
-                        case 0: city.text = GameManager.instance.guiScript.cityIconBad; break;
-                        case 10: city.text = GameManager.instance.guiScript.cityIconGood; break;
+                        case 0:
+                            city.text = GameManager.instance.guiScript.cityIconBad;
+                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            break;
+                        case 10:
+                            city.text = GameManager.instance.guiScript.cityIconGood;
+                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
                     }
                     break;
@@ -470,8 +489,14 @@ public class WidgetTopUI : MonoBehaviour
                     //resistance
                     switch (loyalty)
                     {
-                        case 0: city.text = GameManager.instance.guiScript.cityIconGood; break;
-                        case 10: city.text = GameManager.instance.guiScript.cityIconBad; break;
+                        case 0:
+                            city.text = GameManager.instance.guiScript.cityIconGood;
+                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            break;
+                        case 10:
+                            city.text = GameManager.instance.guiScript.cityIconBad;
+                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
                     }
                     break;
@@ -486,8 +511,62 @@ public class WidgetTopUI : MonoBehaviour
     /// <param name="isAlert"></param>
     public void UpdateHqIcon(int approval)
     {
-        if (approval == 0) { hq.text = GameManager.instance.guiScript.hqIconBad; }
-        else { hq.text = GameManager.instance.guiScript.hqIcon; }
+        if (approval == 0)
+        {
+            hq.text = GameManager.instance.guiScript.hqIconBad;
+            if (isHqCoroutine == false)
+            { StartCoroutine("FlashHqIcon"); }
+        }
+        else
+        {
+            hq.text = GameManager.instance.guiScript.hqIcon;
+            if (isHqCoroutine == true)
+            {
+                StopCoroutine("FlashHqIcon");
+                isHqCoroutine = false;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// coroutine to flash city icon while ever at critical level.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlashCityIcon()
+    {
+        isCityCoroutine = true;
+        do
+        {
+            //adjust font size up and down
+            if (city.fontSize == 14)
+            { city.fontSize = 16; }
+            else { city.fontSize = 14; }
+            //pause
+            yield return new WaitForSeconds(0.5f);
+        }
+        while (isCityCoroutine == true);
+        yield return null;
+    }
+
+    /// <summary>
+    /// coroutine to flash hq icon while ever at crisis level
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FlashHqIcon()
+    {
+        isHqCoroutine = true;
+        do
+        {
+            //adjust font size up and down
+            if (hq.fontSize == 14)
+            { hq.fontSize = 16; }
+            else { hq.fontSize = 14; }
+            //pause
+            yield return new WaitForSeconds(0.5f);
+        }
+        while (isHqCoroutine == true);
+        yield return null;
     }
 
     //new methods above here
