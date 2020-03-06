@@ -52,6 +52,18 @@ public class GUIManager : MonoBehaviour
     [Tooltip("How many pixels above object that tooltip will be offset by")]
     [Range(0, 100)] public int tooltipOffset = 30;
 
+    [Header("Top Widget Icon coroutines")]
+    [Tooltip("Min font size for icon (default normal size)")]
+    [Range(10, 20)] public int iconMinFontSize = 12;
+    [Tooltip("Max font size for icon")]
+    [Range(10, 20)] public int iconMaxFontSize = 18;
+    [Tooltip("Default normal size for icons")]
+    [Range(10, 20)] public int iconDefaultFontSize = 14;
+    [Tooltip("Time interval (seconds) for coroutine step change in font size")]
+    [Range(0, 1.0f)] public float iconFlashInterval = 0.05f;
+    [Tooltip("Amount icon font size changes each time interval")]
+    [Range(0, 1.0f)] public float iconFontIncrement = 0.25f;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantActorSprite;

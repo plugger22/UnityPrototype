@@ -100,6 +100,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
             {
                 tooltipHeader = string.Format("{0}{1}", GameManager.instance.cityScript.GetCityNameFormatted(), GameManager.instance.cityScript.GetCityArcFormatted());
                 tooltipMain = GameManager.instance.cityScript.GetCityDescriptionFormatted();
+                tooltipDetails = GameManager.instance.cityScript.GetCityDetails();
                 GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
                 GameManager.instance.tooltipGenericScript.SetTooltip(data);
                 yield return null;

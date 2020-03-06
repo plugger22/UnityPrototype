@@ -4293,7 +4293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 34965ba51d609b940a15a66396e85d92, type: 2}
+  debugTopicPool: {fileID: 0}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4731,6 +4731,11 @@ MonoBehaviour:
   tooltipDelay: 0.5
   tooltipFade: 0.5
   tooltipOffset: 30
+  iconMinFontSize: 12
+  iconMaxFontSize: 18
+  iconDefaultFontSize: 14
+  iconFlashInterval: 0.05
+  iconFontIncrement: 0.25
   vacantActorSprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
   errorSprite: {fileID: 21300000, guid: b9bbb6ebf7eace84fa8f788ca4d7fc72, type: 3}
   infoSprite: {fileID: 21300000, guid: 487d8e165f0c4564b8465f21c927f6b2, type: 3}

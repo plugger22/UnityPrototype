@@ -1,6 +1,4 @@
 ﻿using gameAPI;
-using modalAPI;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -263,7 +261,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetCityLoyaltyFormatted()
-    { return string.Format("{0}{1}{2} out of {3}", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
+    { return string.Format("{0}<size=130%>{1}{2} out of {3}</size>", colourNeutral, _cityLoyalty, colourEnd, maxCityLoyalty); }
 
 
     public string GetCityDescriptionFormatted()
@@ -271,6 +269,60 @@ public class CityManager : MonoBehaviour
         if (city.descriptor != null)
         { return string.Format("{0}{1}{2}", colourNormal, city.descriptor, colourEnd); }
         else { return "Unknown"; }
+    }
+
+    /// <summary>
+    /// Used for top Widget city Icon and city Bar tooltips if city loyalty critical. 'isBarTooltip' true, show default message, ignore for city icon tooltip
+    /// </summary>
+    /// <returns></returns>
+    public string GetCityDetails(bool isBarTooltip = false)
+    {
+        string text = "";
+        if (_cityLoyalty == 0 || _cityLoyalty == 10)
+        {
+            switch (GameManager.instance.sideScript.PlayerSide.level)
+            {
+                case 1:
+                    //Authority
+                    switch (_cityLoyalty)
+                    {
+                        case 0:
+                            text = string.Format("{0}Resistance{1} wins in{2}{3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            break;
+                        case 10:
+                            text = string.Format("{0}Authority{1} wins in{2}{3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            break;
+                    }
+                    break;
+                case 2:
+                    //Resistance
+                    switch (_cityLoyalty)
+                    {
+                        case 0:
+                            text = string.Format("{0}Resistance{1} wins in{2}{3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            break;
+                        case 10:
+                            text = string.Format("{0}Authority{1} wins in{2}{3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            //Non critical
+            if (isBarTooltip == true)
+            {
+                //show default win/loss message
+                text = string.Format("At {0}Zero{1}{2}{3}Resistance wins Level{4}{5}At {6}Ten{7}{8}{9}Authority wins Level{10}{11}after {12}Countdowns{13}", 
+                    colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd);
+            }
+        }
+        return text;
     }
 
 
@@ -373,17 +425,17 @@ public class CityManager : MonoBehaviour
         return builder.ToString();
     }
 
-   /* /// <summary>
-    /// returns a colour formatted string of the Faction's trait. Used by cityInfoUI faction tooltip
-    /// </summary>
-    /// <returns></returns>
-    public string GetFactionTraitFormatted()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);
-        builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.GetTrait().description, colourEnd);
-        return builder.ToString();
-    }*/
+    /* /// <summary>
+     /// returns a colour formatted string of the Faction's trait. Used by cityInfoUI faction tooltip
+     /// </summary>
+     /// <returns></returns>
+     public string GetFactionTraitFormatted()
+     {
+         StringBuilder builder = new StringBuilder();
+         builder.AppendFormat("<font=\"Bangers SDF\"><cspace=1em>{0}</cspace></font>", city.faction.GetTrait().tagFormatted);
+         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourAlert, city.faction.GetTrait().description, colourEnd);
+         return builder.ToString();
+     }*/
 
     /// <summary>
     /// checks city loyalty once per turn for min and max conditions, sets timers, gives outcomes. Checks for both sides, depending on who is player

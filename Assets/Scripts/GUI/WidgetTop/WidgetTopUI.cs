@@ -2,7 +2,6 @@
 using packageAPI;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,9 @@ using UnityEngine.UI;
 public class WidgetTopUI : MonoBehaviour
 {
 
+    // NOTE: Globals parameters for Icon coroutines are to be found in GUIManager.cs
+
+    [Header("UI Elements")]
     public Image widgetTopSprite;
     public Image barCityFront;
     public Image barHqFront;
@@ -38,8 +40,19 @@ public class WidgetTopUI : MonoBehaviour
     private Color innerColour;
     private Color outerColour;
 
+    //coroutines
     private bool isCityCoroutine;                           //true if active, false if not
     private bool isHqCoroutine;
+    private bool isGrowCity;                                //true if city icon getting larger (in coroutine), false if getting smaller
+    private bool isGrowHq;
+
+    //icon variables for coroutines
+    private int minFontSize;
+    private int maxFontSize;
+    private int defaultFontSize;
+    private float timeInterval;
+    private float fontIncrement;
+
 
     private static WidgetTopUI widgetTopUI;
 
@@ -142,6 +155,11 @@ public class WidgetTopUI : MonoBehaviour
         //coroutines
         isCityCoroutine = false;
         isHqCoroutine = false;
+        minFontSize = GameManager.instance.guiScript.iconMinFontSize;
+        maxFontSize = GameManager.instance.guiScript.iconMaxFontSize;
+        defaultFontSize = GameManager.instance.guiScript.iconDefaultFontSize;
+        timeInterval = GameManager.instance.guiScript.iconFlashInterval;
+        fontIncrement = GameManager.instance.guiScript.iconFontIncrement;
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
@@ -167,8 +185,8 @@ public class WidgetTopUI : MonoBehaviour
         //set bars to starting values
         SetSides(GameManager.instance.sideScript.PlayerSide);
         //set city and HQ icons
-        city.fontSize = 14;
-        hq.fontSize = 14;
+        city.fontSize = defaultFontSize;
+        hq.fontSize = defaultFontSize;
         city.text = GameManager.instance.guiScript.cityIcon;
         hq.text = GameManager.instance.guiScript.hqIcon;
     }
@@ -315,7 +333,7 @@ public class WidgetTopUI : MonoBehaviour
     private void SetFactionBar(int size)
     {
         Debug.Assert(size > -1 && size < 11, string.Format("Invalid size {0}", size));
-        float floatSize = (float)size;
+        float floatSize = size;
         transformFaction.sizeDelta = new Vector2(floatSize * 10f, transformFaction.sizeDelta.y);
         //set colour
         float factor = floatSize * 0.1f;
@@ -333,7 +351,7 @@ public class WidgetTopUI : MonoBehaviour
         //convert opacity to 0 to 1.0
         opacity *= 0.01f;
         //change opacity of relevant star
-        switch(uiPosition)
+        switch (uiPosition)
         {
             case AlignHorizontal.Left:
                 Color tempLeftColor = starLeft.color;
@@ -456,7 +474,7 @@ public class WidgetTopUI : MonoBehaviour
     /// </summary>
     /// <param name="isAlert"></param>
     public void UpdateCityIcon(int loyalty)
-    { 
+    {
         if (loyalty > 0 && loyalty < 10)
         {
             city.text = GameManager.instance.guiScript.cityIcon;
@@ -464,11 +482,12 @@ public class WidgetTopUI : MonoBehaviour
             {
                 StopCoroutine("FlashCtyIcon");
                 isCityCoroutine = false;
+                city.fontSize = minFontSize;
             }
         }
         else
         {
-            switch(GameManager.instance.sideScript.PlayerSide.level)
+            switch (GameManager.instance.sideScript.PlayerSide.level)
             {
                 case 1:
                     //authority
@@ -524,6 +543,7 @@ public class WidgetTopUI : MonoBehaviour
             {
                 StopCoroutine("FlashHqIcon");
                 isHqCoroutine = false;
+                hq.fontSize = minFontSize;
             }
         }
     }
@@ -536,14 +556,32 @@ public class WidgetTopUI : MonoBehaviour
     IEnumerator FlashCityIcon()
     {
         isCityCoroutine = true;
+        isGrowCity = true;
         do
         {
-            //adjust font size up and down
-            if (city.fontSize == 14)
-            { city.fontSize = 16; }
-            else { city.fontSize = 14; }
+            switch (isGrowCity)
+            {
+                case true:
+                    //Grow
+                    if (city.fontSize < maxFontSize)
+                    {
+                        //grow by half a font size
+                        city.fontSize += fontIncrement;
+                    }
+                    else { isGrowCity = false; }
+                    break;
+                case false:
+                    //Shrink
+                    if (city.fontSize > minFontSize)
+                    {
+                        //shrink by half a font size
+                        city.fontSize -= fontIncrement;
+                    }
+                    else { isGrowCity = true; }
+                    break;
+            }
             //pause
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(timeInterval);
         }
         while (isCityCoroutine == true);
         yield return null;
@@ -556,7 +594,10 @@ public class WidgetTopUI : MonoBehaviour
     IEnumerator FlashHqIcon()
     {
         isHqCoroutine = true;
-        do
+        isGrowHq = true;
+
+
+        /*do
         {
             //adjust font size up and down
             if (hq.fontSize == 14)
@@ -564,6 +605,33 @@ public class WidgetTopUI : MonoBehaviour
             else { hq.fontSize = 14; }
             //pause
             yield return new WaitForSeconds(0.5f);
+        }*/
+
+        do
+        {
+            switch (isGrowHq)
+            {
+                case true:
+                    //Grow
+                    if (hq.fontSize < maxFontSize)
+                    {
+                        //grow by half a font size
+                        hq.fontSize += fontIncrement;
+                    }
+                    else { isGrowHq = false; }
+                    break;
+                case false:
+                    //Shrink
+                    if (hq.fontSize > minFontSize)
+                    {
+                        //shrink by half a font size
+                        hq.fontSize -= fontIncrement;
+                    }
+                    else { isGrowHq = true; }
+                    break;
+            }
+            //pause
+            yield return new WaitForSeconds(timeInterval);
         }
         while (isHqCoroutine == true);
         yield return null;

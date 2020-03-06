@@ -20227,6 +20227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3922ba135a96d8d42b1d7eac82f846d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minFontSize: 14
+  maxFontSize: 18
+  timeInterval: 0.1
+  fontIncrement: 0.2
   widgetTopSprite: {fileID: 1422097819}
   barCityFront: {fileID: 463940729}
   barHqFront: {fileID: 86671960}
