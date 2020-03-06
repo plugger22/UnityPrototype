@@ -1271,3 +1271,20 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 61315 -> Thursday, 5 March 2020 8:37 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 44932 -> Friday, 6 March 2020 11:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11772 -> Friday, 6 March 2020 11:21 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerDistrict" -> INFO Only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1738)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:2905)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:283)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:237)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	

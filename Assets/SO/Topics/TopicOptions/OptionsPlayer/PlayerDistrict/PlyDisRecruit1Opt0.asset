@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
   news: My [who] knew [recruit]. Yep, the one who joined the Resistance [daysAgo].
-    Send us a postcard, says [npc], [job], of [node]
+    Sent us a postcard, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

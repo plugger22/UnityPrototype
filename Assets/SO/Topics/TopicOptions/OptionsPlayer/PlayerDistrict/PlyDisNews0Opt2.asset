@@ -26,7 +26,7 @@ MonoBehaviour:
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: Did you see that stuff on InYourFace here at [node], [daysAgo]? Showed what
-    a disaster the [mayor] was, says [npc], [job]
+    a disaster [mayor] was, says [npc], [job]
   tooltipHeader: <color=#FFFFE0>Lazy</color>
   tooltipMain: "<b><color=#98FB98>High</color> chance of SUCCESS</b>\r\n<color=#98FB98>
     HQ Approval +1</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\n<color=#BDC3C7>Nothing
