@@ -287,11 +287,11 @@ public class CityManager : MonoBehaviour
                     switch (_cityLoyalty)
                     {
                         case 0:
-                            text = string.Format("{0}Resistance{1} wins in{2}{3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
                                 loyaltyCountdownTimer != 1 ? "s" : "");
                             break;
                         case 10:
-                            text = string.Format("{0}Authority{1} wins in{2}{3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
                                 loyaltyCountdownTimer != 1 ? "s" : "");
                             break;
                     }
@@ -301,11 +301,11 @@ public class CityManager : MonoBehaviour
                     switch (_cityLoyalty)
                     {
                         case 0:
-                            text = string.Format("{0}Resistance{1} wins in{2}{3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
                                 loyaltyCountdownTimer != 1 ? "s" : "");
                             break;
                         case 10:
-                            text = string.Format("{0}Authority{1} wins in{2}{3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
+                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
                                 loyaltyCountdownTimer != 1 ? "s" : "");
                             break;
                     }

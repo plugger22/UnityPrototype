@@ -79,10 +79,10 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             //do once
             Vector3 screenPos = transform.position;
             screenPos.x -= 280;
-            screenPos.y -= 90;
+            screenPos.y -= 50;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("{0} <size=115%>Loyalty</size>", GameManager.instance.cityScript.GetCityNameFormatted());
+                tooltipHeader = string.Format("{0}{1}<size=115%>Loyalty</size>", GameManager.instance.cityScript.GetCityNameFormatted(), "\n");
                 tooltipMain = GameManager.instance.cityScript.GetCityLoyaltyFormatted();
                 tooltipDetails = GameManager.instance.cityScript.GetCityDetails(true);
                 GenericTooltipData data = new GenericTooltipData() { screenPos =screenPos , main = tooltipMain , header = tooltipHeader, details = tooltipDetails };

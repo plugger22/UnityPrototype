@@ -37,27 +37,27 @@ public class HQManager : MonoBehaviour
 
     #region SaveDataCompatible
     private int bossOpinion;                                //opinion of HQ boss (changes depending on topic decisions made, if in alignment with Boss's view or not)
+    private int _approvalAuthority;                         //level of HQ approval (out of 10) enjoyed by authority side (Player/AI)
+    private int _approvalResistance;                        //level of HQ approval (out of 10) enjoyed by resistance side (Player/AI)
     private int approvalZeroTimer;                          //countdown timer once approval at zero. Player fired when timer reaches zero.
     private int timerHqRelocating;                          //activated when relocation occurs, counts down to zero when relocation is considered done
     [HideInInspector] public bool isHqRelocating;           //true if HQ relocating. Disallows HQ support + Gear/Recruit/Lie Low actions
     #endregion
 
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
-    private int _approvalAuthority;                         //level of HQ approval (out of 10) enjoyed by authority side (Player/AI)
-    private int _approvalResistance;                        //level of HQ approval (out of 10) enjoyed by resistance side (Player/AI)
 
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
 
-    /*private string colourRebel;
-    private string colourAuthority;*/
+    private string colourRebel;
+    private string colourAuthority;
     private string colourNeutral;
     private string colourNormal;
     private string colourGood;
     private string colourBad;
     private string colourGrey;
-    /*private string colourAlert;*/
+    private string colourAlert;
     /*private string colourSide;*/
     private string colourEnd;
 
@@ -219,12 +219,12 @@ public class HQManager : MonoBehaviour
     public void SetColours()
     {
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);*/
+        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
         /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
@@ -500,10 +500,10 @@ public class HQManager : MonoBehaviour
                 switch (side.level)
                 {
                     case 1:
-                        description = string.Format("<b><size=115%>{0}</size></b>", hQAuthority.tag);
+                        description = string.Format("<b><size=115%>{0}{1}{2}</size></b>", colourAuthority, hQAuthority.tag, colourEnd);
                         break;
                     case 2:
-                        description = string.Format("<b><size=115%>{0}</size></b>", hQResistance.tag);
+                        description = string.Format("<b><size=115%>{0}{1}{2}</size></b>", colourRebel, hQResistance.tag, colourEnd);
                         break;
                     default:
                         Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -543,10 +543,10 @@ public class HQManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2}", colourNeutral, hQAuthority.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNormal, hQAuthority.descriptor, colourEnd);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2}", colourNeutral, hQResistance.descriptor, colourEnd);
+                    description = string.Format("{0}{1}{2}", colourNormal, hQResistance.descriptor, colourEnd);
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
@@ -602,13 +602,13 @@ public class HQManager : MonoBehaviour
             switch (side.level)
             {
                 case 1:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalAuthority, colourEnd, maxHqApproval);
+                    description = string.Format("{0}<size=130%>{1}{2} out of {3}</size>", colourNeutral, _approvalAuthority, colourEnd, maxHqApproval);
                     break;
                 case 2:
-                    description = string.Format("{0}{1}{2} out of {3}", colourNeutral, _approvalResistance, colourEnd, maxHqApproval);
+                    description = string.Format("{0}<size=130%>{1}{2} out of {3}</size>", colourNeutral, _approvalResistance, colourEnd, maxHqApproval);
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                     break;
             }
         }
@@ -617,32 +617,44 @@ public class HQManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns current HQ details for specified side in colour formatted string. 'Unknown' if an problem
+    /// returns current HQ details for specified side in colour formatted string. 'Unknown' if an problem. 'isBarTooltip' shows default text if true, otherwise zip unless critical
     /// </summary>
     /// <returns></returns>
-    public string GetHqDetails(GlobalSide side)
+    public string GetHqDetails(GlobalSide side, bool isBarTooltip = false)
     {
         string colourNode = colourGrey;
-        StringBuilder builder = new StringBuilder();
+        string text = "";
         if (side != null)
         {
             switch (side.level)
             {
                 case 1:
-                    builder.AppendFormat("HQ details: {0}To be Done{1}", colourNode, colourEnd);
+                    //Authority
+                    if (_approvalAuthority > 0)
+                    {
+                        if (isBarTooltip == true)
+                        { text = string.Format("At {0}Zero{1}{2}{3}You are FIRED{4}{5}After a {6}Countdown{7}", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd); }
+                    }
+                    else
+                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, _approvalAuthority, colourEnd, _approvalAuthority != 1 ? "s" : ""); }
                     break;
                 case 2:
-                    builder.AppendFormat("HQ details: {0}To be Done{1}", colourNode, colourEnd);
+                    //Resistance
+                    if (_approvalResistance > 0)
+                    {
+                        if (isBarTooltip == true)
+                        { text = string.Format("At {0}Zero{1}{2}{3}You are FIRED{4}{5}After a {6}Countdown{7}", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd); }
+                    }
+                    else
+                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, _approvalResistance, colourEnd, _approvalResistance != 1 ? "s" : ""); }
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
                     break;
             }
         }
         else { Debug.LogWarning("Invalid side (Null)"); }
-        if (builder.Length == 0)
-        { builder.Append("Unknown"); }
-        return builder.ToString();
+        return text;
     }
 
 
