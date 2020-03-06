@@ -64,6 +64,14 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Amount icon font size changes each time interval")]
     [Range(0, 1.0f)] public float iconFontIncrement = 0.25f;
 
+    [Header("ModalReviewUI Review Button Flash")]
+    [Tooltip("Max button size (y_axis)")]
+    [Range(10, 30)] public int reviewMaxButtonSize = 20;
+    [Tooltip("Button size increase increments per time interval")]
+    [Range(1, 5)] public int reviewButtonIncrement = 2;
+    [Tooltip("Button size change time interval (per increment step) in seconds")]
+    [Range(0, 1.0f)] public float reviewTimeInterval = 0.10f;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantActorSprite;

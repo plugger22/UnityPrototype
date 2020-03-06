@@ -60,7 +60,12 @@ public class ModalReviewUI : MonoBehaviour
     private int votesAbstained;
     private float reviewWaitTimerDefault;
 
+    //Review button flash
     private bool isFlashReviewButton;
+    private int maxReviewButtonSize;
+    private int reviewButtonIncrement;
+    private float reviewTimeInterval;
+    private bool isGrow;                                        //true if button growing in size (coroutine), false otherwise
 
     private bool isOutcome;                                     //true if an outcome achieved, eg. Black mark or commendation, false if inconclusive
 
@@ -149,6 +154,13 @@ public class ModalReviewUI : MonoBehaviour
         //fast access
         votesMinimum = GameManager.instance.campaignScript.reviewMinVotes;
         Debug.Assert(votesMinimum > -1, "Invalid votesMinimum (-1)");
+        //review button
+        maxReviewButtonSize = GameManager.instance.guiScript.reviewMaxButtonSize;
+        reviewButtonIncrement = GameManager.instance.guiScript.reviewButtonIncrement;
+        reviewTimeInterval = GameManager.instance.guiScript.reviewTimeInterval;
+        Debug.Assert(maxReviewButtonSize > 0, "Invalid maxReviewButtonSize (Zero)");
+        Debug.Assert(reviewButtonIncrement > 0, "Invalid reviewButtonIncrement (Zero)");
+        Debug.Assert(reviewTimeInterval > 0, "Invalid reviewTimeInterval (Zero)");
         //register listener
         EventManager.instance.AddListener(EventType.ReviewOpenUI, OnEvent, "ReviewInventoryUI");
         EventManager.instance.AddListener(EventType.ReviewStart, OnEvent, "ReviewInventoryUI");
@@ -398,10 +410,10 @@ public class ModalReviewUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator ReviewButton()
     {
-        Vector2 orginalDelta = buttonReview.image.rectTransform.sizeDelta;
-        Vector2 newDelta = orginalDelta;
-        newDelta.y += 10;
-        float original_y = orginalDelta.y;
+        /*Vector2 orginalDelta = buttonReview.image.rectTransform.sizeDelta;
+        Vector2 newDelta = originalDelta;
+        newDelta.y += maxReviewButtonSize;
+        float original_y = originalDelta.y;
         do
         {
             //make larger
@@ -409,12 +421,56 @@ public class ModalReviewUI : MonoBehaviour
             { buttonReview.image.rectTransform.sizeDelta = newDelta; }
             //return to original size
             else
-            { buttonReview.image.rectTransform.sizeDelta = orginalDelta; }
-            yield return new WaitForSeconds(0.5f);
+            { buttonReview.image.rectTransform.sizeDelta = originalDelta; }
+            yield return new WaitForSeconds(reviewTimeInterval);
+        }
+        while (isFlashReviewButton == true);*/
+
+        Vector2 originalDelta = buttonReview.image.rectTransform.sizeDelta;
+        Vector2 currentDelta = originalDelta;
+        float min_y = originalDelta.y;
+        float max_y = min_y + maxReviewButtonSize;
+        isGrow = true;
+        do
+        {
+            if (isGrow == true)
+            {
+                //Growing
+                if (buttonReview.image.rectTransform.sizeDelta.y < max_y)
+                {
+                    //increase button size by set increments
+                    currentDelta.y += reviewButtonIncrement;
+                    buttonReview.image.rectTransform.sizeDelta = currentDelta;
+                }
+                else
+                {
+                    //maxxed out size
+                    isGrow = false;
+                }
+            }
+            else
+            {
+                //Shrinking
+                if (buttonReview.image.rectTransform.sizeDelta.y > min_y)
+                {
+                    //decrease button size by set increments
+                    currentDelta.y -= reviewButtonIncrement;
+                    buttonReview.image.rectTransform.sizeDelta = currentDelta;
+                }
+                else
+                {
+                    //reached min size
+                    isGrow = true;
+                }
+            }
+            //wait time interval
+            yield return new WaitForSeconds(reviewTimeInterval);
         }
         while (isFlashReviewButton == true);
+
         //reset button to normal size
-        buttonReview.image.rectTransform.sizeDelta = orginalDelta;
+        buttonReview.image.rectTransform.sizeDelta = originalDelta;
+        isGrow = false;
         yield return null;
     }
 
