@@ -32,6 +32,11 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI type3;
     public TextMeshProUGUI playerStressed;
     public TextMeshProUGUI moodStars;
+    public TextMeshProUGUI compatibility0;
+    public TextMeshProUGUI compatibility1;
+    public TextMeshProUGUI compatibility2;
+    public TextMeshProUGUI compatibility3;
+    
 
     public Image renownCircle0;
     public Image renownCircle1;
@@ -59,9 +64,10 @@ public class ActorPanelUI : MonoBehaviour
     private GenericTooltipUI playerMoodTooltip;
     private GenericTooltipUI playerStressedTooltip;
 
-    public bool isRenownUI;                             //gives status of renown UI display (true -> On, false -> Off)
+    public bool isRenownUI;                                                     //gives status of Info UI display (true -> Shows RENOWN, false -> COMPATIBILITY)
 
-    private Image[] arrayOfRenownCircles = new Image[4];      //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
+    private Image[] arrayOfRenownCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
+    private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
 
     //fast access
     private Sprite vacantAuthorityActor;
@@ -105,7 +111,12 @@ public class ActorPanelUI : MonoBehaviour
         playerStressedTooltip = playerStressed.GetComponent<GenericTooltipUI>();
         Debug.Assert(playerMoodTooltip != null, "Invalid playerMoodHelp (Null)");
         Debug.Assert(playerStressedTooltip != null, "Invalid playerStressedHelp (Null)");
-    }
+        //compatibility
+        Debug.Assert(compatibility0 != null, "Invalid compatibility0 (Null)");
+        Debug.Assert(compatibility1 != null, "Invalid compatibility1 (Null)");
+        Debug.Assert(compatibility2 != null, "Invalid compatibility2 (Null)");
+        Debug.Assert(compatibility3 != null, "Invalid compatibility3 (Null)");
+      }
 
     /// <summary>
     /// Not called for LoadGame
@@ -210,7 +221,6 @@ public class ActorPanelUI : MonoBehaviour
         picture2.GetComponent<ActorTooltipUI>().isText = false;
         picture3.GetComponent<ActorTooltipUI>().isText = false;
 
-
         //populate lists
         List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
         if (listOfActorTypes != null)
@@ -235,11 +245,16 @@ public class ActorPanelUI : MonoBehaviour
         if (GameManager.instance.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
-        //initialse listOfRenownCircles
+        //initialse arrayOfRenownCircles
         arrayOfRenownCircles[0] = renownCircle0;
         arrayOfRenownCircles[1] = renownCircle1;
         arrayOfRenownCircles[2] = renownCircle2;
         arrayOfRenownCircles[3] = renownCircle3;
+        //initialise arrayOfCompatibility
+        arrayOfCompatibility[0] = compatibility0;
+        arrayOfCompatibility[1] = compatibility1;
+        arrayOfCompatibility[2] = compatibility2;
+        arrayOfCompatibility[3] = compatibility3;
     }
     #endregion
 
@@ -248,8 +263,8 @@ public class ActorPanelUI : MonoBehaviour
     {
         //renown UI (default true)
         if (GameManager.instance.optionScript.showRenown == true)
-        { SetActorRenownUI(true); }
-        else { SetActorRenownUI(false); }
+        { SetActorInfoUI(true); }
+        else { SetActorInfoUI(false); }
         //initialise starting line up
         UpdateActorPanel();
     }
@@ -319,10 +334,10 @@ public class ActorPanelUI : MonoBehaviour
                                 }
                             }
                         }
-                        //Update Renown indicators (switches off for Vacant actors)
+                        //Update Renown/Compatibiliyt indicators (switches off for Vacant actors)
                         if (GameManager.instance.optionScript.showRenown == true)
-                        { SetActorRenownUI(true); }
-                        else { SetActorRenownUI(false); }
+                        { SetActorInfoUI(true); }
+                        else { SetActorInfoUI(false); }
                     }
                     else { Debug.LogWarning("Invalid number of Actors (listOfActors doesn't correspond to numOfActors). Texts not updated."); }
                 }
@@ -442,45 +457,60 @@ public class ActorPanelUI : MonoBehaviour
         {
             playerStressed.gameObject.SetActive(false);
             moodStars.gameObject.SetActive(true);
-            moodStars.text = GameManager.instance.guiScript.GetStars(mood);
+            moodStars.text = GameManager.instance.guiScript.GetMotivationStars(mood);
         }
     }
 
     /// <summary>
-    /// toggles actor renown display on/off depending on status. If set to true and no actor present in slot (Vacant) will auto switch off
+    /// toggles actor renown/compatibility display. If 'showRenown' true RENOWN, false COMPATIBILITY and no actor present in slot (Vacant) will auto switch off
     /// </summary>
-    /// <param name="status"></param>
-    public void SetActorRenownUI(bool status)
+    /// <param name="showRenown"></param>
+    public void SetActorInfoUI(bool showRenown)
     {
-        GameManager.instance.optionScript.showRenown = status;
+        GameManager.instance.optionScript.showRenown = showRenown;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int index = 0; index < arrayOfRenownCircles.Length; index++)
         {
-            if (status == true)
+            if (showRenown == true)
             {
+                //display RENOWN
+                arrayOfCompatibility[index].gameObject.SetActive(false);
                 if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
-                { arrayOfRenownCircles[index].gameObject.SetActive(status); }
+                { arrayOfRenownCircles[index].gameObject.SetActive(showRenown); }
                 else
                 {
                     arrayOfRenownCircles[index].gameObject.SetActive(false);
                     UpdateActorRenownUI(index, 0);
                 }
             }
-            else { arrayOfRenownCircles[index].gameObject.SetActive(false); }
+            else
+            {
+                //display COMPATIBILITY
+                arrayOfRenownCircles[index].gameObject.SetActive(false);
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
+                { arrayOfCompatibility[index].gameObject.SetActive(true); }
+                else
+                {
+                    arrayOfCompatibility[index].gameObject.SetActive(false);
+                    UpdateActorCompatibilityUI(index, 0);
+                }
+            }
         }
-        //player is never vacant
-        renownCirclePlayer.gameObject.SetActive(status);
+
+        /*//player is never vacant -> EDIT player renown shown regardless
+        renownCirclePlayer.gameObject.SetActive(showRenown);*/
+
         //update flag
-        isRenownUI = status;
+        isRenownUI = showRenown;
         //logging
-        Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorRenown: {0}{1}", status, "\n");
+        Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorInfoUI: {0}{1}", showRenown == true ? "RENOWN" : "COMPATIBILITY", "\n");
     }
 
     /// <summary>
-    /// returns true if actor Renown UI is ON, false otherwise
+    /// returns true if actor Info UI shows RENOWN, false if COMPATIBILITY
     /// </summary>
     /// <returns></returns>
-    public bool CheckRenownUIStatus()
+    public bool CheckInfoUIStatus()
     { return isRenownUI; }
 
     /// <summary>
@@ -494,21 +524,30 @@ public class ActorPanelUI : MonoBehaviour
         Debug.Assert(renown > -1, "Invalid renown (< 0)");
         switch (actorSlotID)
         {
-            case 0:
-                renownText0.text = Convert.ToString(renown);
-                break;
-            case 1:
-                renownText1.text = Convert.ToString(renown);
-                break;
-            case 2:
-                renownText2.text = Convert.ToString(renown);
-                break;
-            case 3:
-                renownText3.text = Convert.ToString(renown);
-                break;
-            default:
-                Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID);
-                break;
+            case 0: renownText0.text = Convert.ToString(renown); break;
+            case 1: renownText1.text = Convert.ToString(renown); break;
+            case 2: renownText2.text = Convert.ToString(renown); break;
+            case 3: renownText3.text = Convert.ToString(renown); break;
+            default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
+        }
+    }
+
+    /// <summary>
+    /// updates actor slot compatibility UI with compatibility stars
+    /// </summary>
+    /// <param name="actorSlotID"></param>
+    /// <param name="compatibility"></param>
+    public void UpdateActorCompatibilityUI(int actorSlotID, int compatibility)
+    {
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
+        Debug.Assert(compatibility >= -3 && compatibility <= 3, "Invalid compatibility (< -3 or > +3)");
+        switch (actorSlotID)
+        {
+            case 0: compatibility0.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
+            case 1: compatibility1.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
+            case 2: compatibility2.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
+            case 3: compatibility3.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
+            default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
         }
     }
 

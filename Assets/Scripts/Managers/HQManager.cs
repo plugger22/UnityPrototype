@@ -622,7 +622,7 @@ public class HQManager : MonoBehaviour
     /// <returns></returns>
     public string GetHqDetails(GlobalSide side, bool isBarTooltip = false)
     {
-        string colourNode = colourGrey;
+        /*string colourNode = colourGrey;*/
         string text = "";
         if (side != null)
         {

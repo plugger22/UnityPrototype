@@ -13,6 +13,8 @@ using UnityEngine.UI;
 public class ModalReviewUI : MonoBehaviour
 {
 
+    //NOTE: Review Button flash global parameters are in GUIManager.cs and are passed across in 'Start'
+
     public GameObject reviewObject;
     public GameObject panelObject;
     public GameObject headerObject;
@@ -405,27 +407,11 @@ public class ModalReviewUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Flashes 'Commence Review' button to gain player's attention
+    /// Flashes 'Commence Review' button to gain player's attention by changing button size (gradually, up and down)
     /// </summary>
     /// <returns></returns>
     IEnumerator ReviewButton()
     {
-        /*Vector2 orginalDelta = buttonReview.image.rectTransform.sizeDelta;
-        Vector2 newDelta = originalDelta;
-        newDelta.y += maxReviewButtonSize;
-        float original_y = originalDelta.y;
-        do
-        {
-            //make larger
-            if (buttonReview.image.rectTransform.sizeDelta.y == original_y)
-            { buttonReview.image.rectTransform.sizeDelta = newDelta; }
-            //return to original size
-            else
-            { buttonReview.image.rectTransform.sizeDelta = originalDelta; }
-            yield return new WaitForSeconds(reviewTimeInterval);
-        }
-        while (isFlashReviewButton == true);*/
-
         Vector2 originalDelta = buttonReview.image.rectTransform.sizeDelta;
         Vector2 currentDelta = originalDelta;
         float min_y = originalDelta.y;
@@ -467,7 +453,6 @@ public class ModalReviewUI : MonoBehaviour
             yield return new WaitForSeconds(reviewTimeInterval);
         }
         while (isFlashReviewButton == true);
-
         //reset button to normal size
         buttonReview.image.rectTransform.sizeDelta = originalDelta;
         isGrow = false;

@@ -565,7 +565,7 @@ public class TopBarUI : MonoBehaviour
         tipInvestigation.y_offset = 60;
         //innocence
         tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.instance.colourScript.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-            GameManager.instance.guiScript.GetStars(GameManager.instance.playerScript.Innocence));
+            GameManager.instance.guiScript.GetMotivationStars(GameManager.instance.playerScript.Innocence));
         tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.instance.topicScript.GetInnocenceDescriptor());
         tipInnocence.tooltipDetails = string.Format("If it drops to {0} you will be {1} when next captured{2}{3}",
             GameManager.instance.colourScript.GetFormattedString("ZERO", ColourType.neutralText),
@@ -659,14 +659,14 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.instance.colourScript.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-                GameManager.instance.guiScript.GetStars(value));
+                GameManager.instance.guiScript.GetMotivationStars(value));
             tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n",
                 GameManager.instance.colourScript.GetFormattedString(GameManager.instance.topicScript.GetInnocenceDescriptor(), ColourType.salmonText));
         }
         else
         {
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.instance.colourScript.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-                GameManager.instance.guiScript.GetStars(value));
+                GameManager.instance.guiScript.GetMotivationStars(value));
             tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.instance.topicScript.GetInnocenceDescriptor());
         }
     }

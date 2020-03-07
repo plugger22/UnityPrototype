@@ -1,41 +1,101 @@
 
-Dev seed 45183 -> Friday, 6 March 2020 4:21 PM
+Dev seed 59539 -> Saturday, 7 March 2020 2:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised num "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
+	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
+	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised num "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
+	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
+	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Unrecognised num "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
+	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
+	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 46171 -> Saturday, 7 March 2020 2:40 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 34266 -> Friday, 6 March 2020 4:25 PM
+Dev seed 9731 -> Saturday, 7 March 2020 2:41 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 42678 -> Friday, 6 March 2020 4:26 PM
+Dev seed 18357 -> Saturday, 7 March 2020 2:42 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 46377 -> Friday, 6 March 2020 4:27 PM
+Dev seed 18084 -> Saturday, 7 March 2020 2:53 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 13944 -> Friday, 6 March 2020 4:30 PM
+Dev seed 4329 -> Saturday, 7 March 2020 2:57 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 46697 -> Friday, 6 March 2020 4:33 PM
+Dev seed 17403 -> Saturday, 7 March 2020 2:58 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 18499 -> Friday, 6 March 2020 4:36 PM
+Dev seed 57188 -> Saturday, 7 March 2020 3:07 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 28296 -> Friday, 6 March 2020 4:37 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18571 -> Friday, 6 March 2020 8:34 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56039 -> Friday, 6 March 2020 8:34 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 12761 -> Friday, 6 March 2020 9:01 PM
+Dev seed 29851 -> Saturday, 7 March 2020 4:28 PM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorPanelUI.SetActorInfoUI (System.Boolean showRenown) (at Assets/Scripts/GUI/ActorPanelUI.cs:475)
+	ActorPanelUI.SubInitialiseAll () (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 18085 -> Saturday, 7 March 2020 4:30 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 4756 -> Friday, 6 March 2020 9:02 PM
+Dev seed 28609 -> Saturday, 7 March 2020 4:34 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 50588 -> Friday, 6 March 2020 9:03 PM
+Dev seed 56367 -> Saturday, 7 March 2020 4:40 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 11083 -> Saturday, 7 March 2020 4:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41795 -> Saturday, 7 March 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15360 -> Saturday, 7 March 2020 4:56 PM
 City seed 5678 -> London, United Kingdom

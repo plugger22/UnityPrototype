@@ -307,7 +307,7 @@ public class TooltipActor : MonoBehaviour
             {
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.instance.guiScript.GetStars(dataStats));
+                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.instance.guiScript.GetMotivationStars(dataStats));
             }
             actorStats.text = builder.ToString();
         }

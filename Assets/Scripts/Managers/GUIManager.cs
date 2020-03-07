@@ -924,20 +924,43 @@ public class GUIManager : MonoBehaviour
     //
 
     /// <summary>
-    /// returns TMP Pro self contained string for the required number of stars (always returns 3 stars, colourNeutral for active, grey, low opacity, for inactive). Returns "Unknown"
+    /// returns TMP Pro self contained string for the required number of stars (always returns 3 stars, colourNeutral for active, grey, low opacity, for inactive). Returns "Unknown" if an issue
     /// </summary>
-    /// <param name="num"></param>
+    /// <param name="motivation"></param>
     /// <returns></returns>
-    public string GetStars(int num)
+    public string GetMotivationStars(int motivation)
     {
         string stars = "Unknown";
-        switch (num)
+        switch (motivation)
         {
             case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
             case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
             case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
             case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
+            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", motivation); break;
+        }
+        return stars;
+    }
+
+    /// <summary>
+    /// returns TMP Pro self containted string for the required number of stars (red for negative, green for positive, grey for neutral). Returns 'Unknown' if an issue
+    /// Compatibility -3 to +3
+    /// </summary>
+    /// <param name="compatibility"></param>
+    /// <returns></returns>
+    public string GetCompatibilityStars(int compatibility)
+    {
+        string stars = "Unknown";
+        switch (compatibility)
+        {
+            case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourDataGood, starChar, starChar, starChar, colourEnd); break;
+            case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourDataGood, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
+            case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourDataGood, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
+            case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
+            case -1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourDataTerrible, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
+            case -2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourDataTerrible, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
+            case -3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourDataTerrible, starChar, starChar, starChar, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised compatibility \"{0}\"", compatibility); break;
         }
         return stars;
     }

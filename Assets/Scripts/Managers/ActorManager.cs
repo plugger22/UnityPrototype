@@ -389,7 +389,7 @@ public class ActorManager : MonoBehaviour
         nameSet = GameManager.instance.cityScript.GetNameSet();
         if (nameSet == null)
         { Debug.LogError("Invalid nameSet (Null)"); }
-        //create active, OnMap actors
+        //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
         InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         //create pool actors
@@ -626,6 +626,7 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < num; i++)
             {
                 Actor actor = CreateActor(side, tempActorArcs[i].name, 1, ActorStatus.Active, i);
+                //Debug actor summary
                 if (actor != null)
                 {
                     Debug.LogFormat("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
@@ -3638,7 +3639,7 @@ public class ActorManager : MonoBehaviour
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                         //motivation stars
-                        optionData.textLower = GameManager.instance.guiScript.GetStars(motivation);
+                        optionData.textLower = GameManager.instance.guiScript.GetMotivationStars(motivation);
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
@@ -3649,7 +3650,7 @@ public class ActorManager : MonoBehaviour
                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
                            .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
                            .ToString();*/
-                        tooltipDetailsSprite.textMain = string.Format("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd);
+                        tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd);
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
                         //tooltip -> stars (bottom text, motivation -> same for all)
@@ -3790,7 +3791,7 @@ public class ActorManager : MonoBehaviour
                             //tooltip -> sprite
                             tooltipDetailsSprite = new GenericTooltipDetails();
                             tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
                             //tooltip -> result 
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
@@ -3812,7 +3813,7 @@ public class ActorManager : MonoBehaviour
                             //standard HQ hierarchy -> tooltip Sprite
                             tooltipDetailsSprite = new GenericTooltipDetails();
                             tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
                             //tooltip -> result 
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
@@ -3862,7 +3863,7 @@ public class ActorManager : MonoBehaviour
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
-                        tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                        tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
                         //tooltip -> result 
                         tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
                         tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a", "\n", GetOpinionText(motivation), "\n");
@@ -4024,9 +4025,9 @@ public class ActorManager : MonoBehaviour
                                 builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
                                     actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);*/
 
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
-                                builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.instance.guiScript.GetStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
+                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
+                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
+                                builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.instance.guiScript.GetMotivationStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
 
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }

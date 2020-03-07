@@ -2300,6 +2300,8 @@ public class ActionManager : MonoBehaviour
                     GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
                     //recalculate all actors compatibility
                     GameManager.instance.personScript.SetAllActorsCompatibility();
+                    //update actorPanelUI
+                    GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, actor.GetPersonality().GetCompatibilityWithPlayer());
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {

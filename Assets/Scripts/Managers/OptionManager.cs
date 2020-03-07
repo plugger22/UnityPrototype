@@ -20,7 +20,7 @@ public class OptionManager : MonoBehaviour
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
-    [HideInInspector] public bool showRenown = true;                              //if true renown UI elements shown for actors and player
+    [HideInInspector] public bool showRenown = true;                              //if true renown UI elements shown for actors and player, if false show compatibility instead
     [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
     [HideInInspector] public bool fullMoodInfo = false;
 

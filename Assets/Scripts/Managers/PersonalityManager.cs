@@ -164,6 +164,22 @@ public class PersonalityManager : MonoBehaviour
         SetAllActorsPersonality();
         //set compatibility of all current actors with each other
         SetAllActorsCompatibility();
+        //update actorPanelUI for OnMap actors compatibility
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    { GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer()); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
     #endregion
 

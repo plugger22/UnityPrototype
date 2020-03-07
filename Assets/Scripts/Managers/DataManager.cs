@@ -4044,6 +4044,8 @@ public class DataManager : MonoBehaviour
         //update relations -> ignore for actors in Reserves who have resigned
         if (actor.Status != ActorStatus.Reserve)
         { UpdateRelations(actor.slotID); }
+        //update actorPanelUI
+        GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, 0);
         //update actor arrays
         if (actor.Status != ActorStatus.Reserve)
         {

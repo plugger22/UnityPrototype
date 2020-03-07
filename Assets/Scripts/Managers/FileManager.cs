@@ -3712,14 +3712,16 @@ public class FileManager : MonoBehaviour
                         { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaActive); }
                         else
                         { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaInactive); }
-                        //update renown
+                        //update renown & compatibiliyt
                         GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown);
+                        GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer());
                     }
                 }
                 else
                 {
-                    //actor not present in slot, reset renown to 0
+                    //actor not present in slot, reset renown and compatibility to 0
                     GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, 0);
+                    GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, 0);
                 }
             }
         }

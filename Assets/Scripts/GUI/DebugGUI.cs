@@ -89,7 +89,7 @@ public class DebugGUI : MonoBehaviour
         /*optionAIOffline = "AIOffline ON";*/
         /*optionAITraceback = "AITraceback ON";*/
         /*optionAIScreamer = "AIScreamer ON";*/
-        optionRenownUI = "Renown UI OFF";
+        optionRenownUI = "Compatibility ON";
         optionPath = "Input Path";
         optionContacts = "Contacts ON";
         optionMoodInfo = "Mood Info ON";
@@ -640,16 +640,16 @@ public class DebugGUI : MonoBehaviour
             //tenth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionRenownUI))
             {
-                Debug.Log("[Dbg] Button -> Toggle Renown UI Display");
-                if (GameManager.instance.actorPanelScript.CheckRenownUIStatus() == true)
+                Debug.Log("[Dbg] Button -> Toggle Info UI Display");
+                if (GameManager.instance.actorPanelScript.CheckInfoUIStatus() == true)
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(false);
-                    optionRenownUI = "Renown UI ON";
+                    GameManager.instance.actorPanelScript.SetActorInfoUI(false);
+                    optionRenownUI = "Renown ON";
                 }
                 else
                 {
-                    GameManager.instance.actorPanelScript.SetActorRenownUI(true);
-                    optionRenownUI = "Renown UI OFF";
+                    GameManager.instance.actorPanelScript.SetActorInfoUI(true);
+                    optionRenownUI = "Compatibility ON";
                 }
             }
 
