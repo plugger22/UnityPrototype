@@ -72,6 +72,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Button size change time interval (per increment step) in seconds")]
     [Range(0, 1.0f)] public float reviewTimeInterval = 0.10f;
 
+    [Header("ActorPanelUI")]
+    [Tooltip("Font size for Compatibility and Player Moods stars")]
+    [Range(14, 24)] public int actorFontSize = 18;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantActorSprite;

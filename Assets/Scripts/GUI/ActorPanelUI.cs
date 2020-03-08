@@ -1,5 +1,4 @@
 ﻿using gameAPI;
-using packageAPI;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -36,7 +35,7 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI compatibility1;
     public TextMeshProUGUI compatibility2;
     public TextMeshProUGUI compatibility3;
-    
+
 
     public Image renownCircle0;
     public Image renownCircle1;
@@ -68,10 +67,12 @@ public class ActorPanelUI : MonoBehaviour
 
     private Image[] arrayOfRenownCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
+    private GenericTooltipUI[] arrayOfCompatibilityTooltips = new GenericTooltipUI[4];    //compatibility tooltips
 
     //fast access
     private Sprite vacantAuthorityActor;
     private Sprite vacantResistanceActor;
+    private int starFontSize = -1;
 
     private static ActorPanelUI actorPanelUI;
 
@@ -116,7 +117,7 @@ public class ActorPanelUI : MonoBehaviour
         Debug.Assert(compatibility1 != null, "Invalid compatibility1 (Null)");
         Debug.Assert(compatibility2 != null, "Invalid compatibility2 (Null)");
         Debug.Assert(compatibility3 != null, "Invalid compatibility3 (Null)");
-      }
+    }
 
     /// <summary>
     /// Not called for LoadGame
@@ -156,6 +157,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         //event listener
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+        EventManager.instance.AddListener(EventType.ActorInfo, OnEvent, "ActorPanelUI");
     }
     #endregion
 
@@ -168,8 +170,10 @@ public class ActorPanelUI : MonoBehaviour
         //fast access
         vacantAuthorityActor = GameManager.instance.guiScript.vacantActorSprite;
         vacantResistanceActor = GameManager.instance.guiScript.vacantActorSprite;
+        starFontSize = GameManager.instance.guiScript.actorFontSize;
         Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
         Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
+        Debug.Assert(starFontSize > -1, "Invalid starFontSize (-1)");
         //mood stars
         mood0 = GameManager.instance.guiScript.moodStar0;
         mood1 = GameManager.instance.guiScript.moodStar1;
@@ -188,8 +192,6 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
-        //initialise tooltips
-        InitialiseTooltips();
         //assign actorSlotID's to all Actor components
         Actor0.GetComponent<ActorHighlightUI>().actorSlotID = 0;
         Actor1.GetComponent<ActorHighlightUI>().actorSlotID = 1;
@@ -255,6 +257,27 @@ public class ActorPanelUI : MonoBehaviour
         arrayOfCompatibility[1] = compatibility1;
         arrayOfCompatibility[2] = compatibility2;
         arrayOfCompatibility[3] = compatibility3;
+        //array components and assignments
+        for (int i = 0; i < 4; i++)
+        {
+            Debug.AssertFormat(arrayOfRenownCircles[i] != null, "Invalid arrayOfRenownCircles[{0}]", i);
+            if (arrayOfCompatibility[i] != null)
+            {
+                //font size
+                arrayOfCompatibility[i].fontSize = starFontSize;
+                //tooltips
+                arrayOfCompatibilityTooltips[i] = arrayOfCompatibility[i].GetComponent<GenericTooltipUI>();
+                if (arrayOfCompatibilityTooltips[i] == null)
+                { Debug.LogErrorFormat("Invalid arrayOfCompatibilityTooltips[{0}] (Null)", i); }
+            }
+            else { Debug.LogErrorFormat("ActorPanelUI.cs -> SubInitialiseSesssionStart: Invalid arrayOfCompatibility[{0}]", i); }
+        }
+        //player mood stars
+        if (moodStars != null)
+        { moodStars.fontSize = starFontSize; }
+        else { Debug.LogError("Invalid moodStars (Null)"); }
+        //initialise tooltips
+        InitialiseTooltips();
     }
     #endregion
 
@@ -285,6 +308,9 @@ public class ActorPanelUI : MonoBehaviour
         {
             case EventType.ChangeSide:
                 UpdateActorPanel();
+                break;
+            case EventType.ActorInfo:
+                SetActorInfoUI(!isRenownUI);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -399,13 +425,14 @@ public class ActorPanelUI : MonoBehaviour
     { canvasPlayer.alpha = alpha; }
 
     /// <summary>
-    /// Initialise Player related tooltips
+    /// Initialise Actor and Player related tooltips
+    /// NOTE: Using custom Generic Tooltips here rather than  Help Tooltips due to sequencing issues at startup
     /// </summary>
     public void InitialiseTooltips()
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.instance.colourScript.GetFormattedString( "0 to 3 Stars", ColourType.neutralText));
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.instance.colourScript.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
         playerMoodTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
@@ -415,7 +442,32 @@ public class ActorPanelUI : MonoBehaviour
         details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
         playerStressedTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
-
+        //actor compatibility
+        string tooltipHeader = string.Format("<size=120%>{0}</size>{1}with Player", GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.salmonText), "\n");
+        string tooltipMain = string.Format("{0} indicate a Positive Relationship{1}{2} a Negative one. The {3} of Stars indicate the {4} of the Relationship",
+                    GameManager.instance.colourScript.GetFormattedString("Green Stars", ColourType.goodText), "\n",
+                    GameManager.instance.colourScript.GetFormattedString("Red Stars", ColourType.badText),
+                    GameManager.instance.colourScript.GetFormattedString("number", ColourType.salmonText),
+                    GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText));
+        string tooltipDetails = string.Format("A subordinate with {0} has a chance of {1} any {2} Motivational outcomes{3}{4}With a {5} they may {6} outcomes",
+                    GameManager.instance.colourScript.GetFormattedString("Positive Relationship", ColourType.goodText), 
+                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.normalText), 
+                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.normalText), "\n", "\n",
+                    GameManager.instance.colourScript.GetFormattedString("Negative Relationship", ColourType.badText),
+                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.normalText));
+        for (int i = 0; i < 4; i++)
+        {
+            GenericTooltipUI tooltip = arrayOfCompatibilityTooltips[i];
+            if (tooltip != null)
+            {
+                tooltip.tooltipHeader = tooltipHeader;
+                tooltip.tooltipMain = tooltipMain;
+                tooltip.tooltipDetails = tooltipDetails;
+                tooltip.x_offset = 100;
+                tooltip.y_offset = 20;
+            }
+            else { Debug.LogWarningFormat("Invalid arrayOfCompatibilityTooltip[{0}] (Null)", i); }
+        }
     }
 
     /// <summary>
@@ -467,6 +519,9 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="showRenown"></param>
     public void SetActorInfoUI(bool showRenown)
     {
+        //switch off any relevant tooltip (renown/compatibility)
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorPanelUI");
+        //toggle
         GameManager.instance.optionScript.showRenown = showRenown;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;
         for (int index = 0; index < arrayOfRenownCircles.Length; index++)

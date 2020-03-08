@@ -99,3 +99,353 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 15360 -> Saturday, 7 March 2020 4:56 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 42800 -> Sunday, 8 March 2020 11:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61598 -> Sunday, 8 March 2020 11:24 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46888 -> Sunday, 8 March 2020 11:28 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52577 -> Sunday, 8 March 2020 11:29 AM
+City seed 5678 -> London, United Kingdom
+WARNING Maximum number of teams already present at Node Marleborne, ID 1 (Info Only)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:943)
+	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3278)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3138)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:546)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:289)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	
+Dev seed 52356 -> Sunday, 8 March 2020 11:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57010 -> Sunday, 8 March 2020 11:49 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65311 -> Sunday, 8 March 2020 11:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55526 -> Sunday, 8 March 2020 12:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2336 -> Sunday, 8 March 2020 12:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53537 -> Sunday, 8 March 2020 12:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35143 -> Sunday, 8 March 2020 12:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28412 -> Sunday, 8 March 2020 12:35 PM
+WARNING Not found, tag "info_app_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "info_app_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "info_app_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:91)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag1 "info_app_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:94)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "info_app_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag2 "info_app_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "test0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "test0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 40148 -> Sunday, 8 March 2020 12:42 PM
+WARNING Not found, tag "info_app_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag0 "info_app_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "info_app_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:91)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag1 "info_app_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:94)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Not found, tag "info_app_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	WARNING Invalid HelpData (Null) for tag2 "info_app_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
+	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
+	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorPanelUI.InitialiseTooltips () (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
+	ActorPanelUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
+	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 34205 -> Sunday, 8 March 2020 12:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55140 -> Sunday, 8 March 2020 12:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17560 -> Sunday, 8 March 2020 1:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51700 -> Sunday, 8 March 2020 1:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27746 -> Sunday, 8 March 2020 1:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2862 -> Sunday, 8 March 2020 1:35 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
+	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
+	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
+	UnityEngine.Canvas:ForceUpdateCanvases()
+	TooltipGeneric:SetTooltip(GenericTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:97)
+	<ShowGenericTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericTooltipUI.cs:145)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 22873 -> Sunday, 8 March 2020 1:36 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
+	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
+	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
+	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
+	UnityEngine.Canvas:ForceUpdateCanvases()
+	TooltipGeneric:SetTooltip(GenericTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:97)
+	<ShowGenericTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericTooltipUI.cs:145)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 30335 -> Sunday, 8 March 2020 1:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60984 -> Sunday, 8 March 2020 1:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27048 -> Sunday, 8 March 2020 1:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40307 -> Sunday, 8 March 2020 1:47 PM
+City seed 5678 -> London, United Kingdom

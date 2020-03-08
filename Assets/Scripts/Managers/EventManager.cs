@@ -174,6 +174,8 @@ public enum EventType
     TopicDisplayIgnore,
     //ShowMe
     ShowMeRestore,
+    //ActorPanelUI
+    ActorInfo,
     //City Info
     CityInfoOpen,
     CityInfoClose,

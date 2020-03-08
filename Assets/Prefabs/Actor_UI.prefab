@@ -80,8 +80,9 @@ GameObject:
   - component: {fileID: 222413555248435734}
   - component: {fileID: 114309640588895928}
   - component: {fileID: 114842514964971292}
+  - component: {fileID: 114267499380779636}
   m_Layer: 5
-  m_Name: Compatibility
+  m_Name: Compatibility0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,6 +198,26 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &114267499380779636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1677509026877788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
 --- !u!114 &114309640588895928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -243,8 +264,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
@@ -292,11 +313,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

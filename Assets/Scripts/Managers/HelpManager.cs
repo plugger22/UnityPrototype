@@ -112,7 +112,7 @@ public class HelpManager : MonoBehaviour
         return listOfHelp;
     }
 
-    /*/// <summary>
+    /// <summary>
     /// Returns a colour formatted string from a specific help tag. Returns null if a problem
     /// NOTE: For use with Generic Tooltips.
     /// </summary>
@@ -128,7 +128,7 @@ public class HelpManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag \"{0}\"", tag); }
         }
         return null;
-    }*/
+    }
 
     /// <summary>
     /// Get help data generic (overloaded for a list input, only the first four entries are taken into account)
@@ -1569,7 +1569,9 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" MainInfoApp Home -> Home{0}", "\n")
             .AppendFormat(" MainInfoApp End -> End{0}", "\n")
             .AppendFormat(" MainInfoApp Back -> PageDn{0}", "\n")
-            .AppendFormat(" MainInfoApp Forward -> PageUp{0}", "\n")
+            .AppendFormat(" MainInfoApp Forward -> PageUp{0}{1}", "\n", "\n")
+            .AppendFormat("-Global Options (Modal/non-Modal){0}", "\n")
+            .AppendFormat(" Actor Info toggle -> 1{0}", "\n")
             .ToString();
     }
 
