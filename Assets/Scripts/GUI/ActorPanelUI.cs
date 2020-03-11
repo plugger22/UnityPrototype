@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -442,45 +443,27 @@ public class ActorPanelUI : MonoBehaviour
         details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
         playerStressedTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
-        //
-        // - - - actor compatibility
-        //
-        string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player", 
-            GameManager.instance.guiScript.compatibilityIcon, 
-            GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
-        string tooltipMain = string.Format("{0} indicate a Positive Relationship{1}{2} a Negative one. The {3} of Stars indicate the {4} of the Relationship",
-                    GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconGood, ColourType.goodText), "\n",
-                    GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconBad, ColourType.badText),
-                    GameManager.instance.colourScript.GetFormattedString("number", ColourType.salmonText),
-                    GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText));
-        /*string tooltipDetails = string.Format("A subordinate with {0} has a chance of {1} any {2} {3} Motivational outcomes{4}{5}With a {6} they may {7} {8} outcomes",
-                    GameManager.instance.colourScript.GetFormattedString("Positive Relationship", ColourType.goodText), 
-                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.salmonText), 
-                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.salmonText), 
-                    GameManager.instance.guiScript.motivationIcon, "\n", "\n",
-                    GameManager.instance.colourScript.GetFormattedString("Negative Relationship", ColourType.badText),
-                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.salmonText),
-                    GameManager.instance.guiScript.motivationIcon);*/
-        string tooltipDetails = string.Format("A subordinate {0} ignore {1} ({2}) or {3} ({4}) Motivational outcomes",
-            GameManager.instance.colourScript.GetFormattedString("may", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString("GOOD", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconBad, ColourType.badText),
-            GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconGood, ColourType.goodText));
-        for (int i = 0; i < 4; i++)
+        //actor compatibility
+        GenericTooltipData data = GameManager.instance.guiScript.GetCompatibilityTooltip();
+        if (data != null)
         {
-            GenericTooltipUI tooltip = arrayOfCompatibilityTooltips[i];
-            if (tooltip != null)
+            for (int i = 0; i < 4; i++)
             {
-                tooltip.tooltipHeader = tooltipHeader;
-                tooltip.tooltipMain = tooltipMain;
-                tooltip.tooltipDetails = tooltipDetails;
-                tooltip.tooltipType = GenericTooltipType.ActorInfo;
-                tooltip.x_offset = 100;
-                tooltip.y_offset = 20;
+                GenericTooltipUI tooltip = arrayOfCompatibilityTooltips[i];
+                if (tooltip != null)
+                {
+
+                    tooltip.tooltipHeader = data.header;
+                    tooltip.tooltipMain = data.main;
+                    tooltip.tooltipDetails = data.details;
+                    tooltip.tooltipType = GenericTooltipType.ActorInfo;
+                    tooltip.x_offset = 100;
+                    tooltip.y_offset = 20;
+                }
+                else { Debug.LogWarningFormat("Invalid arrayOfCompatibilityTooltip[{0}] (Null)", i); }
             }
-            else { Debug.LogWarningFormat("Invalid arrayOfCompatibilityTooltip[{0}] (Null)", i); }
         }
+        else { Debug.LogWarningFormat("Invalid GenericTooltipData (Null) for Compatibility tooltip"); }
     }
 
     /// <summary>
