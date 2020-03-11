@@ -445,18 +445,22 @@ public class ActorPanelUI : MonoBehaviour
         //
         // - - - actor compatibility
         //
-        string tooltipHeader = string.Format("<size=120%>{0}</size>{1}with Player", GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.salmonText), "\n");
+        string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player", 
+            GameManager.instance.guiScript.compatibilityIcon, 
+            GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
         string tooltipMain = string.Format("{0} indicate a Positive Relationship{1}{2} a Negative one. The {3} of Stars indicate the {4} of the Relationship",
-                    GameManager.instance.colourScript.GetFormattedString("Green Stars", ColourType.goodText), "\n",
-                    GameManager.instance.colourScript.GetFormattedString("Red Stars", ColourType.badText),
+                    GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconGood, ColourType.goodText), "\n",
+                    GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.starIconBad, ColourType.badText),
                     GameManager.instance.colourScript.GetFormattedString("number", ColourType.salmonText),
                     GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText));
-        string tooltipDetails = string.Format("A subordinate with {0} has a chance of {1} any {2} Motivational outcomes{3}{4}With a {5} they may {6} outcomes",
+        string tooltipDetails = string.Format("A subordinate with {0} has a chance of {1} any {2} {3} Motivational outcomes{4}{5}With a {6} they may {7} {8} outcomes",
                     GameManager.instance.colourScript.GetFormattedString("Positive Relationship", ColourType.goodText), 
-                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.moccasinText), 
-                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.moccasinText), "\n", "\n",
+                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.salmonText), 
+                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.salmonText), 
+                    GameManager.instance.guiScript.motivationIcon, "\n", "\n",
                     GameManager.instance.colourScript.GetFormattedString("Negative Relationship", ColourType.badText),
-                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.moccasinText));
+                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.salmonText),
+                    GameManager.instance.guiScript.motivationIcon);
         for (int i = 0; i < 4; i++)
         {
             GenericTooltipUI tooltip = arrayOfCompatibilityTooltips[i];

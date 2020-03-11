@@ -203,6 +203,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char motivationChar;
     [HideInInspector] public char connectionsChar;
     [HideInInspector] public char cityChar;
+    [HideInInspector] public char compatibilityChar;
 
 
     //predefined data icons
@@ -218,6 +219,9 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string cityIconBad;
     [HideInInspector] public string hqIcon;
     [HideInInspector] public string hqIconBad;
+    [HideInInspector] public string compatibilityIcon;
+    [HideInInspector] public string starIconGood;
+    [HideInInspector] public string starIconBad;
 
 
 
@@ -337,6 +341,7 @@ public class GUIManager : MonoBehaviour
         motivationChar = '\uf118';
         connectionsChar = '\uf500';
         cityChar = '\uf64f';
+        compatibilityChar = '\uf6ad';
     }
 
     /// <summary>
@@ -353,12 +358,15 @@ public class GUIManager : MonoBehaviour
         motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
+        compatibilityIcon = string.Format("{0}{1}{2}", colourIcon, compatibilityChar, colourEnd);
         //uncoloured
         cityIcon = string.Format("{0}{1}{2}", colourIcon, cityChar, colourEnd);
         cityIconGood = string.Format("{0}{1}{2}", colourDataGood, cityChar, colourEnd);
         cityIconBad = string.Format("{0}{1}{2}", colourDataTerrible, cityChar, colourEnd);
         hqIcon = string.Format("{0}HQ{1}", colourIcon, colourEnd);
         hqIconBad = string.Format("{0}HQ{1}", colourDataTerrible, colourEnd);
+        starIconGood = string.Format("{0}{1}{2}", colourDataGood, starChar, colourEnd);
+        starIconBad = string.Format("{0}{1}{2}", colourDataTerrible, starChar, colourEnd);
 
     }
 
