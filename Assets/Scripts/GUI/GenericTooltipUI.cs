@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using packageAPI;
-
+using gameAPI;
 
 /// <summary>
 /// handles Generic tooltips. Text only. Attach to required GameObject
@@ -22,6 +22,8 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     [HideInInspector] public string testTag;                //use for debugging purposes to see where the tooltip originated from
     [HideInInspector] public bool isIgnoreClick;            //if true then will ignore all mouse clicks
+
+    [HideInInspector] public GenericTooltipType tooltipType; //type of tooltip
 
     private bool isNodeHighlightOn;                             //true if Node highlight currently on
     private bool isConnectionHighlightOn;                       //true if Connection highlight currently on
@@ -141,7 +143,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             position.y += y_offset;
             while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                GenericTooltipData data = new GenericTooltipData() { screenPos = position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
+                GenericTooltipData data = new GenericTooltipData() { screenPos = position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails, tooltipType = tooltipType };
                 GameManager.instance.tooltipGenericScript.SetTooltip (data);
                 yield return null;
             }

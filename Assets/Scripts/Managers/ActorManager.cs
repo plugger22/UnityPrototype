@@ -8164,6 +8164,7 @@ public class ActorManager : MonoBehaviour
         /*data.details = string.Format("{0}Somebody with high renown gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Dismiss{7}{8} or {9}{10}Dispose Off{11}",
             colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);*/
         data.details = string.Format("{0}The higher a Subordinates Renown, the greater their chance of joining HQ. If Promoted they will be your friends, if Dismissed, your enemies{1}", colourAlert, colourEnd);
+        data.tooltipType = GenericTooltipType.ActorInfo;
         return data;
     }
 

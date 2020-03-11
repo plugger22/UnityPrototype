@@ -68,11 +68,13 @@ namespace packageAPI
         public string main;                                      //required, header and details are optional
         public string header;
         public string details;
+        public GenericTooltipType tooltipType;
 
         public GenericTooltipData()
         {
             header = null;
             details = null;
+            tooltipType = GenericTooltipType.Any;
         }
     }
 

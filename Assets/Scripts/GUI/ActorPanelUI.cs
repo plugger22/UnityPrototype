@@ -442,7 +442,9 @@ public class ActorPanelUI : MonoBehaviour
         details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
         playerStressedTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
-        //actor compatibility
+        //
+        // - - - actor compatibility
+        //
         string tooltipHeader = string.Format("<size=120%>{0}</size>{1}with Player", GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.salmonText), "\n");
         string tooltipMain = string.Format("{0} indicate a Positive Relationship{1}{2} a Negative one. The {3} of Stars indicate the {4} of the Relationship",
                     GameManager.instance.colourScript.GetFormattedString("Green Stars", ColourType.goodText), "\n",
@@ -451,10 +453,10 @@ public class ActorPanelUI : MonoBehaviour
                     GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText));
         string tooltipDetails = string.Format("A subordinate with {0} has a chance of {1} any {2} Motivational outcomes{3}{4}With a {5} they may {6} outcomes",
                     GameManager.instance.colourScript.GetFormattedString("Positive Relationship", ColourType.goodText), 
-                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.normalText), 
-                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.normalText), "\n", "\n",
+                    GameManager.instance.colourScript.GetFormattedString("ignoring", ColourType.moccasinText), 
+                    GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.moccasinText), "\n", "\n",
                     GameManager.instance.colourScript.GetFormattedString("Negative Relationship", ColourType.badText),
-                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.normalText));
+                    GameManager.instance.colourScript.GetFormattedString("ignore GOOD", ColourType.moccasinText));
         for (int i = 0; i < 4; i++)
         {
             GenericTooltipUI tooltip = arrayOfCompatibilityTooltips[i];
@@ -463,6 +465,7 @@ public class ActorPanelUI : MonoBehaviour
                 tooltip.tooltipHeader = tooltipHeader;
                 tooltip.tooltipMain = tooltipMain;
                 tooltip.tooltipDetails = tooltipDetails;
+                tooltip.tooltipType = GenericTooltipType.ActorInfo;
                 tooltip.x_offset = 100;
                 tooltip.y_offset = 20;
             }
@@ -520,7 +523,7 @@ public class ActorPanelUI : MonoBehaviour
     public void SetActorInfoUI(bool showRenown)
     {
         //switch off any relevant tooltip (renown/compatibility)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorPanelUI");
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorPanelUI", GenericTooltipType.ActorInfo);
         //toggle
         GameManager.instance.optionScript.showRenown = showRenown;
         GlobalSide side = GameManager.instance.sideScript.PlayerSide;

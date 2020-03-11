@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using packageAPI;
+using gameAPI;
 
 /// <summary>
 /// handles Generic tooltips. Text only. Attach to PanelManager
@@ -21,10 +22,12 @@ public class TooltipGeneric : MonoBehaviour
     public GameObject tooltipGenericObject;
 
     private static TooltipGeneric tooltipGeneric;
+
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;                         //TooltipManager.cs -> Offset. Used to move tooltip down from screen top if required (otherwise sits right on edge)
+    private GenericTooltipType tooltipType;
 
     /// <summary>
     /// initialisation
@@ -93,6 +96,8 @@ public class TooltipGeneric : MonoBehaviour
             genericDetail.gameObject.SetActive(true);
             dividerBottom.gameObject.SetActive(true);
         }
+        //type
+        tooltipType = data.tooltipType;
         //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
         Canvas.ForceUpdateCanvases();
         rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
@@ -150,12 +155,24 @@ public class TooltipGeneric : MonoBehaviour
     { return tooltipGenericObject.activeSelf; }
 
     /// <summary>
-    /// close tool tip. Provide an optional string showing calling method
+    /// close tool tip. Provide an optional string showing calling method. 'tooltipType' is the tooltip Type to close (default 'Any' but you can specify a particular type to close and to ignore the rest)
     /// </summary>
-    public void CloseTooltip(string text = "Unknown")
+    public void CloseTooltip(string text = "Unknown", GenericTooltipType tooltipTypeToClose = GenericTooltipType.Any)
     {
-        Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");
-        tooltipGenericObject.SetActive(false);
+        bool isProceed = true;
+        Debug.LogFormat("[Tst] TooltipGeneric.cs -> CloseTooltip: \"{0}\", tooltipTypeToClose \"{1}\", current tooltipType \"{2}\"", text, tooltipTypeToClose, tooltipType);
+        if (tooltipTypeToClose != GenericTooltipType.Any)
+        {
+            //only close if current tooltip is specified type
+            if (tooltipType != tooltipTypeToClose)
+            { isProceed = false; }
+        }
+        if (isProceed == true)
+        {
+            //close tooltip
+            Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");
+            tooltipGenericObject.SetActive(false);
+        }
     }
 
 

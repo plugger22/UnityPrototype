@@ -153,15 +153,19 @@ public class InputManager : MonoBehaviour
         if (scroll > 0) { Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: SCROLL UP"); }
         else if (scroll < 0) { Debug.LogFormat("[Tst] InputManager.cs -> ProcessInput: SCROLL DOWN"); }*/
 
-        //Global options -> Apply modal or non-modal
+        //
+        // - - - Global options -> Apply modal or non-modal
+        //
         if (Input.GetButtonDown("ActorInfo") == true)
         {
             //Toggle Actor Info display between Renown and Compatibility
-            EventManager.instance.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessIput ActorInfo"));
+            EventManager.instance.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessInput ActorInfo"));
         }
         else
         {
-            //Modal and Game State dependant input -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
+            //
+            // - - - Modal and Game State dependant input -> NOTE: use Input.inputString only for normal key presses (won't pick up non-standard keypresses)
+            //
             switch (_modalState)
             {
                 //
