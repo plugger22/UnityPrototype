@@ -3995,6 +3995,9 @@ public class ActorManager : MonoBehaviour
                 Condition conditionUnhappy = GameManager.instance.dataScript.GetCondition("UNHAPPY");
                 if (conditionUnhappy != null)
                 {
+                    //compatibility tooltip
+                    GenericTooltipData compatibilityData = GameManager.instance.guiScript.GetCompatibilityTooltip();
+                    if (compatibilityData == null) { Debug.LogWarning("Invalid compatibilityData (Null)"); }
                     for (int i = 0; i < listOfActors.Count; i++)
                     {
                         Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
@@ -4002,6 +4005,7 @@ public class ActorManager : MonoBehaviour
                         {
                             GenericOptionData optionData = new GenericOptionData();
                             optionData.sprite = actor.sprite;
+                            optionData.textTop = GameManager.instance.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
                             optionData.textUpper = actor.arc.name;
                             //unhappy situation
                             if (actor.CheckConditionPresent(conditionUnhappy) == true)
@@ -4071,9 +4075,16 @@ public class ActorManager : MonoBehaviour
                             }
 
                             tooltipDetails.textDetails = builderDetails.ToString();
+                            //tooltip -> compatibility (top text -> same for all)
+                            GenericTooltipDetails tooltipDetailsCompatibility = new GenericTooltipDetails();
+                            tooltipDetailsCompatibility.textHeader = compatibilityData.header;
+                            tooltipDetailsCompatibility.textMain = compatibilityData.main;
+                            tooltipDetailsCompatibility.textDetails = compatibilityData.details;
                             //add to arrays
                             data.arrayOfOptions[i] = optionData;
                             data.arrayOfTooltipsSprite[i] = tooltipDetails;
+                            data.arrayOfTooltipsCompatibility[i] = tooltipDetailsCompatibility;
+
                         }
                         else
                         { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", listOfActors[i]); }
