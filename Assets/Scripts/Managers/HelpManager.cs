@@ -10,7 +10,7 @@ using UnityEngine;
 public class HelpManager : MonoBehaviour
 {
     //bullet character for help topics
-    char bullet = '\u2022';
+    char bullet;
 
     //
     // - - - Colour Scheme - - -
@@ -28,6 +28,7 @@ public class HelpManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         SetColours();
+        bullet = GameManager.instance.guiScript.bulletChar;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -1526,8 +1527,8 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void DebugShowHelp()
     {
-        string tag0 = "relation_0";
-        string tag1 = "relation_1";
+        string tag0 = "hq_0";
+        string tag1 = "hq_1";
         string tag2 = "relation_2";
         string tag3 = "relation_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
