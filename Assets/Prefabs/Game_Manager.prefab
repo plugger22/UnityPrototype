@@ -4293,7 +4293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4794,6 +4794,7 @@ MonoBehaviour:
   colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
   colourTopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
   colourTopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
+  bulletChar: 0
   starChar: 61445
   airportChar: 61554
   harbourChar: 61757
@@ -4824,6 +4825,7 @@ MonoBehaviour:
   motivationChar: 0
   connectionsChar: 0
   cityChar: 0
+  compatibilityChar: 0
   stabilityIcon: 
   supportIcon: 
   securityIcon: 
@@ -4836,6 +4838,9 @@ MonoBehaviour:
   cityIconBad: 
   hqIcon: 
   hqIconBad: 
+  compatibilityIcon: 
+  starIconGood: 
+  starIconBad: 
   waitUntilDone: 0
 --- !u!114 &114736970613289560
 MonoBehaviour:

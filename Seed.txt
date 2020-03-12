@@ -634,3 +634,81 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 25496 -> Thursday, 12 March 2020 12:32 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12760 -> Thursday, 12 March 2020 1:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57198 -> Thursday, 12 March 2020 2:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59448 -> Thursday, 12 March 2020 2:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6261 -> Thursday, 12 March 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PersonalityManager.SetHqActorsCompatibility () (at Assets/Scripts/Managers/PersonalityManager.cs:335)
+	ActorManager.InitialiseHqActors () (at Assets/Scripts/Managers/ActorManager.cs:889)
+	HQManager.SubInitialiseNewGame () (at Assets/Scripts/Managers/HQManager.cs:132)
+	HQManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/HQManager.cs:104)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 23020 -> Thursday, 12 March 2020 2:29 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PersonalityManager.SetHqActorsCompatibility () (at Assets/Scripts/Managers/PersonalityManager.cs:335)
+	HQManager.SubInitialiseNewGame () (at Assets/Scripts/Managers/HQManager.cs:134)
+	HQManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/HQManager.cs:104)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 18582 -> Thursday, 12 March 2020 2:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28793 -> Thursday, 12 March 2020 2:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22621 -> Thursday, 12 March 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35048 -> Thursday, 12 March 2020 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9652 -> Thursday, 12 March 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5860 -> Thursday, 12 March 2020 3:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4693 -> Thursday, 12 March 2020 3:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53600 -> Thursday, 12 March 2020 3:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1562 -> Thursday, 12 March 2020 3:52 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalInventoryUI.SetInventoryUI (modalAPI.InventoryInputData details) (at Assets/Scripts/GUI/ModalInventoryUI.cs:253)
+	ModalInventoryUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalInventoryUI.cs:126)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:3700)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:451)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:262)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 33478 -> Thursday, 12 March 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11592 -> Thursday, 12 March 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23584 -> Thursday, 12 March 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5498 -> Thursday, 12 March 2020 4:05 PM
+City seed 5678 -> London, United Kingdom

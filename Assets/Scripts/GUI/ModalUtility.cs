@@ -290,6 +290,7 @@ namespace modalAPI
         public GenericOptionData[] arrayOfOptions = new GenericOptionData[4];                               //only the first four are recognised
         public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[4];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
         public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[4];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
+        public GenericTooltipDetails[] arrayOfTooltipsCompatibility = new GenericTooltipDetails[4];         //same [index] for both arrays. Keep in synch!! -> top text (Stars) tooltip, optional
     }
 
     /// <summary>
@@ -298,6 +299,7 @@ namespace modalAPI
     public class GenericOptionData
     {
         public Sprite sprite;
+        public string textTop;                  //used for Compatibility stars, etc
         public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
         public string textLower;                //details that go below name, eg. "Unhappy in 2 turns", motivational stars, etc
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, etc.

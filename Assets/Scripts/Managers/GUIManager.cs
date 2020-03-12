@@ -999,7 +999,7 @@ public class GUIManager : MonoBehaviour
             GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText), "\n",
             GameManager.instance.colourScript.GetFormattedString("Constant", ColourType.salmonText)
             );
-        string tooltipDetails = string.Format("<align=\"left\">A subordinate {0} ignore {1} ({2}) or {3} ({4}){5}{6} Motivational outcomes",
+        string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Motivational outcomes",
             GameManager.instance.colourScript.GetFormattedString("may", ColourType.salmonText),
             GameManager.instance.colourScript.GetFormattedString("GOOD", ColourType.salmonText),
             GameManager.instance.colourScript.GetFormattedString(starIconBad, ColourType.badText),

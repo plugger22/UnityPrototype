@@ -56,7 +56,7 @@ public class HQManager : MonoBehaviour
     private string colourNormal;
     private string colourGood;
     private string colourBad;
-    private string colourGrey;
+    /*private string colourGrey;*/
     private string colourAlert;
     /*private string colourSide;*/
     private string colourEnd;
@@ -130,6 +130,8 @@ public class HQManager : MonoBehaviour
     {
         //initialise HQ actors starting lineUp
         GameManager.instance.actorScript.InitialiseHqActors();
+        //assign compatibility with player and descriptors
+        GameManager.instance.personScript.SetHqActorsCompatibility();
     }
     #endregion
 
@@ -221,7 +223,7 @@ public class HQManager : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);

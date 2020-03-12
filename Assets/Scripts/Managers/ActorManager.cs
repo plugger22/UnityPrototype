@@ -3626,6 +3626,9 @@ public class ActorManager : MonoBehaviour
                 data.textTop = string.Format("This is the {0}{1}{2} HQ Hierarchy", colourNeutral, data.side.name, colourEnd);
                 data.textBottom = string.Format("{0}LEFT CLICK{1} portrait for more information", colourAlert, colourEnd);
                 data.state = InventoryState.HQ;
+                //compatibility tooltip
+                GenericTooltipData compatibilityData = GameManager.instance.guiScript.GetCompatibilityTooltip();
+                if (compatibilityData == null) { Debug.LogWarning("Invalid compatibilityData (Null)"); }
                 //loop actors and populate data packages (only want hierarchy entries)
                 for (int i = offset; i < offset + GameManager.instance.hqScript.numOfActorsHQ; i++)
                 {
@@ -3637,6 +3640,7 @@ public class ActorManager : MonoBehaviour
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
+                        optionData.textTop = GameManager.instance.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                         //motivation stars
                         optionData.textLower = GameManager.instance.guiScript.GetMotivationStars(motivation);
@@ -3658,10 +3662,16 @@ public class ActorManager : MonoBehaviour
                         tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
                         tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, title, colourEnd, "\n", colourNeutral, colourEnd);
                         tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                        //tooltip -> compatibility (top text -> same for all)
+                        GenericTooltipDetails tooltipDetailsCompatibility = new GenericTooltipDetails();
+                        tooltipDetailsCompatibility.textHeader = compatibilityData.header;
+                        tooltipDetailsCompatibility.textMain = compatibilityData.main;
+                        tooltipDetailsCompatibility.textDetails = compatibilityData.details;
                         //add to arrays
                         data.arrayOfOptions[i - offset] = optionData;
                         data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
                         data.arrayOfTooltipsStars[i - offset] = tooltipDetailsStars;
+                        data.arrayOfTooltipsCompatibility[i - offset] = tooltipDetailsCompatibility;
                         //help
                         data.help0 = "hq_over_0";
                         data.help1 = "hq_over_1";

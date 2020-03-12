@@ -322,7 +322,45 @@ public class PersonalityManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Set individual personality (excluding factors, assumed to have already been done). Not performant. Use sparingly.
+    /// sets all HQ actors (game start) compatibility with player (done once at campaign start by ActorManager.cs -> InitialiseHqActors)
+    /// </summary>
+    public void SetHqActorsCompatibility()
+    {
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfHQ();
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        if (dictOfProfiles != null)
+        {
+            if (dictOfActors != null)
+            {
+                int[] arrayOfPlayerFactors = playerPersonality.GetFactors();
+                foreach (var actor in dictOfActors)
+                {
+                    if (actor.Value != null)
+                    {
+                        int compatibility;
+                        Personality personality = actor.Value.GetPersonality();
+                        if (personality != null)
+                        {
+                            //compatibility with Player
+                            compatibility = CheckCompatibility(arrayOfPlayerFactors, personality.GetFactors());
+                            personality.SetCompatibilityWithPlayer(compatibility);
+                            //descriptors
+                            SetDescriptors(personality);
+                            //profile
+                            CheckPersonalityProfile(dictOfProfiles, personality);
+                        }
+                        else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.Value.actorName, actor.Value.actorID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actor.Key); }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfActors (Null)"); }
+        }
+        else { Debug.LogError("Invalid dictOfProfiles (Null)"); }
+    }
+
+    /// <summary>
+    /// Set individual personality (excluding factors, assumed to have already been done). Not performant. Use sparingly. Currently only used by ActorManager.cs -> DebugAddTrait
     /// </summary>
     /// <param name="personality"></param>
     public void SetIndividualPersonality(Personality personality)

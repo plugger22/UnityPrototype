@@ -31,6 +31,7 @@ public class ModalInventoryUI : MonoBehaviour
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
+    private GenericTooltipUI[] arrayOfTooltipsCompatibility;    //used for fast access to tooltip components for Compatibility (topText)
 
     private static ModalInventoryUI modalInventoryUI;
     private ButtonInteraction buttonInteraction;
@@ -74,6 +75,7 @@ public class ModalInventoryUI : MonoBehaviour
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
+        arrayOfTooltipsCompatibility = new GenericTooltipUI[numOfOptions];
         for (int i = 0; i < numOfOptions; i++)
         {
             if (arrayOfInventoryOptions[i] != null)
@@ -93,6 +95,11 @@ public class ModalInventoryUI : MonoBehaviour
                     if (tooltipStars != null)
                     { arrayOfTooltipsStars[i] = tooltipStars; }
                     else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipStars \"{0}\" (Null)", i)); }
+                    //tooltip -> compatibility (topText, optional)
+                    GenericTooltipUI tooltipCompatibility = interaction.tooltipCompatibility.GetComponent<GenericTooltipUI>();
+                    if (tooltipCompatibility != null)
+                    { arrayOfTooltipsCompatibility[i] = tooltipCompatibility; }
+                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipCompatibility \"{0}\" (Null)", i)); }
                 }
                 else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
             }
@@ -207,6 +214,7 @@ public class ModalInventoryUI : MonoBehaviour
                             arrayOfInventoryOptions[i].SetActive(true);
                             //populate option data
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
+                            arrayOfInteractions[i].textTop.text = details.arrayOfOptions[i].textTop;
                             arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                             arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
                             arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;
@@ -245,6 +253,25 @@ public class ModalInventoryUI : MonoBehaviour
                                     arrayOfTooltipsStars[i].tooltipHeader = "";
                                     arrayOfTooltipsStars[i].tooltipMain = "";
                                     arrayOfTooltipsStars[i].tooltipDetails = "";
+                                }
+                            }
+                            //tooltip data -> compatibility
+                            if (arrayOfTooltipsCompatibility[i] != null)
+                            {
+                                if (details.arrayOfTooltipsCompatibility[i] != null)
+                                {
+                                    arrayOfTooltipsCompatibility[i].tooltipHeader = details.arrayOfTooltipsCompatibility[i].textHeader;
+                                    arrayOfTooltipsCompatibility[i].tooltipMain = details.arrayOfTooltipsCompatibility[i].textMain;
+                                    arrayOfTooltipsCompatibility[i].tooltipDetails = details.arrayOfTooltipsCompatibility[i].textDetails;
+                                    arrayOfTooltipsCompatibility[i].x_offset = 55;
+                                    arrayOfTooltipsCompatibility[i].y_offset = 15;
+                                }
+                                else
+                                {
+                                    //this tooltip is optional, fill with blank data otherwise previously used data will be used
+                                    arrayOfTooltipsCompatibility[i].tooltipHeader = "";
+                                    arrayOfTooltipsCompatibility[i].tooltipMain = "";
+                                    arrayOfTooltipsCompatibility[i].tooltipDetails = "";
                                 }
                             }
                         }
@@ -343,6 +370,7 @@ public class ModalInventoryUI : MonoBehaviour
                                 arrayOfInventoryOptions[i].SetActive(true);
                                 //populate option data
                                 arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
+                                arrayOfInteractions[i].textTop.text = details.arrayOfOptions[i].textTop;
                                 arrayOfInteractions[i].textUpper.text = details.arrayOfOptions[i].textUpper;
                                 arrayOfInteractions[i].textLower.text = details.arrayOfOptions[i].textLower;
                                 arrayOfInteractions[i].optionData = details.arrayOfOptions[i].optionID;

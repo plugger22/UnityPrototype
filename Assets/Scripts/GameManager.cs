@@ -562,10 +562,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
-        //HQ Manager
-        startMethod.handler = hqScript.Initialise;
-        startMethod.className = "HqManager";
-        listOfLevelMethods.Add(startMethod);
+
         //Organisation Manager
         startMethod.handler = orgScript.Initialise;
         startMethod.className = "OrganisationManager";
@@ -637,6 +634,10 @@ public class GameManager : MonoBehaviour
         //Personality Manager -> after Actor/PlayerManager.cs
         startMethod.handler = personScript.Initialise;
         startMethod.className = "PersonalityManager";
+        listOfLevelMethods.Add(startMethod);
+        //HQ Manager -> after PersonalityManager.cs
+        startMethod.handler = hqScript.Initialise;
+        startMethod.className = "HqManager";
         listOfLevelMethods.Add(startMethod);
         //Player Manager -> Late (after PersonalityManager.cs)
         startMethod.handler = playerScript.InitialiseLate;

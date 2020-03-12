@@ -14,15 +14,27 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 {
 
     public Image optionImage;
+
+    public TextMeshProUGUI textTop;                                 //text above image, eg. compatibility stars
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textLower;
     //public GenericTooltipUI tooltipSprite;                        //EDIT -> tooltip component attached to gameobject rather than sprite as can't get mouseover and click detection from sprite without code change
     public GenericTooltipUI tooltipStars;
+    public GenericTooltipUI tooltipCompatibility;
 
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
     [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear
     [HideInInspector] public InventoryState type;
 
+
+    public void Awake()
+    {
+        Debug.Assert(optionImage != null, "Invalid optionImage (Null)");
+        Debug.Assert(textTop != null, "Invalid textTop (Null)");
+        Debug.Assert(textUpper != null, "Invalid textUpper (Null)");
+        Debug.Assert(textLower != null, "Invalid textLower (Null)");
+        Debug.Assert(tooltipStars != null, "Invalid tooltipStars (Null)");
+    }
     /// <summary>
     /// Mouse click -> Right: Actor Action Menu
     /// </summary>
