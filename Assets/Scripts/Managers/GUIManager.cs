@@ -940,18 +940,18 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// returns TMP Pro self contained string for the required number of stars (always returns 3 stars, colourNeutral for active, grey, low opacity, for inactive). Returns "Unknown" if an issue
     /// </summary>
-    /// <param name="motivation"></param>
+    /// <param name="datapoint"></param>
     /// <returns></returns>
-    public string GetMotivationStars(int motivation)
+    public string GetDatapointStars(int datapoint)
     {
         string stars = "Unknown";
-        switch (motivation)
+        switch (datapoint)
         {
             case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
             case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
             case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
             case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", motivation); break;
+            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", datapoint); break;
         }
         return stars;
     }

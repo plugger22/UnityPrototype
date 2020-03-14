@@ -505,7 +505,7 @@ public class ActorPanelUI : MonoBehaviour
         {
             playerStressed.gameObject.SetActive(false);
             moodStars.gameObject.SetActive(true);
-            moodStars.text = GameManager.instance.guiScript.GetMotivationStars(mood);
+            moodStars.text = GameManager.instance.guiScript.GetDatapointStars(mood);
         }
     }
 

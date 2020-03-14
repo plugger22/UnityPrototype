@@ -1,744 +1,412 @@
 
-Dev seed 59539 -> Saturday, 7 March 2020 2:38 PM
-City seed 5678 -> London, United Kingdom
-WARNING Unrecognised num "-1"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
-	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
-	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING Unrecognised num "-1"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
-	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
-	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	WARNING Unrecognised num "-1"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	GUIManager:GetMotivationStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:940)
-	TooltipActor:SetTooltip(ActorTooltipData, Int32) (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:311)
-	<ShowActiveActorTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:112)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 46171 -> Saturday, 7 March 2020 2:40 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9731 -> Saturday, 7 March 2020 2:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18357 -> Saturday, 7 March 2020 2:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18084 -> Saturday, 7 March 2020 2:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4329 -> Saturday, 7 March 2020 2:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 17403 -> Saturday, 7 March 2020 2:58 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57188 -> Saturday, 7 March 2020 3:07 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29851 -> Saturday, 7 March 2020 4:28 PM
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorPanelUI.SetActorInfoUI (System.Boolean showRenown) (at Assets/Scripts/GUI/ActorPanelUI.cs:475)
-	ActorPanelUI.SubInitialiseAll () (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
-	
-Dev seed 18085 -> Saturday, 7 March 2020 4:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28609 -> Saturday, 7 March 2020 4:34 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56367 -> Saturday, 7 March 2020 4:40 PM
-City seed 5678 -> London, United Kingdom
-ERROR Invalid actor (Null) for arrayOfActors[0]
+Dev seed 5711 -> Saturday, 14 March 2020 3:26 PM
+ERROR No entry found in dictOfRelations for slotID 0
 UnityEngine.Debug:LogErrorFormat(String, Object[])
-	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
-	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
-	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	DataManager:UpdateRelations(Int32) (at Assets/Scripts/Managers/DataManager.cs:8821)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4046)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	ERROR Invalid actor (Null) for arrayOfActors[1]
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
 UnityEngine.Debug:LogErrorFormat(String, Object[])
-	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
-	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
-	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	ERROR Invalid actor (Null) for arrayOfActors[2]
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
 UnityEngine.Debug:LogErrorFormat(String, Object[])
-	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
-	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
-	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	ERROR Invalid actor (Null) for arrayOfActors[3]
+	ERROR Invalid firstActorSlotId "3" (key not found in dictOfRelations)
 UnityEngine.Debug:LogErrorFormat(String, Object[])
-	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:663)
-	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:412)
-	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:268)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	
-Dev seed 11083 -> Saturday, 7 March 2020 4:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41795 -> Saturday, 7 March 2020 4:52 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15360 -> Saturday, 7 March 2020 4:56 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 42800 -> Sunday, 8 March 2020 11:20 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61598 -> Sunday, 8 March 2020 11:24 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 46888 -> Sunday, 8 March 2020 11:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 52577 -> Sunday, 8 March 2020 11:29 AM
-City seed 5678 -> London, United Kingdom
-WARNING Maximum number of teams already present at Node Marleborne, ID 1 (Info Only)
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:943)
-	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
-	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3278)
-	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3138)
-	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
-	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:546)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:289)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
-	
-Dev seed 52356 -> Sunday, 8 March 2020 11:41 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57010 -> Sunday, 8 March 2020 11:49 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 65311 -> Sunday, 8 March 2020 11:54 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55526 -> Sunday, 8 March 2020 12:10 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2336 -> Sunday, 8 March 2020 12:11 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53537 -> Sunday, 8 March 2020 12:12 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35143 -> Sunday, 8 March 2020 12:17 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28412 -> Sunday, 8 March 2020 12:35 PM
-WARNING Not found, tag "info_app_0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "info_app_0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "info_app_1", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:91)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag1 "info_app_1"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:94)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "info_app_2", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag2 "info_app_2"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:264)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid listOfHelpData (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "test0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "test0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid listOfHelpData (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "test0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "test0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid listOfHelpData (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "test0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "test0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid listOfHelpData (Null or Empty)
-UnityEngine.Debug:LogWarning(Object)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "test0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "test0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:41)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:277)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "3" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8764)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 40148 -> Sunday, 8 March 2020 12:42 PM
-WARNING Not found, tag "info_app_0", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:83)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+Dev seed 5711 -> Saturday, 14 March 2020 3:40 PM
+ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag0 "info_app_0"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:86)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "info_app_1", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:91)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag1 "info_app_1"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:94)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "3" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Not found, tag "info_app_2", in dictOfHelpData 
-
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7590)
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING Invalid HelpData (Null) for tag2 "info_app_2"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:446)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorPanelUI.InitialiseTooltips () (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
-	ActorPanelUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ActorPanelUI.cs:197)
-	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:132)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
-	
-Dev seed 34205 -> Sunday, 8 March 2020 12:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55140 -> Sunday, 8 March 2020 12:58 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 17560 -> Sunday, 8 March 2020 1:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51700 -> Sunday, 8 March 2020 1:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27746 -> Sunday, 8 March 2020 1:28 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2862 -> Sunday, 8 March 2020 1:35 PM
-City seed 5678 -> London, United Kingdom
-ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
-TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
-	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
-	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
-	UnityEngine.Canvas:ForceUpdateCanvases()
-	TooltipGeneric:SetTooltip(GenericTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:97)
-	<ShowGenericTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericTooltipUI.cs:145)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 22873 -> Sunday, 8 March 2020 1:36 PM
-City seed 5678 -> London, United Kingdom
-ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
-TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2648)
-	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
-	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/cameron/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
-	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
-	UnityEngine.Canvas:ForceUpdateCanvases()
-	TooltipGeneric:SetTooltip(GenericTooltipData) (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:97)
-	<ShowGenericTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericTooltipUI.cs:145)
-	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
-	
-Dev seed 30335 -> Sunday, 8 March 2020 1:37 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 60984 -> Sunday, 8 March 2020 1:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27048 -> Sunday, 8 March 2020 1:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40307 -> Sunday, 8 March 2020 1:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2802 -> Wednesday, 11 March 2020 3:07 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40791 -> Wednesday, 11 March 2020 3:09 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1226 -> Wednesday, 11 March 2020 4:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59304 -> Wednesday, 11 March 2020 4:06 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22918 -> Wednesday, 11 March 2020 4:10 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18180 -> Wednesday, 11 March 2020 4:16 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9371 -> Wednesday, 11 March 2020 4:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 65149 -> Wednesday, 11 March 2020 4:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61635 -> Wednesday, 11 March 2020 4:50 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50978 -> Wednesday, 11 March 2020 4:55 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32146 -> Wednesday, 11 March 2020 4:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62007 -> Wednesday, 11 March 2020 5:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4868 -> Wednesday, 11 March 2020 5:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22577 -> Wednesday, 11 March 2020 5:06 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20038 -> Wednesday, 11 March 2020 8:43 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 2120 -> Thursday, 12 March 2020 9:36 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32922 -> Thursday, 12 March 2020 9:44 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 46476 -> Thursday, 12 March 2020 9:51 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 47145 -> Thursday, 12 March 2020 9:54 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13477 -> Thursday, 12 March 2020 9:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32727 -> Thursday, 12 March 2020 9:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27606 -> Thursday, 12 March 2020 10:00 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54875 -> Thursday, 12 March 2020 10:01 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 37165 -> Thursday, 12 March 2020 10:02 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50148 -> Thursday, 12 March 2020 10:05 AM
-City seed 5678 -> London, United Kingdom
-WARNING Info: ListOfCurrentActorArcs (Empty) ->  No actors present
-UnityEngine.Debug:LogWarning(Object)
-	ActorManager:AddNewActorOnMapAI(GlobalSide, Node, Int32) (at Assets/Scripts/Managers/ActorManager.cs:8450)
-	AIRebelManager:ExecuteRecruiterTask(AITask) (at Assets/Scripts/Managers/AIRebelManager.cs:3201)
-	AIRebelManager:ExecuteActorArcTask(AITask) (at Assets/Scripts/Managers/AIRebelManager.cs:3060)
-	AIRebelManager:ExecuteTask(AITask) (at Assets/Scripts/Managers/AIRebelManager.cs:2816)
-	AIRebelManager:ProcessTaskFinal() (at Assets/Scripts/Managers/AIRebelManager.cs:2787)
-	AIRebelManager:ProcessAI() (at Assets/Scripts/Managers/AIRebelManager.cs:546)
-	AIManager:ProcessAISideResistance() (at Assets/Scripts/Managers/AIManager.cs:632)
-	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:541)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:289)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
-	WARNING Invalid listOfActors (Empty), PlayerStats topic cancelled
-UnityEngine.Debug:LogWarning(Object)
-	TopicManager:GetPlayerStatsTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2298)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1665)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1127)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
-	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerStats" -> INFO Only
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1738)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1127)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:310)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
-	
-Dev seed 57504 -> Thursday, 12 March 2020 10:07 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 32759 -> Thursday, 12 March 2020 10:09 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59165 -> Thursday, 12 March 2020 10:11 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 3140 -> Thursday, 12 March 2020 10:28 AM
-WARNING You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all
-UnityEngine.MonoBehaviour:.ctor()
-	GenericTooltipUI:.ctor()
-	GUIManager:GetCompatibilityTooltip() (at Assets/Scripts/Managers/GUIManager.cs:1004)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:280)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:131)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all
-UnityEngine.MonoBehaviour:.ctor()
-	GenericTooltipUI:.ctor()
-	GUIManager:GetCompatibilityTooltip() (at Assets/Scripts/Managers/GUIManager.cs:1004)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:280)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:131)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "3" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all
-UnityEngine.MonoBehaviour:.ctor()
-	GenericTooltipUI:.ctor()
-	GUIManager:GetCompatibilityTooltip() (at Assets/Scripts/Managers/GUIManager.cs:1004)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:280)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:131)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
-	WARNING You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all
-UnityEngine.MonoBehaviour:.ctor()
-	GenericTooltipUI:.ctor()
-	GUIManager:GetCompatibilityTooltip() (at Assets/Scripts/Managers/GUIManager.cs:1004)
-	ActorPanelUI:InitialiseTooltips() (at Assets/Scripts/GUI/ActorPanelUI.cs:451)
-	ActorPanelUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ActorPanelUI.cs:280)
-	ActorPanelUI:Initialise(GameState) (at Assets/Scripts/GUI/ActorPanelUI.cs:131)
-	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:774)
-	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:828)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "3" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
 	City seed 5678 -> London, United Kingdom
 
-Dev seed 15751 -> Thursday, 12 March 2020 10:37 AM
+Dev seed 5711 -> Saturday, 14 March 2020 3:44 PM
+ERROR Invalid firstActorSlotId "0" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "0" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "0" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "2" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8527)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:4083)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 5711 -> Saturday, 14 March 2020 3:48 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 64222 -> Thursday, 12 March 2020 10:48 AM
+Dev seed 5711 -> Saturday, 14 March 2020 3:48 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 42438 -> Thursday, 12 March 2020 10:50 AM
+Dev seed 5711 -> Saturday, 14 March 2020 3:50 PM
+ERROR No entry found in dictOfRelations for slotID 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateRelations(Int32) (at Assets/Scripts/Managers/DataManager.cs:8824)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4046)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:3992)
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:8765)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:398)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:241)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:365)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 5711 -> Saturday, 14 March 2020 3:52 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 30 -> Thursday, 12 March 2020 10:51 AM
+Dev seed 5711 -> Saturday, 14 March 2020 4:04 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 35385 -> Thursday, 12 March 2020 12:25 PM
+Dev seed 5711 -> Saturday, 14 March 2020 4:09 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 2060 -> Thursday, 12 March 2020 12:27 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34512 -> Thursday, 12 March 2020 12:28 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 24620 -> Thursday, 12 March 2020 12:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62482 -> Thursday, 12 March 2020 12:31 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25496 -> Thursday, 12 March 2020 12:32 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 12760 -> Thursday, 12 March 2020 1:45 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57198 -> Thursday, 12 March 2020 2:18 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59448 -> Thursday, 12 March 2020 2:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 6261 -> Thursday, 12 March 2020 2:28 PM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-PersonalityManager.SetHqActorsCompatibility () (at Assets/Scripts/Managers/PersonalityManager.cs:335)
-	ActorManager.InitialiseHqActors () (at Assets/Scripts/Managers/ActorManager.cs:889)
-	HQManager.SubInitialiseNewGame () (at Assets/Scripts/Managers/HQManager.cs:132)
-	HQManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/HQManager.cs:104)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
-	
-Dev seed 23020 -> Thursday, 12 March 2020 2:29 PM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-PersonalityManager.SetHqActorsCompatibility () (at Assets/Scripts/Managers/PersonalityManager.cs:335)
-	HQManager.SubInitialiseNewGame () (at Assets/Scripts/Managers/HQManager.cs:134)
-	HQManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/HQManager.cs:104)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:774)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:828)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
-	
-Dev seed 18582 -> Thursday, 12 March 2020 2:31 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28793 -> Thursday, 12 March 2020 2:37 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22621 -> Thursday, 12 March 2020 2:58 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35048 -> Thursday, 12 March 2020 3:07 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9652 -> Thursday, 12 March 2020 3:11 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5860 -> Thursday, 12 March 2020 3:13 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4693 -> Thursday, 12 March 2020 3:15 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53600 -> Thursday, 12 March 2020 3:36 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1562 -> Thursday, 12 March 2020 3:52 PM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ModalInventoryUI.SetInventoryUI (modalAPI.InventoryInputData details) (at Assets/Scripts/GUI/ModalInventoryUI.cs:253)
-	ModalInventoryUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalInventoryUI.cs:126)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
-	ActorManager.InitialiseHqHierarchyInventory () (at Assets/Scripts/Managers/ActorManager.cs:3700)
-	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:451)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
-	InputManager.ProcessInput () (at Assets/Scripts/Managers/InputManager.cs:262)
-	GameManager.Update () (at Assets/Scripts/GameManager.cs:388)
-	
-Dev seed 33478 -> Thursday, 12 March 2020 3:58 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 11592 -> Thursday, 12 March 2020 4:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 23584 -> Thursday, 12 March 2020 4:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5498 -> Thursday, 12 March 2020 4:05 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35364 -> Thursday, 12 March 2020 4:35 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57947 -> Thursday, 12 March 2020 4:37 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9320 -> Thursday, 12 March 2020 4:44 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35999 -> Thursday, 12 March 2020 4:45 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14101 -> Thursday, 12 March 2020 4:52 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25320 -> Thursday, 12 March 2020 4:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51860 -> Thursday, 12 March 2020 4:56 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 8483 -> Thursday, 12 March 2020 4:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4576 -> Thursday, 12 March 2020 4:59 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4458 -> Thursday, 12 March 2020 5:01 PM
+Dev seed 5711 -> Saturday, 14 March 2020 4:11 PM
 City seed 5678 -> London, United Kingdom

@@ -3978,7 +3978,7 @@ public class DataManager : MonoBehaviour
     /// <param name="side"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    public bool RemoveCurrentActor(GlobalSide side, Actor actor, ActorStatus status)
+    public bool RemoveCurrentActor(GlobalSide side, Actor actor, ActorStatus status, bool isDebugAtStart = false)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         if (actor != null)
@@ -3989,7 +3989,7 @@ public class DataManager : MonoBehaviour
                 case ActorStatus.Reserve:
                     if (AddActorToReserve(actor.actorID, side) == true)
                     {
-                        RemoveActorAdmin(side, actor, status);
+                        RemoveActorAdmin(side, actor, status, isDebugAtStart);
                         return true;
                     }
                     else
@@ -4039,7 +4039,7 @@ public class DataManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status)
+    private void RemoveActorAdmin(GlobalSide side, Actor actor, ActorStatus status, bool isDebugAtStart = false)
     {
         //update relations -> ignore for actors in Reserves who have resigned
         if (actor.Status != ActorStatus.Reserve)
@@ -4079,8 +4079,11 @@ public class DataManager : MonoBehaviour
                 GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
         }
-        //update actor compatibility
-        GameManager.instance.personScript.SetAllActorsCompatibility();
+        if (isDebugAtStart == false)
+        {
+            //update actor compatibility
+            GameManager.instance.personScript.SetAllActorsCompatibility();
+        }
         //update actor GUI display
         GameManager.instance.actorPanelScript.UpdateActorPanel();
     }

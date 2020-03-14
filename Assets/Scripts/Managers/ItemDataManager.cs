@@ -2462,14 +2462,14 @@ public class ItemDataManager : MonoBehaviour
         {
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
             builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(invest.lead), colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetMotivationStars(motivation), "\n", "\n");
+            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetDatapointStars(motivation), "\n", "\n");
         }
         else
         {
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
             builder.AppendFormat("{0}It is not known who is leading the Investigation{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
         }
-        builder.AppendFormat("<b>Evidence</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetMotivationStars(invest.evidence), "\n", "\n");
+        builder.AppendFormat("<b>Evidence</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetDatapointStars(invest.evidence), "\n", "\n");
         switch (invest.evidence)
         {
             case 0: outcome = string.Format("{0}Guilty{1}", colourBad, colourEnd); break;

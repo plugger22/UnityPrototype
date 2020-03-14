@@ -273,9 +273,9 @@ public class TooltipPlayer : MonoBehaviour
                 /*builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
                 builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);*/
 
-                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.instance.guiScript.GetMotivationStars(invisibility), "\n");
-                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.instance.guiScript.GetMotivationStars(mood), "\n");
-                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.instance.guiScript.GetMotivationStars(GameManager.instance.playerScript.Innocence));
+                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.instance.guiScript.GetDatapointStars(invisibility), "\n");
+                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.instance.guiScript.GetDatapointStars(mood), "\n");
+                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.instance.guiScript.GetDatapointStars(GameManager.instance.playerScript.Innocence));
                 playerStats.text = builderRes.ToString();
                 break;
         }
