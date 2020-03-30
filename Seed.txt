@@ -410,3 +410,83 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 5711 -> Saturday, 14 March 2020 4:11 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 40462 -> Monday, 30 March 2020 12:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39066 -> Monday, 30 March 2020 12:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4845 -> Monday, 30 March 2020 12:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7979 -> Monday, 30 March 2020 12:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12058 -> Monday, 30 March 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39231 -> Monday, 30 March 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65297 -> Monday, 30 March 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 22 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:677)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:822)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:804)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 19499 -> Monday, 30 March 2020 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60996 -> Monday, 30 March 2020 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49776 -> Monday, 30 March 2020 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34569 -> Monday, 30 March 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4472 -> Monday, 30 March 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actorSlotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ActorPanelUI:UpdateActorCompatibilityUI(Int32, Int32) (at Assets/Scripts/GUI/ActorPanelUI.cs:601)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4048)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4022)
+	ActorManager:TakeAction(Actor) (at Assets/Scripts/Managers/ActorManager.cs:7981)
+	ActorManager:UpdateReserveActors() (at Assets/Scripts/Managers/ActorManager.cs:7548)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:560)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:430)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:506)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:294)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	
+Dev seed 1602 -> Monday, 30 March 2020 4:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46664 -> Monday, 30 March 2020 4:43 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 39892 -> Monday, 30 March 2020 4:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19265 -> Monday, 30 March 2020 5:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9074 -> Monday, 30 March 2020 5:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5686 -> Monday, 30 March 2020 5:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29097 -> Monday, 30 March 2020 5:04 PM
+City seed 5678 -> London, United Kingdom

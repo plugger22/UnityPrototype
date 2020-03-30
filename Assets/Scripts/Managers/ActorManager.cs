@@ -47,7 +47,7 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int manageDisposeRenown = 3;
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
     [Range(1, 99)] public int unhappyLoseMotivationChance = 40;
-    [Tooltip("Once actor is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
+    [Tooltip("Once actor in Reserves is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
     [Range(1, 99)] public int unhappyTakeActionChance = 30;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
     [Range(1, 99)] public int unhappyRevealSecretChance = 50;

@@ -101,7 +101,7 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorPromoted = new List<int>();                            //uses actorID
     private List<int> resistanceActorDisposedOf = new List<int>();                          //uses actorID
     private List<int> resistanceActorResigned = new List<int>();                            //uses actorID
-    
+
     //HQ
     private List<int> actorHQPool = new List<int>();                                        //player side HQ actors, uses hqID NOT actorID
 
@@ -4043,12 +4043,11 @@ public class DataManager : MonoBehaviour
     {
         //update relations -> ignore for actors in Reserves who have resigned
         if (actor.Status != ActorStatus.Reserve)
-        { UpdateRelations(actor.slotID); }
-        //update actorPanelUI
-        GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, 0);
-        //update actor arrays
-        if (actor.Status != ActorStatus.Reserve)
         {
+            UpdateRelations(actor.slotID);
+            //update actorPanelUI
+            GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, 0);
+            //update actor arrays
             arrayOfActors[side.level, actor.slotID] = null;
             arrayOfActorsPresent[side.level, actor.slotID] = false;
         }
@@ -8537,7 +8536,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void ResetAllActorsCompatibility()
     {
-        foreach(var relation in dictOfRelations)
+        foreach (var relation in dictOfRelations)
         {
             RelationshipData data = relation.Value;
             if (data != null)
@@ -8652,7 +8651,7 @@ public class DataManager : MonoBehaviour
         if (CheckNumOfActiveActors(playerSide) > 1)
         {
             //loop (efficient) dictOfRelations. Exit on first viable possible relationship
-            foreach(var relation in dictOfRelations)
+            foreach (var relation in dictOfRelations)
             {
                 //no current relationship
                 if (relation.Value.relationship == ActorRelationship.None || relation.Value.timer == 0)
@@ -8738,8 +8737,11 @@ public class DataManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No actor in slotID {0}, for compatibility check with slotID {1}, {2}{3}", j, i, actor.arc.name, "\n"); }
                                             }
-                                            else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship exists between slotID {0} and slotID {1} ({2}){3}", 
-                                                j, dictOfRelations[j].slotID, dictOfRelations[j].relationship, "\n"); }
+                                            else
+                                            {
+                                                Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Relationship exists between slotID {0} and slotID {1} ({2}){3}",
+                                             j, dictOfRelations[j].slotID, dictOfRelations[j].relationship, "\n");
+                                            }
                                         }
                                         else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No dict.key found for slotID {0}{1}", j, "\n"); }
                                     }
@@ -8969,7 +8971,7 @@ public class DataManager : MonoBehaviour
     public void AddCommendation(string reasonForAward)
     {
         if (string.IsNullOrEmpty(reasonForAward) == false)
-        { listOfCommendations.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward });  }
+        { listOfCommendations.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward }); }
         else { Debug.LogError("Invalid reasonForAward (Null or Empty)"); }
     }
 

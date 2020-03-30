@@ -638,7 +638,7 @@ public class HQManager : MonoBehaviour
                         { text = string.Format("At {0}Zero{1}{2}{3}You are FIRED{4}{5}After a {6}Countdown{7}", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd); }
                     }
                     else
-                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, _approvalAuthority, colourEnd, _approvalAuthority != 1 ? "s" : ""); }
+                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, approvalZeroTimer, colourEnd, approvalZeroTimer != 1 ? "s" : ""); }
                     break;
                 case 2:
                     //Resistance
@@ -648,7 +648,7 @@ public class HQManager : MonoBehaviour
                         { text = string.Format("At {0}Zero{1}{2}{3}You are FIRED{4}{5}After a {6}Countdown{7}", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd); }
                     }
                     else
-                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, _approvalResistance, colourEnd, _approvalResistance != 1 ? "s" : ""); }
+                    { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, approvalZeroTimer, colourEnd, approvalZeroTimer != 1 ? "s" : ""); }
                     break;
                 default:
                     Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);

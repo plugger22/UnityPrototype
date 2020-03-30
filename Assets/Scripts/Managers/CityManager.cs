@@ -1,8 +1,9 @@
 ﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles all city related matters (Each level is a city)
@@ -278,7 +279,7 @@ public class CityManager : MonoBehaviour
     public string GetCityDetails(bool isBarTooltip = false)
     {
         string text = "";
-        if (_cityLoyalty == 0 || _cityLoyalty == 10)
+        if (_cityLoyalty == 0 || _cityLoyalty == 10 && isLoyaltyCheckedThisTurn == true)
         {
             switch (GameManager.instance.sideScript.PlayerSide.level)
             {
@@ -287,12 +288,12 @@ public class CityManager : MonoBehaviour
                     switch (_cityLoyalty)
                     {
                         case 0:
-                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
-                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyMinTimer, colourEnd,
+                              loyaltyMinTimer != 1 ? "s" : "");
                             break;
                         case 10:
-                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
-                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyMaxTimer, colourEnd,
+                                loyaltyMaxTimer != 1 ? "s" : "");
                             break;
                     }
                     break;
@@ -301,12 +302,12 @@ public class CityManager : MonoBehaviour
                     switch (_cityLoyalty)
                     {
                         case 0:
-                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
-                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            text = string.Format("{0}Resistance wins{1}{2}in {3}{4}{5} turn{6}", colourGood, colourEnd, "\n", colourNeutral, loyaltyMinTimer, colourEnd,
+                                loyaltyMinTimer != 1 ? "s" : "");
                             break;
                         case 10:
-                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyCountdownTimer, colourEnd,
-                                loyaltyCountdownTimer != 1 ? "s" : "");
+                            text = string.Format("{0}Authority wins{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, loyaltyMaxTimer, colourEnd,
+                                loyaltyMaxTimer != 1 ? "s" : "");
                             break;
                     }
                     break;
@@ -318,7 +319,7 @@ public class CityManager : MonoBehaviour
             if (isBarTooltip == true)
             {
                 //show default win/loss message
-                text = string.Format("At {0}Zero{1}{2}{3}Resistance wins Level{4}{5}At {6}Ten{7}{8}{9}Authority wins Level{10}{11}after {12}Countdowns{13}", 
+                text = string.Format("At {0}Zero{1}{2}{3}Resistance wins Level{4}{5}At {6}10{7}{8}{9}Authority wins Level{10}{11}after {12}Countdowns{13}",
                     colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd, "\n", colourAlert, colourEnd, "\n", colourNeutral, colourEnd);
             }
         }
@@ -580,6 +581,27 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public NameSet GetNameSet()
     { return city.country.nameSet; }
+
+
+    /// <summary>
+    /// Set city loyalty to a new value (Debug Action Menu). Auto clamps value to allowable limits
+    /// </summary>
+    /// <param name="input_0"></param>
+    /// <returns></returns>
+    public string DebugSetLoyalty(string input_0)
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        string reply = "";
+        int newLoyalty = -1;
+        try
+        { newLoyalty = Convert.ToInt32(input_0); }
+        catch (OverflowException)
+        { reply = $"Invalid City Loyalty input {input_0}"; }
+        newLoyalty = Mathf.Clamp(newLoyalty, 0, 10);
+        CityLoyalty = newLoyalty;
+        reply = $"City Loyalty is now {_cityLoyalty} (DEBUG)";
+        return reply;
+    }
 
     //new methods above here
 }

@@ -13,7 +13,7 @@ public class DebugGUI : MonoBehaviour
     //for whenever interaction is needed
     private enum GUIStatus
     { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
-    GiveCaptureTool, SetInnocence, SetMood, SetFriend, SetEnemy}
+    GiveCaptureTool, SetInnocence, SetMood, SetFriend, SetEnemy, SetLoyalty }
 
     public GUIStyle customBackground;
 
@@ -875,10 +875,10 @@ public class DebugGUI : MonoBehaviour
 
 
             //thirteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "AI Reboot"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 15 + button_height * 15, button_width, button_height), "City Loyalty"))
             {
-                Debug.Log("[Dbg] Button -> Force AI Reboot");
-                GameManager.instance.aiScript.RebootCommence();
+                Debug.Log("[Dbg] Button -> Change City Loyalty");
+                debugDisplay = 97;
             }
 
             //thirteenth button
@@ -1841,6 +1841,23 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.playerScript.DebugDisplayPlayerNodeActions();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
+                    //Set City Loyalty Input
+                    case 97:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 30, 200, 60), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 35, 150, 20), "City Loyalty (0 to 10)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 60, 100, 20), textInput_0);
+                        status = GUIStatus.SetLoyalty;
+                        textOutput = null;
+                        break;
+                    //City Loyalty process and output
+                    case 98:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.cityScript.DebugSetLoyalty(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1903,6 +1920,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetEnemy:
                         debugDisplay = 95;
+                        break;
+                    case GUIStatus.SetLoyalty:
+                        debugDisplay = 98;
                         break;
                 }
                 break;
