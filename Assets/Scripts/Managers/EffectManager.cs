@@ -4756,14 +4756,17 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //no trait
-                    bottomText = string.Format("{0}{1} {2}{3}", colourBadSide, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), effect.description, colourEnd);
+                    bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourBad : colourGood,
+                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), 
+                        effect.description, colourEnd);
                 }
                 break;
             case "Subtract":
                 actor.Renown -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
-                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), effect.description, colourEnd);
+                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), 
+                    effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }

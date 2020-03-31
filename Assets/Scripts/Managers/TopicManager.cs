@@ -3314,7 +3314,11 @@ public class TopicManager : MonoBehaviour
                     }
                     else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
                 }
-                else { Debug.LogWarningFormat("Invalid turnOption.moodEffect (Null) for option \"{0}\"", turnOption.name); }
+                else
+                {
+                    if (turnOption.isIgnoreMood == false)
+                    { Debug.LogWarningFormat("Invalid turnOption.moodEffect (Null) for option \"{0}\"", turnOption.name); }
+                }
             }
             //news item
             if (string.IsNullOrEmpty(turnOption.news) == false)
@@ -5088,6 +5092,7 @@ public class TopicManager : MonoBehaviour
                                 }
                                 else { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }
                             }
+                            else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                         }
                         else
                         {
@@ -5097,6 +5102,7 @@ public class TopicManager : MonoBehaviour
                                 builder.AppendFormat("{0}Unknown{1}", colourGrey, colourEnd);
                                 Debug.LogWarningFormat("Invalid belief (Null) for option \"{0}\", topic {1}", option.name, turnTopic.name);
                             }
+                            else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                         }
                     }
                     else
