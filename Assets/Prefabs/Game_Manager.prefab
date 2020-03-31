@@ -961,6 +961,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 571c982d036f72d4ab99bf88b0c0dd54, type: 2}
   - {fileID: 11400000, guid: 87860e70abe576e4ebdd880a658ad825, type: 2}
   - {fileID: 11400000, guid: 1eeae65edb87bcd41bbb53764d537b62, type: 2}
+  - {fileID: 11400000, guid: da872a3e161182b41af4c96b94cc8710, type: 2}
   arrayOfEffectApply:
   - {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}
   - {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
@@ -1534,6 +1535,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
   - {fileID: 11400000, guid: a301190c0d4058f4a92b6d572121617a, type: 2}
   - {fileID: 11400000, guid: f70dd145ec3cf834690e71c1fa6d98b9, type: 2}
+  - {fileID: 11400000, guid: caee276104d697846b6dcaed9ccfd582, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -5133,6 +5135,7 @@ MonoBehaviour:
     type: 2}
   textListHqActive: {fileID: 11400000, guid: fafb644a07b521f4ebf4755625f3133f, type: 2}
   textListHqIssue: {fileID: 11400000, guid: 6fb37af2b3a997a4f8b821c0e6dc2de3, type: 2}
+  textListHqConflict: {fileID: 11400000, guid: caee276104d697846b6dcaed9ccfd582, type: 2}
   textListHqWant: {fileID: 11400000, guid: 72298ecf7776873448dc9842131cf101, type: 2}
   textListMeds: {fileID: 11400000, guid: a301190c0d4058f4a92b6d572121617a, type: 2}
   textListDisease: {fileID: 11400000, guid: f70dd145ec3cf834690e71c1fa6d98b9, type: 2}

@@ -18,9 +18,8 @@ MonoBehaviour:
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
-  isIgnoreMood: 0
-  listOfCriteria:
-  - {fileID: 11400000, guid: 121d87e247acbdd468d033d690d5f214, type: 2}
+  isIgnoreMood: 1
+  listOfCriteria: []
   listOfGoodEffects: []
   listOfBadEffects:
   - {fileID: 11400000, guid: 4be49c0f44a075d46b9a0e7f1a441f59, type: 2}
@@ -28,8 +27,8 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   tooltipHeader: <color=#FFFFE0>B*stard!</color>
-  tooltipMain: <color=#FF4500>Quartermaster Renown -10</color>
+  tooltipMain: <color=#FF4500>Financier Renown -10</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Vote against Quartermaster</color>
+  textToDisplay: <color=#EEFB73>Vote against Financier</color>
   optionNumber: 0

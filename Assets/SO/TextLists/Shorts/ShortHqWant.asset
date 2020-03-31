@@ -14,7 +14,7 @@ MonoBehaviour:
   descriptor: It's [shortHqActive]. [actor] and [other] are arguing [shortHqIssue].
     Both [shortHqWant] your support
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
-  isTestForDuplicates: 0
+  isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
   - are demanding
@@ -23,4 +23,4 @@ MonoBehaviour:
   - are appealing for
   - are petitioning for
   - are requesting
-  index: 1
+  index: 5

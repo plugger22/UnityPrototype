@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: HQ5
   m_EditorClassIdentifier: 
   tag: Factional Brawl
-  text: Aaaargh! Both [hqTitleA] [hqNameA] and [hqTitleO] [hqNameO] are playing hardball
-    politics and both [hqWant] your support
+  text: Aaaargh! Both [hqTitleA] [hqNameA] and [hqTitleO] [hqNameO] are [hqConflict]
+    and both [hqWant] your support
   designNotes: 'Applies to both sides
 
     Generic internal politics'
@@ -45,5 +45,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 20
+  turnsLive: 18
   turnsDone: 0

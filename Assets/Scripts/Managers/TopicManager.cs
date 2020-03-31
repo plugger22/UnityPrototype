@@ -78,6 +78,8 @@ public class TopicManager : MonoBehaviour
     public TextList textListHqActive;
     [Tooltip("List of issues for HQ topics")]
     public TextList textListHqIssue;
+    [Tooltip("List of conflicts for HQ topics")]
+    public TextList textListHqConflict;
     [Tooltip("List of wants for HQ topics")]
     public TextList textListHqWant;
     [Tooltip("List of meds for HQ topics")]
@@ -388,6 +390,7 @@ public class TopicManager : MonoBehaviour
         Debug.Assert(textListEnemyReason != null, "Invalid textListEnemyReason (Null)");
         Debug.Assert(textListHqActive != null, "Invalid textListHqActive (Null)");
         Debug.Assert(textListHqIssue != null, "Invalid textListHqIssue (Null)");
+        Debug.Assert(textListHqConflict != null, "Invalid textListHqConflict (Null)");
         Debug.Assert(textListHqWant != null, "Invalid textListHqWant (Null)");
         Debug.Assert(textListMeds != null, "Invalid textListMeds (Null)");
         Debug.Assert(textListDisease != null, "Invalid textListDisease (Null)");
@@ -5088,9 +5091,12 @@ public class TopicManager : MonoBehaviour
                         }
                         else
                         {
-                            //invalid belief
-                            builder.AppendFormat("{0}Unknown{1}", colourGrey, colourEnd);
-                            Debug.LogWarningFormat("Invalid belief (Null) for option \"{0}\", topic {1}", option.name, turnTopic.name);
+                            if (option.isIgnoreMood == false)
+                            {
+                                //invalid belief
+                                builder.AppendFormat("{0}Unknown{1}", colourGrey, colourEnd);
+                                Debug.LogWarningFormat("Invalid belief (Null) for option \"{0}\", topic {1}", option.name, turnTopic.name);
+                            }
                         }
                     }
                     else
@@ -6176,6 +6182,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = textListHqIssue.GetRandomRecord(); }
                         }
                         else { CountTextTag("hqIssue", dictOfTags); }
+                        break;
+                    case "hqConflict":
+                        //HQ topic -> 'are [..]' 
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("<b>{0}</b>", textListHqConflict.GetRandomRecord()); }
+                            else { replaceText = textListHqConflict.GetRandomRecord(); }
+                        }
+                        else { CountTextTag("hqConflict", dictOfTags); }
                         break;
                     case "hqWant":
                         //HQ topic -> 'both [..] your support' 

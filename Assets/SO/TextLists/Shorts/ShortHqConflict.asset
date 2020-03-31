@@ -9,22 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortHqActive
+  m_Name: ShortHqConflict
   m_EditorClassIdentifier: 
-  descriptor: It's [shortHqActive]. [actor] and [other] are arguing [shortHqIssue].
-    Both [shortHqWant] your support
+  descriptor: hqActor1 and hqActor2 are [hqConflict]
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
-  - getting ugly
-  - turning nasty
-  - getting vicious
-  - blown up
-  - become public
-  - boiled over
-  - gone nuclear
-  - erupted
-  - flared up
-  - exploded
-  index: 1
+  - at loggerheads
+  - playing hardball politics
+  - undermining each other
+  - making accusations
+  - squabbling over seniority
+  index: 6

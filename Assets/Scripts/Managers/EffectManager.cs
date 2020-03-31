@@ -966,8 +966,13 @@ public class EffectManager : MonoBehaviour
                                                     { result.Append(manageDisposeCost.tooltip); }
                                                 }
                                                 break;
-                                            
-
+                                            case "RenownNOTZeroActor":
+                                                if (actor != null)
+                                                {
+                                                    if (actor.Renown == 0)
+                                                    { BuildString(result, "Renown Zero"); }
+                                                }
+                                                break;
                                             case "NumRecruitsCurrent":
                                                 //check max. number of recruits in reserve pool not exceeded
                                                 val = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
@@ -4100,7 +4105,7 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "Renown":
-                effectResolve.bottomText = ExecuteActorRenown(effect, actor);
+                effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataTopic.isHqActors);
                 break;
             case "ContactGainLose":
             case "ContactStatus":
@@ -4742,7 +4747,8 @@ public class EffectManager : MonoBehaviour
                 {
                     //trait -> renown doubled (only for Add renown)
                     actor.Renown += effect.value;
-                    bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", colourBadSide, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+                    bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", isHqActor == false ? colourBad : colourGood,
+                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                         effect.value * 2, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd);
                     //logger
                     GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
@@ -4756,7 +4762,8 @@ public class EffectManager : MonoBehaviour
             case "Subtract":
                 actor.Renown -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
-                bottomText = string.Format("{0}{1} {2}{3}", colourGoodSide, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), effect.description, colourEnd);
+                bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
+                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
