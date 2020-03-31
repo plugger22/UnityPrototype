@@ -490,3 +490,122 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 29097 -> Monday, 30 March 2020 5:04 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 7115 -> Tuesday, 31 March 2020 2:22 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	
+Dev seed 51482 -> Tuesday, 31 March 2020 3:01 PM
+WARNING [Val] ValidateSO: MISMATCH on Effect, array 374, assets 376 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1801)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1712)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:775)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:356)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 9629 -> Tuesday, 31 March 2020 3:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58734 -> Tuesday, 31 March 2020 4:06 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid option.moodEffect (Null) for option HQ5Opt0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4877)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3023)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid option.moodEffect (Null) for option HQ5Opt1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4877)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3023)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid option.moodEffect (Null) for option HQ5Opt2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:4877)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3023)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "HQ5Opt0", topic HQ5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:5093)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3053)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "HQ5Opt1", topic HQ5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:5093)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3053)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid belief (Null) for option "HQ5Opt2", topic HQ5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseBossDetails(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:5093)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3053)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2836)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:324)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:184)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessInput() (at Assets/Scripts/Managers/InputManager.cs:249)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:388)
+	WARNING Invalid turnOption.moodEffect (Null) for option "HQ5Opt1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3314)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:644)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

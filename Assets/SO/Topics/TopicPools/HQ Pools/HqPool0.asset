@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: HQTestPool0
+  m_Name: HqPool0
   m_EditorClassIdentifier: 
-  tag: HQ topic test pool 0
+  tag: HQ topic pool 0
   descriptor: 
   type: {fileID: 11400000, guid: b662571175bcd8b43aa7617fcc8ff8c8, type: 2}
   subType: {fileID: 11400000, guid: 4216f2c224633ff4a9090964d503d8c0, type: 2}
@@ -21,4 +21,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 737a8e5d07e37c1448e3661d53e68614, type: 2}
   - {fileID: 11400000, guid: c212794ed72006f4e9999b43a98ac0f4, type: 2}
   - {fileID: 11400000, guid: e43111fc9f90cc74e80cb580ff72d1d3, type: 2}
+  - {fileID: 11400000, guid: a692a04937eb5af499ade67fbeb78815, type: 2}
+  - {fileID: 11400000, guid: 4d9639ec9e1949e439d986ebbc70b466, type: 2}
   listOfSubSubTypePools: []

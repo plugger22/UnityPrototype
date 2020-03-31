@@ -2008,6 +2008,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b530cb38c36b77e46b678e898777109f, type: 2}
   - {fileID: 11400000, guid: 4abbd6480e2804d429bc4bf9e2a43253, type: 2}
   - {fileID: 11400000, guid: 3d48b990a4ac2184f96c3b2ba9619e0b, type: 2}
+  - {fileID: 11400000, guid: 12cdc5f327f614745a74414c6d49e5b3, type: 2}
+  - {fileID: 11400000, guid: 228f168bdf7a99a49915f30a65907b8d, type: 2}
+  - {fileID: 11400000, guid: 62244dca29823134d8906adfe02255f5, type: 2}
+  - {fileID: 11400000, guid: 4be49c0f44a075d46b9a0e7f1a441f59, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -2551,6 +2555,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bfd6de9b4366fc04883be0fe053fc6d2, type: 2}
   - {fileID: 11400000, guid: f06e6f86c49668540a5ce25a2813344b, type: 2}
   - {fileID: 11400000, guid: 40eee9b3c67cde1468f7644e46060bcd, type: 2}
+  - {fileID: 11400000, guid: a692a04937eb5af499ade67fbeb78815, type: 2}
+  - {fileID: 11400000, guid: 4d9639ec9e1949e439d986ebbc70b466, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2908,6 +2914,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56266a88edd6b7b4c89a480864b1b433, type: 2}
   - {fileID: 11400000, guid: e25a8fca0f207e449b02cc15e5d37bc9, type: 2}
   - {fileID: 11400000, guid: 7f244c88ef285dc499781040545902c0, type: 2}
+  - {fileID: 11400000, guid: 2af377b3c602c5b47ac3f9078f2047e3, type: 2}
+  - {fileID: 11400000, guid: dcc1cf4631d0696428a3bb93ec691b6f, type: 2}
+  - {fileID: 11400000, guid: eb7822b5baed9e046be83415c2ad095f, type: 2}
+  - {fileID: 11400000, guid: 0c82a85528f4c824593929926cec3eae, type: 2}
+  - {fileID: 11400000, guid: 870bffa718c49414e9272000af3825c1, type: 2}
+  - {fileID: 11400000, guid: b66df9e23fa1e874c9f8d6fe41bc2b4c, type: 2}
   arrayOfOptionsCapture:
   - {fileID: 11400000, guid: 0179cd12aca681e41ab3d4942e0e2521, type: 2}
   - {fileID: 11400000, guid: 35175244ec60aad42991943ef29c6b19, type: 2}
@@ -4293,7 +4305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 0}
+  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}

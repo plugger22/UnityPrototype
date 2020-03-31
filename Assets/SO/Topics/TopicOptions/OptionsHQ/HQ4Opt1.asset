@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: HQ4Opt1
+  m_EditorClassIdentifier: 
+  descriptor: HQ 4 option 1
+  tag: Red Corner
+  text: Support [hqTitleO]
+  topic: {fileID: 11400000, guid: a692a04937eb5af499ade67fbeb78815, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 12cdc5f327f614745a74414c6d49e5b3, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Take Sides</color>
+  tooltipMain: "<color=#98FB98>Quartermaster Motivation +1</color>\r\n<color=#FF4500>Financier
+    Motivation -1</color>"
+  tooltipDetails: <color=#FF4500>Player Mood -2</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Support Quartermaster</color>
+  optionNumber: 1
