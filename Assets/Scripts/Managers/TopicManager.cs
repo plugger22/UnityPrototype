@@ -197,7 +197,7 @@ public class TopicManager : MonoBehaviour
     private string tagLocation;
     private string tagMeds;
     private string tagDisease;
-    private string tagGear;
+    private string tagGear;                 //multipurpose, could be node action gear for both actor/player, actor held gear or gear from Player inventory (depends on topicSubType)
     private string tagRecruit;
     private string tagSecretName;               //secret.name
     private string tagSecretTag;                //secret.tag
@@ -1896,7 +1896,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorGearTopics
     /// <summary>
-    /// subType ActorGear template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorGear template topics selected by random actor (who has gear) based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
@@ -1916,31 +1916,43 @@ public class TopicManager : MonoBehaviour
                 if (actor != null)
                 {
                     numOfActors++;
-                    //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
-                    switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
+                    //actor must have gear
+                    if (actor.CheckIfGear() == true)
                     {
-                        case 3: numOfEntries = 2; break;
-                        case 2: numOfEntries = 1; break;
-                        case 1: numOfEntries = 2; break;
-                        case 0: numOfEntries = 3; break;
+                        //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
+                        switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
+                        {
+                            case 3: numOfEntries = 2; break;
+                            case 2: numOfEntries = 1; break;
+                            case 1: numOfEntries = 2; break;
+                            case 0: numOfEntries = 3; break;
+                        }
+                        //populate selection pool
+                        for (int i = 0; i < numOfEntries; i++)
+                        { selectionList.Add(actor); }
                     }
-                    //populate selection pool
-                    for (int i = 0; i < numOfEntries; i++)
-                    { selectionList.Add(actor); }
                 }
                 else { Debug.LogWarning("Invalid Actor (Null) in listOfActors"); }
             }
             //check at least one actors present
             if (selectionList.Count > 0 && numOfActors > 0)
-            {
+            {                
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
-                group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
-                //if no entries use entire list by default
-                listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
-                //Info tags
-                tagActorID = actor.actorID;
+                //Actor gear (null if none present)
+                tagGear = actor.GetGearName();
+                //proceed only if actor has gear (should do as only those with gear have been selected)
+                if (string.IsNullOrEmpty(tagGear) == false)
+                {
+                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                    //if no entries use entire list by default
+                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                    //Info tags
+                    tagActorID = actor.actorID;
+                }
+                else { Debug.LogWarningFormat("[Tst] TopicManager.cs -> GetActorGearTopics: actor ({0}, {1}, ID {2}) doesn't have gear (should do)", actor.actorName, actor.arc.name, actor.actorID); }
             }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorGearTopics: No topics found (No actors with Gear present){0}", "\n"); }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorGear subType"); }
         return listOfTopics;
@@ -4699,6 +4711,7 @@ public class TopicManager : MonoBehaviour
             secret = tagSecretName,
             orgName = tagOrgName,
             investigationRef = tagStringData,
+            gearName = tagGear,
             relation = tagRelation
         };
         return data;
@@ -5541,7 +5554,7 @@ public class TopicManager : MonoBehaviour
                         else { CountTextTag("contactLong", dictOfTags); }
                         break;
                     case "gear":
-                        //gear tag
+                        //gear tag (Node action)
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)

@@ -11,31 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActGeaRES0
   m_EditorClassIdentifier: 
-  tag: Actor Gear Common 0
+  tag: Faulty Gear
+  text: Your [actor] has brought it to your attention that the [gear] in their possession
+    is faulty and requires remiedial action
+  designNotes: Postive gear event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: aa9025954ff4a9141832fec24a93b748, type: 2}
-  - {fileID: 11400000, guid: ef283a2dc3169c1499f840ccb475e0aa, type: 2}
-  notes: Actor sources some common gear that will go into Player's inventory
+  listOfCriteria: []
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 85fdfdb0fd7fcee4b82365675db02c3e, type: 2}
   - {fileID: 11400000, guid: c26631bfe9b21d64ea3d5bddc33c8610, type: 2}
   - {fileID: 11400000, guid: 2e9aec2c78e4f2347bd41e4fd9fca828, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
   turnsActive: 1
-  turnsLive: 23
+  turnsLive: 17
   turnsDone: 0

@@ -863,6 +863,19 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns a random gear item in Player inventory, null if none
+    /// </summary>
+    /// <returns></returns>
+    public string GetRandomGear()
+    {
+        string gearName = null;
+        int count = listOfGear.Count;
+        if (count > 0)
+        { gearName = listOfGear[Random.Range(0, count)]; }
+        return gearName;
+    }
+
     //
     // - - - Conditions - - -
     //

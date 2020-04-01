@@ -2557,7 +2557,7 @@ public class EffectManager : MonoBehaviour
             }
             //motivation shift, update topBarUI item
             if (effect.outcome.name.Equals("Motivation") == true)
-            { GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors());  }
+            { GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors()); }
         }
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
         return isSuccess;
@@ -4140,6 +4140,11 @@ public class EffectManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for dataTopic.secret \"{0}\"", dataTopic.secret); }
                 break;
+            case "Gear":
+                //remove gear from actor
+                if (actor.RemoveGear(GearRemoved.Decision) == true)
+                { effectResolve.bottomText = string.Format("{0}{1}, {2} loses {3} gear{4}", colourBad, actor.actorName, actor.arc.name, dataTopic.gearName, colourEnd); }
+                break;
             case "ActorDismissed":
                 //fire actor
                 if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Dismissed) == true)
@@ -4194,8 +4199,10 @@ public class EffectManager : MonoBehaviour
                 //assign relationship
                 ActorRelationship relationship = dataTopic.relation;
                 if (GameManager.instance.dataScript.AddRelationship(actor.slotID, actorOther.slotID, actor.actorID, actorOther.actorID, relationship) == true)
-                { effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name, 
-                    relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd); }
+                {
+                    effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name,
+                      relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd);
+                }
                 break;
             case "Motivation":
                 //actor Other changes motivation
@@ -4757,7 +4764,7 @@ public class EffectManager : MonoBehaviour
                 {
                     //no trait
                     bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourBad : colourGood,
-                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), 
+                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                         effect.description, colourEnd);
                 }
                 break;
@@ -4765,7 +4772,7 @@ public class EffectManager : MonoBehaviour
                 actor.Renown -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
-                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), 
+                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                     effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4998,7 +5005,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Subtract":
                 motivation -= Mathf.Abs(amount);
-                if (motivation < 0 )
+                if (motivation < 0)
                 {
                     if (isHqActor == false)
                     {

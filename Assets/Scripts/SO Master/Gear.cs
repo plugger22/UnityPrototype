@@ -4,7 +4,7 @@ using UnityEngine;
 using gameAPI;
 
 /// <summary>
-/// Gear SO. Name of SO is the name of the Gear, eg. "Safe House"
+/// Gear SO. Name of SO is the name of the Gear without spaces, eg. "SafeHouse", use tag for in-game name, eg. "Safe House"
 /// </summary>
 [CreateAssetMenu(menuName = "Gear / Gear")]
 public class Gear : ScriptableObject

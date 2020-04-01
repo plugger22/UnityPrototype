@@ -1098,9 +1098,9 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// remove gear for various reasons. Msg only if gear present in first place. isTaken true if you are taking gear from actor, false (by default) otherwise
+        /// remove gear for various reasons. Msg only if gear present in first place. isTaken true if you are taking gear from actor, false (by default) otherwise. Returns true if successful
         /// </summary>
-        public void RemoveGear(GearRemoved reason)
+        public bool RemoveGear(GearRemoved reason)
         {
             if (string.IsNullOrEmpty(gearName) == false)
             {
@@ -1113,14 +1113,12 @@ namespace gameAPI
                 gearTimer = 0;
                 switch (reason)
                 {
-                    case GearRemoved.Lost:
-                        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
-                        { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
-                        break;
                     case GearRemoved.Taken:
                         gearTimesTaken++;
                         break;
-                    case GearRemoved.Compromised:
+                    case GearRemoved.Decision:
+                    case GearRemoved.Lost:
+                    case GearRemoved.Compromised:                   
                         if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
                         { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;
@@ -1128,7 +1126,9 @@ namespace gameAPI
                         Debug.LogErrorFormat("Unrecognised GearRemoved reason \"{0}\"", reason);
                         break;
                 }
+                return true;
             }
+            return false;
         }
 
         public void IncrementGearTimer()

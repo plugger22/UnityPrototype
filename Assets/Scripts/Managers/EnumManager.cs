@@ -116,7 +116,7 @@
     //
     // - - - Gear - - -
     //
-    public enum GearRemoved { Lost, Taken, Compromised }                        //Actor.cs -> RemoveGear, reason why
+    public enum GearRemoved { Lost, Taken, Compromised, Decision }                        //Actor.cs -> RemoveGear, reason why
 
     //
     // - - - Targets - - -

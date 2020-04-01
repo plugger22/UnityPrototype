@@ -12,29 +12,35 @@ MonoBehaviour:
   m_Name: ActGeaRES5
   m_EditorClassIdentifier: 
   tag: Actor Gear Personal 5
+  text: Your [actor] insistst that the [gear] you've given them should be traded for
+    useful intel via their contact network
+  designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: 6aa1258e7e3e8d24793d7b73ff41cc64, type: 2}
-  notes: Actor with personal gear wants to give it to HQ for personal renown
+  listOfCriteria: []
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 13037b0b635f65a40933f0a538f0c430, type: 2}
   - {fileID: 11400000, guid: 87afdba58570cc345abb439a0438b9fc, type: 2}
   - {fileID: 11400000, guid: daac074def273184399cd5b9afdbc8bd, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 1
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
-  turnsActive: 24
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0

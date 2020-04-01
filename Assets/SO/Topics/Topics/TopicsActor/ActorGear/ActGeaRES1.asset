@@ -11,32 +11,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: ActGeaRES1
   m_EditorClassIdentifier: 
-  tag: Actor Gear test 1
+  tag: Gear Complaint
+  text: Your [actor] is complaining long and loud that their [gear] has a problem
+    which needs to be fixed ASAP!
+  designNotes: negative gear event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: 2a3f1dfe488651e4bb7af891a484ed63, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: aa9025954ff4a9141832fec24a93b748, type: 2}
-  - {fileID: 11400000, guid: 7b5f6123b272eb84c8a103de7309195c, type: 2}
-  notes: Actor sources some new Rare gear that will go into inventory but it is very
-    expensive and the actor will gain a bunch of renown
+  listOfCriteria: []
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 23101bf0432a6c348b3fe38bdc0dc9d3, type: 2}
   - {fileID: 11400000, guid: 70f95c311f833e84b9f497b0b7b90a4c, type: 2}
   - {fileID: 11400000, guid: 7b1cab3732e50304fa896452cc7582b2, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 2
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 27
+  turnsLive: 21
   turnsDone: 0

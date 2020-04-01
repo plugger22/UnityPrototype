@@ -12,29 +12,35 @@ MonoBehaviour:
   m_Name: ActGeaRES4
   m_EditorClassIdentifier: 
   tag: Actor Gear Personal 4
+  text: Your [actor] is confident that they can gain valuable new information  if
+    they can use the [gear] that you've given them
+  designNotes: Positive gear event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 0fc6135504c6ffc46b664d92866c4b8b, type: 2}
   subSubType: {fileID: 0}
-  priority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
   profile: {fileID: 11400000, guid: c789a7646a01f9b49aa139237965c447, type: 2}
-  listOfCriteria:
-  - {fileID: 11400000, guid: 6aa1258e7e3e8d24793d7b73ff41cc64, type: 2}
-  notes: Actor wants permission to use personal gear to save family from bad outcome
+  listOfCriteria: []
+  listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 48e2d93b24b01234b8d8969a9aa158e3, type: 2}
   - {fileID: 11400000, guid: a4e4dd8b60007124f898c7cc910c25fc, type: 2}
   - {fileID: 11400000, guid: 9b60909aca404264586f28bc98023ac4, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
   status: 1
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 3
-  turnsActive: 24
+  turnsActive: 18
   turnsLive: 0
   turnsDone: 0
