@@ -25,7 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4be49c0f44a075d46b9a0e7f1a441f59, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Is there any point in expecting [side] HQ to behave like adults, asks [npc],
+    [job], of [node]?
   tooltipHeader: <color=#FFFFE0>B*stard!</color>
   tooltipMain: <color=#FF4500>Financier Renown -10</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

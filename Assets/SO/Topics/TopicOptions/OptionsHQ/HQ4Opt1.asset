@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Rumour has it that there are strict protocols in place at [side] HQ to prevent
+    factional disputes, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Red Corner</color>
   tooltipMain: <color=#98FB98>Financier Renown +10</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

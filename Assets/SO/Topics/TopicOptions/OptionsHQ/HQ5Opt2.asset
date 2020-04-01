@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 228f168bdf7a99a49915f30a65907b8d, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: '[side] HQ? Great bunch of people. Professional, competent and on the ball,
+    insists [npc], [job], of [node]'
   tooltipHeader: <color=#FFFFE0>Go Jump</color>
   tooltipMain: "<color=#FF4500>Financier Renown -10</color>\r\n<color=#FF4500>Psychologist
     Renown -10</color>"

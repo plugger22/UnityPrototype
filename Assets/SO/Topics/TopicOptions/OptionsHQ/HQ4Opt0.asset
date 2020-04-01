@@ -25,7 +25,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: '[side] HQ don''t tolerate internal squabbling. Apparently. Not from what
+    I''ve heard, says [npc], [job], of [node]'
   tooltipHeader: <color=#FFFFE0>Blue Corner</color>
   tooltipMain: <color=#98FB98>Psychologist Renown +10</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>

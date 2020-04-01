@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Of course [side] HQ is nothing more than a bunch of squabbling schoolchildren.
+    Everybody knows that, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Love In</color>
   tooltipMain: "<color=#98FB98>Psychologist Renown +10</color>\r\n<color=#98FB98>Financier
     Renown +10</color>"
