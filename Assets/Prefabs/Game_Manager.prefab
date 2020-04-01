@@ -2014,6 +2014,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 228f168bdf7a99a49915f30a65907b8d, type: 2}
   - {fileID: 11400000, guid: 62244dca29823134d8906adfe02255f5, type: 2}
   - {fileID: 11400000, guid: 4be49c0f44a075d46b9a0e7f1a441f59, type: 2}
+  - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
