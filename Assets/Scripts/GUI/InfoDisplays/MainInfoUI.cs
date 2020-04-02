@@ -769,7 +769,8 @@ public class MainInfoUI : MonoBehaviour
                     if (data.listOfAdverts.Count > i)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                        builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
+                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
+                        //builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
                     }
                     else
                     {
