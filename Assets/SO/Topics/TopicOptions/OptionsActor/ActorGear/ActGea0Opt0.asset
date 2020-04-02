@@ -11,5 +11,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActGea0Opt0
   m_EditorClassIdentifier: 
-  tag: Actor Gear 0 option 0
+  descriptor: Actor Gear 0 option 0
+  tag: You Pay
+  text: Sure, let me help
   topic: {fileID: 11400000, guid: 6c2fcd78e6dcbf541a6f76640588968b, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: e371f974f16dae64c813cc63527a4ba9, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: eaa65c76dc32e234c81a61b343bbe49a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>You Pay</color>
+  tooltipMain: "<color=#98FB98>HACKER Motivation +2</color>\r\n<color=#FF4500>Player
+    Renown -1</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Sure, let me help</color>
+  optionNumber: 0

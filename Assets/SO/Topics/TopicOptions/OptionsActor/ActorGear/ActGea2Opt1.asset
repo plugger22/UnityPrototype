@@ -11,5 +11,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActGea2Opt1
   m_EditorClassIdentifier: 
-  tag: Actor Gear 2 option 1
+  descriptor: Actor Gear 2 option 1
+  tag: Mutual Effort
+  text: Ask [actor] to contribute
   topic: {fileID: 11400000, guid: 4c8572df919e1274fa1131cfe5e212e8, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  - {fileID: 11400000, guid: da872a3e161182b41af4c96b94cc8710, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1d33e57c153f79e4d978c2b2368f2645, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Mutual Effort</color>
+  tooltipMain: "<color=#98FB98>HACKER Renown -2</color>\r\n<color=#FF4500>HACKER loses
+    Gear</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Ask HACKER to contribute</color>
+  optionNumber: 1

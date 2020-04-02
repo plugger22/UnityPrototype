@@ -1940,17 +1940,23 @@ public class TopicManager : MonoBehaviour
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
                 //Actor gear (null if none present)
-                tagGear = actor.GetGearName();
+                string gearName = actor.GetGearName();
                 //proceed only if actor has gear (should do as only those with gear have been selected)
-                if (string.IsNullOrEmpty(tagGear) == false)
+                if (string.IsNullOrEmpty(gearName) == false)
                 {
-                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
-                    //if no entries use entire list by default
-                    listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
-                    //Info tags
-                    tagActorID = actor.actorID;
+                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                    if (gear != null)
+                    {
+                        tagGear = gear.tag;
+                        group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                        //if no entries use entire list by default
+                        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                        //Info tags
+                        tagActorID = actor.actorID;
+                    }
+                    else { Debug.LogWarningFormat("Invalid gear (Null) for gearName \"{0}\"", gearName); }
                 }
-                else { Debug.LogWarningFormat("[Tst] TopicManager.cs -> GetActorGearTopics: actor ({0}, {1}, ID {2}) doesn't have gear (should do)", actor.actorName, actor.arc.name, actor.actorID); }
+                else { Debug.LogWarningFormat("TopicManager.cs -> GetActorGearTopics: actor ({0}, {1}, ID {2}) doesn't have gear (should do)", actor.actorName, actor.arc.name, actor.actorID); }
             }
             else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorGearTopics: No topics found (No actors with Gear present){0}", "\n"); }
         }

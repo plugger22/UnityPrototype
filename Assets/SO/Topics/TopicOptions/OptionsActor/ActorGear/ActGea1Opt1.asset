@@ -11,5 +11,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActGea1Opt1
   m_EditorClassIdentifier: 
-  tag: Actor Gear 1 option 1
+  descriptor: Actor Gear 1 option 1
+  tag: They Pay
+  text: Can't your [actor] deal with it?
   topic: {fileID: 11400000, guid: 87acc5d4003df19488109a23ae8a93fc, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: da872a3e161182b41af4c96b94cc8710, type: 2}
+  - {fileID: 11400000, guid: 571c982d036f72d4ab99bf88b0c0dd54, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1d33e57c153f79e4d978c2b2368f2645, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 1

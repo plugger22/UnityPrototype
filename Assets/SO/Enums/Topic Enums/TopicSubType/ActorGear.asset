@@ -22,5 +22,5 @@ MonoBehaviour:
   listOfSubSubType: []
   listOfCriteria:
   - {fileID: 11400000, guid: 6aa1258e7e3e8d24793d7b73ff41cc64, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   minInterval: 4

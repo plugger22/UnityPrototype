@@ -3607,8 +3607,6 @@ public class ActorManager : MonoBehaviour
         bool errorFlag = false;
         bool isBoss;
         string title;
-        //close all modal 0 tooltips
-        GameManager.instance.guiScript.SetTooltipsOff();
         //get HQ actors
         Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
         lengthOfArray = arrayOfHqActors.Length;
@@ -3627,7 +3625,7 @@ public class ActorManager : MonoBehaviour
                 data.side = GameManager.instance.sideScript.PlayerSide;
                 data.textHeader = "HQ Hierarchy";
                 data.textTop = string.Format("This is the {0}{1}{2} HQ Hierarchy", colourNeutral, data.side.name, colourEnd);
-                data.textBottom = string.Format("{0}LEFT CLICK{1} portrait for more information", colourAlert, colourEnd);
+                data.textBottom = string.Format("{0}MOUSE OVER{1} portrait for more information", colourAlert, colourEnd);
                 data.state = InventoryState.HQ;
                 //compatibility tooltip
                 GenericTooltipData compatibilityData = GameManager.instance.guiScript.GetCompatibilityTooltip();

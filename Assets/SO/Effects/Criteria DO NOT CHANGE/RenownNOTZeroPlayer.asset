@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: RenownNOTZeroPlayer
   m_EditorClassIdentifier: 
   description: Player has at least 1 renown
-  effectCriteria: {fileID: 11400000, guid: 2e6edebc0aececc45ae4a189e947a34c, type: 2}
+  effectCriteria: {fileID: 11400000, guid: e18bde68990b37549bfdba73c69a60a7, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}

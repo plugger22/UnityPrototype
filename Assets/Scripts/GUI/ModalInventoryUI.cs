@@ -150,6 +150,8 @@ public class ModalInventoryUI : MonoBehaviour
         bool errorFlag = false;
         //set modal status
         GameManager.instance.guiScript.SetIsBlocked(true);
+        //tooltips off
+        GameManager.instance.guiScript.SetTooltipsOff();
         //activate main panel
         modalPanelObject.SetActive(true);
         modalInventoryObject.SetActive(true);

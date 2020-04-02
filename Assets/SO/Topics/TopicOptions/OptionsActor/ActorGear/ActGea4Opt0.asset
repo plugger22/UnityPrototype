@@ -11,5 +11,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: ActGea4Opt0
   m_EditorClassIdentifier: 
-  tag: Actor Gear 4 option 0
+  descriptor: Actor Gear 4 option 0
+  tag: Agree
+  text: O.K, what have you got?
   topic: {fileID: 11400000, guid: d3eb84b25b159c44fb1d00460fd41ce2, type: 2}
+  isPreferredByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4d0059a61fc81dd4e93a67e3fd207cb8, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 0}
+  news: 
+  tooltipHeader: <color=#FFFFE0>Agree</color>
+  tooltipMain: "<color=#98FB98> HQ Approval +2</color>\r\n<color=#FF4500>HACKER loses
+    Gear</color>"
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>O.K, what have you got?</color>
+  optionNumber: 0

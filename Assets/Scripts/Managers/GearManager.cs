@@ -874,8 +874,10 @@ public class GearManager : MonoBehaviour
         int numOfGear;
         string colourRarity;
         bool errorFlag = false;
-        //close node tooltip -> safety check
-        GameManager.instance.tooltipNodeScript.CloseTooltip("GearManager.cs -> InitialiseGearInventoryDisplay");
+
+        /*//close node tooltip -> safety check -> redundant as ModalInventory handles this
+        GameManager.instance.tooltipNodeScript.CloseTooltip("GearManager.cs -> InitialiseGearInventoryDisplay");*/
+
         //only for Resistance
         if (GameManager.instance.sideScript.PlayerSide == GameManager.instance.globalScript.sideResistance)
         {
