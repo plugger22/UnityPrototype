@@ -26,10 +26,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
   chance: {fileID: 0}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  news: There are ways of finding the same type of gear that the Resistance uses but
+    why would you want to, asks [npc], [job], of [node]?
+  tooltipHeader: <color=#FFFFE0>Agree</color>
+  tooltipMain: "<color=#98FB98> HQ Approval +1</color>\r\n<color=#FF4500>BLOGGER loses
+    Gear</color>"
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I can live with that</color>
   optionNumber: 0

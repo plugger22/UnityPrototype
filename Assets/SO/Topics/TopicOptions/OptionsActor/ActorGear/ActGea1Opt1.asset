@@ -28,7 +28,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Resistance gear is worth big bucks, insists [npc], [job], of [node]. Wish
+    I had some to get enough [money]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

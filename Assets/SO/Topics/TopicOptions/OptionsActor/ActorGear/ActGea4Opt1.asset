@@ -30,13 +30,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
-  tooltipHeader: <color=#FFFFE0>Better Deal</color>
-  tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>HACKER
-    Renown -2</color>\r\n<color=#98FB98> HQ Approval +2</color>\n<color=#FFE4B5>if
-    UNSUCCESSFUL</color>\r\n<color=#FF4500>HACKER Motivation -1</color>\r\n<color=#FF4500>HACKER
-    loses Gear</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
-  isValid: 1
-  textToDisplay: <color=#EEFB73>Ask HACKER to negotiate</color>
+  news: Rumour has it that Resistance gear is neuro tagged. If the wrong person uses
+    it then it's lights out for them, says [npc], [job], of [node]
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Player STRESSED</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Ask HACKER to negotiate</color>
   optionNumber: 1

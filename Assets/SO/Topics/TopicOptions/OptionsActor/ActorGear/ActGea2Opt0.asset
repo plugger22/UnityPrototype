@@ -26,11 +26,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: My [who] swears that the Resistance is in cohorts with bug eyed aliens from
+    Betelgeuse. That's where the gear comes from, says [npc]
   tooltipHeader: <color=#FFFFE0>Approve</color>
   tooltipMain: "<color=#98FB98>HACKER Motivation +3</color>\r\n<color=#FF4500>HACKER
     loses Gear</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Sure, knock yourself out</color>
   optionNumber: 0

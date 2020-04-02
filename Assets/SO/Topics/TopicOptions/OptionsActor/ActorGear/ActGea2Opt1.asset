@@ -28,11 +28,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I think it's sad that the Resistance puts so much effort into sourcing expensive,
+    illegal gear when they could be helping us, says [npc] of [node]
   tooltipHeader: <color=#FFFFE0>Mutual Effort</color>
   tooltipMain: "<color=#98FB98>HACKER Renown -2</color>\r\n<color=#FF4500>HACKER loses
     Gear</color>"
-  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Ask HACKER to contribute</color>
   optionNumber: 1

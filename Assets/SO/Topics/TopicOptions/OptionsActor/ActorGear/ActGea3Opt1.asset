@@ -30,10 +30,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bb156fa1b8a4aaf499f6f8e22bd29260, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  news: Illegal gear is illegal for a reason. Doesn't the Resistance know that a lot
+    of it is harmful to the user, asks [npc], [job], of [node]?
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Player STRESSED</color>
+  tooltipDetails: <color=#98FB98>Player Mood +1</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>You break it, you fix it</color>
   optionNumber: 1

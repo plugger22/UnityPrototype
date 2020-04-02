@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d96d5ea26c2d418cf902879a14de9, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: My [handicap] is why I don't deal in illegal Resistance gear. I'd only be
+    asking for trouble, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Refuse</color>
   tooltipMain: "<b><color=#EEFB73>Medium</color> chance of SUCCESS</b>\r\n<color=#98FB98>Player
     Renown +2</color>\n<color=#FFE4B5>if UNSUCCESSFUL</color>\r\n<color=#FF4500>HACKER

@@ -334,6 +334,8 @@ public class HelpManager : MonoBehaviour
         // - - - TopicSubType help (for optional 2nd help icon on topicUI that covers subType details for the topic)
         //
 
+        // NEXT # is _26
+
         //ActorPolitic -> Overview
         data = new HelpData();
         data.tag = "topicSub_0";
@@ -358,6 +360,19 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicSub_3";
         data.header = "Good and Bad";
         data.text = string.Format("The good and bad versions of each topic depend on the {0}Player's Mood{1}. You're in charge and you set the example", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //ActorGear -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_24";
+        data.header = string.Format("{0}Subordinate Gear{1}", colourTip, colourEnd);
+        data.text = string.Format("\'The things you own end up owning you\' - {0}Chuck Palahnuik, <i>Fight Club</i>{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //ActorGear -> Good/Bad
+        data = new HelpData();
+        data.tag = "topicSub_25";
+        data.header = "Good and Bad";
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Motivation{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
         //ActorDistrict -> Overview

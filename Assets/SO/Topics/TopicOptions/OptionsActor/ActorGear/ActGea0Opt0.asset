@@ -27,9 +27,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94be9a2843762d645a2e372130f36e60, type: 2}
   moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Where does the Resistance get hold of all their good gear, asks [npc], [job],
+    of [node]? I'd like to know.
   tooltipHeader: <color=#FFFFE0>You Pay</color>
-  tooltipMain: "<color=#98FB98>HACKER Motivation +2</color>\r\n<color=#FF4500>Player
+  tooltipMain: "<color=#98FB98>RECRUITER Motivation +2</color>\r\n<color=#FF4500>Player
     Renown -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1

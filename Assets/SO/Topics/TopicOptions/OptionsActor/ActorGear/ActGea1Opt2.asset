@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   moodEffect: {fileID: 11400000, guid: 392b95ff7dbfd0a4294db713848cf59e, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Will the Resistance give [who] any of their illegal gear so they have enough
+    [money], asks [npc] of [node]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

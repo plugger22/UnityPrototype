@@ -6763,6 +6763,7 @@ public class TopicManager : MonoBehaviour
         {
             case "ActorPolitic": listOfHelp = new List<string>() { "topicSub_0", "topicSub_1" }; break;
             case "ActorMatch": listOfHelp = new List<string>() { "topicSub_2", "topicSub_3" }; break;
+            case "ActorGear": listOfHelp = new List<string>() { "topicSub_24", "topicSub_25" }; break;
             case "ActorDistrict": listOfHelp = new List<string>() { "topicSub_4", "topicSub_5", "topicSub_6" }; break;
             case "ActorContact": listOfHelp = new List<string>() { "topicSub_7", "topicSub_8", "topicSub_9" }; break;
             case "PlayerConditions": listOfHelp = new List<string>() { "topicSub_10", "topicSub_11" }; break;
