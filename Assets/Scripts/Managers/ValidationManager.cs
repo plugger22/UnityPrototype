@@ -79,6 +79,8 @@ public class ValidationManager : MonoBehaviour
     public TopicSubType playerGeneralSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType playerStatsSubType;
+    [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used")]
+    public TopicSubType playerGearSubType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType playerConditionsSubType;
 
@@ -353,6 +355,13 @@ public class ValidationManager : MonoBehaviour
                 { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerStatsSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerStatsSubType.name, playerType.name, "\n"); }
             }
             else { Debug.LogError("Invalid playerStatsSubType (Null)"); }
+            //player Gear
+            if (playerGearSubType != null)
+            {
+                if (playerType.listOfSubTypes.Exists(x => x.name.Equals(playerGearSubType.name, StringComparison.Ordinal)) == false)
+                { Debug.LogFormat("[Val] ValidationManager.cs->ValidateTopics: playerGearSubType \"{0}\" Does Not Match playerType \"{1}\"{2}", playerGearSubType.name, playerType.name, "\n"); }
+            }
+            else { Debug.LogError("Invalid playerGearSubType (Null)"); }
             //player Conditions
             if (playerConditionsSubType != null)
             {
@@ -1296,6 +1305,9 @@ public class ValidationManager : MonoBehaviour
                         //Player Stats Pool
                         if (campaign.playerStatsPool != null)
                         { CheckCampaignPool(campaign, campaign.playerStatsPool, playerStatsSubType); }
+                        //Player Gear Pool
+                        if (campaign.playerGearPool != null)
+                        { CheckCampaignPool(campaign, campaign.playerGearPool, playerGearSubType); }
                         //Player Conditions Pool
                         if (campaign.playerConditionsPool != null)
                         { CheckCampaignPool(campaign, campaign.playerConditionsPool, playerConditionsSubType); }

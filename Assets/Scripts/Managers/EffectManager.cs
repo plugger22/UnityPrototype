@@ -996,6 +996,14 @@ public class EffectManager : MonoBehaviour
                                                 if (val == 0)
                                                 { BuildString(result, "Invisibility Zero"); }
                                                 break;
+                                            case "InvisibilityLow":
+                                                //check invisibility Less than 2 -> Actor / Player
+                                                if (actor != null)
+                                                { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
+                                                else { val = GameManager.instance.playerScript.Invisibility; }
+                                                if (val > 1)
+                                                { BuildString(result, "Invisibility > 1"); }
+                                                break;
                                             case "SecretsNOTMin":
                                                 //check num of secrets greater than Zero -> Actor / Player
                                                 if (actor != null)
@@ -5040,7 +5048,7 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Player gains or loses invisibility
+    /// Player gains or loses invisibility (variable amount)
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: PlyGearRES5
+  m_EditorClassIdentifier: 
+  tag: Ply Gear 5
+  text: 'Hey, do you want to go DARK? Disappear off the radar? I can make that happen,
+    says [npc] if you give me that [gear] of yours. '
+  designNotes: 'Player Gear bad event
+
+    No ignore penalty
+
+    Trade gear for invisibility (player invis < 2)'
+  type: {fileID: 11400000, guid: cde46cf1d1819ee449fdff3ba9228b6f, type: 2}
+  subType: {fileID: 11400000, guid: 799a388820d3c904ab148423e21e4b95, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: cc179e2e4bb4b1445b2b67b8998f5df0, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c245f81fc5d9edc4295109df47e0ee98, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 35ba4c4413123a74db11da6176160e87, type: 2}
+  - {fileID: 11400000, guid: 487be3f3f25bb5d41b84772af045b122, type: 2}
+  - {fileID: 11400000, guid: 22c48ab09eb8f7947ac3fcb9da1d190d, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 2
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 8
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 15
+  turnsDone: 0

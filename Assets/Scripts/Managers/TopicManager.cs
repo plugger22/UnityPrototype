@@ -659,6 +659,19 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
+                                                    case "PlayerGear":
+                                                        if (campaign.playerGearPool != null)
+                                                        {
+                                                            //any subSubTypes present?
+                                                            if (campaign.playerGearPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.playerGearPool, campaign.side); }
+                                                            //populate dictionary
+                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGearPool.listOfTopics);
+                                                            AddTopicTypeToList(listOfTopicTypesLevel, topicType);
+                                                            SetTopicDynamicData(campaign.playerGearPool.listOfTopics);
+                                                            isValid = true;
+                                                        }
+                                                        break;
                                                     case "PlayerConditions":
                                                         if (campaign.playerConditionsPool != null)
                                                         {
@@ -1667,6 +1680,10 @@ public class TopicManager : MonoBehaviour
                         //based on player Mood
                         listOfPotentialTopics = GetPlayerStatsTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
+                    case "PlayerGear":
+                        //based on player Mood
+                        listOfPotentialTopics = GetPlayerGearTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     case "PlayerConditions":
                         //based on player Mood
                         listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
@@ -2309,16 +2326,52 @@ public class TopicManager : MonoBehaviour
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
             else
-            {
-                Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);
-                listOfTopics.Clear();
-            }
+            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);  }
         }
         else
+        { Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled"); }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetPlayerGearTopics
+    /// <summary>
+    /// subType PlayerGear template topics selected by player based on player Mood. Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetPlayerGearTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        List<string> listOfGear = new List<string>();
+        //All topics based of a randomly selected item of gear from player Inventory
+        listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        if (listOfGear != null)
         {
-            Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
-            listOfTopics.Clear();
+            string gearName = listOfGear[Random.Range(0, listOfGear.Count)];
+            if (string.IsNullOrEmpty(gearName) == false)
+            {
+                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                if (gear != null)
+                {
+                    tagGear = gear.name;
+                    if (string.IsNullOrEmpty(tagGear) == false)
+                    {
+                        //group based on Actor Motivation
+                        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                        //if no entries use entire list by default
+                        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+                    }
+                    else { Debug.LogWarning("Invalid tagGear (Null or Empty)"); }
+                }
+                else { Debug.LogErrorFormat("Invalid gear (Null) for gearName \"{0}\"", gearName); }
+            }
+            else { Debug.LogWarning("Invalid gearName (Null or Empty)"); }
         }
+        else { Debug.LogError("Invalid listOfGear (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2375,16 +2428,10 @@ public class TopicManager : MonoBehaviour
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
             else
-            {
-                Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);
-                listOfTopics.Clear();
-            }
+            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);  }
         }
         else
-        {
-            Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled"); }
         return listOfTopics;
     }
     #endregion
@@ -2498,10 +2545,7 @@ public class TopicManager : MonoBehaviour
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgEmergency (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgEmergency (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2541,10 +2585,7 @@ public class TopicManager : MonoBehaviour
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgCure (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgCure (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2602,10 +2643,7 @@ public class TopicManager : MonoBehaviour
 
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgContract (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgContract (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2643,10 +2681,7 @@ public class TopicManager : MonoBehaviour
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgHQ (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgHQ (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2684,10 +2719,7 @@ public class TopicManager : MonoBehaviour
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgEmergency (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgEmergency (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -2727,10 +2759,7 @@ public class TopicManager : MonoBehaviour
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
         else
-        {
-            Debug.LogWarning("Invalid campaign.orgInfo (Null)");
-            listOfTopics.Clear();
-        }
+        { Debug.LogWarning("Invalid campaign.orgInfo (Null)"); }
         return listOfTopics;
     }
     #endregion
@@ -6481,6 +6510,20 @@ public class TopicManager : MonoBehaviour
                         case "PlayerGeneral":
                             turnSprite = GameManager.instance.playerScript.sprite;
                             tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            break;
+                        case "PlayerGear":
+                            //use gear sprite
+                            if (string.IsNullOrEmpty(tagGear) == false)
+                            {
+                                Gear gear = GameManager.instance.dataScript.GetGear(tagGear);
+                                if (gear != null)
+                                {
+                                    turnSprite = gear.sprite;
+                                    tagSpriteName = gear.sprite.name;
+                                }
+                                else { Debug.LogWarningFormat("Invalid gear (Null) for tagGear \"{0}\"", tagGear); }
+                            }
+                            else { Debug.LogWarning("Invalid tagGear (Null or Empty) for PlayerGear topic sprite"); }
                             break;
                         case "PlayerStats":
                         case "PlayerConditions":
