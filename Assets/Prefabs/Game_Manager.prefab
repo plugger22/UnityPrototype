@@ -1260,6 +1260,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0245937009cf66848a2d682bf1a1a8fd, type: 2}
   - {fileID: 11400000, guid: 50c454ba8bbd7ac4dbaa551bdb96e4e6, type: 2}
   - {fileID: 11400000, guid: e9d41039983d97c4c9befde23964c468, type: 2}
+  - {fileID: 11400000, guid: ed371bdbab12fa14094883a418e2cd12, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -2019,6 +2020,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4be49c0f44a075d46b9a0e7f1a441f59, type: 2}
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}

@@ -4289,7 +4289,8 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerTakeDrugs(effect);
                 break;
             case "Gear":
-                effectResolve.bottomText = ExecutePlayerLoseGear(effect);
+            case "GearSpecific":
+                effectResolve.bottomText = ExecutePlayerLoseGear(effect, dataTopic);
                 break;
             case "PlayerActions":
                 //player gains or loses and action next turn
@@ -5387,36 +5388,49 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player loses a Random piece of gear from inventory
+    /// Player loses a Random, or specific, piece of gear from inventory
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    private string ExecutePlayerLoseGear(Effect effect)
+    private string ExecutePlayerLoseGear(Effect effect, TopicEffectData dataTopic)
     {
         string gearName = "Unknown";
-        //Player loses a random piece of Gear
-        List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
-        if (listOfGear != null)
+        switch (effect.outcome.name)
         {
-            int count = listOfGear.Count;
-            if (count > 0)
-            {
-                gearName = listOfGear[Random.Range(0, count)];
-                if (string.IsNullOrEmpty(gearName) == false)
+            case "Gear":
+                //Player loses a random piece of Gear
+                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                if (listOfGear != null)
                 {
+                    int count = listOfGear.Count;
+                    if (count > 0)
+                    {
+                        gearName = listOfGear[Random.Range(0, count)];
+                        if (string.IsNullOrEmpty(gearName) == false)
+                        {
+                            //remove gear (lost forever)
+                            GameManager.instance.playerScript.RemoveGear(gearName, true);
+                        }
+                        else
+                        { Debug.LogWarning("Invalid gearName (Null or Empty)"); }
+                    }
+                    else { Debug.LogWarning("Invalid listOfGear (Empty)"); }
+                }
+                else
+                { Debug.LogWarning("Invalid listOFGear (Null)"); }
+                break;
+            case "GearSpecific":
+                //Player loses a specific piece of gear
+                if (string.IsNullOrEmpty(dataTopic.gearName) == false)
+                {
+                    gearName = dataTopic.gearName;
                     //remove gear (lost forever)
                     GameManager.instance.playerScript.RemoveGear(gearName, true);
                 }
                 else
-                {
-                    Debug.LogWarning("Invalid gearName (Null or Empty)");
-                    gearName = "Unknown";
-                }
-            }
-            else { Debug.LogWarning("Invalid listOfGear (Empty)"); }
+                { Debug.LogWarning("Invalid dataTopic.gearName (Null or Empty)"); }
+                break;
         }
-        else
-        { Debug.LogWarning("Invalid listOFGear (Null)"); }
         return string.Format("{0}Player loses {1} gear{2}", colourBad, gearName, colourEnd);
     }
 
