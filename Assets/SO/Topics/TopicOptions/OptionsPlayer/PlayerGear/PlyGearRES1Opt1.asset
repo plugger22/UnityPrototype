@@ -12,16 +12,19 @@ MonoBehaviour:
   m_Name: PlyGearRES1Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res1 option 1
-  tag: dd
-  text: 
+  tag: Good Relations
+  text: Only 'cause I like you
   topic: {fileID: 11400000, guid: 3548462d42907f94594734f50b5d0a05, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5edfc5490cb9c314b9cc1673397b8f07, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 4d0059a61fc81dd4e93a67e3fd207cb8, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
@@ -30,4 +33,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

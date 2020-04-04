@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Name: PlyGearRES2Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res2 option 2
-  tag: dd
-  text: 
+  tag: Honest Broker
+  text: Tell HQ everything
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
@@ -30,4 +31,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

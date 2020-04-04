@@ -22,6 +22,7 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}

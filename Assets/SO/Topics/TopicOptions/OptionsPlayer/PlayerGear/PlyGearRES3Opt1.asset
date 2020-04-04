@@ -12,22 +12,26 @@ MonoBehaviour:
   m_Name: PlyGearRES3Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res3 option 1
-  tag: dd
-  text: 
+  tag: Con Job
+  text: They look pretty gullible
   topic: {fileID: 11400000, guid: fd2382c5170310b49b788456bc1a7c71, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
-  listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 87860e70abe576e4ebdd880a658ad825, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 45f7fee155c23b347b0da0b28018cd2a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
+  - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

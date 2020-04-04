@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Name: PlyGearRES2Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res2 option 0
-  tag: dd
-  text: 
+  tag: Tranact
+  text: Make a deal
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 45f7fee155c23b347b0da0b28018cd2a, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
