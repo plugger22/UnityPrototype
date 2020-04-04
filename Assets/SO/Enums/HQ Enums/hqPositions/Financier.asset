@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Financier
   m_EditorClassIdentifier: 
   tag: Financier
-  position: Any subBoss
+  position: subBoss 2
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}

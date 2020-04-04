@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
   m_Name: MotivationNeutralMin
   m_EditorClassIdentifier: 
-  descriptor: Actor Motivation neutral (2) or better
+  descriptor: Actor/Player Motivation 2+

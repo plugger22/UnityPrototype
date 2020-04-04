@@ -1636,9 +1636,9 @@ public class EffectManager : MonoBehaviour
                                         }
                                         break;
                                     //
-                                    // - - - Faction - - -
+                                    // - - - HQ - - -
                                     //
-                                    case "Faction":
+                                    case "HQ":
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "HqRelocatingNo":
@@ -1651,9 +1651,49 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.hqScript.GetHqApproval() == 0)
                                                 { BuildString(result, "HQ Approval Zero"); }
                                                 break;
+                                            case "HqMotNeutMinBoss":
+                                                //Boss of HQ has motivation 2+
+                                                Actor actorBoss = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+                                                if (actorBoss != null)
+                                                {
+                                                    if (actorBoss.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.Boss))); }
+                                                }
+                                                else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
+                                                break;
+                                            case "HqMotNeutMinSubBoss1":
+                                                //subBoss 1 of HQ has motivation 2+
+                                                Actor actorSubBoss1 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss1);
+                                                if (actorSubBoss1 != null)
+                                                {
+                                                    if (actorSubBoss1.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss1))); }
+                                                }
+                                                else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
+                                                break;
+                                            case "HqMotNeutMinSubBoss2":
+                                                //subBoss 2 of HQ has motivation 2+
+                                                Actor actorSubBoss2 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss2);
+                                                if (actorSubBoss2 != null)
+                                                {
+                                                    if (actorSubBoss2.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss2))); }
+                                                }
+                                                else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
+                                                break;
+                                            case "HqMotNeutMinSubBoss3":
+                                                //subBoss 3 of HQ has motivation 2+
+                                                Actor actorSubBoss3 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss3);
+                                                if (actorSubBoss3 != null)
+                                                {
+                                                    if (actorSubBoss3.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss3))); }
+                                                }
+                                                else { Debug.LogWarning("Invalid HQ SubBoss3 (Null)"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
-                                                Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                Debug.LogWarningFormat("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name);
                                                 errorFlag = true;
                                                 break;
                                         }
