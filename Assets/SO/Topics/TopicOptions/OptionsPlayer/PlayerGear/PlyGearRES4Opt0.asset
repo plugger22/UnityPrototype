@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyGearRES4Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res4 option 0
-  tag: dd
-  text: 
+  tag: Agree
+  text: Sure, make me disappear
   topic: {fileID: 11400000, guid: 7e1d4e81ab9730a4dbf7c45130c723ba, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -22,7 +22,9 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
-  listOfBadEffects: []
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

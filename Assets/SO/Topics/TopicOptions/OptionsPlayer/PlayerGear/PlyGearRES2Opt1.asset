@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res2 option 1
   tag: Sting
-  text: Try and trick them
+  text: Lets try and trick them
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

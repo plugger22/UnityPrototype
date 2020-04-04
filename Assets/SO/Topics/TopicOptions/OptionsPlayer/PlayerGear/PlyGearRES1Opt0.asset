@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res1 option 0
   tag: Reluctant
-  text: I'm not happy but O.K
+  text: What choice do I have?
   topic: {fileID: 11400000, guid: 3548462d42907f94594734f50b5d0a05, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

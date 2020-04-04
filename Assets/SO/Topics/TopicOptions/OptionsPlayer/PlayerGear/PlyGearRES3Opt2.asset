@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res3 option 2
   tag: Blackmail
-  text: Threaten to inform on the Scum
+  text: Threaten to inform on the them
   topic: {fileID: 11400000, guid: fd2382c5170310b49b788456bc1a7c71, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0

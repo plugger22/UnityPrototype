@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res1 option 1
   tag: Good Relations
-  text: Only 'cause I like you
+  text: I'm SO HAPPY to have been asked
   topic: {fileID: 11400000, guid: 3548462d42907f94594734f50b5d0a05, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d0059a61fc81dd4e93a67e3fd207cb8, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 

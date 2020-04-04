@@ -2358,6 +2358,7 @@ public class TopicManager : MonoBehaviour
                 if (gear != null)
                 {
                     tagGear = gear.name;
+                    tagNodeID = -1;
                     if (string.IsNullOrEmpty(tagGear) == false)
                     {
                         //group based on Actor Motivation
@@ -6671,6 +6672,7 @@ public class TopicManager : MonoBehaviour
                 case "PlayerDistrict":
                 case "PlayerGeneral":
                 case "PlayerStats":
+                case "PlayerGear":
                 case "PlayerConditions":
                 case "CaptureSub":
                 case "ActorMatch":

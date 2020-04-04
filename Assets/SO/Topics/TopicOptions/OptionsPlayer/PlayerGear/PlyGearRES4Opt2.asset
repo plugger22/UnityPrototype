@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: PlyGearRES4Opt2
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res4 option 2
-  tag: dd
-  text: 
+  tag: Double Cross
+  text: Sell intel to the Authority
   topic: {fileID: 11400000, guid: 7e1d4e81ab9730a4dbf7c45130c723ba, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: f0f3178f353449447b0c20a463c165fe, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyGearRES3
   m_EditorClassIdentifier: 
-  tag: Ply Gear 3
+  tag: Honest Broker
   text: Hey there, want to sell me your [gear]. I pay top dollar for [side] gear.
     You can trust me. I'm the most trustworthy guy I know
   designNotes: 'Player Gear bad event
@@ -46,5 +46,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 15
+  turnsLive: 18
   turnsDone: 0

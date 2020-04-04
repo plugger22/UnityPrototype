@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyGearRES5Opt0
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res5 option 0
-  tag: dd
-  text: 
+  tag: Agree
+  text: Turn off the lights
   topic: {fileID: 11400000, guid: 8572f658ec268ea4d9054de04d05701a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -22,7 +22,8 @@ MonoBehaviour:
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
-  listOfBadEffects: []
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 

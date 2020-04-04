@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: PlyGearRES5
   m_EditorClassIdentifier: 
-  tag: Ply Gear 5
+  tag: Light Switch
   text: 'Hey, do you want to go DARK? Disappear off the radar? I can make that happen,
     says [npc] if you give me that [gear] of yours. '
   designNotes: 'Player Gear bad event
@@ -46,6 +46,6 @@ MonoBehaviour:
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 15
+  turnsActive: 9
+  turnsLive: 9
   turnsDone: 0

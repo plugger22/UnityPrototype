@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Name: PlyGearRES4Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res4 option 1
-  tag: dd
-  text: 
+  tag: Dodgy Deal
+  text: I'll pay you later, I promise
   topic: {fileID: 11400000, guid: 7e1d4e81ab9730a4dbf7c45130c723ba, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
-  listOfGoodEffects: []
-  listOfBadEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 0}
-  chance: {fileID: 0}
+  chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   news: 
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
