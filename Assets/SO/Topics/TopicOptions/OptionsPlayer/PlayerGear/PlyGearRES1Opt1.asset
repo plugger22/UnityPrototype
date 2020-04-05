@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Resistance gear is radioactive 'cause it all comes from the Outer Belt mining
+    stations. They make it in ZeroG says [npc], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -27,7 +27,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I don't believe that Resistance gear is made on Mars. Those deadbeat dust
+    eaters don't know how to make crap, says [npc] of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

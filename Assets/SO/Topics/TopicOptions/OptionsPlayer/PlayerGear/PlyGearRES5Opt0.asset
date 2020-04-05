@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 11400000, guid: 8a2ec7f44f916df47b07eb6e811a0616, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: Who says that Resistance gear will rot your tackle, asks [npc], [job], of
+    [node]? It will, but only if you're unlucky enough to be a man
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

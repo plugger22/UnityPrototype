@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
-  news: 
+  news: Geniune Resistance gear turns you into a g*dd*amnned Sexual Tyrannosaurus,
+    swears [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: I've heard that the Resistance gets all their illegal gear from the Outer
+    Belt, smuggled in on cargo pods, said [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

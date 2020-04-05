@@ -26,7 +26,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6ec4718db4e5d8e4a861fae831f10409, type: 2}
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
-  news: 
+  news: Does [mayor] know that the Resistance has gear that can turn your brain into
+    mush and have it dribble out your nose, asks [npc]?
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

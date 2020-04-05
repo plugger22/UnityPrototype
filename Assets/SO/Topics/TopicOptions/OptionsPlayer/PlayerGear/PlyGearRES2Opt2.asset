@@ -26,7 +26,8 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
-  news: 
+  news: They make most Resistance gear on Ceres. Yep, that's right, dirty belter gear
+    is what it is, says [npc], [job], of [node]
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

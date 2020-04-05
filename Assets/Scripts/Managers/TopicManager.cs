@@ -5366,7 +5366,7 @@ public class TopicManager : MonoBehaviour
                                 {
                                     if (isColourHighlighting == true)
                                     { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, actor.arc.name, colourEnd); }
-                                    else { replaceText = actor.arc.name; }
+                                    else { replaceText = string.Format("{0}'s", actor.arc.name); }
                                 }
                                 else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                             }
@@ -5809,7 +5809,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
-                            else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                            else { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
                         }
                         else { CountTextTag("citys", dictOfTags); }
                         break;
