@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: PlyGearRES5Opt1
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res5 option 1
-  tag: Swindle
-  text: The dog ate my wallet
+  tag: Go Crazy
+  text: I'll pay you in HELL
   topic: {fileID: 11400000, guid: 8572f658ec268ea4d9054de04d05701a, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   news: 
   tooltipHeader: 

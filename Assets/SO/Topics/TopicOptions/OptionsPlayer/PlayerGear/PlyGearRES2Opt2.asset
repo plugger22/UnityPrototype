@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Player Gear Res2 option 2
   tag: Honest Broker
-  text: Tell HQ everything
+  text: I must inform HQ
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
   isPreferredByHQ: 0
   isIgnoredByHQ: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   chance: {fileID: 0}
   news: 
   tooltipHeader: 
