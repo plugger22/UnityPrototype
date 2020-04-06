@@ -15,7 +15,7 @@ MonoBehaviour:
   tag: Double Cross
   text: Sell intel to the Authority
   topic: {fileID: 11400000, guid: 7e1d4e81ab9730a4dbf7c45130c723ba, type: 2}
-  isPreferredByHQ: 0
+  isPreferredByHQ: 1
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0

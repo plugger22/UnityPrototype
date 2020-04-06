@@ -15,7 +15,7 @@ MonoBehaviour:
   tag: Honest Broker
   text: I must inform HQ
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
-  isPreferredByHQ: 0
+  isPreferredByHQ: 1
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
@@ -28,9 +28,9 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: They make most Resistance gear on Ceres. Yep, that's right, dirty belter gear
     is what it is, says [npc], [job], of [node]
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: <color=#FFE4B5>Quartermaster Motivation < 2</color>
+  tooltipDetails: <color=#98FB98>Player Mood +2</color>
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#BDC3C7>I must inform HQ</color>
   optionNumber: 2

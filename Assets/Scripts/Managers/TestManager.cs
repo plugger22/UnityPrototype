@@ -20,6 +20,10 @@ public class TestManager : MonoBehaviour
     [Tooltip("If there is a topic pool specified here then a topic will be randomly chosen from that pool overriding any normally selected topic. Ignored for autoRuns")]
     public TopicPool debugTopicPool;
 
+    [Header("Gear")]
+    [Tooltip("Number of gear items in inventory at end of autorun (default -1 for normal random assignment, specify number from 0 to 3 otherwise to override)")]
+    public int numOfGearItems = -1;
+
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;

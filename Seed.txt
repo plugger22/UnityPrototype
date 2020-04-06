@@ -1885,3 +1885,28 @@ TopBarUI.UpdateInnocenceTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopB
 	
 Dev seed 53402 -> Monday, 6 April 2020 9:57 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 16796 -> Monday, 6 April 2020 10:17 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43445 -> Monday, 6 April 2020 10:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28655 -> Monday, 6 April 2020 10:21 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55293 -> Monday, 6 April 2020 10:24 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15168 -> Monday, 6 April 2020 10:29 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14025 -> Monday, 6 April 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 22 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:677)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:822)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:804)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

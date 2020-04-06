@@ -15,7 +15,7 @@ MonoBehaviour:
   tag: Dubious Ethics
   text: Inform Authority and claim reward
   topic: {fileID: 11400000, guid: 8572f658ec268ea4d9054de04d05701a, type: 2}
-  isPreferredByHQ: 0
+  isPreferredByHQ: 1
   isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
