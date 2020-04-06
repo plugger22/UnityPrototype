@@ -668,6 +668,7 @@ public class SaveActor
     public List<string> listOfTraitEffects = new List<string>();
     public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     public List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
+    public List<HqRenownData> listOfHqRenownData = new List<HqRenownData>();
 
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }

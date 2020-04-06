@@ -774,7 +774,7 @@ public class HQManager : MonoBehaviour
     /// returns a random ranking HQ position
     /// </summary>
     /// <returns></returns>
-    public ActorHQ GetRandomHQPosition()
+    public ActorHQ GetRandomHqPosition()
     {
         List<ActorHQ> listOfHQPositions = new List<ActorHQ>() { ActorHQ.Boss, ActorHQ.SubBoss1, ActorHQ.SubBoss2, ActorHQ.SubBoss3 };
         return listOfHQPositions[Random.Range(0, listOfHQPositions.Count)];
@@ -784,7 +784,7 @@ public class HQManager : MonoBehaviour
     /// HQ relocating. Takes a number of turns. Services unavailable while relocating. Handles all admin. Time to relocate increases with every instance
     /// </summary>
     /// <param name="reason"></param>
-    public void RelocateHQ(string reason = "Unknown")
+    public void RelocateHq(string reason = "Unknown")
     {
         //stats (do first as needed for calcs below) 
         GameManager.instance.dataScript.StatisticIncrement(StatType.HQRelocations);
@@ -808,7 +808,7 @@ public class HQManager : MonoBehaviour
     /// <summary>
     /// Metagame resetting of HQ data
     /// </summary>
-    public void ProcessMetaHQ()
+    public void ProcessMetaHq()
     {
         isHqRelocating = false;
         timerHqRelocating = 0;       
@@ -851,7 +851,7 @@ public class HQManager : MonoBehaviour
     /// Debug method to display HQ Actors
     /// </summary>
     /// <returns></returns>
-    public string DebugDisplayHQActors()
+    public string DebugDisplayHqActors()
     {
         StringBuilder builder = new StringBuilder();
         Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
@@ -916,4 +916,85 @@ public class HQManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         return builder.ToString();
     }
+
+
+    /// <summary>
+    /// displays HQ actors renown data packages if any are present (eg. entries made everytime actor experiences a change in renown)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHqActorRenown()
+    {
+        StringBuilder builder = new StringBuilder();
+        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfActors != null)
+        {
+            builder.AppendFormat("-HQ Hierarchy Renown Data{0}", "\n");
+            //first and last indexes are blanks ('None', 'Workers', 'LeftHQ')
+            for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                {
+                    List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
+                    if (listOfRenownData != null && listOfRenownData.Count > 0)
+                    {
+                        builder.AppendFormat("{0}- {1}, {2}, {3}, ID {4}{5}", "\n", actor.statusHQ, actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.actorID, "\n");
+                        for (int j = 0; j < listOfRenownData.Count; j++)
+                        {
+                            HqRenownData data = listOfRenownData[j];
+                            if (data != null)
+                            { builder.AppendFormat("t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                            else { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, 
+                                GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.actorID); }
+                        }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i); }
+            }
+            //loop dictOfHQ and get Workers and LeftHQ
+            List<Actor> listOfWorkers = new List<Actor>();
+            List<Actor> listOfLeftHQ = new List<Actor>();
+            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+            if (dictOfHQ != null)
+            {
+                foreach (var actor in dictOfHQ)
+                {
+                    if (actor.Value != null)
+                    {
+                        switch (actor.Value.statusHQ)
+                        { case ActorHQ.Worker: listOfWorkers.Add(actor.Value); break; }
+                    }
+                    else { Debug.LogWarning("Invalid actor (Null) in dictOfHQ"); }
+                }
+                //display Workers
+                builder.AppendFormat("{0}- Workers{1}", "\n", "\n");
+                if (listOfWorkers.Count > 0)
+                {
+                    foreach (Actor actor in listOfWorkers)
+                    {
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1), 
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                        List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
+                        if (listOfRenownData != null && listOfRenownData.Count > 0)
+                        {
+                            for (int j = 0; j < listOfRenownData.Count; j++)
+                            {
+                                HqRenownData data = listOfRenownData[j];
+                                if (data != null)
+                                { builder.AppendFormat("t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                                else { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, actor.arc.name, actor.actorID); }
+                            }
+                        }
+                    }
+                }
+                else { builder.AppendFormat(" No records{0}", "\n"); }
+            }
+            else { Debug.LogError("Invalid dictOfHQ (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
+        return builder.ToString();
+    }
+
+
+    //new methods above here
 }

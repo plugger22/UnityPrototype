@@ -4026,6 +4026,11 @@ public class FileManager : MonoBehaviour
             if (listOfTraitEffects != null)
             { saveActor.listOfTraitEffects.AddRange(listOfTraitEffects); }
             else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
+            //Hq renown data
+            List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
+            if (listOfRenownData != null)
+            { saveActor.listOfHqRenownData.AddRange(listOfRenownData); }
+            else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
             //topics
             saveActor.listOfNodeActions = actor.GetListOfNodeActions();
             saveActor.listOfTeamActions = actor.GetListOfTeamActions();
@@ -4201,6 +4206,8 @@ public class FileManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
+            //Hq Renown data
+            actor.SetHqRenownData(readActor.listOfHqRenownData);
             //topic data
             actor.SetNodeActionData(readActor.listOfNodeActions);
             actor.SetTeamActionData(readActor.listOfTeamActions);

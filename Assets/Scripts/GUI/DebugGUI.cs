@@ -225,7 +225,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 11; hqToggle = 1; break;
                     case 1: debugDisplay = 71; hqToggle = 2; break;
-                    case 2: debugDisplay = 0; hqToggle = 0; break;
+                    case 2: debugDisplay = 99; hqToggle = 3; break;
+                    case 3: debugDisplay = 0; hqToggle = 0; break;
                 }
             }
 
@@ -1653,7 +1654,7 @@ public class DebugGUI : MonoBehaviour
                     //HQs
                     case 71:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.hqScript.DebugDisplayHQActors();
+                        analysis = GameManager.instance.hqScript.DebugDisplayHqActors();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
                         break;
                     //News Items
@@ -1857,6 +1858,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    //HQ actors renown history
+                    case 99:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.hqScript.DebugDisplayHqActorRenown();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                 }
             }

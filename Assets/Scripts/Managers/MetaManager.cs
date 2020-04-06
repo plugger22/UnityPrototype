@@ -37,7 +37,7 @@ public class MetaManager : MonoBehaviour
         GameManager.instance.topicScript.ProcessMetaTopics();
         GameManager.instance.actorScript.ProcessMetaActors();
         GameManager.instance.dataScript.ProcessMetaCures();
-        GameManager.instance.hqScript.ProcessMetaHQ();
+        GameManager.instance.hqScript.ProcessMetaHq();
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
     }

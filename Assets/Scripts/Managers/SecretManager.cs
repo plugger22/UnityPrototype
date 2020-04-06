@@ -363,7 +363,7 @@ public class SecretManager : MonoBehaviour
                         tag = secret.investigationTag,
                         evidence = secret.investigationEvidence,
                         turnStart = gameTurn,
-                        lead = GameManager.instance.hqScript.GetRandomHQPosition(),
+                        lead = GameManager.instance.hqScript.GetRandomHqPosition(),
                         city = GameManager.instance.campaignScript.scenario.city.name,
                         status = InvestStatus.Ongoing,
                         outcome = InvestOutcome.None

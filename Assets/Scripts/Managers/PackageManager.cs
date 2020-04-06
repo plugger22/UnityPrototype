@@ -922,5 +922,17 @@ namespace packageAPI
         public string reason;
     }
 
+    /// <summary>
+    /// Tracks anything that changes an HQ actors renown
+    /// </summary>
+    [System.Serializable]
+    public class HqRenownData
+    {
+        public int turn;
+        public int change;                  //amount renown is changing by
+        public int newRenown;               //what renown is after change
+        public string reason;
+    }
+
     //new classes above here
 }

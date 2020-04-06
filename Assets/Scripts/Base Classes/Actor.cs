@@ -74,6 +74,7 @@ namespace gameAPI
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();        //Actor district topics
         private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();        //Authority team topics
+        private List<HqRenownData> listOfHqRenownData = new List<HqRenownData>();           //Hq actors only, tracks all changes to renown
         #endregion
 
         //cached trait effects (public for serialization reasons)
@@ -1373,6 +1374,42 @@ namespace gameAPI
             else { Debug.LogError("Invalid listOfData (Null)"); }
         }
 
+        //
+        // - - - HQ actors
+        //
+
+        public List<HqRenownData> GetListOfHqRenownData()
+        { return listOfHqRenownData; }
+
+        /// <summary>
+        /// Adds data record of HQ actor's renown change, returns true if successful, false if not
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool AddHqRenownData(HqRenownData data)
+        {
+            if (data != null)
+            {
+                listOfHqRenownData.Add(data);
+                return true;
+            }
+            else { Debug.LogError("Invalid hqRenownData (Null)"); }
+            return false;
+        }
+
+        /// <summary>
+        /// refresh HQ renown data list for Save/Load data
+        /// </summary>
+        /// <param name="tempList"></param>
+        public void SetHqRenownData(List<HqRenownData> tempList)
+        {
+            if (tempList != null)
+            {
+                listOfHqRenownData.Clear();
+                listOfHqRenownData.AddRange(tempList);
+            }
+            else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
+        }
 
         //place methods above here
     }

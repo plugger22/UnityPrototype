@@ -2333,7 +2333,7 @@ public class EffectManager : MonoBehaviour
                             {
                                 //Actor effect
                                 if (actor != null)
-                                { effectReturn.bottomText = ExecuteActorRenown(effect, actor); }
+                                { effectReturn.bottomText = ExecuteActorRenown(effect, actor, dataInput); }
                                 else
                                 {
                                     Debug.LogErrorFormat("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name);
@@ -4153,7 +4153,7 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "Renown":
-                effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataTopic.isHqActors);
+                effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataInput, dataTopic.isHqActors);
                 break;
             case "ContactGainLose":
             case "ContactStatus":
@@ -4258,7 +4258,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Renown":
                 //actor Other changes Renown
-                effectResolve.bottomText = ExecuteActorRenown(effect, actorOther, dataTopic.isHqActors);
+                effectResolve.bottomText = ExecuteActorRenown(effect, actorOther, dataInput, dataTopic.isHqActors);
                 break;
         }
         return effectResolve;
@@ -4522,7 +4522,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "HQRelocate":
                 //HQ relocates (takes time, services unavailable during relocation)
-                GameManager.instance.hqScript.RelocateHQ("Player reveals Location");
+                GameManager.instance.hqScript.RelocateHq("Player reveals Location");
                 effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}{2}{3}Location Compromised{4}{5}", colourBad, colourEnd, "\n", colourAlert, colourEnd, "\n");
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4791,19 +4791,22 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ExecuteActorRenown(Effect effect, Actor actor, bool isHqActor = false)
+    private string ExecuteActorRenown(Effect effect, Actor actor, EffectDataInput dataInput, bool isHqActor = false)
     {
         string bottomText = "Unknown";
         int dataBefore = actor.Renown;
+        int changeAmount = 0;
         switch (effect.operand.name)
         {
             case "Add":
                 actor.Renown += effect.value;
+                changeAmount += effect.value;
                 if (actor.CheckTraitEffect(actorDoubleRenown) == true)
                 {
                     //trait -> renown doubled (only for Add renown)
+                    changeAmount += effect.value;
                     actor.Renown += effect.value;
-                    bottomText = string.Format("{0}{1} Renown +{2}{3} {4}({5}){6}", isHqActor == false ? colourBad : colourGood,
+                    bottomText = string.Format("{0}{1} Renown +{2}{3} ({4}{5}{6} trait)", isHqActor == false ? colourBad : colourGood,
                         isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                         effect.value * 2, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd);
                     //logger
@@ -4819,6 +4822,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Subtract":
                 actor.Renown -= effect.value;
+                changeAmount -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
                     isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
@@ -4826,6 +4830,19 @@ public class EffectManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
+        //hq actor
+        if (isHqActor == true && changeAmount != 0)
+        {
+            HqRenownData dataRenown = new HqRenownData()
+            {
+                turn = GameManager.instance.turnScript.Turn,
+                change = changeAmount,
+                newRenown = actor.Renown,
+                reason = dataInput.originText
+            };
+            actor.AddHqRenownData(dataRenown);
+        }
+        //admin
         Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
             dataBefore, actor.Renown, "\n");
         return bottomText;

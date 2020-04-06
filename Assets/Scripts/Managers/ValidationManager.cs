@@ -2123,6 +2123,9 @@ public class ValidationManager : MonoBehaviour
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
                 CheckDictRange(actor.Value.Renown, 0, 999, "Renown", tag, key);
+                //renown data
+                if (actor.Value.GetListOfHqRenownData().Count > 0)
+                { CheckList(actor.Value.GetListOfHqRenownData(), "HqRenownData", tag); }
                 //personality
                 Personality personality = actor.Value.GetPersonality();
                 if (personality != null)
@@ -2142,12 +2145,12 @@ public class ValidationManager : MonoBehaviour
                 if (actor.Value.Status != ActorStatus.HQ)
                 {
                     Debug.LogFormat("{0}Invalid status \"{1}\" (should be HQ) for hqID {2}, actor {3}{4}",
-tag, actor.Value.Status, actor.Value.hqID, actor.Value.actorName, "\n");
+                        tag, actor.Value.Status, actor.Value.hqID, actor.Value.actorName, "\n");
                 }
                 else if (actor.Value.statusHQ == ActorHQ.None)
                 {
                     Debug.LogFormat("{0}Invalid HQ Status \"{1}\" (shouldn't be None) for hqID {2}, actor {3}{4}",
-tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
+                        tag, actor.Value.statusHQ, actor.Value.hqID, actor.Value.actorName, "\n");
                 }
             }
         }

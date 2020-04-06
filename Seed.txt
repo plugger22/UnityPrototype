@@ -1915,3 +1915,40 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 43084 -> Monday, 6 April 2020 12:05 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 18635 -> Monday, 6 April 2020 3:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22140 -> Monday, 6 April 2020 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11127 -> Monday, 6 April 2020 4:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1370 -> Monday, 6 April 2020 4:15 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HQManager.DebugDisplayHqActorRenown () (at Assets/Scripts/Managers/HQManager.cs:946)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1865)
+	
+Dev seed 27120 -> Monday, 6 April 2020 4:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34483 -> Monday, 6 April 2020 4:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63774 -> Monday, 6 April 2020 4:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25408 -> Monday, 6 April 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 40560 -> Monday, 6 April 2020 4:58 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39481 -> Monday, 6 April 2020 5:08 PM
+City seed 5678 -> London, United Kingdom
