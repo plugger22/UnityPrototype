@@ -16,7 +16,8 @@ MonoBehaviour:
   text: Go ahead, turn off the lights
   topic: {fileID: 11400000, guid: 8572f658ec268ea4d9054de04d05701a, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 1
+  isDislikedByHQ: 1
+  isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []

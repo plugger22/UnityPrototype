@@ -24,6 +24,8 @@ public class TopicOption : ScriptableObject
     [Header("Special")]
     [Tooltip("Select this if the option is preferred by HQ. Doing so will override the HQ Boss's personality preferences. Ignore otherwise")]
     public bool isPreferredByHQ;
+    [Tooltip("Select this is the option is disliked by HQ. Doing so will override the HQ Boss's personality preference and give a 'disapprove' result")]
+    public bool isDislikedByHQ;
     [Tooltip("Select this if the option is irrelevant to HQ. Doing so will override the HQ Boss's personality preferences and give a 'no opinion' result")]
     public bool isIgnoredByHQ;
     [Tooltip("If true the random option disabled, due to Player being Stressed, effect is unavailable (eg. all options available regardless of Player stress status). Optional (default false, effect applies")]

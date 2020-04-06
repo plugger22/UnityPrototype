@@ -3349,7 +3349,7 @@ public class TopicManager : MonoBehaviour
                     Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
                     if (actorHQ != null)
                     {
-                        int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isIgnoredByHQ);
+                        int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isDislikedByHQ, turnOption.isIgnoredByHQ);
                         if (opinionChange != 0)
                         {
                             int bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
@@ -5132,14 +5132,23 @@ public class TopicManager : MonoBehaviour
                         {
                             if (option.moodEffect.belief != null)
                             {
-                                //if an HQ preferred option it is automatically 'Good', otherwise it's based on HQ Boss's personality
+                                /*//if an HQ preferred option it is automatically 'Good', otherwise it's based on HQ Boss's personality
                                 if (option.isPreferredByHQ == false)
                                 {
                                     if (option.isIgnoredByHQ == false)
                                     { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
                                     else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                                 }
-                                else { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }
+                                else { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }*/
+
+                                if (option.isPreferredByHQ == true)
+                                { builder.AppendFormat("{0}{1}: {2} {3}Approves{4}", colourCancel, option.tag, colourEnd, colourGood, colourEnd); }
+                                else if (option.isDislikedByHQ == true)
+                                { builder.AppendFormat("{0}{1}: {2} {3}Disapproves{4}", colourCancel, option.tag, colourEnd, colourBad, colourEnd); }
+                                else if (option.isIgnoredByHQ == true)
+                                { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
+                                else
+                                { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
                             }
                             else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                         }

@@ -886,6 +886,7 @@ public class ValidationManager : MonoBehaviour
         List<string> listOfMoodEffects = new List<string>();
         Dictionary<string, int> dictOfBeliefs = GameManager.instance.dataScript.GetDictOfBeliefs();
         int maxOptions = GameManager.instance.topicScript.maxOptions;
+        int hqOptions;
         if (arrayOfTopics != null)
         {
             if (arrayOfTopicOptions != null)
@@ -953,6 +954,13 @@ public class ValidationManager : MonoBehaviour
                                                     Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, limit {1} chars) for option \"{2}\", topic {3}{4}",
                                                         textLength, maxOptionTextLength, option.name, topic.name, "\n");
                                                 }
+                                                //check that there is only a single HQ option available (or none) as they are mutually exclusive
+                                                hqOptions = 0;
+                                                if (option.isPreferredByHQ == true) { hqOptions++; }
+                                                if (option.isDislikedByHQ == true) { hqOptions++; }
+                                                if (option.isIgnoredByHQ == true) { hqOptions++; }
+                                                if (hqOptions > 1)
+                                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: More than one isHQ toggle for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }
                                                 //check there is at least one good or bad effect present
                                                 if (option.listOfGoodEffects.Count == 0 && option.listOfBadEffects.Count == 0)
                                                 { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: No effects present, Good or Bad, for option \"{0}\", topic {1}{2}", option.name, topicName, "\n"); }

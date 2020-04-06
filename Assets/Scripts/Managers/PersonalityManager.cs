@@ -924,10 +924,10 @@ public class PersonalityManager : MonoBehaviour
     /// <param name="belief"></param>
     /// <param name="actorHQ"></param>
     /// <returns></returns>
-    public int UpdateHQOpinion(Belief belief, Actor actorHQ, bool isHQPreferredOption, bool isHQIgnoredOption)
+    public int UpdateHQOpinion(Belief belief, Actor actorHQ, bool isHQPreferredOption, bool isHQDislikeOption, bool isHQIgnoredOption)
     {
         int opinionChange = 0;
-        if (isHQPreferredOption == false && isHQIgnoredOption == false)
+        if (isHQPreferredOption == false && isHQIgnoredOption == false && isHQDislikeOption == false)
         {
             //get index of factor array
             int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
@@ -962,6 +962,11 @@ public class PersonalityManager : MonoBehaviour
             {
                 //HQ Preferred option -> always good
                 opinionChange = 1;
+            }
+            else if (isHQDislikeOption == true)
+            {
+                //HQ Disapproves option -> always bad
+                opinionChange = -1;
             }
             else if (isHQIgnoredOption == true)
             {

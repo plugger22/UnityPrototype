@@ -16,7 +16,8 @@ MonoBehaviour:
   text: Make a deal
   topic: {fileID: 11400000, guid: 608e506058849634dbd98efe1053475d, type: 2}
   isPreferredByHQ: 0
-  isIgnoredByHQ: 1
+  isDislikedByHQ: 1
+  isIgnoredByHQ: 0
   isIgnoreStress: 0
   isIgnoreMood: 0
   listOfCriteria: []
@@ -31,7 +32,7 @@ MonoBehaviour:
   tooltipHeader: <color=#FFFFE0>Transact</color>
   tooltipMain: "<color=#98FB98>Player Renown +5</color>\r\n<color=#FF4500>Player loses
     Gear item</color>"
-  tooltipDetails: <color=#98FB98>Player Mood +1</color>
+  tooltipDetails: <color=#FF4500>Player Mood -1</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Make a deal</color>
   optionNumber: 0
