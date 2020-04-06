@@ -1864,3 +1864,24 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 44489 -> Sunday, 5 April 2020 5:03 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 63421 -> Monday, 6 April 2020 9:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53318 -> Monday, 6 April 2020 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55839 -> Monday, 6 April 2020 9:45 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateInnocenceTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:661)
+	TopBarUI.UpdateInnocence (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:400)
+	PlayerManager.set_Innocence (System.Int32 value) (at Assets/Scripts/Managers/PlayerManager.cs:205)
+	PlayerManager.SubInitialiseSessionStartEarly () (at Assets/Scripts/Managers/PlayerManager.cs:273)
+	PlayerManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/PlayerManager.cs:219)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:775)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:829)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:365)
+	
+Dev seed 53402 -> Monday, 6 April 2020 9:57 AM
+City seed 5678 -> London, United Kingdom

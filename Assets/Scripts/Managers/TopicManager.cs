@@ -6324,9 +6324,9 @@ public class TopicManager : MonoBehaviour
         string replaceText = "Unknown";
         switch (GameManager.instance.playerScript.Innocence)
         {
-            case 3: replaceText = string.Format("{0}<b>low level street Operative</b>{1}", colourAlert, colourEnd); break;
-            case 2: replaceText = string.Format("{0}<b>mid level Organiser</b>{1}", colourAlert, colourEnd); break;
-            case 1: replaceText = string.Format("{0}<b>high level Operative</b>{1}", colourAlert, colourEnd); break;
+            case 3: replaceText = string.Format("{0}<b>Low level street Operative</b>{1}", colourAlert, colourEnd); break;
+            case 2: replaceText = string.Format("{0}<b>Mid level Organiser</b>{1}", colourAlert, colourEnd); break;
+            case 1: replaceText = string.Format("{0}<b>High level Operative</b>{1}", colourAlert, colourEnd); break;
             case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourAlert, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised Innocence {0}", GameManager.instance.playerScript.Innocence); break;
         }

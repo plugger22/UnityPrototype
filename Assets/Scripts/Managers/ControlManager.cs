@@ -405,7 +405,7 @@ public class ControlManager : MonoBehaviour
 
 
     /// <summary>
-    /// returns game state at time player opted for the selected option
+    /// returns game state at time player opted for the selected option. Use during non-normal gameState checks, eg. Menu ops, Save/Load, otherwise inputScript.GameState
     /// </summary>
     /// <returns></returns>
     public GameState GetExistingGameState()
