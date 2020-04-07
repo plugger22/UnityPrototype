@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25fedcb97c2563141b11a299c37f0ace, type: 3}
-  m_Name: Psychologist
+  m_Name: Enforcer
   m_EditorClassIdentifier: 
-  tag: Psychologist
+  tag: Enforcer
   position: subBoss 3
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}

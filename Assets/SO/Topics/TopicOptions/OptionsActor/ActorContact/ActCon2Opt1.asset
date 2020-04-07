@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActCon2Opt1
+  m_EditorClassIdentifier: 
+  descriptor: Actor Contact 2 option 1
+  tag: Investigate
+  text: Dig Deeper
+  topic: {fileID: 11400000, guid: 4cd7d13753ed13e4b80d058a966ba5d2, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria:
+  - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
+  - {fileID: 11400000, guid: e7e531d54edce21418ded7985d8430d6, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
+  listOfBadEffects:
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
+  moodEffect: {fileID: 11400000, guid: f19759d229ec55e4db483c209726edc4, type: 2}
+  chance: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  news: Do Resistance contacts qualify for corporate benefits, asks [npc], [job],
+    of [node]? I could be interested if there was free medical
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Pay them what they want</color>
+  optionNumber: 1

@@ -2582,6 +2582,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd2382c5170310b49b788456bc1a7c71, type: 2}
   - {fileID: 11400000, guid: 7e1d4e81ab9730a4dbf7c45130c723ba, type: 2}
   - {fileID: 11400000, guid: 8572f658ec268ea4d9054de04d05701a, type: 2}
+  - {fileID: 11400000, guid: 4cd7d13753ed13e4b80d058a966ba5d2, type: 2}
+  - {fileID: 11400000, guid: 018c83fe91c59204288f745a157d46d2, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -2590,6 +2592,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 446e552d318bdd441bf2c279ccdf8865, type: 2}
   - {fileID: 11400000, guid: 5554296e05eb7fe44b4997b8251d0046, type: 2}
   - {fileID: 11400000, guid: d93a1d736a2e33c418aa3b720177f908, type: 2}
+  - {fileID: 11400000, guid: 373cb4c80538e4e49adb4bbaf05f4619, type: 2}
+  - {fileID: 11400000, guid: 4996aa501d9e02448b79d5f2020a9b33, type: 2}
+  - {fileID: 11400000, guid: 7bec0a85ea5d15849bfd36b220e3282e, type: 2}
+  - {fileID: 11400000, guid: 3c01e451d7ef3ba44bd3ca005f8e2647, type: 2}
+  - {fileID: 11400000, guid: 7c662688ae7611740857108a7823ecb7, type: 2}
+  - {fileID: 11400000, guid: 4b7cfeb46d5e3944c841f87199f7256c, type: 2}
   arrayOfOptionsActorDistrict:
   - {fileID: 11400000, guid: f682cee580d928c4a86a73c4256093c2, type: 2}
   - {fileID: 11400000, guid: 6b4a3321be258124b897cca1c266c206, type: 2}
@@ -4349,7 +4357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
   numOfGearItems: 3
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999

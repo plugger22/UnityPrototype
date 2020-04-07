@@ -1952,3 +1952,75 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 39481 -> Monday, 6 April 2020 5:08 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 59509 -> Tuesday, 7 April 2020 9:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49293 -> Tuesday, 7 April 2020 9:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12945 -> Tuesday, 7 April 2020 9:55 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64078 -> Tuesday, 7 April 2020 10:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30085 -> Tuesday, 7 April 2020 10:29 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53969 -> Tuesday, 7 April 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14410 -> Tuesday, 7 April 2020 10:33 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37521 -> Tuesday, 7 April 2020 10:35 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53193 -> Tuesday, 7 April 2020 10:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64071 -> Tuesday, 7 April 2020 11:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37513 -> Tuesday, 7 April 2020 11:42 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44422 -> Tuesday, 7 April 2020 11:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15440 -> Tuesday, 7 April 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+	TopicManager:DebugTestNews() (at Assets/Scripts/Managers/TopicManager.cs:6902)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:726)
+	WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid tagContactID "-1" for tag <Contact>
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:5573)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

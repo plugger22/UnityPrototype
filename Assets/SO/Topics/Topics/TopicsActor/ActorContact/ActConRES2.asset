@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: ActConRES2
+  m_EditorClassIdentifier: 
+  tag: Mystery Contact
+  text: Your [actor] has found a promising candidate for a new contact, [contactLong],
+    but very little is known about them
+  designNotes: 
+  type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
+  subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics: []
+  linkedIndex: -1
+  profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: da91d7948f4e285408ae55c3c610cfba, type: 2}
+  listOfIgnoreEffects:
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  listOfOptions:
+  - {fileID: 11400000, guid: 373cb4c80538e4e49adb4bbaf05f4619, type: 2}
+  - {fileID: 11400000, guid: 4996aa501d9e02448b79d5f2020a9b33, type: 2}
+  - {fileID: 11400000, guid: 7bec0a85ea5d15849bfd36b220e3282e, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 1
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 4
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 18
+  turnsLive: 0
+  turnsDone: 0

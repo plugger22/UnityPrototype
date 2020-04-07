@@ -16,7 +16,10 @@ MonoBehaviour:
   text: Ask [actor] to negotiate a better deal
   topic: {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   isPreferredByHQ: 0
+  isDislikedByHQ: 0
   isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
   listOfCriteria:
   - {fileID: 11400000, guid: 8d0536988ce08744489a30fec14d8ce3, type: 2}
   listOfGoodEffects:
@@ -27,8 +30,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa601b2d15987c4397bb0eafdf0bac4, type: 2}
   moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   chance: {fileID: 0}
-  news: Did you know that you can earn money on the by letting the Resistance know
-    stuff, says [contact] of [node]? It's for money, they pay real money
+  news: Did you know that you can earn money on the sly by letting the Resistance
+    know stuff, says [contact] of [node]? It's for money, real money
   tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
   tooltipMain: '<color=#FFE4B5>Not enough Renown
 

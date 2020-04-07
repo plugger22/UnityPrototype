@@ -3650,12 +3650,14 @@ public class ActorManager : MonoBehaviour
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                        /*tooltipDetailsSprite.textMain = new StringBuilder()
-                           .AppendFormat("{0}  {1}{2}{3}{4}", "Motivation", GameManager.instance.colourScript.GetValueColour(motivation),
-                                   actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n")
-                           .AppendFormat("{0}  {1}{2}{3}", "Renown", colourNeutral, actor.Renown, colourEnd)
-                           .ToString();*/
-                        tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd);
+                        if (actor.GetTrait().isHqTrait == false)
+                        { tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd); }
+                        else
+                        {
+                            //actor has an HQ relevant trait
+                            tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Renown, colourEnd, "\n", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
+                                 actor.GetTrait().tagFormatted, "</cspace>", "</font>");
+                        }
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.instance.hqScript.GetBossOpinionFormatted()); }
                         //tooltip -> stars (bottom text, motivation -> same for all)
@@ -4032,17 +4034,9 @@ public class ActorManager : MonoBehaviour
                             StringBuilder builder = new StringBuilder();
                             if (arrayOfQualities.Length > 0)
                             {
-                                /*builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[0], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint0)),
-                                    actor.GetDatapoint(ActorDatapoint.Datapoint0), colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}{4}", arrayOfQualities[1], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint1)),
-                                    actor.GetDatapoint(ActorDatapoint.Datapoint1), colourEnd, "\n");
-                                builder.AppendFormat("{0}  {1}{2}{3}", arrayOfQualities[2], GameManager.instance.colourScript.GetValueColour(actor.GetDatapoint(ActorDatapoint.Datapoint2)),
-                                    actor.GetDatapoint(ActorDatapoint.Datapoint2), colourEnd);*/
-
                                 builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.instance.guiScript.GetDatapointStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
                                 builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.instance.guiScript.GetDatapointStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
                                 builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.instance.guiScript.GetDatapointStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
-
                                 tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
                             }
                             //trait and action

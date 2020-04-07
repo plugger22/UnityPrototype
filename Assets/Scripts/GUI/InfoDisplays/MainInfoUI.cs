@@ -204,8 +204,8 @@ public class MainInfoUI : MonoBehaviour
     string colourBlue;
     string colourNormal;
     /*string colourError;
-    string colourInvalid;
-    string colourCancel;*/
+    string colourInvalid;*/
+    string colourCancel;
     string colourEnd;
 
     //static reference
@@ -615,7 +615,7 @@ public class MainInfoUI : MonoBehaviour
         itemButtonTooltip.tooltipMain = texts.Item2;
         itemButtonTooltip.tooltipDetails = texts.Item3;
         itemButtonTooltip.x_offset = 125;
-        //initialise butotnHelpInfo data
+        //initialise buttonHelpInfo data
         List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
         if (listOfHelp != null)
         { infoHelpTop.SetHelpTooltip(listOfHelp, 400, 50); }
@@ -716,8 +716,8 @@ public class MainInfoUI : MonoBehaviour
 
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
         colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
@@ -755,11 +755,11 @@ public class MainInfoUI : MonoBehaviour
             //ticker tap
             SetTicker(data.tickerText);
             List<HelpData> listOfHelpData = new List<HelpData>();
-            //ticker mouse over -> News + advert repeated sequence
+            //ticker mouse over tooltip -> News + advert repeated sequence
             if (data.listOfNews != null)
             {
                 HelpData helpData = new HelpData();
-                helpData.header = string.Format("{0}NewsFeed{1}", colourNeutral, colourEnd);
+                helpData.header = string.Format("{0}News Feed{1}", colourCancel, colourEnd);
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < data.listOfNews.Count; i++)
                 {
@@ -769,7 +769,7 @@ public class MainInfoUI : MonoBehaviour
                     if (data.listOfAdverts.Count > i)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
+                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourNeutral, data.listOfAdverts[i], colourEnd));
                         //builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
                     }
                     else

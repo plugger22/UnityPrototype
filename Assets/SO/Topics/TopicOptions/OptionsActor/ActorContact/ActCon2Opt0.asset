@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: ActCon2Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Actor Contact 2 option 0
+  tag: Gain Contact
+  text: Sign them up, the more the better
+  topic: {fileID: 11400000, guid: 4cd7d13753ed13e4b80d058a966ba5d2, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 0
+  isIgnoreStress: 0
+  isIgnoreMood: 0
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d4bd73b319d92e946b76b96a090657c5, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
+  chance: {fileID: 0}
+  news: What is the lifespan of a Resistance contact? Not bloody long from what I
+    gather, says [npc], [job], of [node]
+  tooltipHeader: <mark=#FFFFFF4D>OPTION UNAVAILABLE</mark>
+  tooltipMain: '<color=#FFE4B5>Not enough Renown
+
+    (need 2)</color>'
+  tooltipDetails: <color=#BDC3C7>No effect on Player Mood</color>
+  isValid: 0
+  textToDisplay: <color=#BDC3C7>Pay them what they want</color>
+  optionNumber: 0

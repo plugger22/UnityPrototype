@@ -20,6 +20,12 @@ public class Trait : ScriptableObject
     public GlobalSide side;
     [Tooltip("What type of trait is it? Any SO with this trait will be error checked on import to confirm that it has the correct trait category")]
     public TraitCategory category;
+
+    [Header("Special")]
+    [Tooltip("Does the trait have a use when the actor is at HQ")]
+    public bool isHqTrait;
+
+    [Header("Effects")]
     [Tooltip("Specific in-game effects of the trait")]
     public List<TraitEffect> listOfTraitEffects;
 

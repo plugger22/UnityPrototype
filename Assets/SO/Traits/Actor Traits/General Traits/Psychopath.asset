@@ -16,6 +16,7 @@ MonoBehaviour:
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
+  isHqTrait: 0
   listOfTraitEffects:
   - {fileID: 11400000, guid: 424dc197193d93245bb201f3a6cc1e4e, type: 2}
   openness: 1

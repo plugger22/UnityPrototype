@@ -953,7 +953,6 @@ public class HQManager : MonoBehaviour
             }
             //loop dictOfHQ and get Workers and LeftHQ
             List<Actor> listOfWorkers = new List<Actor>();
-            List<Actor> listOfLeftHQ = new List<Actor>();
             Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
             if (dictOfHQ != null)
             {
