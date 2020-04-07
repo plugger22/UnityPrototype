@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActConRES2
   m_EditorClassIdentifier: 
   tag: Mystery Contact
-  text: Your [actor] has found a promising candidate for a new contact, [contactLong],
-    but very little is known about them
+  text: Your [actor] has found a promising candidate for a new contact but very little
+    is known about them
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
@@ -37,12 +37,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 1
+  status: 0
   isCurrent: 1
   timerStart: 0
   timerRepeat: 4
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 18
-  turnsLive: 0
+  turnsLive: 2
   turnsDone: 0

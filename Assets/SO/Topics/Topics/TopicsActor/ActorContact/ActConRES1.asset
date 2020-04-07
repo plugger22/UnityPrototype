@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Contact threatens
   text: One of your [actors] contacts, [contactLong] is demanding more compensation
-    for the risks that they are taking.
+    for the high quality information they are providing
   designNotes: 
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 58bafff6a7787b84ca053a4bc14f59b1, type: 2}
@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 446e552d318bdd441bf2c279ccdf8865, type: 2}
   - {fileID: 11400000, guid: 5554296e05eb7fe44b4997b8251d0046, type: 2}
   - {fileID: 11400000, guid: d93a1d736a2e33c418aa3b720177f908, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -40,7 +41,7 @@ MonoBehaviour:
   timerStart: 0
   timerRepeat: 2
   timerWindow: 0
-  turnsDormant: 1
-  turnsActive: 1
-  turnsLive: 14
+  turnsDormant: 2
+  turnsActive: 0
+  turnsLive: 18
   turnsDone: 0

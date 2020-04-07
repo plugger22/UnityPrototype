@@ -2024,3 +2024,5 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:6936)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 6629 -> Tuesday, 7 April 2020 2:08 PM
+City seed 5678 -> London, United Kingdom
