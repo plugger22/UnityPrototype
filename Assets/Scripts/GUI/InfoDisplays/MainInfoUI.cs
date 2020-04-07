@@ -200,8 +200,8 @@ public class MainInfoUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
-    /*string colourGood;*/
-    string colourBlue;
+    /*string colourGood;
+    string colourBlue;*/
     string colourNormal;
     /*string colourError;
     string colourInvalid;*/
@@ -706,8 +706,8 @@ public class MainInfoUI : MonoBehaviour
         colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
-        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
 
         /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
@@ -769,8 +769,8 @@ public class MainInfoUI : MonoBehaviour
                     if (data.listOfAdverts.Count > i)
                     {
                         if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourNeutral, data.listOfAdverts[i], colourEnd));
-                        //builder.Append(string.Format("<font=\"Bangers SDF\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", colourBlue, data.listOfAdverts[i], colourEnd));
+                        builder.Append(string.Format("<font=\"Bangers SDF\" material=\"Bangers SDF - Outline\"><size=115%><cspace=1em>{0}{1}{2}</cspace></size></font>", 
+                            colourNeutral, data.listOfAdverts[i], colourEnd));
                     }
                     else
                     {
@@ -1087,6 +1087,8 @@ public class MainInfoUI : MonoBehaviour
         buttonHelpCentre.gameObject.SetActive(false);
         buttonHelpCombined.gameObject.SetActive(false);
         buttonItem.gameObject.SetActive(false);
+        //reset scrollbar
+        scrollRect.verticalNormalizedPosition = 1.0f;
         //redrawn main page
         DisplayItemPage(tabIndex);
         //assign default info icon

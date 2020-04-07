@@ -131,7 +131,8 @@ public class GameManager : MonoBehaviour
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
-     [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
+    private float mouseWheelInput;                                                    //used for detecting mouse wheel input in the Update method
+    [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
@@ -380,12 +381,19 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        mouseWheelInput = 0;
         //redraw any Nodes where required
         if (nodeScript.NodeRedraw == true)
         { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
+
+        //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
+        mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
+
         //Handle Game Input
-        if (Input.anyKeyDown == true)
-        { inputScript.ProcessInput(); }
+        if (mouseWheelInput != 0)
+        { inputScript.ProcessMouseWheelInput(mouseWheelInput); }
+        else if (Input.anyKeyDown == true)
+        { inputScript.ProcessKeyInput(); }
     }
     #endregion
 
