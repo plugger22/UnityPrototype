@@ -1455,11 +1455,14 @@ public class MainInfoUI : MonoBehaviour
             if (highlightIndex > 0)
             {
                 //if already scrolled down move scrollRect up one item
-                if (highlightIndex >= numOfVisibleItems)
+                if (highlightIndex > numOfVisibleItems)
                 {
                     float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
                     scrollRect.verticalNormalizedPosition = scrollPos;
                 }
+                else if (highlightIndex == numOfVisibleItems)
+                { scrollRect.verticalNormalizedPosition = 1.0f; }
+
                 ShowItemDetails(highlightIndex - 1);
             }
             else
