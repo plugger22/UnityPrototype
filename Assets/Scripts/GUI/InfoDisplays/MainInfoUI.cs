@@ -958,6 +958,7 @@ public class MainInfoUI : MonoBehaviour
             {
                 /*//update max number of items
                 numOfMaxItem = numOfItemsCurrent;*/
+
                 //populate current messages for the main tab
                 for (int index = 0; index < arrayItemText.Length; index++)
                 {
@@ -1008,7 +1009,7 @@ public class MainInfoUI : MonoBehaviour
             SetPageHeader(numOfItemsCurrent);
         }
         else { Debug.LogWarning("Invalid MainInfoData.listOfMainText (Null)"); }
-        //manually activate / deactivate scrollBar as needed (because you've got daactivated objects in the scroll list the bar shows regardless unless you override here)
+        //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
         if (numOfItemsCurrent <= numOfVisibleItems)
         {
             scrollRect.verticalScrollbar = null;
@@ -1425,8 +1426,17 @@ public class MainInfoUI : MonoBehaviour
     {
         if (highlightIndex > -1)
         {
-            if (highlightIndex < (maxHighlightIndex))
-            { ShowItemDetails(highlightIndex + 1); }
+            if (highlightIndex < maxHighlightIndex)
+            {
+                ShowItemDetails(highlightIndex + 1);
+
+                //if outside scroll view move scrollRect down one item
+                if (highlightIndex >= numOfVisibleItems)
+                {
+                    float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
+                    scrollRect.verticalNormalizedPosition = scrollPos;
+                }
+            }
         }
         else if (maxHighlightIndex > -1)
         {
@@ -1443,7 +1453,15 @@ public class MainInfoUI : MonoBehaviour
         if (highlightIndex > -1)
         {
             if (highlightIndex > 0)
-            { ShowItemDetails(highlightIndex - 1); }
+            {
+                //if already scrolled down move scrollRect up one item
+                if (highlightIndex >= numOfVisibleItems)
+                {
+                    float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
+                    scrollRect.verticalNormalizedPosition = scrollPos;
+                }
+                ShowItemDetails(highlightIndex - 1);
+            }
             else
             {
                 //at top of page, go to tab
