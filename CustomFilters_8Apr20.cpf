@@ -686,15 +686,15 @@
         "isTempFilter": false,
         "useAdvancedColors": false,
         "customTextColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
+            "r": 0.493562281131744,
+            "g": 0.0450338236987591,
+            "b": 0.867924511432648,
             "a": 1.0
         },
         "customBackgroundColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
+            "r": 0.905660390853882,
+            "g": 0.892844438552856,
+            "b": 0.892844438552856,
             "a": 1.0
         },
         "swallowStandard": true,
@@ -2027,24 +2027,24 @@
     {
         "filterName": "[Rnd]",
         "mainColor": {
-            "r": 0.0687522143125534,
-            "g": 0.0841119438409805,
-            "b": 0.971698105335236,
+            "r": 0.100302614271641,
+            "g": 0.121436558663845,
+            "b": 0.924528300762177,
             "a": 1.0
         },
         "isStandardFilter": false,
         "isTempFilter": false,
-        "useAdvancedColors": false,
+        "useAdvancedColors": true,
         "customTextColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
+            "r": 0.915094316005707,
+            "g": 0.721293389797211,
+            "b": 0.0733802169561386,
             "a": 1.0
         },
         "customBackgroundColor": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
+            "r": 0.129672467708588,
+            "g": 0.177318468689919,
+            "b": 0.886792421340942,
             "a": 1.0
         },
         "swallowStandard": true,
@@ -4860,10 +4860,10 @@
         "itemGUID": "6e3eb8bf-db5e-4aa4-a671-828ddb1d77fc"
     },
     {
-        "filterName": "[Hq]",
+        "filterName": "[HQ]",
         "mainColor": {
             "r": 0.925490200519562,
-            "g": 0.607843160629272,
+            "g": 0.596078455448151,
             "b": 0.274509817361832,
             "a": 1.0
         },
@@ -4899,7 +4899,7 @@
         "useAndOpForSearchList": false,
         "searchList": [
             {
-                "searchString": "[Hq]",
+                "searchString": "[HQ]",
                 "searchType": "ExactCaseInsensitive",
                 "removeSearchStringFromLog": false,
                 "logTypeList": [
@@ -4908,7 +4908,7 @@
                         "name": null,
                         "isEnabled": true,
                         "collapsed": false,
-                        "itemGUID": "7b4cf641-4301-401f-b7c9-7803fe3e452f"
+                        "itemGUID": "2f71a26f-0d67-41b8-9c4a-65b87a87ed46"
                     }
                 ],
                 "columnTypeList": [
@@ -4917,13 +4917,13 @@
                         "name": null,
                         "isEnabled": true,
                         "collapsed": false,
-                        "itemGUID": "0bc6d9d4-aa93-4ee3-925b-3c5cf2f0353e"
+                        "itemGUID": "8cdf4d1a-8a18-4cff-8338-d956e1c009bc"
                     }
                 ],
                 "name": null,
                 "isEnabled": true,
                 "collapsed": false,
-                "itemGUID": "b7af8ea3-dd7d-4218-8958-74e1bf8e05b5"
+                "itemGUID": "3c7fe4ed-8b87-43f8-bd85-0537c225e3b7"
             }
         ],
         "iconLetter": {
@@ -4989,9 +4989,9 @@
         "showInToolbar": true,
         "hideLabelInToolbar": false,
         "hideWhenNoMatches": false,
-        "name": "[Hq]",
+        "name": "[HQ]",
         "isEnabled": true,
         "collapsed": true,
-        "itemGUID": "0d2f2137-1052-40e4-a1db-01d56465b879"
+        "itemGUID": "d68dac15-7960-4737-ad0f-dedb06a8732c"
     }
 ]

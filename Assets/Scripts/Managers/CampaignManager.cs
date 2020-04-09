@@ -431,6 +431,7 @@ public class CampaignManager : MonoBehaviour
                     case ActorHQ.SubBoss1: title = campaign.subBoss1Aut.tag; break;  
                     case ActorHQ.SubBoss2: title = campaign.subBoss2Aut.tag; break;  
                     case ActorHQ.SubBoss3: title = campaign.subBoss3Aut.tag; break;
+                    case ActorHQ.Worker: title = "Worker"; break;
                     default: Debug.LogWarningFormat("Unrecognised Authority hqPosition \"{0}\"", hqPosition); break;
                 }
                 break;
@@ -442,6 +443,7 @@ public class CampaignManager : MonoBehaviour
                     case ActorHQ.SubBoss1: title = campaign.subBoss1Res.tag; break;
                     case ActorHQ.SubBoss2: title = campaign.subBoss2Res.tag; break;
                     case ActorHQ.SubBoss3: title = campaign.subBoss3Res.tag; break;
+                    case ActorHQ.Worker: title = "Worker"; break;
                     default: Debug.LogWarningFormat("Unrecognised Resistance hqPosition \"{0}\"", hqPosition); break;
                 }
                 break;

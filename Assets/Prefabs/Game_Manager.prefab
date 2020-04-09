@@ -4357,8 +4357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}
-  numOfGearItems: 3
+  debugTopicPool: {fileID: 0}
+  numOfGearItems: -1
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4704,7 +4704,11 @@ MonoBehaviour:
   maxHqApproval: 10
   renownPerTurn: 1
   numOfActorsHQ: 4
+  maxNumOfWorkers: 8
   renownFactor: 10
+  chanceOfRandomEvent: 25
+  chanceOfMajorEvent: 15
+  maxNumOfEvents: 4
   hQApprovalActorResigns: 1
   hQFirePlayerTimer: 3
   timerRelocationBase: 5

@@ -2140,3 +2140,122 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 35764 -> Thursday, 9 April 2020 11:53 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 38228 -> Thursday, 9 April 2020 12:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39055 -> Thursday, 9 April 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51946 -> Thursday, 9 April 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12878 -> Thursday, 9 April 2020 2:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9957 -> Thursday, 9 April 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51303 -> Thursday, 9 April 2020 2:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45465 -> Thursday, 9 April 2020 2:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27835 -> Thursday, 9 April 2020 2:44 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50110 -> Thursday, 9 April 2020 2:51 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid actor (Null) for arrayOfHierarchy[5]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:869)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 56466 -> Thursday, 9 April 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52425 -> Thursday, 9 April 2020 3:22 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27340 -> Thursday, 9 April 2020 3:26 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 55092 -> Thursday, 9 April 2020 3:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:888)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:894)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:903)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:888)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:894)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Unrecognised Resistance hqPosition "Worker"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CampaignManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/CampaignManager.cs:445)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:903)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	City seed 234 -> Sydney, Australia
+
+Dev seed 18738 -> Thursday, 9 April 2020 3:32 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
