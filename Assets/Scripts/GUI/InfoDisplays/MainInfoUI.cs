@@ -1456,8 +1456,11 @@ public class MainInfoUI : MonoBehaviour
             {
                 ShowItemDetails(highlightIndex - 1);
                 //adjust scrolling
-                float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
-                scrollRect.verticalNormalizedPosition = scrollPos;
+                if (scrollRect.verticalNormalizedPosition != 1)
+                {
+                    float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
+                    scrollRect.verticalNormalizedPosition = scrollPos;
+                }
             }
             else
             {

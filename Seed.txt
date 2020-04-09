@@ -2101,3 +2101,42 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 20973 -> Wednesday, 8 April 2020 11:53 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 63817 -> Wednesday, 8 April 2020 4:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33798 -> Wednesday, 8 April 2020 4:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47529 -> Thursday, 9 April 2020 9:12 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:119)
+	
+Dev seed 62877 -> Thursday, 9 April 2020 9:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9161 -> Thursday, 9 April 2020 9:21 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24910 -> Thursday, 9 April 2020 9:27 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22259 -> Thursday, 9 April 2020 10:16 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 57541 -> Thursday, 9 April 2020 11:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31716 -> Thursday, 9 April 2020 11:49 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35764 -> Thursday, 9 April 2020 11:53 AM
+City seed 5678 -> London, United Kingdom

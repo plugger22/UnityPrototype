@@ -14,7 +14,6 @@ public class MetaManager : MonoBehaviour
 
     public void Initialise(GameState state)
     {
-        
         //set state
         metaLevel = GameManager.instance.globalScript.metaBottom;
     }
@@ -35,9 +34,9 @@ public class MetaManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
         GameManager.instance.statScript.ProcessMetaStatistics();
         GameManager.instance.topicScript.ProcessMetaTopics();
+        GameManager.instance.hqScript.ProcessMetaHq();          //needs to be BEFORE MetaActors
         GameManager.instance.actorScript.ProcessMetaActors();
         GameManager.instance.dataScript.ProcessMetaCures();
-        GameManager.instance.hqScript.ProcessMetaHq();
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
     }

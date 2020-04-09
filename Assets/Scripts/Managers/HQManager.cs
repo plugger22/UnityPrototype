@@ -17,8 +17,19 @@ public class HQManager : MonoBehaviour
     [Range(1, 3)] public int renownPerTurn = 1;
     [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
+    [Tooltip("Size cap on HQ worker pool")]
+    [Range(0, 10)] public int maxNumOfWorkers = 8;
     [Tooltip("Multiplier for HQ hierarchy Actors renown (Boss gets highest renown, subBoss's progressively less) forumla renown = (numOfActorsHQ + 2 - enum.StatusHQ) * renownFactor")]
     [Range(1, 20)] public int renownFactor = 10;
+
+    [Header("MetaGame")]
+    [Tooltip("Chance of an HQ actor suffering a random event that effects their renown")]
+    [Range(0, 100)] public int chanceOfRandomEvent = 25;
+    [Tooltip("Chance of an HQ actor Major random event (eg. leave), if failed then a random event")]
+    [Range(0, 100)] public int chanceOfMajorEvent = 15;
+    [Tooltip("Max number of random events that can affect HQ actors - no more checks made after cap reached")]
+    [Range(0, 10)] public int maxNumOfEvents = 4;
+
 
     [Header("Actor Influence")]
     [Tooltip("Amount HQ Approval drops by whenever an Actor resigns for whatever reason")]
@@ -180,7 +191,7 @@ public class HQManager : MonoBehaviour
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;
-        Debug.LogFormat("[Fac] HQManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
+        Debug.LogFormat("[Hq] HQManager -> Initialise: {0}, approval {1}, {2}, approval {3}{4}",
             hQResistance, ApprovalResistance, hQAuthority, ApprovalAuthority, "\n");
 
     }
@@ -253,7 +264,7 @@ public class HQManager : MonoBehaviour
                 timerHqRelocating = 0;
                 text = "HQ has successfully Relocated";
                 GameManager.instance.messageScript.HqRelocates(text, "Relocation Successful");
-                Debug.LogFormat("[Fac] HqManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
+                Debug.LogFormat("[Hq] HqManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
             }
             else
             {
@@ -271,7 +282,7 @@ public class HQManager : MonoBehaviour
                     help2 = "hq_2"
                 };
                 GameManager.instance.messageScript.ActiveEffect(dataEffect);
-                Debug.LogFormat("[Fac] HqManager.cs -> EndTurnLate: {0}{1}", text, "\n");
+                Debug.LogFormat("[Hq] HqManager.cs -> EndTurnLate: {0}{1}", text, "\n");
             }
         }
     }
@@ -289,7 +300,7 @@ public class HQManager : MonoBehaviour
         if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[Fac] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[Hq] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
         }
         //HQ relocating
         if (isHqRelocating == true)
@@ -298,7 +309,7 @@ public class HQManager : MonoBehaviour
             Hq hqFaction = GetCurrentHQ();
             if (hqFaction != null)
             {
-                Debug.LogFormat("Fac] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
+                Debug.LogFormat("[Hq] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
                 string reason = GameManager.instance.colourScript.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
                 GameManager.instance.messageScript.HqSupportUnavailable(text, reason, hqFaction);
@@ -678,7 +689,7 @@ public class HQManager : MonoBehaviour
                     //Authority
                     oldApproval = ApprovalAuthority;
                     ApprovalAuthority += amountToChange;
-                    Debug.LogFormat("[Fac] <b>Authority</b> HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
+                    Debug.LogFormat("[Hq] <b>Authority</b> HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
                     {
                         msgText = string.Format("{0} HQ approval {1}{2}", hQAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
@@ -689,7 +700,7 @@ public class HQManager : MonoBehaviour
                     //Resistance
                     oldApproval = ApprovalResistance;
                     ApprovalResistance += amountToChange;
-                    Debug.LogFormat("[Fac] Resistance HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
+                    Debug.LogFormat("[Hq] Resistance HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
                     if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
                     {
                         msgText = string.Format("{0} HQ approval {1}{2}", hQResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
@@ -741,7 +752,7 @@ public class HQManager : MonoBehaviour
     {
         int oldValue = bossOpinion;
         bossOpinion = newValue;
-        Debug.LogFormat("[Fac] HqManager.cs -> SetBossOpinion: Opinion now {0} (was {1}), due to {2}{3}", newValue, oldValue, reason, "\n");
+        Debug.LogFormat("[Hq] HqManager.cs -> SetBossOpinion: Opinion now {0} (was {1}), due to {2}{3}", newValue, oldValue, reason, "\n");
     }
 
     /// <summary>
@@ -793,7 +804,7 @@ public class HQManager : MonoBehaviour
         isHqRelocating = true;
         timerHqRelocating = timerRelocationBase * timesRelocated;
         //messages
-        Debug.LogFormat("[Fac] HqManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
+        Debug.LogFormat("[Hq] HqManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
         string text = string.Format("HQ is relocating due to {0} (will take {1} turns)", reason, timerHqRelocating);
         GameManager.instance.messageScript.HqRelocates(text, reason);
     }
@@ -806,12 +817,43 @@ public class HQManager : MonoBehaviour
     { timerHqRelocating = timer; }
 
     /// <summary>
-    /// Metagame resetting of HQ data
+    /// Metagame resetting of HQ data and HQ actors
     /// </summary>
     public void ProcessMetaHq()
     {
         isHqRelocating = false;
-        timerHqRelocating = 0;       
+        timerHqRelocating = 0;
+        //
+        // - - - HQ actors
+        //
+
+        //check for random events
+        int numOfEvents = 0;
+        int rnd;
+        //Hq Hierarchy checked first
+        Actor[] arrayOfHierarchy = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        if (arrayOfHierarchy != null)
+        {
+            for (int i = 1; i < arrayOfHierarchy.Length - 1; i++)
+            {
+                //random event?
+                rnd = Random.Range(0, 100);
+                if (rnd < chanceOfRandomEvent)
+                {
+                    //major event?
+                    rnd = Random.Range(0, 100);
+                    if (rnd < chanceOfMajorEvent)
+                    {
+
+                    }
+                    //limit of events exceeded?
+                    numOfEvents++;
+                    if (numOfEvents > maxNumOfEvents)
+                    { break; }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
     }
 
     //
