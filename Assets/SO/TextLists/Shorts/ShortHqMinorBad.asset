@@ -9,24 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortDisease
+  m_Name: ShortHqMinorBad
   m_EditorClassIdentifier: 
-  descriptor: 'I''d love to but I have [Pig Flu]''
-
-
-'
+  descriptor: '''actor lost ''x'' renown because of [shortHqMinorBad]'''
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
-  - Pig Flu
-  - Ebola
-  - Mad Cow disease
-  - Bionic Bowels
-  - Slime Syndrome
-  - Llama Liver
-  - Snake Whip Spine
-  - Wallaby Warts
-  - Viper Virus
-  - Pigeon Pox
-  index: 8
+  - poor leadership
+  - insipid leadership
+  - dreadful leadership
+  - woeful crisis management
+  - administrative chaos
+  - political naivety
+  - managerial incompetence
+  - a lack of supporters
+  - being backstabbed
+  - the lack of a killer instinct
+  index: 0

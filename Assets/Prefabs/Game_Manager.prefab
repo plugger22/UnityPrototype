@@ -4707,11 +4707,14 @@ MonoBehaviour:
   maxNumOfWorkers: 8
   renownFactor: 10
   chanceOfRandomEvent: 25
-  chanceOfMajorEvent: 15
+  chanceOfMajorEvent: 25
   maxNumOfEvents: 4
   hQApprovalActorResigns: 1
   hQFirePlayerTimer: 3
   timerRelocationBase: 5
+  hQMajorEvent: {fileID: 11400000, guid: 6165069926966ea40ade8811cebcd98b, type: 2}
+  hQMinorEventGood: {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
+  hQMinorEventBad: {fileID: 11400000, guid: ddd7455871d1d7042b3ebe57df20001d, type: 2}
   hQAuthority: {fileID: 0}
   hQResistance: {fileID: 0}
   isHqRelocating: 0

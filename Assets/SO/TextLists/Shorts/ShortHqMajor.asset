@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortHqMajor
+  m_EditorClassIdentifier: 
+  descriptor: '''HQ actor has to leave due to [shortHqMajor]'''
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - being caught fiddling the books
+  - an embarassing scandal
+  - accusations of sexual harassment
+  - having sexual relations with animals
+  - failing their medical
+  - accusations of bullying
+  - a serious drinking habit
+  - a nasty drug habit
+  - being caught embezzling HQ funds
+  - early onset dementia
+  - being voted out by their peers
+  - managerial incompetence
+  - a debilitating medical condition
+  - leading an extravagant lifestyle
+  - chronic constipation
+  - psychotic episodes
+  - untreatable post traumatic stress
+  - undergoing a nervous breakdown
+  - a personal hygiene crisis
+  - pressing family matters
+  index: 0

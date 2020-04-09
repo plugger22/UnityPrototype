@@ -2259,3 +2259,127 @@ Dev seed 18738 -> Thursday, 9 April 2020 3:32 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 234 -> Sydney, Australia
+
+Dev seed 52194 -> Thursday, 9 April 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 42792 -> Thursday, 9 April 2020 5:05 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 22810 -> Thursday, 9 April 2020 5:09 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 49304 -> Thursday, 9 April 2020 5:33 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 7860 -> Thursday, 9 April 2020 5:40 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 17684 -> Thursday, 9 April 2020 5:43 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20413 -> Thursday, 9 April 2020 5:48 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 6861 -> Thursday, 9 April 2020 5:51 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 44225 -> Thursday, 9 April 2020 5:53 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 1731 -> Thursday, 9 April 2020 5:54 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 38305 -> Thursday, 9 April 2020 5:57 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 26066 -> Thursday, 9 April 2020 5:58 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 84, assets 87 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:1821)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1784)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
