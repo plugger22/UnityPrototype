@@ -891,19 +891,24 @@ public class HQManager : MonoBehaviour
     /// <returns></returns>
     private int ProcessHqActor(Actor actor, int numOfEvents)
     {
-        int rnd, change, renownBefore;
-        string reason = "Unknown";
+        int rnd;
         //random event?
         rnd = Random.Range(0, 100);
         Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqActor: {0}, {1}, hqID {2} Event Check, need < {3}, rolled {4}{5}", actor.actorName,
             GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, chanceOfRandomEvent, rnd, "\n");
         if (rnd < chanceOfRandomEvent)
         {
+            int change, renownBefore;
+            int chanceMajor = chanceOfMajorEvent;
+            int chanceGood = 50;
+            ProcessHqActorTraits(actor, ref chanceMajor, ref chanceGood);
+            string reason = "Unknown";
+            string text = "Unknown";
             //major event?
             rnd = Random.Range(0, 100);
             Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqActor: {0}, {1}, hqID {2} MAJOR Event Check, need < {3}, rolled {4}{5}", actor.actorName,
-                GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, chanceOfMajorEvent, rnd, "\n");
-            if (rnd < chanceOfMajorEvent)
+                GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, chanceMajor, rnd, "\n");
+            if (rnd < chanceMajor)
             {
                 //hq actor leaves
 
@@ -923,26 +928,49 @@ public class HQManager : MonoBehaviour
                 { change *= hierarchyFactor; }
                 //determine renown change good or bad
                 rnd = Random.Range(0, 100);
-                if (rnd < 50)
+                if (rnd < chanceGood)
                 {
                     //good change
                     actor.Renown += change;
-                    reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, hQMinorEventGood.GetRandomRecord(false), renownBefore, actor.Renown);
+                    text = hQMinorEventGood.GetRandomRecord(false);
+                    reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 }
                 else
                 {
                     //bad change
                     actor.Renown -= change;
-                    reason = string.Format("loses -{0} renown because of {1} (before {2}, now {3} renown)", change, hQMinorEventBad.GetRandomRecord(false), renownBefore, actor.Renown);
+                    text = hQMinorEventBad.GetRandomRecord(false);
+                    change *= -1;
+                    reason = string.Format("loses -{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 }
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqActor: {0}, {1}, {2}{3}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                     reason, "\n");
+                //Renown tracking
+                HqRenownData renownData = new HqRenownData()
+                {
+                    turn = GameManager.instance.turnScript.Turn,
+                    change = change,
+                    newRenown = actor.Renown,
+                    reason = text
+                };
+                actor.AddHqRenownData(renownData);
             }
             //limit of events exceeded?
             numOfEvents++;
             Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqActor: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n");
         }
         return numOfEvents;
+    }
+
+    /// <summary>
+    /// determines what effect various traits have on random event chances (eg. whether a major event or, if not, whether it's a good minor event)
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="chanceMajor"></param>
+    /// <param name="chanceGood"></param>
+    private void ProcessHqActorTraits(Actor actor, ref int chanceMajor, ref int chanceGood)
+    {
+
     }
 
     //
@@ -1074,7 +1102,7 @@ public class HQManager : MonoBehaviour
                         {
                             HqRenownData data = listOfRenownData[j];
                             if (data != null)
-                            { builder.AppendFormat("t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                            { builder.AppendFormat(" t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName,
@@ -1114,7 +1142,7 @@ public class HQManager : MonoBehaviour
                             {
                                 HqRenownData data = listOfRenownData[j];
                                 if (data != null)
-                                { builder.AppendFormat("t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                                { builder.AppendFormat("  t{0}: R {1}{2}, now {3}, {4}{5}", data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
                                 else { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, actor.arc.name, actor.actorID); }
                             }
                         }
