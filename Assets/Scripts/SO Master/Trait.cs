@@ -22,13 +22,11 @@ public class Trait : ScriptableObject
     public TraitCategory category;
 
     [Header("HQ Traits")]
-    [Tooltip("Does the trait have a use when the actor is at HQ")]
-    public bool isHqTrait;
-    [Tooltip("Multiplier to renown gain/loss while at HQ (default 0")]
+    [Tooltip("Multiplier to renown gain/loss while at HQ (default 0). NOTE: can only be one HQ trait option")]
     public int hqRenownMultiplier = 0;
-    [Tooltip("Multiplier to chance of a Major event (random/leave HQ) occuring, default 0")]
+    [Tooltip("Multiplier to chance of a Major event (random/leave HQ) occuring, default 0). NOTE: can only be one HQ trait option")]
     public float hqMajorMultiplier = 0f;
-    [Tooltip("Multiplier to chance of a Minor Good event (success good/ fail bad event) occuring, default 0")]
+    [Tooltip("Multiplier to chance of a Minor Good event (success good/ fail bad event) occuring, default 0). NOTE: can only be one HQ trait option")]
     public float hqMinorMultiplier = 0f;
 
     [Header("Effects")]
@@ -48,6 +46,10 @@ public class Trait : ScriptableObject
     public int neuroticism = 99;
 
     [HideInInspector] public string tagFormatted;                       //pre-formatted (TextMeshPro) string ready for trait display (initialised on import)
+
+    //HQ traits
+    [HideInInspector] public bool isHqTrait;                            //true if trait has an hq Effect (auto assigned by LoadManager.cs)
+    [HideInInspector] public string hqDescription;                      //valid if trait has an hq Effect (auto assigned by LoadManager.cs)
 
     private int[] arrayOfCriteria;                                      //personality criteria (allows PersonalityManager.cs -> SetPersonalityFactors to be conform to a particular trait profile, if required)
 

@@ -18,7 +18,7 @@ MonoBehaviour:
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
   isHqTrait: 1
   hqRenownMultiplier: 0
-  hqMajorMultiplier: 2
+  hqMajorMultiplier: 1.5
   hqMinorMultiplier: 0
   listOfTraitEffects:
   - {fileID: 11400000, guid: e51e5884d109b0844b7385bf6d2a301b, type: 2}

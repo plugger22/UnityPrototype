@@ -16,9 +16,8 @@ MonoBehaviour:
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  isHqTrait: 1
   hqRenownMultiplier: 0
-  hqMajorMultiplier: 0.5
+  hqMajorMultiplier: 0.75
   hqMinorMultiplier: 0
   listOfTraitEffects:
   - {fileID: 11400000, guid: 45f15451be96f004fa8e94d2d59373a7, type: 2}
@@ -28,3 +27,5 @@ MonoBehaviour:
   agreeableness: -2
   neuroticism: 99
   tagFormatted: <color=#7FFF00>Tough</color>
+  isHqTrait: 1
+  hqDescription: Chance of a Major (leave) event 50 % less

@@ -1548,6 +1548,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a301190c0d4058f4a92b6d572121617a, type: 2}
   - {fileID: 11400000, guid: f70dd145ec3cf834690e71c1fa6d98b9, type: 2}
   - {fileID: 11400000, guid: caee276104d697846b6dcaed9ccfd582, type: 2}
+  - {fileID: 11400000, guid: 6165069926966ea40ade8811cebcd98b, type: 2}
+  - {fileID: 11400000, guid: ddd7455871d1d7042b3ebe57df20001d, type: 2}
+  - {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -4709,6 +4712,8 @@ MonoBehaviour:
   chanceOfRandomEvent: 25
   chanceOfMajorEvent: 25
   maxNumOfEvents: 4
+  baseRenownChange: 6
+  hierarchyFactor: 2
   hQApprovalActorResigns: 1
   hQFirePlayerTimer: 3
   timerRelocationBase: 5

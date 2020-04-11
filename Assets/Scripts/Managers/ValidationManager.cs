@@ -1641,6 +1641,8 @@ public class ValidationManager : MonoBehaviour
     #endregion
 
 
+
+
 #if (UNITY_EDITOR)
 
     #region ValidateSO
@@ -1893,6 +1895,7 @@ public class ValidationManager : MonoBehaviour
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
             CheckTopicData(prefix);
+            CheckTraitData(prefix);
             CheckTextListData(prefix);
             CheckRelationsData(prefix);
         }
@@ -2044,6 +2047,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="highestActorID"></param>
     private void CheckActorData(string prefix, int highestActorID, int highestHQID, int highestNodeID, int highestSlotID)
     {
+        int count;
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
         int maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
@@ -2950,6 +2954,41 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfRelations (Null)"); }
+    }
+    #endregion
+
+    #region CheckTraitData
+    /// <summary>
+    /// Integrity check of traits
+    /// </summary>
+    private void CheckTraitData(string prefix)
+    {
+        int count;
+        string tag = string.Format("{0}{1}", prefix, "CheckTrait: ");
+        Trait[] arrayOfTraits = GameManager.instance.loadScript.arrayOfTraits;
+        if (arrayOfTraits != null)
+        {
+            for (int i = 0; i < arrayOfTraits.Length; i++)
+            {
+                //HQ trait fields
+                Trait trait = arrayOfTraits[i];
+                if (trait != null)
+                {
+                    count = 0;
+                    if (trait.hqMajorMultiplier > 0) { count++; }
+                    if (trait.hqMinorMultiplier > 0) { count++; }
+                    if (trait.hqRenownMultiplier > 0) { count++; }
+                    if (count > 1)
+                    { Debug.LogFormat("{0}Too many HQ traits (max 1) for trait \"{1}\"{2}", tag, trait.tag, "\n"); }
+                    if (count > 1 && trait.isHqTrait == false)
+                    { Debug.LogFormat("{0}trait.isHQTrait is False (should be true) for trait \"{1}\"{2}", tag, trait.tag, "\n"); }
+                    else if (count == 0 && trait.isHqTrait == true)
+                    { Debug.LogFormat("{0}trait.isHQTrait is True (should be false) for trait \"{1}\"{2}", tag, trait.tag, "\n"); }
+                }
+                else { Debug.LogFormat("{0} Invalid trait (Null) for arrayOfTraits[{1}]{2}", tag, i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfTraits (Null)"); }
     }
     #endregion
 

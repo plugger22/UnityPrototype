@@ -19,7 +19,7 @@ MonoBehaviour:
   isHqTrait: 1
   hqRenownMultiplier: 0
   hqMajorMultiplier: 0
-  hqMinorMultiplier: 2
+  hqMinorMultiplier: 1.5
   listOfTraitEffects:
   - {fileID: 11400000, guid: ce7fde7295e82374bad4e92fb8e31b28, type: 2}
   openness: 99
