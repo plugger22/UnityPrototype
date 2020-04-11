@@ -322,7 +322,7 @@ public class EffectManager : MonoBehaviour
             else if (data.actorHqID > -1)
             {
                 //HQ actor
-                actor = GameManager.instance.dataScript.GetHQActor(data.actorHqID);
+                actor = GameManager.instance.dataScript.GetHqActor(data.actorHqID);
                 if (actor == null)
                 {
                     Debug.LogErrorFormat("Invalid actorHqID \"{0}\" -> Criteria Check cancelled", data.actorHqID);
@@ -4010,7 +4010,7 @@ public class EffectManager : MonoBehaviour
                             //check for HQ actor
                             if (data.isHqActors == false)
                             { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
-                            else { actor = GameManager.instance.dataScript.GetHQActor(data.actorID); }
+                            else { actor = GameManager.instance.dataScript.GetHqActor(data.actorID); }
                             if (actor != null)
                             { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor); }
                             else
@@ -4035,13 +4035,13 @@ public class EffectManager : MonoBehaviour
                                 //check for HQ actors
                                 if (data.isHqActors == false)
                                 { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
-                                else { actor = GameManager.instance.dataScript.GetHQActor(data.actorID); }
+                                else { actor = GameManager.instance.dataScript.GetHqActor(data.actorID); }
                                 if (actor != null)
                                 {
                                     Actor actorOther = null;
                                     if (data.isHqActors == false)
                                     { actorOther = GameManager.instance.dataScript.GetActor(data.actorOtherID); }
-                                    else { actorOther = GameManager.instance.dataScript.GetHQActor(data.actorOtherID); }
+                                    else { actorOther = GameManager.instance.dataScript.GetHqActor(data.actorOtherID); }
                                     if (actorOther != null)
                                     { effectResolve = ResolveTopicDualActorEffect(effect, dataInput, data, actor, actorOther); }
                                     else

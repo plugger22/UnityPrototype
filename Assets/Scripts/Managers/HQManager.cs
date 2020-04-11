@@ -864,10 +864,10 @@ public class HQManager : MonoBehaviour
         //Hq Workers checked last
         if (numOfEvents < maxNumOfEvents)
         {
-            List<int> ListOfHqActors = GameManager.instance.dataScript.GetListOfActorHQ();
+            List<int> ListOfHqActors = GameManager.instance.dataScript.GetListOfActorHq();
             for (int i = 0; i < ListOfHqActors.Count; i++)
             {
-                Actor actor = GameManager.instance.dataScript.GetHQActor(ListOfHqActors[i]);
+                Actor actor = GameManager.instance.dataScript.GetHqActor(ListOfHqActors[i]);
                 if (actor != null)
                 {
                     //worker?
@@ -986,6 +986,74 @@ public class HQManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid trait (Null) for actor {0}, {1}, hqID {2}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID); }
     }
 
+    /// <summary>
+    /// Checks hq hierarchy and shuffles / assigns actors into vacant slots in order of descending Renown, eg. Boss has the highest renown. Workers can take over hierarchy slots with enough renown
+    /// </summary>
+    private void CheckHqHierarchy()
+    {
+        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        List<int> listOfHqActors = GameManager.instance.dataScript.GetListOfActorHq();
+        if (arrayOfHqActors != null)
+        {
+            if (listOfHqActors != null)
+            {
+                int limitRenown = 0;
+                for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
+                {
+                    Actor currentActor = arrayOfHqActors[index];
+                    //check no actor has more renown
+                    //NOTE: code assumes that slots will be filled progressively from highest rank to lowest
+                    switch (currentActor.statusHQ)
+                    {
+                        case ActorHQ.Boss: limitRenown = 999; break;
+                        case ActorHQ.SubBoss1: limitRenown = arrayOfHqActors[(int)ActorHQ.Boss].Renown; break;
+                        case ActorHQ.SubBoss2: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss1].Renown; break;
+                        case ActorHQ.SubBoss3: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss2].Renown; break;
+                    }
+                    //current actor holding down position
+                    if (currentActor != null)
+                    {
+                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
+                        if (newActor != null)
+                        {
+                            //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
+                        }
+                    }
+                    else
+                    {
+                        //new actor needed, get one with highest renown
+                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
+                        if (newActor != null)
+                        {
+                            //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
+                            arrayOfHqActors[index] = newActor;
+                            //check if existing hierarchy actor
+                            if (newActor.statusHQ != ActorHQ.Worker)
+                            { GameManager.instance.dataScript.RemoveHqActor(ll)}
+                            newActor.statusHQ = (ActorHQ)index;
+                        }
+                        else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfHqActors (Null)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfHqActors (Null)"); }
+    }
+
+    /// <summary>
+    /// Finds actor with highest renown, > currentRenown (renown of actor currently in that position) and < limitRenown eg. actor in next highest position. Returns Null if none found
+    /// ListOfActors is uptodate listOfHqActors
+    /// </summary>
+    /// <param name="hierarchy"></param>
+    /// <returns></returns>
+    private Actor GetActorWithHighestRenown(List<int> listOfActors, int currentRenown, int limitRenown)
+    {
+        Actor actor = null;
+
+        return actor;
+    }
+
     //
     // - - - Debug - - -
     //
@@ -1046,7 +1114,7 @@ public class HQManager : MonoBehaviour
             //loop dictOfHQ and get Workers and LeftHQ
             List<Actor> listOfWorkers = new List<Actor>();
             List<Actor> listOfLeftHQ = new List<Actor>();
-            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
             if (dictOfHQ != null)
             {
                 foreach (var actor in dictOfHQ)
@@ -1130,7 +1198,7 @@ public class HQManager : MonoBehaviour
             }
             //loop dictOfHQ and get Workers and LeftHQ
             List<Actor> listOfWorkers = new List<Actor>();
-            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
             if (dictOfHQ != null)
             {
                 foreach (var actor in dictOfHQ)

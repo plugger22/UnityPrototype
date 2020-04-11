@@ -326,7 +326,7 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     public void SetHqActorsCompatibility()
     {
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfHQ();
+        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfHq();
         Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
         if (dictOfProfiles != null)
         {

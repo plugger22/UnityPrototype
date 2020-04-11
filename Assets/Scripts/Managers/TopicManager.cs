@@ -4786,7 +4786,7 @@ public class TopicManager : MonoBehaviour
                 }
                 else
                 {
-                    actor = GameManager.instance.dataScript.GetHQActor(tagActorID);
+                    actor = GameManager.instance.dataScript.GetHqActor(tagActorID);
                     if (actor != null)
                     { actorCurrentHqID = actor.hqID; }
                 }
@@ -5212,7 +5212,7 @@ public class TopicManager : MonoBehaviour
                     }
                     else
                     {
-                        actor = GameManager.instance.dataScript.GetHQActor(tagActorID);
+                        actor = GameManager.instance.dataScript.GetHqActor(tagActorID);
                         if (actor != null) { prefix = tagHqTitleActor; }
                         else { Debug.LogErrorFormat("Invalid HQ actor (Null) for tagActorID {0}", tagActorID); }
                     }
@@ -5228,7 +5228,7 @@ public class TopicManager : MonoBehaviour
                     }
                     else
                     {
-                        actorOther = GameManager.instance.dataScript.GetHQActor(tagActorOtherID);
+                        actorOther = GameManager.instance.dataScript.GetHqActor(tagActorOtherID);
                         if (actorOther != null) { prefix = tagHqTitleOther; }
                         else { Debug.LogErrorFormat("Invalid HQ actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
                     }

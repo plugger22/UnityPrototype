@@ -3825,7 +3825,7 @@ public class DataManager : MonoBehaviour
     // - - - HQ Actors - - -
     //
 
-    public Dictionary<int, Actor> GetDictOfHQ()
+    public Dictionary<int, Actor> GetDictOfHq()
     { return dictOfHQ; }
 
     public Actor[] GetArrayOfActorsHQ()
@@ -3843,7 +3843,7 @@ public class DataManager : MonoBehaviour
     /// Adds any actor to dictOfHQ, returns true if successful. actor.hqID must be valid (> -1)
     /// </summary>
     /// <param name="actor"></param>
-    public bool AddHQActor(Actor actor)
+    public bool AddHqActor(Actor actor)
     {
         bool successFlag = true;
         if (actor.hqID > -1)
@@ -3860,18 +3860,18 @@ public class DataManager : MonoBehaviour
         return successFlag;
     }
 
-    public List<int> GetListOfActorHQ()
+    public List<int> GetListOfActorHq()
     { return actorHQPool; }
 
     /// <summary>
     /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID. Checks for ActorStatus.HQ and that statusHQ is current (hierarchy or worker)
     /// </summary>
     /// <param name="actorID"></param>
-    public void AddActorToHQPool(int hqID)
+    public void AddActorToHqPool(int hqID)
     {
         Debug.Assert(hqID > -1, "Invalid hqID");
         //check HQ status is hierarchy or worker (must be current)
-        Actor actor = GetHQActor(hqID);
+        Actor actor = GetHqActor(hqID);
         if (actor != null)
         {
             if (actor.Status == ActorStatus.HQ)
@@ -3890,7 +3890,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorID"></param>
     /// <returns></returns>
-    public Actor GetHQActor(int hqID)
+    public Actor GetHqActor(int hqID)
     {
         Debug.Assert(hqID > -1, string.Format("Invalid hqID {0}", hqID));
         if (dictOfHQ.ContainsKey(hqID))
@@ -3904,17 +3904,28 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="hqID"></param>
     /// <returns></returns>
-    public bool RemoveActorFromHQ(int hqID)
+    public bool RemoveHqActor(int hqID)
     {
         bool isSuccess = true;
-        Actor actor = GetHQActor(hqID);
+        Actor actor = GetHqActor(hqID);
         if (actor != null)
         {
-            //update status
-            actor.statusHQ = ActorHQ.LeftHQ;
+            //hierarchy actor
+            switch (actor.statusHQ)
+            {
+                case ActorHQ.Boss:
+                case ActorHQ.SubBoss1:
+                case ActorHQ.SubBoss2:
+                case ActorHQ.SubBoss3:
+                    //remove from array
+                    arrayOfActorsHQ[(int)actor.statusHQ] = null;
+                    break;
+            }
             //remove from actorHQPool
             if (actorHQPool.Exists(x => x == hqID) == true)
             { actorHQPool.Remove(hqID); }
+            //update status
+            actor.statusHQ = ActorHQ.LeftHQ;
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for hqID {0}", hqID); }
         return isSuccess;
@@ -5316,7 +5327,7 @@ public class DataManager : MonoBehaviour
                 Actor actor;
                 if (isActorID == true)
                 { actor = GetActor(listOfActors[i]); }
-                else { actor = GetHQActor(listOfActors[i]); }
+                else { actor = GetHqActor(listOfActors[i]); }
                 if (actor != null)
                 {
                     builder.Append(string.Format(" {0}, ", actor.actorName));

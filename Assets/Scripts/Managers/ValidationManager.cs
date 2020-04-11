@@ -2108,7 +2108,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfHQ
         //
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             foreach (var actor in dictOfHQ)
@@ -2183,7 +2183,7 @@ public class ValidationManager : MonoBehaviour
         CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "resistanceActorDisposedOff", tag, 0, false);
         CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "resistanceActorResigned", tag, 0, false);
         //hq
-        CheckList(GameManager.instance.dataScript.GetListOfActorHQ(), "listOfActorHQ", tag, 0, false);
+        CheckList(GameManager.instance.dataScript.GetListOfActorHq(), "listOfActorHQ", tag, 0, false);
         //authority duplicates
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "actorID", "actor", "authorityActorPoolLevelOne");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "actorID", "actor", "authorityActorPoolLevelTwo");
@@ -2203,7 +2203,7 @@ public class ValidationManager : MonoBehaviour
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
         CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
         //hq
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfActorHQ(), "actorID", "actor", "actorHQPool");
+        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfActorHq(), "actorID", "actor", "actorHQPool");
         //
         // - - - arrayOfActors
         //

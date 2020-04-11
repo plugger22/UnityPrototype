@@ -1125,7 +1125,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
         //dictOfHQ
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             foreach (var actor in dictOfHQ)
@@ -1212,7 +1212,7 @@ public class FileManager : MonoBehaviour
         write.actorData.resistanceActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance));
         write.actorData.resistanceActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalResistance));
 
-        write.actorData.actorHQPool.AddRange(GameManager.instance.dataScript.GetListOfActorHQ());
+        write.actorData.actorHQPool.AddRange(GameManager.instance.dataScript.GetListOfActorHq());
         //
         // - - - ActorManager.cs 
         //
@@ -2910,7 +2910,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
         //dictOfHQ
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHQ();
+        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             if (read.actorData.listOfDictHQ != null)
@@ -3010,7 +3010,7 @@ public class FileManager : MonoBehaviour
                 hqID = read.actorData.listOfActorsHQ[i];
                 if (hqID > -1)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetHQActor(hqID);
+                    Actor actor = GameManager.instance.dataScript.GetHqActor(hqID);
                     if (actor != null)
                     { arrayOfActorsHQ[i] = actor; }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for hqID {0}", hqID); }
@@ -3050,7 +3050,7 @@ public class FileManager : MonoBehaviour
         List<int> resistanceActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance);
         List<int> resistanceActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance);
         List<int> resistanceActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalResistance);
-        List<int> actorHQPool = GameManager.instance.dataScript.GetListOfActorHQ();
+        List<int> actorHQPool = GameManager.instance.dataScript.GetListOfActorHq();
         //null checks
         if (authorityActorPoolLevelOne == null) { Debug.LogError("Invalid authorityActorPoolLevelOne (Null)"); }
         if (authorityActorPoolLevelTwo == null) { Debug.LogError("Invalid authorityActorPoolLevelTwo (Null)"); }
