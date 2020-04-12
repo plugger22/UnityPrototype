@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortHqMinorHierarchyBad
+  m_EditorClassIdentifier: 
+  descriptor: '''actor lost ''x'' renown because of [shortHqMinorBad]''
+
+    HQ hierarchy actors only'
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - poor leadership
+  - insipid leadership
+  - dreadful leadership
+  - woeful crisis management
+  - administrative chaos
+  - political naivety
+  - managerial incompetence
+  - a lack of supporters
+  - being backstabbed
+  - the lack of a killer instinct
+  index: 6

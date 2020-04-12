@@ -51,3 +51,39 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
 	
+Dev seed 10029 -> Sunday, 12 April 2020 2:08 PM
+City seed 5678 -> London, United Kingdom
+ERROR No actor found suitable for vacant slot SubBoss3
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	HQManager:CheckHqHierarchy() (at Assets/Scripts/Managers/HQManager.cs:1068)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:885)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 10029 -> Sunday, 12 April 2020 2:10 PM
+City seed 5678 -> London, United Kingdom
+ERROR No actor found suitable for vacant slot SubBoss3
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	HQManager:CheckHqHierarchy() (at Assets/Scripts/Managers/HQManager.cs:1068)
+	HQManager:ProcessMetaHq() (at Assets/Scripts/Managers/HQManager.cs:885)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:37)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 10029 -> Sunday, 12 April 2020 2:27 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 10029 -> Sunday, 12 April 2020 3:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia

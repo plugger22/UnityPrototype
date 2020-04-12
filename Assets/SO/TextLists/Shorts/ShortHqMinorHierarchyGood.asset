@@ -9,9 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
-  m_Name: ShortHqMinorGood
+  m_Name: ShortHqMinorHierarchyGood
   m_EditorClassIdentifier: 
-  descriptor: '''actor gains ''x'' renown because of [shortHqMinorGood]'''
+  descriptor: '''actor gains ''x'' renown because of [shortHqMinorGood]''
+
+    HQ hierarchy actors only'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
@@ -26,4 +28,4 @@ MonoBehaviour:
   - friends in high places
   - backstabbing behaviour
   - ruthless drive
-  index: 1
+  index: 0

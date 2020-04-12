@@ -3864,6 +3864,26 @@ public class DataManager : MonoBehaviour
     { return actorHQPool; }
 
     /// <summary>
+    /// returns true if actorHQPool has at least one worker, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckHqWorkers()
+    {
+        Actor actor = null;
+        for (int i = 0; i < actorHQPool.Count; i++)
+        {
+            actor = GameManager.instance.dataScript.GetHqActor(actorHQPool[i]);
+            if (actor != null)
+            {
+                if (actor.statusHQ == ActorHQ.Worker)
+                { return true; }
+            }
+            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID. Checks for ActorStatus.HQ and that statusHQ is current (hierarchy or worker)
     /// </summary>
     /// <param name="actorID"></param>

@@ -1551,6 +1551,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6165069926966ea40ade8811cebcd98b, type: 2}
   - {fileID: 11400000, guid: ddd7455871d1d7042b3ebe57df20001d, type: 2}
   - {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
+  - {fileID: 11400000, guid: 05884381eaf873742a3b551c2861bd8b, type: 2}
+  - {fileID: 11400000, guid: 8ab2e853c9eabee47af61a605f911459, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -4718,8 +4720,14 @@ MonoBehaviour:
   hQFirePlayerTimer: 3
   timerRelocationBase: 5
   hQMajorEvent: {fileID: 11400000, guid: 6165069926966ea40ade8811cebcd98b, type: 2}
-  hQMinorEventGood: {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
-  hQMinorEventBad: {fileID: 11400000, guid: ddd7455871d1d7042b3ebe57df20001d, type: 2}
+  hQMinorEventHierarchyGood: {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16,
+    type: 2}
+  hQMinorEventHierarchyBad: {fileID: 11400000, guid: ddd7455871d1d7042b3ebe57df20001d,
+    type: 2}
+  hQMinorEventWorkerGood: {fileID: 11400000, guid: 05884381eaf873742a3b551c2861bd8b,
+    type: 2}
+  hQMinorEventWorkerBad: {fileID: 11400000, guid: 8ab2e853c9eabee47af61a605f911459,
+    type: 2}
   hQAuthority: {fileID: 0}
   hQResistance: {fileID: 0}
   isHqRelocating: 0
@@ -5007,7 +5015,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 10029
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
