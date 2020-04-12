@@ -881,10 +881,12 @@ public class HQManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid Hq Actor (Null) for listOfHqActors[{0}]", i); }
             }
         }
+        //check hierarchy positions (may change due to renown)
+        CheckHqHierarchy();
     }
 
     /// <summary>
-    /// subMethod for ProcesMetaHq to check for and execute any random events for HQ actors
+    /// subMethod for ProcessMetaHq to check for and execute any random events for HQ actors
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="numOfEvents"></param>
@@ -910,17 +912,19 @@ public class HQManager : MonoBehaviour
                 GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, chanceMajor, rnd, "\n");
             if (rnd < chanceMajor)
             {
-                //MAJOR event -> hq actor leaves
-
+                // - - - MAJOR event -> hq actor leaves
+                //
                 reason = hQMajorEvent.GetRandomRecord(false);
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqActor:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqActor: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
                     reason, "\n");
+                //remove actor from hierarcy and hq current list (permanent departure)
+                GameManager.instance.dataScript.RemoveHqActor(actor.hqID);
             }
             else
             {
-                //Minor event -> change in renown
-
+                // - - - Minor event -> change in renown
+                //
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqActor: {0}, {1}, hqID {2} Minor Event{3}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 //amount
                 renownBefore = actor.Renown;
@@ -998,12 +1002,15 @@ public class HQManager : MonoBehaviour
             if (listOfHqActors != null)
             {
                 int limitRenown = 0;
+                ActorHQ currentStatus;
                 for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
                 {
+                    //accomodate empty HQ hierarchy slots
                     Actor currentActor = arrayOfHqActors[index];
-                    //check no actor has more renown
-                    //NOTE: code assumes that slots will be filled progressively from highest rank to lowest
-                    switch (currentActor.statusHQ)
+                    if (currentActor != null) { currentStatus = currentActor.statusHQ; }
+                    else { currentStatus = (ActorHQ)index; }
+                    //check no actor has more renown -> NOTE: code assumes that slots will be filled progressively from highest rank to lowest
+                    switch (currentStatus)
                     {
                         case ActorHQ.Boss: limitRenown = 999; break;
                         case ActorHQ.SubBoss1: limitRenown = arrayOfHqActors[(int)ActorHQ.Boss].Renown; break;
@@ -1016,20 +1023,46 @@ public class HQManager : MonoBehaviour
                         Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
                         if (newActor != null)
                         {
+                            Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, Replaced by {3}, {4}, r{5}{6}", 
+                                currentActor.actorName, GameManager.instance.campaignScript.GetHqTitle(currentActor.statusHQ), currentActor.Renown, 
+                                newActor.actorName, GameManager.instance.campaignScript.GetHqTitle(newActor.statusHQ),  newActor.Renown, "\n");
+                            //check if existing hierarchy actor
+                            if (newActor.statusHQ != ActorHQ.Worker)
+                            {
+                                //empty existing position
+                                arrayOfHqActors[(int)newActor.statusHQ] = null;
+                            }
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
+                            newActor.statusHQ = (ActorHQ)index;
+                            arrayOfHqActors[index] = newActor;
+                            //bump current actor back to work status (they can then compete for lower level hierarchy positions)
+                            currentActor.statusHQ = ActorHQ.Worker;
+
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
+                                GameManager.instance.campaignScript.GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
                         }
                     }
                     else
                     {
-                        //new actor needed, get one with highest renown
-                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
+                        //new actor needed, get one with highest renown (null current actor, hence 0 renown)
+                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, 0, limitRenown);
                         if (newActor != null)
                         {
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
                             arrayOfHqActors[index] = newActor;
+                            Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, assumes vacant role of {3}{4}",
+                                newActor.actorName, GameManager.instance.campaignScript.GetHqTitle(newActor.statusHQ), newActor.Renown, 
+                                GameManager.instance.campaignScript.GetHqTitle((ActorHQ)index), "\n");
                             //check if existing hierarchy actor
                             if (newActor.statusHQ != ActorHQ.Worker)
-                            { GameManager.instance.dataScript.RemoveHqActor(ll)}
+                            {
+                                //empty existing position
+                                arrayOfHqActors[(int)newActor.statusHQ] = null;
+                            }
+                            //assign new position
                             newActor.statusHQ = (ActorHQ)index;
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
@@ -1042,16 +1075,39 @@ public class HQManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds actor with highest renown, > currentRenown (renown of actor currently in that position) and < limitRenown eg. actor in next highest position. Returns Null if none found
-    /// ListOfActors is uptodate listOfHqActors
+    /// Finds actor with highest renown, > currentRenown (renown of actor currently in that position) and <  limitRenown eg. actor in next highest position. Returns Null if none found
+    /// ListOfActors is uptodate listOfHqActors and is null checked by parent method
     /// </summary>
     /// <param name="hierarchy"></param>
     /// <returns></returns>
     private Actor GetActorWithHighestRenown(List<int> listOfActors, int currentRenown, int limitRenown)
     {
-        Actor actor = null;
-
-        return actor;
+        Actor actorTemp = null;
+        int hqID;
+        int candidateHqID = -1;
+        int candidateHqRenown = 0;
+        for (int i = 0; i < listOfActors.Count; i++)
+        {
+            hqID = listOfActors[i];
+            actorTemp = GameManager.instance.dataScript.GetHqActor(hqID);
+            if (actorTemp != null)
+            {
+                if (actorTemp.Renown > currentRenown && actorTemp.Renown < limitRenown)
+                {
+                    //viable candidate -> check if higher renown than any existing candidate
+                    if (actorTemp.Renown > candidateHqRenown)
+                    {
+                        candidateHqID = actorTemp.hqID;
+                        candidateHqRenown = actorTemp.Renown;
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid actor (Null) for hqID {0}", hqID); }
+        }
+        Actor actorReturn = null;
+        if (candidateHqID > -1)
+        { actorReturn = GameManager.instance.dataScript.GetHqActor(candidateHqID); }
+        return actorReturn;
     }
 
     //

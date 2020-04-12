@@ -2047,7 +2047,6 @@ public class ValidationManager : MonoBehaviour
     /// <param name="highestActorID"></param>
     private void CheckActorData(string prefix, int highestActorID, int highestHQID, int highestNodeID, int highestSlotID)
     {
-        int count;
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
         int maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
