@@ -741,9 +741,8 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Initialises required number of actors to populate HQ hierarchy for player side
     /// </summary>
-    public void InitialiseHqActors()
+    public void InitialiseHqActors(GlobalSide playerSide)
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         int numOfArcs, level;
         int numOfActors = GameManager.instance.hqScript.numOfActorsHQ;
         int renownFactor = GameManager.instance.hqScript.renownFactor;
@@ -884,11 +883,41 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Renown = (numOfActors + 2 - counter) * renownFactor;
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
+                        GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
                 }
             }
             else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActors (Empty)"); }
+    }
+
+    /// <summary>
+    /// Add new actors to hqActorPool as workers
+    /// </summary>
+    /// <param name="num"></param>
+    public void InitialiseHqWorkers(int num, GlobalSide side)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            List<ActorArc> listOfArcs = new List<ActorArc>(GameManager.instance.dataScript.GetActorArcs(side));
+            //Get random arc
+            ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
+            //auto level 1 actors
+            Actor actor = CreateActor(side, arc.name, 1, ActorStatus.HQ);
+            if (actor != null)
+            {
+                actor.statusHQ = ActorHQ.Worker;
+                actor.Renown = Random.Range(0, 6);
+                //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                if (GameManager.instance.dataScript.AddHqActor(actor) == true)
+                {
+                    GameManager.instance.dataScript.AddActorToHqPool(actor.hqID);
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqWorkers: {0}, {1}, hqID {2}, renown {3}, WORKER, added to hq Pool{4}", actor.actorName, actor.arc.name, actor.hqID, actor.Renown, "\n");
+                }
+            }
+            else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
+        }
     }
 
 
@@ -8553,13 +8582,13 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// handles all Meta (between level) game actor matters
     /// </summary>
-    public void ProcessMetaActors()
+    public void ProcessMetaActors(GlobalSide playerSide)
     {
         int count, rndNum;
         bool isProceed = true;
         int numToHQ = 0;
         //check lists of actors at end of level to see if any get transferred to the reserves -> Promoted
-        List<int> listOfPromotedActors = GameManager.instance.dataScript.GetListOfPromotedActors(GameManager.instance.sideScript.PlayerSide);
+        List<int> listOfPromotedActors = GameManager.instance.dataScript.GetListOfPromotedActors(playerSide);
         if (listOfPromotedActors != null)
         {
             count = listOfPromotedActors.Count;
@@ -8588,7 +8617,7 @@ public class ActorManager : MonoBehaviour
         if (isProceed == true)
         {
             //Resigned
-            List<int> listOfResignedActors = GameManager.instance.dataScript.GetListOfResignedActors(GameManager.instance.sideScript.PlayerSide);
+            List<int> listOfResignedActors = GameManager.instance.dataScript.GetListOfResignedActors(playerSide);
             if (listOfResignedActors != null)
             {
                 count = listOfResignedActors.Count;
@@ -8617,7 +8646,7 @@ public class ActorManager : MonoBehaviour
             if (isProceed == true)
             {
                 //Dismissed
-                List<int> listOfDismissedActors = GameManager.instance.dataScript.GetListOfDismissedActors(GameManager.instance.sideScript.PlayerSide);
+                List<int> listOfDismissedActors = GameManager.instance.dataScript.GetListOfDismissedActors(playerSide);
                 if (listOfDismissedActors != null)
                 {
                     count = listOfDismissedActors.Count;
@@ -8646,7 +8675,7 @@ public class ActorManager : MonoBehaviour
                 if (isProceed == true)
                 {
                     //OnMap
-                    Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+                    Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
                     if (arrayOfCurrentActors != null)
                     {
                         count = arrayOfCurrentActors.Length;
@@ -8674,7 +8703,7 @@ public class ActorManager : MonoBehaviour
                     if (isProceed == true)
                     {
                         //Reserves
-                        List<int> listOfReserveActors = GameManager.instance.dataScript.GetListOfReserveActors(GameManager.instance.sideScript.PlayerSide);
+                        List<int> listOfReserveActors = GameManager.instance.dataScript.GetListOfReserveActors(playerSide);
                         if (listOfReserveActors != null)
                         {
                             count = listOfReserveActors.Count;

@@ -156,7 +156,9 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //initialise HQ actors starting lineUp
-        GameManager.instance.actorScript.InitialiseHqActors();
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GameManager.instance.actorScript.InitialiseHqActors(playerSide);
+        GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide);
         //assign compatibility with player and descriptors
         GameManager.instance.personScript.SetHqActorsCompatibility();
     }
@@ -840,7 +842,7 @@ public class HQManager : MonoBehaviour
     /// <summary>
     /// Metagame resetting of HQ data and HQ actors
     /// </summary>
-    public void ProcessMetaHq()
+    public void ProcessMetaHq(GlobalSide playerSide)
     {
         isHqRelocating = false;
         timerHqRelocating = 0;
@@ -855,13 +857,20 @@ public class HQManager : MonoBehaviour
         if (arrayOfHierarchy != null)
         {
             //HQ workers present in pool (No Major event allowed if none 'cause how do you replace a vacant hierarchy slot?)
-            bool isWorkers = GameManager.instance.dataScript.CheckHqWorkers();
+            int numOfWorkers = GameManager.instance.dataScript.CheckHqWorkers();
+            //should be at least same number as hierarchy actors (to cover for any departures due to Major events)
+            if (numOfWorkers < numOfActorsHQ)
+            {
+                //add new workers (create new actors)
+                GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ - numOfWorkers, playerSide);
+            }
+
             for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
             {
                 Actor actor = arrayOfHierarchy[i];
                 if (actor != null)
                 {
-                    numOfEvents = ProcessHqHierarchy(actor, numOfEvents, isWorkers);
+                    numOfEvents = ProcessHqHierarchy(actor, numOfEvents);
                     if (numOfEvents > maxNumOfEvents)
                     { break; }
                 }
@@ -899,7 +908,7 @@ public class HQManager : MonoBehaviour
     /// <param name="actor"></param>
     /// <param name="numOfEvents"></param>
     /// <returns></returns>
-    private int ProcessHqHierarchy(Actor actor, int numOfEvents, bool isWorkers)
+    private int ProcessHqHierarchy(Actor actor, int numOfEvents)
     {
         int rnd;
         //random event?
@@ -918,10 +927,10 @@ public class HQManager : MonoBehaviour
             rnd = Random.Range(0, 100);
             Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, hqID {2} MAJOR Event Check, need < {3}, rolled {4}{5}", actor.actorName,
                 GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, chanceMajor, rnd, "\n");
-            if (isWorkers == true && rnd < chanceMajor)
+            if (rnd < chanceMajor)
             {
                 //
-                // - - - MAJOR event -> hq actor leaves (only possible if at least one worker present in HQ to take up vacant position)
+                // - - - MAJOR event -> hq actor leaves
                 //
                 reason = hQMajorEvent.GetRandomRecord(false);
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, "\n");

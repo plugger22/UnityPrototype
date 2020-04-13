@@ -30,12 +30,13 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaGame()
     {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //hide top bar UI at start of meta game
         EventManager.instance.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
         GameManager.instance.statScript.ProcessMetaStatistics();
         GameManager.instance.topicScript.ProcessMetaTopics();
-        GameManager.instance.hqScript.ProcessMetaHq();          //needs to be BEFORE MetaActors
-        GameManager.instance.actorScript.ProcessMetaActors();
+        GameManager.instance.hqScript.ProcessMetaHq(playerSide);          //needs to be BEFORE MetaActors
+        GameManager.instance.actorScript.ProcessMetaActors(playerSide);
         GameManager.instance.dataScript.ProcessMetaCures();
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");

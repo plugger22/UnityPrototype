@@ -3864,23 +3864,24 @@ public class DataManager : MonoBehaviour
     { return actorHQPool; }
 
     /// <summary>
-    /// returns true if actorHQPool has at least one worker, false otherwise
+    /// returns number of workers in actorHQPool
     /// </summary>
     /// <returns></returns>
-    public bool CheckHqWorkers()
+    public int CheckHqWorkers()
     {
         Actor actor = null;
+        int count = 0;
         for (int i = 0; i < actorHQPool.Count; i++)
         {
             actor = GameManager.instance.dataScript.GetHqActor(actorHQPool[i]);
             if (actor != null)
             {
                 if (actor.statusHQ == ActorHQ.Worker)
-                { return true; }
+                { count++; }
             }
             else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
         }
-        return false;
+        return count;
     }
 
     /// <summary>
