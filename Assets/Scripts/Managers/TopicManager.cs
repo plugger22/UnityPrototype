@@ -2491,8 +2491,8 @@ public class TopicManager : MonoBehaviour
                             tagActorOtherID = actorSecond.hqID;
                             tagHqActorName = actorFirst.actorName;
                             tagHqOtherName = actorSecond.actorName;
-                            tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
-                            tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
+                            tagHqTitleActor = GameManager.instance.hqScript.GetHqTitle(actorFirst.statusHQ);
+                            tagHqTitleOther = GameManager.instance.hqScript.GetHqTitle(actorSecond.statusHQ);
                         }
                         else
                         {
@@ -2500,8 +2500,8 @@ public class TopicManager : MonoBehaviour
                             tagActorOtherID = actorFirst.hqID;
                             tagHqActorName = actorSecond.actorName;
                             tagHqOtherName = actorFirst.actorName;
-                            tagHqTitleActor = GameManager.instance.campaignScript.GetHqTitle(actorSecond.statusHQ);
-                            tagHqTitleOther = GameManager.instance.campaignScript.GetHqTitle(actorFirst.statusHQ);
+                            tagHqTitleActor = GameManager.instance.hqScript.GetHqTitle(actorSecond.statusHQ);
+                            tagHqTitleOther = GameManager.instance.hqScript.GetHqTitle(actorFirst.statusHQ);
                         }
                         //group based on faction approval
                         group = GetGroupApproval(GameManager.instance.hqScript.GetHqApproval());

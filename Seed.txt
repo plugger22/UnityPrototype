@@ -101,3 +101,46 @@ City seed 765 -> New York, America
 Dev seed 10029 -> Monday, 13 April 2020 12:02 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 10029 -> Monday, 13 April 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 10029 -> Monday, 13 April 2020 2:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+WARNING [Tst] DataManager.cs -> GetRandomTargetNode: No target found after 20 iterations
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetRandomTargetNode() (at Assets/Scripts/Managers/DataManager.cs:3141)
+	TargetManager:AssignOrganisationTarget(Mission) (at Assets/Scripts/Managers/TargetManager.cs:738)
+	TargetManager:AssignTargets(Mission) (at Assets/Scripts/Managers/TargetManager.cs:427)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:73)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:50)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:124)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:74)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 49725 -> Monday, 13 April 2020 3:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52984 -> Monday, 13 April 2020 3:10 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 7143 -> Monday, 13 April 2020 3:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40334 -> Monday, 13 April 2020 3:18 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

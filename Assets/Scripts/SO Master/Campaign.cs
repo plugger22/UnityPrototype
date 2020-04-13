@@ -108,7 +108,7 @@ public class Campaign : ScriptableObject
     [Tooltip("Org that provides Information services such as location of Nemesis and the cleansing of secret evidence")]
     public Organisation orgInfo;
 
-    [Header("HQ Positions -> Authority")]
+    /*[Header("HQ Positions -> Authority")]
     [Tooltip("HQ Position that corresponds to the enum.ActorHQ equivalent. Transferred over to DataManager.cs if playerSide")]
     public HqPosition bossAut;
     public HqPosition subBoss1Aut;
@@ -120,7 +120,7 @@ public class Campaign : ScriptableObject
     public HqPosition bossRes;
     public HqPosition subBoss1Res;
     public HqPosition subBoss2Res;
-    public HqPosition subBoss3Res;
+    public HqPosition subBoss3Res;*/
 
     public void OnEnable()
     {
@@ -128,15 +128,6 @@ public class Campaign : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(listOfScenarios.Count > 0, "Invalid listOfScenarios (Empty) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
-        //hq
-        Debug.AssertFormat(bossAut != null, "Invalid bossAut (Null) for {0}", name);
-        Debug.AssertFormat(subBoss1Aut != null, "Invalid subBoss1Aut (Null) for {0}", name);
-        Debug.AssertFormat(subBoss2Aut != null, "Invalid subBoss2Aut (Null) for {0}", name);
-        Debug.AssertFormat(subBoss3Aut != null, "Invalid subBoss3Aut (Null) for {0}", name);
-        Debug.AssertFormat(bossRes != null, "Invalid bossRes (Null) for {0}", name);
-        Debug.AssertFormat(subBoss1Res != null, "Invalid subBoss1Res (Null) for {0}", name);
-        Debug.AssertFormat(subBoss2Res != null, "Invalid subBoss2Res (Null) for {0}", name);
-        Debug.AssertFormat(subBoss3Res != null, "Invalid subBoss3Res (Null) for {0}", name);
     }
 
 

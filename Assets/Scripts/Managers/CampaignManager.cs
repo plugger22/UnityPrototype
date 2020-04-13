@@ -412,7 +412,7 @@ public class CampaignManager : MonoBehaviour
 
 
 
-    /// <summary>
+    /*/// <summary>
     /// returns official HQ title (string, eg. 'Treasurer') for specified enum and Playerside. Returns 'Unknown' if a problem
     /// </summary>
     /// <param name="hqPosition"></param>
@@ -450,7 +450,7 @@ public class CampaignManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised playerSide.level {0}", playerSide.level); break;
         }
         return title;
-    }
+    }*/
 
     
 

@@ -1900,7 +1900,7 @@ public class PlayerManager : MonoBehaviour
                     if (builder.Length > 0) { builder.AppendLine(); }
                     builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
                     builder.AppendFormat("Evidence  {0}{1}", GameManager.instance.guiScript.GetDatapointStars(investigation.evidence), "\n");
-                    builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
+                    builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
                     if (investigation.timer > 0)
                     {
                         string textVerdict = string.Format("{0}Verdict in {1} day{2}", "\n", investigation.timer, investigation.timer != 1 ? "s" : "");

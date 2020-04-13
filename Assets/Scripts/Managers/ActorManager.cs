@@ -883,8 +883,8 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Renown = (numOfActors + 2 - counter) * renownFactor;
-                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
-                        GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName, 
+                        GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
                 }
             }
             else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
@@ -3666,7 +3666,7 @@ public class ActorManager : MonoBehaviour
                     if (actor != null)
                     {
                         motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
-                        title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
+                        title = GameManager.instance.hqScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
@@ -3797,7 +3797,7 @@ public class ActorManager : MonoBehaviour
                     if (actor != null)
                     {
                         motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
-                        title = GameManager.instance.campaignScript.GetHqTitle((ActorHQ)i);
+                        title = GameManager.instance.hqScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         if (isBoss == true)
                         {

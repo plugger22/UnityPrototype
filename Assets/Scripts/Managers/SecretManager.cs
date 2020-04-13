@@ -384,14 +384,14 @@ public class SecretManager : MonoBehaviour
                     Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
                     if (actor == null)
                     {
-                        Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.campaignScript.GetHqTitle(invest.lead));
+                        Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.hqScript.GetHqTitle(invest.lead));
                         bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
-                        actor.actorName, GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                        actor.actorName, GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
                     }
                     else
                     {
                         bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName, 
-                            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.campaignScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
                     }
                     ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                     {

@@ -1657,7 +1657,7 @@ public class EffectManager : MonoBehaviour
                                                 if (actorBoss != null)
                                                 {
                                                     if (actorBoss.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.Boss))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.Boss))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
                                                 break;
@@ -1667,7 +1667,7 @@ public class EffectManager : MonoBehaviour
                                                 if (actorSubBoss1 != null)
                                                 {
                                                     if (actorSubBoss1.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss1))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
                                                 break;
@@ -1677,7 +1677,7 @@ public class EffectManager : MonoBehaviour
                                                 if (actorSubBoss2 != null)
                                                 {
                                                     if (actorSubBoss2.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss2))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
                                                 break;
@@ -1687,7 +1687,7 @@ public class EffectManager : MonoBehaviour
                                                 if (actorSubBoss3 != null)
                                                 {
                                                     if (actorSubBoss3.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.campaignScript.GetHqTitle(ActorHQ.SubBoss3))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss3 (Null)"); }
                                                 break;
@@ -4807,7 +4807,7 @@ public class EffectManager : MonoBehaviour
                     changeAmount += effect.value;
                     actor.Renown += effect.value;
                     bottomText = string.Format("{0}{1} Renown +{2}{3} ({4}{5}{6} trait)", isHqActor == false ? colourBad : colourGood,
-                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+                        isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
                         effect.value * 2, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd);
                     //logger
                     GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
@@ -4816,7 +4816,7 @@ public class EffectManager : MonoBehaviour
                 {
                     //no trait
                     bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourBad : colourGood,
-                        isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+                        isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
                         effect.description, colourEnd);
                 }
                 break;
@@ -4825,7 +4825,7 @@ public class EffectManager : MonoBehaviour
                 changeAmount -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
-                    isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+                    isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
                     effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4843,7 +4843,7 @@ public class EffectManager : MonoBehaviour
             actor.AddHqRenownData(dataRenown);
         }
         //admin
-        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
             dataBefore, actor.Renown, "\n");
         return bottomText;
     }
@@ -5067,7 +5067,7 @@ public class EffectManager : MonoBehaviour
                 motivation += Mathf.Abs(amount);
                 motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
-                bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                 break;
             case "Subtract":
                 motivation -= Mathf.Abs(amount);
@@ -5086,11 +5086,11 @@ public class EffectManager : MonoBehaviour
                     else
                     {
                         motivation = Mathf.Max(0, motivation);
-                        bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+                        bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                     }
                 }
                 else
-                { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
+                { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
@@ -5098,7 +5098,7 @@ public class EffectManager : MonoBehaviour
         //log entry
         if (motivation != dataBefore)
         {
-            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.campaignScript.GetHqTitle(actor.statusHQ),
+            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
                 dataBefore, motivation, "\n");
         }
         return bottomText;

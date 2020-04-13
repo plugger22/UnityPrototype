@@ -929,9 +929,13 @@ namespace packageAPI
     public class HqRenownData
     {
         public int turn;
+        public int scenarioIndex;           //taken care of automatically in constructor
         public int change;                  //amount renown is changing by
         public int newRenown;               //what renown is after change
         public string reason;
+
+        public HqRenownData()
+        { scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex(); }
     }
 
     //new classes above here

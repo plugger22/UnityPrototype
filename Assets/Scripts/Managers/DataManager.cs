@@ -389,18 +389,18 @@ public class DataManager : MonoBehaviour
         if (GameManager.instance.sideScript.PlayerSide.level == 1)
         {
             //Authority
-            hqBoss = GameManager.instance.campaignScript.campaign.bossAut;
-            subBoss1 = GameManager.instance.campaignScript.campaign.subBoss1Aut;
-            subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Aut;
-            subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Aut;
+            hqBoss = GameManager.instance.hqScript.bossAut;
+            subBoss1 = GameManager.instance.hqScript.subBoss1Aut;
+            subBoss2 = GameManager.instance.hqScript.subBoss2Aut;
+            subBoss3 = GameManager.instance.hqScript.subBoss3Aut;
         }
         else
         {
             //Resistance
-            hqBoss = GameManager.instance.campaignScript.campaign.bossRes;
-            subBoss1 = GameManager.instance.campaignScript.campaign.subBoss1Res;
-            subBoss2 = GameManager.instance.campaignScript.campaign.subBoss2Res;
-            subBoss3 = GameManager.instance.campaignScript.campaign.subBoss3Res;
+            hqBoss = GameManager.instance.hqScript.bossRes;
+            subBoss1 = GameManager.instance.hqScript.subBoss1Res;
+            subBoss2 = GameManager.instance.hqScript.subBoss2Res;
+            subBoss3 = GameManager.instance.hqScript.subBoss3Res;
         }
         Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
         Debug.Assert(subBoss1 != null, "Invalid subBoss1 (Null)");
