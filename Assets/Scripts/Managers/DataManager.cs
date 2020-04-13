@@ -3885,6 +3885,59 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a list of all current Hq workers in actorHQPool, empty list if none
+    /// </summary>
+    /// <returns></returns>
+    public List<Actor> GetListOfHqWorkers()
+    {
+        Actor actor = null;
+        List<Actor> listOfWorkers = new List<Actor>();
+        for (int i = 0; i < actorHQPool.Count; i++)
+        {
+            actor = GetHqActor(actorHQPool[i]);
+            if (actor != null)
+            {
+                if (actor.statusHQ == ActorHQ.Worker)
+                { listOfWorkers.Add(actor); }
+            }
+            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+        }
+        return listOfWorkers;
+    }
+
+    /// <summary>
+    /// Removes all existing workers from actorHQPool and adds listOfWorkers to bring it up to date with any changes
+    /// </summary>
+    /// <param name="listOfWorkers"></param>
+    public void UpdateHqWorkers(List<Actor> listOfWorkers)
+    {
+        if (listOfWorkers != null)
+        {
+            //reverse loop list and remove workers
+            Actor actor = null;
+            for (int i = actorHQPool.Count - 1; i >= 0; i--)
+            {
+                actor = GetHqActor(actorHQPool[i]);
+                if (actor != null)
+                {
+                    if (actor.statusHQ == ActorHQ.Worker)
+                    { actorHQPool.RemoveAt(i); }
+                }
+                else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+            }
+            //add updated list of workers
+            for (int i = 0; i < listOfWorkers.Count; i++)
+            {
+                actor = listOfWorkers[i];
+                if (actor != null)
+                { actorHQPool.Add(actor.hqID); }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfWorkers (Null)"); }
+    }
+
+    /// <summary>
     /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID. Checks for ActorStatus.HQ and that statusHQ is current (hierarchy or worker)
     /// </summary>
     /// <param name="actorID"></param>
