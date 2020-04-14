@@ -502,7 +502,7 @@ namespace gameAPI
             {
                 Contact contact = dictOfContacts[nodeID];
                 if (contact != null)
-                { 
+                {
                     //update contact details
                     contact.actorID = -1;
                     contact.nodeID = -1;
@@ -841,6 +841,12 @@ namespace gameAPI
             return false;
         }
 
+        /// <summary>
+        /// Used for when an actor is promoted to HQ only, quick and dirty
+        /// </summary>
+        public void RemoveAllConditions()
+        { listOfConditions.Clear(); }
+
 
         public List<Condition> GetListOfConditions()
         { return listOfConditions; }
@@ -1119,7 +1125,7 @@ namespace gameAPI
                         break;
                     case GearRemoved.Decision:
                     case GearRemoved.Lost:
-                    case GearRemoved.Compromised:                   
+                    case GearRemoved.Compromised:
                         if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
                         { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;

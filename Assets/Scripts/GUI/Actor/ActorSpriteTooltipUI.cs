@@ -14,7 +14,7 @@ public class ActorSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     [HideInInspector] public string tooltipMain;
     [HideInInspector] public string tooltipDetails;*/
 
-    [HideInInspector] public int actorSlotID;               //initialised in GUIManager.cs
+    [HideInInspector] public int actorSlotID;              
 
     private Coroutine myCoroutine;
     private float mouseOverDelay;

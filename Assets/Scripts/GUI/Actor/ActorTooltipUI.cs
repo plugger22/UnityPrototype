@@ -43,12 +43,15 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <param name="eventData"></param>
     public void OnPointerEnter (PointerEventData eventData)
     {
+        Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 0 -> {0}{1}", actorSlotID, "\n");
         onMouseFlag = true;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         {
+            Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 1 -> {0}{1}", actorSlotID, "\n");
             Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
             if (actor != null)
             {
+                Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 2 -> {0}{1}", actorSlotID, "\n");
                 //Don't want to clash with actor sprite tooltip
                 if (actor.tooltipStatus == ActorTooltip.None)
                 { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
@@ -92,6 +95,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                 if (actor != null)
                 {
+                    Debug.LogFormat("[Tst] ActorTooltipUI.cs -> ShowActiveActor: actorSlotID 4 -> {0}{1}", actorSlotID, "\n");
 
                     /*Gear gearActor = null;
                     if (actor.GetGearID() > -1)

@@ -8779,22 +8779,29 @@ public class ActorManager : MonoBehaviour
                             //must have renown > 0
                             if (actorOnMap.Renown > 0)
                             {
-                                //add to HQ 
-                                threshold = actorOnMap.Renown * renownFactorOthers;
-                                rnd = Random.Range(0, 100);
-                                if (rnd < threshold)
+                                if (actorOnMap.CheckConditionPresent(conditionQuestionable) == false)
                                 {
-                                    if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
-                                    { Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
-                                    actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n"); }
+                                    //add to HQ 
+                                    threshold = actorOnMap.Renown * renownFactorOthers;
+                                    rnd = Random.Range(0, 100);
+                                    if (rnd < threshold)
+                                    {
+                                        if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        {
+                                            Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
+                                          actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}", 
+                                            actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
+                                    }
                                 }
                                 else
-                                {
-                                    Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}",
-                                 actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
-                                }
+                                { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             }
-                            else
+                            else 
                             { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                         }
                     }
@@ -8811,7 +8818,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// subMethod for ProcessMetaGame to have an actor promoted to HQ. Handles all details. Returns true if actor promoted to HQ, false otherwise
-    /// If workers maxxed out then can replace an existing worker (eg. worker.hqID < or equal to highestHqID)
+    /// If workers maxxed out then can replace an existing worker (eg. worker.hqID less than or equal to highestHqID)
     /// but only if have more renown than existing worker (isPriority true then this condition is ignored, eg. actor who has been promoted)
     /// NOTE: actor and listOfWorkers checked for null by parent method
     /// </summary>
@@ -8855,6 +8862,9 @@ public class ActorManager : MonoBehaviour
                         reason = "Promoted to HQ"
                     };
                     actor.AddHqRenownData(renownData);
+                    //remove any secrets and conditions
+                    actor.RemoveAllSecrets();
+                    actor.RemoveAllConditions();
                     //remove worker
                     Actor worker = GameManager.instance.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
                     Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, renown {3}, Demoted from HQ (Bumped){4}", worker.actorName,

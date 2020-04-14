@@ -8013,3 +8013,78 @@ City seed 765 -> New York, America
 Dev seed 63603 -> Tuesday, 14 April 2020 3:14 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 9169 -> Tuesday, 14 April 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 5823 -> Tuesday, 14 April 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:119)
+	
+Dev seed 27137 -> Tuesday, 14 April 2020 5:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25237 -> Tuesday, 14 April 2020 5:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17738 -> Tuesday, 14 April 2020 5:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61415 -> Tuesday, 14 April 2020 5:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9666 -> Tuesday, 14 April 2020 5:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10406 -> Tuesday, 14 April 2020 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15408 -> Tuesday, 14 April 2020 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5226 -> Tuesday, 14 April 2020 5:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11673 -> Tuesday, 14 April 2020 5:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20033 -> Tuesday, 14 April 2020 5:42 PM
+City seed 5678 -> London, United Kingdom
