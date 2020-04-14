@@ -897,7 +897,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add new actors to hqActorPool as workers
+    /// Add new actors to hqActorPool as workers (used at Campaign start and also during metaGame to fill any gaps for HQ actors who may leave)
     /// </summary>
     /// <param name="num"></param>
     public void InitialiseHqWorkers(int num, GlobalSide side)
@@ -912,7 +912,7 @@ public class ActorManager : MonoBehaviour
             if (actor != null)
             {
                 actor.statusHQ = ActorHQ.Worker;
-                actor.Renown = Random.Range(0, 6);
+                actor.Renown = Random.Range(1, 6);
                 //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                 if (GameManager.instance.dataScript.AddHqActor(actor) == true)
                 {
@@ -8744,7 +8744,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="playerSide"></param>
     public void ProcessMetaActors(GlobalSide playerSide)
     {
-        int count, highestHqID;
+        int count, highestHqID, oldRenown;
         int maxWorkersAllowed = GameManager.instance.hqScript.maxNumOfWorkers;
         //existing workers at HQ -> needs to be by value, not by reference
         List<Actor> listOfWorkers = new List<Actor>(GameManager.instance.dataScript.GetListOfHqWorkers());
@@ -8772,17 +8772,30 @@ public class ActorManager : MonoBehaviour
                         if (actorPromoted != null)
                         {
                             //renown mincap at 1 then multiplied by factor as a boost for going to HQ
+                            oldRenown = actorPromoted.Renown;
                             actorPromoted.Renown = Mathf.Max(1, actorPromoted.Renown);
                             actorPromoted.Renown *= renownFactorPromoted;
-
-                            if (listOfWorkers.Count > 0)
+                            //renown history
+                            HqRenownData renownData = new HqRenownData()
                             {
-                                //Get worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
+                                turn = 0,
+                                scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex() + 1,
+                                change = actorPromoted.Renown - oldRenown,
+                                newRenown = actorPromoted.Renown,
+                                reason = "Promoted to HQ"
+                            };
+                            actorPromoted.AddHqRenownData(renownData);
+                            //add actor to HQ (if limit reached will have to displace an existing worker)
+                            if (listOfWorkers.Count >= maxWorkersAllowed)
+                            {
+                                //Get existing worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
                                 Tuple<int, int> results = GetWorkerWithLowestRenown(listOfWorkers);
                                 if (results.Item1 > -1)
                                 {
                                     //remove worker
                                     Actor worker = GameManager.instance.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
+                                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, renown {3}, Demoted from HQ (low Renown){4}", worker.actorName, 
+                                        GameManager.instance.hqScript.GetHqTitle(worker.statusHQ), worker.hqID, worker.Renown, "\n");
                                     worker.statusHQ = ActorHQ.LeftHQ;
                                     listOfWorkers.RemoveAt(results.Item1);
                                     //add actor
@@ -8802,6 +8815,9 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfPromotedActors (Null)"); }
+
+            //merge worker list back into original
+            GameManager.instance.dataScript.UpdateHqWorkers(listOfWorkers);
         }
         else { Debug.LogError("Invalid listOfWorkers (Null)"); }
     }

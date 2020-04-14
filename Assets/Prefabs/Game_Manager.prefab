@@ -4364,12 +4364,14 @@ MonoBehaviour:
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
   debugTopicPool: {fileID: 0}
   numOfGearItems: -1
+  numOfWorkers: 8
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: -1
-  conditionWhoResistance: 999
-  conditionResistance: {fileID: 0}
+  conditionTurnResistance: 19
+  conditionWhoResistance: 1
+  conditionResistance: {fileID: 11400000, guid: 81509dbb901ce55408bf253da001f05e,
+    type: 2}
   actorSlotID: 0
   actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
   actorDatapoint0: -1
@@ -4603,13 +4605,8 @@ MonoBehaviour:
   stressLeaveRenownCostResistance: 2
   stressLeaveHQApproval: 1
   lieLowCooldownPeriod: 5
-  chanceOfPromotedToHQ: 100
-  chanceOfResignedToHQ: 40
-  chanceOfDismissedToHQ: 40
-  chanceOfOnMapToHQ: 40
-  chanceOfReservesToHQ: 40
-  maxActorsToHQ: 5
-  maxActorsLeaveHQ: 5
+  renownFactorPromoted: 3
+  renownFactorOthers: 2
   timerRelations: 999
   chanceRelationShift: 100
   lieLowTimer: 0

@@ -174,7 +174,10 @@ public class HQManager : MonoBehaviour
         //initialise HQ actors starting lineUp
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         GameManager.instance.actorScript.InitialiseHqActors(playerSide);
-        GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide);
+        //add workers (possible testManager.cs override)
+        if (GameManager.instance.testScript.numOfWorkers > -1)
+        { GameManager.instance.actorScript.InitialiseHqWorkers(GameManager.instance.testScript.numOfWorkers, playerSide); }
+        else { GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide); }
         //assign compatibility with player and descriptors
         GameManager.instance.personScript.SetHqActorsCompatibility();
     }

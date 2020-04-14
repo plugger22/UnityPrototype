@@ -24,6 +24,10 @@ public class TestManager : MonoBehaviour
     [Tooltip("Number of gear items in inventory at end of autorun (default -1 for normal random assignment, specify number from 0 to 3 otherwise to override)")]
     public int numOfGearItems = -1;
 
+    [Header("HQ")]
+    [Tooltip("How many worker, at campaign start, are populated in HQ pool (default -1 for normal assignment). Allows number between 0 and HQManager.cs -> maxNumOfWorkers")]
+    [Range(0, 8)] public int numOfWorkers = -1;
+
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;
@@ -40,7 +44,7 @@ public class TestManager : MonoBehaviour
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
 
-    [Header("Specify an Actor (Player Side)")]
+    [Header("Actor (Player Side)")]
     [Tooltip("slotID (0 -3) of actor you want to specify. Leave as '-1' (default) for no effect. All changes made at start")]
     [Range(-1, 3)] public int actorSlotID = -1;
     [Tooltip("The type of actor you want them to be, leave as 'None' for random. If type not present existing actor will be placed in Reserves and a new actor of required type will replace them")]

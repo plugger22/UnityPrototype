@@ -3672,8 +3672,8 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}{1} moved to the Reserves{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ActorPromoted":
-                effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2} HQ{3}", colourEffect, actor.actorName,
-                    GameManager.instance.hqScript.GetCurrentHQ(), colourEnd);
+                effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2}{3}", colourEffect, actor.actorName,
+                    GameManager.instance.hqScript.GetCurrentHQ().tag, colourEnd);
                 break;
             case "ActorDismissed":
                 effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);

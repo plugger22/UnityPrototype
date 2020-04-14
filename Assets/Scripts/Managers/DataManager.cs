@@ -5417,14 +5417,15 @@ public class DataManager : MonoBehaviour
                     builder.Append(string.Format(" {0}, ", actor.actorName));
                     if (isActorID == true)
                     {
-                        builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7}{8}", actor.actorID, actor.arc.name, actor.level,
-                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, actor.Status, "\n"));
+                        builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8}{9}", actor.actorID, actor.arc.name, actor.level,
+                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, 
+                            actor.Renown, actor.Status, "\n"));
                     }
                     else
                     {
-                        builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, {7} {8}{9}", actor.hqID, actor.arc.name, actor.level,
+                        builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8} {9}{10}", actor.hqID, GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.level,
                             actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2),
-                            actor.unhappyTimer, actor.Status, actor.sex, "\n"));
+                            actor.unhappyTimer, actor.Renown, actor.Status, actor.sex, "\n"));
                     }
                 }
                 else
