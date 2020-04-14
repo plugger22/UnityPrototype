@@ -98,10 +98,11 @@ public class ActorPanelUI : MonoBehaviour
     public void Awake()
     {
 
-        picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
+        /*picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
         picture1.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 1;
         picture2.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 2;
-        picture3.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 3;
+        picture3.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 3;*/
+
         //Canvas Group references
         canvas0 = Actor0.GetComponent<CanvasGroup>();
         canvas1 = Actor1.GetComponent<CanvasGroup>();

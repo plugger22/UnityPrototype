@@ -112,7 +112,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                     };*/
 
                     ActorTooltipData data = actor.GetTooltipData(parent.transform.position);
-
+                    Debug.LogFormat("[Tst] ActorTooltipUI.cs -> ShowActiveActor: actorSlotID 5 -> {0}, {1}, slotID {2}, actorSlotID {3}{4}", actor.actorName, actor.arc.name, actor.slotID, actorSlotID, "\n");
                     GameManager.instance.tooltipActorScript.SetTooltip(data, actorSlotID);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }

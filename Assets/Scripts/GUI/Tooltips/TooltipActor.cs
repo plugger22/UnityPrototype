@@ -176,6 +176,7 @@ public class TooltipActor : MonoBehaviour
     /// <param name="pos">Position of tooltip originator -> note as it's a UI element transform will be in screen units, not world units</param>
     public void SetTooltip(ActorTooltipData data, int actorSlotID)
     {
+        Debug.LogFormat("[Tst] TooltipActor.cs -> SetTooltip: {0}, {1}, slotID {2}, actorSlotID {3}{4}", data.actor.actorName, data.actor.arc.name, data.actor.slotID, actorSlotID, "\n");
         bool isResistance = true;
         if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistance = false; }
         //open panel at start
@@ -344,7 +345,7 @@ public class TooltipActor : MonoBehaviour
         //base y pos at zero (bottom of screen). Adjust up from there.
         worldPos.y += height + offset + 100;
         //position of tooltip varies according to slotID as don't want to mask the city map
-        switch (actorSlotID)
+        switch (data.actor.slotID)
         {
             case 0:
             case 1:

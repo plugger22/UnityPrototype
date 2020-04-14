@@ -1202,15 +1202,17 @@ namespace gameAPI
         /// <returns></returns>
         public ActorTooltipData GetTooltipData(Vector3 position)
         {
-
+            Debug.LogFormat("[Tst] Actor.cs -> GetTooltipData: {0}, {1}, slotID {2}{3}", actorName, arc.name, slotID, "\n");
             Gear gear = null;
             if (string.IsNullOrEmpty(gearName) == false)
             { gear = GameManager.instance.dataScript.GetGear(gearName); }
             ActorTooltipData data = new ActorTooltipData()
             {
                 tooltipPos = position,
-                actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side),
-                action = GameManager.instance.dataScript.GetActorAction(slotID, side),
+                //actor = GameManager.instance.dataScript.GetCurrentActor(slotID, side),
+                //action = GameManager.instance.dataScript.GetActorAction(slotID, side),
+                actor = this,
+                action = arc.nodeAction,
                 gear = gear,
                 listOfSecrets = GetSecretsTooltipList(),
                 arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
