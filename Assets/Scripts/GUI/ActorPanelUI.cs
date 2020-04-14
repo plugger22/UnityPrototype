@@ -224,6 +224,11 @@ public class ActorPanelUI : MonoBehaviour
         picture2.GetComponent<ActorTooltipUI>().isText = false;
         picture3.GetComponent<ActorTooltipUI>().isText = false;
 
+        picture0.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 0;
+        picture1.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 1;
+        picture2.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 2;
+        picture3.GetComponent<ActorSpriteTooltipUI>().actorSlotID = 3;
+
         //populate lists
         List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
         if (listOfActorTypes != null)

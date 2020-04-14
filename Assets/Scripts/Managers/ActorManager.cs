@@ -115,20 +115,6 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
     [Header("MetaGame")]
-    /*[Tooltip("Chance of Promoted actor being sent to HQ at end of level")]
-    [Range(0, 100)] public int chanceOfPromotedToHQ = 100;
-    [Tooltip("Chance of Resigned actor being sent to HQ at end of level")]
-    [Range(0, 100)] public int chanceOfResignedToHQ = 40;
-    [Tooltip("Chance of Dismissed actor being sent to HQ at end of level")]
-    [Range(0, 100)] public int chanceOfDismissedToHQ = 40;
-    [Tooltip("Chance of OnMap actor being sent to HQ at end of level")]
-    [Range(0, 100)] public int chanceOfOnMapToHQ = 40;
-    [Tooltip("Chance of Reserves actor being sent to HQ at end of level")]
-    [Range(0, 100)] public int chanceOfReservesToHQ = 40;
-    [Tooltip("Maximum number of actors that can be sent to HQ at the end of a level")]
-    [Range(0, 10)] public int maxActorsToHQ = 5;
-    [Tooltip("Maximum number of actors that can leave HQ at the end of a level (during MetaGame)")]
-    [Range(0, 10)] public int maxActorsLeaveHQ = 5;*/
     [Tooltip("Renown multiplier, when actor joins HQ, for Promoted actor")]
     [Range(1, 5)] public int renownFactorPromoted = 3;
     [Tooltip("Renown multiplier, if actor joins HQ, for all other Actors (OnMap / Resigned / Dismissed")]
@@ -1711,13 +1697,12 @@ public class ActorManager : MonoBehaviour
                     ModalActionDetails manageActionDetails = new ModalActionDetails() { };
                     manageActionDetails.side = playerSide;
                     manageActionDetails.actorDataID = actor.slotID;
-                    tooltipText = string.Format("Select to choose what to do with {0} (send to the Reserve Pool, Dismiss or Dispose Off)", actor.actorName);
+                    tooltipText = string.Format("Choose what to do with {0} (send to Reserves, Promote, Dismiss or Dispose Off)", actor.actorName);
                     EventButtonDetails dismissDetails = new EventButtonDetails()
                     {
                         buttonTitle = "MANAGE",
                         buttonTooltipHeader = string.Format("{0}{1}{2}", sideColour, "INFO", colourEnd),
-                        buttonTooltipMain = string.Format("Unfortunately {0}{1}{2} {3}{4}  isn't working out", colourNeutral, actor.arc.name, colourEnd,
-                        title, actor.actorName),
+                        buttonTooltipMain = string.Format("Review the status of {0}{1}{2} {3}{4}", colourNeutral, actor.arc.name, colourEnd, title, actor.actorName),
                         buttonTooltipDetail = string.Format("{0}{1}{2}", colourCancel, tooltipText, colourEnd),
                         //use a Lambda to pass arguments to the action
                         action = () => { EventManager.instance.PostNotification(EventType.ManageActorAction, this, manageActionDetails, "ActorManager.cs -> GetActorActions"); }
@@ -8744,7 +8729,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="playerSide"></param>
     public void ProcessMetaActors(GlobalSide playerSide)
     {
-        int count, highestHqID, oldRenown;
+        int count, highestHqID, threshold, rnd;
         int maxWorkersAllowed = GameManager.instance.hqScript.maxNumOfWorkers;
         //existing workers at HQ -> needs to be by value, not by reference
         List<Actor> listOfWorkers = new List<Actor>(GameManager.instance.dataScript.GetListOfHqWorkers());
@@ -8770,64 +8755,137 @@ public class ActorManager : MonoBehaviour
                     {
                         Actor actorPromoted = GameManager.instance.dataScript.GetActor(listOfPromotedActors[i]);
                         if (actorPromoted != null)
-                        {
-                            //renown mincap at 1 then multiplied by factor as a boost for going to HQ
-                            oldRenown = actorPromoted.Renown;
-                            actorPromoted.Renown = Mathf.Max(1, actorPromoted.Renown);
-                            actorPromoted.Renown *= renownFactorPromoted;
-                            //renown history
-                            HqRenownData renownData = new HqRenownData()
-                            {
-                                turn = 0,
-                                scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex() + 1,
-                                change = actorPromoted.Renown - oldRenown,
-                                newRenown = actorPromoted.Renown,
-                                reason = "Promoted to HQ"
-                            };
-                            actorPromoted.AddHqRenownData(renownData);
-                            //add actor to HQ (if limit reached will have to displace an existing worker)
-                            if (listOfWorkers.Count >= maxWorkersAllowed)
-                            {
-                                //Get existing worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
-                                Tuple<int, int> results = GetWorkerWithLowestRenown(listOfWorkers);
-                                if (results.Item1 > -1)
-                                {
-                                    //remove worker
-                                    Actor worker = GameManager.instance.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
-                                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, renown {3}, Demoted from HQ (low Renown){4}", worker.actorName, 
-                                        GameManager.instance.hqScript.GetHqTitle(worker.statusHQ), worker.hqID, worker.Renown, "\n");
-                                    worker.statusHQ = ActorHQ.LeftHQ;
-                                    listOfWorkers.RemoveAt(results.Item1);
-                                    //add actor
-                                    listOfWorkers.Add(actorPromoted);
-                                }
-                            }
-                            else
-                            {
-                                //add to worker list
-                                listOfWorkers.Add(actorPromoted);
-                                Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actorPromoted.actorName, actorPromoted.arc.name,
-                                    actorPromoted.actorID, actorPromoted.Renown, "\n");
-                            }
-                        }
+                        { PromoteActorToHQ(actorPromoted, listOfWorkers, maxWorkersAllowed, renownFactorPromoted, highestHqID, true); }
                         else { Debug.LogErrorFormat("Invalid Promoted actor (Null) for actorID {0}", listOfPromotedActors[i]); }
                     }
                 }
             }
             else { Debug.LogError("Invalid listOfPromotedActors (Null)"); }
-
-            //merge worker list back into original
+            //
+            // - - - OnMap actors (% chance of going to HQ equal to 2 x renown, otherwise go back to actor Pool)
+            //
+            //OnMap
+            Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+            if (arrayOfCurrentActors != null)
+            {
+                count = arrayOfCurrentActors.Length;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Actor actorOnMap = arrayOfCurrentActors[i];
+                        if (actorOnMap != null)
+                        {
+                            //must have renown > 0
+                            if (actorOnMap.Renown > 0)
+                            {
+                                //add to HQ 
+                                threshold = actorOnMap.Renown * renownFactorOthers;
+                                rnd = Random.Range(0, 100);
+                                if (rnd < threshold)
+                                {
+                                    if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                    { Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
+                                    actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n"); }
+                                }
+                                else
+                                {
+                                    Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}",
+                                 actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
+                                }
+                            }
+                            else
+                            { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfCurrentActors (Null)"); }
+            //
+            // - - - Merge worker list back into original
+            //
             GameManager.instance.dataScript.UpdateHqWorkers(listOfWorkers);
         }
         else { Debug.LogError("Invalid listOfWorkers (Null)"); }
     }
 
     /// <summary>
-    /// returns a tuple, index of worker in listOfWorkers, renown of worker. Default values of -1 for index and 999 for renown
+    /// subMethod for ProcessMetaGame to have an actor promoted to HQ. Handles all details. Returns true if actor promoted to HQ, false otherwise
+    /// If workers maxxed out then can replace an existing worker (eg. worker.hqID < or equal to highestHqID)
+    /// but only if have more renown than existing worker (isPriority true then this condition is ignored, eg. actor who has been promoted)
+    /// NOTE: actor and listOfWorkers checked for null by parent method
+    /// </summary>
+    /// <param name="actor"></param>
+    private bool PromoteActorToHQ(Actor actor, List<Actor> listOfWorkers, int maxWorkersAllowed, int renownFactor, int highestHqID, bool isPriority = false)
+    {
+        bool isSuccess = true;
+        //add actor to HQ (if limit reached will have to displace an existing worker)
+        if (listOfWorkers.Count >= maxWorkersAllowed)
+        {
+            //Get existing worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
+            Tuple<int, int> results = GetWorkerWithLowestRenown(listOfWorkers, highestHqID);
+            if (results.Item1 > -1)
+            {
+                bool isProceed = true;
+                if (isPriority == false)
+                {
+                    if (actor.Renown * renownFactor <= results.Item2)
+                    {
+                        isProceed = false;
+                        Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} unable to bump Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                            actor.Renown, results.Item2, "\n");
+                    }
+                    else
+                    {
+                        Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} BUMPS Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                            actor.Renown, results.Item2, "\n");
+                    }
+                }
+                if (isProceed == true)
+                {
+                    int oldRenown = actor.Renown;
+                    actor.Renown *= renownFactor;
+                    //renown history
+                    HqRenownData renownData = new HqRenownData()
+                    {
+                        turn = 0,
+                        scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex() + 1,
+                        change = actor.Renown - oldRenown,
+                        newRenown = actor.Renown,
+                        reason = "Promoted to HQ"
+                    };
+                    actor.AddHqRenownData(renownData);
+                    //remove worker
+                    Actor worker = GameManager.instance.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
+                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, renown {3}, Demoted from HQ (Bumped){4}", worker.actorName,
+                        GameManager.instance.hqScript.GetHqTitle(worker.statusHQ), worker.hqID, worker.Renown, "\n");
+                    worker.statusHQ = ActorHQ.LeftHQ;
+                    listOfWorkers.RemoveAt(results.Item1);
+                    //add actor
+                    listOfWorkers.Add(actor);
+                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
+                        actor.actorID, actor.Renown, "\n");
+                }
+                else { isSuccess = false; }
+            }
+        }
+        else
+        {
+            //add to worker list
+            listOfWorkers.Add(actor);
+            Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
+                actor.actorID, actor.Renown, "\n");
+        }
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// Submethod of PromoteActorToHQ which returns a tuple, index of worker in listOfWorkers, renown of worker. Default values of -1 for index and 999 for renown
+    /// Only checks existing workers (determined if their hqID is less than or equal to highestHqID)
     /// </summary>
     /// <param name="listOfWorkers"></param>
     /// <returns></returns>
-    private Tuple<int, int> GetWorkerWithLowestRenown(List<Actor> listOfWorkers)
+    private Tuple<int, int> GetWorkerWithLowestRenown(List<Actor> listOfWorkers, int highestHqID)
     {
         int index = -1;
         int lowestRenown = 999;
@@ -8835,10 +8893,13 @@ public class ActorManager : MonoBehaviour
         {
             for (int i = 0; i < listOfWorkers.Count; i++)
             {
-                if (listOfWorkers[i].Renown < lowestRenown)
+                if (listOfWorkers[i].hqID <= highestHqID)
                 {
-                    index = i;
-                    lowestRenown = listOfWorkers[i].Renown;
+                    if (listOfWorkers[i].Renown < lowestRenown)
+                    {
+                        index = i;
+                        lowestRenown = listOfWorkers[i].Renown;
+                    }
                 }
             }
         }

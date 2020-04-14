@@ -548,6 +548,7 @@ public class HQManager : MonoBehaviour
                     case ActorHQ.SubBoss2: title = subBoss2Aut.tag; break;
                     case ActorHQ.SubBoss3: title = subBoss3Aut.tag; break;
                     case ActorHQ.Worker: title = "Worker"; break;
+                    case ActorHQ.LeftHQ: title = "Left HQ"; break;
                     default: Debug.LogWarningFormat("Unrecognised Authority hqPosition \"{0}\"", hqPosition); break;
                 }
                 break;
@@ -560,6 +561,7 @@ public class HQManager : MonoBehaviour
                     case ActorHQ.SubBoss2: title = subBoss2Res.tag; break;
                     case ActorHQ.SubBoss3: title = subBoss3Res.tag; break;
                     case ActorHQ.Worker: title = "Worker"; break;
+                    case ActorHQ.LeftHQ: title = "Left HQ"; break;
                     default: Debug.LogWarningFormat("Unrecognised Resistance hqPosition \"{0}\"", hqPosition); break;
                 }
                 break;
