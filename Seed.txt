@@ -144,3 +144,9 @@ City seed 5678 -> London, United Kingdom
 Dev seed 40334 -> Monday, 13 April 2020 3:18 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 5130 -> Monday, 13 April 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France

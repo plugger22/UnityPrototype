@@ -115,7 +115,7 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
     [Header("MetaGame")]
-    [Tooltip("Chance of Promoted actor being sent to HQ at end of level")]
+    /*[Tooltip("Chance of Promoted actor being sent to HQ at end of level")]
     [Range(0, 100)] public int chanceOfPromotedToHQ = 100;
     [Tooltip("Chance of Resigned actor being sent to HQ at end of level")]
     [Range(0, 100)] public int chanceOfResignedToHQ = 40;
@@ -128,7 +128,11 @@ public class ActorManager : MonoBehaviour
     [Tooltip("Maximum number of actors that can be sent to HQ at the end of a level")]
     [Range(0, 10)] public int maxActorsToHQ = 5;
     [Tooltip("Maximum number of actors that can leave HQ at the end of a level (during MetaGame)")]
-    [Range(0, 10)] public int maxActorsLeaveHQ = 5;
+    [Range(0, 10)] public int maxActorsLeaveHQ = 5;*/
+    [Tooltip("Renown multiplier, when actor joins HQ, for Promoted actor")]
+    [Range(1, 5)] public int renownFactorPromoted = 3;
+    [Tooltip("Renown multiplier, if actor joins HQ, for all other Actors (OnMap / Resigned / Dismissed")]
+    [Range(1, 5)] public int renownFactorOthers = 2;
 
     [Header("Actor to Actor Relations")]
     [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
@@ -883,7 +887,7 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Renown = (numOfActors + 2 - counter) * renownFactor;
-                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName, 
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
                         GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
                 }
             }
@@ -3509,7 +3513,7 @@ public class ActorManager : MonoBehaviour
                             //arc type and name plus compatibility
                             dataStars = actor.GetPersonality().GetCompatibilityWithPlayer();
                             tooltipDetails.textHeader = string.Format("{0}<size=120%>{1}{2}</size>{3}{4}Compatibility<pos=57%>{5}{6}", colourRecruit, actor.actorName, colourEnd,
-                                "\n",  colourNormal, colourEnd, GameManager.instance.guiScript.GetCompatibilityStars(dataStars));
+                                "\n", colourNormal, colourEnd, GameManager.instance.guiScript.GetCompatibilityStars(dataStars));
                             //stats
                             string[] arrayOfQualities = GameManager.instance.dataScript.GetQualities(details.side);
                             StringBuilder builder = new StringBuilder();
@@ -8579,7 +8583,7 @@ public class ActorManager : MonoBehaviour
         return false;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// handles all Meta (between level) game actor matters
     /// </summary>
     public void ProcessMetaActors(GlobalSide playerSide)
@@ -8732,6 +8736,98 @@ public class ActorManager : MonoBehaviour
                 }
             }
         }
+    }*/
+
+    /// <summary>
+    /// handles all Meta (between level) game actor matters
+    /// </summary>
+    /// <param name="playerSide"></param>
+    public void ProcessMetaActors(GlobalSide playerSide)
+    {
+        int count, highestHqID;
+        int maxWorkersAllowed = GameManager.instance.hqScript.maxNumOfWorkers;
+        //existing workers at HQ -> needs to be by value, not by reference
+        List<Actor> listOfWorkers = new List<Actor>(GameManager.instance.dataScript.GetListOfHqWorkers());
+        if (listOfWorkers != null)
+        {
+            //get highest hqID of existing workers (needed to check if a worker on list is existing or new)
+            highestHqID = 0;
+            for (int i = 0; i < listOfWorkers.Count; i++)
+            {
+                if (listOfWorkers[i].hqID > highestHqID)
+                { highestHqID = listOfWorkers[i].hqID; }
+            }
+            //
+            // - - - Promoted actors (auto go to HQ, replace workers with lowest renown)
+            //
+            List<int> listOfPromotedActors = GameManager.instance.dataScript.GetListOfPromotedActors(playerSide);
+            if (listOfPromotedActors != null)
+            {
+                count = listOfPromotedActors.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Actor actorPromoted = GameManager.instance.dataScript.GetActor(listOfPromotedActors[i]);
+                        if (actorPromoted != null)
+                        {
+                            //renown mincap at 1 then multiplied by factor as a boost for going to HQ
+                            actorPromoted.Renown = Mathf.Max(1, actorPromoted.Renown);
+                            actorPromoted.Renown *= renownFactorPromoted;
+
+                            if (listOfWorkers.Count > 0)
+                            {
+                                //Get worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
+                                Tuple<int, int> results = GetWorkerWithLowestRenown(listOfWorkers);
+                                if (results.Item1 > -1)
+                                {
+                                    //remove worker
+                                    Actor worker = GameManager.instance.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
+                                    worker.statusHQ = ActorHQ.LeftHQ;
+                                    listOfWorkers.RemoveAt(results.Item1);
+                                    //add actor
+                                    listOfWorkers.Add(actorPromoted);
+                                }
+                            }
+                            else
+                            {
+                                //add to worker list
+                                listOfWorkers.Add(actorPromoted);
+                                Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actorPromoted.actorName, actorPromoted.arc.name,
+                                    actorPromoted.actorID, actorPromoted.Renown, "\n");
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid Promoted actor (Null) for actorID {0}", listOfPromotedActors[i]); }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfPromotedActors (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfWorkers (Null)"); }
+    }
+
+    /// <summary>
+    /// returns a tuple, index of worker in listOfWorkers, renown of worker. Default values of -1 for index and 999 for renown
+    /// </summary>
+    /// <param name="listOfWorkers"></param>
+    /// <returns></returns>
+    private Tuple<int, int> GetWorkerWithLowestRenown(List<Actor> listOfWorkers)
+    {
+        int index = -1;
+        int lowestRenown = 999;
+        if (listOfWorkers != null)
+        {
+            for (int i = 0; i < listOfWorkers.Count; i++)
+            {
+                if (listOfWorkers[i].Renown < lowestRenown)
+                {
+                    index = i;
+                    lowestRenown = listOfWorkers[i].Renown;
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfWorkers (Null)"); }
+        return new Tuple<int, int>(index, lowestRenown);
     }
 
     /// <summary>
@@ -8739,7 +8835,7 @@ public class ActorManager : MonoBehaviour
     /// NOTE: actor checked for Null by parent method
     /// </summary>
     /// <param name="actor"></param>
-    private void AddActorToHQ(Actor actor, string reason)
+    public void AddActorToHQ(Actor actor, string reason)
     {
         actor.Status = ActorStatus.HQ;
         actor.statusHQ = ActorHQ.Worker;

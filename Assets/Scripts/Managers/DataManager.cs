@@ -3841,6 +3841,7 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// Adds any actor to dictOfHQ, returns true if successful. actor.hqID must be valid (> -1)
+    /// NOTE: Use ActorManager.cs -> AddActorToHQ to add new worker to HQ
     /// </summary>
     /// <param name="actor"></param>
     public bool AddHqActor(Actor actor)
@@ -3930,7 +3931,15 @@ public class DataManager : MonoBehaviour
             {
                 actor = listOfWorkers[i];
                 if (actor != null)
-                { actorHQPool.Add(actor.hqID); }
+                {
+                    if (actor.hqID > -1)
+                    { actorHQPool.Add(actor.hqID); }
+                    else
+                    {
+                        //new addition
+                        GameManager.instance.actorScript.AddActorToHQ(actor, "Promoted");
+                    }
+                }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }
             }
         }
@@ -3939,6 +3948,7 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// Add actor to HQ pool (assumed to be playerSide actor) using hqID, NOT actorID. Checks for ActorStatus.HQ and that statusHQ is current (hierarchy or worker)
+    /// NOTE: Use ActorManager.cs -> AddActorToHQ to add new worker to HQ
     /// </summary>
     /// <param name="actorID"></param>
     public void AddActorToHqPool(int hqID)
