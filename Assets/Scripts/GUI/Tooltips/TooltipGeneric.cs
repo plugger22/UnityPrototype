@@ -160,7 +160,7 @@ public class TooltipGeneric : MonoBehaviour
     public void CloseTooltip(string text = "Unknown", GenericTooltipType tooltipTypeToClose = GenericTooltipType.Any)
     {
         bool isProceed = true;
-        Debug.LogFormat("[Tst] TooltipGeneric.cs -> CloseTooltip: \"{0}\", tooltipTypeToClose \"{1}\", current tooltipType \"{2}\"", text, tooltipTypeToClose, tooltipType);
+        /*Debug.LogFormat("[Tst] TooltipGeneric.cs -> CloseTooltip: \"{0}\", tooltipTypeToClose \"{1}\", current tooltipType \"{2}\"", text, tooltipTypeToClose, tooltipType);*/
         if (tooltipTypeToClose != GenericTooltipType.Any)
         {
             //only close if current tooltip is specified type
@@ -170,8 +170,8 @@ public class TooltipGeneric : MonoBehaviour
         if (isProceed == true)
         {
             //close tooltip
-            Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");
             tooltipGenericObject.SetActive(false);
+            /*Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");*/
         }
     }
 

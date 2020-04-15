@@ -48,15 +48,12 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter (PointerEventData eventData)
     {
         side = GameManager.instance.sideScript.PlayerSide;
-        Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 0 -> {0}{1}", actorSlotID, "\n");
         onMouseFlag = true;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         {
-            Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 1 -> {0}{1}", actorSlotID, "\n");
             actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
             if (actor != null)
             {
-                Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 2 -> {0}{1}", actorSlotID, "\n");
                 //Don't want to clash with actor sprite tooltip
                 if (actor.tooltipStatus == ActorTooltip.None)
                 { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
@@ -104,24 +101,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
                 if (actor != null)
                 {
-                    Debug.LogFormat("[Tst] ActorTooltipUI.cs -> ShowActiveActor: actorSlotID 4 -> {0}{1}", actorSlotID, "\n");
-
-                    /*Gear gearActor = null;
-                    if (actor.GetGearID() > -1)
-                    { gearActor = GameManager.instance.dataScript.GetGear(actor.GetGearID()); }
-                    ActorTooltipData data = new ActorTooltipData()
-                    {
-                        tooltipPos = parent.transform.position,
-                        actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side),
-                        action = GameManager.instance.dataScript.GetActorAction(actorSlotID, side),
-                        gear = gearActor,
-                        listOfSecrets = actor.GetSecretsTooltipList(),
-                        arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
-                        arrayOfStats = GameManager.instance.dataScript.GetActorStats(actorSlotID, side)
-                    };*/
-
                     ActorTooltipData data = actor.GetTooltipData(parent.transform.position);
-                    Debug.LogFormat("[Tst] ActorTooltipUI.cs -> ShowActiveActor: actorSlotID 5 -> {0}, {1}, slotID {2}, actorSlotID {3}{4}", actor.actorName, actor.arc.name, actor.slotID, actorSlotID, "\n");
                     GameManager.instance.tooltipActorScript.SetTooltip(data, actorSlotID);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }

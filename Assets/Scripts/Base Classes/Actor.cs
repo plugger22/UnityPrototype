@@ -1202,7 +1202,6 @@ namespace gameAPI
         /// <returns></returns>
         public ActorTooltipData GetTooltipData(Vector3 position)
         {
-            Debug.LogFormat("[Tst] Actor.cs -> GetTooltipData: {0}, {1}, slotID {2}{3}", actorName, arc.name, slotID, "\n");
             Gear gear = null;
             if (string.IsNullOrEmpty(gearName) == false)
             { gear = GameManager.instance.dataScript.GetGear(gearName); }
