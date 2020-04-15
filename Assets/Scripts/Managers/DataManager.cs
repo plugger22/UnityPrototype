@@ -4059,6 +4059,30 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Adds a metaGame current actor, eg. one from recruit pool, to OnMap line up
+    /// </summary>
+    /// <param name="side"></param>
+    /// <param name="actor"></param>
+    /// <param name="slotID"></param>
+    public void AddMetaGameCurrentActor(GlobalSide side, Actor actor, int slotID)
+    {
+        Debug.Assert(side != null, "Invalid side (Null)");
+        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        if (actor != null)
+        {
+            arrayOfActors[side.level, slotID] = actor;
+            //ensure position is set to 'Filled'
+            arrayOfActorsPresent[side.level, slotID] = true;
+            //update actor
+            actor.slotID = slotID;
+            actor.ResetStates();
+            actor.Status = ActorStatus.Active;
+        }
+        else { Debug.LogError("Invalid actor (null)"); }
+    }
+
+
+    /// <summary>
     /// Removes current actor and handles all relevant admin details. Returns true if actor removed successfully. Actor could be in Reserves.
     /// NOTE: Actor status will be updated if operation successful otherwise no change
     /// </summary>

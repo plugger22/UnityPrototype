@@ -8952,3 +8952,289 @@ System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:
 	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:228)
 	GameManager.Update () (at Assets/Scripts/GameManager.cs:396)
 	
+Dev seed 8026 -> Wednesday, 15 April 2020 2:41 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for listOfActors check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckSecretData(String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:2541)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1893)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	WARNING Invalid CheckDictListBounds for dictOfNodeContactsResistance.List<int> check as both lower and upper bounds are Zero
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckDictListBounds(List`1, String, String, String, Int32, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3146)
+	ValidationManager:CheckContactData(String, Int32, Int32, Int32, Int32, GlobalSide) (at Assets/Scripts/Managers/ValidationManager.cs:2665)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1895)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:238)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 8288 -> Wednesday, 15 April 2020 2:44 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 55550 -> Wednesday, 15 April 2020 2:53 PM
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ActorManager.InitialiseActors (System.Int32 num, GlobalSide side) (at Assets/Scripts/Managers/ActorManager.cs:631)
+	ActorManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/ActorManager.cs:386)
+	ActorManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ActorManager.cs:231)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:783)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:837)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 58587 -> Wednesday, 15 April 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 39950 -> Wednesday, 15 April 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid teamID (-1) for teamArcID 2
+UnityEngine.Debug:LogWarning(Object)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3282)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3186)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:546)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:289)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:246)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:368)
+	City seed 765 -> New York, America
+ERROR Invalid entry in dictOfContacts for contact Arla, ID 43
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	gameAPI.Actor:AddContact(Contact) (at Assets/Scripts/Base Classes/Actor.cs:490)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:408)
+	ActorManager:InitialiseActorContacts(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:766)
+	ActorManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/ActorManager.cs:408)
+	ActorManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/ActorManager.cs:261)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	

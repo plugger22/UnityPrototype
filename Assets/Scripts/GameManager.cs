@@ -931,12 +931,12 @@ public class GameManager : MonoBehaviour
                 turnScript.ResetTurn();
                 messageScript.ResetCounter();
                 nodeScript.ResetCounters();
-                actorScript.ResetCounter();
                 contactScript.ResetCounter();
                 teamScript.ResetCounter();
             }
             else
             {
+                //Load Game
                 dataScript.ResetLoadGame();
                 nodeScript.ResetCounters();
                 actorScript.ResetCounter();

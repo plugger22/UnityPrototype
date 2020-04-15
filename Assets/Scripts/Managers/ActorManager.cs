@@ -628,7 +628,7 @@ public class ActorManager : MonoBehaviour
                 //Debug actor summary
                 if (actor != null)
                 {
-                    Debug.LogFormat("Actor added -> {0}, {1} {2}, {3} {4}, {5} {6}, level {7}{8}", actor.arc.actorName,
+                    Debug.LogFormat("[Map] ActorManager.cs -> InitialiseActors: {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
                         GameManager.instance.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
                         GameManager.instance.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
                         GameManager.instance.dataScript.GetQuality(side, 2), actor.GetDatapoint(ActorDatapoint.Datapoint2),
@@ -650,6 +650,7 @@ public class ActorManager : MonoBehaviour
         if (num > 0)
         {
             int actorID, count;
+            bool isSuccess;
             //can't have duplicate actor arcs on map, need a pick list by value
             List<ActorArc> listOfArcs = new List<ActorArc>();
             switch (side.level)
@@ -664,8 +665,9 @@ public class ActorManager : MonoBehaviour
             {
                 if (listOfArcs != null)
                 {
-                    for (int i = 0; i < num; i++)
+                    for (int index = 0; index < num; index++)
                     {
+                        isSuccess = false;
                         count = listOfActors.Count;
                         if (count > 0)
                         {
@@ -678,19 +680,68 @@ public class ActorManager : MonoBehaviour
                                 {
                                     //good to go, remove arc from list to prevent dupes
                                     listOfArcs.Remove(actor.arc);
-                                    //initialise actor
-
-
+                                    //add actor
+                                    GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                    Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
+                                        actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                                    //remove from list
+                                    listOfActors.Remove(actorID);
+                                    isSuccess = true;
+                                }
+                                else
+                                {
+                                    //find actor in pool list with a different arc
+                                    for (int j = 0; j < listOfActors.Count; j++)
+                                    {
+                                        actorID = listOfActors[j];
+                                        actor = GameManager.instance.dataScript.GetActor(actorID);
+                                        if (actor != null)
+                                        {
+                                            //check if arc type is in listOfArcs (if so then it's unique for OnMap)
+                                            if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
+                                            {
+                                                //good to go, remove arc from list to prevent dupes
+                                                listOfArcs.Remove(actor.arc);
+                                                //add actor
+                                                GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                                Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
+                                                    actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                                                //remove from list
+                                                listOfActors.Remove(actorID);
+                                                isSuccess = true;
+                                                break;
+                                            }
+                                        }
+                                        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                                    }
                                 }
                             }
                             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
                         }
-                        else
+                        //failed to find a suitable actor in level one pool
+                        if (isSuccess == false)
                         {
-                            //run out of actors in pool list
+                            //failed to add a level 1 actor -> create a new actor
+                            ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
+                            Actor newActor = CreateActor(side, arc.name, 1, ActorStatus.Active, index);
+                            if (newActor != null)
+                            {
+                                //good to go, remove arc from list to prevent dupes
+                                listOfArcs.Remove(arc);
+                                isSuccess = true;
+                                Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
+                                    newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
+                            }
+                            else { Debug.LogError("Invalid newActor (Null)"); }
+                        }
+                        //failed to create a new actor
+                        if (isSuccess == false)
+                        {
 
                         }
                     }
+                    //Update actor Panel
+                    GameManager.instance.actorPanelScript.UpdateActorPanel();
                 }
                 else { Debug.LogError("Invalid listOfArcs (Null)"); }
             }
