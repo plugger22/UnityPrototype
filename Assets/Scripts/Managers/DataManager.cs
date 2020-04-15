@@ -488,17 +488,11 @@ public class DataManager : MonoBehaviour
             currentInfoData = new MainInfoData();
         }
         //actor lists
-        authorityActorPoolLevelOne.Clear();
-        authorityActorPoolLevelTwo.Clear();
-        authorityActorPoolLevelThree.Clear();
         authorityActorReserve.Clear();
         authorityActorDismissed.Clear();
         authorityActorPromoted.Clear();
         authorityActorDisposedOf.Clear();
         authorityActorResigned.Clear();
-        resistanceActorPoolLevelOne.Clear();
-        resistanceActorPoolLevelTwo.Clear();
-        resistanceActorPoolLevelThree.Clear();
         resistanceActorReserve.Clear();
         resistanceActorDismissed.Clear();
         resistanceActorPromoted.Clear();
@@ -551,8 +545,6 @@ public class DataManager : MonoBehaviour
         //dijkstra
         dictOfDijkstraUnweighted.Clear();
         dictOfDijkstraWeighted.Clear();
-        //actors
-        dictOfActors.Clear();
         //teams
         dictOfTeams.Clear();
         //contacts
@@ -4224,7 +4216,7 @@ public class DataManager : MonoBehaviour
     /// Adds an actor to one of the three (by level and side) pools from which actors can be recruited from
     /// </summary>
     /// <param name="level"></param>
-    public void AddActorToPool(int actorID, int level, GlobalSide side)
+    public void AddActorToRecruitPool(int actorID, int level, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
@@ -4234,17 +4226,41 @@ public class DataManager : MonoBehaviour
             case "Authority":
                 switch (level)
                 {
-                    case 1: authorityActorPoolLevelOne.Add(actorID); break;
-                    case 2: authorityActorPoolLevelTwo.Add(actorID); break;
-                    case 3: authorityActorPoolLevelThree.Add(actorID); break;
+                    case 1:
+                        if (authorityActorPoolLevelOne.Exists(x => x == actorID) == false)
+                        { authorityActorPoolLevelOne.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in authorityActorPoolLevelOne", actorID); }
+                        break;
+                    case 2:
+                        if (authorityActorPoolLevelTwo.Exists(x => x == actorID) == false)
+                        { authorityActorPoolLevelTwo.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in authorityActorPoolLevelTwo", actorID); }
+                        break;
+                    case 3:
+                        if (authorityActorPoolLevelThree.Exists(x => x == actorID) == false)
+                        { authorityActorPoolLevelThree.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in authorityActorPoolLevelThree", actorID); }
+                        break;
                 }
                 break;
             case "Resistance":
                 switch (level)
                 {
-                    case 1: resistanceActorPoolLevelOne.Add(actorID); break;
-                    case 2: resistanceActorPoolLevelTwo.Add(actorID); break;
-                    case 3: resistanceActorPoolLevelThree.Add(actorID); break;
+                    case 1:
+                        if (resistanceActorPoolLevelOne.Exists(x => x == actorID) == false)
+                        { resistanceActorPoolLevelOne.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in resistanceActorPoolLevelOne", actorID); }
+                        break;
+                    case 2:
+                        if (resistanceActorPoolLevelTwo.Exists(x => x == actorID) == false)
+                        { resistanceActorPoolLevelTwo.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in resistanceActorPoolLevelTwo", actorID); }
+                        break;
+                    case 3:
+                        if (resistanceActorPoolLevelThree.Exists(x => x == actorID) == false)
+                        { resistanceActorPoolLevelThree.Add(actorID); }
+                        else { Debug.LogWarningFormat("ActorID {0} already present in resistanceActorPoolLevelThree", actorID); }
+                        break;
                 }
                 break;
             default:

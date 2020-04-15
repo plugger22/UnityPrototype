@@ -379,11 +379,20 @@ public class ActorManager : MonoBehaviour
         nameSet = GameManager.instance.cityScript.GetNameSet();
         if (nameSet == null)
         { Debug.LogError("Invalid nameSet (Null)"); }
-        //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
-        InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
-        InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
-        //create pool actors
-        InitialisePoolActors();
+        //create new actors -> first level only
+        if (GameManager.instance.campaignScript.GetScenarioIndex() == 0)
+        {
+            //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
+            InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
+            InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
+            InitialisePoolActors();
+        }
+        else
+        {
+            //draw from pool
+            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
+            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
+        }
         //Debug settings
         DebugTest();
         //set actor alpha to active for all onMap slots
@@ -603,7 +612,7 @@ public class ActorManager : MonoBehaviour
     { actorIDCounter = 0; }
 
     /// <summary>
-    /// Set up number of required actors (minions supporting play)
+    /// Set up number of required actors (minions supporting play). New actors for first scenario only, drawn from pool for the subsequent scenarios (GetOnMapActorsFromPool)
     /// </summary>
     /// <param name="num"></param>
     public void InitialiseActors(int num, GlobalSide side)
@@ -612,7 +621,7 @@ public class ActorManager : MonoBehaviour
         {
             //get a list of random actorArcs
             List<ActorArc> tempActorArcs = GameManager.instance.dataScript.GetRandomActorArcs(num, side);
-            //Create actors
+            //Get actors
             for (int i = 0; i < num; i++)
             {
                 Actor actor = CreateActor(side, tempActorArcs[i].name, 1, ActorStatus.Active, i);
@@ -630,6 +639,66 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
     }
+
+    /// <summary>
+    /// Sets up OnMap actors (all scenarios after first) by drawing from recruit pool. If there is a shortage a new actor is created
+    /// </summary>
+    /// <param name="num"></param>
+    /// <param name=""></param>
+    public void GetOnMapActorsFromPool(int num, GlobalSide side)
+    {
+        if (num > 0)
+        {
+            int actorID, count;
+            //can't have duplicate actor arcs on map, need a pick list by value
+            List<ActorArc> listOfArcs = new List<ActorArc>();
+            switch (side.level)
+            {
+                case 1: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfAuthorityActorArcs()); break;
+                case 2: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfResistanceActorArcs()); break;
+                default: Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); break;
+            }
+            //Get level 1 pool (by reference)
+            List<int> listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(1, side);
+            if (listOfActors != null)
+            {
+                if (listOfArcs != null)
+                {
+                    for (int i = 0; i < num; i++)
+                    {
+                        count = listOfActors.Count;
+                        if (count > 0)
+                        {
+                            actorID = listOfActors[Random.Range(0, count)];
+                            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                            if (actor != null)
+                            {
+                                //check if arc type is in listOfArcs (if so then it's unique for OnMap)
+                                if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
+                                {
+                                    //good to go, remove arc from list to prevent dupes
+                                    listOfArcs.Remove(actor.arc);
+                                    //initialise actor
+
+
+                                }
+                            }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                        }
+                        else
+                        {
+                            //run out of actors in pool list
+
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid listOfArcs (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfActors (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
+    }
+
 
     /// <summary>
     /// Initialise actor contacts for both sides at game start
@@ -669,7 +738,7 @@ public class ActorManager : MonoBehaviour
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                     GameManager.instance.dataScript.AddActor(actorOne);
-                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalAuthority);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorOne.actorID, 1, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
                 //level two actor
@@ -677,7 +746,7 @@ public class ActorManager : MonoBehaviour
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActor(actorTwo);
-                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalAuthority);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorTwo.actorID, 2, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorTwo (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
                 //level three actor
@@ -685,7 +754,7 @@ public class ActorManager : MonoBehaviour
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActor(actorThree);
-                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalAuthority);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorThree.actorID, 3, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorThree (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
             }
@@ -704,7 +773,7 @@ public class ActorManager : MonoBehaviour
                 {
                     //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                     GameManager.instance.dataScript.AddActor(actorOne);
-                    GameManager.instance.dataScript.AddActorToPool(actorOne.actorID, 1, globalResistance);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorOne.actorID, 1, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
                 //level two actor
@@ -712,7 +781,7 @@ public class ActorManager : MonoBehaviour
                 if (actorTwo != null)
                 {
                     GameManager.instance.dataScript.AddActor(actorTwo);
-                    GameManager.instance.dataScript.AddActorToPool(actorTwo.actorID, 2, globalResistance);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorTwo.actorID, 2, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorTwo (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
                 //level three actor
@@ -720,7 +789,7 @@ public class ActorManager : MonoBehaviour
                 if (actorThree != null)
                 {
                     GameManager.instance.dataScript.AddActor(actorThree);
-                    GameManager.instance.dataScript.AddActorToPool(actorThree.actorID, 3, globalResistance);
+                    GameManager.instance.dataScript.AddActorToRecruitPool(actorThree.actorID, 3, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorThree (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
             }
@@ -8730,6 +8799,7 @@ public class ActorManager : MonoBehaviour
     public void ProcessMetaActors(GlobalSide playerSide)
     {
         int count, highestHqID, threshold, rnd;
+        bool isSuccess;
         int maxWorkersAllowed = GameManager.instance.hqScript.maxNumOfWorkers;
         //existing workers at HQ -> needs to be by value, not by reference
         List<Actor> listOfWorkers = new List<Actor>(GameManager.instance.dataScript.GetListOfHqWorkers());
@@ -8773,6 +8843,7 @@ public class ActorManager : MonoBehaviour
                 {
                     for (int i = 0; i < count; i++)
                     {
+                        isSuccess = false;
                         Actor actorOnMap = arrayOfCurrentActors[i];
                         if (actorOnMap != null)
                         {
@@ -8788,6 +8859,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
                                         {
+                                            isSuccess = true;
                                             Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
                                           actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
                                         }
@@ -8803,6 +8875,11 @@ public class ActorManager : MonoBehaviour
                             }
                             else 
                             { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                            if (isSuccess == false)
+                            {
+                                //send actor back to recruit pool
+                                GameManager.instance.dataScript.AddActorToRecruitPool(actorOnMap.actorID, actorOnMap.level, playerSide);
+                            }
                         }
                     }
                 }

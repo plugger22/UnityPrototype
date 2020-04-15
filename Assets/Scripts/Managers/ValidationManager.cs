@@ -3116,7 +3116,7 @@ public class ValidationManager : MonoBehaviour
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (list[i] == null)
-                    { Debug.LogFormat("{0}\"{1}\"[{2] invalid (Null) for dictKey {3}{4}", tag, listName, i, key, "\n"); }
+                    { Debug.LogFormat("{0}\"{1}\"[{2}] invalid (Null) for dictKey {3}{4}", tag, listName, i, key, "\n"); }
                 }
             }
         }
