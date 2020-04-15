@@ -44,7 +44,7 @@ public class TestManager : MonoBehaviour
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
 
-    [Header("Actor (Player Side)")]
+    [Header("Actor -> First Scenario Only")]
     [Tooltip("slotID (0 -3) of actor you want to specify. Leave as '-1' (default) for no effect. All changes made at start")]
     [Range(-1, 3)] public int actorSlotID = -1;
     [Tooltip("The type of actor you want them to be, leave as 'None' for random. If type not present existing actor will be placed in Reserves and a new actor of required type will replace them")]

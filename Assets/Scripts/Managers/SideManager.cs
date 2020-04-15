@@ -422,7 +422,7 @@ public class SideManager : MonoBehaviour
                             if (actor != null)
                             {
                                 //clear out debug NodeActionData records
-                                actor.ClearAllNodeActions();
+                                actor.RemoveAllNodeActions();
                                 //update
                                 switch (actor.Status)
                                 {

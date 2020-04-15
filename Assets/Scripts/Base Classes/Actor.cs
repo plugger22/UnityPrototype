@@ -466,7 +466,7 @@ namespace gameAPI
         /// <summary>
         /// Empty out listOfTeams
         /// </summary>
-        public void ClearAllTeams()
+        public void RemoveAllTeams()
         { listOfTeams.Clear(); }
 
         //
@@ -514,6 +514,14 @@ namespace gameAPI
             }
             //remove contact
             return dictOfContacts.Remove(nodeID);
+        }
+
+        /// <summary>
+        /// Remove all contacts, used when actor being sent back to recruit pool at end of a level (ActorManager.cs -> ProcessMetaActors)
+        /// </summary>
+        public void RemoveAllContacts()
+        {
+            dictOfContacts.Clear();
         }
 
         /// <summary>
@@ -1129,6 +1137,8 @@ namespace gameAPI
                         if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
                         { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;
+                    case GearRemoved.RecruitPool:
+                        break;
                     default:
                         Debug.LogErrorFormat("Unrecognised GearRemoved reason \"{0}\"", reason);
                         break;
@@ -1137,6 +1147,7 @@ namespace gameAPI
             }
             return false;
         }
+
 
         public void IncrementGearTimer()
         { gearTimer++; }
@@ -1289,7 +1300,7 @@ namespace gameAPI
         /// <summary>
         /// Empty out listOfNodeActions
         /// </summary>
-        public void ClearAllNodeActions()
+        public void RemoveAllNodeActions()
         { listOfNodeActions.Clear(); }
 
         /// <summary>
@@ -1364,7 +1375,7 @@ namespace gameAPI
         /// <summary>
         /// Empty out listOfTeamActions
         /// </summary>
-        public void ClearAllTeamActions()
+        public void RemoveAllTeamActions()
         { listOfTeamActions.Clear(); }
 
 

@@ -1749,7 +1749,7 @@ public class TeamManager : MonoBehaviour
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}, actor {1}, ID {2}", listOfTeams[i], actor.arc.name, actor.actorID)); }
                 }
                 //empty list
-                actor.ClearAllTeams(); ;
+                actor.RemoveAllTeams(); ;
             }
         }
         else { Debug.LogError("Invalid actor (Null)"); }

@@ -386,6 +386,8 @@ public class ActorManager : MonoBehaviour
             InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
             InitialiseActors(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
             InitialisePoolActors();
+            //Debug settings
+            DebugTest();
         }
         else
         {
@@ -393,8 +395,6 @@ public class ActorManager : MonoBehaviour
             GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
             GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
         }
-        //Debug settings
-        DebugTest();
         //set actor alpha to active for all onMap slots
         GameManager.instance.actorPanelScript.SetActorsAlphaActive();
     }
@@ -732,16 +732,27 @@ public class ActorManager : MonoBehaviour
                                 Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
                                     newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
                             }
-                            else { Debug.LogError("Invalid newActor (Null)"); }
-                        }
-                        //failed to create a new actor
-                        if (isSuccess == false)
-                        {
-
+                            else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
                         }
                     }
                     //Update actor Panel
                     GameManager.instance.actorPanelScript.UpdateActorPanel();
+                    //Update renown data
+                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+                    if (arrayOfActors != null)
+                    {
+                        for (int i = 0; i < arrayOfActors.Length; i++)
+                        {
+                            //check actor is present in slot (not vacant)
+                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                            {
+                                Actor actor = arrayOfActors[i];
+                                if (actor != null)
+                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
+                            }
+                        }
+                    }
+                    else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 }
                 else { Debug.LogError("Invalid listOfArcs (Null)"); }
             }
@@ -8885,17 +8896,17 @@ public class ActorManager : MonoBehaviour
             //
             // - - - OnMap actors (% chance of going to HQ equal to 2 x renown, otherwise go back to actor Pool)
             //
-            //OnMap
             Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
             if (arrayOfCurrentActors != null)
             {
+                Actor actorOnMap = null;
                 count = arrayOfCurrentActors.Length;
                 if (count > 0)
                 {
                     for (int i = 0; i < count; i++)
                     {
                         isSuccess = false;
-                        Actor actorOnMap = arrayOfCurrentActors[i];
+                        actorOnMap = arrayOfCurrentActors[i];
                         if (actorOnMap != null)
                         {
                             //must have renown > 0
@@ -8928,14 +8939,34 @@ public class ActorManager : MonoBehaviour
                             { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             if (isSuccess == false)
                             {
-                                //send actor back to recruit pool
-                                GameManager.instance.dataScript.AddActorToRecruitPool(actorOnMap.actorID, actorOnMap.level, playerSide);
+                                //tidy up and send actor back to recruit pool
+                                SendActorBackToRecruitPool(actorOnMap, playerSide);
                             }
                         }
                     }
                 }
             }
             else { Debug.LogError("Invalid arrayOfCurrentActors (Null)"); }
+            //
+            // - - - Reserve Actors (auto sent back to recruit pool)
+            //
+            List<int> listOfReserveActors = GameManager.instance.dataScript.GetListOfReserveActors(playerSide);
+            if (listOfReserveActors != null)
+            {
+                count = listOfReserveActors.Count;
+                if (count > 0)
+                {
+                    Actor actorReserve = null;
+                    for (int i = 0; i < count; i++)
+                    {
+                        actorReserve = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                        if (actorReserve != null)
+                        { SendActorBackToRecruitPool(actorReserve, playerSide); }
+                        else { Debug.LogErrorFormat("Invalid Promoted actor (Null) for actorID {0}", listOfPromotedActors[i]); }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfReserveActors (Null)"); }
             //
             // - - - Merge worker list back into original
             //
@@ -9046,6 +9077,28 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
+    /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Renown is retained
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="side"></param>
+    private void SendActorBackToRecruitPool(Actor actor, GlobalSide side)
+    {
+        //tidy up
+        actor.Status = ActorStatus.RecruitPool;
+        actor.SetDatapoint(ActorDatapoint.Invisibility2, 3);
+        actor.ResetStates();
+        actor.RemoveAllTeams();
+        actor.RemoveAllConditions();
+        actor.RemoveAllSecrets();
+        actor.RemoveAllContacts();
+        actor.RemoveAllNodeActions();
+        actor.RemoveAllTeamActions();
+        actor.RemoveGear(GearRemoved.RecruitPool);
+        //return to recruit pool
+        GameManager.instance.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
+    }
+
+    /// <summary>
     /// handles all admin to transfer a normal actor to HQ (as a worker), string 'reason' is for message moved to HQ [...] ('after being dismissed', 'from active duty', 'after resigning', etc)
     /// NOTE: actor checked for Null by parent method
     /// </summary>
@@ -9063,7 +9116,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks TestManager.cs for any relevant debug test settings that may require changes to actors (PlayerSide only) at startUp
+    /// Checks TestManager.cs for any relevant debug test settings that may require changes to actors (PlayerSide only) at startUp (First Scenario in Campaign only)
     /// Can request a particular actor Arc type in the line up and/or a particular slotID actor having specified dataPoint settings
     /// NOTE: No need to deal with Authority preferrred actor teams as this is automatically taken care off by teamManager when teams are initialised (actors swapped before this happens)
     /// </summary>

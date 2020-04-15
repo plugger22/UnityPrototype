@@ -9238,3 +9238,90 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
 	
+Dev seed 47622 -> Wednesday, 15 April 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid actorNew (Null) for arc RECRUITER, level 1, side Resistance
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:DebugTest() (at Assets/Scripts/Managers/ActorManager.cs:9130)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:397)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:235)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	City seed 765 -> New York, America
+ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8665)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:166)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8665)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:166)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	ERROR Invalid firstActorSlotId "-1" (key not found in dictOfRelations)
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:AddActorCompatibility(Int32, Int32, Int32) (at Assets/Scripts/Managers/DataManager.cs:8665)
+	PersonalityManager:SetAllActorsCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:496)
+	PersonalityManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/PersonalityManager.cs:166)
+	PersonalityManager:Initialise(GameState) (at Assets/Scripts/Managers/PersonalityManager.cs:117)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.AddActorCompatibility (System.Int32 firstActorSlotID, System.Int32 secondActorSlotID, System.Int32 compatibility) (at Assets/Scripts/Managers/DataManager.cs:8657)
+	PersonalityManager.SetAllActorsCompatibility () (at Assets/Scripts/Managers/PersonalityManager.cs:498)
+	PersonalityManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/PersonalityManager.cs:166)
+	PersonalityManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/PersonalityManager.cs:117)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:783)
+	GameManager.InitialiseNewLevel () (at Assets/Scripts/GameManager.cs:874)
+	ControlManager.CloseMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 12330 -> Wednesday, 15 April 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 58810 -> Wednesday, 15 April 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 63394 -> Wednesday, 15 April 2020 4:33 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 31988 -> Wednesday, 15 April 2020 4:37 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 24908 -> Wednesday, 15 April 2020 4:54 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
