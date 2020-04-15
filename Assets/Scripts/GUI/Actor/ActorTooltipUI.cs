@@ -19,6 +19,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private bool onMouseFlag;
     private GameObject parent;
     private Coroutine myCoroutine;
+    private Actor actor;
+    private GlobalSide side;
 
     private void Awake()
     {
@@ -37,18 +39,21 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         mouseOverFade /= 2;
     }
 
+    
+
     /// <summary>
     /// Mouse Over event -> Shows actor tooltip if one present and a generic, info, tooltip, if not
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerEnter (PointerEventData eventData)
     {
+        side = GameManager.instance.sideScript.PlayerSide;
         Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 0 -> {0}{1}", actorSlotID, "\n");
         onMouseFlag = true;
         if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
         {
             Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 1 -> {0}{1}", actorSlotID, "\n");
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
+            actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
             if (actor != null)
             {
                 Debug.LogFormat("[Tst] ActorTooltipUI.cs -> OnPointerEnter: actorSlotID 2 -> {0}{1}", actorSlotID, "\n");
@@ -60,9 +65,12 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                     //InActive status, shows only if the text below sprite
                     if (isText == true)
                     { myCoroutine = StartCoroutine("ShowActiveActorTooltip"); }
+                    else
+                    { myCoroutine = StartCoroutine("ShowGenericTooltip"); }
                 }
             }
         }
+        else { myCoroutine = StartCoroutine("ShowVacantActorTooltip"); }
     }
 
     /// <summary>
@@ -75,6 +83,7 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
         GameManager.instance.tooltipActorScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
+        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
     }
 
     /// <summary>
@@ -130,8 +139,104 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
     }
 
+    //
+    // - - - Inactive actor tooltips
+    //
 
+    IEnumerator ShowGenericTooltip()
+    {
+        //delay before tooltip kicks in
+        yield return new WaitForSeconds(mouseOverDelay);
+        GenericTooltipData data = null;
+        //activate tool tip if mouse still over button
+        if (onMouseFlag == true)
+        {
+            //do once
+            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            {
+                data = GameManager.instance.actorScript.GetActorTooltip(actor, side);
+                data.screenPos = transform.position;
+                data.screenPos = AdjustTooltipPosition(data.screenPos);
+                if (data != null)
+                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
+                yield return null;
+            }
+            //fade in
+            if (data != null)
+            {
+                float alphaCurrent;
+                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                {
+                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent += Time.deltaTime / mouseOverFade;
+                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    yield return null;
+                }
+            }
+        }
+    }
 
+    /// <summary>
+    /// Position vacant generic info tooltip
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShowVacantActorTooltip()
+    {
+        GenericTooltipData data = null;
+        //delay before tooltip kicks in
+        yield return new WaitForSeconds(mouseOverDelay);
+        //activate tool tip if mouse still over 'vacant' text
+        if (onMouseFlag == true)
+        {
+            //do once
+            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            {
+                data = GameManager.instance.actorScript.GetVacantActorTooltip();
+                if (data != null)
+                {
+                    data.screenPos = transform.position;
+                    data.screenPos = AdjustTooltipPosition(data.screenPos);
+                    GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                }
+                yield return null;
+            }
+            //fade in
+            if (data != null)
+            {
+                float alphaCurrent;
+                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                {
+                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent += Time.deltaTime / mouseOverFade;
+                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    yield return null;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adjusts tooltip position based on slotID
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    private Vector3 AdjustTooltipPosition(Vector3 pos)
+    {
+        Vector3 adjustedPos = pos;
+        switch (actorSlotID)
+        {
+            case 0:
+            case 1:
+                adjustedPos.x -= 250.0f;
+                break;
+            case 2:
+            case 3:
+                adjustedPos.x += 50.0f;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised actorSlotID \"{0}\"", actorSlotID); break;
+        }
+        return adjustedPos;
+    }
 
 
 

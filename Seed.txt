@@ -8103,3 +8103,30 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 62185 -> Wednesday, 15 April 2020 9:34 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 51470 -> Wednesday, 15 April 2020 9:43 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.GetActorTooltip (gameAPI.Actor actor, GlobalSide side) (at Assets/Scripts/Managers/ActorManager.cs:8131)
+	ActorTooltipUI+<ShowGenericTooltip>c__Iterator1.MoveNext () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:156)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 61656 -> Wednesday, 15 April 2020 9:47 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20992 -> Wednesday, 15 April 2020 9:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46409 -> Wednesday, 15 April 2020 9:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29788 -> Wednesday, 15 April 2020 9:57 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorPanelUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ActorPanelUI.cs:228)
+	ActorPanelUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ActorPanelUI.cs:133)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:783)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:837)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:366)
+	
+Dev seed 42118 -> Wednesday, 15 April 2020 9:58 AM
+City seed 5678 -> London, United Kingdom
