@@ -735,24 +735,23 @@ public class ActorManager : MonoBehaviour
                             else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
                         }
                     }
-                    //Update actor Panel
-                    GameManager.instance.actorPanelScript.UpdateActorPanel();
-                    //Update renown data
-                    Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-                    if (arrayOfActors != null)
+                    //GUI update -> Player side only
+                    if (side.level == GameManager.instance.sideScript.PlayerSide.level)
                     {
-                        for (int i = 0; i < arrayOfActors.Length; i++)
+                        //Update actor Panel
+                        GameManager.instance.actorPanelScript.UpdateActorPanel();
+                        //Update renown data
+                        for (int i = 0; i < maxNumOfOnMapActors; i++)
                         {
                             //check actor is present in slot (not vacant)
                             if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
                             {
-                                Actor actor = arrayOfActors[i];
+                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, side);
                                 if (actor != null)
-                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(actor.slotID, actor.Renown); }
+                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
                             }
                         }
                     }
-                    else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 }
                 else { Debug.LogError("Invalid listOfArcs (Null)"); }
             }
@@ -8705,7 +8704,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// handles all Meta (between level) game actor matters
+    /// handles all Meta (between level) game actor matters (Both sides)
     /// </summary>
     /// <param name="playerSide"></param>
     public void ProcessMetaActors(GlobalSide playerSide)
@@ -8744,7 +8743,7 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid listOfPromotedActors (Null)"); }
             //
-            // - - - OnMap actors (% chance of going to HQ equal to 2 x renown, otherwise go back to actor Pool)
+            // - - - OnMap actors, Player side (% chance of going to HQ equal to 2 x renown, otherwise go back to actor Pool)
             //
             Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
             if (arrayOfCurrentActors != null)
@@ -8772,19 +8771,19 @@ public class ActorManager : MonoBehaviour
                                         {
                                             isSuccess = true;
                                             Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
-                                          actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
+                                                actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
                                         }
                                     }
                                     else
                                     {
-                                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}", 
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}",
                                             actorOnMap.actorName, actorOnMap.arc.name, threshold, rnd, "\n");
                                     }
                                 }
                                 else
                                 { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             }
-                            else 
+                            else
                             { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             if (isSuccess == false)
                             {
@@ -8792,6 +8791,35 @@ public class ActorManager : MonoBehaviour
                                 SendActorBackToRecruitPool(actorOnMap, playerSide, "OnMap");
                             }
                         }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfCurrentActors (Null)"); }
+            //
+            // - - - OnMap actors, Non-Player side (auto sent back to recruit pool)
+            //
+            GlobalSide otherSide = globalResistance;
+            switch (playerSide.level)
+            {
+                case 1: otherSide = globalResistance; break;
+                case 2: otherSide = globalAuthority; break;
+                default: Debug.LogWarningFormat("Invalid playerSide {0}", playerSide.name); break;
+            }
+            Actor[] arrayOfOtherActors = GameManager.instance.dataScript.GetCurrentActors(otherSide);
+            if (arrayOfOtherActors != null)
+            {
+                count = arrayOfOtherActors.Length;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Actor actorOther = arrayOfOtherActors[i];
+                        if (actorOther != null)
+                        {
+                                //tidy up and send actor back to recruit pool
+                                SendActorBackToRecruitPool(actorOther, otherSide, "OnMap");
+                        }
+                        else { Debug.LogErrorFormat("Invalid Other side OnMap actor (Null) for arrayOfCurrentActors[{0}]", i); }
                     }
                 }
             }
@@ -8933,6 +8961,8 @@ public class ActorManager : MonoBehaviour
     {
         //tidy up
         actor.Status = ActorStatus.RecruitPool;
+        actor.inactiveStatus = ActorInactive.None;
+        actor.tooltipStatus = ActorTooltip.None;
         actor.SetDatapoint(ActorDatapoint.Invisibility2, 3);
         actor.ResetStates();
         actor.RemoveAllTeams();

@@ -4077,6 +4077,7 @@ public class DataManager : MonoBehaviour
             actor.slotID = slotID;
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
+            actor.inactiveStatus = ActorInactive.None;
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }

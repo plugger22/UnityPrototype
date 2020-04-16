@@ -64,7 +64,7 @@ public class ActorPanelUI : MonoBehaviour
     private GenericTooltipUI playerMoodTooltip;
     private GenericTooltipUI playerStressedTooltip;
 
-    public bool isRenownUI;                                                     //gives status of Info UI display (true -> Shows RENOWN, false -> COMPATIBILITY)
+    private bool isRenownUI;                                                     //gives status of Info UI display (true -> Shows RENOWN, false -> COMPATIBILITY)
 
     private Image[] arrayOfRenownCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility

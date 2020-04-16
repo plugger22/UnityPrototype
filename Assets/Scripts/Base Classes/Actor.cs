@@ -171,6 +171,10 @@ namespace gameAPI
             isReassured = false;
             isThreatening = false;
             isComplaining = false;
+            isBreakdown = false;
+            isLieLowFirstturn = false;
+            isStressLeave = false;
+            /*isTraitor = false;  //leave as is so traitor status can carry over between levels */
         }
 
         //
