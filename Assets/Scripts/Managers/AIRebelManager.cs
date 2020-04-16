@@ -2945,7 +2945,7 @@ public class AIRebelManager : MonoBehaviour
                 //message (only if human player after an autorun)
                 if (isPlayer == true)
                 {
-                    Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Actor {0}, commences LYING LOW{1}", aiName, "\n");
+                    Debug.LogFormat("[Tor] AIRebelManager.cs -> ExecuteLieLowTask: Actor {0}, commences LYING LOW{1}", aiName, "\n");
                     //message
                     string text = string.Format("{0} is lying Low. Status: {1}", aiName, actor.Status);
                     string reason = string.Format("is currently Lying Low and is{0}{1}<b>out of communication</b>", "\n", "\n");

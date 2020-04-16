@@ -628,7 +628,7 @@ public class ActorManager : MonoBehaviour
                 //Debug actor summary
                 if (actor != null)
                 {
-                    Debug.LogFormat("[Map] ActorManager.cs -> InitialiseActors: {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
+                    Debug.LogFormat("[Tor] ActorManager.cs -> InitialiseActors: OnMap {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
                         GameManager.instance.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
                         GameManager.instance.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
                         GameManager.instance.dataScript.GetQuality(side, 2), actor.GetDatapoint(ActorDatapoint.Datapoint2),
@@ -682,7 +682,7 @@ public class ActorManager : MonoBehaviour
                                     listOfArcs.Remove(actor.arc);
                                     //add actor
                                     GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                    Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
+                                    Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
                                         actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                     //remove from list
                                     listOfActors.Remove(actorID);
@@ -704,7 +704,7 @@ public class ActorManager : MonoBehaviour
                                                 listOfArcs.Remove(actor.arc);
                                                 //add actor
                                                 GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                                Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
+                                                Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
                                                     actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                                 //remove from list
                                                 listOfActors.Remove(actorID);
@@ -729,7 +729,7 @@ public class ActorManager : MonoBehaviour
                                 //good to go, remove arc from list to prevent dupes
                                 listOfArcs.Remove(arc);
                                 isSuccess = true;
-                                Debug.LogFormat("[Map] ActorManager.cs -> GetOnMapActorsFromPool: {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
+                                Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
                                     newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
                             }
                             else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
@@ -748,7 +748,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 Actor actor = arrayOfActors[i];
                                 if (actor != null)
-                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
+                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(actor.slotID, actor.Renown); }
                             }
                         }
                     }
@@ -5512,7 +5512,7 @@ public class ActorManager : MonoBehaviour
                                             //message -> status change
                                             text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                             GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
-                                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckInactiveResistanceActorsHuman: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
+                                            Debug.LogFormat("[Tor] ActorManager.cs -> CheckInactiveResistanceActorsHuman: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
                                                 actor.arc.name, actor.actorID, "\n");
                                             //check if actor has stressed condition
                                             if (actor.CheckConditionPresent(conditionStressed) == true)
@@ -5648,7 +5648,7 @@ public class ActorManager : MonoBehaviour
                                                 string text = string.Format("{0} {1} has automatically reactivated", actor.arc.name, actor.actorName);
                                                 GameManager.instance.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", actor.actorID, globalResistance);
                                             }
-                                            Debug.LogFormat("[Ply] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
+                                            Debug.LogFormat("[Tor] ActorManager.cs -> CheckInactiveResistanceActorsAI: {0}, {1}, id {2} is no longer LYING LOW{3}", actor.actorName,
                                                 actor.arc.name, actor.actorID, "\n");
                                             //check if actor has stressed condition
                                             if (actor.CheckConditionPresent(conditionStressed) == true)
@@ -6648,7 +6648,7 @@ public class ActorManager : MonoBehaviour
                                 if (string.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
                                 {
                                     msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
-                                    Debug.LogFormat("[Ply] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
+                                    Debug.LogFormat("[Tor] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
                                 }
                                 else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
                             }
@@ -7600,7 +7600,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.CheckTraitEffect(actorUnhappyNone) == false)
                         {
                             actor.unhappyTimer--;
-                            Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                            Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2}  unhappy timer now {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.unhappyTimer, "\n");
                             if (actor.unhappyTimer == 1)
                             {
                                 //unhappy in one turn warning
@@ -7636,7 +7636,7 @@ public class ActorManager : MonoBehaviour
                                 int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                 motivation--;
                                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
-                                Debug.LogFormat("CheckReserveActors: Resistance {0} {1} UNHAPPY, Motivation now {2}{3}", actor.arc.name, actor.actorName,
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Motivation now {3}{4}", actor.actorName, actor.arc.name, actor.actorID,
                                     motivation, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
@@ -7685,8 +7685,8 @@ public class ActorManager : MonoBehaviour
                                 msgText = string.Format("Unhappy {0} Action check SUCCESS {1}", actor.arc.name, situation.Length > 0 ? "(" + situation + ")" : "");
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //action taken (decrement totalUnhappy only if actor resigns)
-                                Debug.Log(string.Format("CheckReserveActors: Resistance {0} {1} takes ACTION {2}", actor.arc.name, actor.actorName, "\n"));
-                                if (TakeAction(actor) == true)
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} takes ACTION {3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                                if (TakeReservePoolAction(actor) == true)
                                 { totalUnhappy--; }
                             }
                             else
@@ -7732,7 +7732,7 @@ public class ActorManager : MonoBehaviour
                         if (actor.CheckTraitEffect(actorUnhappyNone) == false)
                         {
                             actor.unhappyTimer--;
-                            Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} unhappy timer now {2}{3}", actor.arc.name, actor.actorName, actor.unhappyTimer, "\n"));
+                            Debug.Log(string.Format("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} unhappy timer now {2}{3}", actor.actorName, actor.arc.name, actor.actorID, actor.unhappyTimer, "\n"));
                             if (actor.unhappyTimer == 1)
                             {
                                 //unhappy in one turn warning
@@ -7768,8 +7768,8 @@ public class ActorManager : MonoBehaviour
                                 int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                 motivation--;
                                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
-                                Debug.LogFormat("CheckReserveActors: Authority {0} {1} UNHAPPY, Motivation now {2}, chance {3}{4}", actor.arc.name,
-                                    actor.actorName, motivation, chance, "\n");
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Motivation now {3}, chance {4}{5}", actor.actorName, actor.arc.name, actor.actorID,
+                                     motivation, chance, "\n");
                                 //lost motivation warning
                                 msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
                                 itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
@@ -7812,8 +7812,8 @@ public class ActorManager : MonoBehaviour
                                 msgText = string.Format("Unhappy {0} Action check SUCCESS", actor.arc.name);
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //action taken (decrement totalUnhappy only if actor resigns)
-                                Debug.Log(string.Format("CheckReserveActors: Authority {0} {1} takes ACTION, chance {2}{3}", actor.arc.name, actor.actorName, chance, "\n"));
-                                if (TakeAction(actor) == true)
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, {2} takes ACTION, chance {3}{4}", actor.actorName, actor.arc.name, actor.actorID, chance, "\n");
+                                if (TakeReservePoolAction(actor) == true)
                                 { totalUnhappy--; }
                             }
                             else
@@ -8045,11 +8045,11 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// An unhappy actor takes action (both sides). Returns true if actor resigns, false for any other outcome
+    /// An unhappy Reserve Pool actor takes action (both sides). Returns true if actor resigns, false for any other outcome
     /// NOTE: Actor is assumed to be Null checked by the calling method
     /// </summary>
     /// <param name="actor"></param>
-    private bool TakeAction(Actor actor)
+    private bool TakeReservePoolAction(Actor actor)
     {
         bool isResigned = false;
         int rnd, chance;
@@ -8064,7 +8064,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Reveal Secret SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
                 Secret secret = actor.GetSecret();
@@ -8093,6 +8093,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                     //message
                     GameManager.instance.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
+                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Reveals Secret{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
                 return isResigned;
@@ -8100,7 +8101,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Reveal Secret FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
             }
@@ -8115,7 +8116,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
                 //resigns in frustration
@@ -8129,6 +8130,7 @@ public class ActorManager : MonoBehaviour
                     itemText = "resigns in disgust";
                     reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
+                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
                 return isResigned;
@@ -8136,7 +8138,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
             }
@@ -8149,7 +8151,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave (already Complained) SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
@@ -8164,13 +8166,14 @@ public class ActorManager : MonoBehaviour
                     itemText = "resigns in disgust";
                     reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
+                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 return isResigned;
             }
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave (already Complained) FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave (Complained)", chance, rnd, true);
             }
@@ -8185,18 +8188,19 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Complain SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
                 msgText = string.Format("{0} Complains about being left in Reserves", actor.arc.name);
                 GameManager.instance.messageScript.ActorComplains(msgText, actor, "Unhappy at being left in Reserve", "Higher chance of Resigning or Revealing a Secret");
+                Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Complains{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 actor.isComplaining = true;
                 return isResigned;
             }
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Complain FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
             }
@@ -8209,6 +8213,7 @@ public class ActorManager : MonoBehaviour
         reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
         string warning = string.Format("{0} will {1}<b>TAKE DECISIVE ACTION</b>{2}, but didn't this turn", actor.actorName, colourBad, colourEnd);
         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Taking Action", reason, warning);
+        Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Failed to Act{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
         return isResigned;
     }
 
@@ -8699,161 +8704,6 @@ public class ActorManager : MonoBehaviour
         return false;
     }
 
-    /*/// <summary>
-    /// handles all Meta (between level) game actor matters
-    /// </summary>
-    public void ProcessMetaActors(GlobalSide playerSide)
-    {
-        int count, rndNum;
-        bool isProceed = true;
-        int numToHQ = 0;
-        //check lists of actors at end of level to see if any get transferred to the reserves -> Promoted
-        List<int> listOfPromotedActors = GameManager.instance.dataScript.GetListOfPromotedActors(playerSide);
-        if (listOfPromotedActors != null)
-        {
-            count = listOfPromotedActors.Count;
-            if (count > 0)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    Actor actor = GameManager.instance.dataScript.GetActor(listOfPromotedActors[i]);
-                    if (actor != null)
-                    {
-                        //add to HQ
-                        rndNum = Random.Range(0, 100);
-                        if (rndNum < chanceOfPromotedToHQ)
-                        {
-                            AddActorToHQ(actor, "after being Promoted");
-                            numToHQ++;
-                            if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
-                        }
-                    }
-                    else { Debug.LogWarningFormat("Invalid actor (Null) in listOfPromotedActors for actorID {0}", listOfPromotedActors[i]); }
-                }
-            }
-        }
-        else { Debug.LogWarning("Invalid listOfPromotedActors (Null)"); }
-        //haven't yet reached max cap on actors to HQ
-        if (isProceed == true)
-        {
-            //Resigned
-            List<int> listOfResignedActors = GameManager.instance.dataScript.GetListOfResignedActors(playerSide);
-            if (listOfResignedActors != null)
-            {
-                count = listOfResignedActors.Count;
-                if (count > 0)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        Actor actor = GameManager.instance.dataScript.GetActor(listOfResignedActors[i]);
-                        if (actor != null)
-                        {
-                            //add to HQ 
-                            rndNum = Random.Range(0, 100);
-                            if (rndNum < chanceOfResignedToHQ)
-                            {
-                                AddActorToHQ(actor, "after Resigning");
-                                numToHQ++;
-                                if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
-                            }
-                        }
-                        else { Debug.LogWarningFormat("Invalid actor (Null) in listOfResignedActors for actorID {0}", listOfResignedActors[i]); }
-                    }
-                }
-            }
-            else { Debug.LogWarning("Invalid listOfResignedActors (Null)"); }
-            //haven't yet reached max cap on actors to HQ
-            if (isProceed == true)
-            {
-                //Dismissed
-                List<int> listOfDismissedActors = GameManager.instance.dataScript.GetListOfDismissedActors(playerSide);
-                if (listOfDismissedActors != null)
-                {
-                    count = listOfDismissedActors.Count;
-                    if (count > 0)
-                    {
-                        for (int i = 0; i < count; i++)
-                        {
-                            Actor actor = GameManager.instance.dataScript.GetActor(listOfDismissedActors[i]);
-                            if (actor != null)
-                            {
-                                //add to HQ 
-                                rndNum = Random.Range(0, 100);
-                                if (rndNum < chanceOfDismissedToHQ)
-                                {
-                                    AddActorToHQ(actor, "after being Dismissed");
-                                    numToHQ++;
-                                    if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
-                                }
-                            }
-                            else { Debug.LogWarningFormat("Invalid actor (Null) in listOfDismissedActors for actorID {0}", listOfDismissedActors[i]); }
-                        }
-                    }
-                }
-                else { Debug.LogWarning("Invalid listOfDismissedActors (Null)"); }
-                //haven't yet reached max cap on actors to HQ
-                if (isProceed == true)
-                {
-                    //OnMap
-                    Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
-                    if (arrayOfCurrentActors != null)
-                    {
-                        count = arrayOfCurrentActors.Length;
-                        if (count > 0)
-                        {
-                            for (int i = 0; i < count; i++)
-                            {
-                                Actor actor = arrayOfCurrentActors[i];
-                                if (actor != null)
-                                {
-                                    //add to HQ 
-                                    rndNum = Random.Range(0, 100);
-                                    if (rndNum < chanceOfOnMapToHQ)
-                                    {
-                                        AddActorToHQ(actor, "from Active Duty");
-                                        numToHQ++;
-                                        if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else { Debug.LogError("Invalid arrayOfCurrentActors (Null)"); }
-                    //haven't yet reached max cap on actors to HQ
-                    if (isProceed == true)
-                    {
-                        //Reserves
-                        List<int> listOfReserveActors = GameManager.instance.dataScript.GetListOfReserveActors(playerSide);
-                        if (listOfReserveActors != null)
-                        {
-                            count = listOfReserveActors.Count;
-                            if (count > 0)
-                            {
-                                for (int i = 0; i < count; i++)
-                                {
-                                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
-                                    if (actor != null)
-                                    {
-                                        //add to HQ 
-                                        rndNum = Random.Range(0, 100);
-                                        if (rndNum < chanceOfReservesToHQ)
-                                        {
-                                            AddActorToHQ(actor, "from Reserves");
-                                            numToHQ++;
-                                            if (numToHQ >= maxActorsToHQ) { isProceed = false; break; }
-                                        }
-                                    }
-                                    else { Debug.LogWarningFormat("Invalid actor (Null) in listOfReserveActors for actorID {0}", listOfReserveActors[i]); }
-                                }
-                            }
-                        }
-                        else { Debug.LogWarning("Invalid listOfReserveActors (Null)"); }
-                    }
-                }
-            }
-        }
-    }*/
-
     /// <summary>
     /// handles all Meta (between level) game actor matters
     /// </summary>
@@ -9094,7 +8944,7 @@ public class ActorManager : MonoBehaviour
         actor.RemoveGear(GearRemoved.RecruitPool);
         //return to recruit pool
         GameManager.instance.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
-        Debug.LogFormat("[Map] ActorManager.cs -> SendActorBackToRecruitPool: {0} actor, {1}, {2}, ID {3} sent back to Recruit pool{4}", whereFrom, actor.actorName, actor.arc.name, actor.actorID, "\n");
+        Debug.LogFormat("[Tor] ActorManager.cs -> SendActorBackToRecruitPool: {0} actor, {1}, {2}, ID {3} sent back to Recruit pool{4}", whereFrom, actor.actorName, actor.arc.name, actor.actorID, "\n");
     }
 
     /// <summary>

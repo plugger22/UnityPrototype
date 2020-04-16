@@ -13,9 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Capture 1 option 1
   tag: Reveal Infomation
-  text: Are those needles? I'll talk!
+  text: THAT many needles? I'll talk!
   topic: {fileID: 11400000, guid: 7181ef811b61fc9419306249bcb9916a, type: 2}
   isPreferredByHQ: 0
+  isDislikedByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
   isIgnoreMood: 1
@@ -30,9 +31,9 @@ MonoBehaviour:
   news: My [who] claims they saw an [cap3] once. Insisted that it did THINGS to them.
     Sadly, not enough, says [npc], [job], of [node]
   tooltipHeader: <color=#FFFFE0>Reveal Infomation</color>
-  tooltipMain: "<color=#98FB98>Player released from Captivity</color>\r\n<color=#FF4500>
-    Random Subordinate<br>Invisibility -1</color>"
+  tooltipMain: "<color=#98FB98>Player released from Captivity</color>\r\n<color=#FF4500>Player
+    gains TAGGED Condition</color>\r\n<color=#FF4500>Player Innocence -1</color>"
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Give them what they expect</color>
+  textToDisplay: <color=#EEFB73>Are those needles? I'll talk!</color>
   optionNumber: 1

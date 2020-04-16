@@ -637,7 +637,7 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void InfoPipelineDictClear()
     {
-        Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineClear: Empty dictionary{0}", "\n");
+        /*Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineClear: Finish Messages, clear dictionary{0}", "\n");*/
         dictOfPipeline.Clear();
     }
 
@@ -670,7 +670,7 @@ public class GUIManager : MonoBehaviour
                     try
                     {
                         dictOfPipeline.Add(details.type, details);
-                        Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineAdd: \"{0}\" added{1}", details.type, "\n");
+                        Debug.LogFormat("[Pip] GUIManager.cs -> InfoPipelineAdd: \"{0}\" message added{1}", details.type, "\n");
                         return true;
                     }
                     catch (ArgumentException)
@@ -697,7 +697,7 @@ public class GUIManager : MonoBehaviour
             SetTooltipsOff();
             waitUntilDone = false;
             //process all messages in pipeline (waits until each message done)
-            Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineStart: start Pipeline - - - {0}", "\n");
+            Debug.LogFormat("[Pip] GUIManager.cs -> InfoPipelineStart: start Pipeline - - - (dict has {0} entr{1}){2}", dictOfPipeline.Count, dictOfPipeline.Count != 1 ? "ies" : "y", "\n");
             StartCoroutine("InfoPipeline", playerSide);
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }
@@ -748,7 +748,7 @@ public class GUIManager : MonoBehaviour
         //find entry (if any) in dictionary
         if (dictOfPipeline.ContainsKey(type) == true)
         {
-            Debug.LogFormat("[Tst] GUIManager.cs -> InfoPipelineProcess: dictionary contains key {0}{1}", type, "\n");
+            Debug.LogFormat("[Pip] GUIManager.cs -> InfoPipelineProcess: show {0} message{1}", type, "\n");
             ModalOutcomeDetails details = dictOfPipeline[type];
             if (details != null)
             {
@@ -767,7 +767,7 @@ public class GUIManager : MonoBehaviour
     IEnumerator Topic()
     {
         TopicGlobal topicGlobal = GameManager.instance.topicScript.GetTopicGlobal();
-        Debug.LogFormat("[Tst] GUIManager.cs -> Topic coroutine -> topicGlobal.{0}{1}", topicGlobal, "\n");
+        Debug.LogFormat("[Pip] GUIManager.cs -> show {0} topic{1}", topicGlobal, "\n");
         switch (topicGlobal)
         {
             case TopicGlobal.Decision:
