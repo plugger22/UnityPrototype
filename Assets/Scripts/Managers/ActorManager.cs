@@ -8899,14 +8899,13 @@ public class ActorManager : MonoBehaviour
             Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
             if (arrayOfCurrentActors != null)
             {
-                Actor actorOnMap = null;
                 count = arrayOfCurrentActors.Length;
                 if (count > 0)
                 {
                     for (int i = 0; i < count; i++)
                     {
                         isSuccess = false;
-                        actorOnMap = arrayOfCurrentActors[i];
+                        Actor actorOnMap = arrayOfCurrentActors[i];
                         if (actorOnMap != null)
                         {
                             //must have renown > 0
@@ -8940,7 +8939,7 @@ public class ActorManager : MonoBehaviour
                             if (isSuccess == false)
                             {
                                 //tidy up and send actor back to recruit pool
-                                SendActorBackToRecruitPool(actorOnMap, playerSide);
+                                SendActorBackToRecruitPool(actorOnMap, playerSide, "OnMap");
                             }
                         }
                     }
@@ -8956,12 +8955,11 @@ public class ActorManager : MonoBehaviour
                 count = listOfReserveActors.Count;
                 if (count > 0)
                 {
-                    Actor actorReserve = null;
                     for (int i = 0; i < count; i++)
                     {
-                        actorReserve = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                        Actor actorReserve = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
                         if (actorReserve != null)
-                        { SendActorBackToRecruitPool(actorReserve, playerSide); }
+                        { SendActorBackToRecruitPool(actorReserve, playerSide, "Reserve"); }
                         else { Debug.LogErrorFormat("Invalid Promoted actor (Null) for actorID {0}", listOfPromotedActors[i]); }
                     }
                 }
@@ -9077,11 +9075,11 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Renown is retained
+    /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Renown is retained. 'whereFrom' is the actor source, eg. 'Reserves / OnMap / Dismissed / Resigned'
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="side"></param>
-    private void SendActorBackToRecruitPool(Actor actor, GlobalSide side)
+    private void SendActorBackToRecruitPool(Actor actor, GlobalSide side, string whereFrom)
     {
         //tidy up
         actor.Status = ActorStatus.RecruitPool;
@@ -9096,6 +9094,7 @@ public class ActorManager : MonoBehaviour
         actor.RemoveGear(GearRemoved.RecruitPool);
         //return to recruit pool
         GameManager.instance.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
+        Debug.LogFormat("[Map] ActorManager.cs -> SendActorBackToRecruitPool: {0} actor, {1}, {2}, ID {3} sent back to Recruit pool{4}", whereFrom, actor.actorName, actor.arc.name, actor.actorID, "\n");
     }
 
     /// <summary>

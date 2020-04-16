@@ -497,8 +497,8 @@ public class ModalGenericPicker : MonoBehaviour
                                             Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, to RESERVE pool selected{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         case "HandleDismiss":
-                                            text = string.Format("{0}Fire {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
-                                            Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, FIRE selected{2}", actor.actorName, data.actorSlotID, "\n");
+                                            text = string.Format("{0}Move On {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
+                                            Debug.LogFormat("[UI] -> ModalGenericPicker: {0}, ID {1}, DISMISS selected{2}", actor.actorName, data.actorSlotID, "\n");
                                             break;
                                         case "HandleDispose":
                                             text = string.Format("{0}Dispose of {1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);

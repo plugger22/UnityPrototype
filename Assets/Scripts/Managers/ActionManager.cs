@@ -926,11 +926,11 @@ public class ActionManager : MonoBehaviour
             {
                 genericDetails.returnEvent = EventType.GenericDismissActor;
                 genericDetails.side = playerSide;
-                genericDetails.textHeader = "Dismiss";
+                genericDetails.textHeader = "Move On";
                 genericDetails.actorSlotID = details.actorDataID;
                 title = string.Format("{0}", isResistance ? "" : GameManager.instance.metaScript.GetAuthorityTitle().ToString() + " ");
                 //picker text
-                genericDetails.textTop = string.Format("{0}Dismiss{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
+                genericDetails.textTop = string.Format("{0}Move On{1}{2} {3} {4}{5}{6}", colourNeutral, colourEnd, colourNormal, actor.arc.name, title,
                     actor.actorName, colourEnd);
                 genericDetails.textMiddle = string.Format("{0}{1} demands to know why?{2}",
                     colourNormal, actor.actorName, colourEnd);
@@ -969,7 +969,7 @@ public class ActionManager : MonoBehaviour
                                 //option activated
                                 option.isOptionActive = true;
                                 //tooltip
-                                tooltip.textHeader = string.Format("{0}DISMISS{1}", colourSide, colourEnd);
+                                tooltip.textHeader = string.Format("{0}Move On{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
                                 //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
