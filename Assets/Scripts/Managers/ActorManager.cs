@@ -119,6 +119,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 5)] public int renownFactorPromoted = 3;
     [Tooltip("Renown multiplier, if actor joins HQ, for all other Actors (OnMap / Resigned / Dismissed")]
     [Range(1, 5)] public int renownFactorOthers = 2;
+    [Tooltip("Base amount added to renown (adjusted by multiplier above) to determine % chance of actor being promoted to HQ")]
+    [Range(0, 50)] public int baseHqAmount = 15;
 
     [Header("Actor to Actor Relations")]
     [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
@@ -8709,7 +8711,7 @@ public class ActorManager : MonoBehaviour
     /// <param name="playerSide"></param>
     public void ProcessMetaActors(GlobalSide playerSide)
     {
-        int count, highestHqID, threshold, rnd;
+        int count, highestHqID, actorID, threshold, rnd;
         bool isSuccess;
         int maxWorkersAllowed = GameManager.instance.hqScript.maxNumOfWorkers;
         //existing workers at HQ -> needs to be by value, not by reference
@@ -8743,7 +8745,7 @@ public class ActorManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid listOfPromotedActors (Null)"); }
             //
-            // - - - OnMap actors, Player side (% chance of going to HQ equal to 2 x renown, otherwise go back to actor Pool)
+            // - - - OnMap actors, Player side (% chance of going to HQ , otherwise go back to actor Pool)
             //
             Actor[] arrayOfCurrentActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
             if (arrayOfCurrentActors != null)
@@ -8760,10 +8762,11 @@ public class ActorManager : MonoBehaviour
                             //must have renown > 0
                             if (actorOnMap.Renown > 0)
                             {
+                                //can't have Questionable condition
                                 if (actorOnMap.CheckConditionPresent(conditionQuestionable) == false)
                                 {
                                     //add to HQ 
-                                    threshold = actorOnMap.Renown * renownFactorOthers;
+                                    threshold = actorOnMap.Renown * renownFactorOthers + baseHqAmount;
                                     rnd = Random.Range(0, 100);
                                     if (rnd < threshold)
                                     {
@@ -8781,10 +8784,10 @@ public class ActorManager : MonoBehaviour
                                     }
                                 }
                                 else
-                                { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             }
                             else
-                            { Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                            { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             if (isSuccess == false)
                             {
                                 //tidy up and send actor back to recruit pool
@@ -8843,6 +8846,124 @@ public class ActorManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfReserveActors (Null)"); }
+            //
+            // - - - Resigned actors, Player side (% chance of going to HQ, otherwise go back to actor Pool)
+            //
+            List<int> listOfResignedActors = GameManager.instance.dataScript.GetActorList(playerSide, ActorList.Resigned);
+            if (listOfResignedActors != null)
+            {
+                count = listOfResignedActors.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        isSuccess = false;
+                        actorID = listOfResignedActors[i];
+                        Actor actorResigned = GameManager.instance.dataScript.GetActor(actorID);
+                        if (actorResigned != null)
+                        {
+                            //must have renown > 0
+                            if (actorResigned.Renown > 0)
+                            {
+                                //can't have Questionable condition
+                                if (actorResigned.CheckConditionPresent(conditionQuestionable) == false)
+                                {
+                                    //add to HQ 
+                                    threshold = actorResigned.Renown * renownFactorOthers + baseHqAmount;
+                                    rnd = Random.Range(0, 100);
+                                    if (rnd < threshold)
+                                    {
+                                        if (PromoteActorToHQ(actorResigned, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        {
+                                            isSuccess = true;
+                                            Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Resigned actor promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
+                                                actorResigned.actorName, actorResigned.arc.name, threshold, rnd, "\n");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Resigned actor promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}",
+                                            actorResigned.actorName, actorResigned.arc.name, threshold, rnd, "\n");
+                                    }
+                                }
+                                else
+                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", 
+                                    actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n"); }
+                            }
+                            else
+                            { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", 
+                                actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n"); }
+                            if (isSuccess == false)
+                            {
+                                //tidy up and send actor back to recruit pool
+                                SendActorBackToRecruitPool(actorResigned, playerSide, "Resigned");
+                            }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfResignedActors (Null)"); }
+            //
+            // - - - Dismissed actors, Player side (% chance of going to HQ, otherwise go back to actor Pool)
+            //
+            List<int> listOfDismissedActors = GameManager.instance.dataScript.GetActorList(playerSide, ActorList.Dismissed);
+            if (listOfDismissedActors != null)
+            {
+                count = listOfDismissedActors.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        isSuccess = false;
+                        actorID = listOfDismissedActors[i];
+                        Actor actorDismissed = GameManager.instance.dataScript.GetActor(actorID);
+                        if (actorDismissed != null)
+                        {
+                            //must have renown > 0
+                            if (actorDismissed.Renown > 0)
+                            {
+                                //can't have Questionable condition
+                                if (actorDismissed.CheckConditionPresent(conditionQuestionable) == false)
+                                {
+                                    //add to HQ 
+                                    threshold = actorDismissed.Renown * renownFactorOthers + baseHqAmount;
+                                    rnd = Random.Range(0, 100);
+                                    if (rnd < threshold)
+                                    {
+                                        if (PromoteActorToHQ(actorDismissed, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        {
+                                            isSuccess = true;
+                                            Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Dismissed actor promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
+                                                actorDismissed.actorName, actorDismissed.arc.name, threshold, rnd, "\n");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Dismissed actor promotion of {0}, {1}, Failed (need < {2}, rolled {3}){4}",
+                                            actorDismissed.actorName, actorDismissed.arc.name, threshold, rnd, "\n");
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
+                                      actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                  actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                            }
+                            if (isSuccess == false)
+                            {
+                                //tidy up and send actor back to recruit pool
+                                SendActorBackToRecruitPool(actorDismissed, playerSide, "Dismissed");
+                            }
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid listOfDismissedActors (Null)"); }
             //
             // - - - Merge worker list back into original
             //

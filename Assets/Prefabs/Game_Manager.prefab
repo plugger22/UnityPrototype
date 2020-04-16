@@ -4368,9 +4368,9 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: 19
-  conditionWhoResistance: 1
-  conditionResistance: {fileID: 11400000, guid: 81509dbb901ce55408bf253da001f05e,
+  conditionTurnResistance: 5
+  conditionWhoResistance: 999
+  conditionResistance: {fileID: 11400000, guid: 8d211107db009064782ea763fea77830,
     type: 2}
   actorSlotID: 0
   actorType: {fileID: 0}
@@ -4607,6 +4607,7 @@ MonoBehaviour:
   lieLowCooldownPeriod: 5
   renownFactorPromoted: 3
   renownFactorOthers: 2
+  baseHqAmount: 15
   timerRelations: 999
   chanceRelationShift: 100
   lieLowTimer: 0
