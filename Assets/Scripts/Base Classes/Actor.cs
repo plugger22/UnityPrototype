@@ -75,6 +75,7 @@ namespace gameAPI
         private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();        //Actor district topics
         private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();        //Authority team topics
         private List<HqRenownData> listOfHqRenownData = new List<HqRenownData>();           //Hq actors only, tracks all changes to renown
+        private List<HistoryActor> listOfHistory = new List<HistoryActor>();                //tracks major events affecting actor, carries across levels
         #endregion
 
         //cached trait effects (public for serialization reasons)
@@ -777,6 +778,8 @@ namespace gameAPI
                             string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.tag);
                             GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                         }
+                        //history
+                        AddHistory(new HistoryActor() { text = string.Format("Is now {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
                     }
                 }
             }
@@ -843,6 +846,8 @@ namespace gameAPI
                                 //message
                                 string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.tag);
                                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
+                                //history
+                                AddHistory( new HistoryActor() { text = string.Format("Is no longer {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
                             }
                             return true;
                         }
@@ -1432,6 +1437,45 @@ namespace gameAPI
                 listOfHqRenownData.AddRange(tempList);
             }
             else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
+        }
+
+        //
+        // - - - History
+        //
+
+        public List<HistoryActor> GetListOfHistory()
+        { return listOfHistory; }
+
+        /// <summary>
+        /// Add history record
+        /// </summary>
+        /// <param name="data"></param>
+        public void AddHistory(HistoryActor data)
+        {
+            if (data != null)
+            { listOfHistory.Add(data); }
+            else { Debug.LogError("Invalid HistoryActor data (Null)"); }
+        }
+
+        /// <summary>
+        /// Display Actor History
+        /// </summary>
+        /// <returns></returns>
+        public string DebugDisplayHistory()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("- {0}, {1}, ID {2} History{3}", actorName, arc.name, actorID, "\n");
+            int count = listOfHistory.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    HistoryActor data = listOfHistory[i];
+                    builder.AppendFormat(" {0}, t{1}: {2}{3}", data.cityTag, data.turn, data.text, "\n");
+                }
+            }
+            else { builder.AppendFormat(" No records"); }
+            return builder.ToString();
         }
 
         //place methods above here

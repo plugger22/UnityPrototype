@@ -13,12 +13,16 @@ public class Condition : ScriptableObject
     public string tag;
     [Tooltip("Used for when actor resigns over Player having a bad condition. Format -> [actor] Resigns (due to Player's '....'). Ignore if not applicable")]
     public string resignTag;
+
+    [Header("Texts")]
     [Tooltip("Used for InfoApp details top Text in format '[Actor] ...', keep short")]
     [TextArea] public string topText;
     [Tooltip("Used for InfoApp details bottom Text (self Contained), keep short")]
     [TextArea] public string bottomTextActor;
     [Tooltip("Used for InfoApp details bottom Text (self Contained), keep short")]
     [TextArea] public string bottomTextPlayer;
+
+    [Header("Types")]
     [Tooltip("From Point of View of Actor (should be the same for both sides")]
     public GlobalType type;
     [Tooltip("Determines the colour of the bottomText in the InfoApp (can be different from 'type')")]

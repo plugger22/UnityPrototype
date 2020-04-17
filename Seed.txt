@@ -35,3 +35,37 @@ City seed 765 -> New York, America
 Dev seed 34426 -> Thursday, 16 April 2020 5:42 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 5407 -> Friday, 17 April 2020 10:06 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 5626 -> Friday, 17 April 2020 11:47 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55851 -> Friday, 17 April 2020 11:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11199 -> Friday, 17 April 2020 11:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16131 -> Friday, 17 April 2020 11:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55690 -> Friday, 17 April 2020 12:04 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52243 -> Friday, 17 April 2020 12:13 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 2313 -> Friday, 17 April 2020 12:24 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France

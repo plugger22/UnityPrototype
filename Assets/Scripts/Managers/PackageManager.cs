@@ -451,6 +451,29 @@ namespace packageAPI
         public string option;           //name of option selected
     }
 
+    /// <summary>
+    /// history of major actor and player events. NOTE: turn, city  and cityTag are handled automatically by the constructor, you only need to add text
+    /// </summary>
+    [System.Serializable]
+    public class HistoryActor
+    {
+        public int turn;
+        //automatic
+        public string text;             //what happened
+        public string city;             //search city name, eg. 'NewYork', done automatically in constructor
+        public string cityTag;          //display city name, eg. 'New York', onde automatically in constructor
+
+
+        public HistoryActor()
+        {
+            turn = GameManager.instance.turnScript.Turn;
+            city = GameManager.instance.campaignScript.scenario.city.name;
+            cityTag = GameManager.instance.campaignScript.scenario.city.tag;
+        }
+    }
+
+
+
     //
     // - - - Save / Load packages
     //

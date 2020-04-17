@@ -4368,10 +4368,9 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: 5
+  conditionTurnResistance: -1
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 11400000, guid: 8d211107db009064782ea763fea77830,
-    type: 2}
+  conditionResistance: {fileID: 0}
   actorSlotID: 0
   actorType: {fileID: 0}
   actorDatapoint0: -1

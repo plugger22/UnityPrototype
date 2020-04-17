@@ -179,6 +179,7 @@ public class DataManager : MonoBehaviour
     private List<HistoryRebelMove> listOfHistoryRebelMove = new List<HistoryRebelMove>();
     private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
     private List<HistoryNpcMove> listOfHistoryNpcMove = new List<HistoryNpcMove>();
+    private List<HistoryActor> listOfHistoryPlayer = new List<HistoryActor>();
     private List<string> listOfHistoryAutoRun = new List<string>();
 
     //Topics
@@ -7749,6 +7750,9 @@ public class DataManager : MonoBehaviour
     public List<HistoryNpcMove> GetListOfHistoryVipMove()
     { return listOfHistoryNpcMove; }
 
+    public List<HistoryActor> GetListOfHistoryPlayer()
+    { return listOfHistoryPlayer; }
+
     /// <summary>
     /// Resistance AI or Player moves
     /// </summary>
@@ -7758,6 +7762,17 @@ public class DataManager : MonoBehaviour
         if (data != null)
         { listOfHistoryRebelMove.Add(data); }
         else { Debug.LogError("Invalid Resistance Tracker data (Null)"); }
+    }
+
+    /// <summary>
+    /// Player history
+    /// </summary>
+    /// <param name="data"></param>
+    public void AddHistoryPlayer(HistoryActor data)
+    {
+        if (data != null)
+        { listOfHistoryPlayer.Add(data); }
+        else { Debug.LogError("Invalid player history data (Null)"); }
     }
 
     /// <summary>
@@ -7920,6 +7935,59 @@ public class DataManager : MonoBehaviour
             else { builder.Append(" No records present"); }
         }
         else { builder.Append(" No Npc present"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Displays histories for all current OnMap actors regardless of status
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayActorsHistory()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        StringBuilder builder = new StringBuilder();
+        //loop actors
+        Actor[] arrayOfActors = GetCurrentActors(playerSide);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (CheckActorSlotStatus(i, playerSide) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        builder.Append(actor.DebugDisplayHistory());
+                        builder.AppendLine();
+                        builder.AppendLine();
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// Display Player History
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayPlayerHistory()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Player History{0}", "\n");
+        int count = listOfHistoryPlayer.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                HistoryActor data = listOfHistoryPlayer[i];
+                builder.AppendFormat(" {0}, t{1}: {2}{3}", data.cityTag, data.turn, data.text, "\n");
+            }
+        }
+        else { builder.AppendFormat(" No records"); }
         return builder.ToString();
     }
 

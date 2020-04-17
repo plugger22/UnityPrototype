@@ -200,7 +200,8 @@ public class DebugGUI : MonoBehaviour
                     case 5: debugDisplay = 69; actorToggle = 6; break;
                     case 6: debugDisplay = 80; actorToggle = 7; break;
                     case 7: debugDisplay = 91; actorToggle = 8; break;
-                    case 8: debugDisplay = 0; actorToggle = 0; break;
+                    case 8: debugDisplay = 100; actorToggle = 9; break;
+                    case 9: debugDisplay = 0; actorToggle = 0; break;
                 }
             }
 
@@ -240,7 +241,8 @@ public class DebugGUI : MonoBehaviour
                     case 1: debugDisplay = 60; playerToggle = 2; break;
                     case 2: debugDisplay = 83; playerToggle = 3; break;
                     case 3: debugDisplay = 96; playerToggle = 4; break;
-                    case 4: debugDisplay = 0; playerToggle = 0; break;
+                    case 4: debugDisplay = 101; playerToggle = 5; break;
+                    case 5: debugDisplay = 0; playerToggle = 0; break;
                 }
             }
 
@@ -1864,6 +1866,18 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.hqScript.DebugDisplayHqActorRenown();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
+                        break;
+                    //OnMap Actors History
+                    case 100:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayActorsHistory();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
+                        break;
+                    //Player History
+                    case 101:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayPlayerHistory();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                 }
             }

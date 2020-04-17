@@ -630,6 +630,7 @@ public class ActorManager : MonoBehaviour
                 //Debug actor summary
                 if (actor != null)
                 {
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
                     Debug.LogFormat("[Tor] ActorManager.cs -> InitialiseActors: OnMap {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
                         GameManager.instance.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
                         GameManager.instance.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
@@ -684,6 +685,7 @@ public class ActorManager : MonoBehaviour
                                     listOfArcs.Remove(actor.arc);
                                     //add actor
                                     GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
                                     Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
                                         actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                     //remove from list
@@ -706,6 +708,7 @@ public class ActorManager : MonoBehaviour
                                                 listOfArcs.Remove(actor.arc);
                                                 //add actor
                                                 GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                                actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
                                                 Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
                                                     actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                                 //remove from list
@@ -733,6 +736,7 @@ public class ActorManager : MonoBehaviour
                                 isSuccess = true;
                                 Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
                                     newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
+                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
                             }
                             else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
                         }
@@ -9326,6 +9330,7 @@ public class ActorManager : MonoBehaviour
         listOfHelp.Add(helpData);
         return listOfHelp;
     }
+
 
     //new methods above here
 }
