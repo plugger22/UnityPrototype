@@ -4250,6 +4250,11 @@ public class EffectManager : MonoBehaviour
                 {
                     effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name,
                       relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd);
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
+                        actorOther.actorName, actorOther.arc.name) });
+                    actorOther.AddHistory(new HistoryActor() { text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
+                        actor.actorName, actor.arc.name) });
                 }
                 break;
             case "Motivation":

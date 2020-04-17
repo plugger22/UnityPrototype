@@ -1005,6 +1005,7 @@ public class HQManager : MonoBehaviour
                 // - - - MAJOR event -> hq actor leaves
                 //
                 reason = hQMajorEvent.GetRandomRecord(false);
+                actor.AddHistory(new HistoryActor() { text = string.Format("Leaves HQ due to {0}", reason) });
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
@@ -1032,6 +1033,7 @@ public class HQManager : MonoBehaviour
                     actor.Renown += change;
                     text = hQMinorEventHierarchyGood.GetRandomRecord(false);
                     reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                 }
                 else
                 {
@@ -1040,6 +1042,7 @@ public class HQManager : MonoBehaviour
                     text = hQMinorEventHierarchyBad.GetRandomRecord(false);
                     change *= -1;
                     reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                 }
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
@@ -1101,7 +1104,8 @@ public class HQManager : MonoBehaviour
                 //good change
                 actor.Renown += change;
                 text = hQMinorEventWorkerGood.GetRandomRecord(false);
-                reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
             }
             else
             {
@@ -1109,7 +1113,8 @@ public class HQManager : MonoBehaviour
                 actor.Renown -= change;
                 text = hQMinorEventWorkerBad.GetRandomRecord(false);
                 change *= -1;
-                reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
             }
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                 reason, "\n");
@@ -1205,11 +1210,16 @@ public class HQManager : MonoBehaviour
                             arrayOfHqActors[index] = newActor;
                             //bump current actor back to work status (they can then compete for lower level hierarchy positions)
                             currentActor.statusHQ = ActorHQ.Worker;
+                            //history
+                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
                         }
                         else
                         {
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
+                            if (GameManager.instance.campaignScript.GetScenarioIndex() > 0)
+                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}", GetHqTitle(currentActor.statusHQ)) }); }
                         }
                     }
                     else
@@ -1230,6 +1240,7 @@ public class HQManager : MonoBehaviour
                             }
                             //assign new position
                             newActor.statusHQ = (ActorHQ)index;
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
                     }

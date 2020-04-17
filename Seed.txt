@@ -69,3 +69,64 @@ City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 234 -> Sydney, Australia
 City seed 890 -> Arles, France
+
+Dev seed 64160 -> Friday, 17 April 2020 3:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38075 -> Friday, 17 April 2020 3:38 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+HQManager.CheckHqHierarchy () (at Assets/Scripts/Managers/HQManager.cs:1239)
+	HQManager.ProcessMetaHq (GlobalSide playerSide) (at Assets/Scripts/Managers/HQManager.cs:974)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:38)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 48826 -> Friday, 17 April 2020 3:43 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 17467 -> Friday, 17 April 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+WARNING [Tst] DataManager.cs -> GetRandomTargetNode: No target found after 20 iterations
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetRandomTargetNode() (at Assets/Scripts/Managers/DataManager.cs:3134)
+	TargetManager:AssignOrganisationTarget(Mission) (at Assets/Scripts/Managers/TargetManager.cs:738)
+	TargetManager:AssignTargets(Mission) (at Assets/Scripts/Managers/TargetManager.cs:427)
+	MissionManager:SubInitialiseAll() (at Assets/Scripts/Managers/MissionManager.cs:73)
+	MissionManager:Initialise() (at Assets/Scripts/Managers/MissionManager.cs:50)
+	CampaignManager:SubInitialiseAllLate() (at Assets/Scripts/Managers/CampaignManager.cs:124)
+	CampaignManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:74)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:783)
+	GameManager:InitialiseNewLevel() (at Assets/Scripts/GameManager.cs:874)
+	ControlManager:CloseMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:235)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:228)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:396)
+	City seed 890 -> Arles, France
+
+Dev seed 53712 -> Friday, 17 April 2020 4:22 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 60892 -> Friday, 17 April 2020 4:28 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 34930 -> Friday, 17 April 2020 5:32 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

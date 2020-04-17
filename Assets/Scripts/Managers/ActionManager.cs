@@ -1264,9 +1264,8 @@ public class ActionManager : MonoBehaviour
                 string text = string.Format("{0}, {1}, is lying Low. Status: {2}", actor.arc.name, actor.actorName, actor.Status);
                 string reason = string.Format("is currently <b>Lying Low</b> and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
-
-                /*//update contacts
-                GameManager.instance.contactScript.UpdateNodeContacts();*/
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Goes into hiding to Lie Low" });
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1571,6 +1570,8 @@ public class ActionManager : MonoBehaviour
                 string reason = "has taken a break in order to recover from their <b>STRESS</b>";
                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details, HelpType.StressLeave);
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Has taken Stress Leave" });
                 //statistics
                 StressLeaveStatistics(modalDetails.side);
                 //action (if valid) expended -> must be BEFORE outcome window event
@@ -2682,6 +2683,8 @@ public class ActionManager : MonoBehaviour
                         //actor successfully moved to reserve
                         if (string.IsNullOrEmpty(data.optionNested) == false)
                         {
+                            //history
+                            actor.AddHistory(new HistoryActor() { text = "Transferred to the Reserves" });
                             switch (data.optionNested)
                             {
                                 case "ReserveRest":
@@ -2873,6 +2876,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been Promoted ({2})", actor.arc.name, actor.actorName,
                                         GameManager.instance.hqScript.GetCurrentHQ().tag);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissPromote, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Promoted" });
                                     break;
                                 case "DismissIncompetent":
                                     builderTop.AppendFormat("{0}{1} {2} scowls and curses before stomping off{3}",
@@ -2881,6 +2885,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "dismissed for Incompetence";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissIncompetent, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Dismissed (Incompetent)" });
                                     break;
                                 case "DismissUnsuited":
                                     builderTop.AppendFormat("{0}{1} {2} lets you know that they won't forget this{3}",
@@ -2889,6 +2894,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "dismissed as Unsuited for role";
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DismissUnsuited, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Dismissed (unsuited for their role)" });
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
@@ -3037,6 +3043,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "Disloyal";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeLoyalty, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Disposed Off (disloyal)" });
                                     break;
                                 case "DisposeCorrupt":
                                     builderTop.AppendFormat("{0}{1} {2} protests their innocence but don't they all?{3}",
@@ -3045,6 +3052,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "Corrupt";
                                     msgTextMain = string.Format("{0} {1} has been killed({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeCorrupt, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Disposed Off (corrupt)" });
                                     break;
                                 case "DisposeHabit":
                                     builderTop.AppendFormat("{0}{1} {2} smiles and says that they will be waiting for you in hell{3}",
@@ -3053,6 +3061,7 @@ public class ActionManager : MonoBehaviour
                                     msgReason = "Bad Habit";
                                     msgTextMain = string.Format("{0} {1} has been killed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.instance.personScript.UpdateMood(MoodType.DisposeHabit, actor.arc.name);
+                                    actor.AddHistory(new HistoryActor() { text = "Has been Disposed Off (unsavoury habit)" });
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);

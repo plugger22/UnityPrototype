@@ -900,6 +900,7 @@ public class ActorManager : MonoBehaviour
                                     GameManager.instance.dataScript.AddHqActor(actorOne);
                                     GameManager.instance.dataScript.AddActorToHqPool(actorOne.hqID);
                                     listOfActors.Add(actorOne);
+
                                 }
                                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
                                 break;
@@ -1009,6 +1010,7 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Renown = (numOfActors + 2 - counter) * renownFactor;
+                    actor.AddHistory(new HistoryActor () {text = string.Format("Assigned to {0} position at HQ", GameManager.instance.hqScript.GetHqTitle(actor.statusHQ)) });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
                         GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
                 }
@@ -1039,6 +1041,7 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.instance.dataScript.AddHqActor(actor) == true)
                 {
                     GameManager.instance.dataScript.AddActorToHqPool(actor.hqID);
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to HQ as a {0}", GameManager.instance.hqScript.GetHqTitle(actor.statusHQ)) });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqWorkers: {0}, {1}, hqID {2}, renown {3}, WORKER, added to hq Pool{4}", actor.actorName, actor.arc.name, actor.hqID, actor.Renown, "\n");
                 }
             }
@@ -4832,6 +4835,8 @@ public class ActorManager : MonoBehaviour
                             //Statistics (counts conflict regardless of outcome of conflict)
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
                             actor.numOfTimesConflict++;
+                            //history
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Instigates a Relationship Conflict ({0})", threatMsg) });
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -6341,7 +6346,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //breakdown
-                ActorBreakdown(actor, actor.side);
+                ProcessActorBreakdown(actor, actor.side);
                 Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveActors: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                     chance, rnd, "\n");
                 if (isPlayer == true)
@@ -6527,6 +6532,7 @@ public class ActorManager : MonoBehaviour
                                     //actor learns of secret
                                     actor.AddSecret(secret);
                                     secret.AddActor(actor.actorID);
+                                    actor.AddHistory(new HistoryActor() { text = string.Format("Learnt one of your Secrets ({0})", secret.tag) });
                                     //Admin
                                     Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                     if (isPlayer == true)
@@ -6790,7 +6796,7 @@ public class ActorManager : MonoBehaviour
     /// handles all admin for an Actor having a breakdown as a result of having the Stressed condition
     /// </summary>
     /// <param name="actor"></param>
-    private void ActorBreakdown(Actor actor, GlobalSide side)
+    private void ProcessActorBreakdown(Actor actor, GlobalSide side)
     {
         if (actor != null)
         {
@@ -6807,6 +6813,8 @@ public class ActorManager : MonoBehaviour
             string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
             string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
             GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, side, details);
+            //history
+            actor.AddHistory(new HistoryActor() { text = "Suffers a Breakdown" });
         }
         else { Debug.LogError("Invalid actor (Null)"); }
     }
@@ -9033,6 +9041,7 @@ public class ActorManager : MonoBehaviour
                     listOfWorkers.RemoveAt(results.Item1);
                     //add actor
                     listOfWorkers.Add(actor);
+                    actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
                     Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
                         actor.actorID, actor.Renown, "\n");
                 }
@@ -9043,6 +9052,7 @@ public class ActorManager : MonoBehaviour
         {
             //add to worker list
             listOfWorkers.Add(actor);
+            actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
             Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
                 actor.actorID, actor.Renown, "\n");
         }
@@ -9099,6 +9109,7 @@ public class ActorManager : MonoBehaviour
         actor.RemoveGear(GearRemoved.RecruitPool);
         //return to recruit pool
         GameManager.instance.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
+        actor.AddHistory(new HistoryActor() { text = "Sent back to the Recruit Pool" });
         Debug.LogFormat("[Tor] ActorManager.cs -> SendActorBackToRecruitPool: {0} actor, {1}, {2}, ID {3} sent back to Recruit pool{4}", whereFrom, actor.actorName, actor.arc.name, actor.actorID, "\n");
     }
 

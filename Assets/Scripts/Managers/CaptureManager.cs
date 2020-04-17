@@ -296,6 +296,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.instance.cityScript.CityLoyalty = cause;
         //invisibility set to zero (most likely already is)
         details.actor.SetDatapoint(ActorDatapoint.Invisibility2, 0);
+        //history
+        details.actor.AddHistory(new HistoryActor() { text = string.Format("Captured at {0}", details.node.nodeName) });
         //update map
         GameManager.instance.nodeScript.NodeRedraw = true;
         //update contacts
@@ -451,6 +453,8 @@ public class CaptureManager : MonoBehaviour
                     cause = Mathf.Max(0, cause);
                     GameManager.instance.cityScript.CityLoyalty = cause;
                     builder.AppendFormat("{0}City Loyalty -{1}{2}{3}{4}", colourGood, actorReleased, colourEnd, "\n", "\n");
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Released at {0}", node.nodeName) });
                     //invisibility
                     int invisibilityNew = releaseInvisibility;
                     actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibilityNew);

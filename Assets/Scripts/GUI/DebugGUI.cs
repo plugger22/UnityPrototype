@@ -227,7 +227,8 @@ public class DebugGUI : MonoBehaviour
                     case 0: debugDisplay = 11; hqToggle = 1; break;
                     case 1: debugDisplay = 71; hqToggle = 2; break;
                     case 2: debugDisplay = 99; hqToggle = 3; break;
-                    case 3: debugDisplay = 0; hqToggle = 0; break;
+                    case 3: debugDisplay = 102; hqToggle = 4; break;
+                    case 4: debugDisplay = 0; hqToggle = 0; break;
                 }
             }
 
@@ -1877,6 +1878,12 @@ public class DebugGUI : MonoBehaviour
                     case 101:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.dataScript.DebugDisplayPlayerHistory();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
+                        break;
+                    //HQ Hierarchy History
+                    case 102:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplayHqHierarchyHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                 }

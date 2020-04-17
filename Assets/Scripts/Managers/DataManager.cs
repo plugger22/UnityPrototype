@@ -7950,6 +7950,7 @@ public class DataManager : MonoBehaviour
         Actor[] arrayOfActors = GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
+            builder.AppendFormat("- OnMap Actors History{0}{1}", "\n", "\n");
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
@@ -7966,6 +7967,34 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        return builder.ToString();
+    }
+
+
+    /// <summary>
+    /// Displays histories for all HQ Hierarchy actors regardless of status
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayHqHierarchyHistory()
+    {
+        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        StringBuilder builder = new StringBuilder();
+        //loop actors
+        if (arrayOfActorsHQ != null)
+        {
+            builder.AppendFormat("- HQ Hierarchy Actors History{0}{1}", "\n", "\n");
+            for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
+            {
+                Actor actor = arrayOfActorsHQ[i];
+                if (actor != null)
+                {
+                    builder.Append(actor.DebugDisplayHistory());
+                    builder.AppendLine();
+                    builder.AppendLine();
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
         return builder.ToString();
     }
 
