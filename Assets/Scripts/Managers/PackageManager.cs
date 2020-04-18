@@ -961,5 +961,18 @@ namespace packageAPI
         { scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex(); }
     }
 
+    /// <summary>
+    /// Option set derived from MetaGame decisions that drive the new level's lineup of OnMap actors
+    /// </summary>
+    public class MetaGameOptions
+    {
+        public bool isDismissed;            //listOfActorsDismissed: true -> included, false -> excluded          
+        public bool isResigned;             //listOfActorsResigned: true -> included, false -> excluded
+        public bool isLowMotivation;        //true -> includes any actor, false -> excludes any actor with motivation < 2
+        public bool isLevelTwo;             //true -> all actors will be level 2, or better, false -> base pool of actors will be level 1
+        public bool isLevelThree;           //true -> all actors will be level 3, false -> base pool of actors will be level 1
+    }
+
+
     //new classes above here
 }

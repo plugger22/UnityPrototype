@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles all MetaLevel matters
@@ -10,12 +11,24 @@ public class MetaManager : MonoBehaviour
 {
     [HideInInspector] public GlobalMeta metaLevel;
 
+    private MetaGameOptions metaOptions;
+
 
 
     public void Initialise(GameState state)
     {
         //set state
         metaLevel = GameManager.instance.globalScript.metaBottom;
+        //options
+        metaOptions = new MetaGameOptions()
+        {
+            //debug
+            isDismissed = true,
+            isResigned = true,
+            isLowMotivation = true,
+            isLevelTwo = true,
+            isLevelThree = true
+        };
     }
 
     /// <summary>
@@ -24,6 +37,15 @@ public class MetaManager : MonoBehaviour
     /// <returns></returns>
     public AuthorityTitle GetAuthorityTitle()
     { return (AuthorityTitle)(metaLevel.level); }
+
+
+    /// <summary>
+    /// gets player chosen metaGame options
+    /// </summary>
+    /// <returns></returns>
+    public MetaGameOptions GetMetaOptions()
+    { return metaOptions; }
+
 
     /// <summary>
     /// Metalevel master sequence

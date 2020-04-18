@@ -7817,6 +7817,19 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfHistory (Null)"); }
     }
 
+    /// <summary>
+    /// Clear list and then copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetListOfHistoryPlayer(List<HistoryActor> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfHistoryPlayer.Clear();
+            listOfHistoryPlayer.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
+    }
 
     /// <summary>
     /// Nemesis AI or Player controlled moves

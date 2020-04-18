@@ -1265,7 +1265,7 @@ public class ActionManager : MonoBehaviour
                 string reason = string.Format("is currently <b>Lying Low</b> and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
                 //history
-                actor.AddHistory(new HistoryActor() { text = "Goes into hiding to Lie Low" });
+                actor.AddHistory(new HistoryActor() { text = "Goes into hiding (Lies Low)" });
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1571,7 +1571,7 @@ public class ActionManager : MonoBehaviour
                 string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
                 GameManager.instance.messageScript.ActorStatus(text, itemText, reason, actor.actorID, modalDetails.side, details, HelpType.StressLeave);
                 //history
-                actor.AddHistory(new HistoryActor() { text = "Has taken Stress Leave" });
+                actor.AddHistory(new HistoryActor() { text = "Took Stress Leave" });
                 //statistics
                 StressLeaveStatistics(modalDetails.side);
                 //action (if valid) expended -> must be BEFORE outcome window event
@@ -2418,6 +2418,8 @@ public class ActionManager : MonoBehaviour
                             actorID = actor.actorID;
                             if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                             { isZeroInvisibility = true; }
+                            //history
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance) });
                         }
                         else
                         { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); errorFlag = true; }

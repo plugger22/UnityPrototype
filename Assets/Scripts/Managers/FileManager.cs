@@ -1070,6 +1070,11 @@ public class FileManager : MonoBehaviour
         if (listOfHistoryVip != null)
         { write.dataData.listOfHistoryVip.AddRange(listOfHistoryVip); }
         else { Debug.LogError("Invalid listOfHistoryVipMove (Null)"); }
+        //Player History
+        List<HistoryActor> listOfHistoryPlayer = GameManager.instance.dataScript.GetListOfHistoryPlayer();
+        if (listOfHistoryPlayer != null)
+        { write.dataData.listOfHistoryPlayer.AddRange(listOfHistoryPlayer); }
+        else { Debug.LogError("Invalid listOfHistoryPlayer (Null)"); }
         #endregion
 
         #region newsFeed
@@ -2828,6 +2833,7 @@ public class FileManager : MonoBehaviour
         GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
         GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
         GameManager.instance.dataScript.SetListOfHistoryNpcMove(read.dataData.listOfHistoryVip);
+        GameManager.instance.dataScript.SetListOfHistoryPlayer(read.dataData.listOfHistoryPlayer);
         #endregion
 
         #region News
@@ -4031,6 +4037,11 @@ public class FileManager : MonoBehaviour
             if (listOfRenownData != null)
             { saveActor.listOfHqRenownData.AddRange(listOfRenownData); }
             else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
+            //Actor History data
+            List<HistoryActor> listOfHistory = actor.GetListOfHistory();
+            if (listOfHistory != null)
+            { saveActor.listOfHistory.AddRange(listOfHistory); }
+            else { Debug.LogError("Invalid listOfHistory (Null)"); }
             //topics
             saveActor.listOfNodeActions = actor.GetListOfNodeActions();
             saveActor.listOfTeamActions = actor.GetListOfTeamActions();
@@ -4208,6 +4219,8 @@ public class FileManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
             //Hq Renown data
             actor.SetHqRenownData(readActor.listOfHqRenownData);
+            //Actor History
+            actor.SetHistory(readActor.listOfHistory);
             //topic data
             actor.SetNodeActionData(readActor.listOfNodeActions);
             actor.SetTeamActionData(readActor.listOfTeamActions);

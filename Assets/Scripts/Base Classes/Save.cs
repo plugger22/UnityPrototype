@@ -130,6 +130,7 @@ public class SaveDataData
     public List<HistoryRebelMove> listOfHistoryRebel = new List<HistoryRebelMove>();
     public List<HistoryNemesisMove> listOfHistoryNemesis = new List<HistoryNemesisMove>();
     public List<HistoryNpcMove> listOfHistoryVip = new List<HistoryNpcMove>();
+    public List<HistoryActor> listOfHistoryPlayer = new List<HistoryActor>();
     //Messages
     public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();
@@ -669,6 +670,7 @@ public class SaveActor
     public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     public List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
     public List<HqRenownData> listOfHqRenownData = new List<HqRenownData>();
+    public List<HistoryActor> listOfHistory = new List<HistoryActor>();
 
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
 }

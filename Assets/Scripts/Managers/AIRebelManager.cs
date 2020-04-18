@@ -2946,6 +2946,8 @@ public class AIRebelManager : MonoBehaviour
                 if (isPlayer == true)
                 {
                     Debug.LogFormat("[Tor] AIRebelManager.cs -> ExecuteLieLowTask: Actor {0}, commences LYING LOW{1}", aiName, "\n");
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = "Goes into hiding (Lies Low)" });
                     //message
                     string text = string.Format("{0} is lying Low. Status: {1}", aiName, actor.Status);
                     string reason = string.Format("is currently Lying Low and is{0}{1}<b>out of communication</b>", "\n", "\n");
@@ -2995,6 +2997,8 @@ public class AIRebelManager : MonoBehaviour
                         actorType = actor.arc.name;
                         isSuccess = actor.RemoveCondition(conditionStressed, "due to Stress Leave");
                         text = string.Format("{0}, {1}, takes Stress Leave", actorName, actor.arc.name);
+                        //history
+                        actor.AddHistory(new HistoryActor() { text = "Takes Stress Leave" });
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
                 }
@@ -3788,7 +3792,11 @@ public class AIRebelManager : MonoBehaviour
                     else
                     {
                         if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
-                        { isZeroInvisibility = true; }
+                        {
+                            isZeroInvisibility = true;
+                            //history
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts target ({0})", target.descriptorResistance) });
+                        }
                     }
                 }
             }
@@ -3970,7 +3978,8 @@ public class AIRebelManager : MonoBehaviour
             //Dismiss actor
             if (GameManager.instance.actorScript.DismissActorAI(globalResistance, actor) == true)
             {
-
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Fired from active service" });
                 //deduct resources
                 int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
                 resources = Mathf.Max(0, resources - cost);

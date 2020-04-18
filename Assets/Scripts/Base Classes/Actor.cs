@@ -34,6 +34,8 @@ namespace gameAPI
         [HideInInspector] public bool isLieLowFirstturn;        //set true when lie low action, prevents invis incrementing on first turn
         [HideInInspector] public bool isStressLeave;            //set true to ensure actor spends one turn inactive on stress leave
         [HideInInspector] public bool isTraitor;                //set true to be a traitor (determined at time of release from captivity)
+        [HideInInspector] public bool isDismissed;              //set true if at any time in the past actor has been dismissed
+        [HideInInspector] public bool isResigned;               //set true if at any time in the past actor has resigned
         //other
         [HideInInspector] public string actorName;              //complete name
         [HideInInspector] public string firstName;              //first name
@@ -847,7 +849,7 @@ namespace gameAPI
                                 string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.tag);
                                 GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                                 //history
-                                AddHistory( new HistoryActor() { text = string.Format("Is no longer {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+                                AddHistory( new HistoryActor() { text = string.Format("Is no longer {0}{1}", condition.isNowA == true ? "a " : "", condition.tag, reason) });
                             }
                             return true;
                         }
@@ -1458,6 +1460,13 @@ namespace gameAPI
         }
 
         /// <summary>
+        /// returns true if actor's listOfHistory has any records (actor has been used previously), false if none
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckHistory()
+        { return listOfHistory.Count > 0 ? true : false; }
+
+        /// <summary>
         /// Display Actor History
         /// </summary>
         /// <returns></returns>
@@ -1476,6 +1485,20 @@ namespace gameAPI
             }
             else { builder.AppendFormat(" No records"); }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// refresh Actor History for Save/Load data
+        /// </summary>
+        /// <param name="tempList"></param>
+        public void SetHistory(List<HistoryActor> tempList)
+        {
+            if (tempList != null)
+            {
+                listOfHistory.Clear();
+                listOfHistory.AddRange(tempList);
+            }
+            else { Debug.LogError("Invalid listOfHistory (Null)"); }
         }
 
         //place methods above here

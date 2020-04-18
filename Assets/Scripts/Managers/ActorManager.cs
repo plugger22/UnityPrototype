@@ -393,9 +393,10 @@ public class ActorManager : MonoBehaviour
         }
         else
         {
+            MetaGameOptions data = GameManager.instance.metaScript.GetMetaOptions();
             //draw from pool
-            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance);
-            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority);
+            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance, data);
+            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideAuthority, data);
         }
         //set actor alpha to active for all onMap slots
         GameManager.instance.actorPanelScript.SetActorsAlphaActive();
@@ -648,122 +649,261 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     /// <param name="num"></param>
     /// <param name=""></param>
-    public void GetOnMapActorsFromPool(int num, GlobalSide side)
+    public void GetOnMapActorsFromPool(int num, GlobalSide side, MetaGameOptions data)
     {
         if (num > 0)
         {
-            int actorID, count;
-            bool isSuccess;
-            //can't have duplicate actor arcs on map, need a pick list by value
-            List<ActorArc> listOfArcs = new List<ActorArc>();
-            switch (side.level)
+            if (data != null)
             {
-                case 1: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfAuthorityActorArcs()); break;
-                case 2: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfResistanceActorArcs()); break;
-                default: Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); break;
-            }
-            //Get level 1 pool (by reference)
-            List<int> listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(1, side);
-            if (listOfActors != null)
-            {
-                if (listOfArcs != null)
+                int actorID, count;
+                bool isSuccess;
+                //can't have duplicate actor arcs on map, need a pick list by value
+                List<ActorArc> listOfArcs = new List<ActorArc>();
+                switch (side.level)
                 {
-                    for (int index = 0; index < num; index++)
+                    case 1: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfAuthorityActorArcs()); break;
+                    case 2: listOfArcs.AddRange(GameManager.instance.dataScript.GetListOfResistanceActorArcs()); break;
+                    default: Debug.LogErrorFormat("Invalid side \"{0}\"", side.name); break;
+                }
+                //
+                // - - - Get actor Pool
+                //
+                //Get base pool (by reference) and any previously used actors at higher levels depending on metaGame options
+                List<int> listOfActors = new List<int>();
+                if (data.isLevelTwo == true)
+                {
+                    //level two actors
+                    listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(2, side);
+                    //add any level 3 actors that have been previously used (eg. have an listOfHistory.Count > 0)
+                    listOfActors.AddRange(GetPreviousActors(2, side));
+                }
+                else if (data.isLevelThree == true)
+                {
+                    //level three actors
+                    listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(3, side);
+                }
+                else
+                {
+                    //default level one actors
+                    listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(1, side);
+                    //add any level 2 or 3 actors that have been previously used (eg. have an listOfHistory.Count > 0)
+                    listOfActors.AddRange(GetPreviousActors(1, side));
+                }
+                //
+                // - - - filter actor list
+                //
+                //are any metaGame filtering options active (can ignore filtering otherwise)
+                if (data.isDismissed == false || data.isResigned == false || data.isLowMotivation == false)
+                {
+                    //loop backwards as could be removing data
+                    for (int i = listOfActors.Count - 1; i >= 0; i--)
                     {
-                        isSuccess = false;
-                        count = listOfActors.Count;
-                        if (count > 0)
+                        actorID = listOfActors[i];
+                        Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                        if (actor != null)
                         {
-                            actorID = listOfActors[Random.Range(0, count)];
-                            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
-                            if (actor != null)
+                            if (data.isDismissed == false)
                             {
-                                //check if arc type is in listOfArcs (if so then it's unique for OnMap)
-                                if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
+                                //remove actor if has previously been dismissed at any time
+                                if (actor.isDismissed == true)
                                 {
-                                    //good to go, remove arc from list to prevent dupes
-                                    listOfArcs.Remove(actor.arc);
-                                    //add actor
-                                    GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
-                                    Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
-                                        actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
-                                    //remove from list
                                     listOfActors.Remove(actorID);
-                                    isSuccess = true;
+                                    continue;
                                 }
-                                else
+                            }
+                            if (data.isResigned == false)
+                            {
+                                //remove actor if has previously resigned at any time
+                                if (actor.isResigned == true)
                                 {
-                                    //find actor in pool list with a different arc
-                                    for (int j = 0; j < listOfActors.Count; j++)
-                                    {
-                                        actorID = listOfActors[j];
-                                        actor = GameManager.instance.dataScript.GetActor(actorID);
-                                        if (actor != null)
-                                        {
-                                            //check if arc type is in listOfArcs (if so then it's unique for OnMap)
-                                            if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
-                                            {
-                                                //good to go, remove arc from list to prevent dupes
-                                                listOfArcs.Remove(actor.arc);
-                                                //add actor
-                                                GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                                actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
-                                                Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
-                                                    actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
-                                                //remove from list
-                                                listOfActors.Remove(actorID);
-                                                isSuccess = true;
-                                                break;
-                                            }
-                                        }
-                                        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
-                                    }
+                                    listOfActors.Remove(actorID);
+                                    continue;
                                 }
                             }
-                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
-                        }
-                        //failed to find a suitable actor in level one pool
-                        if (isSuccess == false)
-                        {
-                            //failed to add a level 1 actor -> create a new actor
-                            ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
-                            Actor newActor = CreateActor(side, arc.name, 1, ActorStatus.Active, index);
-                            if (newActor != null)
+                            if (data.isLowMotivation == false)
                             {
-                                //good to go, remove arc from list to prevent dupes
-                                listOfArcs.Remove(arc);
-                                isSuccess = true;
-                                Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
-                                    newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
-                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
-                            }
-                            else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
-                        }
-                    }
-                    //GUI update -> Player side only
-                    if (side.level == GameManager.instance.sideScript.PlayerSide.level)
-                    {
-                        //Update actor Panel
-                        GameManager.instance.actorPanelScript.UpdateActorPanel();
-                        //Update renown data
-                        for (int i = 0; i < maxNumOfOnMapActors; i++)
-                        {
-                            //check actor is present in slot (not vacant)
-                            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
-                            {
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, side);
-                                if (actor != null)
-                                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
+                                //remove actor if motivation less than two
+                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                {
+                                    listOfActors.Remove(actorID);
+                                    continue;
+                                }
+
                             }
                         }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
                     }
                 }
-                else { Debug.LogError("Invalid listOfArcs (Null)"); }
+                //
+                // - - - process actor list
+                //
+                if (listOfActors != null)
+                {
+                    if (listOfArcs != null)
+                    {
+                        for (int index = 0; index < num; index++)
+                        {
+                            isSuccess = false;
+                            count = listOfActors.Count;
+                            if (count > 0)
+                            {
+                                actorID = listOfActors[Random.Range(0, count)];
+                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                if (actor != null)
+                                {
+                                    //check if arc type is in listOfArcs (if so then it's unique for OnMap)
+                                    if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
+                                    {
+                                        //good to go, remove arc from list to prevent dupes
+                                        listOfArcs.Remove(actor.arc);
+                                        //add actor
+                                        GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                        actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                        Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
+                                            actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                                        //remove from list
+                                        listOfActors.Remove(actorID);
+                                        isSuccess = true;
+                                    }
+                                    else
+                                    {
+                                        //find actor in pool list with a different arc
+                                        for (int j = 0; j < listOfActors.Count; j++)
+                                        {
+                                            actorID = listOfActors[j];
+                                            actor = GameManager.instance.dataScript.GetActor(actorID);
+                                            if (actor != null)
+                                            {
+                                                //check if arc type is in listOfArcs (if so then it's unique for OnMap)
+                                                if (listOfArcs.Exists(x => x.name.Equals(actor.arc.name)) == true)
+                                                {
+                                                    //good to go, remove arc from list to prevent dupes
+                                                    listOfArcs.Remove(actor.arc);
+                                                    //add actor
+                                                    GameManager.instance.dataScript.AddMetaGameCurrentActor(side, actor, index);
+                                                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                                    Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
+                                                        actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
+                                                    //remove from list
+                                                    listOfActors.Remove(actorID);
+                                                    isSuccess = true;
+                                                    break;
+                                                }
+                                            }
+                                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                                        }
+                                    }
+                                }
+                                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                            }
+                            //failed to find a suitable actor in level one pool
+                            if (isSuccess == false)
+                            {
+                                //failed to add a level 1 actor -> create a new actor
+                                ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
+                                Actor newActor = CreateActor(side, arc.name, 1, ActorStatus.Active, index);
+                                if (newActor != null)
+                                {
+                                    //good to go, remove arc from list to prevent dupes
+                                    listOfArcs.Remove(arc);
+                                    isSuccess = true;
+                                    Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
+                                        newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
+                                    newActor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                }
+                                else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
+                            }
+                        }
+                        //GUI update -> Player side only
+                        if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+                        {
+                            //Update actor Panel
+                            GameManager.instance.actorPanelScript.UpdateActorPanel();
+                            //Update renown data
+                            for (int i = 0; i < maxNumOfOnMapActors; i++)
+                            {
+                                //check actor is present in slot (not vacant)
+                                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                                {
+                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, side);
+                                    if (actor != null)
+                                    { GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogError("Invalid listOfArcs (Null)"); }
+                }
+                else { Debug.LogError("Invalid listOfActors (Null)"); }
             }
-            else { Debug.LogError("Invalid listOfActors (Null)"); }
+            else { Debug.LogError("Invalid MetaGameOptions (Null)"); }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
+    }
+
+    /// <summary>
+    /// retrieves a list of previously used actors in lists of actors with a level greater than 'higherThan', eg. if parameter is 1 then retrieves from actors level 2 and 3 lists. Returns EMPTY list if none
+    /// NOTE: Previously used actors determined by actor.listOfHistory.Count > 0 (includes those who've been recruited to reserves but never used in anger)
+    /// </summary>
+    /// <param name="higherThan"></param>
+    /// <returns></returns>
+    private List<int> GetPreviousActors(int higherThan, GlobalSide playerSide)
+    {
+        List<int> listOfActors = new List<int>();
+        List<int> tempList = new List<int>();
+        int actorID;
+        switch (higherThan)
+        {
+            case 1:
+                //check level 2 and 3 actors
+                tempList = GameManager.instance.dataScript.GetActorRecruitPool(2, playerSide);
+                //level 2 first
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    actorID = tempList[i];
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        //check if has been used previously
+                        if (actor.CheckHistory() == true)
+                        { listOfActors.Add(actorID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Lvl 2 actor (Null) for actorID {0}", actorID); }
+                }
+                //level 3
+                tempList = GameManager.instance.dataScript.GetActorRecruitPool(3, playerSide);
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    actorID = tempList[i];
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        //check if has been used previously
+                        if (actor.CheckHistory() == true)
+                        { listOfActors.Add(actorID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Lvl 3 actor (Null) for actorID {0}", actorID); }
+                }
+                break;
+            case 2:
+                //level 3 only
+                tempList = GameManager.instance.dataScript.GetActorRecruitPool(3, playerSide);
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    actorID = tempList[i];
+                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    if (actor != null)
+                    {
+                        //check if has been used previously
+                        if (actor.CheckHistory() == true)
+                        { listOfActors.Add(actorID); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid Lvl 3 actor (Null) for actorID {0}", actorID); }
+                }
+                break;
+            default: /*return empty list*/ break;
+        }
+        return listOfActors;
     }
 
 
@@ -1010,7 +1150,7 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Renown = (numOfActors + 2 - counter) * renownFactor;
-                    actor.AddHistory(new HistoryActor () {text = string.Format("Assigned to {0} position at HQ", GameManager.instance.hqScript.GetHqTitle(actor.statusHQ)) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GameManager.instance.hqScript.GetHqTitle(actor.statusHQ)) });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
                         GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
                 }
@@ -8841,8 +8981,8 @@ public class ActorManager : MonoBehaviour
                         Actor actorOther = arrayOfOtherActors[i];
                         if (actorOther != null)
                         {
-                                //tidy up and send actor back to recruit pool
-                                SendActorBackToRecruitPool(actorOther, otherSide, "OnMap");
+                            //tidy up and send actor back to recruit pool
+                            SendActorBackToRecruitPool(actorOther, otherSide, "OnMap");
                         }
                         else { Debug.LogErrorFormat("Invalid Other side OnMap actor (Null) for arrayOfCurrentActors[{0}]", i); }
                     }
@@ -8909,12 +9049,16 @@ public class ActorManager : MonoBehaviour
                                     }
                                 }
                                 else
-                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", 
-                                    actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n"); }
+                                {
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
+                                      actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                                }
                             }
                             else
-                            { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", 
-                                actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n"); }
+                            {
+                                Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                  actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                            }
                             if (isSuccess == false)
                             {
                                 //tidy up and send actor back to recruit pool
