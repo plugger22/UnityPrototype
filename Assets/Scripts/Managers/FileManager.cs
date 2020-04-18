@@ -3975,6 +3975,8 @@ public class FileManager : MonoBehaviour
             saveActor.isLieLowFirstturn = actor.isLieLowFirstturn;
             saveActor.isStressLeave = actor.isStressLeave;
             saveActor.isTraitor = actor.isTraitor;
+            saveActor.isDismissed = actor.isDismissed;
+            saveActor.isResigned = actor.isResigned;
             saveActor.tooltipStatus = actor.tooltipStatus;
             saveActor.inactiveStatus = actor.inactiveStatus;
             saveActor.gearTimer = actor.GetGearTimer();
@@ -4148,6 +4150,8 @@ public class FileManager : MonoBehaviour
             actor.isLieLowFirstturn = readActor.isLieLowFirstturn;
             actor.isStressLeave = readActor.isStressLeave;
             actor.isTraitor = readActor.isTraitor;
+            actor.isDismissed = readActor.isDismissed;
+            actor.isResigned = readActor.isResigned;
             actor.tooltipStatus = readActor.tooltipStatus;
             actor.inactiveStatus = readActor.inactiveStatus;
             actor.SetGearTimer(readActor.gearTimer);

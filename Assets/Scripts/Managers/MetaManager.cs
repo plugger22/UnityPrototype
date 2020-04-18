@@ -19,16 +19,26 @@ public class MetaManager : MonoBehaviour
     {
         //set state
         metaLevel = GameManager.instance.globalScript.metaBottom;
-        //options
-        metaOptions = new MetaGameOptions()
+
+        //debug metaGame options
+        MetaGameOptions data = new MetaGameOptions();
+        if (GameManager.instance.testScript.isValidTestMetaGameOptions == true)
         {
-            //debug
-            isDismissed = true,
-            isResigned = true,
-            isLowMotivation = true,
-            isLevelTwo = true,
-            isLevelThree = true
-        };
+            data.isDismissed = GameManager.instance.testScript.isDismissed;
+            data.isResigned = GameManager.instance.testScript.isResigned;
+            data.isLowMotivation = GameManager.instance.testScript.isLowMotivation;
+            data.isLevelTwo = GameManager.instance.testScript.isLevelTwo;
+            data.isLevelThree = GameManager.instance.testScript.isLevelThree;
+        }
+        else
+        {
+            //default -> level 1, include everybody
+            data.isDismissed = true;
+            data.isResigned = true;
+            data.isLowMotivation = true;
+            data.isLevelTwo = false;
+            data.isLevelThree = false;
+        }
     }
 
     /// <summary>

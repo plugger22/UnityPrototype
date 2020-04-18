@@ -80,6 +80,21 @@ public class TestManager : MonoBehaviour
     [Tooltip("Any value other than zero will override calculated ratio each turn")]
     [Range(0, 1)] public float testRatioAddictedDays = 0;
 
+    [Header("MetaGame Options")]
+    [Tooltip("Options only taken into account if this is True")]
+    public bool isValidTestMetaGameOptions = false;
+    [Tooltip("If true, actors who have previously been dismissed, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
+    public bool isDismissed = true;
+    [Tooltip("If true, actors who have previously resigned, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
+    public bool isResigned = true;
+    [Tooltip("If true, actors with all motivation values will be included, if false any with motivation < 2 will be excluded")]
+    public bool isLowMotivation = true;
+    [Tooltip("If true, all actors in the selection pool will be level 2, or higher")]
+    public bool isLevelTwo = false;
+    [Tooltip("If true, all actors in the selection pool will be level 3")]
+    public bool isLevelThree = false;
+    
+
     Stopwatch timer;
 
     private long totalElapsedTime;                      //start tally with 'TimerTallyStart', finish with 'TimerTallyStop'

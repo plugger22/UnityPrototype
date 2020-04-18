@@ -653,6 +653,8 @@ public class SaveActor
     public bool isLieLowFirstturn;
     public bool isStressLeave;
     public bool isTraitor;
+    public bool isDismissed;
+    public bool isResigned;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
     public int gearTimer;

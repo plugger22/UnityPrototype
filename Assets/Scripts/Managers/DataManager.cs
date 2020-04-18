@@ -4114,6 +4114,7 @@ public class DataManager : MonoBehaviour
                     {
                         //actor movitation now Zero
                         actor.SetDatapoint(ActorDatapoint.Motivation1, 0, "Dismissed");
+                        actor.isDismissed = true;
                         RemoveActorAdmin(side, actor, status);
                         return true;
                     }
@@ -4137,6 +4138,7 @@ public class DataManager : MonoBehaviour
                     {
                         //actor movitation now Zero
                         actor.SetDatapoint(ActorDatapoint.Motivation1, 0, "Resigned");
+                        actor.isResigned = true;
                         RemoveActorAdmin(side, actor, status);
                         return true;
                     }

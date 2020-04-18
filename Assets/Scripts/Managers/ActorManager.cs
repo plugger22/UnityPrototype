@@ -799,9 +799,12 @@ public class ActorManager : MonoBehaviour
                             //failed to find a suitable actor in level one pool
                             if (isSuccess == false)
                             {
-                                //failed to add a level 1 actor -> create a new actor
+                                //failed to add a actor -> create a new actor at the appropriate level
                                 ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
-                                Actor newActor = CreateActor(side, arc.name, 1, ActorStatus.Active, index);
+                                int level = 1;
+                                if (data.isLevelTwo == true) { level = 2; }
+                                else if (data.isLevelThree == true) { level = 3; }
+                                Actor newActor = CreateActor(side, arc.name, level, ActorStatus.Active, index);
                                 if (newActor != null)
                                 {
                                     //good to go, remove arc from list to prevent dupes
