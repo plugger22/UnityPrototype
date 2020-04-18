@@ -1988,6 +1988,8 @@ public class ActionManager : MonoBehaviour
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 actor.isReassured = true;
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Reassured by you in Reserves" });
                 //message
                 string text = string.Format("{0} {1} has been Reassured (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorSpokenToo(text, "Reassured", actor, benefit);
@@ -2054,6 +2056,8 @@ public class ActionManager : MonoBehaviour
                 actor.unhappyTimer += benefit;
                 //Deduct Player renown
                 GameManager.instance.playerScript.Renown -= renownCost;
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Threatened by you in Reserves" });
                 //message
                 string text = string.Format("{0} {1} has been Threatened (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorSpokenToo(text, "Threatened", actor, benefit);
@@ -2135,6 +2139,8 @@ public class ActionManager : MonoBehaviour
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.sprite;
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Has been Let go from the Reserves" });
                 //message
                 string text = string.Format("{0} {1} has been Let Go (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorStatus(text, "Let Go", "has been Let Go", actor.actorID, details.side);
@@ -2187,11 +2193,6 @@ public class ActionManager : MonoBehaviour
                 actor.ResetStates();
                 //remove actor from reserve list
                 GameManager.instance.dataScript.RemoveActorFromReservePool(details.side, actor);
-
-                /*//remove actor from map & handle admin -> EDIT: Can't remove actor from Map as actor is in reserve pool
-                if (GameManager.instance.dataScript.RemoveCurrentActor(details.side, actor, actor.Status) == false)
-                { Debug.LogErrorFormat("Actor \"{0}\", {1}, actorID {2}, not removed", actor.actorName, actor.arc.name, actor.actorID); }*/
-
                 GameManager.instance.dataScript.AddActorToDismissed(actor.actorID, details.side);
                 //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
                 actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
@@ -2235,6 +2236,8 @@ public class ActionManager : MonoBehaviour
                     actor.actorName);
                 outcomeDetails.textBottom = builder.ToString();
                 outcomeDetails.sprite = actor.sprite;
+                //history
+                actor.AddHistory(new HistoryActor() { text = "Fired and removed from the Reserves" });
                 //message
                 string text = string.Format("{0} {1} has been Dismissed (Reserve Pool)", actor.arc.name, actor.actorName);
                 GameManager.instance.messageScript.ActorStatus(text, "Dismissed", "has been Fired from the Reserves", actor.actorID, details.side);
@@ -2303,6 +2306,8 @@ public class ActionManager : MonoBehaviour
                     GameManager.instance.personScript.SetAllActorsCompatibility();
                     //update actorPanelUI
                     GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, actor.GetPersonality().GetCompatibilityWithPlayer());
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = "Recalled up for Active Duty" });
                     //Authority Actor brings team with them (if space available)
                     if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
                     {

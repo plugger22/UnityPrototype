@@ -7939,14 +7939,14 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Displays histories for all current OnMap actors regardless of status
+    /// Displays histories for all current OnMap and Reserve actors regardless of status
     /// </summary>
     /// <returns></returns>
     public string DebugDisplayActorsHistory()
     {
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
-        //loop actors
+        //loop OnMap actors
         Actor[] arrayOfActors = GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
@@ -7967,6 +7967,23 @@ public class DataManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //loop Reserve actors
+        builder.AppendFormat("- Reserve Actors History{0}{1}", "\n", "\n");
+        List<int> listOfActors = GetActorList(playerSide, ActorList.Reserve);
+        if (listOfActors.Count > 0)
+        {
+            for (int i = 0; i < listOfActors.Count; i++)
+            {
+                Actor actor = GetActor(listOfActors[i]);
+                if (actor != null)
+                {
+                    builder.Append(actor.DebugDisplayHistory());
+                    builder.AppendLine();
+                    builder.AppendLine();
+                }
+            }
+        }
+        else { builder.Append(" No actors in Reserve"); }
         return builder.ToString();
     }
 

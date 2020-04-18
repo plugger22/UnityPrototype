@@ -4438,6 +4438,8 @@ public class ActorManager : MonoBehaviour
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
                             GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
+                            //history
+                            actorRecruited.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
                             //stats
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
@@ -4611,6 +4613,8 @@ public class ActorManager : MonoBehaviour
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
                         GameManager.instance.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
+                        //history
+                        actorRecruited.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
                         //actor successfully recruited
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -4836,7 +4840,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.instance.dataScript.StatisticIncrement(StatType.ActorConflicts);
                             actor.numOfTimesConflict++;
                             //history
-                            actor.AddHistory(new HistoryActor() { text = string.Format("Instigates a Relationship Conflict ({0})", threatMsg) });
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Relationship Conflict ({0})", threatMsg) });
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -6418,6 +6422,8 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret);
                     StringBuilder builder = new StringBuilder();
                     builder.AppendFormat("{0}{1}{2}", colourNeutral, secret.tag, colourEnd);
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Reveals your {0} secret", secret.tag) });
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
@@ -6660,6 +6666,8 @@ public class ActorManager : MonoBehaviour
                                 {
                                     msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
                                     Debug.LogFormat("[Tor] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
+                                    //history
+                                    actor.AddHistory(new HistoryActor() { text = string.Format("Resigns due to your {0}", conditionUpsetOver.resignTag) });
                                 }
                                 else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
                             }
@@ -7699,7 +7707,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //action taken (decrement totalUnhappy only if actor resigns)
                                 Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} takes ACTION {3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-                                if (TakeReservePoolAction(actor) == true)
+                                if (ProcessReservePoolAction(actor) == true)
                                 { totalUnhappy--; }
                             }
                             else
@@ -7826,7 +7834,7 @@ public class ActorManager : MonoBehaviour
                                 GameManager.instance.messageScript.GeneralRandom(msgText, "Take Action", chance, rnd, true);
                                 //action taken (decrement totalUnhappy only if actor resigns)
                                 Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, {2} takes ACTION, chance {3}{4}", actor.actorName, actor.arc.name, actor.actorID, chance, "\n");
-                                if (TakeReservePoolAction(actor) == true)
+                                if (ProcessReservePoolAction(actor) == true)
                                 { totalUnhappy--; }
                             }
                             else
@@ -8062,7 +8070,7 @@ public class ActorManager : MonoBehaviour
     /// NOTE: Actor is assumed to be Null checked by the calling method
     /// </summary>
     /// <param name="actor"></param>
-    private bool TakeReservePoolAction(Actor actor)
+    private bool ProcessReservePoolAction(Actor actor)
     {
         bool isResigned = false;
         int rnd, chance;
@@ -8077,7 +8085,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Reveal Secret SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
                 Secret secret = actor.GetSecret();
@@ -8106,7 +8114,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
                     //message
                     GameManager.instance.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
-                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Reveals Secret{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Reveals Secret{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
                 return isResigned;
@@ -8114,7 +8122,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Reveal Secret FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
             }
@@ -8129,7 +8137,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
                 //resigns in frustration
@@ -8143,7 +8151,7 @@ public class ActorManager : MonoBehaviour
                     itemText = "resigns in disgust";
                     reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
-                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
                 return isResigned;
@@ -8151,7 +8159,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
             }
@@ -8164,7 +8172,7 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave (already Complained) SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
@@ -8179,14 +8187,14 @@ public class ActorManager : MonoBehaviour
                     itemText = "resigns in disgust";
                     reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
                     GameManager.instance.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.instance.sideScript.PlayerSide);
-                    Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 }
                 return isResigned;
             }
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Leave (already Complained) FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Leave (Complained)", chance, rnd, true);
             }
@@ -8201,19 +8209,19 @@ public class ActorManager : MonoBehaviour
             if (rnd < chance)
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Complain SUCCESS", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
                 msgText = string.Format("{0} Complains about being left in Reserves", actor.arc.name);
                 GameManager.instance.messageScript.ActorComplains(msgText, actor, "Unhappy at being left in Reserve", "Higher chance of Resigning or Revealing a Secret");
-                Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Complains{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Complains{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
                 actor.isComplaining = true;
                 return isResigned;
             }
             else
             {
                 //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> TakeReservePoolAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                 msgText = string.Format("Unhappy {0} Complain FAILED", actor.arc.name);
                 GameManager.instance.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
             }
@@ -8226,7 +8234,7 @@ public class ActorManager : MonoBehaviour
         reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
         string warning = string.Format("{0} will {1}<b>TAKE DECISIVE ACTION</b>{2}, but didn't this turn", actor.actorName, colourBad, colourEnd);
         GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Taking Action", reason, warning);
-        Debug.LogFormat("[Res] ActorManager.cs -> TakeReservePoolAction: Reserve {0}, {1}, ID {2} Failed to Act{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+        Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Failed to Act{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
         return isResigned;
     }
 
@@ -8686,6 +8694,8 @@ public class ActorManager : MonoBehaviour
                     actor.isNewRecruit = true;
                     //stats
                     GameManager.instance.dataScript.StatisticIncrement(StatType.ActorsRecruited);
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
                 }
                 else { Debug.LogWarningFormat("Actor unable to be added to Reserve Pool"); }
                 //admin
