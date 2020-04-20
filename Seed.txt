@@ -410,3 +410,68 @@ City seed 765 -> New York, America
 Dev seed 15020 -> Monday, 20 April 2020 10:31 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 40803 -> Monday, 20 April 2020 10:48 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 14011 -> Monday, 20 April 2020 10:56 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 4863 -> Monday, 20 April 2020 11:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52744 -> Monday, 20 April 2020 11:07 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 44742 -> Monday, 20 April 2020 11:16 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 42263 -> Monday, 20 April 2020 11:28 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 44806 -> Monday, 20 April 2020 11:48 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52925 -> Monday, 20 April 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 18601 -> Monday, 20 April 2020 12:23 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:396)
+	
+Dev seed 28079 -> Monday, 20 April 2020 12:28 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 51713 -> Monday, 20 April 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52336 -> Monday, 20 April 2020 12:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 41680 -> Monday, 20 April 2020 12:33 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France

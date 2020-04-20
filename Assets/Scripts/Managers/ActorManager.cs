@@ -1290,14 +1290,19 @@ public class ActorManager : MonoBehaviour
                     actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
                 }
                 actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());
-                //level -> range limits
+                /*//level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
                 int limitUpper = Math.Min(4, level + 2);
                 //level -> assign
                 actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
-                actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support
-                if (side.level == GameManager.instance.globalScript.sideResistance.level)
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support*/
+
+                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
+
+                /*if (side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
                     //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
                     switch (actor.level)
@@ -1315,7 +1320,10 @@ public class ActorManager : MonoBehaviour
 
                 }
                 else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
-                { actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper)); }
+                {
+                    actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
+                }*/
+
                 //OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
@@ -9298,7 +9306,7 @@ public class ActorManager : MonoBehaviour
         actor.Status = ActorStatus.RecruitPool;
         actor.inactiveStatus = ActorInactive.None;
         actor.tooltipStatus = ActorTooltip.None;
-        actor.SetDatapoint(ActorDatapoint.Invisibility2, 3);
+        actor.SetDatapoint(ActorDatapoint.Invisibility2, actor.level);
         actor.ResetStates();
         actor.RemoveAllTeams();
         actor.RemoveAllConditions();

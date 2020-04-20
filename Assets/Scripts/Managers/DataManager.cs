@@ -9036,18 +9036,18 @@ public class DataManager : MonoBehaviour
             for (int g = 0; g < count; g++)
             {
                 RelationSelectData data = tempList[g];
-                Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: WEIGHTED POOL firstActorID {0}, secondActorID {1}, compatibility {2}{3}", data.actorFirstID, data.actorSecondID, data.compatibility, "\n");
+                /*Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: WEIGHTED POOL firstActorID {0}, secondActorID {1}, compatibility {2}{3}", data.actorFirstID, data.actorSecondID, data.compatibility, "\n");*/
             }
             //if non-Neutral compatibilities present, remove all neutral ones prior to selection
             if (tempList.Exists(x => x.compatibility != 0) == true)
             {
                 tempList.RemoveAll(x => x.compatibility == 0);
-                Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Zero Compatibility Entries removed, Weighted Pool now has {0} Records (previously {1}){2}", tempList.Count, count, "\n");
+                /*Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Zero Compatibility Entries removed, Weighted Pool now has {0} Records (previously {1}){2}", tempList.Count, count, "\n");*/
             }
 
             //randomly select from weighted pool
             dataReturn = tempList[Random.Range(0, tempList.Count)];
-            Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: SELECTED firstActorID {0}, secondActorID {1}, compatibility {2}{3}", dataReturn.actorFirstID, dataReturn.actorSecondID, dataReturn.compatibility, "\n");
+            /*Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: SELECTED firstActorID {0}, secondActorID {1}, compatibility {2}{3}", dataReturn.actorFirstID, dataReturn.actorSecondID, dataReturn.compatibility, "\n");*/
         }
         return dataReturn;
     }

@@ -4368,9 +4368,10 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: -1
+  conditionTurnResistance: 10
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 0}
+  conditionResistance: {fileID: 11400000, guid: 8d211107db009064782ea763fea77830,
+    type: 2}
   actorSlotID: 0
   actorType: {fileID: 0}
   actorDatapoint0: -1
@@ -4386,6 +4387,12 @@ MonoBehaviour:
   testRatioPlayManageAct: 0
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
+  isValidTestMetaGameOptions: 0
+  isDismissed: 0
+  isResigned: 0
+  isLowMotivation: 0
+  isLevelTwo: 0
+  isLevelThree: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
