@@ -13,6 +13,7 @@ public class OptionManager : MonoBehaviour
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
+    [HideInInspector] public bool fixedActorStats = false;                        //if true then actors will have varying stats according to level, if false then actors of the same level all have identical stats
     
     //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen

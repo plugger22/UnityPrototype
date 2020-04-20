@@ -1290,44 +1290,48 @@ public class ActorManager : MonoBehaviour
                     actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
                 }
                 actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());
-
-                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
-
-                /*//level -> range limits
-                int limitLower = 1;
-                if (level == 3) { limitLower = 2; }
-                int limitUpper = Math.Min(4, level + 2);
-                //level -> assign
-                actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
-                actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support*/
-
-
-
-                /*if (side.level == GameManager.instance.globalScript.sideResistance.level)
+                // - - - Actor stats (variable or fixed)
+                if (GameManager.instance.optionScript.fixedActorStats == true)
                 {
-                    //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
-                    switch (actor.level)
-                    {
-                        case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); break;
-                        case 2:
-                            if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
-                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
-                            break;
-                        case 1:
-                            if (Random.Range(0, 100) <= 50) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
-                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
-                            break;
-                    }
-
+                    //Fixed stats
+                    actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
+                    actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
+                    actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
                 }
-                else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+                else
                 {
-                    actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
-                }*/
+                    //Variable Stats -> level -> range limits
+                    int limitLower = 1;
+                    if (level == 3) { limitLower = 2; }
+                    int limitUpper = Math.Min(4, level + 2);
+                    //level -> assign
+                    actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
+                    actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support
+                    //Datapoint 2
+                    if (side.level == GameManager.instance.globalScript.sideResistance.level)
+                    {
+                        //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
+                        switch (actor.level)
+                        {
+                            case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); break;
+                            case 2:
+                                if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                                else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
+                                break;
+                            case 1:
+                                if (Random.Range(0, 100) <= 50) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                                else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
+                                break;
+                        }
 
-                //OnMap actor (pool actors already in dictionary)
+                    }
+                    else if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+                    {
+                        //Ability
+                        actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
+                    }
+                }
+                // - - - OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
                     actor.Renown = 0;
@@ -3753,8 +3757,7 @@ public class ActorManager : MonoBehaviour
                 genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
-                genericDetails.help0 = "reserve_0";
-                genericDetails.help1 = "reserve_2";
+                genericDetails.help0 = "reserve_2";
                 //
                 //generate temp list of Recruits to choose from and a list of ones for the picker
                 //

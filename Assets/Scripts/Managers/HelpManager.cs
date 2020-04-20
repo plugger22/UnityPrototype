@@ -299,7 +299,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "reserve_2";
         data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
-        data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to recruit with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to source new subordinates with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
 
         #endregion
