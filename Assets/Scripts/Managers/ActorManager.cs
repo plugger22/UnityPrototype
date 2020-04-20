@@ -657,6 +657,19 @@ public class ActorManager : MonoBehaviour
             {
                 int actorID, count;
                 bool isSuccess;
+                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+
+                //Debug
+                if (side.level == playerSide.level)
+                {
+                    Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: MetaGame options - - - {0}", "\n");
+                    Debug.LogFormat("[Tst] isDismissed: {0}{1}", data.isDismissed, "\n");
+                    Debug.LogFormat("[Tst] isResigned: {0}{1}", data.isResigned, "\n");
+                    Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
+                    Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
+                    Debug.LogFormat("[Tst] isLevelThree: {0}{1}", data.isLevelThree, "\n");
+                }
+
                 //can't have duplicate actor arcs on map, need a pick list by value
                 List<ActorArc> listOfArcs = new List<ActorArc>();
                 switch (side.level)
@@ -688,6 +701,21 @@ public class ActorManager : MonoBehaviour
                     listOfActors = GameManager.instance.dataScript.GetActorRecruitPool(1, side);
                     //add any level 2 or 3 actors that have been previously used (eg. have an listOfHistory.Count > 0)
                     listOfActors.AddRange(GetPreviousActors(1, side));
+                }
+                //Debug
+                if (side.level == playerSide.level)
+                {
+                    Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: Unfiltered listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
+                    for (int i = 0; i < listOfActors.Count; i++)
+                    {
+                        Actor tempActor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                        if (tempActor != null)
+                        {
+                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}{7}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
+                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
+                    }
                 }
                 //
                 // - - - filter actor list
@@ -722,8 +750,8 @@ public class ActorManager : MonoBehaviour
                             }
                             if (data.isLowMotivation == false)
                             {
-                                //remove actor if motivation less than two
-                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                //remove actor if motivation Zero
+                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
                                 {
                                     listOfActors.Remove(actorID);
                                     continue;
@@ -732,6 +760,21 @@ public class ActorManager : MonoBehaviour
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
+                    }
+                }
+                //Debug
+                if (side.level == playerSide.level)
+                {
+                    Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: FILTERED listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
+                    for (int i = 0; i < listOfActors.Count; i++)
+                    {
+                        Actor tempActor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
+                        if (tempActor != null)
+                        {
+                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}{7}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
+                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
                 }
                 //
@@ -818,7 +861,7 @@ public class ActorManager : MonoBehaviour
                             }
                         }
                         //GUI update -> Player side only
-                        if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+                        if (side.level == playerSide.level)
                         {
                             //Update actor Panel
                             GameManager.instance.actorPanelScript.UpdateActorPanel();

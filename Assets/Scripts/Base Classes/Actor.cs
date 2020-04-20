@@ -1473,7 +1473,7 @@ namespace gameAPI
         public string DebugDisplayHistory()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("- {0}, {1}, ID {2} History{3}", actorName, arc.name, actorID, "\n");
+            builder.AppendFormat("- {0}, {1}, ID {2}, LvL {3}, Mot {4}, isD {5}, isR {6}{7}", actorName, arc.name, actorID, level, GetDatapoint(ActorDatapoint.Motivation1), isDismissed, isResigned, "\n");
             int count = listOfHistory.Count;
             if (count > 0)
             {

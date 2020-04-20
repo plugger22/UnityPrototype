@@ -570,7 +570,6 @@ public class GameManager : MonoBehaviour
         startMethod.className = "DijkstraManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
-
         //Organisation Manager
         startMethod.handler = orgScript.Initialise;
         startMethod.className = "OrganisationManager";
