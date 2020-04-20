@@ -1290,6 +1290,11 @@ public class ActorManager : MonoBehaviour
                     actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
                 }
                 actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());
+
+                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
+
                 /*//level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -1298,9 +1303,7 @@ public class ActorManager : MonoBehaviour
                 actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
                 actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support*/
 
-                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
+
 
                 /*if (side.level == GameManager.instance.globalScript.sideResistance.level)
                 {
@@ -3750,6 +3753,8 @@ public class ActorManager : MonoBehaviour
                 genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
+                genericDetails.help0 = "reserve_0";
+                genericDetails.help1 = "reserve_2";
                 //
                 //generate temp list of Recruits to choose from and a list of ones for the picker
                 //
@@ -4342,6 +4347,9 @@ public class ActorManager : MonoBehaviour
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
             data.state = InventoryState.ReservePool;
+            data.help0 = "reserve_0";
+            data.help1 = "reserve_1";
+            data.help2 = "reserve_2";
             //Loop Actor list and populate arrays
             List<int> listOfActors = GameManager.instance.dataScript.GetActorList(data.side, ActorList.Reserve);
             if (listOfActors != null)

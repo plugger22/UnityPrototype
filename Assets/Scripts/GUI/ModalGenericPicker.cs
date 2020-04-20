@@ -6,6 +6,7 @@ using modalAPI;
 using gameAPI;
 using System.Text;
 using System;
+using packageAPI;
 
 /// <summary>
 /// handles Modal Generic UI (picker with 2 to 3 choices that can be used for a wide range of purposes)
@@ -29,6 +30,7 @@ public class ModalGenericPicker : MonoBehaviour
     public Button buttonCancel;
     public Button buttonBack;
     public Button buttonConfirm;
+    public Button buttonHelp;
 
     public GameObject[] arrayOfGenericOptions;                      //place generic option UI elements here (3 options)
 
@@ -36,6 +38,7 @@ public class ModalGenericPicker : MonoBehaviour
     private ButtonInteraction buttonConfirmInteraction;
     private ButtonInteraction buttonCancelInteraction;
     private ButtonInteraction buttonBackInteraction;                //specifically for the Back button as it can be dynamically updated
+    private GenericHelpTooltipUI help;
     private static ModalGenericPicker modalGenericPicker;
 
     private int optionIDSelected;                                   //slot ID (eg arrayOfGenericOptions [index] of selected option [EDIT: Not sure about this, I think it is teamID, targetID, actorID etc)
@@ -73,6 +76,11 @@ public class ModalGenericPicker : MonoBehaviour
 
     private void Awake()
     {
+        //asserts
+        Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
+        Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
+        Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");
+        Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
         //confirm button event
         buttonConfirmInteraction = buttonConfirm.GetComponent<ButtonInteraction>();
         if (buttonConfirmInteraction != null)
@@ -83,6 +91,9 @@ public class ModalGenericPicker : MonoBehaviour
         if (buttonCancelInteraction != null)
         { buttonCancelInteraction.SetButton(EventType.CancelButtonGeneric); }
         else { Debug.LogError("Invalid buttonInteraction Confirm (Null)"); }
+        //help button
+        help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
+        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
         //Back button event (default -> can be set dynamically using 'SetBackButton' method
         buttonBackInteraction = buttonBack.GetComponent<ButtonInteraction>();
         if (buttonBackInteraction != null)
@@ -231,6 +242,14 @@ public class ModalGenericPicker : MonoBehaviour
                 datapoint = details.data;
                 optionIDSelected = -1;
                 optionNameSelected = "";
+                //set help
+                List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+                if (listOfHelpData != null && listOfHelpData.Count > 0)
+                {
+                    buttonHelp.gameObject.SetActive(true);
+                    help.SetHelpTooltip(listOfHelpData, 150, 200);
+                }
+                else { buttonHelp.gameObject.SetActive(false); }
                 //assign sprites, texts, optionID's and tooltips
                 for (int i = 0; i < details.arrayOfOptions.Length; i++)
                 {
@@ -357,6 +376,8 @@ public class ModalGenericPicker : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
         GameManager.instance.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
+        //close help tooltip
+        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalGenericPickerUI.cs -> CloseGenericPicker");
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
         //reset GUI elements to default

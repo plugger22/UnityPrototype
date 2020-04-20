@@ -60,7 +60,7 @@ public class ModalInventoryUI : MonoBehaviour
     private void Awake()
     {
         //Asserts
-        //Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
         Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
         //cancel button event
         buttonInteraction = buttonCancel.GetComponent<ButtonInteraction>();

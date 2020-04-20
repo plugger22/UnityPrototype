@@ -221,6 +221,10 @@ namespace modalAPI
         public int nodeID;
         public int actorSlotID;
         public string gearName;
+        public string help0;                                                                        //optional help, icon displayed only if help0 present
+        public string help1;
+        public string help2;
+        public string help3;
         public int data;                                                                           //general purpose datapoint, can be ignored
         public bool isHaltExecution;                                                               //if true execution is halted until outcome obtained, ignore otherwise
         public ModalGenericPickerSubState subState;                                                         //can be ignored unless needed

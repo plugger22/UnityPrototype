@@ -276,6 +276,34 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+
+        #region Inventory UI
+        //
+        // - - - Reserves UI
+        //
+        //Open
+        data = new HelpData();
+        data.tag = "reserve_0";
+        data.header = "Overview";
+        data.text = string.Format("Subordinates are willing to sit in the Reserves for a while, {0}but not forever{1}. At some point they'll become {2}Unhappy{3} and will eventually take decisive action", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Options
+        data = new HelpData();
+        data.tag = "reserve_1";
+        data.header = "Options";
+        data.text = string.Format("You can {0}delay{1} a subordinate becoming unhappy by Reassuring or Threatening them, change your mind and {2}get rid of them{3}, or select them for {4}Active Duty{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Quality
+        data = new HelpData();
+        data.tag = "reserve_2";
+        data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
+        data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to recruit with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        #endregion
+
         #endregion
 
         #region ...Topics

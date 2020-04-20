@@ -22,7 +22,7 @@ public class MetaManager : MonoBehaviour
 
         //debug metaGame options
         metaOptions = new MetaGameOptions();
-        if (GameManager.instance.testScript.isValidTestMetaGameOptions == true)
+        if (GameManager.instance.testScript.isValidMetaOptions == true)
         {
             metaOptions.isDismissed = GameManager.instance.testScript.isDismissed;
             metaOptions.isResigned = GameManager.instance.testScript.isResigned;

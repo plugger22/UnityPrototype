@@ -82,7 +82,7 @@ public class TestManager : MonoBehaviour
 
     [Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]
-    public bool isValidTestMetaGameOptions = false;
+    public bool isValidMetaOptions = false;
     [Tooltip("If true, actors who have previously been dismissed, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
     public bool isDismissed = true;
     [Tooltip("If true, actors who have previously resigned, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
