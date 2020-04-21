@@ -4006,23 +4006,31 @@ public class EffectManager : MonoBehaviour
                 {
                     case "MetaOptionDismissed":
                         GameManager.instance.metaScript.SetMetaGameDismissed(false);
+                        effectResolve.bottomText = "Dismissed Subordinates are excluded";
                         break;
                     case "MetaOptionResigned":
                         GameManager.instance.metaScript.SetMetaGameResigned(false);
+                        effectResolve.bottomText = "Subordinates who Resigned are excluded";
                         break;
                     case "MetaOptionTraitor":
                         GameManager.instance.metaScript.SetMetaGameTraitor(false);
+                        effectResolve.bottomText = "Traitorous Subordinates are excluded";
                         break;
                     case "MetaOptionMotivation":
                         GameManager.instance.metaScript.SetMetaGameMotivation(false);
+                        effectResolve.bottomText = "Low Motivation Subordinates are excluded";
                         break;
                     case "MetaOptionLevel2":
+                        //level 2 and 3 are binary choices
                         GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
                         GameManager.instance.metaScript.SetMetaGameLevelThree(false);
+                        effectResolve.bottomText = "All Subordinates will be level 2";
                         break;
                     case "MetaOptionLevel3":
+                        //level 2 and 3 are binary choices
                         GameManager.instance.metaScript.SetMetaGameLevelThree(true);
                         GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
+                        effectResolve.bottomText = "All Subordinates will be level 3";
                         break;
                     default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
                 }
