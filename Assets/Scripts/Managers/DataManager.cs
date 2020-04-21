@@ -250,6 +250,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
     private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
     private Dictionary<int, RelationshipData> dictOfRelations = new Dictionary<int, RelationshipData>();        //Key -> slotID, Value -> RelationshipData.cs package
+    private Dictionary<string, MetaOption> dictOfMetaOptions = new Dictionary<string, MetaOption>();            //Key -> MetaOption name, Value -> MetaOption
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -9284,6 +9285,13 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null) for Blackmarks"); }
     }
+
+    //
+    // - - - MetaOptions
+    //
+
+    public Dictionary<string, MetaOption> GetDictOfMetaOptions()
+    { return dictOfMetaOptions; }
 
     //new methods above here
 }
