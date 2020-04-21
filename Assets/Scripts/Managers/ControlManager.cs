@@ -190,8 +190,8 @@ public class ControlManager : MonoBehaviour
     {
         //save existing game state
         gameState = GameManager.instance.inputScript.GameState;
-        //close any Node tooltip
-        GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+        //close all tooltips
+        GameManager.instance.guiScript.SetTooltipsOff();
         //modal block
         GameManager.instance.guiScript.SetIsBlocked(true);
         //Open end level background

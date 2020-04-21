@@ -3296,6 +3296,10 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             //specific Conditions
+            case "ConditionAddicted":
+            case "ConditionDoomed":
+            case "ConditionImaged":
+            case "ConditionWounded":
             case "ConditionStressed":
             case "ConditionIncompetent":
             case "ConditionCorrupt":
@@ -5840,6 +5844,12 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "ConditionTagged":
                     condition = conditionTagged;
+                    break;
+                    case "ConditionDoomed":
+                    condition = conditionDoomed;
+                    break;
+                case "ConditionImaged":
+                    condition = conditionImaged;
                     break;
                 default:
                     Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", outcome.name);

@@ -1269,6 +1269,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50c454ba8bbd7ac4dbaa551bdb96e4e6, type: 2}
   - {fileID: 11400000, guid: e9d41039983d97c4c9befde23964c468, type: 2}
   - {fileID: 11400000, guid: ed371bdbab12fa14094883a418e2cd12, type: 2}
+  - {fileID: 11400000, guid: 1666d6c5b2fe8aa42a57451fd60ad7ba, type: 2}
+  - {fileID: 11400000, guid: 7118076edbbb34142a051d4ab61cfcc4, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1671,6 +1673,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbe2f6ba1a37dcf4f880a17e721f9155, type: 2}
   - {fileID: 11400000, guid: 5fa7385757a0a2f4cbf2e111afbb8f0a, type: 2}
   - {fileID: 11400000, guid: e6ed9c256284f7340a7d2c3aa7bb6d55, type: 2}
+  - {fileID: 11400000, guid: 0cf7d8cfbda437146837e3637e7a289c, type: 2}
+  - {fileID: 11400000, guid: 163665f654f004142a5dfa641e9344c7, type: 2}
+  - {fileID: 11400000, guid: 4f942eb01025b4f4bb342eb842e348ab, type: 2}
+  - {fileID: 11400000, guid: 3153b262bde115140b420c6f0be36748, type: 2}
+  - {fileID: 11400000, guid: 21df908b4bfcbb94095675b351861120, type: 2}
   arrayOfEffectsGeneral:
   - {fileID: 11400000, guid: a4ca57f88fc59a2418ba0d04163879ff, type: 2}
   - {fileID: 11400000, guid: ecfd7bee7bfef1646be47c7c8edd3138, type: 2}
@@ -3565,6 +3572,19 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a9f6f2b3fcef4d345a733bd5d1042ad7, type: 3}
   - {fileID: 21300000, guid: 40bd906edf6b8bf488966c05a0629e20, type: 3}
   - {fileID: 21300000, guid: 8d28e5f6fdb32d94498931c54ec84968, type: 3}
+  arrayOfBossOptions:
+  - {fileID: 11400000, guid: ace394f062c177445b70499197959a93, type: 2}
+  - {fileID: 11400000, guid: 0fd2612cfcc85c64fb024ed11a86161e, type: 2}
+  - {fileID: 11400000, guid: 7c6ea3ed875d88046ac2a2e7193b0534, type: 2}
+  - {fileID: 11400000, guid: 1f9a287438070ad44a3d407cfd140383, type: 2}
+  - {fileID: 11400000, guid: 29a8daac0dccc87498b8b63fecf25a09, type: 2}
+  - {fileID: 11400000, guid: ec3c68daa23f9f047b736e352b109772, type: 2}
+  - {fileID: 11400000, guid: 8234632f67da7524cbd43fcc09fb16c4, type: 2}
+  - {fileID: 11400000, guid: 205de70b3b2bfbe4fbe48d5e9e4b06c1, type: 2}
+  - {fileID: 11400000, guid: 738d449294ea2504994bd5596c265842, type: 2}
+  arrayOfSubBoss1Options: []
+  arrayOfSubBoss2Options: []
+  arrayOfSubBoss3Options: []
   arrayOfManageActors:
   - {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
   - {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
@@ -4324,6 +4344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoGearResolution: 0
   fogOfWar: 0
+  fixedActorStats: 0
   debugData: 0
   noAI: 0
   showContacts: 0
@@ -4386,7 +4407,7 @@ MonoBehaviour:
   testRatioPlayManageAct: 0
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
-  isValidTestMetaGameOptions: 0
+  isValidMetaOptions: 0
   isDismissed: 0
   isResigned: 0
   isLowMotivation: 0

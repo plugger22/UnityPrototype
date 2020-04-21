@@ -1,9 +1,9 @@
-﻿using System;
+﻿using gameAPI;
+using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using gameAPI;
-using packageAPI;
 
 /// <summary>
 /// handles loading of all design time SO's
@@ -44,7 +44,7 @@ public class LoadManager : MonoBehaviour
     public OrgType[] arrayOfOrgTypes;
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
-    
+
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
@@ -52,7 +52,7 @@ public class LoadManager : MonoBehaviour
     public TraitEffect[] arrayOfTraitEffects;
     public SecretType[] arrayOfSecretTypes;
     public NodeDatapoint[] arrayOfNodeDatapoints;
-    
+
     [Header("TextLists")]       //NOTE: need to add any new arrays to arrayOfTextLists in InitialiseEarly
     public TextList[] arrayOfContactTextLists;
     public TextList[] arrayOfNameTextLists;
@@ -90,7 +90,7 @@ public class LoadManager : MonoBehaviour
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
-    public ActorArc[] arrayOfActorArcs;   
+    public ActorArc[] arrayOfActorArcs;
     public Action[] arrayOfActions;
     public TeamArc[] arrayOfTeamArcs;
     public Gear[] arrayOfGear;
@@ -150,6 +150,12 @@ public class LoadManager : MonoBehaviour
     public Sprite[] arrayOfTargetSprites;
     public Sprite[] arrayOfTeamSprites;
 
+    [Header("MetaOptions")]
+    public MetaOption[] arrayOfBossOptions;
+    public MetaOption[] arrayOfSubBoss1Options;
+    public MetaOption[] arrayOfSubBoss2Options;
+    public MetaOption[] arrayOfSubBoss3Options;
+
     [Header("InitialiseEarly")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
@@ -168,11 +174,13 @@ public class LoadManager : MonoBehaviour
     public Campaign[] arrayOfCampaigns;
 
     //Consolidated arrays
-    //NOTE: consolidation needs to happen in InitialiseEarly for sequencing reasons
-    [HideInInspector] public Effect[] arrayOfEffects;       
-    [HideInInspector] public TextList[] arrayOfTextLists;           
-    [HideInInspector] public Target[] arrayOfTargets;               
-    [HideInInspector] public TopicOption[] arrayOfTopicOptions;     
+    //NOTE: consolidation needs to happen in InitialiseStart for sequencing reasons
+    //NOTE: consolidate arrays into the master array in InitialiseStart and do the processing later in InitialiseEarly
+    [HideInInspector] public Effect[] arrayOfEffects;
+    [HideInInspector] public TextList[] arrayOfTextLists;
+    [HideInInspector] public Target[] arrayOfTargets;
+    [HideInInspector] public TopicOption[] arrayOfTopicOptions;
+    [HideInInspector] public MetaOption[] arrayOfMetaOptions;
     #endregion
 
     #region InitialiseStart
@@ -280,6 +288,15 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsOrgInfo);
         arrayOfTopicOptions = listOfOptions.ToArray();
         //
+        // - - - MetaOptions (consolidate arrays)
+        //
+        List<MetaOption> listOfMetaOptions = new List<MetaOption>();
+        listOfMetaOptions.AddRange(arrayOfBossOptions);
+        listOfMetaOptions.AddRange(arrayOfSubBoss1Options);
+        listOfMetaOptions.AddRange(arrayOfSubBoss2Options);
+        listOfMetaOptions.AddRange(arrayOfSubBoss3Options);
+        arrayOfMetaOptions = listOfMetaOptions.ToArray();
+        //
         // - - - GlobalMeta (not stored in a collection)
         //
         numArray = arrayOfGlobalMeta.Length;
@@ -330,7 +347,7 @@ public class LoadManager : MonoBehaviour
             { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfGlobalSide has {0} entries{1}", numArray, "\n"); }
             else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No GlobalSide present"); }
             //add to dictionary
-            for (int i = 0; i < numArray; i++) 
+            for (int i = 0; i < numArray; i++)
             {
                 GlobalSide side = arrayOfGlobalSide[i];
                 if (side != null)
@@ -535,7 +552,7 @@ public class LoadManager : MonoBehaviour
         else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No TextLists present"); }
         //add to dictOfTextsLists
         Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
-        foreach(TextList textList in arrayOfTextLists)
+        foreach (TextList textList in arrayOfTextLists)
         {
             if (textList != null)
             {
@@ -741,7 +758,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfColours.Length;
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfColours has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No colours present"); }        
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No colours present"); }
         //
         // - - - Mission (not stored in a collection)
         //
@@ -833,28 +850,28 @@ public class LoadManager : MonoBehaviour
         if (dictOfTraitCategories != null)
         {
 
-                counter = 0;
-                numArray = arrayOfTraitEffects.Length;
-                if (numArray > 0)
+            counter = 0;
+            numArray = arrayOfTraitEffects.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
                 {
-                    for (int i = 0; i < numArray; i++)
-                    {
-                        TraitEffect traitEffect = arrayOfTraitEffects[i];
-                        counter++;
-                        //add to dictionaries
-                        try
-                        { dictOfTraitEffects.Add(traitEffect.name, traitEffect); }
-                        catch (ArgumentNullException)
-                        { Debug.LogError("Invalid trait Effect (Null)"); }
-                        catch (ArgumentException)
-                        { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
-                    }
+                    TraitEffect traitEffect = arrayOfTraitEffects[i];
+                    counter++;
+                    //add to dictionaries
+                    try
+                    { dictOfTraitEffects.Add(traitEffect.name, traitEffect); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid trait Effect (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid trait Effect (duplicate ID) \"{0}\"", traitEffect.name); }
                 }
-                numDict = dictOfTraitEffects.Count;
-                Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
-                Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
-                Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
-                Debug.Assert(numArray == numDict, string.Format("Mismatch in TraitEffect count, array {0}, dict {1}", numArray, numDict));
+            }
+            numDict = dictOfTraitEffects.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfTraitEffects has {0} entries{1}", numDict, "\n");
+            Debug.Assert(dictOfTraitEffects.Count == counter, "Mismatch on count");
+            Debug.Assert(dictOfTraitEffects.Count > 0, "No Trait Effects imported to dictionary");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in TraitEffect count, array {0}, dict {1}", numArray, numDict));
 
         }
         else { Debug.LogError("Invalid dictOfTraitEffects (Null) -> Import failed"); }
@@ -1030,14 +1047,20 @@ public class LoadManager : MonoBehaviour
                             //can only be one, takes first one found and ignores the rest
                             trait.isHqTrait = true;
                             if (trait.hqMajorMultiplier > 0)
-                            { trait.hqDescription = string.Format("Chance of a Major (leave) event {0} % {1}", 
-                                trait.hqMajorMultiplier > 1.0 ? (trait.hqMajorMultiplier - 1.0) * 100 : trait.hqMajorMultiplier * 100, trait.hqMajorMultiplier < 1.0f ? "less" : "more"); }
+                            {
+                                trait.hqDescription = string.Format("Chance of a Major (leave) event {0} % {1}",
+                                  trait.hqMajorMultiplier > 1.0 ? (trait.hqMajorMultiplier - 1.0) * 100 : trait.hqMajorMultiplier * 100, trait.hqMajorMultiplier < 1.0f ? "less" : "more");
+                            }
                             else if (trait.hqMinorMultiplier > 0)
-                            { trait.hqDescription = string.Format("Chance of a Good (change in renown) event {0} % {1}", 
-                                trait.hqMinorMultiplier > 1.0 ? (trait.hqMinorMultiplier - 1.0) * 100 : trait.hqMinorMultiplier * 100, trait.hqMinorMultiplier < 1.0f ? "less" : "more"); }
-                            else if  (trait.hqRenownMultiplier > 0)
-                            { trait.hqDescription = string.Format("Renown gain, or loss, from an event is {0}% {1}", 
-                                trait.hqRenownMultiplier > 1.0 ? (trait.hqRenownMultiplier - 1.0) * 100 : trait.hqRenownMultiplier * 100, trait.hqRenownMultiplier < 1.0f ? "less" : "more"); }
+                            {
+                                trait.hqDescription = string.Format("Chance of a Good (change in renown) event {0} % {1}",
+                                  trait.hqMinorMultiplier > 1.0 ? (trait.hqMinorMultiplier - 1.0) * 100 : trait.hqMinorMultiplier * 100, trait.hqMinorMultiplier < 1.0f ? "less" : "more");
+                            }
+                            else if (trait.hqRenownMultiplier > 0)
+                            {
+                                trait.hqDescription = string.Format("Renown gain, or loss, from an event is {0}% {1}",
+                                  trait.hqRenownMultiplier > 1.0 ? (trait.hqRenownMultiplier - 1.0) * 100 : trait.hqRenownMultiplier * 100, trait.hqRenownMultiplier < 1.0f ? "less" : "more");
+                            }
                         }
                         else
                         {
@@ -1205,32 +1228,62 @@ public class LoadManager : MonoBehaviour
             Debug.AssertFormat(numArray == numDict, "Mismatch in Sprites count, array {0}, dict {1}", numArray, numDict);
         }
         else { Debug.LogError("Invalid dictOfSprites (Null)"); }
-
+        //
+        // - - - MetaOptions - - -
+        //
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        if (dictOfMetaOptions != null)
+        {
+            List<MetaOption> listOfMetaOptions = arrayOfMetaOptions.ToList();
+            Debug.LogFormat("[Loa] InitialiseEarly: arrayOfMetaOptions has {0} entries{1}", arrayOfMetaOptions.Length, "\n");
+            //loop options
+            counter = 0;
+            numArray = listOfMetaOptions.Count;
+            for (int i = 0; i < numArray; i++)
+            {
+                //add to dictionary
+                MetaOption metaOption = listOfMetaOptions[i];
+                if (metaOption != null)
+                {
+                    try
+                    { dictOfMetaOptions.Add(metaOption.name, metaOption); counter++; }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate metaOption name \"{0}\" for listOfMetaOptions[{1}]", metaOption.name, i); }
+                }
+                else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
+            }
+            numDict = dictOfMetaOptions.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfMetaOptions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No MetaOptions have been imported");
+            Debug.AssertFormat(numArray == numDict, "Mismatch in MetaOptions count, array {0}, dict {1}", numArray, numDict);
+        }
+        else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
         //
         // - - - Actions - - -
         //
         Dictionary<string, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
         if (dictOfActions != null)
         {
-                counter = 0;
-                numArray = arrayOfActions.Length;
-                for (int i = 0; i < numArray; i++)
-                {
-                    Action action = arrayOfActions[i];
-                    counter++;
-                    //add to dictionary
-                    try
-                    { dictOfActions.Add(action.name, action); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
-                    catch (ArgumentException)
-                    { Debug.LogError(string.Format("Invalid (duplicate) for Action \"{0}\"", action.name)); counter--; }
-                }
-                numDict = dictOfActions.Count;
-                Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
-                Debug.Assert(numDict == counter, "Mismatch on count");
-                Debug.Assert(numDict > 0, "No Actions have been imported");
-                Debug.Assert(numArray == numDict, string.Format("Mismatch in Action count, array {0}, dict {1}", numArray, numDict));
+            counter = 0;
+            numArray = arrayOfActions.Length;
+            for (int i = 0; i < numArray; i++)
+            {
+                Action action = arrayOfActions[i];
+                counter++;
+                //add to dictionary
+                try
+                { dictOfActions.Add(action.name, action); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid Action Arc (Null)"); counter--; }
+                catch (ArgumentException)
+                { Debug.LogError(string.Format("Invalid (duplicate) for Action \"{0}\"", action.name)); counter--; }
+            }
+            numDict = dictOfActions.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfActions has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No Actions have been imported");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch in Action count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfActions (Null) -> Import failed"); }
         //

@@ -1647,7 +1647,7 @@ public class ValidationManager : MonoBehaviour
 
     #region ValidateSO
     /// <summary>
-    /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays vs. those found by an Asset search (editor only)
+    /// optional (GameManager.cs toggle) program to run to check SO's loaded in LoadManager.cs arrays (must be in 'InitialiseStart') vs. those found by an Asset search (editor only)
     /// Designed to pick up SO's that might have been added in the editor but not added to the arrays (ignored by game if this is the case).
     /// </summary>
     public void ValidateSO(GameState state)
@@ -1796,6 +1796,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric<HqPosition>(GameManager.instance.loadScript.arrayOfHqPositions);
         //CaptureTools
         ValidateSOGeneric<CaptureTool>(GameManager.instance.loadScript.arrayOfCaptureTools);
+        //MetaOptions
+        ValidateSOGeneric<MetaOption>(GameManager.instance.loadScript.arrayOfMetaOptions);
 
     }
     #endregion

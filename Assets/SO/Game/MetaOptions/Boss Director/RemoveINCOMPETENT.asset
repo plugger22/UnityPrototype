@@ -9,15 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: RemoveQUESTIONABLE
+  m_Name: RemoveINCOMPETENT
   m_EditorClassIdentifier: 
-  text: Neuro Lie Detector examination
-  descriptor: Remove your QUESTIONABLE condition
+  text: Management for Dummies
+  descriptor: Remove your INCOMPETENT condition
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   isAlways: 0
   listOfCriteria:
-  - {fileID: 11400000, guid: 724c26a8102ed8f48915ba8b634b6f58, type: 2}
-  listOfEffects: []
+  - {fileID: 11400000, guid: fe8e0bbbdd022a64e9c7da898325a8dc, type: 2}
+  listOfEffects:
+  - {fileID: 11400000, guid: c0f19332bc46bae498cb37bfea57df89, type: 2}
   statTimesSelected: 0
   isRecommended: 0

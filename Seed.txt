@@ -526,3 +526,49 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 55013 -> Monday, 20 April 2020 4:53 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 61182 -> Tuesday, 21 April 2020 11:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4058 -> Tuesday, 21 April 2020 12:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11773 -> Tuesday, 21 April 2020 12:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61706 -> Tuesday, 21 April 2020 12:15 PM
+WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 0, assets 9 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1800)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 14911 -> Tuesday, 21 April 2020 12:18 PM
+WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 0, assets 9 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1800)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 47630 -> Tuesday, 21 April 2020 12:21 PM
+WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 0, assets 9 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1800)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 45936 -> Tuesday, 21 April 2020 12:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37120 -> Tuesday, 21 April 2020 12:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
