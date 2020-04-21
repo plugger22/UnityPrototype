@@ -9293,6 +9293,24 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, MetaOption> GetDictOfMetaOptions()
     { return dictOfMetaOptions; }
 
+    /// <summary>
+    /// Get MetaOption by name. Returns null if not found or a problem
+    /// </summary>
+    /// <param name="optionName"></param>
+    /// <returns></returns>
+    public MetaOption GetMetaOption(string optionName)
+    {
+        if (string.IsNullOrEmpty(optionName) == false)
+        {
+            if (dictOfMetaOptions.ContainsKey(optionName))
+            { return dictOfMetaOptions[optionName]; }
+            else { Debug.LogWarningFormat("metaOption name \"{0}\", not found in dictOfMetaOptions", optionName); }
+        }
+        else { Debug.LogError("Invalid optionName (Null or Empty)"); }
+        return null;
+    }
+
+
     //new methods above here
 }
 

@@ -1860,6 +1860,7 @@ public class EffectManager : MonoBehaviour
     {
         int teamID, teamArcID;
         EffectDataReturn effectReturn = new EffectDataReturn();
+        EffectDataResolve effectResolve = new EffectDataResolve();
         //set default values
         effectReturn.errorFlag = false;
         effectReturn.topText = "";
@@ -1896,9 +1897,9 @@ public class EffectManager : MonoBehaviour
             }
             else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
             //Topic effects
-            if (effect.apply.name.Equals("Topic") == true)
+            if (effect.apply.name.Equals("Topic", StringComparison.Ordinal) == true)
             {
-                EffectDataResolve effectResolve = ResolveTopicData(effect, dataInput);
+                effectResolve = ResolveTopicData(effect, dataInput);
                 if (effectResolve.isError == true)
                 { effectReturn.errorFlag = true; }
                 else
@@ -1907,6 +1908,11 @@ public class EffectManager : MonoBehaviour
                     effectReturn.bottomText = effectResolve.bottomText;
                     effectReturn.isAction = false;
                 }
+            }
+            else if (effect.apply.name.Equals("MetaGame", StringComparison.Ordinal) == true)
+            {
+                //MetaGame effects
+                effectResolve = ResolveMetaGame(effect, dataInput);
             }
             //Non-Topic effect
             else
@@ -1926,13 +1932,13 @@ public class EffectManager : MonoBehaviour
                     case "NodeSupport":
                         if (node != null)
                         {
-                            EffectDataResolve resolve = ResolveNodeData(effect, node, dataInput);
-                            if (resolve.isError == true)
+                            effectResolve = ResolveNodeData(effect, node, dataInput);
+                            if (effectResolve.isError == true)
                             { effectReturn.errorFlag = true; }
                             else
                             {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.topText = effectResolve.topText;
+                                effectReturn.bottomText = effectResolve.bottomText;
                                 effectReturn.isAction = true;
                             }
                         }
@@ -1956,13 +1962,13 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             //it's OK to pass a null actor provided it's a player condition
-                            EffectDataResolve resolve = ResolveConditionData(effect, node, dataInput, actor);
-                            if (resolve.isError == true)
+                            effectResolve = ResolveConditionData(effect, node, dataInput, actor);
+                            if (effectResolve.isError == true)
                             { effectReturn.errorFlag = true; }
                             else
                             {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.topText = effectResolve.topText;
+                                effectReturn.bottomText = effectResolve.bottomText;
                                 effectReturn.isAction = true;
                             }
                         }
@@ -1976,13 +1982,13 @@ public class EffectManager : MonoBehaviour
                     // - - - Player Actions - - -
                     //
                     case "PlayerActions":
-                        EffectDataResolve resolvePlayer = ResolvePlayerData(effect, dataInput);
-                        if (resolvePlayer.isError == true)
+                        effectResolve = ResolvePlayerData(effect, dataInput);
+                        if (effectResolve.isError == true)
                         { effectReturn.errorFlag = true; }
                         else
                         {
-                            effectReturn.topText = resolvePlayer.topText;
-                            effectReturn.bottomText = resolvePlayer.bottomText;
+                            effectReturn.topText = effectResolve.topText;
+                            effectReturn.bottomText = effectResolve.bottomText;
                             effectReturn.isAction = true;
                         }
                         break;
@@ -2005,13 +2011,13 @@ public class EffectManager : MonoBehaviour
                     case "ActorPromised":
                         if (actor != null)
                         {
-                            EffectDataResolve resolve = ResolveManageData(effect, actor);
-                            if (resolve.isError == true)
+                            effectResolve = ResolveManageData(effect, actor);
+                            if (effectResolve.isError == true)
                             { effectReturn.errorFlag = true; }
                             else
                             {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.topText = effectResolve.topText;
+                                effectReturn.bottomText = effectResolve.bottomText;
                                 effectReturn.isAction = true;
                             }
                         }
@@ -2029,13 +2035,13 @@ public class EffectManager : MonoBehaviour
                     case "NeurotiscismGood":
                     case "OpennessBad":
                     case "OpennessGood":
-                        EffectDataResolve resolveMood = ResolveMoodData(effect, dataInput);
-                        if (resolveMood.isError == true)
+                        effectResolve = ResolveMoodData(effect, dataInput);
+                        if (effectResolve.isError == true)
                         { effectReturn.errorFlag = true; }
                         else
                         {
-                            effectReturn.topText = resolveMood.topText;
-                            effectReturn.bottomText = resolveMood.bottomText;
+                            effectReturn.topText = effectResolve.topText;
+                            effectReturn.bottomText = effectResolve.bottomText;
                             effectReturn.isAction = true;
                         }
                         break;
@@ -2046,13 +2052,13 @@ public class EffectManager : MonoBehaviour
                     case "ActorKills":
                         if (actor != null)
                         {
-                            EffectDataResolve resolve = ResolveSpecialActorEffect(effect, actor);
-                            if (resolve.isError == true)
+                            effectResolve = ResolveSpecialActorEffect(effect, actor);
+                            if (effectResolve.isError == true)
                             { effectReturn.errorFlag = true; }
                             else
                             {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.topText = effectResolve.topText;
+                                effectReturn.bottomText = effectResolve.bottomText;
                                 effectReturn.isAction = true;
                             }
                         }
@@ -2136,13 +2142,13 @@ public class EffectManager : MonoBehaviour
                     case "ConnectionSecurity":
                         if (node != null)
                         {
-                            EffectDataResolve resolve = ResolveConnectionData(effect, node, dataInput);
-                            if (resolve.isError == true)
+                            effectResolve = ResolveConnectionData(effect, node, dataInput);
+                            if (effectResolve.isError == true)
                             { effectReturn.errorFlag = true; }
                             else
                             {
-                                effectReturn.topText = resolve.topText;
-                                effectReturn.bottomText = resolve.bottomText;
+                                effectReturn.topText = effectResolve.topText;
+                                effectReturn.bottomText = effectResolve.bottomText;
                                 effectReturn.isAction = true;
                             }
                         }
@@ -2498,6 +2504,7 @@ public class EffectManager : MonoBehaviour
         }
     }
     #endregion
+
 
     /// <summary>
     /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise
@@ -3979,6 +3986,56 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     public int GetOngoingEffectID()
     { return ongoingEffectIDCounter++; }
+
+    //
+    // - - - MetaGame effects - - -
+    //
+
+    public EffectDataResolve ResolveMetaGame(Effect effect, EffectDataInput dataInput)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        MetaEffectData metaData = GameManager.instance.metaScript.GetMetaEffectData();
+        if (metaData != null)
+        {
+            effectResolve.bottomText = "Unknown";
+            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaOptionName);
+            if (metaOption != null)
+            {
+                switch (effect.outcome.name)
+                {
+                    case "MetaOptionDismissed":
+                        GameManager.instance.metaScript.SetMetaGameDismissed(false);
+                        break;
+                    case "MetaOptionResigned":
+                        GameManager.instance.metaScript.SetMetaGameResigned(false);
+                        break;
+                    case "MetaOptionTraitor":
+                        GameManager.instance.metaScript.SetMetaGameTraitor(false);
+                        break;
+                    case "MetaOptionMotivation":
+                        GameManager.instance.metaScript.SetMetaGameMotivation(false);
+                        break;
+                    case "MetaOptionLevel2":
+                        GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
+                        GameManager.instance.metaScript.SetMetaGameLevelThree(false);
+                        break;
+                    case "MetaOptionLevel3":
+                        GameManager.instance.metaScript.SetMetaGameLevelThree(true);
+                        GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
+                        break;
+                    default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Invalid metaOption (Null)");
+                
+            }
+        }
+        else { Debug.LogWarning("Invalid metaEffectData (Null)"); }
+        return effectResolve;
+    }
 
     //
     // - - - Topic Effects - - -

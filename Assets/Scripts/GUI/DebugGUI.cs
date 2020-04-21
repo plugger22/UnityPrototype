@@ -13,7 +13,7 @@ public class DebugGUI : MonoBehaviour
     //for whenever interaction is needed
     private enum GUIStatus
     { None, GiveGear, GiveCondition, RemoveCondition, GiveActorTrait, SetState, AddContact, RemoveContact, isKnownContact, ShowPath, ShowPathOff, NemesisControl, ContactToggle, Conflict,
-    GiveCaptureTool, SetInnocence, SetMood, SetFriend, SetEnemy, SetLoyalty }
+    GiveCaptureTool, SetInnocence, SetMood, SetFriend, SetEnemy, SetLoyalty, SetTraitor }
 
     public GUIStyle customBackground;
 
@@ -913,11 +913,11 @@ public class DebugGUI : MonoBehaviour
 
 
             //sixteenth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 19 + button_height * 19, button_width, button_height), "isContactKnown"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 19 + button_height * 19, button_width, button_height), "Set Traitor"))
             {
-                Debug.Log("[Dbg] Button -> Set isContactKnown True");
-                if (debugDisplay != 31)
-                { debugDisplay = 31; }
+                Debug.Log("[Dbg] Button -> Set Traitor");
+                if (debugDisplay != 103)
+                { debugDisplay = 103; }
                 else { debugDisplay = 0; }
             }
 
@@ -1887,6 +1887,23 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.instance.dataScript.DebugDisplayHqHierarchyHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
+                    //Set Traitor
+                    case 103:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 100, 50, 200, 100), "", customBackground);
+                        GUI.Label(new Rect(Screen.width / 2 - 75, 55, 150, 20), "Actor (0 to 3)");
+                        textInput_0 = GUI.TextField(new Rect(Screen.width / 2 - 50, 90, 100, 20), textInput_0);
+                        status = GUIStatus.SetTraitor;
+                        textOutput = null;
+                        break;
+                    //Set Mood processing & Output
+                    case 104:
+                        if (textOutput == null)
+                        { textOutput = GameManager.instance.actorScript.DebugSetTraitor(textInput_0); }
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
+                        status = GUIStatus.None;
+                        break;
                 }
             }
             else { status = GUIStatus.None; }
@@ -1952,6 +1969,9 @@ public class DebugGUI : MonoBehaviour
                         break;
                     case GUIStatus.SetLoyalty:
                         debugDisplay = 98;
+                        break;
+                    case GUIStatus.SetTraitor:
+                        debugDisplay = 104;
                         break;
                 }
                 break;

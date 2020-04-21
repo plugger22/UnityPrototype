@@ -80,6 +80,7 @@ public class LoadManager : MonoBehaviour
     public Effect[] arrayOfEffectsGeneral;
     public Effect[] arrayOfEffectsGroup;
     public Effect[] arrayOfEffectsManage;
+    public Effect[] arrayOfEffectsMetaOptions;
     public Effect[] arrayOfEffectsPersonality;
     public Effect[] arrayOfEffectsPlayer;
     public Effect[] arrayOfEffectsResistance;
@@ -380,6 +381,7 @@ public class LoadManager : MonoBehaviour
         listOfEffects.AddRange(arrayOfEffectsGeneral);
         listOfEffects.AddRange(arrayOfEffectsGroup);
         listOfEffects.AddRange(arrayOfEffectsManage);
+        listOfEffects.AddRange(arrayOfEffectsMetaOptions);
         listOfEffects.AddRange(arrayOfEffectsPersonality);
         listOfEffects.AddRange(arrayOfEffectsPlayer);
         listOfEffects.AddRange(arrayOfEffectsResistance);

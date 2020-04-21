@@ -12,14 +12,14 @@ public class MetaManager : MonoBehaviour
     [HideInInspector] public GlobalMeta metaLevel;
 
     private MetaGameOptions metaOptions;
-
+    private MetaEffectData metaEffect;
 
 
     public void Initialise(GameState state)
     {
         //set state
         metaLevel = GameManager.instance.globalScript.metaBottom;
-
+        metaEffect = new MetaEffectData();
         //debug metaGame options
         metaOptions = new MetaGameOptions();
         if (GameManager.instance.testScript.isValidMetaOptions == true)
@@ -27,6 +27,7 @@ public class MetaManager : MonoBehaviour
             metaOptions.isDismissed = GameManager.instance.testScript.isDismissed;
             metaOptions.isResigned = GameManager.instance.testScript.isResigned;
             metaOptions.isLowMotivation = GameManager.instance.testScript.isLowMotivation;
+            metaOptions.isTraitor = GameManager.instance.testScript.isTraitor;
             metaOptions.isLevelTwo = GameManager.instance.testScript.isLevelTwo;
             metaOptions.isLevelThree = GameManager.instance.testScript.isLevelThree;
         }
@@ -36,6 +37,7 @@ public class MetaManager : MonoBehaviour
             metaOptions.isDismissed = true;
             metaOptions.isResigned = true;
             metaOptions.isLowMotivation = true;
+            metaOptions.isTraitor = true;
             metaOptions.isLevelTwo = false;
             metaOptions.isLevelThree = false;
         }
@@ -56,6 +58,65 @@ public class MetaManager : MonoBehaviour
     public MetaGameOptions GetMetaOptions()
     { return metaOptions; }
 
+    /// <summary>
+    /// Set metaGame setting, isDismissed
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameDismissed(bool setting)
+    {
+        metaOptions.isDismissed = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionDismissed: Option isDismissed now {0}{1}", setting, "\n");
+    }
+
+    /// <summary>
+    /// Set metaGame setting, isResigned
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameResigned(bool setting)
+    {
+        metaOptions.isResigned = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionResigned: Option isResigned now {0}{1}", setting, "\n");
+    }
+
+    /// <summary>
+    /// Set metaGame setting, isTraitor
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameTraitor(bool setting)
+    {
+        metaOptions.isTraitor = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionTraitor: Option isTraitor now {0}{1}", setting, "\n");
+    }
+
+    /// <summary>
+    /// Set metaGame setting, isLowMotivation
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameMotivation(bool setting)
+    {
+        metaOptions.isLowMotivation = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionMotivation: Option isLowMotivation now {0}{1}", setting, "\n");
+    }
+
+    /// <summary>
+    /// Set metaGame setting, isLevelTwo
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameLevelTwo(bool setting)
+    {
+        metaOptions.isLevelTwo = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionLevelTwo: Option isLevelTwo now {0}{1}", setting, "\n");
+    }
+
+    /// <summary>
+    /// Set metaGame setting, isLevelThree
+    /// </summary>
+    /// <param name="setting"></param>
+    public void SetMetaGameLevelThree(bool setting)
+    {
+        metaOptions.isLevelThree = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionLevelThree: Option isLevelThree now {0}{1}", setting, "\n");
+    }
 
     /// <summary>
     /// Metalevel master sequence
@@ -74,6 +135,9 @@ public class MetaManager : MonoBehaviour
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
     }
 
+
+    public MetaEffectData GetMetaEffectData()
+    { return metaEffect; }
 
 
 }

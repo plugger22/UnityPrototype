@@ -666,6 +666,7 @@ public class ActorManager : MonoBehaviour
                     Debug.LogFormat("[Tst] isDismissed: {0}{1}", data.isDismissed, "\n");
                     Debug.LogFormat("[Tst] isResigned: {0}{1}", data.isResigned, "\n");
                     Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
+                    Debug.LogFormat("[Tst] isTraitor: {0}{1}", data.isTraitor, "\n");
                     Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
                     Debug.LogFormat("[Tst] isLevelThree: {0}{1}", data.isLevelThree, "\n");
                 }
@@ -711,8 +712,8 @@ public class ActorManager : MonoBehaviour
                         Actor tempActor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
                         if (tempActor != null)
                         {
-                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}{7}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
-                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, "\n");
+                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
+                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
@@ -721,7 +722,7 @@ public class ActorManager : MonoBehaviour
                 // - - - filter actor list
                 //
                 //are any metaGame filtering options active (can ignore filtering otherwise)
-                if (data.isDismissed == false || data.isResigned == false || data.isLowMotivation == false)
+                if (data.isDismissed == false || data.isResigned == false || data.isLowMotivation == false || data.isTraitor == false)
                 {
                     //loop backwards as could be removing data
                     for (int i = listOfActors.Count - 1; i >= 0; i--)
@@ -756,7 +757,15 @@ public class ActorManager : MonoBehaviour
                                     listOfActors.Remove(actorID);
                                     continue;
                                 }
-
+                            }
+                            if (data.isTraitor == false)
+                            {
+                                //remove actor if a traitor
+                                if (actor.isTraitor == true)
+                                {
+                                    listOfActors.Remove(actorID);
+                                    continue;
+                                }
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
@@ -771,8 +780,8 @@ public class ActorManager : MonoBehaviour
                         Actor tempActor = GameManager.instance.dataScript.GetActor(listOfActors[i]);
                         if (tempActor != null)
                         {
-                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}{7}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
-                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, "\n");
+                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
+                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
@@ -9561,6 +9570,33 @@ public class ActorManager : MonoBehaviour
         return listOfHelp;
     }
 
+    /// <summary>
+    /// Set an actor to traitor status
+    /// </summary>
+    /// <param name="slotIDString"></param>
+    /// <returns></returns>
+    public string DebugSetTraitor(string slotIDString)
+    {
+        string reply = "Error";
+        int slotID = -1;
+        if (string.IsNullOrEmpty(slotIDString) == false)
+        {
+            //convert string to int
+            try { slotID = System.Convert.ToInt32(slotIDString); }
+            catch (System.OverflowException)
+            { Debug.LogErrorFormat("Invalid conversion for slotIDString \"{0}\"", slotIDString); }
+            //Set Traitor -> method will handle invalid input
+            Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+            if (actor != null)
+            {
+                actor.isTraitor = true;
+                reply = $"{actor.arc.name} isTraitor now {actor.isTraitor}";
+            }
+            else { reply = string.Format("Invalid slotIDString \"{0}\" (slotID {1})", slotIDString, slotID); }
+        }
+        else { Debug.LogError("Invalid slotIDString (Null or Empty)"); }
+        return reply;
+    }
 
     //new methods above here
 }
