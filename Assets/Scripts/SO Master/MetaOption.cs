@@ -44,5 +44,6 @@ public class MetaOption : ScriptableObject
     {
         isRecommended = false;
         dataName = "";
+        dataTag = "";
     }
 }

@@ -20,7 +20,6 @@ public class OrganisationManager : MonoBehaviour
     [Tooltip("Maximum number of Organisations that the Player can be in contact with at any one time (UI limit)")]
     [Range(1, 5)] public int maxOrgContact = 3;
 
-
     /// <summary>
     /// Not for GameState.LoadGame
     /// </summary>
@@ -282,7 +281,8 @@ public class OrganisationManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaOrgs()
     {
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations(); //note that this is orgs current for campaign, NOT currently in contact with player
+        List<Organisation> tempList = new List<Organisation>();
         if (listOfOrgs != null)
         {
             int count = listOfOrgs.Count;
@@ -293,13 +293,19 @@ public class OrganisationManager : MonoBehaviour
                     Organisation org = listOfOrgs[i];
                     if (org != null)
                     {
-                        org.isContact = false;
-                        Debug.LogFormat("[Org] OrganisationManager.cs -> ProcessMetaOrg: {0} no longer in contact with Player{1}", org.tag, "\n");
+                        //only want organisations that are currently in contact with the Player
+                        if (org.isContact == true)
+                        {
+                            org.isContact = false;
+                            Debug.LogFormat("[Org] OrganisationManager.cs -> ProcessMetaOrg: {0} no longer in contact with Player{1}", org.tag, "\n");
+                            //add to list
+                            tempList.Add(org);
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid org (Null) in listOfOrgs[{0}]", i); }
                 }
                 //send list to MetaGame
-                GameManager.instance.metaScript.SetMetaOrganisations(listOfOrgs);
+                GameManager.instance.metaScript.SetMetaOrganisations(tempList);
             }
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
