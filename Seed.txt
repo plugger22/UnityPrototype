@@ -17,3 +17,41 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
 	City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 12441 -> Wednesday, 22 April 2020 2:43 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52051 -> Wednesday, 22 April 2020 3:41 PM
+WARNING [Val] ValidateSO: MISMATCH on Effect, array 393, assets 395 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1734)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 16, assets 21 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1800)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+City seed 890 -> Arles, France
+
+Dev seed 6159 -> Wednesday, 22 April 2020 4:19 PM
+WARNING [Val] ValidateSO: MISMATCH on Effect, array 393, assets 395 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1734)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 16, assets 21 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1800)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

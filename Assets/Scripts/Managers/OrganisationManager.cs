@@ -278,6 +278,34 @@ public class OrganisationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// MetaGame processing
+    /// </summary>
+    public void ProcessMetaOrgs()
+    {
+        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
+        {
+            int count = listOfOrgs.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Organisation org = listOfOrgs[i];
+                    if (org != null)
+                    {
+                        org.isContact = false;
+                        Debug.LogFormat("[Org] OrganisationManager.cs -> ProcessMetaOrg: {0} no longer in contact with Player{1}", org.tag, "\n");
+                    }
+                    else { Debug.LogWarningFormat("Invalid org (Null) in listOfOrgs[{0}]", i); }
+                }
+                //send list to MetaGame
+                GameManager.instance.metaScript.SetMetaOrganisations(listOfOrgs);
+            }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+    }
+
+    /// <summary>
     /// Cancels a current tracking service due to target being no longer available
     /// </summary>
     /// <param name="infoType"></param>

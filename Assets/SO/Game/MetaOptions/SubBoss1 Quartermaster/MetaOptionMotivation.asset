@@ -21,3 +21,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce9c1d19ce0d7ab40be439e35aefb4e7, type: 2}
   statTimesSelected: 0
   isRecommended: 0
+  dataName: 
+  dataTag: 

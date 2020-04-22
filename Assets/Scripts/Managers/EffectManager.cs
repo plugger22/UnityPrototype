@@ -847,7 +847,7 @@ public class EffectManager : MonoBehaviour
                                                     {
                                                         //player
                                                         if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == false)
-                                                        { BuildString(result, string.Format(" Player isn't a {0}ADDICTED{1}", colourNeutral, colourEnd)); }
+                                                        { BuildString(result, string.Format(" Player isn't {0}ADDICTED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionAddicted (Null)"); errorFlag = true; }

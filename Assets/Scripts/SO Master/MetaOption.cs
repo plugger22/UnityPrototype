@@ -37,10 +37,12 @@ public class MetaOption : ScriptableObject
 
     //data reset prior to use
     [HideInInspector] public bool isRecommended;
-
+    [HideInInspector] public string dataName;                               //generic data point, eg. organisation/secret/investigation name
+    [HideInInspector] public string dataTag;                                //generic data point, eg. organisation/secret/investigation tag (used in metaOption text to replace '*' symbol)
 
     public void Reset()
     {
         isRecommended = false;
+        dataName = "";
     }
 }

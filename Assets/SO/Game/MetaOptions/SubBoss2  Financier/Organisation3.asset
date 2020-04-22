@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: MetaOptionDismissed
+  m_Name: Organisation3
   m_EditorClassIdentifier: 
-  text: Shut the door on your way out
-  descriptor: Exclude any Dismissed subordinates
+  text: Maintain back channel contact with *
+  descriptor: Maintains contact with Organisation
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
-  hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
-  isAlways: 1
+  hqPosition: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
+  isAlways: 0
   listOfCriteria: []
   listOfEffects:
-  - {fileID: 11400000, guid: 1874ea3a6b4a3ab49b8b9f7ca06961f3, type: 2}
+  - {fileID: 11400000, guid: 9fc0a5d7f5ec9a64993d38eb58c5b0d9, type: 2}
   statTimesSelected: 0
   isRecommended: 0
   dataName: 

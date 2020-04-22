@@ -2799,6 +2799,17 @@ public class PlayerManager : MonoBehaviour
         return arrayOfCaptureTools[innocenceLevel];
     }
 
+    /// <summary>
+    /// take care of all MetaGame matters
+    /// </summary>
+    public void ProcessMetaPlayer()
+    {
+        //Send lists to MetaGame
+        if (listOfSecrets.Count > 0)
+        { GameManager.instance.metaScript.SetMetaSecrets(listOfSecrets); }
+        if (listOfInvestigations.Count > 0)
+        { GameManager.instance.metaScript.SetMetaInvestigations(listOfInvestigations); }
+    }
 
 
     //place new methods above here
