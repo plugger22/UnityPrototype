@@ -1195,6 +1195,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.playerScript.Innocence != 0)
                                                 { BuildString(result, string.Format("Innocence not 0 stars{0}", "\n")); }
                                                 break;
+                                            case "InnocenceNOTMin":
+                                                //Player Innocence > 0
+                                                if (GameManager.instance.playerScript.Innocence == 0)
+                                                { BuildString(result, string.Format("Innocence is Zero{0}", "\n")); }
+                                                break;
+                                            case "InnocenceNOTMax":
+                                                //Player Innocence < Max
+                                                if (GameManager.instance.playerScript.Innocence == 3)
+                                                { BuildString(result, string.Format("Innocence is Maxxed{0}", "\n")); }
+                                                break;
                                             case "CaptureTool0":
                                                 //Player has CaptureTool for innocence level 0 incarceration in their possession
                                                 if (GameManager.instance.playerScript.CheckCaptureToolPresent(0) == false)
@@ -1981,6 +1991,7 @@ public class EffectManager : MonoBehaviour
                     //
                     // - - - Player Actions - - -
                     //
+                    case "Innocence":
                     case "PlayerActions":
                         effectResolve = ResolvePlayerData(effect, dataInput);
                         if (effectResolve.isError == true)

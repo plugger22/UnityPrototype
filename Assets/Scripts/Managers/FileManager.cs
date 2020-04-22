@@ -579,6 +579,28 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
         #endregion
 
+        #region MetaOptions
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        if (dictOfMetaOptions != null)
+        {
+            foreach(var metaOption in dictOfMetaOptions)
+            {
+                if (metaOption.Value != null)
+                {
+                    SaveMetaOption metaData = new SaveMetaOption()
+                    {
+                        optionName = metaOption.Key,
+                        statTimesSelected = metaOption.Value.statTimesSelected
+                    };
+                    //add to list
+                    write.dataData.listOfMetaOptions.Add(metaData);
+                }
+                else { Debug.LogWarningFormat("Invalid metaOption \"{0}\" in dictOfMetaOptions", metaOption.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
+        #endregion
+
         #region Cures
         Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
         if (dictOfCures != null)
@@ -2135,9 +2157,6 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region organisations
-        Dictionary<string, Organisation> dictOfOrgs = GameManager.instance.dataScript.GetDictOfOrganisations();
-        if (dictOfOrgs != null)
-        {
             string orgName;
             List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
             for (int i = 0; i < read.dataData.listOfCurrentOrganisations.Count; i++)
@@ -2180,8 +2199,21 @@ public class FileManager : MonoBehaviour
             GameManager.instance.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
             //OrgInfoArray
             GameManager.instance.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
+        #endregion
+
+        #region metaOptions
+        if (read.dataData.listOfMetaOptions != null)
+        {
+            for (int i = 0; i < read.dataData.listOfMetaOptions.Count; i++)
+            {
+                //copy across dynamic data
+                SaveMetaOption metaOption = read.dataData.listOfMetaOptions[i];
+                if (metaOption != null)
+                { GameManager.instance.dataScript.LoadMetaOptionData(metaOption); }
+                else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
+            }
         }
-        else { Debug.LogError("Invalid dictOfOrganisations (Null)"); }
+        else { Debug.LogError("Invalid listOfMetaOptions (Null)"); }
         #endregion
 
         #region cures

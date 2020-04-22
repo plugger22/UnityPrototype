@@ -213,8 +213,7 @@ public class ModalMainMenu : MonoBehaviour
         gameState = GameManager.instance.inputScript.GameState;
         GameManager.instance.inputScript.GameState = GameState.MainMenu;
         //turn off node tooltip if needs be
-        if (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == true)
-        { GameManager.instance.tooltipNodeScript.CloseTooltip("ModalMainMenu -> SetMainMenu"); }
+        GameManager.instance.guiScript.SetTooltipsOff();
         //activate main menu
         modalMenuObject.SetActive(true);
         //set all states to off

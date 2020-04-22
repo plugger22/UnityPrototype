@@ -9310,6 +9310,28 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// loads saved MetaOption dynamic data back into dictOfMetaOptions
+    /// </summary>
+    /// <param name="saveCure"></param>
+    public void LoadMetaOptionData(SaveMetaOption saveMetaOption)
+    {
+        if (saveMetaOption != null)
+        {
+            if (string.IsNullOrEmpty(saveMetaOption.optionName) == false)
+            {
+                MetaOption metaOption = GetMetaOption(saveMetaOption.optionName);
+                if (metaOption != null)
+                {
+                    metaOption.statTimesSelected = saveMetaOption.statTimesSelected;
+                }
+                else { Debug.LogWarningFormat("Invalid metaOption (Null) for \"{0}\"", saveMetaOption.optionName); }
+            }
+            else { Debug.LogError("Invalid saveMetaOption.optionName (Null or Empty)"); }
+        }
+        else { Debug.LogError("Invalid saveMetaOption (Null)"); }
+    }
+
 
     //new methods above here
 }

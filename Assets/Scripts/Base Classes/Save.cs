@@ -100,6 +100,8 @@ public class SaveDataData
     public List<OrgData> listOfEmergencyOrgData = new List<OrgData>();
     public List<OrgData> listOfHQOrgData = new List<OrgData>();
     public List<OrgData> listOfInfoOrgData = new List<OrgData>();
+    //metaOptions
+    public List<SaveMetaOption> listOfMetaOptions = new List<SaveMetaOption>();
     //contacts
     public int contactCounter;
     public List<int> listOfContactPool = new List<int>();
@@ -846,6 +848,18 @@ public class SaveNpc
     public int endNodeID;
     public int currentNodeID;
     public int daysActive;
+}
+#endregion
+
+#region SaveMetaOption
+/// <summary>
+/// MetaOption.SO dynamic data
+/// </summary>
+[System.Serializable]
+public class SaveMetaOption
+{
+    public string optionName;
+    public int statTimesSelected;
 }
 #endregion
 
