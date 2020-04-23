@@ -82,11 +82,13 @@ public class MetaManager : MonoBehaviour
         GameManager.instance.dataScript.ProcessMetaCures();
         GameManager.instance.orgScript.ProcessMetaOrgs();
         GameManager.instance.playerScript.ProcessMetaPlayer();
-        //show top bar UI at completion of meta game
-        EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
+
 
         //Player metaGame Options choice
         InitialiseMetaOptions();
+        
+        //show top bar UI at completion of meta game
+        EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
     }
 
     /// <summary>
@@ -194,33 +196,33 @@ public class MetaManager : MonoBehaviour
     /// <summary>
     /// Update org's player in contact with at end of level prior to MetaGame process
     /// </summary>
-    /// <param name="listOfOrgs"></param>
-    public void SetMetaOrganisations(List<Organisation> listOfOrgs)
+    /// <param name="tempList"></param>
+    public void SetMetaOrganisations(List<Organisation> tempList)
     {
-        if (listOfOrgs != null)
-        { listOfOrganisations.AddRange(listOfOrgs); }
+        if (tempList != null)
+        { listOfOrganisations.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfOrganisations (Null)"); }
     }
 
     /// <summary>
     /// Update Player's secrets at end of level prior to MetaGame process
     /// </summary>
-    /// <param name="listOfSecrets"></param>
-    public void SetMetaSecrets(List<Secret> listOfSecrets)
+    /// <param name="tempList"></param>
+    public void SetMetaSecrets(List<Secret> tempList)
     {
-        if (listOfSecrets != null)
-        { listOfSecrets.AddRange(listOfSecrets); }
+        if (tempList != null)
+        { listOfSecrets.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfSecrets (Null)"); }
     }
 
     /// <summary>
     /// Update current Investigations into the player at end of level prior to MetaGame process
     /// </summary>
-    /// <param name="listOfInvestigations"></param>
-    public void SetMetaInvestigations(List<Investigation> listOfInvestigations)
+    /// <param name="tempList"></param>
+    public void SetMetaInvestigations(List<Investigation> tempList)
     {
-        if (listOfInvestigations != null)
-        { listOfInvestigations.AddRange(listOfInvestigations); }
+        if (tempList != null)
+        { listOfInvestigations.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfInvestigationss (Null)"); }
     }
 
@@ -286,7 +288,6 @@ public class MetaManager : MonoBehaviour
             // - - - Specials -> Organisations / Secrets / Investigations
             //
             Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: SPECIAl MetaOptions - - - {0}", "\n");
-            
             //Organisations -> don't exceed max number of org options available
             count = Mathf.Min(listOfOrganisations.Count, arrayOfOrganisationOptions.Length);
             if (count > 0)
@@ -313,7 +314,6 @@ public class MetaManager : MonoBehaviour
                 }
             }
             else { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: No Organisations currently in contact with Player{0}", "\n"); }
-            
             //Secrets -> don't exceed max number of secret options available
             count = Mathf.Min(listOfSecrets.Count, arrayOfSecretOptions.Length);
             if (count > 0)

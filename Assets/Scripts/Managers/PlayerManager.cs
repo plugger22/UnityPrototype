@@ -1316,6 +1316,14 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns secret based on name, null if not found
+    /// </summary>
+    /// <param name="secretName"></param>
+    /// <returns></returns>
+    public Secret GetSecret(string secretName)
+    { return listOfSecrets.Find(x => x.name.Equals(secretName, StringComparison.Ordinal)); }
+    
+    /// <summary>
     /// Add a new secret, checks for duplicates and won't add if one found (warning msg). Returns true if successful, false otherwise
     /// </summary>
     /// <param name="secret"></param>
@@ -1332,7 +1340,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     //add secret & make active
                     listOfSecrets.Add(secret);
-                    secret.status = gameAPI.SecretStatus.Active;
+                    secret.status = SecretStatus.Active;
                     secret.gainedWhen = GameManager.instance.turnScript.Turn;
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
@@ -1347,7 +1355,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove a secret from listOfSecrets. Returns true if successful, false if not found
+    /// Remove a secret from listOfSecrets. You need to set status and turnRemoved of secret prior to being removed, eg. Revealed / Deleted. Returns true if successful, false if not found
     /// </summary>
     /// <param name="secretID"></param>
     /// <returns></returns>
@@ -1367,11 +1375,11 @@ public class PlayerManager : MonoBehaviour
                     //add to correct list
                     switch (secret.status)
                     {
-                        case gameAPI.SecretStatus.Revealed:
+                        case SecretStatus.Revealed:
                             //revealed secret
                             GameManager.instance.dataScript.AddRevealedSecret(secret);
                             break;
-                        case gameAPI.SecretStatus.Deleted:
+                        case SecretStatus.Deleted:
                             //deleted secret
                             secret.deletedWhen = GameManager.instance.turnScript.Turn;
                             GameManager.instance.dataScript.AddDeletedSecret(secret);

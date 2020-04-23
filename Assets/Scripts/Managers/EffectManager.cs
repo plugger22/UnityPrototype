@@ -2078,7 +2078,7 @@ public class EffectManager : MonoBehaviour
                     //
                     // - - - Secrets - - -
                     //
-                    case "Secret":
+                    case "SecretRandom":
                         //Remove a random secret from Player (removes all instances) or Actor (removes local instance only)
                         if (actor == null)
                         {
@@ -2107,6 +2107,25 @@ public class EffectManager : MonoBehaviour
                                 effectReturn.isAction = true;
                             }
                         }
+                        break;
+                    case "Secret":
+                        //Remove a specific secret from Player (removes all instances)
+                        if (actor == null)
+                        {
+                            //Player
+                            Secret secret = GameManager.instance.playerScript.GetSecret(dataInput.dataName);
+                            if (secret != null)
+                            {
+                                secret.status = gameAPI.SecretStatus.Deleted;
+                                secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                                //remove secret from game
+                                if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
+                                { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
+                                else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
+                                effectReturn.isAction = true;
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid actor (should be Null). Player secret not removed"); }
                         break;
                     //
                     // - - - Org Secrets (break off contact once revealed)

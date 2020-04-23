@@ -552,8 +552,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7317cf572da2aa04d92a77c1f794e0d6, type: 2}
   - {fileID: 11400000, guid: 60f749e8d2076d34caac4148a631fec4, type: 2}
   - {fileID: 11400000, guid: 49767979b2e140b40851efc18c413056, type: 2}
-  arrayOfSecretOptions: []
-  arrayOfInvestigationOptions: []
+  arrayOfSecretOptions:
+  - {fileID: 11400000, guid: 85a667eb07c2d4441b192d6c49f5b524, type: 2}
+  - {fileID: 11400000, guid: 8311cecfd0e5b164f895a802f997af92, type: 2}
+  - {fileID: 11400000, guid: 16bd06f2010a0dc48b9336ac47a62a11, type: 2}
+  - {fileID: 11400000, guid: c34cb9ec398f30340a4f8710acc2a60a, type: 2}
+  arrayOfInvestigationOptions:
+  - {fileID: 11400000, guid: 3eeeae372551a1842b719a1c8fd79361, type: 2}
+  - {fileID: 11400000, guid: b8d8fc9942d7fa248928c5af1786bded, type: 2}
+  - {fileID: 11400000, guid: 04be7f52e50f64742a7d6a1583a418a1, type: 2}
   metaLevel: {fileID: 0}
 --- !u!114 &114297685510842036
 MonoBehaviour:
