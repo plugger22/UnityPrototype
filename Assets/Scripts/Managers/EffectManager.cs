@@ -2074,7 +2074,13 @@ public class EffectManager : MonoBehaviour
                             }
                         }
                         break;
-
+                    //
+                    // - - - Investigations
+                    //
+                    case "InvestigationDropped":
+                        //Remove an investigation into the Player
+                        effectReturn.bottomText = GameManager.instance.playerScript.DropInvestigation(dataInput.dataName);
+                        break;
                     //
                     // - - - Secrets - - -
                     //
@@ -2110,22 +2116,17 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Secret":
                         //Remove a specific secret from Player (removes all instances)
-                        if (actor == null)
+                        Secret secretPlayer = GameManager.instance.playerScript.GetSecret(dataInput.dataName);
+                        if (secretPlayer != null)
                         {
-                            //Player
-                            Secret secret = GameManager.instance.playerScript.GetSecret(dataInput.dataName);
-                            if (secret != null)
-                            {
-                                secret.status = gameAPI.SecretStatus.Deleted;
-                                secret.deletedWhen = GameManager.instance.turnScript.Turn;
-                                //remove secret from game
-                                if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
-                                { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
-                                else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
-                                effectReturn.isAction = true;
-                            }
+                            secretPlayer.status = gameAPI.SecretStatus.Deleted;
+                            secretPlayer.deletedWhen = GameManager.instance.turnScript.Turn;
+                            //remove secret from game
+                            if (GameManager.instance.secretScript.RemoveSecretFromAll(secretPlayer.name, true) == true)
+                            { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secretPlayer.tag, colourEnd); }
+                            else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secretPlayer.tag, colourEnd); }
+                            effectReturn.isAction = true;
                         }
-                        else { Debug.LogWarning("Invalid actor (should be Null). Player secret not removed"); }
                         break;
                     //
                     // - - - Org Secrets (break off contact once revealed)
@@ -4068,7 +4069,7 @@ public class EffectManager : MonoBehaviour
             else
             {
                 Debug.LogWarning("Invalid metaOption (Null)");
-                
+
             }
         }
         else { Debug.LogWarning("Invalid metaEffectData (Null)"); }
@@ -4350,10 +4351,16 @@ public class EffectManager : MonoBehaviour
                     effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name,
                       relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd);
                     //history
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
-                        actorOther.actorName, actorOther.arc.name) });
-                    actorOther.AddHistory(new HistoryActor() { text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies", 
-                        actor.actorName, actor.arc.name) });
+                    actor.AddHistory(new HistoryActor()
+                    {
+                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
+                        actorOther.actorName, actorOther.arc.name)
+                    });
+                    actorOther.AddHistory(new HistoryActor()
+                    {
+                        text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
+                        actor.actorName, actor.arc.name)
+                    });
                 }
                 break;
             case "Motivation":
@@ -5940,7 +5947,7 @@ public class EffectManager : MonoBehaviour
                 case "ConditionTagged":
                     condition = conditionTagged;
                     break;
-                    case "ConditionDoomed":
+                case "ConditionDoomed":
                     condition = conditionDoomed;
                     break;
                 case "ConditionImaged":

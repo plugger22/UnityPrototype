@@ -146,6 +146,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateScenarios();
                 ValidateCampaigns();
                 ValidateCapture();
+                ValidateMetaOptions();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -1640,6 +1641,50 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
+    #region ValidateMetaOptions
+    /// <summary>
+    /// runs checks on MetaOptions
+    /// </summary>
+    private void ValidateMetaOptions()
+    {
+        //check MetaManager special arrays, each should have a set number in order to handle worst case scenarios -> Organisations
+        if (GameManager.instance.metaScript.arrayOfOrganisationOptions.Length != GameManager.instance.loadScript.arrayOfOrgTypes.Length)
+        {
+            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfOrganisations (has {0} records, should be {1}){2}",
+              GameManager.instance.metaScript.arrayOfOrganisationOptions.Length, GameManager.instance.loadScript.arrayOfOrgTypes.Length, "\n");
+        }
+        //Secrets
+        if (GameManager.instance.metaScript.arrayOfSecretOptions.Length != GameManager.instance.secretScript.secretMaxNum)
+        {
+            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfSecrets (has {0} records, should be {1}){2})",
+                GameManager.instance.metaScript.arrayOfSecretOptions.Length, GameManager.instance.secretScript.secretMaxNum, "\n");
+        }
+        //Investigations
+        if (GameManager.instance.metaScript.arrayOfInvestigationOptions.Length != GameManager.instance.playerScript.maxInvestigations)
+        {
+            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfInvestigations (has {0} records, should be {1}){2})",
+                GameManager.instance.metaScript.arrayOfInvestigationOptions.Length, GameManager.instance.playerScript.maxInvestigations, "\n");
+        }
+        //check each metaOption in the special arrays to ensure that 'isAlways' is false and there are NO Criteria
+        MetaOption[] arrayOfMeta = GameManager.instance.metaScript.arrayOfOrganisationOptions;
+        if (arrayOfMeta != null)
+        {
+            for (int i = 0; i < arrayOfMeta.Length; i++)
+            {
+                MetaOption meta = arrayOfMeta[i];
+                if (meta != null)
+                {
+                    if (meta.isAlways == true)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: metaOption \"{0}\" isAlways is True (should be false as in a special case array){1}", meta.name, "\n"); }
+                    if (meta.listOfCriteria.Count > 0)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: metaOption \"{0}\" has Criteria (should be none as in a special case array){1}", meta.name, "\n"); }
+                }
+                else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid metaOption (Null) for arrayOfOrganisationOptions[{0}]{1}", i, "\n"); }
+            }
+        }
+        else { Debug.LogError("Invalid MetaManager.cs -> arrayOfOrganisationOptions (Null)"); }
+    }
+    #endregion
 
 
 

@@ -152,3 +152,27 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
 	City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 25549 -> Thursday, 23 April 2020 12:29 PM
+WARNING [Val] ValidateSO: MISMATCH on EffectOutcome, array 105, assets 106 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectOutcome[]) (at Assets/Scripts/Managers/ValidationManager.cs:1852)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1703)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	WARNING [Val] ValidateSO: MISMATCH on Effect, array 395, assets 397 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1852)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1761)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 21, assets 28 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1852)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1827)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:782)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:357)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 1382 -> Thursday, 23 April 2020 12:32 PM
+City seed 5678 -> London, United Kingdom

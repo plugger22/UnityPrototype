@@ -20,6 +20,7 @@ public class OrganisationManager : MonoBehaviour
     [Tooltip("Maximum number of Organisations that the Player can be in contact with at any one time (UI limit)")]
     [Range(1, 5)] public int maxOrgContact = 3;
 
+
     /// <summary>
     /// Not for GameState.LoadGame
     /// </summary>

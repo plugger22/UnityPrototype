@@ -1297,6 +1297,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 337f446332c04f64ca2f7983c8493047, type: 2}
   - {fileID: 11400000, guid: 97bf384793feb104ca53f00b1f34be19, type: 2}
   - {fileID: 11400000, guid: 5f64e5e4f1a025b46a3cfc2cc5678ba9, type: 2}
+  - {fileID: 11400000, guid: 31a062dc4b17ed74daa7cec61d2ee78a, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1889,6 +1890,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec67a895a6e918748a7713ce270336f2, type: 2}
   - {fileID: 11400000, guid: 1127789f79e7f6e43ba0fcbe8d5820c6, type: 2}
   - {fileID: 11400000, guid: 204477ea45b9365429a5081cdd83c7b4, type: 2}
+  - {fileID: 11400000, guid: 10acb683f8e58b44c9914955bd2ef4bb, type: 2}
+  - {fileID: 11400000, guid: e0f2239083cc3764ca9a2c2b69e8194d, type: 2}
   arrayOfEffectsResistance:
   - {fileID: 11400000, guid: 91122dcbe98bfd540a745f4c0773a202, type: 2}
   - {fileID: 11400000, guid: bf422e980cb47b242a0e93b9ad717eac, type: 2}
@@ -3631,8 +3634,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7317cf572da2aa04d92a77c1f794e0d6, type: 2}
   - {fileID: 11400000, guid: 60f749e8d2076d34caac4148a631fec4, type: 2}
   - {fileID: 11400000, guid: 49767979b2e140b40851efc18c413056, type: 2}
+  - {fileID: 11400000, guid: 85a667eb07c2d4441b192d6c49f5b524, type: 2}
+  - {fileID: 11400000, guid: 8311cecfd0e5b164f895a802f997af92, type: 2}
+  - {fileID: 11400000, guid: 16bd06f2010a0dc48b9336ac47a62a11, type: 2}
+  - {fileID: 11400000, guid: c34cb9ec398f30340a4f8710acc2a60a, type: 2}
   arrayOfSubBoss3Options:
   - {fileID: 11400000, guid: 4d4b868b937456041b79835b1696f040, type: 2}
+  - {fileID: 11400000, guid: 3eeeae372551a1842b719a1c8fd79361, type: 2}
+  - {fileID: 11400000, guid: b8d8fc9942d7fa248928c5af1786bded, type: 2}
+  - {fileID: 11400000, guid: 04be7f52e50f64742a7d6a1583a418a1, type: 2}
   arrayOfManageActors:
   - {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
   - {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
