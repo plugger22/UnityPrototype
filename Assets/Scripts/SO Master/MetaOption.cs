@@ -46,4 +46,9 @@ public class MetaOption : ScriptableObject
         dataName = "";
         dataTag = "";
     }
+
+
+    //
+    //NOTE - - -> ValidationManager.cs -> ValidateMetaOptions handles error states for text / renownCost / hqPosition and effects (should be at least one)
+    //
 }

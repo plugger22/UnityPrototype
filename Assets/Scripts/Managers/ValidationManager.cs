@@ -1683,6 +1683,49 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid MetaManager.cs -> arrayOfOrganisationOptions (Null)"); }
+        //check all MetaOptions
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        if (dictOfMetaOptions != null)
+        {
+            foreach(var meta in dictOfMetaOptions)
+            {
+                if (meta.Value != null)
+                {
+                    //check Renown cost not null
+                    if (meta.Value.renownCost == null)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid Renown cost (Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check HQ Position not null
+                    if (meta.Value.hqPosition == null)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid Hq Position (Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check text.Length > 0
+                    if (string.IsNullOrEmpty(meta.Value.text) == true)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid text (Null or Empty) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check at least one effect
+                    if (meta.Value.listOfEffects == null || meta.Value.listOfEffects.Count == 0)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid listOfEffects (None or Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    else
+                    {
+                        //check effect options aren't null
+                        for (int i = 0; i < meta.Value.listOfEffects.Count; i++)
+                        {
+                            if (meta.Value.listOfEffects[i] == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid listOfEffects[{0}] (Null) for metaOption \"{1}\"{2}", i, meta.Value.name, "\n"); }
+                        }
+                    }
+                    //check criteria options, if present, aren't null
+                    if (meta.Value.listOfCriteria.Count > 0)
+                    {
+                        for (int i = 0; i < meta.Value.listOfCriteria.Count; i++)
+                        {
+                            if (meta.Value.listOfCriteria[i] == null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid listOfCriteria[{0}] (Null) for metaOption \"{1}\"{2}", i, meta.Value.name, "\n"); }
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", meta.Key); }
+            } 
+        }
+        else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
     #endregion
 
