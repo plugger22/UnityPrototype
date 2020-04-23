@@ -16,6 +16,8 @@ public class MetaManager : MonoBehaviour
     [Tooltip("Place metaOptions here to handle the max number of possible investigation metaOptions that may be required")]
     public MetaOption[] arrayOfInvestigationOptions;
 
+    //NOTE: the above arrays are checked for various error states in ValidationManager.cs -> ValidateMetaOptions
+
     [HideInInspector] public GlobalMeta metaLevel;
 
     private MetaGameOptions metaGameOptions;
