@@ -124,10 +124,8 @@ public class MainInfoUI : MonoBehaviour
     public float tickerSpeedMin = 5;
 
 
-    [Header("Globals")]
-    [Tooltip("Change this at your peril (default 6) as data collections and indexes all flow from it")]
-    public int numOfTabs = 6;
-    [Tooltip("")]
+    //NOTE: Change this at your peril (default 6) as data collections and indexes all flow from it
+    private int numOfTabs = 6;
 
     //button script handlers
     private ButtonInteraction buttonInteractionClose;

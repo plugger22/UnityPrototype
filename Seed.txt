@@ -218,3 +218,56 @@ System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument ar
 	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 61531 -> Monday, 27 April 2020 9:31 AM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MainInfoUI.ShowItemDetails (System.Int32 itemIndex) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:1109)
+	MainInfoUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:656)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	MainInfoRightItemUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:39)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 12104 -> Monday, 27 April 2020 10:03 AM
+
+Dev seed 12279 -> Monday, 27 April 2020 10:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36629 -> Monday, 27 April 2020 11:08 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid backgroundBoss (Null)
+UnityEngine.Debug:LogError(Object)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGameUI.cs:149)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGameUI.cs:114)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 18265 -> Monday, 27 April 2020 11:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15424 -> Monday, 27 April 2020 11:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62724 -> Monday, 27 April 2020 12:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2817 -> Monday, 27 April 2020 12:09 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19450 -> Monday, 27 April 2020 12:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10671 -> Monday, 27 April 2020 12:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39914 -> Monday, 27 April 2020 12:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47046 -> Monday, 27 April 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
