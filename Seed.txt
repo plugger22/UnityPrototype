@@ -414,3 +414,36 @@ City seed 5678 -> London, United Kingdom
 Dev seed 17946 -> Monday, 27 April 2020 5:26 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 615 -> Monday, 27 April 2020 7:38 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 5741 -> Monday, 27 April 2020 8:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 18133 -> Monday, 27 April 2020 8:08 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 36583 -> Monday, 27 April 2020 8:19 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:158)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:107)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 17812 -> Monday, 27 April 2020 8:20 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 32223 -> Monday, 27 April 2020 8:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 29457 -> Monday, 27 April 2020 8:37 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

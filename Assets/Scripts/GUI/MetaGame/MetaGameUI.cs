@@ -64,19 +64,18 @@ public class MetaGameUI : MonoBehaviour
     //arrays
     private GameObject[] tabObjects;
     private MetaInteraction[] tabItems;
+    private MetaHqTabUI[] tabInteractions;
 
-    //is MainINfoApp active?
     private bool isRunning;
-
-
-
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 30
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
-
+    //tabs
+    private int currentTabIndex = -1;
+    private int maxTabIndex;
 
 
     //static reference
@@ -134,8 +133,11 @@ public class MetaGameUI : MonoBehaviour
         //initialise Arrays
         tabObjects = new GameObject[numOfTabs];
         tabItems = new MetaInteraction[numOfTabs];
+        tabInteractions = new MetaHqTabUI[numOfTabs];
         //canvas
         canvasScroll.gameObject.SetActive(true);
+        //max tabs
+        maxTabIndex = numOfTabs - 1;
         //tab components
         if (tabBoss != null)  { tabObjects[index++] = tabBoss; }  else { Debug.LogError("Invalid tabBoss (Null)"); }
         if (tabSubBoss1 != null)  { tabObjects[index++] = tabSubBoss1; }  else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
@@ -148,7 +150,18 @@ public class MetaGameUI : MonoBehaviour
             {
                 MetaInteraction metaInteract = tabObjects[i].GetComponent<MetaInteraction>();
                 if (metaInteract != null)
-                { tabItems[i] = metaInteract; }
+                {
+                    tabItems[i] = metaInteract;
+                    //tab interaction
+                    MetaHqTabUI hqTab = metaInteract.background.GetComponent<MetaHqTabUI>();
+                    if (hqTab != null)
+                    {
+                        tabInteractions[i] = hqTab;
+                        //identify tabs
+                        hqTab.SetTabIndex(i);
+                    }
+                    else { Debug.LogErrorFormat("Invalid MetaHqTabUI (Null) for tabItems[{0}]", i); }
+                }
                 else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for tabObject[{0}]", i); }
             }
         }
@@ -181,6 +194,7 @@ public class MetaGameUI : MonoBehaviour
     {
         //listeners
         EventManager.instance.AddListener(EventType.MetaClose, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaTabOpen, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -201,10 +215,10 @@ public class MetaGameUI : MonoBehaviour
             case EventType.MetaClose:
                 CloseMetaUI();
                 break;
-            /*case EventType.MainInfoTabOpen:
+            case EventType.MetaTabOpen:
                 OpenTab((int)Param);
                 break;
-            case EventType.MainInfoHome:
+            /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
                 break;
             case EventType.MainInfoEnd:
@@ -291,6 +305,43 @@ public class MetaGameUI : MonoBehaviour
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
+    }
+
+
+    /// <summary>
+    /// Open the designated tab and close whatever is open
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    private void OpenTab(int tabIndex)
+    {
+        Debug.Assert(tabIndex > -1 && tabIndex < numOfTabs, string.Format("Invalid tab index {0}", tabIndex));
+        //reset Active tabs to reflect new status
+        Color tempColor;
+        for (int index = 0; index < tabItems.Length; index++)
+        {
+            tempColor = tabItems[index].portrait.color;
+            //activate indicated tab and deactivate the rest
+            if (index == tabIndex)
+            {
+                tempColor.a = 1.0f;
+            }
+            else
+            {
+                tempColor.a = 0.15f;
+            }
+            tabItems[index].portrait.color = tempColor;
+        }
+        /*//reset scrollbar
+        scrollRect.verticalNormalizedPosition = 1.0f;
+        //redrawn main page
+        DisplayItemPage(tabIndex);
+        //assign default info icon
+        details_image.gameObject.SetActive(true);
+        details_image.sprite = details_image_sprite;*/
+
+        //update indexes
+        highlightIndex = -1;
+        currentTabIndex = tabIndex;
     }
 
     //new methods above here
