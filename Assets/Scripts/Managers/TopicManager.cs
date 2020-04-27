@@ -6453,7 +6453,7 @@ public class TopicManager : MonoBehaviour
                 case "Family":
                     break;
                 case "HQ":
-                    turnSprite = GameManager.instance.hqScript.GetHqSpirte();
+                    turnSprite = GameManager.instance.hqScript.GetHqMainSpirte();
                     tagSpriteName = GameManager.instance.sideScript.PlayerSide.name;
                     //based on HQ approval
                     Tuple<string, string> resultsHQ = GetHqTooltip();

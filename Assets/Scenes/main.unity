@@ -14307,6 +14307,11 @@ Prefab:
       propertyPath: m_Name
       value: Text
       objectReference: {fileID: 0}
+    - target: {fileID: 114511982019179852, guid: 55986510f8794d24793a2ebba6bc9af4,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
   m_IsPrefabAsset: 0
@@ -17674,6 +17679,16 @@ Prefab:
       propertyPath: m_Name
       value: tabBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 114511982019179852, guid: 55986510f8794d24793a2ebba6bc9af4,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114511982019179852, guid: 55986510f8794d24793a2ebba6bc9af4,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
   m_IsPrefabAsset: 0
@@ -20799,6 +20814,11 @@ Prefab:
     - target: {fileID: 1937802753818170, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
       value: Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 114511982019179852, guid: 55986510f8794d24793a2ebba6bc9af4,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
@@ -43051,6 +43071,11 @@ Prefab:
       propertyPath: m_Name
       value: Text
       objectReference: {fileID: 0}
+    - target: {fileID: 114511982019179852, guid: 55986510f8794d24793a2ebba6bc9af4,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
   m_IsPrefabAsset: 0
@@ -48532,7 +48557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1628612048
 RectTransform:
   m_ObjectHideFlags: 0

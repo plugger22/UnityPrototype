@@ -88,9 +88,9 @@ public class MetaManager : MonoBehaviour
 
         //Player metaGame Options choice
         InitialiseMetaOptions();
+        GameManager.instance.metaUIScript.InitialiseMetaUI();
         
-        //show top bar UI at completion of meta game
-        EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaManager.cs -> Show TopBarUI");
+
     }
 
     /// <summary>

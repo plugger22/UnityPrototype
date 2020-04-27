@@ -271,3 +271,115 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 47046 -> Monday, 27 April 2020 12:29 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 54923 -> Monday, 27 April 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63254 -> Monday, 27 April 2020 2:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61595 -> Monday, 27 April 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actor (Null) for ActorHQ "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:189)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	WARNING Unrecognised Resistance hqPosition "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HQManager:GetHqTitle(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:565)
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:193)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	City seed 765 -> New York, America
+
+Dev seed 36465 -> Monday, 27 April 2020 3:09 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+MetaGameUI.InitialiseMetaUI () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:181)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
+	
+Dev seed 59966 -> Monday, 27 April 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42382 -> Monday, 27 April 2020 3:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62248 -> Monday, 27 April 2020 3:22 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid actor (Null) for ActorHQ "Boss"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:189)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	WARNING Invalid actor (Null) for ActorHQ "SubBoss1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:189)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	WARNING Invalid actor (Null) for ActorHQ "SubBoss2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:189)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	WARNING Invalid actor (Null) for ActorHQ "SubBoss3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:InitialiseMetaUI() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:189)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:91)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:285)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:225)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:399)
+	
+Dev seed 13841 -> Monday, 27 April 2020 3:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21246 -> Monday, 27 April 2020 3:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26574 -> Monday, 27 April 2020 3:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62541 -> Monday, 27 April 2020 3:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39967 -> Monday, 27 April 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21948 -> Monday, 27 April 2020 4:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32388 -> Monday, 27 April 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23949 -> Monday, 27 April 2020 4:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51250 -> Monday, 27 April 2020 4:26 PM
+City seed 5678 -> London, United Kingdom

@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TopBarUI topBarScript;                         //Top Bar UI
     [HideInInspector] public CityInfoUI cityInfoScript;                 //City Info UI
     [HideInInspector] public MainInfoUI mainInfoScript;                 //Main Info UI
-    [HideInInspector] public MetaGameUI metaGameScript;                 //Meta Game UI
+    [HideInInspector] public MetaGameUI metaUIScript;                   //Meta Game UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;               //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;               //AI SideTab UI
     [HideInInspector] public ActorPanelUI actorPanelScript;             //Actor Panel UI
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
         topBarScript = TopBarUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
         mainInfoScript = MainInfoUI.Instance();
-        metaGameScript = MetaGameUI.Instance();
+        metaUIScript = MetaGameUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
         aiSideTabScript = AISideTabUI.Instance();
         alertScript = AlertUI.Instance();
@@ -320,7 +320,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(topBarScript != null, "Invalid topBarScript (Null)");
         Debug.Assert(cityInfoScript != null, "Invalid cityInfoScript (Null)");
         Debug.Assert(mainInfoScript != null, "Invalid mainInfoScript (Null)");
-        Debug.Assert(metaGameScript != null, "Invalid metaGameScript (Null)");
+        Debug.Assert(metaUIScript != null, "Invalid metaGameScript (Null)");
         Debug.Assert(aiDisplayScript != null, "Invalid aiDisplayScript (Null)");
         Debug.Assert(aiSideTabScript != null, "Invalid aiSideTabScript (Null)");
         Debug.Assert(alertScript != null, "Invalid alertScript (Null)");
@@ -691,7 +691,7 @@ public class GameManager : MonoBehaviour
         startMethod.className = "MainInfoUI";
         listOfUIMethods.Add(startMethod);
         //Meta Game UI
-        startMethod.handler = metaGameScript.Initialise;
+        startMethod.handler = metaUIScript.Initialise;
         startMethod.className = "MetaGameUI";
         listOfUIMethods.Add(startMethod);
         //Topic UI

@@ -570,6 +570,7 @@ public class HQManager : MonoBehaviour
         return title;
     }
 
+
     /// <summary>
     /// returns current HQ for player side, Null if not found
     /// </summary>
@@ -638,6 +639,7 @@ public class HQManager : MonoBehaviour
         return description;
     }
 
+
     /// <summary>
     /// returns current HQ description for specified side in colour formatted string
     /// </summary>
@@ -684,7 +686,7 @@ public class HQManager : MonoBehaviour
     /// returns HQ sprite for current player side, returns errorSprite if a problem
     /// </summary>
     /// <returns></returns>
-    public Sprite GetHqSpirte()
+    public Sprite GetHqMainSpirte()
     {
         Sprite sprite = GameManager.instance.guiScript.errorSprite;
         switch (GameManager.instance.sideScript.PlayerSide.level)
@@ -695,6 +697,7 @@ public class HQManager : MonoBehaviour
         }
         return sprite;
     }
+
 
 
     /// <summary>
