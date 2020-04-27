@@ -8,9 +8,9 @@ using UnityEngine.UI;
 /// </summary>
 public class MetaGameUI : MonoBehaviour
 {
+    [Header("Main")]
     public Canvas canvasMeta;
     public Canvas canvasScroll;
-
     public GameObject metaObject;
 
     [Header("Backgrounds")]
@@ -268,11 +268,9 @@ public class MetaGameUI : MonoBehaviour
     {
 
         canvasMeta.gameObject.SetActive(true);
-        //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
         //set game state
         isRunning = true;
-        GameManager.instance.inputScript.SetModalState(new ModalStateData(){ mainState = ModalSubState.MetaGame });
+        GameManager.instance.inputScript.SetModalState(new ModalStateData(){ mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
         Debug.LogFormat("[UI] MetaGameUI.cs -> SetMetaUI{0}", "\n");
 
     }
@@ -286,9 +284,9 @@ public class MetaGameUI : MonoBehaviour
         GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         canvasMeta.gameObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
         //set game state
         isRunning = false;
+        GameManager.instance.guiScript.SetIsBlocked(false);
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
         //show top bar UI at completion of meta game

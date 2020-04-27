@@ -10,11 +10,13 @@ public class ModalStateData
     public ModalSubState mainState;
     public ModalInfoSubState infoState;
     public ModalGenericPickerSubState pickerState;
+    public ModalMetaSubState metaState;
 
     public ModalStateData()
     {
         infoState = ModalInfoSubState.None;
         pickerState = ModalGenericPickerSubState.None;
+        metaState = ModalMetaSubState.None;
     }
 }
 
@@ -28,6 +30,7 @@ public class InputManager : MonoBehaviour
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalState.InfoDisplay -> what type of info?
     private ModalGenericPickerSubState _modalGenericPickerState;    //sub state of ModalState.GenericPicker -> what type of picker?
+    private ModalMetaSubState _modalMetaState;                      //sub state of ModalState.MetaGame -> what type of MetaUI?
     private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
 
     public void Initialise(GameState state)
@@ -43,7 +46,7 @@ public class InputManager : MonoBehaviour
         set
         {
             _gameState = value;
-            Debug.Log(string.Format("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n"));
+            Debug.LogFormat("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n");
         }
     }
 
@@ -54,7 +57,7 @@ public class InputManager : MonoBehaviour
         private set
         {
             _modalState = value;
-            Debug.Log(string.Format("[Inp] InputManager: ModalState now {0}{1}", _modalState, "\n"));
+            Debug.LogFormat("[Inp] InputManager: ModalState now {0}{1}", _modalState, "\n");
         }
     }
 
@@ -64,7 +67,7 @@ public class InputManager : MonoBehaviour
         private set
         {
             _modalSubState = value;
-            Debug.Log(string.Format("[Inp] InputManager: ModalSubState now {0}{1}", _modalSubState, "\n"));
+            Debug.LogFormat("[Inp] InputManager: ModalSubState now {0}{1}", _modalSubState, "\n");
         }
     }
 
@@ -74,7 +77,7 @@ public class InputManager : MonoBehaviour
         private set
         {
             _modalInfoState = value;
-            Debug.Log(string.Format("[Inp] InputManager.cs: ModalInfoState now {0}{1}", _modalInfoState, "\n"));
+            Debug.LogFormat("[Inp] InputManager.cs: ModalInfoState now {0}{1}", _modalInfoState, "\n");
         }
     }
 
@@ -84,9 +87,20 @@ public class InputManager : MonoBehaviour
         private set
         {
             _modalGenericPickerState = value;
-            Debug.Log(string.Format("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n"));
+            Debug.LogFormat("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n");
         }
     }
+
+    public ModalMetaSubState ModalMetaState
+    {
+        get { return _modalMetaState; }
+        private set
+        {
+            _modalMetaState = value;
+            Debug.LogFormat("[Inp] InputManager.cs: ModalMetaState now {0}{1}", _modalMetaState, "\n");
+        }
+    }
+
     public ModalReviewSubState ModalReviewState
     {
         get { return _modalReviewState; }
@@ -108,13 +122,19 @@ public class InputManager : MonoBehaviour
     {
         if (data != null)
         {
-            if (data.mainState != ModalSubState.None)
-            { ModalState = gameAPI.ModalState.ModalUI; }
             ModalSubState = data.mainState;
+            //main
+            if (data.mainState != ModalSubState.None)
+            { ModalState = ModalState.ModalUI; }
+            //main Info App
             if (ModalSubState == ModalSubState.InfoDisplay)
             { ModalInfoState = data.infoState; }
+            //picker
             if (ModalSubState == ModalSubState.GenericPicker)
             { ModalGenericPickerState = data.pickerState; }
+            //metaGame
+            if (ModalSubState == ModalSubState.MetaGame)
+            { ModalMetaState = data.metaState; }
         }
         else { Debug.LogWarning("Invalid ModalStateData (Null)"); }
     }
@@ -136,6 +156,7 @@ public class InputManager : MonoBehaviour
             {
                 ModalState = ModalState.Normal;
                 ModalInfoState = ModalInfoSubState.None;
+                ModalMetaState = ModalMetaSubState.None;
                 ModalGenericPickerState = ModalGenericPickerSubState.None;
             }
         }
