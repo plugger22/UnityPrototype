@@ -76,6 +76,17 @@ public class MetaGameUI : MonoBehaviour
     private MetaInteraction[] tabItems;
     private MetaHqTabUI[] tabInteractions;
 
+    //item collections
+    private GameObject[] arrayItemMain;
+    private TextMeshProUGUI[] arrayItemText;
+    private Image[] arrayItemIcon;
+    private Image[] arrayItemBorder;
+    private Image[] arrayItemBackground;
+    //item priority sprites
+    private Sprite priorityHigh;
+    private Sprite priorityMedium;
+    private Sprite priorityLow;
+
     //ItemData
     private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
     List<ItemData> listOfCurrentPageItemData;                                                //current data for currently displayed page
@@ -144,10 +155,16 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         int index = 0;
-        //initialise Arrays
+        //initialise Arrays -> tabs
         tabObjects = new GameObject[numOfTabs];
         tabItems = new MetaInteraction[numOfTabs];
         tabInteractions = new MetaHqTabUI[numOfTabs];
+        //initialise Arrays -> items
+        arrayItemMain = new GameObject[numOfItemsTotal];
+        arrayItemIcon = new Image[numOfItemsTotal];
+        arrayItemBorder = new Image[numOfItemsTotal];
+        arrayItemBackground = new Image[numOfItemsTotal];
+        arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
@@ -179,6 +196,10 @@ public class MetaGameUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for tabObject[{0}]", i); }
             }
         }
+        //main
+        Debug.Assert(canvasMeta != null, "Invalid canvasMeta (Null)");
+        Debug.Assert(canvasScroll != null, "Invalid canvasScroll (Null)");
+        Debug.Assert(metaObject != null, "Invalid metaObject (Null)");
         //buttons
         buttonInteractionReset = buttonReset.GetComponent<ButtonInteraction>();
         buttonInteractionConfirm = buttonConfirm.GetComponent<ButtonInteraction>();
@@ -192,12 +213,60 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
         Debug.Assert(rightTextTop != null, "Invalid rightTextTop (Null)");
         Debug.Assert(rightTextBottom != null, "Invalid rightTextBottom (Null)");
+        //backgrounds
+        Debug.Assert(backgroundMain != null, "Invalid backgroundMain (Null)");
+        Debug.Assert(backgroundLeft != null, "Invalid backgroundLeft (Null)");
+        Debug.Assert(backgroundCentre != null, "Invalid backgroundCentre (Null)");
+        Debug.Assert(backgroundRight != null, "Invalid backgroundRight (Null)");
         //assign backgrounds and active tab colours
         Color colour = GameManager.instance.guiScript.colourMainBackground;
         /*backgroundMain.color = new Color(colour.r, colour.g, colour.b, 0.35f);*/
         backgroundCentre.color = new Color(colour.r, colour.g, colour.b);
         backgroundRight.color = new Color(colour.r, colour.g, colour.b);
-
+        //items
+        Debug.Assert(meta_item_0 != null, "Invalid item_0 (Null)");
+        Debug.Assert(meta_item_1 != null, "Invalid item_1 (Null)");
+        Debug.Assert(meta_item_2 != null, "Invalid item_2 (Null)");
+        Debug.Assert(meta_item_3 != null, "Invalid item_3 (Null)");
+        Debug.Assert(meta_item_4 != null, "Invalid item_4 (Null)");
+        Debug.Assert(meta_item_5 != null, "Invalid item_5 (Null)");
+        Debug.Assert(meta_item_6 != null, "Invalid item_6 (Null)");
+        Debug.Assert(meta_item_7 != null, "Invalid item_7 (Null)");
+        Debug.Assert(meta_item_8 != null, "Invalid item_8 (Null)");
+        Debug.Assert(meta_item_9 != null, "Invalid item_9 (Null)");
+        Debug.Assert(meta_item_10 != null, "Invalid item_10 (Null)");
+        Debug.Assert(meta_item_11 != null, "Invalid item_11 (Null)");
+        Debug.Assert(meta_item_12 != null, "Invalid item_12 (Null)");
+        Debug.Assert(meta_item_13 != null, "Invalid item_13 (Null)");
+        Debug.Assert(meta_item_14 != null, "Invalid item_14 (Null)");
+        Debug.Assert(meta_item_15 != null, "Invalid item_15 (Null)");
+        Debug.Assert(meta_item_16 != null, "Invalid item_16 (Null)");
+        Debug.Assert(meta_item_17 != null, "Invalid item_17 (Null)");
+        Debug.Assert(meta_item_18 != null, "Invalid item_18 (Null)");
+        Debug.Assert(meta_item_19 != null, "Invalid item_19 (Null)");
+        //assign items
+        arrayItemMain[0] = meta_item_0;
+        arrayItemMain[1] = meta_item_1;
+        arrayItemMain[2] = meta_item_2;
+        arrayItemMain[3] = meta_item_3;
+        arrayItemMain[4] = meta_item_4;
+        arrayItemMain[5] = meta_item_5;
+        arrayItemMain[6] = meta_item_6;
+        arrayItemMain[7] = meta_item_7;
+        arrayItemMain[8] = meta_item_8;
+        arrayItemMain[9] = meta_item_9;
+        arrayItemMain[10] = meta_item_10;
+        arrayItemMain[11] = meta_item_11;
+        arrayItemMain[12] = meta_item_12;
+        arrayItemMain[13] = meta_item_13;
+        arrayItemMain[14] = meta_item_14;
+        arrayItemMain[15] = meta_item_15;
+        arrayItemMain[16] = meta_item_16;
+        arrayItemMain[17] = meta_item_17;
+        arrayItemMain[18] = meta_item_18;
+        arrayItemMain[19] = meta_item_19;
+        //Set starting Initialisation states
+        InitialiseItems();
     }
     #endregion
 
@@ -207,7 +276,13 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseFastAccess()
     {
-
+        //priority icons
+        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
+        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
+        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
+        Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
+        Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
+        Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
     }
     #endregion
 
@@ -316,6 +391,21 @@ public class MetaGameUI : MonoBehaviour
 
         //Activate UI
         SetMetaUI();
+    }
+
+
+    private void InitialiseItems()
+    {
+        for (int index = 0; index < numOfItemsTotal; index++)
+        {
+            //main game objects off
+            arrayItemMain[index].SetActive(false);
+            //all other child objects on
+            arrayItemIcon[index].gameObject.SetActive(true);
+            arrayItemText[index].gameObject.SetActive(true);
+            arrayItemBorder[index].gameObject.SetActive(true);
+            arrayItemBackground[index].gameObject.SetActive(true);
+        }
     }
 
     /// <summary>
