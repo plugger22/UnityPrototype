@@ -111,7 +111,7 @@ public class MainInfoUI : MonoBehaviour
     public TextMeshProUGUI details_text_top;
     public TextMeshProUGUI details_text_bottom;
     public Image details_image;
-    public Sprite details_image_sprite;
+    public Sprite details_image_sprite;                     //default image
 
     [Header("Moving Flares")]
     public Image flare_SW;

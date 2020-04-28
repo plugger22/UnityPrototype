@@ -223,6 +223,7 @@
     //
     public enum ItemPriority { Low, Medium, High, Count }                                    //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
     public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }            //PackageManager.cs -> MainInfoData array keyed off this
+    public enum MetaTab { Boss, SubBoss1, SubBoss2, SubBoss3, Count}                            //MetaGameUI tabs (HQ actors)
 
     //
     // - - - Messages - - -

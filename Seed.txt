@@ -462,3 +462,103 @@ City seed 765 -> New York, America
 Dev seed 34575 -> Tuesday, 28 April 2020 11:57 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 45381 -> Tuesday, 28 April 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5386 -> Tuesday, 28 April 2020 2:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 13593 -> Tuesday, 28 April 2020 2:27 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 59813 -> Tuesday, 28 April 2020 2:38 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27910 -> Tuesday, 28 April 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 40140 -> Tuesday, 28 April 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56274 -> Tuesday, 28 April 2020 3:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55651 -> Tuesday, 28 April 2020 3:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4691 -> Tuesday, 28 April 2020 3:36 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 26762 -> Tuesday, 28 April 2020 3:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37459 -> Tuesday, 28 April 2020 3:48 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 39059 -> Tuesday, 28 April 2020 3:56 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 44855 -> Tuesday, 28 April 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 36607 -> Tuesday, 28 April 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:179)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:108)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 48479 -> Tuesday, 28 April 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 46589 -> Tuesday, 28 April 2020 4:05 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 1857 -> Tuesday, 28 April 2020 4:07 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 35290 -> Tuesday, 28 April 2020 4:09 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 15819 -> Tuesday, 28 April 2020 4:47 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 32992 -> Tuesday, 28 April 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 17253 -> Tuesday, 28 April 2020 4:53 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 15471 -> Tuesday, 28 April 2020 4:56 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 34389 -> Tuesday, 28 April 2020 4:57 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 63983 -> Tuesday, 28 April 2020 5:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52573 -> Tuesday, 28 April 2020 5:04 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

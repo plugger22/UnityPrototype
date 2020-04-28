@@ -1,4 +1,6 @@
 ﻿using gameAPI;
+using packageAPI;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +16,7 @@ public class MetaGameUI : MonoBehaviour
     public GameObject metaObject;
 
     [Header("Backgrounds")]
+    public Image backgroundMain;
     public Image backgroundLeft;
     public Image backgroundCentre;
     public Image backgroundRight;
@@ -52,7 +55,14 @@ public class MetaGameUI : MonoBehaviour
     public GameObject meta_item_18;
     public GameObject meta_item_19;
 
-    
+    [Header("RHS details")]
+    public TextMeshProUGUI rightTextTop;
+    public TextMeshProUGUI rightTextBottom;
+    public Image rightImage;
+    public Sprite rightImageDefault;                     //default sprite
+
+
+
     private int numOfTabs = 4;    //NOTE: Change this at your peril (default 4 which is number of HQ actors) as data collections and indexes all flow from it
     private int offset = 1;       //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
 
@@ -65,6 +75,10 @@ public class MetaGameUI : MonoBehaviour
     private GameObject[] tabObjects;
     private MetaInteraction[] tabItems;
     private MetaHqTabUI[] tabInteractions;
+
+    //ItemData
+    private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
+    List<ItemData> listOfCurrentPageItemData;                                                //current data for currently displayed page
 
     private bool isRunning;
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -173,6 +187,17 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonInteractionConfirm != null, "Invalid buttonInteractionConfirm (Null)");
         Debug.Assert(buttonInteractionRecommended != null, "Invalid buttonInteractionRecommended (Null)");
         buttonInteractionConfirm.SetButton(EventType.MetaClose);
+        //RHS
+        Debug.Assert(rightImage != null, "Invalid rightImage (Null)");
+        Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
+        Debug.Assert(rightTextTop != null, "Invalid rightTextTop (Null)");
+        Debug.Assert(rightTextBottom != null, "Invalid rightTextBottom (Null)");
+        //assign backgrounds and active tab colours
+        Color colour = GameManager.instance.guiScript.colourMainBackground;
+        /*backgroundMain.color = new Color(colour.r, colour.g, colour.b, 0.35f);*/
+        backgroundCentre.color = new Color(colour.r, colour.g, colour.b);
+        backgroundRight.color = new Color(colour.r, colour.g, colour.b);
+
     }
     #endregion
 
@@ -248,27 +273,45 @@ public class MetaGameUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// run prior to every metaGameUI use
+    /// </summary>
     public void InitialiseMetaUI()
     {
-        //initialise HQ tabs
+        //initialise HQ tabs'
+        Color portraitColor, backgroundColor;
         for (int i = 0; i < tabItems.Length; i++)
         {
+            backgroundColor = tabItems[i].background.color;
             if (tabItems[i] != null)
             {
                 //sprite
                 Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor((ActorHQ)(i + offset));
                 if (actor != null)
-                { tabItems[i].portrait.sprite = actor.sprite; }
+                {
+                    tabItems[i].portrait.sprite = actor.sprite;
+                }
                 else
                 {
                     //default error sprite if a problem
                     Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(i + offset));
                     tabItems[i].portrait.sprite = GameManager.instance.guiScript.errorSprite;
                 }
+                portraitColor = tabItems[i].portrait.color;
                 //title
                 tabItems[i].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
+                //first tab (Boss) should be active on opening, rest passive
+                if (i == 0)
+                { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                else
+                { portraitColor.a = 0.25f; backgroundColor.a = 0.25f; }
+                //set colors
+                tabItems[i].portrait.color = portraitColor;
+                tabItems[i].background.color = backgroundColor;
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", i); }
+            //set first tab active and the rest passive
+            
         }
 
         //Activate UI
@@ -316,28 +359,32 @@ public class MetaGameUI : MonoBehaviour
     {
         Debug.Assert(tabIndex > -1 && tabIndex < numOfTabs, string.Format("Invalid tab index {0}", tabIndex));
         //reset Active tabs to reflect new status
-        Color tempColor;
+        Color portraitColor, backgroundColor;
         for (int index = 0; index < tabItems.Length; index++)
         {
-            tempColor = tabItems[index].portrait.color;
+            portraitColor = tabItems[index].portrait.color;
+            backgroundColor = tabItems[index].background.color;
             //activate indicated tab and deactivate the rest
             if (index == tabIndex)
             {
-                tempColor.a = 1.0f;
+                portraitColor.a = 1.0f;
+                backgroundColor.a = 1.0f;
             }
             else
             {
-                tempColor.a = 0.15f;
+                portraitColor.a = 0.25f;
+                backgroundColor.a = 0.25f;
             }
-            tabItems[index].portrait.color = tempColor;
+            tabItems[index].portrait.color = portraitColor;
+            tabItems[index].background.color = backgroundColor;
         }
         /*//reset scrollbar
         scrollRect.verticalNormalizedPosition = 1.0f;
         //redrawn main page
-        DisplayItemPage(tabIndex);
+        DisplayItemPage(tabIndex);*/
+
         //assign default info icon
-        details_image.gameObject.SetActive(true);
-        details_image.sprite = details_image_sprite;*/
+        rightImage.sprite = rightImageDefault;
 
         //update indexes
         highlightIndex = -1;
