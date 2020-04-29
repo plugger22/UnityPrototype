@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: MetaOptionResigned
   m_EditorClassIdentifier: 
   text: You leave, you're no longer welcome
+  header: Exclude RESIGNED
   descriptor: Exclude any Subordinates who Resigned
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
+  isRecommended: 0
+  recommendPriority: {fileID: 0}
   isAlways: 1
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: ceafe0fe91cd72d4c9346264d59c6229, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

@@ -312,7 +312,7 @@ namespace packageAPI
         public MetaInfoData()
         {
             //initialise arrayOfLists
-            for (int i = 0; i < (int)ItemTab.Count; i++)
+            for (int i = 0; i < (int)MetaTab.Count; i++)
             { arrayOfMetaData[i] = new List<MetaData>(); }
         }
 
@@ -322,7 +322,7 @@ namespace packageAPI
         /// <param name="dataCopy"></param>
         public MetaInfoData(MetaInfoData dataCopy)
         {
-            for (int i = 0; i < (int)ItemTab.Count; i++)
+            for (int i = 0; i < (int)MetaTab.Count; i++)
             { arrayOfMetaData[i] = new List<MetaData>(dataCopy.arrayOfMetaData[i]); }
         }
 
@@ -350,6 +350,11 @@ namespace packageAPI
         public MetaPriority priority;
         public MetaTab tab;
         public int sideLevel;                       //GlobalSide.level
+        public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)
+        public bool isRecommended;                  //if true part of recommended selection of options
+        public MetaPriority recommendPriority;      //recommendations selected on priority until renown runs out
+        public string dataName;                     //used to implement outcome
+        public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)
         public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
         public string tag0;                         //help topic, provide tag or leave Null if none. NOTE: add help topics in sequence -> 0 / 1 / 2 / 3, and make sure help > 0 
         public string tag1;

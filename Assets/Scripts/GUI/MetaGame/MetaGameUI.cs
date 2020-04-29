@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -76,12 +77,12 @@ public class MetaGameUI : MonoBehaviour
     private MetaInteraction[] tabItems;
     private MetaHqTabUI[] tabInteractions;
 
-    //item collections
-    private GameObject[] arrayItemMain;
-    private TextMeshProUGUI[] arrayItemText;
-    private Image[] arrayItemIcon;
-    private Image[] arrayItemBorder;
-    private Image[] arrayItemBackground;
+    //metaItems collections
+    private GameObject[] arrayMetaMain;
+    private TextMeshProUGUI[] arrayMetaText;
+    private Image[] arrayMetaIcon;
+    private Image[] arrayMetaBorder;
+    private Image[] arrayMetaBackground;
     //item priority sprites
     private Sprite priorityHigh;
     private Sprite priorityMedium;
@@ -160,11 +161,11 @@ public class MetaGameUI : MonoBehaviour
         tabItems = new MetaInteraction[numOfTabs];
         tabInteractions = new MetaHqTabUI[numOfTabs];
         //initialise Arrays -> items
-        arrayItemMain = new GameObject[numOfItemsTotal];
-        arrayItemIcon = new Image[numOfItemsTotal];
-        arrayItemBorder = new Image[numOfItemsTotal];
-        arrayItemBackground = new Image[numOfItemsTotal];
-        arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
+        arrayMetaMain = new GameObject[numOfItemsTotal];
+        arrayMetaIcon = new Image[numOfItemsTotal];
+        arrayMetaBorder = new Image[numOfItemsTotal];
+        arrayMetaBackground = new Image[numOfItemsTotal];
+        arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
@@ -245,26 +246,68 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(meta_item_18 != null, "Invalid item_18 (Null)");
         Debug.Assert(meta_item_19 != null, "Invalid item_19 (Null)");
         //assign items
-        arrayItemMain[0] = meta_item_0;
-        arrayItemMain[1] = meta_item_1;
-        arrayItemMain[2] = meta_item_2;
-        arrayItemMain[3] = meta_item_3;
-        arrayItemMain[4] = meta_item_4;
-        arrayItemMain[5] = meta_item_5;
-        arrayItemMain[6] = meta_item_6;
-        arrayItemMain[7] = meta_item_7;
-        arrayItemMain[8] = meta_item_8;
-        arrayItemMain[9] = meta_item_9;
-        arrayItemMain[10] = meta_item_10;
-        arrayItemMain[11] = meta_item_11;
-        arrayItemMain[12] = meta_item_12;
-        arrayItemMain[13] = meta_item_13;
-        arrayItemMain[14] = meta_item_14;
-        arrayItemMain[15] = meta_item_15;
-        arrayItemMain[16] = meta_item_16;
-        arrayItemMain[17] = meta_item_17;
-        arrayItemMain[18] = meta_item_18;
-        arrayItemMain[19] = meta_item_19;
+        arrayMetaMain[0] = meta_item_0;
+        arrayMetaMain[1] = meta_item_1;
+        arrayMetaMain[2] = meta_item_2;
+        arrayMetaMain[3] = meta_item_3;
+        arrayMetaMain[4] = meta_item_4;
+        arrayMetaMain[5] = meta_item_5;
+        arrayMetaMain[6] = meta_item_6;
+        arrayMetaMain[7] = meta_item_7;
+        arrayMetaMain[8] = meta_item_8;
+        arrayMetaMain[9] = meta_item_9;
+        arrayMetaMain[10] = meta_item_10;
+        arrayMetaMain[11] = meta_item_11;
+        arrayMetaMain[12] = meta_item_12;
+        arrayMetaMain[13] = meta_item_13;
+        arrayMetaMain[14] = meta_item_14;
+        arrayMetaMain[15] = meta_item_15;
+        arrayMetaMain[16] = meta_item_16;
+        arrayMetaMain[17] = meta_item_17;
+        arrayMetaMain[18] = meta_item_18;
+        arrayMetaMain[19] = meta_item_19;
+        //initialise metaItems & populate arrays
+        for (index = 0; index < arrayMetaMain.Length; index++)
+        {
+            GameObject metaObject = arrayMetaMain[index];
+            if (metaObject != null)
+            {
+                //get child components -> Image
+                var childrenImage = metaObject.GetComponentsInChildren<Image>();
+                foreach (var child in childrenImage)
+                {
+                    if (child.name.Equals("background", StringComparison.Ordinal) == true)
+                    {
+                        arrayMetaBackground[index] = child;
+                        //attached interaction script
+                        MainInfoRightItemUI itemScript = child.GetComponent<MainInfoRightItemUI>();
+                        if (itemScript != null)
+                        {
+                            itemScript.SetItemIndex(index, numOfItemsTotal);
+                            itemScript.SetUIType(MajorUI.MetaGameUI);
+                        }
+                        else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for arrayMetaMain[{0}]", index); }
+                    }
+                    else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
+                    { arrayMetaIcon[index] = child; }
+                    else if (child.name.Equals("border", StringComparison.Ordinal) == true)
+                    { arrayMetaBorder[index] = child; }
+                }
+                //child components -> Text
+                var childrenText = metaObject.GetComponentsInChildren<TextMeshProUGUI>();
+                foreach (var child in childrenText)
+                {
+                    if (child.name.Equals("text", StringComparison.Ordinal) == true)
+                    {
+                        TextMeshProUGUI metaText = child.GetComponent<TextMeshProUGUI>();
+                        if (metaText != null)
+                        { arrayMetaText[index] = metaText; }
+                        else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for arrayMetaMain[{0}]", index); }
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid GameObject (Null) for mainItemArray[{0}]", index); }
+        }
         //Set starting Initialisation states
         InitialiseItems();
     }
@@ -322,7 +365,10 @@ public class MetaGameUI : MonoBehaviour
                 MetaInfoData data = Param as MetaInfoData;
                 SetMetaUI(data);
                 break;
-            /*case EventType.MainInfoHome:
+            /*case EventType.MetaGameShowDetails:
+                ShowItemDetails((int)Param);
+                break;
+            case EventType.MainInfoHome:
                 ExecuteButtonHome();
                 break;
             case EventType.MainInfoEnd:
@@ -399,12 +445,12 @@ public class MetaGameUI : MonoBehaviour
         for (int index = 0; index < numOfItemsTotal; index++)
         {
             //main game objects off
-            arrayItemMain[index].SetActive(false);
+            arrayMetaMain[index].SetActive(false);
             //all other child objects on
-            arrayItemIcon[index].gameObject.SetActive(true);
-            arrayItemText[index].gameObject.SetActive(true);
-            arrayItemBorder[index].gameObject.SetActive(true);
-            arrayItemBackground[index].gameObject.SetActive(true);
+            arrayMetaIcon[index].gameObject.SetActive(true);
+            arrayMetaText[index].gameObject.SetActive(true);
+            arrayMetaBorder[index].gameObject.SetActive(true);
+            arrayMetaBackground[index].gameObject.SetActive(true);
         }
     }
 

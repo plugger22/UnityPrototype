@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Name: RemoveTAGGED
   m_EditorClassIdentifier: 
   text: Bio Enema Purge
+  header: TAGGED Cure
   descriptor: Remove your TAGGED condition
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   isAlways: 0
   listOfCriteria:
   - {fileID: 11400000, guid: 88369c70e1cdc9d4caf5cd908274ddfe, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 3153b262bde115140b420c6f0be36748, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
+  dataName: 
+  dataTag: 

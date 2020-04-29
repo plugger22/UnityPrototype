@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: Organisation3
   m_EditorClassIdentifier: 
   text: Maintain back channel contact with *
+  header: ORGANISATION Links
   descriptor: Maintains contact with Organisation
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
+  sprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789, type: 3}
+  isRecommended: 0
+  recommendPriority: {fileID: 0}
   isAlways: 0
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 9fc0a5d7f5ec9a64993d38eb58c5b0d9, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

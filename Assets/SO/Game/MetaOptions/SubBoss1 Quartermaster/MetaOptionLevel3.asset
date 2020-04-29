@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: MetaOptionLevel3
   m_EditorClassIdentifier: 
   text: Level Three Subordinates
+  header: LEVEL THREE
   descriptor: All Subordinates are Level 3
   renownCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
+  isRecommended: 0
+  recommendPriority: {fileID: 0}
   isAlways: 1
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 40215ea8949d1444fb7805540177376f, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

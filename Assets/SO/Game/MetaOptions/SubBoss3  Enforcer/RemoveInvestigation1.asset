@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: RemoveInvestigation1
   m_EditorClassIdentifier: 
   text: Squash your * investigation
+  header: Drop INVESTIGATION
   descriptor: Removes Investigation
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
+  sprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   isAlways: 0
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 10acb683f8e58b44c9914955bd2ef4bb, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

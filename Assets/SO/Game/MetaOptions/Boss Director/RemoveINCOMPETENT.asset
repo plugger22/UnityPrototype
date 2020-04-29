@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Name: RemoveINCOMPETENT
   m_EditorClassIdentifier: 
   text: Management for Dummies
+  header: INCOMPETENCE Cure
   descriptor: Remove your INCOMPETENT condition
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   isAlways: 0
   listOfCriteria:
   - {fileID: 11400000, guid: fe8e0bbbdd022a64e9c7da898325a8dc, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: c0f19332bc46bae498cb37bfea57df89, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
+  dataName: 
+  dataTag: 

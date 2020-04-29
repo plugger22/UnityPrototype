@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Name: RemoveADDICTED
   m_EditorClassIdentifier: 
   text: Detox Clinic
+  header: ADDICTION Cure
   descriptor: Remove your ADDICTED condition
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   isAlways: 0
   listOfCriteria:
   - {fileID: 11400000, guid: a80f97b49bf3d1a4ba5bd7454b54a50f, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 4f942eb01025b4f4bb342eb842e348ab, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

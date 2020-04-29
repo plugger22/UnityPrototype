@@ -111,8 +111,12 @@ public class GUIManager : MonoBehaviour
     public Sprite aiCountermeasureSprite;
     [Tooltip("Used for ai alert status changes (152 x 160 png)")]
     public Sprite aiAlertSprite;
-    [Tooltip("Used for Investigations")]
+    [Tooltip("Used for Investigations (152 x 160 png")]
     public Sprite investigationSprite;
+    [Tooltip("Used for Secrets (152 x 160 png")]
+    public Sprite secretSprite;
+    [Tooltip("Used for Organisations (152 x 160 png")]
+    public Sprite organisationSprite;
     [Tooltip("Used for ongoing effects (152 x 160 png")]
     public Sprite ongoingEffectSprite;
     [Tooltip("Used for node Crisis (152 x 160 png")]
@@ -267,6 +271,8 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(aiCountermeasureSprite != null, "Invalid aiCountermeasureSprite (Null)");
         Debug.Assert(aiAlertSprite != null, "Invalid aiAlertSprite (Null)");
         Debug.Assert(investigationSprite != null, "Invalid investigationSprite (Null)");
+        Debug.Assert(secretSprite != null, "Invalid secretSprite (Null)");
+        Debug.Assert(organisationSprite != null, "Invalid organisationSprite (Null)");
         Debug.Assert(ongoingEffectSprite != null, "Invalid ongoingEffectSprite (Null)");
         Debug.Assert(nodeCrisisSprite != null, "Invalid nodeCrisisSprite (Null)");
         Debug.Assert(cityLoyaltySprite != null, "Invalid cityLoyaltySprite (Null)");

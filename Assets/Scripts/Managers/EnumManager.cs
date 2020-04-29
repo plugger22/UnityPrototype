@@ -34,6 +34,7 @@
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum DebugRegister { None, Ongoing, Actions }
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
+    public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,

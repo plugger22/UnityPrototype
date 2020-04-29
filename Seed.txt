@@ -566,3 +566,351 @@ City seed 765 -> New York, America
 Dev seed 41506 -> Wednesday, 29 April 2020 9:32 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 37239 -> Wednesday, 29 April 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseItems () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:404)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:269)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:132)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 47788 -> Wednesday, 29 April 2020 4:10 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseItems () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:404)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:269)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:132)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 48661 -> Wednesday, 29 April 2020 4:14 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseItems () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:404)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:269)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:132)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 9437 -> Wednesday, 29 April 2020 4:40 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid GameObject (Null) for mainItemArray[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[4]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[5]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[6]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[7]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[8]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[9]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[10]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[11]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[12]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[13]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[14]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[15]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[16]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[17]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[18]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[19]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseItems () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:447)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:312)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 42861 -> Wednesday, 29 April 2020 4:41 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid GameObject (Null) for mainItemArray[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[4]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[5]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[6]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[7]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[8]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[9]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[10]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[11]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[12]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[13]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[14]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[15]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[16]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[17]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[18]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	WARNING Invalid GameObject (Null) for mainItemArray[19]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:240)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:789)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:369)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseItems () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:447)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:312)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:133)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:789)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:844)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:369)
+	
+Dev seed 49736 -> Wednesday, 29 April 2020 4:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4730 -> Wednesday, 29 April 2020 4:48 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaManager.InitialiseMetaData () (at Assets/Scripts/Managers/MetaManager.cs:435)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:93)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:290)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
+	
+Dev seed 13783 -> Wednesday, 29 April 2020 4:53 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

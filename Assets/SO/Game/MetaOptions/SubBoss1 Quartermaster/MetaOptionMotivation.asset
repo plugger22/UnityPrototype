@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Name: MetaOptionMotivation
   m_EditorClassIdentifier: 
   text: If you're not smiling we don't want you
+  header: LOW MOTIVATION
   descriptor: Exclude low Motivation subordinates
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
+  sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
+  isRecommended: 0
+  recommendPriority: {fileID: 0}
   isAlways: 1
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: ce9c1d19ce0d7ab40be439e35aefb4e7, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
   dataName: 
   dataTag: 

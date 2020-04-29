@@ -275,19 +275,33 @@ public class MetaManager : MonoBehaviour
                                 isSuccess = false;
                                 Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED ({1}){2}", metaOption.Key, result, "\n");
                             }
+                            else { metaOption.Value.isActive = true; }
                         }
                         else
                         {
-                            //isAlways false and no criteria - fail
+                            //isAlways false and no criteria - fail (like this to handle specials, eg. all specials should fail this check and instead be handled by the Specials code segment)
                             isSuccess = false;
                             Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED (isAlways False and NO Criteria){1}", metaOption.Key, "\n");
                         }
                     }
+                    else
+                    {
+                        //isAlways true -> auto added to list but need to check any criteria to get a value for 'isActive'
+                        if (metaOption.Value.listOfCriteria.Count > 0)
+                        {
+                            data.listOfCriteria = metaOption.Value.listOfCriteria;
+                            result = GameManager.instance.effectScript.CheckCriteria(data);
+                            if (string.IsNullOrEmpty(result) == false)
+                            { metaOption.Value.isActive = false; }
+                            else { metaOption.Value.isActive = true; }
+                        }
+                        else { metaOption.Value.isActive = true; }
+                     }
                     //Add to list if viable
                     if (isSuccess == true)
                     {
                         listOfMetaOptions.Add(metaOption.Value);
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" SUCCESS and added to list{1}", metaOption.Key, "\n");
+                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" SUCCESS, isActive {1}, added to list{2}", metaOption.Key, metaOption.Value.isActive, "\n");
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", metaOption.Key); }
@@ -389,6 +403,8 @@ public class MetaManager : MonoBehaviour
             int count = listOfMetaOptions.Count;
             if (count > 0)
             {
+                //Convert MetaOptions to MetaData and place in a list
+                int level = GameManager.instance.sideScript.PlayerSide.level;
                 List<MetaData> listOfMetaData = new List<MetaData>();
                 for (int i = 0; i < count; i++)
                 {
@@ -398,12 +414,15 @@ public class MetaManager : MonoBehaviour
                         MetaData metaData = new MetaData()
                         {
                             itemText = metaOption.text,
-                            topText = "",
+                            topText = metaOption.header,
                             bottomText = metaOption.descriptor,
-                            sideLevel = 2
+                            sideLevel = level,
+                            dataName = metaOption.dataName,
+                            dataTag = metaOption.dataTag,
+                            sprite = metaOption.sprite,
+                            isActive = metaOption.isActive,
+                            isRecommended = metaOption.isRecommended,
                         };
-                        //sprite 
-
                         //priority
                         switch (metaOption.renownCost.level)
                         {
@@ -412,6 +431,18 @@ public class MetaManager : MonoBehaviour
                             case 2: metaData.priority = MetaPriority.High; break;
                             case 3: metaData.priority = MetaPriority.Extreme; break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
+                        }
+                        //recommendation priority
+                        if (metaOption.isRecommended == true)
+                        {
+                            switch (metaOption.recommendPriority.level)
+                            {
+                                case 0: metaData.recommendPriority = MetaPriority.Low; break;
+                                case 1: metaData.recommendPriority = MetaPriority.Medium; break;
+                                case 2: metaData.recommendPriority = MetaPriority.High; break;
+                                case 3: metaData.recommendPriority = MetaPriority.Extreme; break;
+                                default: Debug.LogWarningFormat("Invalid metaOption.recommendPriority.level \"{0}\" for metaOption {1}", metaOption.recommendPriority.level, metaOption.name); break;
+                            }
                         }
                         //tab
                         switch (metaOption.hqPosition.level)
@@ -426,6 +457,18 @@ public class MetaManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
                 }
+                //Take list of MetaData and populate MetaInfoData package
+                metaInfoData.Reset();
+                for (int i = 0; i < listOfMetaData.Count; i++)
+                {
+                    MetaData metaData = listOfMetaData[i];
+                    if (metaData != null)
+                    {
+
+                    }
+                    else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}]", i); }
+                }
+
             }
             else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
         }

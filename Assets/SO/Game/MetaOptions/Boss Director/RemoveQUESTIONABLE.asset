@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Name: RemoveQUESTIONABLE
   m_EditorClassIdentifier: 
   text: Neuro Lie Detector examination
+  header: QUESTIONABLE Cure
   descriptor: Remove your QUESTIONABLE condition
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   isAlways: 0
   listOfCriteria:
   - {fileID: 11400000, guid: 724c26a8102ed8f48915ba8b634b6f58, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 1482326d9643f304b9e03ee2e341c4b4, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
+  dataName: 
+  dataTag: 

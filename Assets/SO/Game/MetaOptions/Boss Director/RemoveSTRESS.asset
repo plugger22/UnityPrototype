@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Name: RemoveSTRESS
   m_EditorClassIdentifier: 
   text: Charlie Chan's House of Fun
+  header: STRESS Cure
   descriptor: Remove your STRESSED condition
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
+  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  isRecommended: 1
+  recommendPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   isAlways: 0
   listOfCriteria:
   - {fileID: 11400000, guid: 0c269039c72e1934c86cc932229472fc, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: dbe2f6ba1a37dcf4f880a17e721f9155, type: 2}
   statTimesSelected: 0
-  isRecommended: 0
+  isActive: 0
+  dataName: 
+  dataTag: 
