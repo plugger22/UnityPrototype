@@ -334,6 +334,17 @@ namespace packageAPI
             for (int i = 0; i < (int)MetaTab.Count; i++)
             { arrayOfMetaData[i].Clear(); }
         }
+
+        /// <summary>
+        /// Add metaData to appropriate list
+        /// </summary>
+        /// <param name="metaData"></param>
+        public void AddMetaData(MetaData metaData)
+        {
+            if (metaData != null)
+            { arrayOfMetaData[(int)metaData.tab].Add(metaData); }
+            else { Debug.LogWarning("Invalid metaData (Null)"); }
+        }
     }
 
     /// <summary>
@@ -353,6 +364,7 @@ namespace packageAPI
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)
         public bool isRecommended;                  //if true part of recommended selection of options
         public MetaPriority recommendPriority;      //recommendations selected on priority until renown runs out
+        public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public string dataName;                     //used to implement outcome
         public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)
         public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
@@ -360,6 +372,9 @@ namespace packageAPI
         public string tag1;
         public string tag2;
         public string tag3;
+
+        public MetaData()
+        { listOfEffects = new List<Effect>(); }
     }
 
     /// <summary>

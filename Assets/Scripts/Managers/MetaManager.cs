@@ -423,6 +423,8 @@ public class MetaManager : MonoBehaviour
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
                         };
+                        //effects
+                        metaData.listOfEffects.AddRange(metaOption.listOfEffects);
                         //priority
                         switch (metaOption.renownCost.level)
                         {
@@ -463,9 +465,7 @@ public class MetaManager : MonoBehaviour
                 {
                     MetaData metaData = listOfMetaData[i];
                     if (metaData != null)
-                    {
-
-                    }
+                    { metaInfoData.AddMetaData(metaData); }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}]", i); }
                 }
 

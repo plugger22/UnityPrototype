@@ -33,6 +33,10 @@ public class MetaGameUI : MonoBehaviour
     public GameObject tabSubBoss2;
     public GameObject tabSubBoss3;
 
+    [Header("LHS Miscellanous")]
+    public TextMeshProUGUI page_header;
+    public GameObject scrollBarObject;
+    public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
 
     [Header("MetaOption Items")]
     public GameObject meta_item_0;
@@ -90,7 +94,11 @@ public class MetaGameUI : MonoBehaviour
 
     //ItemData
     private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
-    List<ItemData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
+    List<MetaData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
+
+    //scroll bar LHS
+    private ScrollRect scrollRect;                                   //needed to manually disable scrolling when not needed
+    private Scrollbar scrollBar;
 
     private bool isRunning;
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -166,6 +174,8 @@ public class MetaGameUI : MonoBehaviour
         arrayMetaBorder = new Image[numOfItemsTotal];
         arrayMetaBackground = new Image[numOfItemsTotal];
         arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
+        //other collections
+        listOfCurrentPageMetaData = new List<MetaData>();
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
@@ -209,6 +219,13 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonInteractionConfirm != null, "Invalid buttonInteractionConfirm (Null)");
         Debug.Assert(buttonInteractionRecommended != null, "Invalid buttonInteractionRecommended (Null)");
         buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
+        //scrollRect & ScrollBar
+        Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
+        Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
+        scrollRect = scrollBackground.GetComponent<ScrollRect>();
+        scrollBar = scrollBarObject.GetComponent<Scrollbar>();
+        Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
+        Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
         //RHS
         Debug.Assert(rightImage != null, "Invalid rightImage (Null)");
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
@@ -463,6 +480,8 @@ public class MetaGameUI : MonoBehaviour
         {
             InitialiseMetaUI();
             canvasMeta.gameObject.SetActive(true);
+            // Display Boss page by default
+            OpenTab(0);
             //set game state
             isRunning = true;
             GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
@@ -524,11 +543,100 @@ public class MetaGameUI : MonoBehaviour
 
         //assign default info icon
         rightImage.sprite = rightImageDefault;
-
+        //redrawn main page
+        DisplayItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
         currentTabIndex = tabIndex;
     }
+
+
+    /// <summary>
+    /// sub Method to display a particular page drawing from cached data in dictOfItemData
+    /// </summary>
+    /// <param name="tab"></param>
+    private void DisplayItemPage(int tabIndex)
+    {
+        Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
+        //clear out current data
+        listOfCurrentPageMetaData.Clear();
+        //get data
+        listOfCurrentPageMetaData.AddRange(arrayOfMetaData[tabIndex]);
+        //display routine
+        if (listOfCurrentPageMetaData != null)
+        {
+            numOfItemsCurrent = listOfCurrentPageMetaData.Count;
+            maxHighlightIndex = numOfItemsCurrent - 1;
+            if (numOfItemsCurrent > 0)
+            {
+                /*//update max number of items
+                numOfMaxItem = numOfItemsCurrent;*/
+
+                //populate current messages for the main tab
+                for (int index = 0; index < arrayMetaText.Length; index++)
+                {
+                    if (index < numOfItemsCurrent)
+                    {
+                        //populate text and set item to active
+                        arrayMetaText[index].text = listOfCurrentPageMetaData[index].itemText;
+                        arrayMetaMain[index].gameObject.SetActive(true);
+                        //assign icon
+                        switch (listOfCurrentPageMetaData[index].priority)
+                        {
+                            case MetaPriority.Extreme:
+                            case MetaPriority.High:
+                                arrayMetaIcon[index].sprite = priorityHigh;
+                                break;
+                            case MetaPriority.Medium:
+                                arrayMetaIcon[index].sprite = priorityMedium;
+                                break;
+                            case MetaPriority.Low:
+                                arrayMetaIcon[index].sprite = priorityLow;
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageMetaData[index].priority);
+                                break;
+                        }
+
+                    }
+                    else if (index < numOfItemsPrevious)
+                    {
+                        //efficient -> only disables items that were previously active, not the whole set
+                        arrayMetaText[index].text = "";
+                        arrayMetaMain[index].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //no data, blank previous items (not necessarily all), disable line
+                for (int index = 0; index < numOfItemsPrevious; index++)
+                {
+                    arrayMetaText[index].text = "";
+                    arrayMetaMain[index].gameObject.SetActive(false);
+                }
+
+            }
+            //update previous count to current
+            numOfItemsPrevious = numOfItemsCurrent;
+            
+            /*//set header
+            SetPageHeader(numOfItemsCurrent);*/
+        }
+        else { Debug.LogWarning("Invalid MetaInfoData.listOfMainText (Null)"); }
+        //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
+        if (numOfItemsCurrent <= numOfVisibleItems)
+        {
+            scrollRect.verticalScrollbar = null;
+            scrollBarObject.SetActive(false);
+        }
+        else
+        {
+            scrollBarObject.SetActive(true);
+            scrollRect.verticalScrollbar = scrollBar;
+        }
+    }
+
 
     //new methods above here
 }

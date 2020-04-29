@@ -914,3 +914,42 @@ MetaManager.InitialiseMetaData () (at Assets/Scripts/Managers/MetaManager.cs:435
 Dev seed 13783 -> Wednesday, 29 April 2020 4:53 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 28788 -> Wednesday, 29 April 2020 6:09 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21643 -> Wednesday, 29 April 2020 6:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 125 -> Wednesday, 29 April 2020 6:36 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.DisplayItemPage (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:560)
+	MetaGameUI.OpenTab (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:545)
+	MetaGameUI.SetMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:482)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:94)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:290)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
+	
+Dev seed 57285 -> Wednesday, 29 April 2020 6:37 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentNullException: Value cannot be null.
+Parameter name: collection
+System.ThrowHelper.ThrowArgumentNullException (System.ExceptionArgument argument) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].InsertRange (System.Int32 index, System.Collections.Generic.IEnumerable`1[T] collection) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].AddRange (System.Collections.Generic.IEnumerable`1[T] collection) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaGameUI.DisplayItemPage (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:564)
+	MetaGameUI.OpenTab (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:547)
+	MetaGameUI.SetMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:484)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:94)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:290)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
+	

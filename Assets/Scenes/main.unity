@@ -23257,6 +23257,9 @@ MonoBehaviour:
   tabSubBoss1: {fileID: 583718904}
   tabSubBoss2: {fileID: 1472395706}
   tabSubBoss3: {fileID: 419505422}
+  page_header: {fileID: 1538790712}
+  scrollBarObject: {fileID: 279346926}
+  scrollBackground: {fileID: 1877160706}
   meta_item_0: {fileID: 1446082288}
   meta_item_1: {fileID: 156154649}
   meta_item_2: {fileID: 1099749231}

@@ -172,6 +172,9 @@ public class DataManager : MonoBehaviour
     private List<ItemData>[,] arrayOfItemDataByPriority = new List<ItemData>[(int)ItemTab.Count, 3];
     private List<ItemData> listOfDelayedItemData = new List<ItemData>();
 
+    /*//MetaData (MetaGameUI)
+    private MetaInfoData metaInfoData = new MetaInfoData();*/
+
     //Adjustments
     private List<ActionAdjustment> listOfActionAdjustments = new List<ActionAdjustment>();
 
