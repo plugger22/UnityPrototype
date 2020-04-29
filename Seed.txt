@@ -953,3 +953,28 @@ System.ThrowHelper.ThrowArgumentNullException (System.ExceptionArgument argument
 	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
 	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
 	
+Dev seed 13039 -> Wednesday, 29 April 2020 8:03 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentNullException: Value cannot be null.
+Parameter name: collection
+System.ThrowHelper.ThrowArgumentNullException (System.ExceptionArgument argument) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].InsertRange (System.Int32 index, System.Collections.Generic.IEnumerable`1[T] collection) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].AddRange (System.Collections.Generic.IEnumerable`1[T] collection) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaGameUI.DisplayItemPage (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:564)
+	MetaGameUI.OpenTab (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:547)
+	MetaGameUI.SetMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:484)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:94)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:290)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:399)
+	
+Dev seed 23839 -> Wednesday, 29 April 2020 8:08 PM
+City seed 5678 -> London, United Kingdom
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "MetaGameShowDetails"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:277)
+	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:55)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America

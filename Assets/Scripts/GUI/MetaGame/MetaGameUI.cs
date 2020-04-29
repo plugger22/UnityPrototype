@@ -176,6 +176,8 @@ public class MetaGameUI : MonoBehaviour
         arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //other collections
         listOfCurrentPageMetaData = new List<MetaData>();
+        for (int i = 0; i < (int)MetaTab.Count; i++)
+        { arrayOfMetaData[i] = new List<MetaData>(); }
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
@@ -355,6 +357,7 @@ public class MetaGameUI : MonoBehaviour
         //listeners
         EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -480,6 +483,8 @@ public class MetaGameUI : MonoBehaviour
         {
             InitialiseMetaUI();
             canvasMeta.gameObject.SetActive(true);
+            // Populate data
+            UpdateData(data);
             // Display Boss page by default
             OpenTab(0);
             //set game state
@@ -634,6 +639,20 @@ public class MetaGameUI : MonoBehaviour
         {
             scrollBarObject.SetActive(true);
             scrollRect.verticalScrollbar = scrollBar;
+        }
+    }
+
+    /// <summary>
+    /// Updates cached data
+    /// NOTE: data checked for null by the calling procedure
+    /// </summary>
+    /// <param name="data"></param>
+    private void UpdateData(MetaInfoData data)
+    {
+        for (int i = 0; i < (int)MetaTab.Count; i++)
+        {
+            arrayOfMetaData[i].Clear();
+            arrayOfMetaData[i].AddRange(data.arrayOfMetaData[i]);
         }
     }
 

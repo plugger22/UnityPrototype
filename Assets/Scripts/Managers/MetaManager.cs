@@ -468,7 +468,27 @@ public class MetaManager : MonoBehaviour
                     { metaInfoData.AddMetaData(metaData); }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}]", i); }
                 }
-
+                //check if any tab 'page' is empty and, if so, add an explanatory metaData to page
+                for (int i = 0; i < metaInfoData.arrayOfMetaData.Length; i++)
+                {
+                    if (metaInfoData.arrayOfMetaData[i].Count == 0)
+                    {
+                        //add default MetaData item
+                        MetaData metaData = new MetaData()
+                        {
+                            itemText = "No Options available for this HQ leader",
+                            topText = "NO OPTIONS",
+                            bottomText = "There are no viable options available for this leader",
+                            sideLevel = level,
+                            sprite = GameManager.instance.guiScript.infoSprite,
+                            isActive = false,
+                            isRecommended = false,
+                            tab = (MetaTab)i,
+                            priority = MetaPriority.Low
+                        };
+                        metaInfoData.AddMetaData(metaData);
+                    }
+                }
             }
             else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
         }
