@@ -1,8 +1,6 @@
-﻿using System.Collections;
+﻿using gameAPI;
 using System.Collections.Generic;
 using UnityEngine;
-using gameAPI;
-using UnityEngine.UI;
 
 namespace packageAPI
 {
@@ -54,7 +52,7 @@ namespace packageAPI
         public Actor actor;
         public Action action;
         public Gear gear;
-        public List<string> listOfSecrets; 
+        public List<string> listOfSecrets;
         public string[] arrayOfQualities;
         public int[] arrayOfStats;
     }
@@ -178,7 +176,7 @@ namespace packageAPI
         public int typeLevel;                                             //(GlobalType.level) benefit, or otherwise, of effect from POV of Resistance
         public string effectApply;
         public int sideLevel;                                             //GlobalSide.level
-        
+
 
         public EffectDataOngoing()
         {
@@ -296,12 +294,67 @@ namespace packageAPI
         public int connID = -1;                     //if > -1 then 'Show Me' button will activate and user can press to see where the connection is on teh map (can be used together with nodeID)
         public int buttonData;                      //data to send when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
         public EventType buttonEvent;               //event to trigger when button pressed (can ignore) -> Must have both buttonData AND buttonEvent for a button to display
-        public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> wil. display help button if present (make sure tag's ae set below for specific topics
+        public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
         public string tag0;                         //help topic, provide tag or leave Null if none. NOTE: add help topics in sequence -> 0 / 1 / 2 / 3, and make sure help > 0 
         public string tag1;
         public string tag2;
         public string tag3;
         public bool isDisplay = true;               //toggle to enable player to switch on/off certain message types
+    }
+
+    /// <summary>
+    /// MetaInfoData package for MetaGameUI
+    /// </summary>
+    public class MetaInfoData
+    {
+        public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
+
+        public MetaInfoData()
+        {
+            //initialise arrayOfLists
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            { arrayOfMetaData[i] = new List<MetaData>(); }
+        }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="dataCopy"></param>
+        public MetaInfoData(MetaInfoData dataCopy)
+        {
+            for (int i = 0; i < (int)ItemTab.Count; i++)
+            { arrayOfMetaData[i] = new List<MetaData>(dataCopy.arrayOfMetaData[i]); }
+        }
+
+        /// <summary>
+        /// Empties out all data
+        /// </summary>
+        public void Reset()
+        {
+            for (int i = 0; i < (int)MetaTab.Count; i++)
+            { arrayOfMetaData[i].Clear(); }
+        }
+    }
+
+    /// <summary>
+    /// ItemData equivalent for MetaGameUI
+    /// </summary>
+    [System.Serializable]
+    public class MetaData
+    {
+        public string itemText;                     //what is shown for the item
+        public string topText;
+        public string bottomText;
+        [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
+        public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
+        public MetaPriority priority;
+        public MetaTab tab;
+        public int sideLevel;                       //GlobalSide.level
+        public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
+        public string tag0;                         //help topic, provide tag or leave Null if none. NOTE: add help topics in sequence -> 0 / 1 / 2 / 3, and make sure help > 0 
+        public string tag1;
+        public string tag2;
+        public string tag3;
     }
 
     /// <summary>
@@ -380,7 +433,7 @@ namespace packageAPI
         public int turn;
         public int playerNodeID;                    //location at end of move
         public int invisibility;                    //Invisibility at end of move
-        public int nemesisNodeID;                   
+        public int nemesisNodeID;
     }
 
     /// <summary>
@@ -561,7 +614,7 @@ namespace packageAPI
         public int detectModifierFaction;
         public int detectModifierGear;
         //factions
-        public string authorityPreferredArc;         
+        public string authorityPreferredArc;
         public int actionsPerTurn;
         //player target (Nemesis / Erasure teams)
         public int playerTargetNodeID;
@@ -769,7 +822,7 @@ namespace packageAPI
         public int turn;
         public int actorID;
         public int nodeID;
-        public int teamID;                          
+        public int teamID;
         public string dataName;                     //general purpose data, eg. if recruited actor then name of actor recruited, name of gear gained, etc. Can be ignored
         public TeamAction teamAction;               //type of team Action (compulsory)
     }

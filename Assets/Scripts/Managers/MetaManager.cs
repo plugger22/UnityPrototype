@@ -27,8 +27,10 @@ public class MetaManager : MonoBehaviour
     private List<Organisation> listOfOrganisations = new List<Organisation>();
     private List<Secret> listOfSecrets = new List<Secret>();
     private List<Investigation> listOfInvestigations = new List<Investigation>();
+
     //MetaOptions to display
-    private List<MetaOption> listOfMetaOptions = new List<MetaOption>();
+    private List<MetaOption> listOfMetaOptions = new List<MetaOption>();        //metaOptions to be converted to MetaData
+    private MetaInfoData metaInfoData = new MetaInfoData();                     //package to send to MetaGameUI
 
 
     public void Initialise(GameState state)
@@ -88,7 +90,8 @@ public class MetaManager : MonoBehaviour
 
         //Player metaGame Options choice
         InitialiseMetaOptions();
-        GameManager.instance.metaUIScript.InitialiseMetaUI();
+        InitialiseMetaData();
+        GameManager.instance.metaUIScript.SetMetaUI(metaInfoData);
         
 
     }
@@ -232,6 +235,9 @@ public class MetaManager : MonoBehaviour
     // - - - UI
     //
 
+    /// <summary>
+    /// Filter and update available MetaOptions and place in listOfMetaOptions ready for processing
+    /// </summary>
     public void InitialiseMetaOptions()
     {
         //
@@ -373,6 +379,58 @@ public class MetaManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
 
+    /// <summary>
+    /// Converts listOfMetaOptions into idividual MetaData and packages up into a MetaInfoData package ready for MetaGameUI
+    /// </summary>
+    private void InitialiseMetaData()
+    {
+        if (listOfMetaOptions != null)
+        {
+            int count = listOfMetaOptions.Count;
+            if (count > 0)
+            {
+                List<MetaData> listOfMetaData = new List<MetaData>();
+                for (int i = 0; i < count; i++)
+                {
+                    MetaOption metaOption = listOfMetaOptions[i];
+                    if (metaOption != null)
+                    {
+                        MetaData metaData = new MetaData()
+                        {
+                            itemText = metaOption.text,
+                            topText = "",
+                            bottomText = metaOption.descriptor,
+                            sideLevel = 2
+                        };
+                        //sprite 
+
+                        //priority
+                        switch (metaOption.renownCost.level)
+                        {
+                            case 0: metaData.priority = MetaPriority.Low; break;
+                            case 1: metaData.priority = MetaPriority.Medium; break;
+                            case 2: metaData.priority = MetaPriority.High; break;
+                            case 3: metaData.priority = MetaPriority.Extreme; break;
+                            default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
+                        }
+                        //tab
+                        switch (metaOption.hqPosition.level)
+                        {
+                            case 0: metaData.tab = MetaTab.Boss; break;
+                            case 1: metaData.tab = MetaTab.SubBoss1; break;
+                            case 2: metaData.tab = MetaTab.SubBoss2; break;
+                            case 3: metaData.tab = MetaTab.SubBoss3; break;
+                            default: Debug.LogWarningFormat("Invalid metaOption.hqPosition.level \"{0}\" for metaOption {1}", metaOption.hqPosition.level, metaOption.name); break;
+                        }
+                        listOfMetaData.Add(metaData);
+                    }
+                    else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfMetaOptions (Null)"); }
+    }
 
     //new methods above here
 }

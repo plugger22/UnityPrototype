@@ -88,8 +88,8 @@ public class MetaGameUI : MonoBehaviour
     private Sprite priorityLow;
 
     //ItemData
-    private List<ItemData>[] arrayOfItemData = new List<ItemData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
-    List<ItemData> listOfCurrentPageItemData;                                                //current data for currently displayed page
+    private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
+    List<ItemData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
 
     private bool isRunning;
     private int highlightIndex = -1;                                 //item index of currently highlighted item
@@ -207,7 +207,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonInteractionReset != null, "Invalid buttonInteractionReset (Null)");
         Debug.Assert(buttonInteractionConfirm != null, "Invalid buttonInteractionConfirm (Null)");
         Debug.Assert(buttonInteractionRecommended != null, "Invalid buttonInteractionRecommended (Null)");
-        buttonInteractionConfirm.SetButton(EventType.MetaClose);
+        buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
         //RHS
         Debug.Assert(rightImage != null, "Invalid rightImage (Null)");
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
@@ -293,8 +293,8 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //listeners
-        EventManager.instance.AddListener(EventType.MetaClose, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameTabOpen, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -312,11 +312,15 @@ public class MetaGameUI : MonoBehaviour
         switch (eventType)
         {
 
-            case EventType.MetaClose:
+            case EventType.MetaGameClose:
                 CloseMetaUI();
                 break;
-            case EventType.MetaTabOpen:
+            case EventType.MetaGameTabOpen:
                 OpenTab((int)Param);
+                break;
+            case EventType.MetaGameOpen:
+                MetaInfoData data = Param as MetaInfoData;
+                SetMetaUI(data);
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -349,9 +353,9 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// run prior to every metaGameUI use
+    /// run prior to every metaGameUI use. Run from SetMetaUI
     /// </summary>
-    public void InitialiseMetaUI()
+    private void InitialiseMetaUI()
     {
         //initialise HQ tabs'
         Color portraitColor, backgroundColor;
@@ -385,12 +389,8 @@ public class MetaGameUI : MonoBehaviour
                 tabItems[i].background.color = backgroundColor;
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", i); }
-            //set first tab active and the rest passive
             
         }
-
-        //Activate UI
-        SetMetaUI();
     }
 
 
@@ -411,15 +411,18 @@ public class MetaGameUI : MonoBehaviour
     /// <summary>
     /// Display MetaGame Player options UI
     /// </summary>
-    public void SetMetaUI()
+    public void SetMetaUI(MetaInfoData data)
     {
-
-        canvasMeta.gameObject.SetActive(true);
-        //set game state
-        isRunning = true;
-        GameManager.instance.inputScript.SetModalState(new ModalStateData(){ mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
-        Debug.LogFormat("[UI] MetaGameUI.cs -> SetMetaUI{0}", "\n");
-
+        if (data != null)
+        {
+            InitialiseMetaUI();
+            canvasMeta.gameObject.SetActive(true);
+            //set game state
+            isRunning = true;
+            GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
+            Debug.LogFormat("[UI] MetaGameUI.cs -> SetMetaUI{0}", "\n");
+        }
+        else { Debug.LogWarning("Invalid MetaInfoData (Null)"); }
     }
 
 
