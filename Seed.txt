@@ -69,3 +69,7 @@ City seed 765 -> New York, America
 Dev seed 41595 -> Thursday, 30 April 2020 5:44 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 35408 -> Thursday, 30 April 2020 7:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
