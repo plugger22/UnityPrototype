@@ -249,7 +249,7 @@ public class MetaManager : MonoBehaviour
         {
             int count, index;
             bool isSuccess;
-            string result, text;
+            string result;
             CriteriaDataInput data = new CriteriaDataInput();
             //
             // - - - Normal
@@ -323,9 +323,9 @@ public class MetaManager : MonoBehaviour
                         MetaOption metaSpecial = arrayOfOrganisationOptions[index];
                         metaSpecial.dataName = org.name;
                         metaSpecial.dataTag = org.tag;
+                        metaSpecial.isActive = true;
                         //swap '*' for org.tag
-                        text = metaSpecial.text;
-                        metaSpecial.text = text.Replace("*", org.tag);;
+                        metaSpecial.text = metaSpecial.template.Replace("*", org.tag);;
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);
@@ -349,9 +349,9 @@ public class MetaManager : MonoBehaviour
                         MetaOption metaSpecial = arrayOfSecretOptions[index];
                         metaSpecial.dataName = secret.name;
                         metaSpecial.dataTag = secret.tag;
+                        metaSpecial.isActive = true;
                         //swap '*' for secret.tag
-                        text = metaSpecial.text;
-                        metaSpecial.text = text.Replace("*", secret.tag);
+                        metaSpecial.text = metaSpecial.template.Replace("*", secret.tag);
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);
@@ -376,9 +376,9 @@ public class MetaManager : MonoBehaviour
                         MetaOption metaSpecial = arrayOfInvestigationOptions[index];
                         metaSpecial.dataName = investigation.reference;
                         metaSpecial.dataTag = investigation.tag;
+                        metaSpecial.isActive = true;
                         //swap '*' for investigation.tag
-                        text = metaSpecial.text;
-                        metaSpecial.text = text.Replace("*", investigation.tag);
+                        metaSpecial.text = metaSpecial.template.Replace("*", investigation.tag);
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);

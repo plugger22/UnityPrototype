@@ -39,7 +39,7 @@ public class MetaGameUI : MonoBehaviour
     public GameObject tabSubBoss2;
     public GameObject tabSubBoss3;
 
-    [Header("LHS Miscellanous")]
+    [Header("Centre Miscellanous")]
     public TextMeshProUGUI page_header;
     public GameObject scrollBarObject;
     public GameObject scrollBackground;         //needed to get scrollRect component in order to manually disable scrolling when not needed
@@ -91,6 +91,7 @@ public class MetaGameUI : MonoBehaviour
     private GameObject[] tabObjects;
     private MetaInteraction[] tabItems;
     private MetaHqTabUI[] tabInteractions;
+    private int[] tabOptions;                                   //count of how many ACTIVE options are available for this tab
 
     //metaItems collections
     private GameObject[] arrayMetaMain;
@@ -102,6 +103,7 @@ public class MetaGameUI : MonoBehaviour
     private Sprite priorityHigh;
     private Sprite priorityMedium;
     private Sprite priorityLow;
+    private Sprite priorityInactive;
 
     //ItemData
     private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
@@ -192,6 +194,7 @@ public class MetaGameUI : MonoBehaviour
         tabObjects = new GameObject[numOfTabs];
         tabItems = new MetaInteraction[numOfTabs];
         tabInteractions = new MetaHqTabUI[numOfTabs];
+        tabOptions = new int[numOfTabs];
         //initialise Arrays -> items
         arrayMetaMain = new GameObject[numOfItemsTotal];
         arrayMetaIcon = new Image[numOfItemsTotal];
@@ -254,6 +257,8 @@ public class MetaGameUI : MonoBehaviour
         //buttons -> assign button events
         buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
         buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
+        //miscellaneous
+        Debug.Assert(page_header != null, "Invalid page_Header (Null)");
         //scrollRect & ScrollBar
         Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
         Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
@@ -380,9 +385,11 @@ public class MetaGameUI : MonoBehaviour
         priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
         priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
         priorityLow = GameManager.instance.guiScript.priorityLowSprite;
+        priorityInactive = GameManager.instance.guiScript.priorityInactiveSprite;
         Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
+        Debug.Assert(priorityInactive != null, "Invalid priorityInactive (Null)");
     }
     #endregion
 
@@ -399,6 +406,8 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -449,12 +458,12 @@ public class MetaGameUI : MonoBehaviour
             case EventType.MetaGameDownArrow:
                 ExecuteDownArrow();
                 break;
-            /*case EventType.MainInfoLeftArrow:
-                ExecuteLeftArrow();
+            case EventType.MetaGamePageUp:
+                ExecutePageUp();
                 break;
-            case EventType.MainInfoRightArrow:
-                ExecuteRightArrow();
-                break;*/
+            case EventType.MetaGamePageDown:
+                ExecutePageDown();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -488,40 +497,49 @@ public class MetaGameUI : MonoBehaviour
     /// <summary>
     /// run prior to every metaGameUI use. Run from SetMetaUI
     /// </summary>
-    private void InitialiseMetaUI()
+    private void InitialiseMetaUI(MetaInfoData data)
     {
+        int count;
         //initialise HQ tabs'
         Color portraitColor, backgroundColor;
-        for (int i = 0; i < tabItems.Length; i++)
+        for (int index = 0; index < tabItems.Length; index++)
         {
-            backgroundColor = tabItems[i].background.color;
-            if (tabItems[i] != null)
+            backgroundColor = tabItems[index].background.color;
+            if (tabItems[index] != null)
             {
                 //sprite
-                Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor((ActorHQ)(i + offset));
+                Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor((ActorHQ)(index + offset));
                 if (actor != null)
                 {
-                    tabItems[i].portrait.sprite = actor.sprite;
+                    tabItems[index].portrait.sprite = actor.sprite;
                 }
                 else
                 {
                     //default error sprite if a problem
-                    Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(i + offset));
-                    tabItems[i].portrait.sprite = GameManager.instance.guiScript.errorSprite;
+                    Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                    tabItems[index].portrait.sprite = GameManager.instance.guiScript.errorSprite;
                 }
-                portraitColor = tabItems[i].portrait.color;
+                portraitColor = tabItems[index].portrait.color;
                 //title
-                tabItems[i].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
+                tabItems[index].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
                 //first tab (Boss) should be active on opening, rest passive
-                if (i == 0)
+                if (index == 0)
                 { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
                 else
                 { portraitColor.a = 0.25f; backgroundColor.a = 0.25f; }
                 //set colors
-                tabItems[i].portrait.color = portraitColor;
-                tabItems[i].background.color = backgroundColor;
+                tabItems[index].portrait.color = portraitColor;
+                tabItems[index].background.color = backgroundColor;
+                //set count of active items in each tab
+                count = 0;
+                for (int j = 0; j < data.arrayOfMetaData[index].Count; j++)
+                {
+                    if (data.arrayOfMetaData[index][j].isActive == true)
+                    { count++; }
+                }
+                tabOptions[index] = count;
             }
-            else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", i); }
+            else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
 
         }
     }
@@ -548,7 +566,7 @@ public class MetaGameUI : MonoBehaviour
     {
         if (data != null)
         {
-            InitialiseMetaUI();
+            InitialiseMetaUI(data);
             canvasMeta.gameObject.SetActive(true);
             // Populate data
             UpdateData(data);
@@ -617,8 +635,11 @@ public class MetaGameUI : MonoBehaviour
         //redrawn main page
         DisplayItemPage(tabIndex);*/
 
-        //assign default info icon
+        //assign default RHS values
+        string leader = tabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
+        rightTextTop.text = $"{leader} Options";
+        rightTextBottom.text = $"Displays the HQ options associated with your {leader}";
         //redrawn main page
         DisplayItemPage(tabIndex);
         //update indexes
@@ -634,6 +655,8 @@ public class MetaGameUI : MonoBehaviour
     private void DisplayItemPage(int tabIndex)
     {
         Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
+        //page header
+        page_header.text = string.Format("{0} Option{1} available", tabOptions[tabIndex], tabOptions[tabIndex] != 1 ? "s" : "");
         //clear out current data
         listOfCurrentPageMetaData.Clear();
         //get data
@@ -657,22 +680,26 @@ public class MetaGameUI : MonoBehaviour
                         arrayMetaText[index].text = listOfCurrentPageMetaData[index].itemText;
                         arrayMetaMain[index].gameObject.SetActive(true);
                         //assign icon
-                        switch (listOfCurrentPageMetaData[index].priority)
+                        if (listOfCurrentPageMetaData[index].isActive == true)
                         {
-                            case MetaPriority.Extreme:
-                            case MetaPriority.High:
-                                arrayMetaIcon[index].sprite = priorityHigh;
-                                break;
-                            case MetaPriority.Medium:
-                                arrayMetaIcon[index].sprite = priorityMedium;
-                                break;
-                            case MetaPriority.Low:
-                                arrayMetaIcon[index].sprite = priorityLow;
-                                break;
-                            default:
-                                Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageMetaData[index].priority);
-                                break;
+                            switch (listOfCurrentPageMetaData[index].priority)
+                            {
+                                case MetaPriority.Extreme:
+                                case MetaPriority.High:
+                                    arrayMetaIcon[index].sprite = priorityHigh;
+                                    break;
+                                case MetaPriority.Medium:
+                                    arrayMetaIcon[index].sprite = priorityMedium;
+                                    break;
+                                case MetaPriority.Low:
+                                    arrayMetaIcon[index].sprite = priorityLow;
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageMetaData[index].priority);
+                                    break;
+                            }
                         }
+                        else { arrayMetaIcon[index].sprite = priorityInactive; }
 
                     }
                     else if (index < numOfItemsPrevious)
@@ -875,6 +902,36 @@ public class MetaGameUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Page UP (next tab up)
+    /// </summary>
+    private void ExecutePageUp()
+    {
+        //change tab
+        if (currentTabIndex > -1)
+        {
+            if (currentTabIndex > 0)
+            {
+                currentTabIndex -= 1;
+                OpenTab(currentTabIndex);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Page DOWN (next tab down)
+    /// </summary>
+    private void ExecutePageDown()
+    {
+        if (currentTabIndex > -1)
+        {
+            if (currentTabIndex < maxTabIndex)
+            {
+                currentTabIndex += 1;
+                OpenTab(currentTabIndex);
+            }
+        }
+    }
 
 
     //new methods above here

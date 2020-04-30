@@ -487,15 +487,15 @@ public class InputManager : MonoBehaviour
                                             EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                             Input.ResetInputAxes();
                                         }
-                                        else if (Input.GetButtonDown("DayAhead") == true)
+                                        else if (Input.GetButtonDown("PageUp") == true)
                                         {
                                             //Keyboard shortcut for forward a day -> PgUp
-                                            EventManager.instance.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.instance.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
                                         }
-                                        else if (Input.GetButtonDown("DayBehind") == true)
+                                        else if (Input.GetButtonDown("PageDown") == true)
                                         {
-                                            //Keyboard shortcut for back a day -> PgUp
-                                            EventManager.instance.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind \"{0}\"", Input.inputString.ToUpper()));
+                                            //Keyboard shortcut for back a day -> PgDown
+                                            EventManager.instance.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("CurrentDay") == true)
                                         {
@@ -536,6 +536,16 @@ public class InputManager : MonoBehaviour
                                     { EventManager.instance.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                     else if (y_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                }
+                                else if (Input.GetButtonDown("PageUp") == true)
+                                {
+                                    //Keyboard shortcut for forward a day -> PgUp
+                                    EventManager.instance.PostNotification(EventType.MetaGamePageUp, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageUp \"{0}\"", Input.inputString.ToUpper()));
+                                }
+                                else if (Input.GetButtonDown("PageDown") == true)
+                                {
+                                    //Keyboard shortcut for back a day -> PgDown
+                                    EventManager.instance.PostNotification(EventType.MetaGamePageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageDown \"{0}\"", Input.inputString.ToUpper()));
                                 }
                             }
                             break;

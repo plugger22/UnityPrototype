@@ -123,12 +123,6 @@ public class GUIManager : MonoBehaviour
     public Sprite nodeCrisisSprite;
     [Tooltip("Used for city loyalty changes (152 x 160 png)")]
     public Sprite cityLoyaltySprite;
-    [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityHighSprite;
-    [Tooltip("Used for itemData priority Medium in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityMediumSprite;
-    [Tooltip("Used for itemData priority Low in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityLowSprite;
     [Tooltip("Used for action adjustment infoAPP effect notifications")]
     public Sprite actionSprite;
     [Tooltip("Used for Objectives")]
@@ -146,7 +140,17 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Sprite for an Enemy relationship")]
     public Sprite enemySprite;
 
-    //moods
+    [Header("Priorities")]
+    [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityHighSprite;
+    [Tooltip("Used for itemData priority Medium in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityMediumSprite;
+    [Tooltip("Used for itemData priority Low in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
+    public Sprite priorityLowSprite;
+    [Tooltip("Used for Items that are Inactive (MetaGameUI) (20 x 20 artboard with icon being 15 x 15 png")]
+    public Sprite priorityInactiveSprite;
+
+    [Header("Moods")]
     [Tooltip("Player mood 0 star")]
     public Sprite moodStar0;
     [Tooltip("Player mood 1 star")]
@@ -279,6 +283,7 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(priorityHighSprite != null, "Invalid priorityHighSprite (Null)");
         Debug.Assert(priorityMediumSprite != null, "Invalid priorityMediumSprite (Null)");
         Debug.Assert(priorityLowSprite != null, "Invalid priorityLowSprite (Null)");
+        Debug.Assert(priorityInactiveSprite != null, "Invalid priorityInactiveSprite (Null)");
         Debug.Assert(actionSprite != null, "Invalid actionSprite (Null)");
         Debug.Assert(objectiveSprite != null, "Invalid objectiveSprite (Null)");
         Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");

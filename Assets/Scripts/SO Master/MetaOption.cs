@@ -9,6 +9,8 @@ using UnityEngine;
 public class MetaOption : ScriptableObject
 {
     [Header("Core Data")]
+    [Tooltip("Template that includes a '*' for dynamic text (eg. name of secret/organisation/investigation). Used to populate text field, ignore if dynamic text isn't required")]
+    public string template;
     [Tooltip("Option text, self contained, short")]
     public string text;
     [Tooltip("Header text in MetaGameUI RHS. Keep short, max 3 words")]

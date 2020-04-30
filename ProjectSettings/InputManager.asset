@@ -454,8 +454,8 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: DayAhead
-    descriptiveName: mainInfoApp move forward a day
+    m_Name: PageUp
+    descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: page up
@@ -470,8 +470,8 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: DayBehind
-    descriptiveName: MainInfoApp move back one day
+    m_Name: PageDown
+    descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: page down

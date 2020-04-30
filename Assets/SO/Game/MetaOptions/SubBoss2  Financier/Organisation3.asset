@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
   m_Name: Organisation3
   m_EditorClassIdentifier: 
+  template: Maintain back channel contact with *
   text: Maintain back channel contact with *
   header: ORGANISATION Links
   descriptor: Maintains contact with Organisation

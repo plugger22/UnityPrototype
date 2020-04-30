@@ -1700,6 +1700,12 @@ public class ValidationManager : MonoBehaviour
                     //check text.Length > 0
                     if (string.IsNullOrEmpty(meta.Value.text) == true)
                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid text (Null or Empty) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check template field, if present (optional) has the '*' character present (required for swapping over dynamic text)
+                    if (string.IsNullOrEmpty(meta.Value.template) == false)
+                    {
+                        if (meta.Value.template.Contains("*") == false)
+                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid template field (missing '*' char) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    }
                     //check at least one effect
                     if (meta.Value.listOfEffects == null || meta.Value.listOfEffects.Count == 0)
                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid listOfEffects (None or Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
