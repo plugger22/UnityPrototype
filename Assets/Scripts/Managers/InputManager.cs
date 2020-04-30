@@ -521,6 +521,24 @@ public class InputManager : MonoBehaviour
                                 }
                             }
                             break;
+                        case ModalSubState.MetaGame:
+                            //MetaGame displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
+                            if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                            {
+                                if (Input.GetButtonDown("Cancel") == true)
+                                {
+                                    EventManager.instance.PostNotification(EventType.MetaGameClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                }
+                                else if (Input.GetButtonDown("Vertical"))
+                                {
+                                    y_axis = Input.GetAxisRaw("Vertical");
+                                    if (y_axis > 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                    else if (y_axis < 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                }
+                            }
+                            break;
                         case ModalSubState.ShowMe:
                             //'Show Me' -> retore infoApp
                             if (Input.anyKeyDown == true)

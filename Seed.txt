@@ -992,3 +992,41 @@ UnityEngine.Debug:LogError(Object)
 Dev seed 32200 -> Thursday, 30 April 2020 10:13 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 31022 -> Thursday, 30 April 2020 10:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58205 -> Thursday, 30 April 2020 10:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8489 -> Thursday, 30 April 2020 10:26 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 46121 -> Thursday, 30 April 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 765 -> New York, America
+
+Dev seed 61924 -> Thursday, 30 April 2020 10:34 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 765 -> New York, America
+
+Dev seed 52525 -> Thursday, 30 April 2020 10:35 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 12385 -> Thursday, 30 April 2020 10:36 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

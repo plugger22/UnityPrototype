@@ -397,6 +397,8 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameTabOpen, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -440,14 +442,14 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MainInfoForward:
                 ExecuteButtonForward();
-                break;
-            case EventType.MainInfoUpArrow:
+                break;*/
+            case EventType.MetaGameUpArrow:
                 ExecuteUpArrow();
                 break;
-            case EventType.MainInfoDownArrow:
+            case EventType.MetaGameDownArrow:
                 ExecuteDownArrow();
                 break;
-            case EventType.MainInfoLeftArrow:
+            /*case EventType.MainInfoLeftArrow:
                 ExecuteLeftArrow();
                 break;
             case EventType.MainInfoRightArrow:
@@ -552,6 +554,10 @@ public class MetaGameUI : MonoBehaviour
             UpdateData(data);
             // Display Boss page by default
             OpenTab(0);
+            //select button, RHS, off by default
+            buttonSelect.gameObject.SetActive(false);
+            helpCentre.gameObject.SetActive(false);
+            helpCombined.gameObject.SetActive(false);
             //set game state
             isRunning = true;
             GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
@@ -816,6 +822,60 @@ public class MetaGameUI : MonoBehaviour
         }
         return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
+
+    /// <summary>
+    /// Down arrow (down next item on page)
+    /// </summary>
+    private void ExecuteDownArrow()
+    {
+        if (highlightIndex > -1)
+        {
+            if (highlightIndex < maxHighlightIndex)
+            {
+                ShowItemDetails(highlightIndex + 1);
+
+                //if outside scroll view move scrollRect down one item
+                if (highlightIndex >= numOfVisibleItems)
+                {
+                    float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
+                    scrollRect.verticalNormalizedPosition = scrollPos;
+                }
+            }
+        }
+        else if (maxHighlightIndex > -1)
+        {
+            //at tab, jump to first entry if present
+            ShowItemDetails(0);
+        }
+    }
+
+    /// <summary>
+    /// Up arrow (up next item on page)
+    /// </summary>
+    private void ExecuteUpArrow()
+    {
+        if (highlightIndex > -1)
+        {
+            if (highlightIndex > 0)
+            {
+                ShowItemDetails(highlightIndex - 1);
+                //adjust scrolling
+                if (scrollRect.verticalNormalizedPosition != 1)
+                {
+                    float scrollPos = 1.0f - (float)highlightIndex / maxHighlightIndex;
+                    scrollRect.verticalNormalizedPosition = scrollPos;
+                }
+            }
+            else
+            {
+                //at top of page, go to tab
+                highlightIndex = -1;
+                OpenTab(currentTabIndex);
+            }
+        }
+    }
+
+
 
     //new methods above here
 }

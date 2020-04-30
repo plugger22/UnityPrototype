@@ -422,6 +422,8 @@ public class MetaManager : MonoBehaviour
                             sprite = metaOption.sprite,
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
+                            help = 1,
+                            tag0 = "test0"
                         };
                         //effects
                         metaData.listOfEffects.AddRange(metaOption.listOfEffects);
@@ -484,7 +486,9 @@ public class MetaManager : MonoBehaviour
                             isActive = false,
                             isRecommended = false,
                             tab = (MetaTab)i,
-                            priority = MetaPriority.Low
+                            priority = MetaPriority.Low,
+                            help = 1,
+                            tag0 = "test0"
                         };
                         metaInfoData.AddMetaData(metaData);
                     }
