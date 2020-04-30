@@ -9,21 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: MetaOptionResigned
+  m_Name: MetaOptionMotivation
   m_EditorClassIdentifier: 
-  text: You leave, you're no longer welcome
-  header: Exclude RESIGNED
-  descriptor: Exclude any Subordinates who Resigned
-  renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  template: 
+  text: If you're not smiling we don't want you
+  header: LOW MOTIVATION
+  descriptor: Exclude low Motivation subordinates
+  renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isAlways: 1
+  textInactive: 
   listOfCriteria: []
   listOfEffects:
-  - {fileID: 11400000, guid: ceafe0fe91cd72d4c9346264d59c6229, type: 2}
+  - {fileID: 11400000, guid: ce9c1d19ce0d7ab40be439e35aefb4e7, type: 2}
   statTimesSelected: 0
-  isActive: 0
+  isActive: 1
   dataName: 
   dataTag: 

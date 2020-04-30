@@ -401,21 +401,24 @@ public class MetaManager : MonoBehaviour
         if (listOfMetaOptions != null)
         {
             int count = listOfMetaOptions.Count;
+            string leader;
             if (count > 0)
             {
                 //Convert MetaOptions to MetaData and place in a list
                 int level = GameManager.instance.sideScript.PlayerSide.level;
                 List<MetaData> listOfMetaData = new List<MetaData>();
-                for (int i = 0; i < count; i++)
+                for (int index = 0; index < count; index++)
                 {
-                    MetaOption metaOption = listOfMetaOptions[i];
+                    MetaOption metaOption = listOfMetaOptions[index];
                     if (metaOption != null)
                     {
                         MetaData metaData = new MetaData()
                         {
+                            metaName = metaOption.name,
                             itemText = metaOption.text,
                             topText = metaOption.header,
                             bottomText = metaOption.descriptor,
+                            inactiveText = metaOption.textInactive,
                             sideLevel = level,
                             dataName = metaOption.dataName,
                             dataTag = metaOption.dataTag,
@@ -425,6 +428,10 @@ public class MetaManager : MonoBehaviour
                             help = 1,
                             tag0 = "test0"
                         };
+                        //criteria
+                        if (metaOption.listOfCriteria.Count > 0)
+                        { metaData.isCriteria = true; }
+                        else { metaData.isCriteria = false; }
                         //effects
                         metaData.listOfEffects.AddRange(metaOption.listOfEffects);
                         //priority
@@ -459,9 +466,9 @@ public class MetaManager : MonoBehaviour
                         }
                         listOfMetaData.Add(metaData);
                     }
-                    else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
+                    else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", index); }
                 }
-                //Take list of MetaData and populate MetaInfoData package
+                //Take list of MetaData and populate MetaInfoData temp package
                 metaInfoData.Reset();
                 for (int i = 0; i < listOfMetaData.Count; i++)
                 {
@@ -470,29 +477,77 @@ public class MetaManager : MonoBehaviour
                     { metaInfoData.AddMetaData(metaData); }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}]", i); }
                 }
-                //check if any tab 'page' is empty and, if so, add an explanatory metaData to page
-                for (int i = 0; i < metaInfoData.arrayOfMetaData.Length; i++)
+                //temp lists for ordering by priority
+                List<MetaData> listInactive = new List<MetaData>();
+                List<MetaData> listLow = new List<MetaData>();
+                List<MetaData> listMedium = new List<MetaData>();
+                List<MetaData> listHigh = new List<MetaData>();
+                List<MetaData> listExtreme = new List<MetaData>();
+                for (int index = 0; index < metaInfoData.arrayOfMetaData.Length; index++)
                 {
-                    if (metaInfoData.arrayOfMetaData[i].Count == 0)
+                    List<MetaData> tempList = metaInfoData.arrayOfMetaData[index];
+                    //check if any tab 'page' is empty and, if so, add an explanatory metaData to page
+                    if (tempList.Count == 0)
                     {
+                        leader = GameManager.instance.hqScript.GetHqTitle((ActorHQ)(index + 1));
                         //add default MetaData item
                         MetaData metaData = new MetaData()
                         {
-                            itemText = "No Options available for this HQ leader",
-                            topText = "NO OPTIONS",
-                            bottomText = "There are no viable options available for this leader",
+                            metaName = "Default",
+                            itemText = string.Format("Nothing available from your {0}", leader),
+                            topText = "No Options",
+                            bottomText = string.Format("Your {0}<br><br><b>Does Not</b><br><br>have anything for you currently", leader),
                             sideLevel = level,
                             sprite = GameManager.instance.guiScript.infoSprite,
                             isActive = false,
                             isRecommended = false,
-                            tab = (MetaTab)i,
+                            isCriteria = false,
+                            tab = (MetaTab)index,
                             priority = MetaPriority.Low,
                             help = 1,
                             tag0 = "test0"
                         };
                         metaInfoData.AddMetaData(metaData);
                     }
+                    else
+                    {
+                        //Sort by Priority -> empty out lists prior to use
+                        listInactive.Clear();
+                        listLow.Clear();
+                        listMedium.Clear();
+                        listHigh.Clear();
+                        //order page by priority, highest at the top
+                        for (int i = 0; i < tempList.Count; i++)
+                        {
+                            MetaData metaData = tempList[i];
+                            if (metaData != null)
+                            {
+                                if (metaData.isActive == false)
+                                { listInactive.Add(metaData); }
+                                else
+                                {
+                                    switch (metaData.priority)
+                                    {
+                                        case MetaPriority.Low: listLow.Add(metaData); break;
+                                        case MetaPriority.Medium: listMedium.Add(metaData); break;
+                                        case MetaPriority.High: listHigh.Add(metaData); break;
+                                        case MetaPriority.Extreme: listExtreme.Add(metaData); break;
+                                        default: Debug.LogWarningFormat("Invalid metaData.priority \"{0}\", for metaData {1}", metaData.priority, metaData.metaName); break;
+                                    }
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid metaData (Null) for tempList[{0}], arrayOfMetaData[{index}]", i, index); }
+                        }
+                        //assign sorted list back to main array
+                        metaInfoData.arrayOfMetaData[index].Clear();
+                        metaInfoData.arrayOfMetaData[index].AddRange(listExtreme);
+                        metaInfoData.arrayOfMetaData[index].AddRange(listHigh);
+                        metaInfoData.arrayOfMetaData[index].AddRange(listMedium);
+                        metaInfoData.arrayOfMetaData[index].AddRange(listLow);
+                        metaInfoData.arrayOfMetaData[index].AddRange(listInactive);
+                    }
                 }
+
             }
             else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
         }

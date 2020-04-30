@@ -11,12 +11,12 @@ public class MetaOption : ScriptableObject
     [Header("Core Data")]
     [Tooltip("Template that includes a '*' for dynamic text (eg. name of secret/organisation/investigation). Used to populate text field, ignore if dynamic text isn't required")]
     public string template;
-    [Tooltip("Option text, self contained, short")]
+    [Tooltip("Left hand side item text. Keep short and self contained")]
     public string text;
     [Tooltip("Header text in MetaGameUI RHS. Keep short, max 3 words")]
     public string header;
-    [Tooltip("Tooltip description")]
-    public string descriptor;
+    [Tooltip("Right hand side item details. Multi-line O.K")]
+    [TextArea] public string descriptor;
     [Tooltip("Base cost level of option in renown prior to any adjustments")]
     public GlobalChance renownCost;   
     [Tooltip("HQ actor who handles this option")]
@@ -31,8 +31,10 @@ public class MetaOption : ScriptableObject
     public GlobalChance recommendPriority;
 
     [Header("Special Cases")]
-    [Tooltip("If true, option is always displayed, regardless of valid criteria, or not")]
+    [Tooltip("If true, option is always displayed, regardless of valid criteria, or not. NOTE: If false there must be Criteria unless it's a Special case")]
     public bool isAlways;
+    [Tooltip("Must be present if isAlways is TRUE and CRITERIA present (ignore otherwise) as a self contained explanation as to why option can't be selected if isActive False due to failed criteria")]
+    [TextArea] public string textInactive;
 
     [Header("Criteria")]
     [Tooltip("Any criteria needed for option to be valid. Can be ignored")]

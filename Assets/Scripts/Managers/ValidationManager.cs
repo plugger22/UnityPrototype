@@ -1726,6 +1726,12 @@ public class ValidationManager : MonoBehaviour
                             if (meta.Value.listOfCriteria[i] == null)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid listOfCriteria[{0}] (Null) for metaOption \"{1}\"{2}", i, meta.Value.name, "\n"); }
                         }
+                        //if isAlways True and Criteria present there must be textInactive to display in case of isActive False
+                        if (meta.Value.isAlways == true)
+                        {
+                            if (string.IsNullOrEmpty(meta.Value.textInactive) == true)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid textInactive (must be present if isAlways true and Criteria presnt) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                        }
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", meta.Key); }

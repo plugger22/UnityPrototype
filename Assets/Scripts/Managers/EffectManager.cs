@@ -1313,6 +1313,16 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.instance.dataScript.CheckIfRelationPossible() == false)
                                                 { BuildString(result, "Relationship isn't possible"); }
                                                 break;
+                                            case "DismissedActorsNOTZero":
+                                                List<int> tempDismissedActors = new List<int>(GameManager.instance.dataScript.GetListOfDismissedActors(playerSide));
+                                                if (tempDismissedActors.Count == 0)
+                                                { BuildString(result, "no Dismissed Subordinates"); }
+                                                break;
+                                            case "ResignedActorsNOTZero":
+                                                List<int> tempResignedActors = new List<int>(GameManager.instance.dataScript.GetListOfResignedActors(playerSide));
+                                                if (tempResignedActors.Count == 0)
+                                                { BuildString(result, "no Resigned Subordinates"); }
+                                                break;
                                             default:
                                                 BuildString(result, "Error!");
                                                 Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

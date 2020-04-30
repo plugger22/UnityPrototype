@@ -353,9 +353,11 @@ namespace packageAPI
     [System.Serializable]
     public class MetaData
     {
+        public string metaName;                     //metaOption.name for reference and debugging purposes
         public string itemText;                     //what is shown for the item
         public string topText;
         public string bottomText;
+        public string inactiveText;                 //text shown if option isActive.False
         [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public MetaPriority priority;
@@ -363,6 +365,7 @@ namespace packageAPI
         public int sideLevel;                       //GlobalSide.level
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)
         public bool isRecommended;                  //if true part of recommended selection of options
+        public bool isCriteria;                     //true if any criteria involved, false otherwise
         public MetaPriority recommendPriority;      //recommendations selected on priority until renown runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public string dataName;                     //used to implement outcome

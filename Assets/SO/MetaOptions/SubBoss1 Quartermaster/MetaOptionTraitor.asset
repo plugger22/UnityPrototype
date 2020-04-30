@@ -9,21 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: MetaOptionDismissed
+  m_Name: MetaOptionTraitor
   m_EditorClassIdentifier: 
-  text: Shut the door on your way out
-  header: Exclude DISMISSED
-  descriptor: Exclude any Dismissed subordinates
+  template: 
+  text: Traitors aren't welcome
+  header: Exclude TRAITORS
+  descriptor: Exclude any traitorous Subordinates
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isAlways: 1
+  textInactive: 
   listOfCriteria: []
   listOfEffects:
-  - {fileID: 11400000, guid: 1874ea3a6b4a3ab49b8b9f7ca06961f3, type: 2}
+  - {fileID: 11400000, guid: 0ae52a64dee4e354ba9b37131ae95987, type: 2}
   statTimesSelected: 0
-  isActive: 0
+  isActive: 1
   dataName: 
   dataTag: 

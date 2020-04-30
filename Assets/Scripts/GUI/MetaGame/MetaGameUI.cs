@@ -639,7 +639,7 @@ public class MetaGameUI : MonoBehaviour
         string leader = tabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
         rightTextTop.text = $"{leader} Options";
-        rightTextBottom.text = $"Displays the HQ options associated with your {leader}";
+        rightTextBottom.text = string.Format("Shows any HQ options on offer from your<br><br><b>{0}{1}{2}</b>", colourCancel, leader, colourEnd);
         //redrawn main page
         DisplayItemPage(tabIndex);
         //update indexes
@@ -765,8 +765,22 @@ public class MetaGameUI : MonoBehaviour
         if (data != null)
         {
             //main item data
-            rightTextTop.text = data.topText;
-            rightTextBottom.text = data.bottomText;
+
+            //Right Hand side text varies depending on 'isActive' status
+            if (data.isActive == true)
+            {
+                rightTextTop.text = data.topText;
+                rightTextBottom.text = data.bottomText;
+            }
+            else 
+            {
+                rightTextTop.text = string.Format("{0}{1}{2}", colourGrey, data.topText, colourEnd);
+                if (data.isCriteria == true)
+                { rightTextBottom.text = data.inactiveText; }
+                else
+                { rightTextBottom.text = data.bottomText; }
+            }
+            //sprite
             if (data.sprite != null)
             {
                 rightImage.sprite = data.sprite;
@@ -814,8 +828,10 @@ public class MetaGameUI : MonoBehaviour
                 if (highlightIndex > -1)
                 { arrayMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageMetaData[highlightIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
-                //highlight item -> show as yellow
-                arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd);
+                //highlight item -> yelllow if active, grey if not
+                if (data.isActive == true)
+                { arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
+                else { arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourGrey, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
             }
         }
         else
