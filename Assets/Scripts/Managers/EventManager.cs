@@ -170,6 +170,7 @@ public enum EventType
     MetaGameTabOpen,
     MetaGameOpen,
     MetaGameShowDetails,
+    MetaGameSelect,
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,

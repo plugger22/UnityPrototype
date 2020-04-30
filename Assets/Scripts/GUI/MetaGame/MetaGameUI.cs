@@ -26,6 +26,12 @@ public class MetaGameUI : MonoBehaviour
     public Button buttonReset;
     public Button buttonConfirm;
     public Button buttonRecommended;
+    [Tooltip("Right Hand side")]
+    public Button buttonHelpCentre;
+    [Tooltip("Right Hand side")]
+    public Button buttonHelpCombined;
+    [Tooltip("Right Hand side")]
+    public Button buttonSelect;
 
     [Header("HQ Tabs")]
     public GameObject tabBoss;
@@ -75,6 +81,11 @@ public class MetaGameUI : MonoBehaviour
     private ButtonInteraction buttonInteractionReset;
     private ButtonInteraction buttonInteractionConfirm;
     private ButtonInteraction buttonInteractionRecommended;
+    private ButtonInteraction buttonInteractionSelect;
+
+    //button help components                       
+    private GenericHelpTooltipUI helpCentre;                    //item help button on RHS panel (where no 'Select' button exists)
+    private GenericHelpTooltipUI helpCombined;                  //item help button on RHS panel (adjacent to 'Select' button
 
     //arrays
     private GameObject[] tabObjects;
@@ -110,6 +121,19 @@ public class MetaGameUI : MonoBehaviour
     //tabs
     private int currentTabIndex = -1;
     private int maxTabIndex;
+
+    //colours
+    string colourDefault;
+    string colourNeutral;
+    string colourGrey;
+    string colourAlert;
+    /*string colourGood;
+    string colourBlue;*/
+    string colourNormal;
+    /*string colourError;
+    string colourInvalid;*/
+    string colourCancel;
+    string colourEnd;
 
 
     //static reference
@@ -183,10 +207,10 @@ public class MetaGameUI : MonoBehaviour
         //max tabs
         maxTabIndex = numOfTabs - 1;
         //tab components
-        if (tabBoss != null)  { tabObjects[index++] = tabBoss; }  else { Debug.LogError("Invalid tabBoss (Null)"); }
-        if (tabSubBoss1 != null)  { tabObjects[index++] = tabSubBoss1; }  else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
-        if (tabSubBoss2 != null)  { tabObjects[index++] = tabSubBoss2; }  else { Debug.LogError("Invalid tabSubBoss2 (Null)"); }
-        if (tabSubBoss3 != null)  { tabObjects[index++] = tabSubBoss3; }  else { Debug.LogError("Invalid tabSubBoss3 (Null)"); }
+        if (tabBoss != null) { tabObjects[index++] = tabBoss; } else { Debug.LogError("Invalid tabBoss (Null)"); }
+        if (tabSubBoss1 != null) { tabObjects[index++] = tabSubBoss1; } else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
+        if (tabSubBoss2 != null) { tabObjects[index++] = tabSubBoss2; } else { Debug.LogError("Invalid tabSubBoss2 (Null)"); }
+        if (tabSubBoss3 != null) { tabObjects[index++] = tabSubBoss3; } else { Debug.LogError("Invalid tabSubBoss3 (Null)"); }
         //initialise tab Interaction array
         for (int i = 0; i < tabObjects.Length; i++)
         {
@@ -214,13 +238,22 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(canvasScroll != null, "Invalid canvasScroll (Null)");
         Debug.Assert(metaObject != null, "Invalid metaObject (Null)");
         //buttons
+        Debug.Assert(buttonReset != null, "Invalid buttonReset (Null)");
+        Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");
+        Debug.Assert(buttonRecommended != null, "Invalid buttonRecommended (Null)");
+        Debug.Assert(buttonSelect != null, "Invalid buttonSelect (Null)");
+        //buttons -> get interaction components
         buttonInteractionReset = buttonReset.GetComponent<ButtonInteraction>();
         buttonInteractionConfirm = buttonConfirm.GetComponent<ButtonInteraction>();
         buttonInteractionRecommended = buttonRecommended.GetComponent<ButtonInteraction>();
+        buttonInteractionSelect = buttonSelect.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractionReset != null, "Invalid buttonInteractionReset (Null)");
         Debug.Assert(buttonInteractionConfirm != null, "Invalid buttonInteractionConfirm (Null)");
         Debug.Assert(buttonInteractionRecommended != null, "Invalid buttonInteractionRecommended (Null)");
+        Debug.Assert(buttonInteractionSelect != null, "Invalid buttonInteractionSelect (Null)");
+        //buttons -> assign button events
         buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
+        buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
         //scrollRect & ScrollBar
         Debug.Assert(scrollBackground != null, "Invalid scrollBackground (Null)");
         Debug.Assert(scrollBarObject != null, "Invalid scrollBarObject (Null)");
@@ -233,6 +266,11 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
         Debug.Assert(rightTextTop != null, "Invalid rightTextTop (Null)");
         Debug.Assert(rightTextBottom != null, "Invalid rightTextBottom (Null)");
+        //Help 
+        helpCentre = buttonHelpCentre.GetComponent<GenericHelpTooltipUI>();
+        helpCombined = buttonHelpCombined.GetComponent<GenericHelpTooltipUI>();
+        Debug.Assert(helpCentre != null, "Invalid helpCentre (Null)");
+        Debug.Assert(helpCombined != null, "Invalid helpCombined (Null)");
         //backgrounds
         Debug.Assert(backgroundMain != null, "Invalid backgroundMain (Null)");
         Debug.Assert(backgroundLeft != null, "Invalid backgroundLeft (Null)");
@@ -355,6 +393,7 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //listeners
+        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameTabOpen, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
@@ -374,7 +413,9 @@ public class MetaGameUI : MonoBehaviour
         //Detect event type
         switch (eventType)
         {
-
+            case EventType.ChangeColour:
+                SetColours();
+                break;
             case EventType.MetaGameClose:
                 CloseMetaUI();
                 break;
@@ -385,10 +426,10 @@ public class MetaGameUI : MonoBehaviour
                 MetaInfoData data = Param as MetaInfoData;
                 SetMetaUI(data);
                 break;
-            /*case EventType.MetaGameShowDetails:
+            case EventType.MetaGameShowDetails:
                 ShowItemDetails((int)Param);
                 break;
-            case EventType.MainInfoHome:
+            /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
                 break;
             case EventType.MainInfoEnd:
@@ -416,6 +457,30 @@ public class MetaGameUI : MonoBehaviour
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
+    }
+
+    /// <summary>
+    /// Set colour palette for tooltip
+    /// </summary>
+    public void SetColours()
+    {
+        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
+        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
+        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+
+        /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
+        { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
+        else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
+
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
+        colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
+        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
+        colourEnd = GameManager.instance.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -455,7 +520,7 @@ public class MetaGameUI : MonoBehaviour
                 tabItems[i].background.color = backgroundColor;
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", i); }
-            
+
         }
     }
 
@@ -624,7 +689,7 @@ public class MetaGameUI : MonoBehaviour
             }
             //update previous count to current
             numOfItemsPrevious = numOfItemsCurrent;
-            
+
             /*//set header
             SetPageHeader(numOfItemsCurrent);*/
         }
@@ -656,6 +721,101 @@ public class MetaGameUI : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// MetaData details
+    /// </summary>
+    /// <param name="itemIndex"></param>
+    private void ShowItemDetails(int itemIndex)
+    {
+        MetaData data = listOfCurrentPageMetaData[itemIndex];
+        if (data != null)
+        {
+            //main item data
+            rightTextTop.text = data.topText;
+            rightTextBottom.text = data.bottomText;
+            if (data.sprite != null)
+            {
+                rightImage.sprite = data.sprite;
+                rightImage.gameObject.SetActive(true);
+            }
+            //if no sprite, switch off default info sprite and leave blak
+            else { rightImage.gameObject.SetActive(false); }
+
+            //display Select button if active
+            if (data.isActive == true)
+            {
+                //hide help and make button active
+                buttonSelect.gameObject.SetActive(true);
+                buttonHelpCentre.gameObject.SetActive(false);
+                if (data.help > -1)
+                {
+                    buttonHelpCombined.gameObject.SetActive(true);
+                    List<HelpData> listOfHelp = GetItemHelpList(data);
+                    if (listOfHelp != null)
+                    { helpCombined.SetHelpTooltip(listOfHelp, -400, 0); }
+                    else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
+                }
+            }
+            else
+            {
+                //inactive item, hide Select item and display help
+                buttonSelect.gameObject.SetActive(false);
+                buttonHelpCombined.gameObject.SetActive(false);
+                //display help only if available
+                if (data.help > -1)
+                {
+                    buttonHelpCentre.gameObject.SetActive(true);
+                    List<HelpData> listOfHelp = GetItemHelpList(data);
+                    if (listOfHelp != null)
+                    { helpCentre.SetHelpTooltip(listOfHelp, -400, 0); }
+                    else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
+                }
+                else { buttonHelpCentre.gameObject.SetActive(false); }
+            }
+
+            //remove highlight
+            if (highlightIndex != itemIndex)
+            {
+                //reset currently highlighted back to default
+                if (highlightIndex > -1)
+                { arrayMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageMetaData[highlightIndex].itemText, colourEnd); }
+                highlightIndex = itemIndex;
+                //highlight item -> show as yellow
+                arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd);
+            }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid MetaData for listOfCurrentPageMetaData[{0}]", itemIndex);
+        }
+    }
+
+    /// <summary>
+    /// Assembles a list of HelpData for the item to pass onto the help components. Returns empty if none.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private List<HelpData> GetItemHelpList(MetaData data)
+    {
+        string tag0, tag1, tag2, tag3;
+        tag0 = tag1 = tag2 = tag3 = "";
+        //Debug
+        if (string.IsNullOrEmpty(data.tag0) == true)
+        {
+            //default data
+            tag0 = "test0";
+        }
+        else
+        {
+            //item specified help
+            tag0 = data.tag0;
+            tag1 = data.tag1;
+            tag2 = data.tag2;
+            tag3 = data.tag3;
+        }
+        return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
+    }
 
     //new methods above here
 }

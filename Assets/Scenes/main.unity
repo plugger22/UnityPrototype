@@ -1140,7 +1140,7 @@ GameObject:
   - component: {fileID: 26041922}
   - component: {fileID: 26041921}
   m_Layer: 5
-  m_Name: item_button
+  m_Name: ButtonSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23253,6 +23253,9 @@ MonoBehaviour:
   buttonReset: {fileID: 683597962}
   buttonConfirm: {fileID: 373342410}
   buttonRecommended: {fileID: 1760176935}
+  buttonHelpCentre: {fileID: 1714925351}
+  buttonHelpCombined: {fileID: 2046173104}
+  buttonSelect: {fileID: 26041923}
   tabBoss: {fileID: 505221835}
   tabSubBoss1: {fileID: 583718904}
   tabSubBoss2: {fileID: 1472395706}
@@ -44573,7 +44576,7 @@ GameObject:
   - component: {fileID: 1502887626}
   - component: {fileID: 1502887625}
   m_Layer: 5
-  m_Name: item_button_text
+  m_Name: buttonSelectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51769,7 +51772,7 @@ GameObject:
   - component: {fileID: 1714925351}
   - component: {fileID: 1714925350}
   m_Layer: 5
-  m_Name: help_button_centre
+  m_Name: ButtonHelpCentre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60637,7 +60640,7 @@ GameObject:
   - component: {fileID: 2046173104}
   - component: {fileID: 2046173103}
   m_Layer: 5
-  m_Name: help_button_combined
+  m_Name: ButtonHelpCombined
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

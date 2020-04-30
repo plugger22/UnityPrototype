@@ -978,3 +978,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:55)
 	UnityEngine.EventSystems.EventSystem:Update()
 	City seed 765 -> New York, America
+
+Dev seed 2179 -> Thursday, 30 April 2020 9:27 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid eventType MetaGameShowDetails
+
+UnityEngine.Debug:LogError(Object)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:416)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:290)
+	MainInfoRightItemUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InfoDisplays/MainInfoRightItemUI.cs:55)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 32200 -> Thursday, 30 April 2020 10:13 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
