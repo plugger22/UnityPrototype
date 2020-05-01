@@ -362,10 +362,12 @@ namespace packageAPI
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public MetaPriority priority;
         public MetaTab tab;
+        public int renownCost;                      //cost for option based on priority
         public int sideLevel;                       //GlobalSide.level
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)
         public bool isRecommended;                  //if true part of recommended selection of options
         public bool isCriteria;                     //true if any criteria involved, false otherwise
+        public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
         public MetaPriority recommendPriority;      //recommendations selected on priority until renown runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public string dataName;                     //used to implement outcome

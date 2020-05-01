@@ -446,14 +446,16 @@ public class MetaManager : MonoBehaviour
                         cost = 0;
                         switch (metaOption.renownCost.level)
                         {
-                            case 0: metaData.priority = MetaPriority.Low; cost = 2; break;
-                            case 1: metaData.priority = MetaPriority.Medium; cost = 4; break;
-                            case 2: metaData.priority = MetaPriority.High; cost = 6; break;
-                            case 3: metaData.priority = MetaPriority.Extreme; cost = 10;  break;
+                            case 0: metaData.priority = MetaPriority.Low; cost = costLowPriority; break;
+                            case 1: metaData.priority = MetaPriority.Medium; cost = costMediumPriority; break;
+                            case 2: metaData.priority = MetaPriority.High; cost = costHighPriority; break;
+                            case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority;  break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
                         //header text
                         metaData.topText = $"Costs <size=120%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.badText)}</size> Renown";
+                        //RenownCost
+                        metaData.renownCost = cost;
                         //recommendation priority
                         if (metaOption.isRecommended == true)
                         {

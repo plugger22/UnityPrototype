@@ -794,8 +794,6 @@ public class MetaGameUI : MonoBehaviour
         MetaData data = listOfCurrentPageMetaData[itemIndex];
         if (data != null)
         {
-            //main item data
-
             //Right Hand side text varies depending on 'isActive' status
             if (data.isActive == true)
             {
@@ -822,8 +820,13 @@ public class MetaGameUI : MonoBehaviour
             //display Select button if active
             if (data.isActive == true)
             {
-                //hide help and make button active
-                buttonSelect.gameObject.SetActive(true);
+                //hide help and make button active (if hasn't already been selected)
+                if (data.isSelected == false)
+                { buttonSelect.gameObject.SetActive(true); }
+                else
+                {
+                    buttonSelect.gameObject.SetActive(false);
+                }
                 buttonHelpCentre.gameObject.SetActive(false);
                 if (data.help > -1)
                 {
@@ -990,18 +993,13 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
-                int cost = 0;
-                switch (metaOption.renownCost.level)
-                {
-                    case 0: cost = costLow; break;
-                    case 1: cost = costMedium; break;
-                    case 2: cost = costHigh; break;
-                    case 3: cost = costExtreme; break;
-                    default: Debug.LogWarningFormat("Invalid metaOption.renownCost \"{0}\"", metaOption.renownCost); break;
-                }
-                renownCurrent -= cost;
+                //adjust renown display
+                renownCurrent -= metaData.renownCost;
                 renownCurrent = Mathf.Max(0, renownCurrent);
                 renownAmount.text = renownCurrent.ToString();
+                //set as selected
+                metaData.isSelected = true;
+                Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
         }
