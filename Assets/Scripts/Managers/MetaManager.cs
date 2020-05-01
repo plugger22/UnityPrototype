@@ -16,6 +16,13 @@ public class MetaManager : MonoBehaviour
     [Tooltip("Place metaOptions here to handle the max number of possible investigation metaOptions that may be required")]
     public MetaOption[] arrayOfInvestigationOptions;
 
+    [Header("Renown cost of MetaOptions")]
+    [Range(0, 10)] public int costLowPriority = 2;
+    [Range(0, 10)] public int costMediumPriority = 4;
+    [Range(0, 10)] public int costHighPriority = 6;
+    [Range(0, 10)] public int costExtremePriority = 10;
+    
+
     //NOTE: the above arrays are checked for various error states in ValidationManager.cs -> ValidateMetaOptions
 
     [HideInInspector] public GlobalMeta metaLevel;
@@ -401,6 +408,7 @@ public class MetaManager : MonoBehaviour
         if (listOfMetaOptions != null)
         {
             int count = listOfMetaOptions.Count;
+            int cost;
             string leader;
             if (count > 0)
             {
@@ -415,8 +423,8 @@ public class MetaManager : MonoBehaviour
                         MetaData metaData = new MetaData()
                         {
                             metaName = metaOption.name,
-                            itemText = string.Format("{0}  {1}", "2", metaOption.text),
-                            topText = metaOption.header,
+                            itemText = metaOption.text,
+                            //topText = metaOption.header,
                             bottomText = metaOption.descriptor,
                             inactiveText = metaOption.textInactive,
                             sideLevel = level,
@@ -434,15 +442,18 @@ public class MetaManager : MonoBehaviour
                         else { metaData.isCriteria = false; }
                         //effects
                         metaData.listOfEffects.AddRange(metaOption.listOfEffects);
-                        //priority
+                        //priority and cost
+                        cost = 0;
                         switch (metaOption.renownCost.level)
                         {
-                            case 0: metaData.priority = MetaPriority.Low; break;
-                            case 1: metaData.priority = MetaPriority.Medium; break;
-                            case 2: metaData.priority = MetaPriority.High; break;
-                            case 3: metaData.priority = MetaPriority.Extreme; break;
+                            case 0: metaData.priority = MetaPriority.Low; cost = 2; break;
+                            case 1: metaData.priority = MetaPriority.Medium; cost = 4; break;
+                            case 2: metaData.priority = MetaPriority.High; cost = 6; break;
+                            case 3: metaData.priority = MetaPriority.Extreme; cost = 10;  break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
+                        //header text
+                        metaData.topText = $"Costs <size=120%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.badText)}</size> Renown";
                         //recommendation priority
                         if (metaOption.isRecommended == true)
                         {

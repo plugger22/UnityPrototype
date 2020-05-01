@@ -39,6 +39,10 @@ public class MetaGameUI : MonoBehaviour
     public GameObject tabSubBoss2;
     public GameObject tabSubBoss3;
 
+    [Header("Top")]
+    public Image renownBackground;
+    public TextMeshProUGUI renownAmount;
+
     [Header("Centre Miscellanous")]
     public TextMeshProUGUI page_header;
     public GameObject scrollBarObject;
@@ -120,9 +124,16 @@ public class MetaGameUI : MonoBehaviour
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
+    private int renownCurrent;                                       //current amount of renown remaining available to spend
     //tabs
     private int currentTabIndex = -1;
     private int maxTabIndex;
+
+    //fast access
+    private int costLow = -1;                                        //renown cost for low priority metaOptions
+    private int costMedium = -1;
+    private int costHigh = -1;
+    private int costExtreme = -1;
 
     //colours
     string colourDefault;
@@ -266,6 +277,9 @@ public class MetaGameUI : MonoBehaviour
         scrollBar = scrollBarObject.GetComponent<Scrollbar>();
         Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
+        //top
+        Debug.Assert(renownBackground != null, "Invalid renownBackground (Null)");
+        Debug.Assert(renownAmount != null, "Invalid renownAmount (Null)");
         //RHS
         Debug.Assert(rightImage != null, "Invalid rightImage (Null)");
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
@@ -390,6 +404,15 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
         Debug.Assert(priorityInactive != null, "Invalid priorityInactive (Null)");
+        //cost levels for metaOptions
+        costLow = GameManager.instance.metaScript.costLowPriority;
+        costMedium = GameManager.instance.metaScript.costMediumPriority;
+        costHigh = GameManager.instance.metaScript.costHighPriority;
+        costExtreme = GameManager.instance.metaScript.costExtremePriority;
+        Debug.Assert(costLow > -1, "Invalid costLow (-1)");
+        Debug.Assert(costMedium > -1, "Invalid costMedium (-1)");
+        Debug.Assert(costHigh > -1, "Invalid costHigh (-1)");
+        Debug.Assert(costExtreme > -1, "Invalid costExtreme (-1)");
     }
     #endregion
 
@@ -408,6 +431,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -439,6 +463,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameShowDetails:
                 ShowItemDetails((int)Param);
+                break;
+            case EventType.MetaGameSelect:
+                ExecuteSelect();
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -500,6 +527,10 @@ public class MetaGameUI : MonoBehaviour
     private void InitialiseMetaUI(MetaInfoData data)
     {
         int count;
+        //player renown
+        int playerRenown = GameManager.instance.playerScript.Renown;
+        renownAmount.text = playerRenown.ToString();
+        renownCurrent = playerRenown;
         //initialise HQ tabs'
         Color portraitColor, backgroundColor;
         for (int index = 0; index < tabItems.Length; index++)
@@ -540,7 +571,6 @@ public class MetaGameUI : MonoBehaviour
                 tabOptions[index] = count;
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
-
         }
     }
 
@@ -774,7 +804,7 @@ public class MetaGameUI : MonoBehaviour
             }
             else 
             {
-                rightTextTop.text = string.Format("{0}{1}{2}", colourGrey, data.topText, colourEnd);
+                rightTextTop.text = string.Format("{0}{1}{2}", colourGrey, "Option Unavailable", colourEnd);
                 if (data.isCriteria == true)
                 { rightTextBottom.text = data.inactiveText; }
                 else
@@ -947,6 +977,35 @@ public class MetaGameUI : MonoBehaviour
                 OpenTab(currentTabIndex);
             }
         }
+    }
+
+    /// <summary>
+    /// Select button pressed, RHS
+    /// </summary>
+    private void ExecuteSelect()
+    {
+        MetaData metaData = listOfCurrentPageMetaData[highlightIndex];
+        if (metaData != null)
+        {
+            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
+            if (metaOption != null)
+            {
+                int cost = 0;
+                switch (metaOption.renownCost.level)
+                {
+                    case 0: cost = costLow; break;
+                    case 1: cost = costMedium; break;
+                    case 2: cost = costHigh; break;
+                    case 3: cost = costExtreme; break;
+                    default: Debug.LogWarningFormat("Invalid metaOption.renownCost \"{0}\"", metaOption.renownCost); break;
+                }
+                renownCurrent -= cost;
+                renownCurrent = Mathf.Max(0, renownCurrent);
+                renownAmount.text = renownCurrent.ToString();
+            }
+            else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
+        }
+        else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
     }
 
 

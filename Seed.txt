@@ -135,3 +135,70 @@ City seed 765 -> New York, America
 Dev seed 29999 -> Friday, 1 May 2020 12:33 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 24997 -> Friday, 1 May 2020 2:12 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 49189 -> Friday, 1 May 2020 2:14 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 36472 -> Friday, 1 May 2020 2:17 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:674)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:249)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	City seed 765 -> New York, America
+
+Dev seed 52176 -> Friday, 1 May 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 49209 -> Friday, 1 May 2020 2:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 34453 -> Friday, 1 May 2020 2:26 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 54085 -> Friday, 1 May 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 9475 -> Friday, 1 May 2020 2:31 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 26384 -> Friday, 1 May 2020 2:33 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 45929 -> Friday, 1 May 2020 2:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33788 -> Friday, 1 May 2020 3:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 37304 -> Friday, 1 May 2020 4:15 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 48360 -> Friday, 1 May 2020 4:17 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20575 -> Friday, 1 May 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 724 -> Friday, 1 May 2020 4:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 62596 -> Friday, 1 May 2020 4:57 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
