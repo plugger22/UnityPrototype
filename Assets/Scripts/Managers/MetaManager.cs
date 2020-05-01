@@ -415,7 +415,7 @@ public class MetaManager : MonoBehaviour
                         MetaData metaData = new MetaData()
                         {
                             metaName = metaOption.name,
-                            itemText = metaOption.text,
+                            itemText = string.Format("{0}  {1}", "2", metaOption.text),
                             topText = metaOption.header,
                             bottomText = metaOption.descriptor,
                             inactiveText = metaOption.textInactive,

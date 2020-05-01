@@ -1928,6 +1928,24 @@ public class PlayerManager : MonoBehaviour
     //
 
     /// <summary>
+    /// Debug method to add a made up investigation to the player
+    /// </summary>
+    public void DebugAddInvestigation()
+    {
+        int turn = GameManager.instance.turnScript.Turn;
+        Investigation investigation = new Investigation()
+        {
+            reference = $"{turn}Debug",
+            city = GameManager.instance.campaignScript.scenario.city.tag,
+            tag = "Debug",
+            turnStart = turn,
+            lead = ActorHQ.SubBoss1,
+            status = InvestStatus.Ongoing,
+        };
+        AddInvestigation(investigation);
+    }
+
+    /// <summary>
     /// DEBUG method to show players gear in lieu of a working UI element
     /// </summary>
     /// <returns></returns>

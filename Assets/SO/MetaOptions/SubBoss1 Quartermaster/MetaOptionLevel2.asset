@@ -15,7 +15,7 @@ MonoBehaviour:
   text: All Subordinates at least Level Two
   header: LEVEL TWO
   descriptor: HQ guarantees that all your<br><br><b>Subordinates</b><br><br>for the
-    next city will be at least<br><br><b> Level Two</b>
+    <b>next city</b> will be at least<br><br><b>Level Two</b>
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}

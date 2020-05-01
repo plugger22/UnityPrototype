@@ -14,14 +14,15 @@ MonoBehaviour:
   template: 
   text: You leave, you're no longer welcome
   header: Exclude RESIGNED
-  descriptor: Exclude any Subordinates who Resigned
+  descriptor: Ensures that any <b>Subordinates</b> who<br><br><b>Resigned</b><br><br>recently
+    will be <b>excluded</b> from joining you in the <b>next city</b>
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isAlways: 1
-  textInactive: Unavailable as none of your Subordinates have<br><br><b>Resigned</b><br><br>during
+  textInactive: <b>Unavailable</b> as none of your Subordinates have<br><br><b>Resigned</b><br><br>during
     the recent level
   listOfCriteria:
   - {fileID: 11400000, guid: 8fa86f123cf527d49858362b7502db03, type: 2}

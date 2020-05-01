@@ -128,7 +128,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 290), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 310), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Map Menu", customBackground);
 
@@ -990,6 +990,14 @@ public class DebugGUI : MonoBehaviour
                 if (debugDisplay != 94)
                 { debugDisplay = 94; }
                 else { debugDisplay = 0; }
+            }
+
+            //twentyNinth button
+            modifier = 28;
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Add Investigation"))
+            {
+                Debug.Log("[Dbg] Button -> Add Investigation");
+                GameManager.instance.playerScript.DebugAddInvestigation();
             }
 
             //

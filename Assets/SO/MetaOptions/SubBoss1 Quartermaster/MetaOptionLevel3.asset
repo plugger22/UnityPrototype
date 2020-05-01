@@ -15,7 +15,7 @@ MonoBehaviour:
   text: All Subordinates will be Level Three
   header: LEVEL THREE
   descriptor: HQ guarantees that all your<br><br><b>Subordinates</b><br><br>for the
-    next city will be<br><br><b> Level Two</b>
+    <b>next city</b> will be<br><br><b>Level Three</b>
   renownCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}

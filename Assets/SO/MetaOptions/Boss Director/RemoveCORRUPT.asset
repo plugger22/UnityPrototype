@@ -11,20 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
   m_Name: RemoveCORRUPT
   m_EditorClassIdentifier: 
+  template: 
   text: Financial affairs rinse and clean
   header: CORRUPTION Cure
-  descriptor: Remove your CORRUPT condition
+  descriptor: Your <b>financial affairs</b> will be thoroughly <b>rinsed and cleaned</b>
+    in order to expunge the smell of<br><br><b>Corruption</b><br><br>from your <b>sorry
+    self</b>
   renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   isRecommended: 1
   recommendPriority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   isAlways: 0
+  textInactive: 
   listOfCriteria:
   - {fileID: 11400000, guid: 5e8fffab8be85344b8e9072f51ca7da1, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 7b513c2eb7959ca49beeb3f7d4301e1f, type: 2}
   statTimesSelected: 0
-  isActive: 0
+  isActive: 1
   dataName: 
   dataTag: 

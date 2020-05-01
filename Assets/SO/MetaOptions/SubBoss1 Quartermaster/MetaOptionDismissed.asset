@@ -14,15 +14,16 @@ MonoBehaviour:
   template: 
   text: Shut the door on your way out
   header: Exclude DISMISSED
-  descriptor: Exclude any Dismissed subordinates
+  descriptor: Ensures that any <b>Subordinates</b> who were<br><br><b>Dismissed</b><br><br>recently
+    will be <b>excluded</b> from joining you in the <b>next city</b>
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isAlways: 1
-  textInactive: Unavailable as you have not<br><br><b>Dismissed</b><br><br>any subordinates
-    during the recent level
+  textInactive: <b>Unavailable</b> as you have not<br><br><b>Dismissed</b><br><br>any
+    subordinates during the recent level
   listOfCriteria:
   - {fileID: 11400000, guid: 18860b87960e9d14582b3d56d33eccba, type: 2}
   listOfEffects:
