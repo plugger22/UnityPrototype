@@ -32,6 +32,8 @@ public class MetaGameUI : MonoBehaviour
     public Button buttonHelpCombined;
     [Tooltip("Right Hand side")]
     public Button buttonSelect;
+    [Tooltip("Right Hand Side")]
+    public Button buttonDeselect;
 
     [Header("HQ Tabs")]
     public GameObject tabBoss;
@@ -86,6 +88,7 @@ public class MetaGameUI : MonoBehaviour
     private ButtonInteraction buttonInteractionConfirm;
     private ButtonInteraction buttonInteractionRecommended;
     private ButtonInteraction buttonInteractionSelect;
+    private ButtonInteraction buttonInteractionDeselect;
 
     //button help components                       
     private GenericHelpTooltipUI helpCentre;                    //item help button on RHS panel (where no 'Select' button exists)
@@ -256,18 +259,22 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");
         Debug.Assert(buttonRecommended != null, "Invalid buttonRecommended (Null)");
         Debug.Assert(buttonSelect != null, "Invalid buttonSelect (Null)");
+        Debug.Assert(buttonDeselect != null, "Invalid buttonDeselect (Null)");
         //buttons -> get interaction components
         buttonInteractionReset = buttonReset.GetComponent<ButtonInteraction>();
         buttonInteractionConfirm = buttonConfirm.GetComponent<ButtonInteraction>();
         buttonInteractionRecommended = buttonRecommended.GetComponent<ButtonInteraction>();
         buttonInteractionSelect = buttonSelect.GetComponent<ButtonInteraction>();
+        buttonInteractionDeselect = buttonDeselect.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractionReset != null, "Invalid buttonInteractionReset (Null)");
         Debug.Assert(buttonInteractionConfirm != null, "Invalid buttonInteractionConfirm (Null)");
         Debug.Assert(buttonInteractionRecommended != null, "Invalid buttonInteractionRecommended (Null)");
         Debug.Assert(buttonInteractionSelect != null, "Invalid buttonInteractionSelect (Null)");
+        Debug.Assert(buttonInteractionDeselect != null, "Invalid buttonInteractionDeselect (Null)");
         //buttons -> assign button events
         buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
         buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
+        buttonInteractionDeselect.SetButton(EventType.MetaGameDeselect);
         //miscellaneous
         Debug.Assert(page_header != null, "Invalid page_Header (Null)");
         //scrollRect & ScrollBar
@@ -432,6 +439,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -466,6 +474,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameSelect:
                 ExecuteSelect();
+                break;
+            case EventType.MetaGameDeselect:
+                ExecuteDeselect();
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -602,8 +613,9 @@ public class MetaGameUI : MonoBehaviour
             UpdateData(data);
             // Display Boss page by default
             OpenTab(0);
-            //select button, RHS, off by default
+            //select buttons, RHS, off by default
             buttonSelect.gameObject.SetActive(false);
+            buttonDeselect.gameObject.SetActive(false);
             helpCentre.gameObject.SetActive(false);
             helpCombined.gameObject.SetActive(false);
             //set game state
@@ -822,10 +834,16 @@ public class MetaGameUI : MonoBehaviour
             {
                 //hide help and make button active (if hasn't already been selected)
                 if (data.isSelected == false)
-                { buttonSelect.gameObject.SetActive(true); }
+                {
+                    //hasn't been selected
+                    buttonSelect.gameObject.SetActive(true);
+                    buttonDeselect.gameObject.SetActive(false);
+                }
                 else
                 {
+                    //already Selected
                     buttonSelect.gameObject.SetActive(false);
+                    buttonDeselect.gameObject.SetActive(true);
                 }
                 buttonHelpCentre.gameObject.SetActive(false);
                 if (data.help > -1)
@@ -841,6 +859,7 @@ public class MetaGameUI : MonoBehaviour
             {
                 //inactive item, hide Select item and display help
                 buttonSelect.gameObject.SetActive(false);
+                buttonDeselect.gameObject.SetActive(false);
                 buttonHelpCombined.gameObject.SetActive(false);
                 //display help only if available
                 if (data.help > -1)
@@ -999,7 +1018,36 @@ public class MetaGameUI : MonoBehaviour
                 renownAmount.text = renownCurrent.ToString();
                 //set as selected
                 metaData.isSelected = true;
+                //switch buttons
+                buttonSelect.gameObject.SetActive(false);
+                buttonDeselect.gameObject.SetActive(true);
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
+            }
+            else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
+        }
+        else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
+    }
+
+    /// <summary>
+    /// Deselect button pressed, RHS
+    /// </summary>
+    private void ExecuteDeselect()
+    {
+        MetaData metaData = listOfCurrentPageMetaData[highlightIndex];
+        if (metaData != null)
+        {
+            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
+            if (metaOption != null)
+            {
+                //adjust renown display
+                renownCurrent += metaData.renownCost;
+                renownAmount.text = renownCurrent.ToString();
+                //set as deSelected
+                metaData.isSelected = false;
+                //switch buttons
+                buttonDeselect.gameObject.SetActive(false);
+                buttonSelect.gameObject.SetActive(true);
+                Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteDeselect: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
         }
