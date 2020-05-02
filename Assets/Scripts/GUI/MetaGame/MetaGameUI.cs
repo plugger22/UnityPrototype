@@ -440,6 +440,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -477,6 +478,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameDeselect:
                 ExecuteDeselect();
+                break;
+            case EventType.MetaGameButton:
+                ExecuteButton();
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -817,7 +821,7 @@ public class MetaGameUI : MonoBehaviour
                 //bottom text same regardless
                 rightTextBottom.text = data.bottomText;
             }
-            else 
+            else
             {
                 rightTextTop.text = string.Format("{0}{1}{2}", colourGrey, "Option Unavailable", colourEnd);
                 if (data.isCriteria == true)
@@ -841,8 +845,16 @@ public class MetaGameUI : MonoBehaviour
                 if (data.isSelected == false)
                 {
                     //hasn't been selected
-                    buttonSelect.gameObject.SetActive(true);
                     buttonDeselect.gameObject.SetActive(false);
+                    //enough renown for option
+                    if (data.renownCost <= renownCurrent)
+                    { buttonSelect.gameObject.SetActive(true); }
+                    else
+                    {
+                        //insufficient renown
+                        buttonSelect.gameObject.SetActive(false);
+                        rightTextTop.text = string.Format("Not enough Renown (need <size=130%>{0}{1}{2}</size>)", colourNeutral, data.renownCost, colourEnd);
+                    }
                 }
                 else
                 {
@@ -850,14 +862,27 @@ public class MetaGameUI : MonoBehaviour
                     buttonSelect.gameObject.SetActive(false);
                     buttonDeselect.gameObject.SetActive(true);
                 }
-                buttonHelpCentre.gameObject.SetActive(false);
+
+
                 if (data.help > -1)
                 {
-                    buttonHelpCombined.gameObject.SetActive(true);
+
                     List<HelpData> listOfHelp = GetItemHelpList(data);
                     if (listOfHelp != null)
                     { helpCombined.SetHelpTooltip(listOfHelp, -400, 0); }
                     else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
+                    if (data.renownCost <= renownCurrent)
+                    {
+                        //enough renown
+                        buttonHelpCentre.gameObject.SetActive(false);
+                        buttonHelpCombined.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        //insufficient renown
+                        buttonHelpCombined.gameObject.SetActive(false);
+                        buttonHelpCentre.gameObject.SetActive(true);
+                    }
                 }
             }
             else
@@ -888,7 +913,7 @@ public class MetaGameUI : MonoBehaviour
                 //highlight item -> yelllow if active, grey if not
                 if (data.isActive == true)
                 { arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
-                else { arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourGrey, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
+                else { arrayMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
             }
         }
         else
@@ -1061,6 +1086,17 @@ public class MetaGameUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
         }
         else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
+    }
+
+    /// <summary>
+    /// Generic keyboard shortcut for Select/Deselect button press (it is whatever button is active at the time). Does nothing if neither button valid
+    /// </summary>
+    private void ExecuteButton()
+    {
+        if (buttonSelect.gameObject.activeSelf == true)
+        { ExecuteSelect(); }
+        else if (buttonDeselect.gameObject.activeSelf == true)
+        { ExecuteDeselect(); }
     }
 
 

@@ -547,6 +547,12 @@ public class InputManager : MonoBehaviour
                                     //Keyboard shortcut for back a day -> PgDown
                                     EventManager.instance.PostNotification(EventType.MetaGamePageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageDown \"{0}\"", Input.inputString.ToUpper()));
                                 }
+                                else if (Input.GetButtonDown("Multipurpose") == true)
+                                {
+                                    //Space bar is keyboard shortcut for 'Select/Deselect' buttons
+                                    EventManager.instance.PostNotification(EventType.MetaGameButton, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                    Input.ResetInputAxes();
+                                }
                             }
                             break;
                         case ModalSubState.ShowMe:
