@@ -618,7 +618,6 @@ public class InputManager : MonoBehaviour
                                 case ModalInfoSubState.AIInfo:
                                     break;
                                 case ModalInfoSubState.MainInfo:
-                                    //Not working for mouse Scroll Wheel. Don't know why
                                     if (change > 0)
                                     { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     else if (change < 0)
@@ -627,6 +626,21 @@ public class InputManager : MonoBehaviour
                             }
                         }
                         break;
+                    case ModalSubState.MetaGame:
+                        //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
+                        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                        {
+                            switch (_modalMetaState)
+                            {
+                                case ModalMetaSubState.PlayerOptions:
+                                    if (change > 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    else if (change < 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    break;
+                            }
+                        }
+                            break;
                     case ModalSubState.ShowMe:
                         break;
                 }

@@ -542,6 +542,7 @@ public class MetaGameUI : MonoBehaviour
         int playerRenown = GameManager.instance.playerScript.Renown;
         renownAmount.text = playerRenown.ToString();
         renownCurrent = playerRenown;
+        Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
         //initialise HQ tabs'
         Color portraitColor, backgroundColor;
         for (int index = 0; index < tabItems.Length; index++)
@@ -809,7 +810,11 @@ public class MetaGameUI : MonoBehaviour
             //Right Hand side text varies depending on 'isActive' status
             if (data.isActive == true)
             {
-                rightTextTop.text = data.topText;
+                //header text varies if already selected or not
+                if (data.isSelected == false)
+                { rightTextTop.text = data.textSelect; }
+                else { rightTextTop.text = data.textDeselect; }
+                //bottom text same regardless
                 rightTextBottom.text = data.bottomText;
             }
             else 
@@ -1021,6 +1026,8 @@ public class MetaGameUI : MonoBehaviour
                 //switch buttons
                 buttonSelect.gameObject.SetActive(false);
                 buttonDeselect.gameObject.SetActive(true);
+                //switch top texts
+                rightTextTop.text = metaData.textDeselect;
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
@@ -1046,6 +1053,8 @@ public class MetaGameUI : MonoBehaviour
                 metaData.isSelected = false;
                 //switch buttons
                 buttonDeselect.gameObject.SetActive(false);
+                //switch top texts
+                rightTextTop.text = metaData.textSelect;
                 buttonSelect.gameObject.SetActive(true);
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteDeselect: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }

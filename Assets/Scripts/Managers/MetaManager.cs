@@ -452,8 +452,9 @@ public class MetaManager : MonoBehaviour
                             case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority;  break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
-                        //header text
-                        metaData.topText = $"Costs <size=120%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.badText)}</size> Renown";
+                        //header texts
+                        metaData.textSelect = $"Costs <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textDeselect = $"Gain <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
                         //RenownCost
                         metaData.renownCost = cost;
                         //recommendation priority
@@ -508,7 +509,7 @@ public class MetaManager : MonoBehaviour
                         {
                             metaName = "Default",
                             itemText = string.Format("Nothing available from your {0}", leader),
-                            topText = "No Options",
+                            textSelect = "No Options",
                             bottomText = string.Format("Your {0}<br><br><b>Does Not</b><br><br>have anything for you currently", leader),
                             sideLevel = level,
                             sprite = GameManager.instance.guiScript.infoSprite,
