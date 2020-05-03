@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveSTRESS
   m_EditorClassIdentifier: 
   template: 
-  text: Charlie Chan's House of Fun
+  text: Charlie Chan's House of Fun (STRESSED)
   header: STRESS Cure
   descriptor: Yes, yes, we can see that you're<br><br><b>Stressed</b><br><br>A visit
     to <b>Charlie Chan's House of Fun</b> will remove your<br><br><b>Stressed condition</b>

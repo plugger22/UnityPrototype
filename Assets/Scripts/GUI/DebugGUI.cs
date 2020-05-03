@@ -467,8 +467,12 @@ public class DebugGUI : MonoBehaviour
 
             //twentyEigth button
             modifier = 26;
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "MetaGame Data"))
             {
+                Debug.Log("[Dbg] Button -> MetaGame Data");
+                if (debugDisplay != 105)
+                { debugDisplay = 105; }
+                else { debugDisplay = 0; }
             }
 
             //twentyNinth button
@@ -1911,6 +1915,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
+                        break;
+                    //MetaGame data
+                    case 105:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.metaUIScript.DebugDisplaySelected();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 500), analysis, customBackground);
                         break;
                 }
             }

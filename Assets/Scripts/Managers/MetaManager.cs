@@ -455,6 +455,7 @@ public class MetaManager : MonoBehaviour
                         //header texts
                         metaData.textSelect = $"Costs <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
                         metaData.textDeselect = $"Gain <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size>)";
                         //RenownCost
                         metaData.renownCost = cost;
                         //recommendation priority

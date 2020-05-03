@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveINCOMPETENT
   m_EditorClassIdentifier: 
   template: 
-  text: Management for Dummies
+  text: Management for Dummies (INCOMPETENT
   header: INCOMPETENCE Cure
   descriptor: Goodness me. Sit down while we jam <b>Management for Dummies</b> into
     your thick skull and remove your<br><br><b>Incompetent condition</b>

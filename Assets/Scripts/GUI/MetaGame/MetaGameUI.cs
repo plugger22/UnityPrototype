@@ -1,7 +1,9 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -112,9 +114,10 @@ public class MetaGameUI : MonoBehaviour
     private Sprite priorityLow;
     private Sprite priorityInactive;
 
-    //ItemData
+    //MetaData
     private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
     List<MetaData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
+    List<MetaData> listOfSelected = new List<MetaData>();                                    //dynamic list that contains all currently selected metaData
 
     //scroll bar LHS
     private ScrollRect scrollRect;                                   //needed to manually disable scrolling when not needed
@@ -275,6 +278,7 @@ public class MetaGameUI : MonoBehaviour
         buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
         buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
         buttonInteractionDeselect.SetButton(EventType.MetaGameDeselect);
+        buttonInteractionReset.SetButton(EventType.MetaGameReset);
         //miscellaneous
         Debug.Assert(page_header != null, "Invalid page_Header (Null)");
         //scrollRect & ScrollBar
@@ -441,6 +445,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -481,6 +486,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameButton:
                 ExecuteButton();
+                break;
+            case EventType.MetaGameReset:
+                ExecuteReset();
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -853,7 +861,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         //insufficient renown
                         buttonSelect.gameObject.SetActive(false);
-                        rightTextTop.text = string.Format("Not enough Renown (need <size=130%>{0}{1}{2}</size>)", colourNeutral, data.renownCost, colourEnd);
+                        rightTextTop.text = data.textInsufficient;
                     }
                 }
                 else
@@ -1042,6 +1050,8 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
+                //Add to listOfSelected
+                listOfSelected.Add(metaData);
                 //adjust renown display
                 renownCurrent -= metaData.renownCost;
                 renownCurrent = Mathf.Max(0, renownCurrent);
@@ -1071,6 +1081,10 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
+                //remove from listOfSelected
+                if (listOfSelected.Exists(met => met.metaName.Equals(metaData.metaName, StringComparison.Ordinal)) == true)
+                { listOfSelected.Remove(metaData); }
+                else { Debug.LogWarningFormat("metaData \"{0}\" not found in listOfSelected", metaData.metaName); }
                 //adjust renown display
                 renownCurrent += metaData.renownCost;
                 renownAmount.text = renownCurrent.ToString();
@@ -1097,6 +1111,108 @@ public class MetaGameUI : MonoBehaviour
         { ExecuteSelect(); }
         else if (buttonDeselect.gameObject.activeSelf == true)
         { ExecuteDeselect(); }
+    }
+
+    /// <summary>
+    /// Deselects all metaData options to give a clean slate
+    /// </summary>
+    private void ExecuteReset()
+    {
+        int count = listOfSelected.Count;
+        if (count > 0)
+        {
+            //loop list and set all to isActive false
+            for (int i = 0; i < count; i++)
+            {
+                MetaData data = listOfSelected[i];
+                if (data != null)
+                {
+                    data.isSelected = false;
+                    //update renown
+                    renownCurrent += data.renownCost;
+                    Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteReset: metaData \"{0}\" Deselected (Reset button pressed){1}", data.metaName, "\n");
+                }
+                else { Debug.LogWarningFormat("Invalid metaData (Null) in listOfSelected[{0}]", i); }
+            }
+            renownAmount.text = renownCurrent.ToString();
+            //empty list
+            listOfSelected.Clear();
+
+            //update current item
+            if (highlightIndex > -1)
+            {
+                MetaData data = listOfCurrentPageMetaData[highlightIndex];
+                if (data != null)
+                {
+
+                    if (buttonDeselect.gameObject.activeSelf == true)
+                    {
+                        //deselected option
+                        rightTextTop.text = data.textSelect;
+                        buttonDeselect.gameObject.SetActive(false);
+                        buttonSelect.gameObject.SetActive(true);
+                    }
+                    else if (buttonSelect.gameObject.activeSelf == false)
+                    {
+                        if (renownCurrent >= data.renownCost)
+                        {
+                            //unaffordable option
+                            rightTextTop.text = data.textInsufficient;
+                            buttonHelpCentre.gameObject.SetActive(false);
+                            buttonHelpCombined.gameObject.SetActive(true);
+                            buttonSelect.gameObject.SetActive(true);
+                         }
+                    }
+                }
+            }
+
+            //confirmation outcome popup
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}RESET{1}", colourNeutral, colourEnd),
+                textBottom = "All options are now available again for selection",
+                sprite = GameManager.instance.guiScript.infoSprite,
+                modalLevel = 2,
+                modalState = ModalSubState.MetaGame,
+                reason = "Reset pressed"
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
+    }
+
+    /// <summary>
+    /// Debug display of listOfSelected metaData
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplaySelected()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- MetaGameUI.cs -> listOfSelected{0}{1}", "\n", "\n");
+        if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+        {
+            if (GameManager.instance.inputScript.ModalMetaState == ModalMetaSubState.PlayerOptions)
+            {
+                int count = listOfSelected.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        MetaData data = listOfSelected[i];
+                        if (data != null)
+                        {
+                            builder.AppendFormat(" {0}, cost {1} R, dataN {2}, dataT {3}{4}", data.metaName, data.renownCost, 
+                                string.IsNullOrEmpty(data.metaName) ? "n.a" : data.dataName, string.IsNullOrEmpty(data.dataTag) ? "n.a" : data.dataTag, "\n");
+                        }
+                        else { Debug.LogWarningFormat("Invalid metaData in listOfSelected[{0}]", i); }
+                    }
+                }
+                else { builder.AppendFormat(" Nothing selected"); }
+            }
+            else { builder.AppendFormat(" Player options UI isn't active"); }
+        }
+        else { builder.AppendFormat(" Only works during MetaGame Player Options UI"); }
+        return builder.ToString();
     }
 
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveCORRUPT
   m_EditorClassIdentifier: 
   template: 
-  text: Financial affairs rinse and clean
+  text: Financial affairs rinse and clean (CORRUPT)
   header: CORRUPTION Cure
   descriptor: Your <b>financial affairs</b> will be thoroughly <b>rinsed and cleaned</b>
     in order to expunge the smell of<br><br><b>Corruption</b><br><br>from your <b>sorry

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveADDICTED
   m_EditorClassIdentifier: 
   template: 
-  text: Detox Clinic
+  text: Detox Clinic (ADDICTED)
   header: ADDICTION Cure
   descriptor: We will push you through a <b>Detox Clinic</b> that will<br><br><b>remove
     your Addiction</b>

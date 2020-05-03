@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveQUESTIONABLE
   m_EditorClassIdentifier: 
   template: 
-  text: Neuro Lie Detector examination
+  text: Neuro Lie Detector (QUESTIONABLE)
   header: QUESTIONABLE Cure
   descriptor: You'll undergo a <b>Neuro Lie Detector examination</b> which should
     remove, once and for all, your<br><br><b>Questionable condition</b>

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveWOUNDED
   m_EditorClassIdentifier: 
   template: 
-  text: Medical Matches and Glue Pod
+  text: Medical Pod (WOUNDED)
   header: WOUNDED Cure
   descriptor: There's no time to bleed<br><br>We'll have somebody fix you up with
     <b>medical rated matches and glue</b> which will remove your<br><br><b>Wounded

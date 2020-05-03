@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveIMAGED
   m_EditorClassIdentifier: 
   template: 
-  text: 3D Facial reconstruction
+  text: 3D Facial reconstruction (IMAGED)
   header: IMAGED Cure
   descriptor: We'll book you in for a full emergency <b>3D Facial Reconstruction</b>
     which should remove your<br><br><b>Imaged condition</b>

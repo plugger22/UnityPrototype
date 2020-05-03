@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveDOOMED
   m_EditorClassIdentifier: 
   template: 
-  text: The Last Chance Saloon
+  text: The Last Chance Saloon (DOOMED)
   header: DOOMED Cure
   descriptor: We will send you to the <b>Last Chance Saloon</b> for <b>gene theraphy</b>
     that will remove your<br><br><b>Doomed condition</b>

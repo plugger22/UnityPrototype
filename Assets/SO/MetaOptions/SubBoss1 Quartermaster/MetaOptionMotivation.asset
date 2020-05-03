@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: MetaOptionMotivation
   m_EditorClassIdentifier: 
   template: 
-  text: If you're not smiling we don't want you
+  text: If you're not smiling we don't want you (Motivation)
   header: LOW MOTIVATION
   descriptor: Ensures that any <b>Subordinates</b> who have<br><br><b>Zero Motivation</b><br><br>will
     be <b>excluded</b> from joining you in the <b>next city</b>

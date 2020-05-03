@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RemoveTAGGED
   m_EditorClassIdentifier: 
   template: 
-  text: Bio Enema Purge
+  text: Bio Enema Purge (TAGGED)
   header: TAGGED Cure
   descriptor: You will be <b>forcefully</b> administered a <b>Bio Enema Purge</b>
     and yes, it's as bad as it sounds but it'll remove your<br><br><b>Tagged condition</b>

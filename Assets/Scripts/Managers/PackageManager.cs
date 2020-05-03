@@ -357,6 +357,7 @@ namespace packageAPI
         public string itemText;                     //what is shown for the item
         public string textSelect;                 //top text RHS if not yet selected ("Cost 2 Renown")
         public string textDeselect;                 //top text RHS if already selected and can be deselected ("Gain 2 Renown")
+        public string textInsufficient;             //top text RHS if can't afford the renown required ("Not enough renown (need 2)")
         public string bottomText;
         public string inactiveText;                 //text shown if option isActive.False
         [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
