@@ -933,6 +933,7 @@ public class GameManager : MonoBehaviour
             levelScript.Reset();
             if (state != GameState.LoadGame)
             {
+                //follow on level / new game
                 dataScript.ResetNewLevel();
                 turnScript.ResetTurn();
                 messageScript.ResetCounter();

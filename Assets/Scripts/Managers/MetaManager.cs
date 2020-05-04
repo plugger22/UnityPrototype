@@ -28,7 +28,6 @@ public class MetaManager : MonoBehaviour
     [HideInInspector] public GlobalMeta metaLevel;
 
     private MetaGameOptions metaGameOptions;
-    private MetaEffectData metaEffect;                      //for passing data from selected metaOptions (one at a time) to EffectManager
 
     //data for compiling available metaOptions (sent at end of a level by ProcessMeta... methods in individual classes)
     private List<Organisation> listOfOrganisations = new List<Organisation>();
@@ -193,13 +192,6 @@ public class MetaManager : MonoBehaviour
         metaGameOptions.isLevelThree = setting;
         Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionLevelThree: Option isLevelThree now {0}{1}", setting, "\n");
     }
-
-    //
-    // - - - MetaEffectData
-    //
-
-    public MetaEffectData GetMetaEffectData()
-    { return metaEffect; }
 
     //
     // - - - Collections

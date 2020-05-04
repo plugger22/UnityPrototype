@@ -359,6 +359,9 @@ public class ActorManager : MonoBehaviour
     #endregion
 
     #region SubInitialiseRecruitActorCachedFields
+    /// <summary>
+    /// resets relevant global fields
+    /// </summary>
     private void SubInitialiseRecruitActorCachedFields()
     {
         //recruit actors cached fields
@@ -393,6 +396,7 @@ public class ActorManager : MonoBehaviour
         }
         else
         {
+            //NOT the first level
             MetaGameOptions data = GameManager.instance.metaScript.GetMetaOptions();
             //draw from pool
             GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.instance.globalScript.sideResistance, data);

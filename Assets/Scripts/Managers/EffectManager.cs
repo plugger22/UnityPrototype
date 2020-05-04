@@ -1920,19 +1920,22 @@ public class EffectManager : MonoBehaviour
             if (effect.apply.name.Equals("Topic", StringComparison.Ordinal) == true)
             {
                 effectResolve = ResolveTopicData(effect, dataInput);
-                if (effectResolve.isError == true)
+                effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+
+                /*if (effectResolve.isError == true)
                 { effectReturn.errorFlag = true; }
                 else
                 {
                     effectReturn.topText = effectResolve.topText;
                     effectReturn.bottomText = effectResolve.bottomText;
                     effectReturn.isAction = false;
-                }
+                }*/
             }
             else if (effect.apply.name.Equals("MetaGame", StringComparison.Ordinal) == true)
             {
                 //MetaGame effects
                 effectResolve = ResolveMetaGame(effect, dataInput);
+                effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
             }
             //Non-Topic effect
             else
@@ -2478,6 +2481,34 @@ public class EffectManager : MonoBehaviour
             Debug.LogError("Invalid Effect (null)");
             effectReturn = null;
         }
+        return effectReturn;
+    }
+    #endregion
+
+    #region ConvertEffectResolveToReturn
+    /// <summary>
+    /// subMethod for ProcessEffect to convert EffectDataResolve into EffectDataReturn
+    /// </summary>
+    /// <param name="dataResolve"></param>
+    /// <param name="dataReturn"></param>
+    private EffectDataReturn ConvertEffectResolveToReturn(EffectDataResolve effectResolve, EffectDataReturn  effectReturn)
+    {
+        if (effectResolve != null)
+        {
+            if (effectReturn != null)
+            {
+                if (effectResolve.isError == true)
+                { effectReturn.errorFlag = true; }
+                else
+                {
+                    effectReturn.topText = effectResolve.topText;
+                    effectReturn.bottomText = effectResolve.bottomText;
+                    effectReturn.isAction = false;
+                }
+            }
+            else { Debug.LogError("Invalid EffectDataReturn (Null)"); }
+        }
+        else { Debug.LogError("Invalid EffectDataResolve (Null)"); }
         return effectReturn;
     }
     #endregion
@@ -4036,53 +4067,39 @@ public class EffectManager : MonoBehaviour
     {
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
-        MetaEffectData metaData = GameManager.instance.metaScript.GetMetaEffectData();
-        if (metaData != null)
+        effectResolve.bottomText = "Unknown";
+        switch (effect.outcome.name)
         {
-            effectResolve.bottomText = "Unknown";
-            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaOptionName);
-            if (metaOption != null)
-            {
-                switch (effect.outcome.name)
-                {
-                    case "MetaOptionDismissed":
-                        GameManager.instance.metaScript.SetMetaGameDismissed(false);
-                        effectResolve.bottomText = "Dismissed Subordinates are excluded";
-                        break;
-                    case "MetaOptionResigned":
-                        GameManager.instance.metaScript.SetMetaGameResigned(false);
-                        effectResolve.bottomText = "Subordinates who Resigned are excluded";
-                        break;
-                    case "MetaOptionTraitor":
-                        GameManager.instance.metaScript.SetMetaGameTraitor(false);
-                        effectResolve.bottomText = "Traitorous Subordinates are excluded";
-                        break;
-                    case "MetaOptionMotivation":
-                        GameManager.instance.metaScript.SetMetaGameMotivation(false);
-                        effectResolve.bottomText = "Low Motivation Subordinates are excluded";
-                        break;
-                    case "MetaOptionLevel2":
-                        //level 2 and 3 are binary choices
-                        GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
-                        GameManager.instance.metaScript.SetMetaGameLevelThree(false);
-                        effectResolve.bottomText = "All Subordinates will be level 2";
-                        break;
-                    case "MetaOptionLevel3":
-                        //level 2 and 3 are binary choices
-                        GameManager.instance.metaScript.SetMetaGameLevelThree(true);
-                        GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
-                        effectResolve.bottomText = "All Subordinates will be level 3";
-                        break;
-                    default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Invalid metaOption (Null)");
-
-            }
+            case "MetaOptionDismissed":
+                GameManager.instance.metaScript.SetMetaGameDismissed(false);
+                effectResolve.bottomText = "Dismissed Subordinates are excluded";
+                break;
+            case "MetaOptionResigned":
+                GameManager.instance.metaScript.SetMetaGameResigned(false);
+                effectResolve.bottomText = "Subordinates who Resigned are excluded";
+                break;
+            case "MetaOptionTraitor":
+                GameManager.instance.metaScript.SetMetaGameTraitor(false);
+                effectResolve.bottomText = "Traitorous Subordinates are excluded";
+                break;
+            case "MetaOptionMotivation":
+                GameManager.instance.metaScript.SetMetaGameMotivation(false);
+                effectResolve.bottomText = "Low Motivation Subordinates are excluded";
+                break;
+            case "MetaOptionLevel2":
+                //level 2 and 3 are binary choices
+                GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
+                GameManager.instance.metaScript.SetMetaGameLevelThree(false);
+                effectResolve.bottomText = "All Subordinates will be level 2";
+                break;
+            case "MetaOptionLevel3":
+                //level 2 and 3 are binary choices
+                GameManager.instance.metaScript.SetMetaGameLevelThree(true);
+                GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
+                effectResolve.bottomText = "All Subordinates will be level 3";
+                break;
+            default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }
-        else { Debug.LogWarning("Invalid metaEffectData (Null)"); }
         return effectResolve;
     }
 
