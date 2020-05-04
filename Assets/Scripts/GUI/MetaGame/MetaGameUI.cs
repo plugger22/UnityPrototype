@@ -1142,7 +1142,7 @@ public class MetaGameUI : MonoBehaviour
             renownAmount.text = renownCurrent.ToString();
             //empty dict
             dictOfSelected.Clear();
-       
+
             //update current item
             if (highlightIndex > -1)
             {
@@ -1190,8 +1190,67 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     public void ExecuteConfirm()
     {
+        int count;
+        //data packages
+        EffectDataReturn effectReturn = new EffectDataReturn();
+        EffectDataInput effectInput = new EffectDataInput();
+        StringBuilder builder = new StringBuilder();
+        //
+        // - - - Process Effects
+        //
+        //use Player node (still viable as new level not yet created)
+        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+        if (node != null)
+        {
+            //loop dict and add all to effects
+            foreach (var data in dictOfSelected)
+            {
+                if (data.Value != null)
+                {
+                    count = data.Value.listOfEffects.Count;
+                    if (count > 0)
+                    {
+                        effectInput.originText = data.Key;
+                        effectInput.dataName = data.Value.dataName;
+                        for (int i = 0; i < count; i++)
+                        {
+                            Effect effect = data.Value.listOfEffects[i];
+                            if (effect != null)
+                            {
+                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                                if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                                { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
+                                else { builder.Append(effectReturn.bottomText); }
+                            }
+                            else { Debug.LogWarningFormat("metaData \"{0}\" effect invalid (Null) for listOfEffects[{1}]", data.Key, i); }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("metaData \"{0}\" has no Effects (listOfEffects empty)", data.Key); }
+                }
+                else { Debug.LogWarningFormat("Invalid metaData (Null) in dictOfSelected for \"{0}\"", data.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid playerNode (Null), metaData effects not process"); }
+        //
+        // - - - Effects Outcome
+        //
+        //confirmation outcome popup
+        ModalOutcomeDetails details = new ModalOutcomeDetails()
+        {
+            side = GameManager.instance.sideScript.PlayerSide,
+            textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
+            textBottom = builder.ToString(),
+            sprite = GameManager.instance.guiScript.infoSprite,
+            modalLevel = 2,
+            modalState = ModalSubState.MetaGame,
+            reason = "Effect Outcomes"
+        };
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
 
-
+        //
+        // - - - Close main UI
+        //
         CloseMetaUI();
     }
 
@@ -1209,7 +1268,7 @@ public class MetaGameUI : MonoBehaviour
             {
                 if (dictOfSelected.Count > 0)
                 {
-                    foreach(var data in dictOfSelected)
+                    foreach (var data in dictOfSelected)
                     {
                         if (data.Value != null)
                         {

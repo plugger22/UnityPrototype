@@ -339,3 +339,32 @@ City seed 765 -> New York, America
 Dev seed 42001 -> Monday, 4 May 2020 10:15 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 54348 -> Monday, 4 May 2020 12:03 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21114 -> Monday, 4 May 2020 12:36 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 42675 -> Monday, 4 May 2020 12:52 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid metaEffectData (Null)
+UnityEngine.Debug:LogWarning(Object)
+	EffectManager:ResolveMetaGame(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4085)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1935)
+	MetaGameUI:ExecuteConfirm() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:1220)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:495)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:299)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America
+
+Dev seed 63005 -> Monday, 4 May 2020 12:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 25373 -> Monday, 4 May 2020 1:03 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
