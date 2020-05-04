@@ -96,7 +96,7 @@ public class ColourManager : MonoBehaviour
         //automatically handle an access call to an arrayIndex that hasn't been populated
         try
         {
-            colourTag = arrayOfColours[(int)colour, (int)GameManager.instance.optionScript.ColourOption].hexCode;
+            colourTag = GameManager.instance.colourScript.arrayOfColours[(int)colour, (int)GameManager.instance.optionScript.ColourOption].hexCode;
         }
         catch (IndexOutOfRangeException)
         {

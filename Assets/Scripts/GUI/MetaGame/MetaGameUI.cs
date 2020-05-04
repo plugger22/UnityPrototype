@@ -117,7 +117,7 @@ public class MetaGameUI : MonoBehaviour
     //MetaData
     private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
     List<MetaData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
-    List<MetaData> listOfSelected = new List<MetaData>();                                    //dynamic list that contains all currently selected metaData
+    Dictionary<string, MetaData> dictOfSelected = new Dictionary<string, MetaData>();        //selected items, key is metaData.metaName, value metaData
 
     //scroll bar LHS
     private ScrollRect scrollRect;                                   //needed to manually disable scrolling when not needed
@@ -275,7 +275,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonInteractionSelect != null, "Invalid buttonInteractionSelect (Null)");
         Debug.Assert(buttonInteractionDeselect != null, "Invalid buttonInteractionDeselect (Null)");
         //buttons -> assign button events
-        buttonInteractionConfirm.SetButton(EventType.MetaGameClose);
+        buttonInteractionConfirm.SetButton(EventType.MetaGameConfirm);
         buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
         buttonInteractionDeselect.SetButton(EventType.MetaGameDeselect);
         buttonInteractionReset.SetButton(EventType.MetaGameReset);
@@ -446,6 +446,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameConfirm, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -489,6 +490,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameReset:
                 ExecuteReset();
+                break;
+            case EventType.MetaGameConfirm:
+                ExecuteConfirm();
                 break;
             /*case EventType.MainInfoHome:
                 ExecuteButtonHome();
@@ -1050,8 +1054,11 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
-                //Add to listOfSelected
-                listOfSelected.Add(metaData);
+                //add to dictOfSelected
+                try
+                { dictOfSelected.Add(metaData.metaName, metaData); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Invalid metaName (duplicate) in dictOfSelected for \"{0}\"", metaData.metaName); }
                 //adjust renown display
                 renownCurrent -= metaData.renownCost;
                 renownCurrent = Mathf.Max(0, renownCurrent);
@@ -1081,10 +1088,10 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
-                //remove from listOfSelected
-                if (listOfSelected.Exists(met => met.metaName.Equals(metaData.metaName, StringComparison.Ordinal)) == true)
-                { listOfSelected.Remove(metaData); }
-                else { Debug.LogWarningFormat("metaData \"{0}\" not found in listOfSelected", metaData.metaName); }
+                //remove from dictOfSelected
+                if (dictOfSelected.ContainsKey(metaData.metaName) == true)
+                { dictOfSelected.Remove(metaData.metaName); }
+                else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
                 //adjust renown display
                 renownCurrent += metaData.renownCost;
                 renownAmount.text = renownCurrent.ToString();
@@ -1118,26 +1125,24 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteReset()
     {
-        int count = listOfSelected.Count;
-        if (count > 0)
+        if (dictOfSelected.Count > 0)
         {
-            //loop list and set all to isActive false
-            for (int i = 0; i < count; i++)
+            //set all selected metaData to isSelected false
+            foreach (var data in dictOfSelected)
             {
-                MetaData data = listOfSelected[i];
-                if (data != null)
+                if (data.Value != null)
                 {
-                    data.isSelected = false;
+                    data.Value.isSelected = false;
                     //update renown
-                    renownCurrent += data.renownCost;
-                    Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteReset: metaData \"{0}\" Deselected (Reset button pressed){1}", data.metaName, "\n");
+                    renownCurrent += data.Value.renownCost;
+                    Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteReset: metaData \"{0}\" Deselected (Reset button pressed){1}", data.Key, "\n");
                 }
-                else { Debug.LogWarningFormat("Invalid metaData (Null) in listOfSelected[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid metaData (Null) for \"{0}\" in dictOfSelected", data.Key); }
             }
             renownAmount.text = renownCurrent.ToString();
-            //empty list
-            listOfSelected.Clear();
-
+            //empty dict
+            dictOfSelected.Clear();
+       
             //update current item
             if (highlightIndex > -1)
             {
@@ -1161,17 +1166,16 @@ public class MetaGameUI : MonoBehaviour
                             buttonHelpCentre.gameObject.SetActive(false);
                             buttonHelpCombined.gameObject.SetActive(true);
                             buttonSelect.gameObject.SetActive(true);
-                         }
+                        }
                     }
                 }
             }
-
             //confirmation outcome popup
             ModalOutcomeDetails details = new ModalOutcomeDetails()
             {
                 side = GameManager.instance.sideScript.PlayerSide,
                 textTop = string.Format("{0}RESET{1}", colourNeutral, colourEnd),
-                textBottom = "All options are now available again for selection",
+                textBottom = "All available options are now ready for selection again",
                 sprite = GameManager.instance.guiScript.infoSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
@@ -1182,29 +1186,37 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Debug display of listOfSelected metaData
+    /// Confirm button pressed
+    /// </summary>
+    public void ExecuteConfirm()
+    {
+
+
+        CloseMetaUI();
+    }
+
+    /// <summary>
+    /// Debug display of dictOfSelected metaData
     /// </summary>
     /// <returns></returns>
     public string DebugDisplaySelected()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- MetaGameUI.cs -> listOfSelected{0}{1}", "\n", "\n");
+        builder.AppendFormat("- MetaGameUI.cs -> dictOfSelected{0}{1}", "\n", "\n");
         if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
         {
             if (GameManager.instance.inputScript.ModalMetaState == ModalMetaSubState.PlayerOptions)
             {
-                int count = listOfSelected.Count;
-                if (count > 0)
+                if (dictOfSelected.Count > 0)
                 {
-                    for (int i = 0; i < count; i++)
+                    foreach(var data in dictOfSelected)
                     {
-                        MetaData data = listOfSelected[i];
-                        if (data != null)
+                        if (data.Value != null)
                         {
-                            builder.AppendFormat(" {0}, cost {1} R, dataN {2}, dataT {3}{4}", data.metaName, data.renownCost, 
-                                string.IsNullOrEmpty(data.metaName) ? "n.a" : data.dataName, string.IsNullOrEmpty(data.dataTag) ? "n.a" : data.dataTag, "\n");
+                            builder.AppendFormat(" {0}, cost {1} R, dataN {2}, dataT {3}{4}", data.Key, data.Value.renownCost,
+                                string.IsNullOrEmpty(data.Key) ? "n.a" : data.Value.dataName, string.IsNullOrEmpty(data.Value.dataTag) ? "n.a" : data.Value.dataTag, "\n");
                         }
-                        else { Debug.LogWarningFormat("Invalid metaData in listOfSelected[{0}]", i); }
+                        else { Debug.LogWarningFormat("Invalid metaData in dictOfSelected[{0}]", data.Key); }
                     }
                 }
                 else { builder.AppendFormat(" Nothing selected"); }
