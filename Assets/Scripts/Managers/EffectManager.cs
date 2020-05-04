@@ -1956,14 +1956,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             effectResolve = ResolveNodeData(effect, node, dataInput);
-                            if (effectResolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = effectResolve.topText;
-                                effectReturn.bottomText = effectResolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         }
                         else
                         {
@@ -1986,14 +1979,7 @@ public class EffectManager : MonoBehaviour
                         {
                             //it's OK to pass a null actor provided it's a player condition
                             effectResolve = ResolveConditionData(effect, node, dataInput, actor);
-                            if (effectResolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = effectResolve.topText;
-                                effectReturn.bottomText = effectResolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         }
                         else
                         {
@@ -2007,14 +1993,7 @@ public class EffectManager : MonoBehaviour
                     case "Innocence":
                     case "PlayerActions":
                         effectResolve = ResolvePlayerData(effect, dataInput);
-                        if (effectResolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = effectResolve.topText;
-                            effectReturn.bottomText = effectResolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
                     //
                     // - - - Capture Tools - - -
@@ -2036,14 +2015,7 @@ public class EffectManager : MonoBehaviour
                         if (actor != null)
                         {
                             effectResolve = ResolveManageData(effect, actor);
-                            if (effectResolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = effectResolve.topText;
-                                effectReturn.bottomText = effectResolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         }
                         break;
                     //
@@ -2060,14 +2032,7 @@ public class EffectManager : MonoBehaviour
                     case "OpennessBad":
                     case "OpennessGood":
                         effectResolve = ResolveMoodData(effect, dataInput);
-                        if (effectResolve.isError == true)
-                        { effectReturn.errorFlag = true; }
-                        else
-                        {
-                            effectReturn.topText = effectResolve.topText;
-                            effectReturn.bottomText = effectResolve.bottomText;
-                            effectReturn.isAction = true;
-                        }
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
                     //
                     // - - - Special Actor Effects - - -
@@ -2077,14 +2042,7 @@ public class EffectManager : MonoBehaviour
                         if (actor != null)
                         {
                             effectResolve = ResolveSpecialActorEffect(effect, actor);
-                            if (effectResolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = effectResolve.topText;
-                                effectReturn.bottomText = effectResolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         }
                         break;
                     //
@@ -2187,14 +2145,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             effectResolve = ResolveConnectionData(effect, node, dataInput);
-                            if (effectResolve.isError == true)
-                            { effectReturn.errorFlag = true; }
-                            else
-                            {
-                                effectReturn.topText = effectResolve.topText;
-                                effectReturn.bottomText = effectResolve.bottomText;
-                                effectReturn.isAction = true;
-                            }
+                            effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         }
                         else
                         {

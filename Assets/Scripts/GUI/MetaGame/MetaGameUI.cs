@@ -1235,18 +1235,27 @@ public class MetaGameUI : MonoBehaviour
         //
         // - - - Effects Outcome
         //
-        //confirmation outcome popup
-        ModalOutcomeDetails details = new ModalOutcomeDetails()
+        ModalStateData modalData = new ModalStateData()
         {
-            side = GameManager.instance.sideScript.PlayerSide,
-            textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
-            textBottom = builder.ToString(),
-            sprite = GameManager.instance.guiScript.infoSprite,
-            modalLevel = 2,
-            modalState = ModalSubState.MetaGame,
-            reason = "Effect Outcomes"
+            mainState = ModalSubState.MetaGame,
+            metaState = ModalMetaSubState.OptionsConfirm
         };
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        GameManager.instance.inputScript.SetModalState(modalData);
+        if (builder.Length > 0)
+        {
+            //confirmation outcome popup
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
+                textBottom = builder.ToString(),
+                sprite = GameManager.instance.guiScript.infoSprite,
+                modalLevel = 2,
+                modalState = ModalSubState.MetaGame,
+                reason = "Effect Outcomes"
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
 
         //
         // - - - Close main UI
