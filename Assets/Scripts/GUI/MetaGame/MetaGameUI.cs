@@ -370,13 +370,13 @@ public class MetaGameUI : MonoBehaviour
                     {
                         arrayMetaBackground[index] = child;
                         //attached interaction script
-                        MainInfoRightItemUI itemScript = child.GetComponent<MainInfoRightItemUI>();
+                        ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
                         if (itemScript != null)
                         {
                             itemScript.SetItemIndex(index, numOfItemsTotal);
                             itemScript.SetUIType(MajorUI.MetaGameUI);
                         }
-                        else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for arrayMetaMain[{0}]", index); }
+                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for arrayMetaMain[{0}]", index); }
                     }
                     else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
                     { arrayMetaIcon[index] = child; }

@@ -503,13 +503,13 @@ public class MainInfoUI : MonoBehaviour
                     {
                         arrayItemBackground[index] = child;
                         //attached interaction script
-                        MainInfoRightItemUI itemScript = child.GetComponent<MainInfoRightItemUI>();
+                        ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
                         if (itemScript != null)
                         {
                             itemScript.SetItemIndex(index, numOfItemsTotal);
                             itemScript.SetUIType(MajorUI.MainInfoApp);
                         }
-                        else { Debug.LogWarningFormat("Invalid MainInfoRightItemUI component (Null) for mainItemArray[{0}]", index); }
+                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for mainItemArray[{0}]", index); }
                     }
                     else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
                     { arrayItemIcon[index] = child; }

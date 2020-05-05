@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// handles item interaction (click) for RHS. Click on an item and display details in LHS  (NOTE: sides have been reversed to what is described, eg. click on LHS item and display details in RHS)
+/// handles item interaction (click) for MainInfoApp and MetaGame items. Click on an item and display details 
 /// NOTE: multi-use code for both MainInfoApp and MetaGameUI
 /// </summary>
-public class MainInfoRightItemUI : MonoBehaviour, IPointerClickHandler
+public class ItemInteractionUI : MonoBehaviour, IPointerClickHandler
 {
 
     private int itemIndex = -1;          //assigned at start by MainInfoUI, corresponds to listOfCurrentPageData[index]
@@ -20,7 +20,7 @@ public class MainInfoRightItemUI : MonoBehaviour, IPointerClickHandler
     {
         Debug.Assert(index > -1 && index < maxItemNumber, string.Format("Invalid index (must be > -1 && < {0})", maxItemNumber));
         itemIndex = index;
-        /*Debug.LogFormat("[Tst] MainInfoRightItemUI.cs -> SetItemIndex: itemIndex {0}{1}", itemIndex, "\n");*/
+        /*Debug.LogFormat("[Tst] ItemInteractionUI.cs -> SetItemIndex: itemIndex {0}{1}", itemIndex, "\n");*/
     }
 
     public void SetUIType(MajorUI majorTypeUI)
@@ -42,17 +42,20 @@ public class MainInfoRightItemUI : MonoBehaviour, IPointerClickHandler
                     //same for left or right click
                     case PointerEventData.InputButton.Left:
                     case PointerEventData.InputButton.Right:
-                        EventManager.instance.PostNotification(EventType.MainInfoShowDetails, this, itemIndex, "MainInfoRightItemUI.cs -> OnPointClick");
+                        EventManager.instance.PostNotification(EventType.MainInfoShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
                         break;
                 }
                 break;
             case MajorUI.MetaGameUI:
                 switch (eventData.button)
                 {
-                    //same for left or right click
                     case PointerEventData.InputButton.Left:
+                        //show details
+                        EventManager.instance.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick"); break;
                     case PointerEventData.InputButton.Right:
-                        EventManager.instance.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "MainInfoRightItemUI.cs -> OnPointClick");
+                        //show details and select/deselect
+                        EventManager.instance.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
+                        EventManager.instance.PostNotification(EventType.MetaGameButton, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
                         break;
                 }
                 break;
