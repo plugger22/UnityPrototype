@@ -48643,7 +48643,7 @@ Prefab:
     - target: {fileID: 224600551189022118, guid: e578a145b6adfd74382846bfa4b61b72,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224600551189022118, guid: e578a145b6adfd74382846bfa4b61b72,
         type: 2}
@@ -48746,7 +48746,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+      objectReference: {fileID: 21300000, guid: 71422af69eca06243a7750d305bbdff6,
         type: 3}
     - target: {fileID: 114837592937466690, guid: e578a145b6adfd74382846bfa4b61b72,
         type: 2}
@@ -53073,7 +53073,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278905850
-  m_fontColor: {r: 0.9811321, g: 0.9246165, b: 0.041651815, a: 1}
+  m_fontColor: {r: 1, g: 0.627451, b: 0.47843137, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -54469,7 +54469,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 719.6, y: -30}
-  m_SizeDelta: {x: 200, y: 40}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1760176934
 MonoBehaviour:
@@ -54510,7 +54510,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 1824b016b1f6ae24ca034d9d7b9824c3,
+    m_HighlightedSprite: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
       type: 3}
     m_PressedSprite: {fileID: 21300002, guid: 25317bedffad9084c85a2a1affae186d, type: 3}
     m_DisabledSprite: {fileID: 0}
@@ -54557,7 +54557,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 71422af69eca06243a7750d305bbdff6, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -54916,7 +54916,7 @@ Prefab:
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224952120437344228, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
@@ -54994,6 +54994,12 @@ Prefab:
     - target: {fileID: 114955232577186950, guid: a9c4bff2707d81d4494c581e6051a17e,
         type: 2}
       propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 71422af69eca06243a7750d305bbdff6,
+        type: 3}
+    - target: {fileID: 114622461413177228, guid: a9c4bff2707d81d4494c581e6051a17e,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
       value: 
       objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
         type: 3}

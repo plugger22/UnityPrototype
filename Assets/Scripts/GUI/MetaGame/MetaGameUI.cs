@@ -1247,9 +1247,11 @@ public class MetaGameUI : MonoBehaviour
                 metaState = ModalMetaSubState.OptionsConfirm
             };
             GameManager.instance.inputScript.SetModalState(modalData);
-
+            //check options have been selected
             if (builder.Length > 0)
             {
+                //add renown note
+                builder.AppendFormat("{0}{1}{2}{3}{4} Renown will carry over", "\n", "\n", colourNeutral, renownCurrent, colourEnd);
                 //confirmation outcome popup
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {

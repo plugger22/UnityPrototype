@@ -4019,35 +4019,37 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         effectResolve.bottomText = "Unknown";
+        string colourEffect = colourGood;
+        if (effect.typeOfEffect.name.Equals("Bad", StringComparison.Ordinal) == true) { colourEffect = colourBad; }
         switch (effect.outcome.name)
         {
             case "MetaOptionDismissed":
                 GameManager.instance.metaScript.SetMetaGameDismissed(false);
-                effectResolve.bottomText = "Dismissed Subordinates are excluded";
+                effectResolve.bottomText = string.Format("{0}Dismissed Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionResigned":
                 GameManager.instance.metaScript.SetMetaGameResigned(false);
-                effectResolve.bottomText = "Subordinates who Resigned are excluded";
+                effectResolve.bottomText = string.Format("{0}Subordinates who Resigned are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionTraitor":
                 GameManager.instance.metaScript.SetMetaGameTraitor(false);
-                effectResolve.bottomText = "Traitorous Subordinates are excluded";
+                effectResolve.bottomText = string.Format("{0}Traitorous Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionMotivation":
                 GameManager.instance.metaScript.SetMetaGameMotivation(false);
-                effectResolve.bottomText = "Low Motivation Subordinates are excluded";
+                effectResolve.bottomText = string.Format("{0}Low Motivation Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionLevel2":
                 //level 2 and 3 are binary choices
                 GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
                 GameManager.instance.metaScript.SetMetaGameLevelThree(false);
-                effectResolve.bottomText = "All Subordinates will be level 2";
+                effectResolve.bottomText = string.Format("{0}All Subordinates will be level 2{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionLevel3":
                 //level 2 and 3 are binary choices
                 GameManager.instance.metaScript.SetMetaGameLevelThree(true);
                 GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
-                effectResolve.bottomText = "All Subordinates will be level 3";
+                effectResolve.bottomText = string.Format("{0}All Subordinates will be level 3{1}", colourEffect, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }
