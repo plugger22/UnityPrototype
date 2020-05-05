@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalActionMenu actionMenuScript;          //Modal Action Menu (node)
     [HideInInspector] public ModalMainMenu mainMenuScript;              //Modal Main Menu
     [HideInInspector] public ModalOutcome outcomeScript;                //Modal Outcome window
+    [HideInInspector] public ModalConfirm confirmScript;                //Modal Confirm window
     [HideInInspector] public ModalTeamPicker teamPickerScript;          //Modal Team Picker window
     [HideInInspector] public ModalGenericPicker genericPickerScript;    //Modal Generic Picker window
     [HideInInspector] public ModalInventoryUI inventoryScript;          //Modal InventoryUI window
@@ -232,6 +233,7 @@ public class GameManager : MonoBehaviour
         actionMenuScript = ModalActionMenu.Instance();
         mainMenuScript = ModalMainMenu.Instance();
         outcomeScript = ModalOutcome.Instance();
+        confirmScript = ModalConfirm.Instance();
         teamPickerScript = ModalTeamPicker.Instance();
         genericPickerScript = ModalGenericPicker.Instance();
         inventoryScript = ModalInventoryUI.Instance();

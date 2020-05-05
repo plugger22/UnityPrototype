@@ -13,21 +13,14 @@ using packageAPI;
 /// </summary>
 public class ModalOutcome : MonoBehaviour
 {
+    public GameObject modalOutcomeWindow;
+
     public TextMeshProUGUI topText;
     public TextMeshProUGUI bottomText;
     public Image outcomeImage;
     public Button confirmButton;
     public Button helpButton;
-
-
-    /*[Tooltip("Sprite used to skin Confirm button for an Authority Outcome")]
-    public Sprite buttonSpriteAuthority;
-    [Tooltip("Sprite used to skin Confirm button for a Rebel Outcome")]
-    public Sprite buttonSpriteResistance;*/
-    
-
-    //public GameObject modalOutcomeObject;
-    public GameObject modalOutcomeWindow;
+   
 
     private static ModalOutcome modalOutcome;
     private RectTransform rectTransform;
@@ -70,7 +63,7 @@ public class ModalOutcome : MonoBehaviour
     }
 
     /// <summary>
-    /// provide a static reference to tooltipNode that can be accessed from any script
+    /// provide a static reference to ModalOutcome that can be accessed from any script
     /// </summary>
     /// <returns></returns>
     public static ModalOutcome Instance()

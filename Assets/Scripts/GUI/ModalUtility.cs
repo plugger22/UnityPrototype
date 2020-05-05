@@ -141,6 +141,28 @@ namespace modalAPI
     }
 
     /// <summary>
+    /// ModalConfirm window data package
+    /// </summary>
+    public class ModalConfirmDetails
+    {
+        public string topText;                  //Statement text, eg. 'You have not chosen any options'
+        public string bottomText;               //Question text, eg. 'Continue?' (displayed in colourNeutral)
+        public string buttonFalse;              //text of left button, default 'No', returns false if selected
+        public string buttonTrue;               //text of right button, default 'Yes', returns true if selected
+        public int modalLevel;                  //modal level of outcome window, default 1
+        public ModalSubState modalState;        //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
+
+        public ModalConfirmDetails()
+        {
+            bottomText = "Are you sure?";
+            buttonFalse = "No";
+            buttonTrue = "Yes";
+            modalLevel = 1;
+            modalState = ModalSubState.None;
+        }
+    }
+
+    /// <summary>
     /// data stored from NodeManager.cs -> CreateMoveMenu -> ProcessPlayerMove
     /// </summary>
     public class ModalMoveDetails
