@@ -37,7 +37,7 @@ public enum EventType
     CloseOutcomeWindow,
     OpenOutcomeWindow,
     //ModalConfirm
-    ConfirmWindowOpen,
+    OpenConfirmWindow,
     ConfirmCloseLeft,
     ConfirmCloseRight,
     //highlighted node or connection

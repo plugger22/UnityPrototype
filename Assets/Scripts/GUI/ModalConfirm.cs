@@ -1,7 +1,5 @@
 ﻿using gameAPI;
 using modalAPI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +16,18 @@ public class ModalConfirm : MonoBehaviour
     public TextMeshProUGUI bottomText;
     public Button buttonFalse;
     public Button buttonTrue;
+    public TextMeshProUGUI buttonFalseText;
+    public TextMeshProUGUI buttonTrueText;
 
     public static ModalConfirm modalConfirm;
 
     private TextMeshProUGUI falseText;                      //false button text (default 'No')
     private TextMeshProUGUI trueText;                       //true button text (default 'Yes')
 
-    private int modalLevel;                                 //modal level of menu, passed in by ModalConfirmDetails in SetModalOutcome
+    private int modalLevel;                                 //modal level of menu, passed in by ModalConfirmDetails in SetModalConfirm
     private ModalSubState modalState;                       //modal state to return to once confirm window closed (handles modalLevel 2+ cases, ignored for rest)
+
+    private bool result;                                    //outcome of button press, false for buttonFalse, true for button true. Retrieve by CheckResult()
 
 
     /// <summary>
@@ -54,18 +56,19 @@ public class ModalConfirm : MonoBehaviour
         //buttons -> interaction components
         ButtonInteraction interactLeft = buttonFalse.GetComponent<ButtonInteraction>();
         if (interactLeft != null)
-        { interactLeft.SetButton(EventType.CloseOutcomeWindow); }
+        { interactLeft.SetButton(EventType.ConfirmCloseLeft); }
         ButtonInteraction interactRight = buttonTrue.GetComponent<ButtonInteraction>();
         if (interactRight != null)
-        { interactRight.SetButton(EventType.CloseOutcomeWindow); }
+        { interactRight.SetButton(EventType.ConfirmCloseRight); }
         //buttons -> text components
-        falseText = buttonFalse.GetComponent<TextMeshProUGUI>();
-        trueText = buttonTrue.GetComponent<TextMeshProUGUI>();
+        falseText = buttonFalseText.GetComponent<TextMeshProUGUI>();
+        trueText = buttonTrueText.GetComponent<TextMeshProUGUI>();
         Debug.Assert(falseText != null, "Invalid falseText (Null)");
         Debug.Assert(trueText != null, "Invalid trueText (Null)");
         //register a listener
         EventManager.instance.AddListener(EventType.ConfirmCloseLeft, OnEvent, "ModalConfirm");
         EventManager.instance.AddListener(EventType.ConfirmCloseRight, OnEvent, "ModalConfirm");
+        EventManager.instance.AddListener(EventType.OpenConfirmWindow, OnEvent, "ModalConfirm");
     }
 
 
@@ -80,7 +83,7 @@ public class ModalConfirm : MonoBehaviour
         //detect event type
         switch (eventType)
         {
-            case EventType.ConfirmWindowOpen:
+            case EventType.OpenConfirmWindow:
                 ModalConfirmDetails details = Param as ModalConfirmDetails;
                 SetModalConfirm(details);
                 break;
@@ -117,6 +120,8 @@ public class ModalConfirm : MonoBehaviour
             //set states
             GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Confirm });
             Debug.LogFormat("[UI] ModalConfirm.cs -> SetModalConfirm{0}", "\n");
+            //switch on object
+            confirmObject.SetActive(true);
         }
         else { Debug.LogError("Invalid ModalConfirmDetails (Null)"); }
     }
@@ -128,6 +133,7 @@ public class ModalConfirm : MonoBehaviour
     {
 
         CloseConfirm();
+        result = false;
     }
 
 
@@ -138,6 +144,7 @@ public class ModalConfirm : MonoBehaviour
     {
 
         CloseConfirm();
+        result = true;
     }
 
     /// <summary>
@@ -154,6 +161,13 @@ public class ModalConfirm : MonoBehaviour
         //clear flag so execution can continue (if halted to await outcome)
         GameManager.instance.guiScript.waitUntilDone = false;
     }
+
+    /// <summary>
+    /// Returns result of ConfirmWindow button press. False if buttonFalse pressed (left button), true if buttonTrue pressed (right button)
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckResult()
+    { return result; }
 
     //new methods above here
 }

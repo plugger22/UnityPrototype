@@ -658,6 +658,9 @@ public class MetaGameUI : MonoBehaviour
         GameManager.instance.guiScript.SetIsBlocked(false);
         GameManager.instance.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
+        //update player renown
+        GameManager.instance.playerScript.Renown = renownCurrent;
+        Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
     }
@@ -1259,23 +1262,33 @@ public class MetaGameUI : MonoBehaviour
                     reason = "Effect Outcomes"
                 };
                 EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
-                //need a coroutine to handle execution to prevent windows closing prematurely
-                StartCoroutine(CloseMetaGameUI(details));
+                //need a coroutine to handle execution to prevent metaGameUI closing prematurely
+                StartCoroutine(CloseMetaGameOutcome(details));
             }
         }
         else
         {
-            //nothing selected -> Warning message
-
+            //nothing selected -> Confirm continue?
+            ModalConfirmDetails details = new ModalConfirmDetails()
+            {
+                topText =  string.Format("You haven't selected any options<br>{0}<b>{1}</b>{2} Renown will carry over", colourNeutral, renownCurrent, colourEnd),
+                buttonFalse = "BACK",
+                buttonTrue = "CONTINUE",
+                modalLevel = 2,
+                modalState = ModalSubState.MetaGame
+            };
+            EventManager.instance.PostNotification(EventType.OpenConfirmWindow, this, details);
+            //need a coroutine to handle execution to prevent metaGameUI closing prematurely
+            StartCoroutine(CloseMetaGameConfirm(details));
         }
     }
 
     /// <summary>
-    /// Master coroutine
+    /// Master coroutine for outcome window
     /// </summary>
     /// <param name="details"></param>
     /// <returns></returns>
-    IEnumerator CloseMetaGameUI(ModalOutcomeDetails details)
+    IEnumerator CloseMetaGameOutcome(ModalOutcomeDetails details)
     {
         GameManager.instance.guiScript.waitUntilDone = true;
         //wait for outcome window to be closed
@@ -1296,6 +1309,36 @@ public class MetaGameUI : MonoBehaviour
         yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
     }
 
+    /// <summary>
+    /// Master coroutine for confirm dialogue
+    /// </summary>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    IEnumerator CloseMetaGameConfirm(ModalConfirmDetails details)
+    {
+        GameManager.instance.guiScript.waitUntilDone = true;
+        //wait for confirm window to be closed
+        yield return CloseConfirm(details);
+        //check result -> close and continue or close and revert back to MetaGameUI
+        if (GameManager.instance.confirmScript.CheckResult() == true)
+        {
+            //True button pressed - > close metaGameUI
+            CloseMetaUI();
+            Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaGameConfirm: Nooptions selected{0}", "\n");
+        }
+    }
+
+    /// <summary>
+    /// handles confirm window asking are you sure you want to continue (didn't select any options)
+    /// </summary>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    IEnumerator CloseConfirm(ModalConfirmDetails details)
+    {
+        EventManager.instance.PostNotification(EventType.OpenConfirmWindow, this, details);
+        //will wait until ModalConfirm -> True or False button pressed which resets flag
+        yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
+    }
 
 
     /// <summary>

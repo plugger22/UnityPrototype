@@ -432,3 +432,33 @@ City seed 765 -> New York, America
 
 Dev seed 14108 -> Tuesday, 5 May 2020 11:20 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 9835 -> Tuesday, 5 May 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38149 -> Tuesday, 5 May 2020 2:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37715 -> Tuesday, 5 May 2020 3:00 PM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalConfirm.Start () (at Assets/Scripts/GUI/ModalConfirm.cs:62)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 54646 -> Tuesday, 5 May 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62901 -> Tuesday, 5 May 2020 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4267 -> Tuesday, 5 May 2020 3:15 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 31817 -> Tuesday, 5 May 2020 3:18 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 35529 -> Tuesday, 5 May 2020 3:22 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
