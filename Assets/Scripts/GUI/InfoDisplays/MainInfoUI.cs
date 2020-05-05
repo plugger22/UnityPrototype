@@ -157,6 +157,7 @@ public class MainInfoUI : MonoBehaviour
     private Image[] arrayItemIcon;
     private Image[] arrayItemBorder;
     private Image[] arrayItemBackground;
+    private Image[] arrayCheckMark;                                 //these aren't used and are simply switched off
     private Sprite priorityHigh;
     private Sprite priorityMedium;
     private Sprite priorityLow;
@@ -260,6 +261,7 @@ public class MainInfoUI : MonoBehaviour
         arrayItemBorder = new Image[numOfItemsTotal];
         arrayItemBackground = new Image[numOfItemsTotal];
         arrayItemText = new TextMeshProUGUI[numOfItemsTotal];
+        arrayCheckMark = new Image[numOfItemsTotal];
         tabActiveArray = new Image[numOfTabs];
         tabPassiveArray = new Image[numOfTabs];
         tabActiveTextArray = new TextMeshProUGUI[numOfTabs];
@@ -513,6 +515,8 @@ public class MainInfoUI : MonoBehaviour
                     { arrayItemIcon[index] = child; }
                     else if (child.name.Equals("border", StringComparison.Ordinal) == true)
                     { arrayItemBorder[index] = child; }
+                    else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
+                    { arrayCheckMark[index] = child; }
                 }
                 //child components -> Text
                 var childrenText = itemObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -594,6 +598,7 @@ public class MainInfoUI : MonoBehaviour
             arrayItemText[index].gameObject.SetActive(true);
             arrayItemBorder[index].gameObject.SetActive(true);
             arrayItemBackground[index].gameObject.SetActive(true);
+            arrayCheckMark[index].gameObject.SetActive(false);
         }
     }
 
