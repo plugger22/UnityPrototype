@@ -1795,6 +1795,16 @@ Prefab:
       propertyPath: m_Name
       value: scrollItemLight_3
       objectReference: {fileID: 0}
+    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
   m_IsPrefabAsset: 0
@@ -6090,7 +6100,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: ee9fff650767fee419ef476355a11c7a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 00f44d48eee2af9408ef64b87cc30775, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6526,7 +6536,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_Name
@@ -7775,6 +7785,16 @@ Prefab:
       propertyPath: m_Name
       value: scrollItemDark_2
       objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
   m_IsPrefabAsset: 0
@@ -8320,11 +8340,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -8450,7 +8470,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_Name
@@ -9460,7 +9480,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -11642,7 +11662,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -12502,7 +12522,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -12621,7 +12641,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_Name
@@ -15652,11 +15672,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -16513,7 +16533,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_Name
@@ -19069,11 +19089,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -26802,11 +26822,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -27108,7 +27128,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -30133,6 +30153,16 @@ Prefab:
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_Name
       value: scrollItemLight_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
@@ -33378,11 +33408,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -35091,6 +35121,16 @@ Prefab:
       propertyPath: m_Name
       value: scrollItemDark_10
       objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
   m_IsPrefabAsset: 0
@@ -36317,11 +36357,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -39872,6 +39912,16 @@ Prefab:
       propertyPath: m_Name
       value: scrollItemDark_6
       objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
   m_IsPrefabAsset: 0
@@ -42204,7 +42254,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -45936,11 +45986,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -47969,11 +48019,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -48094,6 +48144,16 @@ Prefab:
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_Name
       value: scrollItemDark_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
@@ -51179,7 +51239,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_Name
@@ -53318,7 +53378,7 @@ Prefab:
     - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -54343,7 +54403,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -54837,7 +54897,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -64971,7 +65031,7 @@ Prefab:
     - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_StaticEditorFlags

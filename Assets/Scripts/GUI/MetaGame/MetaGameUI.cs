@@ -108,6 +108,7 @@ public class MetaGameUI : MonoBehaviour
     private TextMeshProUGUI[] arrayMetaText;
     private Image[] arrayMetaIcon;
     private Image[] arrayMetaBorder;
+    private Image[] arrayMetaCheckMark;
     private Image[] arrayMetaBackground;
     //item priority sprites
     private Sprite priorityHigh;
@@ -217,6 +218,7 @@ public class MetaGameUI : MonoBehaviour
         arrayMetaMain = new GameObject[numOfItemsTotal];
         arrayMetaIcon = new Image[numOfItemsTotal];
         arrayMetaBorder = new Image[numOfItemsTotal];
+        arrayMetaCheckMark = new Image[numOfItemsTotal];
         arrayMetaBackground = new Image[numOfItemsTotal];
         arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //other collections
@@ -380,6 +382,8 @@ public class MetaGameUI : MonoBehaviour
                     { arrayMetaIcon[index] = child; }
                     else if (child.name.Equals("border", StringComparison.Ordinal) == true)
                     { arrayMetaBorder[index] = child; }
+                    else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
+                    { arrayMetaCheckMark[index] = child; }
                 }
                 //child components -> Text
                 var childrenText = metaObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -614,6 +618,7 @@ public class MetaGameUI : MonoBehaviour
             arrayMetaIcon[index].gameObject.SetActive(true);
             arrayMetaText[index].gameObject.SetActive(true);
             arrayMetaBorder[index].gameObject.SetActive(true);
+            arrayMetaCheckMark[index].gameObject.SetActive(false);
             arrayMetaBackground[index].gameObject.SetActive(true);
         }
     }
@@ -1072,6 +1077,8 @@ public class MetaGameUI : MonoBehaviour
                 //switch buttons
                 buttonSelect.gameObject.SetActive(false);
                 buttonDeselect.gameObject.SetActive(true);
+                //checkmark
+                arrayMetaCheckMark[highlightIndex].gameObject.SetActive(true);
                 //switch top texts
                 rightTextTop.text = metaData.textDeselect;
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
@@ -1103,6 +1110,8 @@ public class MetaGameUI : MonoBehaviour
                 metaData.isSelected = false;
                 //switch buttons
                 buttonDeselect.gameObject.SetActive(false);
+                //checkmark
+                arrayMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
                 buttonSelect.gameObject.SetActive(true);
@@ -1256,7 +1265,7 @@ public class MetaGameUI : MonoBehaviour
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {
                     side = GameManager.instance.sideScript.PlayerSide,
-                    textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
+                    textTop = string.Format("{0}HQ Outcomes{1}", colourCancel, colourEnd),
                     textBottom = builder.ToString(),
                     sprite = GameManager.instance.guiScript.infoSprite,
                     modalLevel = 2,
