@@ -17,7 +17,6 @@ public struct StartMethod
 }
 
 
-
 /// <summary>
 /// Main game controller
 /// </summary>
@@ -983,6 +982,9 @@ public class GameManager : MonoBehaviour
         obj.SetActive(false);
     }
     #endregion
+
+
+
 
 
 

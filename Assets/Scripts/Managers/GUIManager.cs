@@ -238,7 +238,7 @@ public class GUIManager : MonoBehaviour
                                                                       //to block use -> 'if (isBlocked == false)' in OnMouseDown/Over/Exit etc.
                                                                       //array corresponds to modalLevel, one block setting for each level, level 1 is isBlocked[1]
     private ShowMeData showMeData;                                    //data package that controls highlighting of node/connection and callback event to originating UI element
-    [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until
+    [HideInInspector] public bool waitUntilDone;                        //flag to ensure nothing happens until current UI element completed, eg. allows sequential execution of message pipeline
     private Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = new Dictionary<MsgPipelineType, ModalOutcomeDetails>();           //handles message queue for start of turn information pipeline
     //colour palette 
     private string colourAlert;

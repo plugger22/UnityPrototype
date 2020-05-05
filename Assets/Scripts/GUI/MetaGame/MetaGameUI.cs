@@ -2,6 +2,7 @@
 using modalAPI;
 using packageAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -1190,78 +1191,112 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     public void ExecuteConfirm()
     {
-        int count;
-        //data packages
-        EffectDataReturn effectReturn = new EffectDataReturn();
-        EffectDataInput effectInput = new EffectDataInput();
-        StringBuilder builder = new StringBuilder();
-        //
-        // - - - Process Effects
-        //
-        //use Player node (still viable as new level not yet created)
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
-        if (node != null)
+        if (dictOfSelected.Count > 0)
         {
-            //loop dict and add all to effects
-            foreach (var data in dictOfSelected)
+            int count;
+            //data packages
+            EffectDataReturn effectReturn = new EffectDataReturn();
+            EffectDataInput effectInput = new EffectDataInput();
+            StringBuilder builder = new StringBuilder();
+            //
+            // - - - Process Effects
+            //
+            //use Player node (still viable as new level not yet created)
+            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+            if (node != null)
             {
-                if (data.Value != null)
+                //loop dict and add all to effects
+                foreach (var data in dictOfSelected)
                 {
-                    count = data.Value.listOfEffects.Count;
-                    if (count > 0)
+                    if (data.Value != null)
                     {
-                        effectInput.originText = data.Key;
-                        effectInput.dataName = data.Value.dataName;
-                        for (int i = 0; i < count; i++)
+                        count = data.Value.listOfEffects.Count;
+                        if (count > 0)
                         {
-                            Effect effect = data.Value.listOfEffects[i];
-                            if (effect != null)
+                            effectInput.originText = data.Key;
+                            effectInput.dataName = data.Value.dataName;
+                            for (int i = 0; i < count; i++)
                             {
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
-                                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                                if (string.IsNullOrEmpty(effectReturn.topText) == false)
-                                { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
-                                else { builder.Append(effectReturn.bottomText); }
+                                Effect effect = data.Value.listOfEffects[i];
+                                if (effect != null)
+                                {
+                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                                    if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                                    { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
+                                    else { builder.Append(effectReturn.bottomText); }
+                                }
+                                else { Debug.LogWarningFormat("metaData \"{0}\" effect invalid (Null) for listOfEffects[{1}]", data.Key, i); }
                             }
-                            else { Debug.LogWarningFormat("metaData \"{0}\" effect invalid (Null) for listOfEffects[{1}]", data.Key, i); }
                         }
+                        else { Debug.LogWarningFormat("metaData \"{0}\" has no Effects (listOfEffects empty)", data.Key); }
                     }
-                    else { Debug.LogWarningFormat("metaData \"{0}\" has no Effects (listOfEffects empty)", data.Key); }
+                    else { Debug.LogWarningFormat("Invalid metaData (Null) in dictOfSelected for \"{0}\"", data.Key); }
                 }
-                else { Debug.LogWarningFormat("Invalid metaData (Null) in dictOfSelected for \"{0}\"", data.Key); }
+            }
+            else { Debug.LogError("Invalid playerNode (Null), metaData effects not process"); }
+            //
+            // - - - Effects Outcome
+            //
+            ModalStateData modalData = new ModalStateData()
+            {
+                mainState = ModalSubState.MetaGame,
+                metaState = ModalMetaSubState.OptionsConfirm
+            };
+            GameManager.instance.inputScript.SetModalState(modalData);
+
+            if (builder.Length > 0)
+            {
+                //confirmation outcome popup
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.instance.sideScript.PlayerSide,
+                    textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
+                    textBottom = builder.ToString(),
+                    sprite = GameManager.instance.guiScript.infoSprite,
+                    modalLevel = 2,
+                    modalState = ModalSubState.MetaGame,
+                    reason = "Effect Outcomes"
+                };
+                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                //need a coroutine to handle execution to prevent windows closing prematurely
+                StartCoroutine(CloseMetaGameUI(details));
             }
         }
-        else { Debug.LogError("Invalid playerNode (Null), metaData effects not process"); }
-        //
-        // - - - Effects Outcome
-        //
-        ModalStateData modalData = new ModalStateData()
+        else
         {
-            mainState = ModalSubState.MetaGame,
-            metaState = ModalMetaSubState.OptionsConfirm
-        };
-        GameManager.instance.inputScript.SetModalState(modalData);
-        if (builder.Length > 0)
-        {
-            //confirmation outcome popup
-            ModalOutcomeDetails details = new ModalOutcomeDetails()
-            {
-                side = GameManager.instance.sideScript.PlayerSide,
-                textTop = string.Format("{0}HQ Outcomes{1}", colourNeutral, colourEnd),
-                textBottom = builder.ToString(),
-                sprite = GameManager.instance.guiScript.infoSprite,
-                modalLevel = 2,
-                modalState = ModalSubState.MetaGame,
-                reason = "Effect Outcomes"
-            };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
-        }
+            //nothing selected -> Warning message
 
-        //
-        // - - - Close main UI
-        //
+        }
+    }
+
+    /// <summary>
+    /// Master coroutine
+    /// </summary>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    IEnumerator CloseMetaGameUI(ModalOutcomeDetails details)
+    {
+        GameManager.instance.guiScript.waitUntilDone = true;
+        //wait for outcome window to be closed
+        yield return CloseOutcome(details);
+        //close metaGameUI
         CloseMetaUI();
     }
+
+    /// <summary>
+    /// handles outcome window showing result of effects of selected metaOptions
+    /// </summary>
+    /// <param name="details"></param>
+    /// <returns></returns>
+    IEnumerator CloseOutcome(ModalOutcomeDetails details)
+    {
+        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        //will wait until ModalOutcome -> CloseModalOutcome resets flag
+        yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
+    }
+
+
 
     /// <summary>
     /// Debug display of dictOfSelected metaData
