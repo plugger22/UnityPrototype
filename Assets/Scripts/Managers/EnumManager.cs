@@ -222,10 +222,10 @@
     //
     // - - - ItemData / MetaData - - -
     //
-    public enum ItemPriority { Low, Medium, High, Count }                                    //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
-    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }            //PackageManager.cs -> MainInfoData array keyed off this
-    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count}                            //MetaGameUI side tabs (HQ actors)
-    public enum MetaTabTop { Selected, Count}                                                       //MetaGameUI top tabs
+    public enum ItemPriority { Low, Medium, High, Count }                                           //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
+    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }                //PackageManager.cs -> MainInfoData array keyed off this
+    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count}                            //MetaGameUI side tabs (HQ actors). NOTE: order needs to correspond to UI (arrays keyed off this)
+    public enum MetaTabTop { Status, Selected, Count }                                              //MetaGameUI top tabs. NOTE: order needs to correspond to UI (arrays keyed off this)
     public enum MetaPriority { Low, Medium, High, Extreme, Count}
 
     //

@@ -608,3 +608,43 @@ MetaGameUI.InitialiseMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GU
 Dev seed 52990 -> Wednesday, 6 May 2020 12:25 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 10215 -> Wednesday, 6 May 2020 2:21 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21674 -> Wednesday, 6 May 2020 2:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21201 -> Wednesday, 6 May 2020 2:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38748 -> Wednesday, 6 May 2020 2:54 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 43927 -> Wednesday, 6 May 2020 2:59 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 9002 -> Wednesday, 6 May 2020 3:31 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 33988 -> Wednesday, 6 May 2020 4:41 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid MetaInteraction (Null) for arrayOfTopTabObject[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:323)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:211)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:790)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:370)
+	ERROR Invalid MetaInteraction (Null) for arrayOfTopTabObject[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:323)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:211)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:790)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:370)
+	

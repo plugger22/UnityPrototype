@@ -6,21 +6,24 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// handles mouse overs and clicks on Hq tabs
 /// </summary>
-public class MetaHqTabUI : MonoBehaviour, IPointerClickHandler
+public class MetaSideTabUI : MonoBehaviour, IPointerClickHandler
 {
 
     private int tabIndex = -1;          //assigned at start by MetaGameUI, corresponds to tabItems[index]
+    private int maxTabIndex = -1;       //assigned at start by MetaGameUI, max for Side tabs only
 
 
     /// <summary>
     /// sets tab index
     /// </summary>
     /// <param name="index"></param>
-    public void SetTabIndex(int index)
+    public void SetTabIndex(int index, int max)
     {
-        Debug.Assert(index > -1 && index < 4, "Invalid index (must be > -1 && < 4)");
+        Debug.AssertFormat(max > -1 && max >= index, "Invalid max \"{0}\", (must be > -1 and > index(\"{1}\"))", max, index);
+        maxTabIndex = max;
+        Debug.AssertFormat(index > -1 && index <= maxTabIndex, "Invalid index (must be > -1 && < {0})", maxTabIndex);
         tabIndex = index;
-        /*Debug.LogFormat("[Tst] MetaHqTabUI.cs -> SetTabIndex: tabIndex {0}{1}", tabIndex, "\n");*/
+        /*Debug.LogFormat("[Tst] MetaSideTabUI.cs -> SetTabIndex: tabIndex {0}{1}", tabIndex, "\n");*/
     }
 
     public int GetTabIndex()
@@ -36,7 +39,7 @@ public class MetaHqTabUI : MonoBehaviour, IPointerClickHandler
             //same for left or right click
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                EventManager.instance.PostNotification(EventType.MetaGameTabOpen, this, tabIndex, "MetaHqTabUI.cs -> OnPointClick");
+                EventManager.instance.PostNotification(EventType.MetaGameSideTabOpen, this, tabIndex, "MetaSideTabUI.cs -> OnPointClick");
                 break;
         }
     }

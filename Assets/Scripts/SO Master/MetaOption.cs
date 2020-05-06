@@ -31,6 +31,8 @@ public class MetaOption : ScriptableObject
     public GlobalChance recommendPriority;
 
     [Header("Special Cases")]
+    [Tooltip("If true this represent a Player condition, eg. Secret/Org/Investigation/Condition that is listed under the MetaGameUI top 'Status' tab, setting ignored if false")]
+    public bool isPlayerStatus;
     [Tooltip("If true, option is always displayed, regardless of valid criteria, or not. NOTE: If false there must be Criteria unless it's a Special case")]
     public bool isAlways;
     [Tooltip("Must be present if isAlways is TRUE and CRITERIA present (ignore otherwise) as a self contained explanation as to why option can't be selected if isActive False due to failed criteria")]

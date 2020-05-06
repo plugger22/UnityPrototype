@@ -45,7 +45,9 @@ public class MetaGameUI : MonoBehaviour
     public GameObject tabSubBoss3;
 
     [Header("Top Tabs")]
+    public Image tabStatus;
     public Image tabSelected;
+    public TextMeshProUGUI textStatus;
     public TextMeshProUGUI textSelected;
 
     [Header("Top")]
@@ -86,12 +88,12 @@ public class MetaGameUI : MonoBehaviour
     public Sprite rightImageDefault;                     //default sprite
 
     //tabs
-    private int currentTabIndex = -1;                               //side tabs (top to bottom) followed by top tabs (left to right)
+    private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
+    private int currentTopTabIndex = -1;                            //top tabs (left to right)
     private int maxSideTabIndex;                                    //side tabs only (used for keeping pgUP/DOWN movement within HQ side tabs)
     private int maxTopTabIndex;                                     //top tabs only
     private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
     private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
-    private int numOfTabs;                                          //total tabs (side + top tabs)
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
 
     //button script handlers
@@ -105,35 +107,53 @@ public class MetaGameUI : MonoBehaviour
     private GenericHelpTooltipUI helpCentre;                    //item help button on RHS panel (where no 'Select' button exists)
     private GenericHelpTooltipUI helpCombined;                  //item help button on RHS panel (adjacent to 'Select' button
 
-    //arrays
-    private GameObject[] tabObjects;
-    private MetaInteraction[] tabItems;
-    private MetaHqTabUI[] tabInteractions;
-    private int[] tabOptions;                                   //count of how many ACTIVE options are available for this tab
+    //Side arrays -> tabs
+    private GameObject[] arrayOfSideTabObjects;
+    private MetaInteraction[] arrayOfSideTabItems;
+    private MetaSideTabUI[] arrayOfSideTabInteractions;
+    private int[] arrayOfSideTabOptions;                            //count of how many ACTIVE options are available for this tab
+    //Side arrays -> metaData
+    private GameObject[] arrayOfSideMetaMain;
+    private TextMeshProUGUI[] arrayOfSideMetaText;
+    private Image[] arrayOfSideMetaIcon;
+    private Image[] arrayOfSideMetaBorder;
+    private Image[] arrayOfSideMetaCheckMark;
+    private Image[] arrayOfSideMetaBackground;
 
-    //metaItems collections
-    private GameObject[] arrayMetaMain;
-    private TextMeshProUGUI[] arrayMetaText;
-    private Image[] arrayMetaIcon;
-    private Image[] arrayMetaBorder;
-    private Image[] arrayMetaCheckMark;
-    private Image[] arrayMetaBackground;
+    //Top arrays -> tabs
+    private GameObject[] arrayOfTopTabObjects;
+    private MetaInteraction[] arrayOfTopTabItems;
+    private MetaTopTabUI[] arrayOfTopTabInteractions;
+    private int[] arrayOfTopTabOptions;                            //count of how many ACTIVE options are available for this tab
+    //Top arrays -> metaData
+    private GameObject[] arrayOfTopMetaMain;
+    private TextMeshProUGUI[] arrayOfTopMetaText;
+    private Image[] arrayOfTopMetaIcon;
+    private Image[] arrayOfTopMetaBorder;
+    private Image[] arrayOfTopMetaCheckMark;
+    private Image[] arrayOfTopMetaBackground;
+
     //item priority sprites
     private Sprite priorityHigh;
     private Sprite priorityMedium;
     private Sprite priorityLow;
     private Sprite priorityInactive;
 
-    //MetaData
-    private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];       //One dataset for each tab (excluding Help tab)
-    List<MetaData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
-    Dictionary<string, MetaData> dictOfSelected = new Dictionary<string, MetaData>();        //selected items, key is metaData.metaName, value metaData
+    //MetaData -> side tabs
+    private List<MetaData>[] arrayOfSideMetaData = new List<MetaData>[(int)MetaTabSide.Count];      //One dataset for each side tab (excluding Help tab)
+    List<MetaData> listOfCurrentPageSideMetaData;                                                   //current data for currently displayed page (side tabs)
+    //MetaData -> top tabs
+    private List<MetaData>[] arrayOfTopMetaData = new List<MetaData>[(int)MetaTabTop.Count];        //One dataset for each top tab (excluding Help tab)
+    List<MetaData> listOfCurrentPageTopMetaData;                                                    //current data for currently displayed page (top tabs)
+    //Player selected metaData (dynamic, dict for speed)
+    Dictionary<string, MetaData> dictOfSelected = new Dictionary<string, MetaData>();               //selected items, key is metaData.metaName, value metaData
 
     //scroll bar LHS
     private ScrollRect scrollRect;                                   //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
 
     private bool isRunning;
+    private bool isStatusData;                                          //true if Player status data (metaOption.isPlayerStatus true) present, false otherwise
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 30
@@ -216,57 +236,94 @@ public class MetaGameUI : MonoBehaviour
         int index = 0;
         numOfSideTabs = (int)MetaTabSide.Count;
         numOfTopTabs = (int)MetaTabTop.Count;
-        numOfTabs = numOfSideTabs + numOfTopTabs;
-        //initialise Arrays -> tabs
-        tabObjects = new GameObject[numOfTabs];
-        tabItems = new MetaInteraction[numOfTabs];
-        tabInteractions = new MetaHqTabUI[numOfTabs];
-        tabOptions = new int[numOfTabs];
-        //initialise Arrays -> items
-        arrayMetaMain = new GameObject[numOfItemsTotal];
-        arrayMetaIcon = new Image[numOfItemsTotal];
-        arrayMetaBorder = new Image[numOfItemsTotal];
-        arrayMetaCheckMark = new Image[numOfItemsTotal];
-        arrayMetaBackground = new Image[numOfItemsTotal];
-        arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
-        //other collections
-        listOfCurrentPageMetaData = new List<MetaData>();
+        //initialise Side Arrays -> tabs
+        arrayOfSideTabObjects = new GameObject[numOfSideTabs];
+        arrayOfSideTabItems = new MetaInteraction[numOfSideTabs];
+        arrayOfSideTabInteractions = new MetaSideTabUI[numOfSideTabs];
+        arrayOfSideTabOptions = new int[numOfSideTabs];
+        //initialise  Side Arrays -> items
+        arrayOfSideMetaMain = new GameObject[numOfItemsTotal];
+        arrayOfSideMetaIcon = new Image[numOfItemsTotal];
+        arrayOfSideMetaBorder = new Image[numOfItemsTotal];
+        arrayOfSideMetaCheckMark = new Image[numOfItemsTotal];
+        arrayOfSideMetaBackground = new Image[numOfItemsTotal];
+        arrayOfSideMetaText = new TextMeshProUGUI[numOfItemsTotal];
+        //initialise Top Arrays -> tabs
+        arrayOfTopTabObjects = new GameObject[numOfTopTabs];
+        arrayOfTopTabItems = new MetaInteraction[numOfTopTabs];
+        arrayOfTopTabInteractions = new MetaTopTabUI[numOfTopTabs];
+        arrayOfTopTabOptions = new int[numOfTopTabs];
+        //initialise  Top Arrays -> items
+        arrayOfTopMetaMain = new GameObject[numOfItemsTotal];
+        arrayOfTopMetaIcon = new Image[numOfItemsTotal];
+        arrayOfTopMetaBorder = new Image[numOfItemsTotal];
+        arrayOfTopMetaCheckMark = new Image[numOfItemsTotal];
+        arrayOfTopMetaBackground = new Image[numOfItemsTotal];
+        arrayOfTopMetaText = new TextMeshProUGUI[numOfItemsTotal];
+        //current pages side and top
+        listOfCurrentPageSideMetaData = new List<MetaData>();
+        listOfCurrentPageTopMetaData = new List<MetaData>();
         for (int i = 0; i < (int)MetaTabSide.Count; i++)
-        { arrayOfMetaData[i] = new List<MetaData>(); }
+        { arrayOfSideMetaData[i] = new List<MetaData>(); }
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
         maxSideTabIndex = numOfSideTabs - 1;
         maxTopTabIndex = numOfTopTabs - 1;
         //tab components
-        if (tabBoss != null) { tabObjects[index++] = tabBoss; } else { Debug.LogError("Invalid tabBoss (Null)"); }
-        if (tabSubBoss1 != null) { tabObjects[index++] = tabSubBoss1; } else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
-        if (tabSubBoss2 != null) { tabObjects[index++] = tabSubBoss2; } else { Debug.LogError("Invalid tabSubBoss2 (Null)"); }
-        if (tabSubBoss3 != null) { tabObjects[index++] = tabSubBoss3; } else { Debug.LogError("Invalid tabSubBoss3 (Null)"); }
-        //initialise tab Interaction array
-        for (int i = 0; i < tabObjects.Length; i++)
+        if (tabBoss != null) { arrayOfSideTabObjects[index++] = tabBoss; } else { Debug.LogError("Invalid tabBoss (Null)"); }
+        if (tabSubBoss1 != null) { arrayOfSideTabObjects[index++] = tabSubBoss1; } else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
+        if (tabSubBoss2 != null) { arrayOfSideTabObjects[index++] = tabSubBoss2; } else { Debug.LogError("Invalid tabSubBoss2 (Null)"); }
+        if (tabSubBoss3 != null) { arrayOfSideTabObjects[index++] = tabSubBoss3; } else { Debug.LogError("Invalid tabSubBoss3 (Null)"); }
+        //initialise side tab arrays -> interaction
+        for (int i = 0; i < numOfSideTabs; i++)
         {
-            if (tabObjects[i] != null)
+            if (arrayOfSideTabObjects[i] != null)
             {
-                MetaInteraction metaInteract = tabObjects[i].GetComponent<MetaInteraction>();
+                MetaInteraction metaInteract = arrayOfSideTabObjects[i].GetComponent<MetaInteraction>();
                 if (metaInteract != null)
                 {
-                    tabItems[i] = metaInteract;
+                    arrayOfSideTabItems[i] = metaInteract;
                     //tab interaction
-                    MetaHqTabUI hqTab = metaInteract.background.GetComponent<MetaHqTabUI>();
-                    if (hqTab != null)
+                    MetaSideTabUI sideTab = metaInteract.background.GetComponent<MetaSideTabUI>();
+                    if (sideTab != null)
                     {
-                        tabInteractions[i] = hqTab;
+                        arrayOfSideTabInteractions[i] = sideTab;
                         //identify tabs
-                        hqTab.SetTabIndex(i);
+                        sideTab.SetTabIndex(i, maxSideTabIndex);
                     }
-                    else { Debug.LogErrorFormat("Invalid MetaHqTabUI (Null) for tabItems[{0}]", i); }
+                    else { Debug.LogErrorFormat("Invalid MetaSideTabUI (Null) for arrayOfSideTabItems[{0}]", i); }
                 }
-                else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for tabObject[{0}]", i); }
+                else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
         //top tabs
-        Debug.Assert(tabSelected != null, "Invalid tabSelected (Null)");
+        index = 0;
+        if (tabStatus != null) { arrayOfTopTabObjects[index++] = tabStatus.gameObject; } else { Debug.LogError("Invalid tabStatus (Null)"); }
+        if (tabStatus != null) { arrayOfTopTabObjects[index++] = tabSelected.gameObject; } else { Debug.LogError("Invalid tabSelected (Null)"); }
+        //initialise top tab arrays -> interaction
+        for (int i = 0; i < numOfTopTabs; i++)
+        {
+            if (arrayOfTopTabObjects[i] != null)
+            {
+                MetaInteraction metaInteract = arrayOfTopTabObjects[i].GetComponent<MetaInteraction>();
+                if (metaInteract != null)
+                {
+                    arrayOfTopTabItems[i] = metaInteract;
+                    //tab interaction
+                    MetaTopTabUI topTab = metaInteract.background.GetComponent<MetaTopTabUI>();
+                    if (topTab != null)
+                    {
+                        arrayOfTopTabInteractions[i] = topTab;
+                        //identify tabs
+                        topTab.SetTabIndex(i, maxTopTabIndex);
+                    }
+                    else { Debug.LogErrorFormat("Invalid MetaTopTabUI (Null) for arrayOfTopTabItems[{0}]", i); }
+                }
+                else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfTopTabObject[{0}]", i); }
+            }
+        }
+        Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
         Debug.Assert(textSelected != null, "Invalid textSelected (Null)");
         //main
         Debug.Assert(canvasMeta != null, "Invalid canvasMeta (Null)");
@@ -347,31 +404,52 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(meta_item_17 != null, "Invalid item_17 (Null)");
         Debug.Assert(meta_item_18 != null, "Invalid item_18 (Null)");
         Debug.Assert(meta_item_19 != null, "Invalid item_19 (Null)");
-        //assign items
-        arrayMetaMain[0] = meta_item_0;
-        arrayMetaMain[1] = meta_item_1;
-        arrayMetaMain[2] = meta_item_2;
-        arrayMetaMain[3] = meta_item_3;
-        arrayMetaMain[4] = meta_item_4;
-        arrayMetaMain[5] = meta_item_5;
-        arrayMetaMain[6] = meta_item_6;
-        arrayMetaMain[7] = meta_item_7;
-        arrayMetaMain[8] = meta_item_8;
-        arrayMetaMain[9] = meta_item_9;
-        arrayMetaMain[10] = meta_item_10;
-        arrayMetaMain[11] = meta_item_11;
-        arrayMetaMain[12] = meta_item_12;
-        arrayMetaMain[13] = meta_item_13;
-        arrayMetaMain[14] = meta_item_14;
-        arrayMetaMain[15] = meta_item_15;
-        arrayMetaMain[16] = meta_item_16;
-        arrayMetaMain[17] = meta_item_17;
-        arrayMetaMain[18] = meta_item_18;
-        arrayMetaMain[19] = meta_item_19;
-        //initialise metaItems & populate arrays
-        for (index = 0; index < arrayMetaMain.Length; index++)
+        //assign items -> side array
+        arrayOfSideMetaMain[0] = meta_item_0;
+        arrayOfSideMetaMain[1] = meta_item_1;
+        arrayOfSideMetaMain[2] = meta_item_2;
+        arrayOfSideMetaMain[3] = meta_item_3;
+        arrayOfSideMetaMain[4] = meta_item_4;
+        arrayOfSideMetaMain[5] = meta_item_5;
+        arrayOfSideMetaMain[6] = meta_item_6;
+        arrayOfSideMetaMain[7] = meta_item_7;
+        arrayOfSideMetaMain[8] = meta_item_8;
+        arrayOfSideMetaMain[9] = meta_item_9;
+        arrayOfSideMetaMain[10] = meta_item_10;
+        arrayOfSideMetaMain[11] = meta_item_11;
+        arrayOfSideMetaMain[12] = meta_item_12;
+        arrayOfSideMetaMain[13] = meta_item_13;
+        arrayOfSideMetaMain[14] = meta_item_14;
+        arrayOfSideMetaMain[15] = meta_item_15;
+        arrayOfSideMetaMain[16] = meta_item_16;
+        arrayOfSideMetaMain[17] = meta_item_17;
+        arrayOfSideMetaMain[18] = meta_item_18;
+        arrayOfSideMetaMain[19] = meta_item_19;
+        //assign items -> top array
+        arrayOfTopMetaMain[0] = meta_item_0;
+        arrayOfTopMetaMain[1] = meta_item_1;
+        arrayOfTopMetaMain[2] = meta_item_2;
+        arrayOfTopMetaMain[3] = meta_item_3;
+        arrayOfTopMetaMain[4] = meta_item_4;
+        arrayOfTopMetaMain[5] = meta_item_5;
+        arrayOfTopMetaMain[6] = meta_item_6;
+        arrayOfTopMetaMain[7] = meta_item_7;
+        arrayOfTopMetaMain[8] = meta_item_8;
+        arrayOfTopMetaMain[9] = meta_item_9;
+        arrayOfTopMetaMain[10] = meta_item_10;
+        arrayOfTopMetaMain[11] = meta_item_11;
+        arrayOfTopMetaMain[12] = meta_item_12;
+        arrayOfTopMetaMain[13] = meta_item_13;
+        arrayOfTopMetaMain[14] = meta_item_14;
+        arrayOfTopMetaMain[15] = meta_item_15;
+        arrayOfTopMetaMain[16] = meta_item_16;
+        arrayOfTopMetaMain[17] = meta_item_17;
+        arrayOfTopMetaMain[18] = meta_item_18;
+        arrayOfTopMetaMain[19] = meta_item_19;
+        //initialise metaItems & populate arrays -> Side arrays
+        for (index = 0; index < arrayOfSideMetaMain.Length; index++)
         {
-            GameObject metaObject = arrayMetaMain[index];
+            GameObject metaObject = arrayOfSideMetaMain[index];
             if (metaObject != null)
             {
                 //get child components -> Image
@@ -380,7 +458,7 @@ public class MetaGameUI : MonoBehaviour
                 {
                     if (child.name.Equals("background", StringComparison.Ordinal) == true)
                     {
-                        arrayMetaBackground[index] = child;
+                        arrayOfSideMetaBackground[index] = child;
                         //attached interaction script
                         ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
                         if (itemScript != null)
@@ -388,14 +466,14 @@ public class MetaGameUI : MonoBehaviour
                             itemScript.SetItemIndex(index, numOfItemsTotal);
                             itemScript.SetUIType(MajorUI.MetaGameUI);
                         }
-                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for arrayMetaMain[{0}]", index); }
+                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for arrayOfSideMetaMain[{0}]", index); }
                     }
                     else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
-                    { arrayMetaIcon[index] = child; }
+                    { arrayOfSideMetaIcon[index] = child; }
                     else if (child.name.Equals("border", StringComparison.Ordinal) == true)
-                    { arrayMetaBorder[index] = child; }
+                    { arrayOfSideMetaBorder[index] = child; }
                     else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
-                    { arrayMetaCheckMark[index] = child; }
+                    { arrayOfSideMetaCheckMark[index] = child; }
                 }
                 //child components -> Text
                 var childrenText = metaObject.GetComponentsInChildren<TextMeshProUGUI>();
@@ -405,12 +483,56 @@ public class MetaGameUI : MonoBehaviour
                     {
                         TextMeshProUGUI metaText = child.GetComponent<TextMeshProUGUI>();
                         if (metaText != null)
-                        { arrayMetaText[index] = metaText; }
-                        else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for arrayMetaMain[{0}]", index); }
+                        { arrayOfSideMetaText[index] = metaText; }
+                        else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for arrayOfSideMetaMain[{0}]", index); }
                     }
                 }
             }
-            else { Debug.LogWarningFormat("Invalid GameObject (Null) for mainItemArray[{0}]", index); }
+            else { Debug.LogWarningFormat("Invalid GameObject (Null) for arrayOfSideMetaMain[{0}]", index); }
+        }
+        //initialise metaItems & populate arrays -> Top arrays
+        for (index = 0; index < arrayOfTopMetaMain.Length; index++)
+        {
+            GameObject metaObject = arrayOfTopMetaMain[index];
+            if (metaObject != null)
+            {
+                //get child components -> Image
+                var childrenImage = metaObject.GetComponentsInChildren<Image>();
+                foreach (var child in childrenImage)
+                {
+                    if (child.name.Equals("background", StringComparison.Ordinal) == true)
+                    {
+                        arrayOfTopMetaBackground[index] = child;
+                        //attached interaction script
+                        ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
+                        if (itemScript != null)
+                        {
+                            itemScript.SetItemIndex(index, numOfItemsTotal);
+                            itemScript.SetUIType(MajorUI.MetaGameUI);
+                        }
+                        else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for arrayOfTopMetaMain[{0}]", index); }
+                    }
+                    else if (child.name.Equals("icon", StringComparison.Ordinal) == true)
+                    { arrayOfTopMetaIcon[index] = child; }
+                    else if (child.name.Equals("border", StringComparison.Ordinal) == true)
+                    { arrayOfTopMetaBorder[index] = child; }
+                    else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
+                    { arrayOfTopMetaCheckMark[index] = child; }
+                }
+                //child components -> Text
+                var childrenText = metaObject.GetComponentsInChildren<TextMeshProUGUI>();
+                foreach (var child in childrenText)
+                {
+                    if (child.name.Equals("text", StringComparison.Ordinal) == true)
+                    {
+                        TextMeshProUGUI metaText = child.GetComponent<TextMeshProUGUI>();
+                        if (metaText != null)
+                        { arrayOfTopMetaText[index] = metaText; }
+                        else { Debug.LogWarningFormat("Invalid TextMeshProUGUI component (Null) for arrayOfTopMetaMain[{0}]", index); }
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid GameObject (Null) for arrayOfTopMetaMain[{0}]", index); }
         }
         //Set starting Initialisation states
         InitialiseItems();
@@ -453,7 +575,8 @@ public class MetaGameUI : MonoBehaviour
         //listeners
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameSideTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameTopTabOpen, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
@@ -486,8 +609,11 @@ public class MetaGameUI : MonoBehaviour
             case EventType.MetaGameClose:
                 CloseMetaUI();
                 break;
-            case EventType.MetaGameTabOpen:
-                OpenTab((int)Param);
+            case EventType.MetaGameSideTabOpen:
+                OpenSideTab((int)Param);
+                break;
+            case EventType.MetaGameTopTabOpen:
+                OpenTopTab((int)Param);
                 break;
             case EventType.MetaGameOpen:
                 MetaInfoData data = Param as MetaInfoData;
@@ -576,37 +702,36 @@ public class MetaGameUI : MonoBehaviour
         renownAmount.text = playerRenown.ToString();
         renownCurrent = playerRenown;
         Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
-        //initialise HQ tabs'
         Color portraitColor, backgroundColor;
-        /*for (int index = 0; index < tabItems.Length; index++)*/
+        //initialise HQ side tabs'
         for (int index = 0; index < numOfSideTabs; index++)
         {
-            backgroundColor = tabItems[index].background.color;
-            if (tabItems[index] != null)
+            backgroundColor = arrayOfSideTabItems[index].background.color;
+            if (arrayOfSideTabItems[index] != null)
             {
                 //sprite
                 Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor((ActorHQ)(index + offset));
                 if (actor != null)
                 {
-                    tabItems[index].portrait.sprite = actor.sprite;
+                    arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
                 }
                 else
                 {
                     //default error sprite if a problem
                     Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                    tabItems[index].portrait.sprite = GameManager.instance.guiScript.errorSprite;
+                    arrayOfSideTabItems[index].portrait.sprite = GameManager.instance.guiScript.errorSprite;
                 }
-                portraitColor = tabItems[index].portrait.color;
+                portraitColor = arrayOfSideTabItems[index].portrait.color;
                 //title
-                tabItems[index].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
+                arrayOfSideTabItems[index].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
                 //first tab (Boss) should be active on opening, rest passive
                 if (index == 0)
                 { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
                 else
                 { portraitColor.a = 0.25f; backgroundColor.a = 0.25f; }
                 //set colors
-                tabItems[index].portrait.color = portraitColor;
-                tabItems[index].background.color = backgroundColor;
+                arrayOfSideTabItems[index].portrait.color = portraitColor;
+                arrayOfSideTabItems[index].background.color = backgroundColor;
                 //set count of active items in each tab
                 count = 0;
                 for (int j = 0; j < data.arrayOfMetaData[index].Count; j++)
@@ -614,11 +739,11 @@ public class MetaGameUI : MonoBehaviour
                     if (data.arrayOfMetaData[index][j].isActive == true)
                     { count++; }
                 }
-                tabOptions[index] = count;
+                arrayOfSideTabOptions[index] = count;
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
         }
-        //initialise top tabs -> selected tab inactive as nothing has yet been selected
+        //initialise top tabs -> selected tab (inactive as nothing has yet been selected)
         backgroundColor = tabSelected.color;
         backgroundColor.a = 0.25f;
         tabSelected.color = backgroundColor;
@@ -627,19 +752,55 @@ public class MetaGameUI : MonoBehaviour
         textSelected.color = backgroundColor;
     }
 
+    /// <summary>
+    /// Tab initialised at start and doesn't ever change. Status data (metaOption.isPlayerStatus true) either present or not
+    /// </summary>
+    private void InitialiseTopStatusTab()
+    {
+        Color color;
+        if (isStatusData == true)
+        {
+            //data present
+            color = tabSelected.color;
+            color.a = 1.0f;
+            tabSelected.color = color;
+            color = textSelected.color;
+            color.a = 1.0f;
+            textSelected.color = color;
+        }
+        else
+        {
+            //no data
+            color = tabSelected.color;
+            color.a = 0.25f;
+            tabSelected.color = color;
+            color = textSelected.color;
+            color.a = 0.25f;
+            textSelected.color = color;
+        }
+    }
+
 
     private void InitialiseItems()
     {
         for (int index = 0; index < numOfItemsTotal; index++)
         {
-            //main game objects off
-            arrayMetaMain[index].SetActive(false);
-            //all other child objects on
-            arrayMetaIcon[index].gameObject.SetActive(true);
-            arrayMetaText[index].gameObject.SetActive(true);
-            arrayMetaBorder[index].gameObject.SetActive(true);
-            arrayMetaCheckMark[index].gameObject.SetActive(false);
-            arrayMetaBackground[index].gameObject.SetActive(true);
+            //main game objects off -> Side
+            arrayOfSideMetaMain[index].SetActive(false);
+            //all other child objects on -> Side
+            arrayOfSideMetaIcon[index].gameObject.SetActive(true);
+            arrayOfSideMetaText[index].gameObject.SetActive(true);
+            arrayOfSideMetaBorder[index].gameObject.SetActive(true);
+            arrayOfSideMetaCheckMark[index].gameObject.SetActive(false);
+            arrayOfSideMetaBackground[index].gameObject.SetActive(true);
+            //main game objects off -> top
+            arrayOfTopMetaMain[index].SetActive(false);
+            //all other child objects on -> top
+            arrayOfTopMetaIcon[index].gameObject.SetActive(true);
+            arrayOfTopMetaText[index].gameObject.SetActive(true);
+            arrayOfTopMetaBorder[index].gameObject.SetActive(true);
+            arrayOfTopMetaCheckMark[index].gameObject.SetActive(false);
+            arrayOfTopMetaBackground[index].gameObject.SetActive(true);
         }
     }
 
@@ -654,8 +815,10 @@ public class MetaGameUI : MonoBehaviour
             canvasMeta.gameObject.SetActive(true);
             // Populate data
             UpdateData(data);
+            //initialise top status tab (active if data present) -> once off
+            InitialiseTopStatusTab();
             // Display Boss page by default
-            OpenTab(0);
+            OpenSideTab(0);
             //select buttons, RHS, off by default
             buttonSelect.gameObject.SetActive(false);
             buttonDeselect.gameObject.SetActive(false);
@@ -692,19 +855,19 @@ public class MetaGameUI : MonoBehaviour
 
 
     /// <summary>
-    /// Open the designated tab (side or top) and close whatever is open
+    /// Open the designated Side tab and close whatever is open
     /// </summary>
     /// <param name="tabIndex"></param>
-    private void OpenTab(int tabIndex)
+    private void OpenSideTab(int tabIndex)
     {
-        Debug.Assert(tabIndex > -1 && tabIndex < numOfTabs, string.Format("Invalid tab index {0}", tabIndex));
+        Debug.Assert(tabIndex > -1 && tabIndex < numOfSideTabs, string.Format("Invalid tab index {0}", tabIndex));
         //reset Active tabs to reflect new status
         Color portraitColor, backgroundColor;
         /*for (int index = 0; index < tabItems.Length; index++)*/
         for (int index = 0; index < numOfSideTabs; index++)
         {
-            portraitColor = tabItems[index].portrait.color;
-            backgroundColor = tabItems[index].background.color;
+            portraitColor = arrayOfSideTabItems[index].portrait.color;
+            backgroundColor = arrayOfSideTabItems[index].background.color;
             //activate indicated tab and deactivate the rest
             if (index == tabIndex)
             {
@@ -716,8 +879,8 @@ public class MetaGameUI : MonoBehaviour
                 portraitColor.a = 0.25f;
                 backgroundColor.a = 0.25f;
             }
-            tabItems[index].portrait.color = portraitColor;
-            tabItems[index].background.color = backgroundColor;
+            arrayOfSideTabItems[index].portrait.color = portraitColor;
+            arrayOfSideTabItems[index].background.color = backgroundColor;
         }
         /*//reset scrollbar
         scrollRect.verticalNormalizedPosition = 1.0f;
@@ -725,7 +888,7 @@ public class MetaGameUI : MonoBehaviour
         DisplayItemPage(tabIndex);*/
 
         //assign default RHS values
-        string leader = tabItems[tabIndex].title.text.ToUpper();
+        string leader = arrayOfSideTabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
         rightTextTop.text = $"{leader} Options";
         rightTextBottom.text = string.Format("Shows any HQ options on offer from your<br><br><b>{0}{1}{2}</b>", colourCancel, leader, colourEnd);
@@ -733,7 +896,16 @@ public class MetaGameUI : MonoBehaviour
         DisplayItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
-        currentTabIndex = tabIndex;
+        currentSideTabIndex = tabIndex;
+    }
+
+    /// <summary>
+    /// Open the designated Top tab and close whatever is open
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    private void OpenTopTab(int tabIndex)
+    {
+
     }
 
 
@@ -745,57 +917,54 @@ public class MetaGameUI : MonoBehaviour
     {
         Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
         //page header
-        page_header.text = string.Format("{0} Option{1} available", tabOptions[tabIndex], tabOptions[tabIndex] != 1 ? "s" : "");
+        page_header.text = string.Format("{0} Option{1} available", arrayOfSideTabOptions[tabIndex], arrayOfSideTabOptions[tabIndex] != 1 ? "s" : "");
         //clear out current data
-        listOfCurrentPageMetaData.Clear();
+        listOfCurrentPageSideMetaData.Clear();
         //get data
-        listOfCurrentPageMetaData.AddRange(arrayOfMetaData[tabIndex]);
+        listOfCurrentPageSideMetaData.AddRange(arrayOfSideMetaData[tabIndex]);
         //display routine
-        if (listOfCurrentPageMetaData != null)
+        if (listOfCurrentPageSideMetaData != null)
         {
-            numOfItemsCurrent = listOfCurrentPageMetaData.Count;
+            numOfItemsCurrent = listOfCurrentPageSideMetaData.Count;
             maxHighlightIndex = numOfItemsCurrent - 1;
             if (numOfItemsCurrent > 0)
             {
-                /*//update max number of items
-                numOfMaxItem = numOfItemsCurrent;*/
-
                 //populate current messages for the main tab
-                for (int index = 0; index < arrayMetaText.Length; index++)
+                for (int index = 0; index < arrayOfSideMetaText.Length; index++)
                 {
                     if (index < numOfItemsCurrent)
                     {
                         //populate text and set item to active
-                        arrayMetaText[index].text = listOfCurrentPageMetaData[index].itemText;
-                        arrayMetaMain[index].gameObject.SetActive(true);
+                        arrayOfSideMetaText[index].text = listOfCurrentPageSideMetaData[index].itemText;
+                        arrayOfSideMetaMain[index].gameObject.SetActive(true);
                         //assign icon
-                        if (listOfCurrentPageMetaData[index].isActive == true)
+                        if (listOfCurrentPageSideMetaData[index].isActive == true)
                         {
-                            switch (listOfCurrentPageMetaData[index].priority)
+                            switch (listOfCurrentPageSideMetaData[index].priority)
                             {
                                 case MetaPriority.Extreme:
                                 case MetaPriority.High:
-                                    arrayMetaIcon[index].sprite = priorityHigh;
+                                    arrayOfSideMetaIcon[index].sprite = priorityHigh;
                                     break;
                                 case MetaPriority.Medium:
-                                    arrayMetaIcon[index].sprite = priorityMedium;
+                                    arrayOfSideMetaIcon[index].sprite = priorityMedium;
                                     break;
                                 case MetaPriority.Low:
-                                    arrayMetaIcon[index].sprite = priorityLow;
+                                    arrayOfSideMetaIcon[index].sprite = priorityLow;
                                     break;
                                 default:
-                                    Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageMetaData[index].priority);
+                                    Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageSideMetaData[index].priority);
                                     break;
                             }
                         }
-                        else { arrayMetaIcon[index].sprite = priorityInactive; }
+                        else { arrayOfSideMetaIcon[index].sprite = priorityInactive; }
 
                     }
                     else if (index < numOfItemsPrevious)
                     {
                         //efficient -> only disables items that were previously active, not the whole set
-                        arrayMetaText[index].text = "";
-                        arrayMetaMain[index].gameObject.SetActive(false);
+                        arrayOfSideMetaText[index].text = "";
+                        arrayOfSideMetaMain[index].gameObject.SetActive(false);
                     }
                 }
             }
@@ -804,16 +973,13 @@ public class MetaGameUI : MonoBehaviour
                 //no data, blank previous items (not necessarily all), disable line
                 for (int index = 0; index < numOfItemsPrevious; index++)
                 {
-                    arrayMetaText[index].text = "";
-                    arrayMetaMain[index].gameObject.SetActive(false);
+                    arrayOfSideMetaText[index].text = "";
+                    arrayOfSideMetaMain[index].gameObject.SetActive(false);
                 }
 
             }
             //update previous count to current
             numOfItemsPrevious = numOfItemsCurrent;
-
-            /*//set header
-            SetPageHeader(numOfItemsCurrent);*/
         }
         else { Debug.LogWarning("Invalid MetaInfoData.listOfMainText (Null)"); }
         //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
@@ -836,11 +1002,32 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="data"></param>
     private void UpdateData(MetaInfoData data)
     {
-        for (int i = 0; i < (int)MetaTabSide.Count; i++)
+        if (data.arrayOfMetaData != null)
         {
-            arrayOfMetaData[i].Clear();
-            arrayOfMetaData[i].AddRange(data.arrayOfMetaData[i]);
+            //populate all side tab data
+            for (int i = 0; i < (int)MetaTabSide.Count; i++)
+            {
+                arrayOfSideMetaData[i].Clear();
+                arrayOfSideMetaData[i].AddRange(data.arrayOfMetaData[i]);
+            }
         }
+        else { Debug.LogError("Invalid data.arrayOfMetaData (Null)"); }
+        if (data.listOfStatusData != null)
+        {
+            //populate status top tab data
+            for (int i = 0; i < data.listOfStatusData.Count; i++)
+            {
+                MetaData metaData = data.listOfStatusData[i];
+                if (metaData != null)
+                { arrayOfTopMetaData[(int)MetaTabTop.Status].Add(metaData); }
+                else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfStatusData[i]"); }
+            }
+            //set flag to indicate status data present -> it's a constant from time of initialisation (items may be selected, or not, but they will either be there at the start or they won't
+            if (arrayOfTopMetaData[(int)MetaTabTop.Status].Count > 0)
+            { isStatusData = true; }
+            else { isStatusData = false; }
+        }
+        else { Debug.LogError("Invalid data.listOfStatusData (Null)"); }
     }
 
 
@@ -850,7 +1037,7 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="itemIndex"></param>
     private void ShowItemDetails(int itemIndex)
     {
-        MetaData data = listOfCurrentPageMetaData[itemIndex];
+        MetaData data = listOfCurrentPageSideMetaData[itemIndex];
         if (data != null)
         {
             //Right Hand side text varies depending on 'isActive' status
@@ -950,12 +1137,12 @@ public class MetaGameUI : MonoBehaviour
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
-                { arrayMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageMetaData[highlightIndex].itemText, colourEnd); }
+                { arrayOfSideMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageSideMetaData[highlightIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> yelllow if active, grey if not
                 if (data.isActive == true)
-                { arrayMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
-                else { arrayMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageMetaData[itemIndex].itemText, colourEnd); }
+                { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
+                else { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
             }
         }
         else
@@ -1037,7 +1224,7 @@ public class MetaGameUI : MonoBehaviour
             {
                 //at top of page, go to tab
                 highlightIndex = -1;
-                OpenTab(currentTabIndex);
+                OpenSideTab(currentSideTabIndex);
             }
         }
     }
@@ -1048,12 +1235,18 @@ public class MetaGameUI : MonoBehaviour
     private void ExecutePageUp()
     {
         //change tab
-        if (currentTabIndex > -1)
+        if (currentSideTabIndex > -1)
         {
-            if (currentTabIndex > 0)
+            if (currentSideTabIndex > 0)
             {
-                currentTabIndex -= 1;
-                OpenTab(currentTabIndex);
+                currentSideTabIndex -= 1;
+                OpenSideTab(currentSideTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentSideTabIndex = maxSideTabIndex;
+                OpenSideTab(currentSideTabIndex);
             }
         }
     }
@@ -1063,12 +1256,18 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecutePageDown()
     {
-        if (currentTabIndex > -1)
+        if (currentSideTabIndex > -1)
         {
-            if (currentTabIndex < maxSideTabIndex)
+            if (currentSideTabIndex < maxSideTabIndex)
             {
-                currentTabIndex += 1;
-                OpenTab(currentTabIndex);
+                currentSideTabIndex += 1;
+                OpenSideTab(currentSideTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentSideTabIndex = 0;
+                OpenSideTab(currentSideTabIndex);
             }
         }
     }
@@ -1078,7 +1277,7 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteSelect()
     {
-        MetaData metaData = listOfCurrentPageMetaData[highlightIndex];
+        MetaData metaData = listOfCurrentPageSideMetaData[highlightIndex];
         if (metaData != null)
         {
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
@@ -1099,7 +1298,7 @@ public class MetaGameUI : MonoBehaviour
                 buttonSelect.gameObject.SetActive(false);
                 buttonDeselect.gameObject.SetActive(true);
                 //checkmark
-                arrayMetaCheckMark[highlightIndex].gameObject.SetActive(true);
+                arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(true);
                 //top tab
                 if (dictOfSelected.Count == 1)
                 {
@@ -1127,7 +1326,7 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteDeselect()
     {
-        MetaData metaData = listOfCurrentPageMetaData[highlightIndex];
+        MetaData metaData = listOfCurrentPageSideMetaData[highlightIndex];
         if (metaData != null)
         {
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
@@ -1145,7 +1344,7 @@ public class MetaGameUI : MonoBehaviour
                 //switch buttons
                 buttonDeselect.gameObject.SetActive(false);
                 //checkmark
-                arrayMetaCheckMark[highlightIndex].gameObject.SetActive(false);
+                arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 //top tab
                 if (dictOfSelected.Count == 0)
                 {
@@ -1205,7 +1404,7 @@ public class MetaGameUI : MonoBehaviour
             //update current item
             if (highlightIndex > -1)
             {
-                MetaData data = listOfCurrentPageMetaData[highlightIndex];
+                MetaData data = listOfCurrentPageSideMetaData[highlightIndex];
                 if (data != null)
                 {
 

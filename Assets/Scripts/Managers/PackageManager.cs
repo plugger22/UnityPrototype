@@ -308,6 +308,7 @@ namespace packageAPI
     public class MetaInfoData
     {
         public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
+        public List<MetaData> listOfStatusData = new List<MetaData>();                                  //includes all metaData with metaOption.isPlayerStatus true
 
         public MetaInfoData()
         {

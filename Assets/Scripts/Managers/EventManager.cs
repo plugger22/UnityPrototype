@@ -171,7 +171,8 @@ public enum EventType
     MainInfoTickerSlower,
     //MetaGame UI
     MetaGameClose,
-    MetaGameTabOpen,
+    MetaGameSideTabOpen,
+    MetaGameTopTabOpen,
     MetaGameOpen,
     MetaGameShowDetails,
     MetaGameSelect,
