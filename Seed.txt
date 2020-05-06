@@ -648,3 +648,35 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:370)
 	
+Dev seed 9578 -> Wednesday, 6 May 2020 5:01 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid MetaInteraction (Null) for arrayOfTopTabObject[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:333)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:214)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:790)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:370)
+	ERROR Invalid MetaInteraction (Null) for arrayOfTopTabObject[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:333)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:214)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:790)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:370)
+	
+Dev seed 16943 -> Wednesday, 6 May 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.UpdateData (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:1033)
+	MetaGameUI.SetMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:824)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:100)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:304)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:400)
+	
+Dev seed 31744 -> Wednesday, 6 May 2020 5:15 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

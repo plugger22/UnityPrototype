@@ -121,9 +121,9 @@ public class MetaGameUI : MonoBehaviour
     private Image[] arrayOfSideMetaBackground;
 
     //Top arrays -> tabs
-    private GameObject[] arrayOfTopTabObjects;
-    private MetaInteraction[] arrayOfTopTabItems;
+    private Image[] arrayOfTopTabImages;
     private MetaTopTabUI[] arrayOfTopTabInteractions;
+
     private int[] arrayOfTopTabOptions;                            //count of how many ACTIVE options are available for this tab
     //Top arrays -> metaData
     private GameObject[] arrayOfTopMetaMain;
@@ -249,8 +249,7 @@ public class MetaGameUI : MonoBehaviour
         arrayOfSideMetaBackground = new Image[numOfItemsTotal];
         arrayOfSideMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //initialise Top Arrays -> tabs
-        arrayOfTopTabObjects = new GameObject[numOfTopTabs];
-        arrayOfTopTabItems = new MetaInteraction[numOfTopTabs];
+        arrayOfTopTabImages = new Image[numOfTopTabs];
         arrayOfTopTabInteractions = new MetaTopTabUI[numOfTopTabs];
         arrayOfTopTabOptions = new int[numOfTopTabs];
         //initialise  Top Arrays -> items
@@ -263,8 +262,11 @@ public class MetaGameUI : MonoBehaviour
         //current pages side and top
         listOfCurrentPageSideMetaData = new List<MetaData>();
         listOfCurrentPageTopMetaData = new List<MetaData>();
+        //initialise metaData array lists (side and top tabs)
         for (int i = 0; i < (int)MetaTabSide.Count; i++)
         { arrayOfSideMetaData[i] = new List<MetaData>(); }
+        for (int i = 0; i < (int)MetaTabTop.Count; i++)
+        { arrayOfTopMetaData[i] = new List<MetaData>(); }
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
@@ -299,30 +301,25 @@ public class MetaGameUI : MonoBehaviour
         }
         //top tabs
         index = 0;
-        if (tabStatus != null) { arrayOfTopTabObjects[index++] = tabStatus.gameObject; } else { Debug.LogError("Invalid tabStatus (Null)"); }
-        if (tabStatus != null) { arrayOfTopTabObjects[index++] = tabSelected.gameObject; } else { Debug.LogError("Invalid tabSelected (Null)"); }
+        if (tabStatus != null) { arrayOfTopTabImages[index++] = tabStatus; } else { Debug.LogError("Invalid tabStatus (Null)"); }
+        if (tabStatus != null) { arrayOfTopTabImages[index++] = tabSelected; } else { Debug.LogError("Invalid tabSelected (Null)"); }
         //initialise top tab arrays -> interaction
         for (int i = 0; i < numOfTopTabs; i++)
         {
-            if (arrayOfTopTabObjects[i] != null)
+            if (arrayOfTopTabImages[i] != null)
             {
-                MetaInteraction metaInteract = arrayOfTopTabObjects[i].GetComponent<MetaInteraction>();
-                if (metaInteract != null)
+                MetaTopTabUI topTab = arrayOfTopTabImages[i].GetComponent<MetaTopTabUI>();
+                if (topTab != null)
                 {
-                    arrayOfTopTabItems[i] = metaInteract;
-                    //tab interaction
-                    MetaTopTabUI topTab = metaInteract.background.GetComponent<MetaTopTabUI>();
-                    if (topTab != null)
-                    {
-                        arrayOfTopTabInteractions[i] = topTab;
-                        //identify tabs
-                        topTab.SetTabIndex(i, maxTopTabIndex);
-                    }
-                    else { Debug.LogErrorFormat("Invalid MetaTopTabUI (Null) for arrayOfTopTabItems[{0}]", i); }
+                    arrayOfTopTabInteractions[i] = topTab;
+                    //identify tabs
+                    topTab.SetTabIndex(i, maxTopTabIndex);
                 }
-                else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfTopTabObject[{0}]", i); }
+                else { Debug.LogErrorFormat("Invalid MetaTopTabUI (Null) for arrayOfTopTabItems[{0}]", i); }
             }
+            else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfTopTabImages[{0}]", i); }
         }
+
         Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
         Debug.Assert(textSelected != null, "Invalid textSelected (Null)");
         //main
@@ -380,7 +377,6 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(backgroundRight != null, "Invalid backgroundRight (Null)");
         //assign backgrounds and active tab colours
         Color colour = GameManager.instance.guiScript.colourMainBackground;
-        /*backgroundMain.color = new Color(colour.r, colour.g, colour.b, 0.35f);*/
         backgroundCentre.color = new Color(colour.r, colour.g, colour.b);
         backgroundRight.color = new Color(colour.r, colour.g, colour.b);
         //items
@@ -679,12 +675,7 @@ public class MetaGameUI : MonoBehaviour
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-
-        /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
-        { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
-        else { colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText); }
-
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        /*colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
         colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
@@ -863,7 +854,6 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(tabIndex > -1 && tabIndex < numOfSideTabs, string.Format("Invalid tab index {0}", tabIndex));
         //reset Active tabs to reflect new status
         Color portraitColor, backgroundColor;
-        /*for (int index = 0; index < tabItems.Length; index++)*/
         for (int index = 0; index < numOfSideTabs; index++)
         {
             portraitColor = arrayOfSideTabItems[index].portrait.color;
