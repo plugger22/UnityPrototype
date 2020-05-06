@@ -307,12 +307,12 @@ namespace packageAPI
     /// </summary>
     public class MetaInfoData
     {
-        public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
+        public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
 
         public MetaInfoData()
         {
             //initialise arrayOfLists
-            for (int i = 0; i < (int)MetaTab.Count; i++)
+            for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i] = new List<MetaData>(); }
         }
 
@@ -322,7 +322,7 @@ namespace packageAPI
         /// <param name="dataCopy"></param>
         public MetaInfoData(MetaInfoData dataCopy)
         {
-            for (int i = 0; i < (int)MetaTab.Count; i++)
+            for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i] = new List<MetaData>(dataCopy.arrayOfMetaData[i]); }
         }
 
@@ -331,7 +331,7 @@ namespace packageAPI
         /// </summary>
         public void Reset()
         {
-            for (int i = 0; i < (int)MetaTab.Count; i++)
+            for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i].Clear(); }
         }
 
@@ -363,7 +363,7 @@ namespace packageAPI
         [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public MetaPriority priority;
-        public MetaTab tab;
+        public MetaTabSide tab;
         public int renownCost;                      //cost for option based on priority
         public int sideLevel;                       //GlobalSide.level
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)

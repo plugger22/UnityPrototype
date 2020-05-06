@@ -582,3 +582,29 @@ City seed 765 -> New York, America
 Dev seed 62509 -> Wednesday, 6 May 2020 11:26 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 7046 -> Wednesday, 6 May 2020 12:15 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_sealed_class(intptr,object)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:245)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:192)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:790)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:845)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:370)
+	
+Dev seed 40702 -> Wednesday, 6 May 2020 12:20 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:583)
+	MetaGameUI.SetMetaUI (packageAPI.MetaInfoData data) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:652)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:100)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:303)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:400)
+	
+Dev seed 52990 -> Wednesday, 6 May 2020 12:25 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

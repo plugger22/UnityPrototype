@@ -85,10 +85,14 @@ public class MetaGameUI : MonoBehaviour
     public Image rightImage;
     public Sprite rightImageDefault;                     //default sprite
 
-
-
-    private int numOfTabs = 4;    //NOTE: Change this at your peril (default 4 which is number of HQ actors) as data collections and indexes all flow from it
-    private int offset = 1;       //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
+    //tabs
+    private int currentTabIndex = -1;                               //side tabs (top to bottom) followed by top tabs (left to right)
+    private int maxSideTabIndex;                                    //side tabs only (used for keeping pgUP/DOWN movement within HQ side tabs)
+    private int maxTopTabIndex;                                     //top tabs only
+    private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
+    private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
+    private int numOfTabs;                                          //total tabs (side + top tabs)
+    private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
 
     //button script handlers
     private ButtonInteraction buttonInteractionReset;
@@ -121,7 +125,7 @@ public class MetaGameUI : MonoBehaviour
     private Sprite priorityInactive;
 
     //MetaData
-    private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTab.Count];       //One dataset for each tab (excluding Help tab)
+    private List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];       //One dataset for each tab (excluding Help tab)
     List<MetaData> listOfCurrentPageMetaData;                                                //current data for currently displayed page
     Dictionary<string, MetaData> dictOfSelected = new Dictionary<string, MetaData>();        //selected items, key is metaData.metaName, value metaData
 
@@ -137,9 +141,6 @@ public class MetaGameUI : MonoBehaviour
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
     private int renownCurrent;                                       //current amount of renown remaining available to spend
-    //tabs
-    private int currentTabIndex = -1;
-    private int maxTabIndex;
 
     //fast access
     private int costLow = -1;                                        //renown cost for low priority metaOptions
@@ -213,6 +214,9 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         int index = 0;
+        numOfSideTabs = (int)MetaTabSide.Count;
+        numOfTopTabs = (int)MetaTabTop.Count;
+        numOfTabs = numOfSideTabs + numOfTopTabs;
         //initialise Arrays -> tabs
         tabObjects = new GameObject[numOfTabs];
         tabItems = new MetaInteraction[numOfTabs];
@@ -227,12 +231,13 @@ public class MetaGameUI : MonoBehaviour
         arrayMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //other collections
         listOfCurrentPageMetaData = new List<MetaData>();
-        for (int i = 0; i < (int)MetaTab.Count; i++)
+        for (int i = 0; i < (int)MetaTabSide.Count; i++)
         { arrayOfMetaData[i] = new List<MetaData>(); }
         //canvas
         canvasScroll.gameObject.SetActive(true);
         //max tabs
-        maxTabIndex = numOfTabs - 1;
+        maxSideTabIndex = numOfSideTabs - 1;
+        maxTopTabIndex = numOfTopTabs - 1;
         //tab components
         if (tabBoss != null) { tabObjects[index++] = tabBoss; } else { Debug.LogError("Invalid tabBoss (Null)"); }
         if (tabSubBoss1 != null) { tabObjects[index++] = tabSubBoss1; } else { Debug.LogError("Invalid tabSubBoss1 (Null)"); }
@@ -573,7 +578,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
         //initialise HQ tabs'
         Color portraitColor, backgroundColor;
-        for (int index = 0; index < tabItems.Length; index++)
+        /*for (int index = 0; index < tabItems.Length; index++)*/
+        for (int index = 0; index < numOfSideTabs; index++)
         {
             backgroundColor = tabItems[index].background.color;
             if (tabItems[index] != null)
@@ -686,7 +692,7 @@ public class MetaGameUI : MonoBehaviour
 
 
     /// <summary>
-    /// Open the designated tab and close whatever is open
+    /// Open the designated tab (side or top) and close whatever is open
     /// </summary>
     /// <param name="tabIndex"></param>
     private void OpenTab(int tabIndex)
@@ -694,7 +700,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(tabIndex > -1 && tabIndex < numOfTabs, string.Format("Invalid tab index {0}", tabIndex));
         //reset Active tabs to reflect new status
         Color portraitColor, backgroundColor;
-        for (int index = 0; index < tabItems.Length; index++)
+        /*for (int index = 0; index < tabItems.Length; index++)*/
+        for (int index = 0; index < numOfSideTabs; index++)
         {
             portraitColor = tabItems[index].portrait.color;
             backgroundColor = tabItems[index].background.color;
@@ -823,13 +830,13 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates cached data
+    /// Updates cached data (side tabs)
     /// NOTE: data checked for null by the calling procedure
     /// </summary>
     /// <param name="data"></param>
     private void UpdateData(MetaInfoData data)
     {
-        for (int i = 0; i < (int)MetaTab.Count; i++)
+        for (int i = 0; i < (int)MetaTabSide.Count; i++)
         {
             arrayOfMetaData[i].Clear();
             arrayOfMetaData[i].AddRange(data.arrayOfMetaData[i]);
@@ -1058,7 +1065,7 @@ public class MetaGameUI : MonoBehaviour
     {
         if (currentTabIndex > -1)
         {
-            if (currentTabIndex < maxTabIndex)
+            if (currentTabIndex < maxSideTabIndex)
             {
                 currentTabIndex += 1;
                 OpenTab(currentTabIndex);

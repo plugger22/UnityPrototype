@@ -465,10 +465,10 @@ public class MetaManager : MonoBehaviour
                         //tab
                         switch (metaOption.hqPosition.level)
                         {
-                            case 0: metaData.tab = MetaTab.Boss; break;
-                            case 1: metaData.tab = MetaTab.SubBoss1; break;
-                            case 2: metaData.tab = MetaTab.SubBoss2; break;
-                            case 3: metaData.tab = MetaTab.SubBoss3; break;
+                            case 0: metaData.tab = MetaTabSide.Boss; break;
+                            case 1: metaData.tab = MetaTabSide.SubBoss1; break;
+                            case 2: metaData.tab = MetaTabSide.SubBoss2; break;
+                            case 3: metaData.tab = MetaTabSide.SubBoss3; break;
                             default: Debug.LogWarningFormat("Invalid metaOption.hqPosition.level \"{0}\" for metaOption {1}", metaOption.hqPosition.level, metaOption.name); break;
                         }
                         listOfMetaData.Add(metaData);
@@ -509,7 +509,7 @@ public class MetaManager : MonoBehaviour
                             isActive = false,
                             isRecommended = false,
                             isCriteria = false,
-                            tab = (MetaTab)index,
+                            tab = (MetaTabSide)index,
                             priority = MetaPriority.Low,
                             help = 1,
                             tag0 = "test0"
