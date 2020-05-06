@@ -472,6 +472,9 @@ public class MetaManager : MonoBehaviour
                             default: Debug.LogWarningFormat("Invalid metaOption.hqPosition.level \"{0}\" for metaOption {1}", metaOption.hqPosition.level, metaOption.name); break;
                         }
                         listOfMetaData.Add(metaData);
+                        //Player status metaOptions
+                        if (metaOption.isPlayerStatus == true)
+                        { metaInfoData.listOfStatusData.Add(metaData); }
                     }
                     else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", index); }
                 }

@@ -123,8 +123,8 @@ public class MetaGameUI : MonoBehaviour
     //Top arrays -> tabs
     private Image[] arrayOfTopTabImages;
     private MetaTopTabUI[] arrayOfTopTabInteractions;
-
     private int[] arrayOfTopTabOptions;                            //count of how many ACTIVE options are available for this tab
+    private bool[] arrayOfTopTabStatus;                            //if true the relevant tab (index ->  left to right tabs) is active and has data to display
     //Top arrays -> metaData
     private GameObject[] arrayOfTopMetaMain;
     private TextMeshProUGUI[] arrayOfTopMetaText;
@@ -153,7 +153,7 @@ public class MetaGameUI : MonoBehaviour
     private Scrollbar scrollBar;
 
     private bool isRunning;
-    private bool isStatusData;                                          //true if Player status data (metaOption.isPlayerStatus true) present, false otherwise
+    private bool isLastTabTop;                                       //true if last tab pressed was a top tab
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
     private int numOfItemsTotal = 20;                                //hardwired Max number of items -> 30
@@ -252,6 +252,7 @@ public class MetaGameUI : MonoBehaviour
         arrayOfTopTabImages = new Image[numOfTopTabs];
         arrayOfTopTabInteractions = new MetaTopTabUI[numOfTopTabs];
         arrayOfTopTabOptions = new int[numOfTopTabs];
+        arrayOfTopTabStatus = new bool[numOfTopTabs];
         //initialise  Top Arrays -> items
         arrayOfTopMetaMain = new GameObject[numOfItemsTotal];
         arrayOfTopMetaIcon = new Image[numOfItemsTotal];
@@ -318,6 +319,8 @@ public class MetaGameUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid MetaTopTabUI (Null) for arrayOfTopTabItems[{0}]", i); }
             }
             else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfTopTabImages[{0}]", i); }
+            //set all tab status's to false initially
+            arrayOfTopTabStatus[i] = false;
         }
 
         Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
@@ -734,42 +737,26 @@ public class MetaGameUI : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
         }
-        //initialise top tabs -> selected tab (inactive as nothing has yet been selected)
+        //initialise top tabs (start inactive) -> status tab 
+        backgroundColor = tabStatus.color;
+        backgroundColor.a = 0.25f;
+        tabStatus.color = backgroundColor;
+        backgroundColor = textStatus.color;
+        backgroundColor.a = 0.25f;
+        textStatus.color = backgroundColor;
+        //Selected tab
         backgroundColor = tabSelected.color;
         backgroundColor.a = 0.25f;
         tabSelected.color = backgroundColor;
         backgroundColor = textSelected.color;
         backgroundColor.a = 0.25f;
         textSelected.color = backgroundColor;
+        //last tab pressed default setting
+        isLastTabTop = false;
+        currentTopTabIndex = 0;
     }
 
-    /// <summary>
-    /// Tab initialised at start and doesn't ever change. Status data (metaOption.isPlayerStatus true) either present or not
-    /// </summary>
-    private void InitialiseTopStatusTab()
-    {
-        Color color;
-        if (isStatusData == true)
-        {
-            //data present
-            color = tabSelected.color;
-            color.a = 1.0f;
-            tabSelected.color = color;
-            color = textSelected.color;
-            color.a = 1.0f;
-            textSelected.color = color;
-        }
-        else
-        {
-            //no data
-            color = tabSelected.color;
-            color.a = 0.25f;
-            tabSelected.color = color;
-            color = textSelected.color;
-            color.a = 0.25f;
-            textSelected.color = color;
-        }
-    }
+
 
 
     private void InitialiseItems()
@@ -806,8 +793,6 @@ public class MetaGameUI : MonoBehaviour
             canvasMeta.gameObject.SetActive(true);
             // Populate data
             UpdateData(data);
-            //initialise top status tab (active if data present) -> once off
-            InitialiseTopStatusTab();
             // Display Boss page by default
             OpenSideTab(0);
             //select buttons, RHS, off by default
@@ -851,7 +836,7 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="tabIndex"></param>
     private void OpenSideTab(int tabIndex)
     {
-        Debug.Assert(tabIndex > -1 && tabIndex < numOfSideTabs, string.Format("Invalid tab index {0}", tabIndex));
+        Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfSideTabs, "Invalid tab index {0}", tabIndex);
         //reset Active tabs to reflect new status
         Color portraitColor, backgroundColor;
         for (int index = 0; index < numOfSideTabs; index++)
@@ -887,6 +872,14 @@ public class MetaGameUI : MonoBehaviour
         //update indexes
         highlightIndex = -1;
         currentSideTabIndex = tabIndex;
+        //need to deselect last active top tab
+        if (isLastTabTop == true)
+        {
+            Color color = arrayOfTopTabImages[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabImages[currentTopTabIndex].color = color;
+        }
+        isLastTabTop = false;
     }
 
     /// <summary>
@@ -895,7 +888,66 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="tabIndex"></param>
     private void OpenTopTab(int tabIndex)
     {
+        Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfTopTabs, "Invalid tab index {0}", tabIndex);
+        //tab has data to display? -> ignore if not
+        if (CheckTopTab((MetaTabTop)tabIndex) == true)
+        {
 
+        }
+        //reset Active tabs to reflect new status
+        Color backgroundColor, textColor;
+        for (int index = 0; index < numOfTopTabs; index++)
+        {
+            backgroundColor = arrayOfTopTabImages[index].color;
+            //activate indicated tab and deactivate the rest
+            if (index == tabIndex)
+            {
+
+                backgroundColor.a = 1.0f;
+
+            }
+            else
+            {
+                backgroundColor.a = 0.25f;
+            }
+            arrayOfTopTabImages[index].color = backgroundColor;
+        }
+        //assign default RHS values
+        switch ((MetaTabTop)tabIndex)
+        {
+            case MetaTabTop.Status:
+                rightTextTop.text = "Player Status Options";
+                rightTextBottom.text = string.Format("Shows all options that relate to your <b>ongoing</b><br><br>{0}<b>Conditions, Secrets, Investigations</b>{1} or contacts with {2}<b>Organisations</b>{3}",
+                    colourCancel, colourEnd, colourCancel, colourEnd);
+                break;
+            case MetaTabTop.Selected:
+                rightTextTop.text = "Selected Options";
+                rightTextBottom.text = string.Format("Shows all options that you have currently<br><br>{0}<b>Selected</b>{1}", colourCancel, colourEnd);
+                break;
+            default:
+                rightTextTop.text = "Unknown";
+                rightTextBottom.text = "Unknown";
+                break;
+        }
+        string leader = arrayOfSideTabItems[tabIndex].title.text.ToUpper();
+        rightImage.sprite = rightImageDefault;
+        //update indexes
+        highlightIndex = -1;
+        currentTopTabIndex = tabIndex;
+        //need do to deselect last active side tab
+        if (isLastTabTop == false)
+        {
+            Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].background.color = color;
+            color = arrayOfSideTabItems[currentSideTabIndex].title.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].title.color = color;
+            color = arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
+        }
+        isLastTabTop = true;
     }
 
 
@@ -1014,11 +1066,27 @@ public class MetaGameUI : MonoBehaviour
             }
             //set flag to indicate status data present -> it's a constant from time of initialisation (items may be selected, or not, but they will either be there at the start or they won't
             if (arrayOfTopMetaData[(int)MetaTabTop.Status].Count > 0)
-            { isStatusData = true; }
-            else { isStatusData = false; }
+            { SetTopTabStatus(MetaTabTop.Status, true); }
+            else { SetTopTabStatus(MetaTabTop.Status, false); }
         }
         else { Debug.LogError("Invalid data.listOfStatusData (Null)"); }
     }
+
+    /// <summary>
+    /// Returns true if top tab has valid data, false if none
+    /// </summary>
+    /// <param name="tabTop"></param>
+    /// <returns></returns>
+    private bool CheckTopTab(MetaTabTop tabTop)
+    { return arrayOfTopTabStatus[(int)tabTop]; }
+
+    /// <summary>
+    /// Sets status of a top tab, true should be if any data present, false if none
+    /// </summary>
+    /// <param name="tabTop"></param>
+    /// <param name="status"></param>
+    private void SetTopTabStatus(MetaTabTop tabTop, bool status)
+    { arrayOfTopTabStatus[(int)tabTop] = status; }
 
 
     /// <summary>
