@@ -1093,6 +1093,19 @@ public class MetaGameUI : MonoBehaviour
                 buttonDeselect.gameObject.SetActive(true);
                 //checkmark
                 arrayMetaCheckMark[highlightIndex].gameObject.SetActive(true);
+                //top tab
+                if (dictOfSelected.Count == 1)
+                {
+                    //make top selectedTab active
+                    Color backgroundColor = tabSelected.color;
+                    backgroundColor.a = 1.0f;
+                    tabSelected.color = backgroundColor;
+                    backgroundColor = textSelected.color;
+                    backgroundColor.a = 1.0f;
+                    textSelected.color = backgroundColor;
+
+
+                }
                 //switch top texts
                 rightTextTop.text = metaData.textDeselect;
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
@@ -1126,6 +1139,18 @@ public class MetaGameUI : MonoBehaviour
                 buttonDeselect.gameObject.SetActive(false);
                 //checkmark
                 arrayMetaCheckMark[highlightIndex].gameObject.SetActive(false);
+                //top tab
+                if (dictOfSelected.Count == 0)
+                {
+                    //make top selectedTab inactive
+                    Color backgroundColor = tabSelected.color;
+                    backgroundColor.a = 0.25f;
+                    tabSelected.color = backgroundColor;
+                    backgroundColor = textSelected.color;
+                    backgroundColor.a = 0.25f;
+                    textSelected.color = backgroundColor;
+
+                }
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
                 buttonSelect.gameObject.SetActive(true);
@@ -1296,7 +1321,7 @@ public class MetaGameUI : MonoBehaviour
             //nothing selected -> Confirm continue?
             ModalConfirmDetails details = new ModalConfirmDetails()
             {
-                topText =  string.Format("You haven't selected any options<br>{0}<b>{1}</b>{2} Renown will carry over", colourNeutral, renownCurrent, colourEnd),
+                topText = string.Format("You haven't selected any options<br>{0}<b>{1}</b>{2} Renown will carry over", colourNeutral, renownCurrent, colourEnd),
                 buttonFalse = "BACK",
                 buttonTrue = "CONTINUE",
                 modalLevel = 2,
