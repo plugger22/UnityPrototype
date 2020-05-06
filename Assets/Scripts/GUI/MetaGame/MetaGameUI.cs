@@ -44,6 +44,10 @@ public class MetaGameUI : MonoBehaviour
     public GameObject tabSubBoss2;
     public GameObject tabSubBoss3;
 
+    [Header("Top Tabs")]
+    public Image tabSelected;
+    public TextMeshProUGUI textSelected;
+
     [Header("Top")]
     public Image renownBackground;
     public TextMeshProUGUI renownAmount;
@@ -256,6 +260,9 @@ public class MetaGameUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for tabObject[{0}]", i); }
             }
         }
+        //top tabs
+        Debug.Assert(tabSelected != null, "Invalid tabSelected (Null)");
+        Debug.Assert(textSelected != null, "Invalid textSelected (Null)");
         //main
         Debug.Assert(canvasMeta != null, "Invalid canvasMeta (Null)");
         Debug.Assert(canvasScroll != null, "Invalid canvasScroll (Null)");
@@ -605,6 +612,13 @@ public class MetaGameUI : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
         }
+        //initialise top tabs -> selected tab inactive as nothing has yet been selected
+        backgroundColor = tabSelected.color;
+        backgroundColor.a = 0.25f;
+        tabSelected.color = backgroundColor;
+        backgroundColor = textSelected.color;
+        backgroundColor.a = 0.25f;
+        textSelected.color = backgroundColor;
     }
 
 
