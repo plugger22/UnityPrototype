@@ -627,13 +627,13 @@ public class MetaGameUI : MonoBehaviour
                 ShowItemDetails((int)Param);
                 break;
             case EventType.MetaGameSelect:
-                ExecuteSelect();
+                ExecuteSelect((int)Param);
                 break;
             case EventType.MetaGameDeselect:
-                ExecuteDeselect();
+                ExecuteDeselect((int)Param);
                 break;
             case EventType.MetaGameButton:
-                ExecuteButton();
+                ExecuteButton((int)Param);
                 break;
             case EventType.MetaGameReset:
                 ExecuteReset();
@@ -641,18 +641,6 @@ public class MetaGameUI : MonoBehaviour
             case EventType.MetaGameConfirm:
                 ExecuteConfirm();
                 break;
-            /*case EventType.MainInfoHome:
-                ExecuteButtonHome();
-                break;
-            case EventType.MainInfoEnd:
-                ExecuteButtonEnd();
-                break;
-            case EventType.MainInfoBack:
-                ExecuteButtonBack();
-                break;
-            case EventType.MainInfoForward:
-                ExecuteButtonForward();
-                break;*/
             case EventType.MetaGameUpArrow:
                 ExecuteUpArrow();
                 break;
@@ -999,6 +987,10 @@ public class MetaGameUI : MonoBehaviour
                         //populate text and set item to active
                         arrayOfSideMetaText[index].text = listOfCurrentPageSideMetaData[index].itemText;
                         arrayOfSideMetaMain[index].gameObject.SetActive(true);
+                        //checkmark
+                        if (listOfCurrentPageSideMetaData[index].isSelected == true)
+                        { arrayOfSideMetaCheckMark[index].gameObject.SetActive(true); }
+                        else { arrayOfSideMetaCheckMark[index].gameObject.SetActive(false); }
                         //assign icon
                         if (listOfCurrentPageSideMetaData[index].isActive == true)
                         {
@@ -1064,7 +1056,6 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="tab"></param>
     private void DisplayTopItemPage(int tabIndex)
     {
-        bool isSelectedTab = false;
         Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
         //page header
         page_header.text = string.Format("{0} Option{1} available", arrayOfTopTabOptions[tabIndex], arrayOfTopTabOptions[tabIndex] != 1 ? "s" : "");
@@ -1073,7 +1064,6 @@ public class MetaGameUI : MonoBehaviour
         //Get data -> selected tab
         if (tabIndex == (int)MetaTabTop.Selected)
         {
-            isSelectedTab = true;
             //nothing currently selected, show default
             if (dictOfSelected.Count == 0)
             { listOfCurrentPageTopMetaData.Add(defaultSelected); }
@@ -1099,13 +1089,10 @@ public class MetaGameUI : MonoBehaviour
                         //populate text and set item to active
                         arrayOfTopMetaText[index].text = listOfCurrentPageTopMetaData[index].itemText;
                         arrayOfTopMetaMain[index].gameObject.SetActive(true);
-                        //need to toggle checkmark if Selected tab as it's not automatically picked up
-                        if (isSelectedTab == true)
-                        {
-                            if (listOfCurrentPageTopMetaData[index].isSelected == true)
-                            { arrayOfTopMetaCheckMark[index].gameObject.SetActive(true); }
-                            else { arrayOfTopMetaCheckMark[index].gameObject.SetActive(false); }
-                        }
+                        //checkmarks
+                        if (listOfCurrentPageTopMetaData[index].isSelected == true)
+                        { arrayOfTopMetaCheckMark[index].gameObject.SetActive(true); }
+                        else { arrayOfTopMetaCheckMark[index].gameObject.SetActive(false); }
                         //assign icon
                         if (listOfCurrentPageTopMetaData[index].isActive == true)
                         {
@@ -1408,7 +1395,10 @@ public class MetaGameUI : MonoBehaviour
             {
                 //at top of page, go to tab
                 highlightIndex = -1;
-                OpenSideTab(currentSideTabIndex);
+                //check top or side tab
+                if (isLastTabTop == true)
+                { OpenTopTab(currentTopTabIndex); }
+                else { OpenSideTab(currentSideTabIndex); }
             }
         }
     }
@@ -1543,11 +1533,14 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Select button pressed, RHS
+    /// Select button pressed, RHS. ItemIndex parameter returned in case of itemInteraction mouse click, not the case for Select/Deselect button pressed on RHS (uses existing highlight for this)
     /// </summary>
-    private void ExecuteSelect()
+    private void ExecuteSelect(int itemIndex = -1)
     {
         MetaData metaData;
+        //update highlight index for itemInteraction right click only
+        if (itemIndex > -1)
+        { highlightIndex = itemIndex; }
         //metaData depends on which tab type has been selected (each has it's own records)
         if (isLastTabTop == true)
         { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
@@ -1585,11 +1578,14 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Deselect button pressed, RHS
+    /// Deselect button pressed, RHS. ItemIndex parameter returned in case of itemInteraction mouse click, not the case for Select/Deselect button pressed on RHS (uses existing highlight for this)
     /// </summary>
-    private void ExecuteDeselect()
+    private void ExecuteDeselect(int itemIndex = -1)
     {
         MetaData metaData;
+        //update highlight index for itemInteraction right click only
+        if (itemIndex > -1)
+        { highlightIndex = itemIndex; }
         //metaData depends on which tab type has been selected (each has it's own records)
         if (isLastTabTop == true)
         { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
@@ -1627,12 +1623,12 @@ public class MetaGameUI : MonoBehaviour
     /// <summary>
     /// Generic keyboard shortcut for Select/Deselect button press (it is whatever button is active at the time). Does nothing if neither button valid
     /// </summary>
-    private void ExecuteButton()
+    private void ExecuteButton(int itemIndex)
     {
         if (buttonSelect.gameObject.activeSelf == true)
-        { ExecuteSelect(); }
+        { ExecuteSelect(itemIndex); }
         else if (buttonDeselect.gameObject.activeSelf == true)
-        { ExecuteDeselect(); }
+        { ExecuteDeselect(itemIndex); }
     }
 
     /// <summary>
