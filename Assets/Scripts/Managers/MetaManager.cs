@@ -397,6 +397,9 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseMetaData()
     {
+        //Take list of MetaData and populate MetaInfoData temp package
+        metaInfoData.Reset();
+        //process MetaOptions
         if (listOfMetaOptions != null)
         {
             int count = listOfMetaOptions.Count;
@@ -479,8 +482,6 @@ public class MetaManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", index); }
                 }
-                //Take list of MetaData and populate MetaInfoData temp package
-                metaInfoData.Reset();
                 for (int i = 0; i < listOfMetaData.Count; i++)
                 {
                     MetaData metaData = listOfMetaData[i];

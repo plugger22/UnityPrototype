@@ -1186,6 +1186,7 @@ public class MetaGameUI : MonoBehaviour
             //populate status top tab data
             for (int i = 0; i < data.listOfStatusData.Count; i++)
             {
+                arrayOfTopMetaData[(int)MetaTabTop.Status].Clear();
                 MetaData metaData = data.listOfStatusData[i];
                 if (metaData != null)
                 { arrayOfTopMetaData[(int)MetaTabTop.Status].Add(metaData); }
@@ -1203,7 +1204,11 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="itemIndex"></param>
     private void ShowItemDetails(int itemIndex)
     {
-        MetaData data = listOfCurrentPageSideMetaData[itemIndex];
+        MetaData data;
+        //check top or side tab pressed
+        if (isLastTabTop == true)
+        { data = listOfCurrentPageTopMetaData[itemIndex]; }
+        else { data = listOfCurrentPageSideMetaData[itemIndex]; }
         if (data != null)
         {
             //Right Hand side text varies depending on 'isActive' status
@@ -1303,12 +1308,25 @@ public class MetaGameUI : MonoBehaviour
             {
                 //reset currently highlighted back to default
                 if (highlightIndex > -1)
-                { arrayOfSideMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageSideMetaData[highlightIndex].itemText, colourEnd); }
+                {
+                    if (isLastTabTop == true)
+                    { arrayOfTopMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageTopMetaData[highlightIndex].itemText, colourEnd); }
+                    else { arrayOfSideMetaText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageSideMetaData[highlightIndex].itemText, colourEnd); }
+                }
                 highlightIndex = itemIndex;
                 //highlight item -> yelllow if active, grey if not
                 if (data.isActive == true)
-                { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
-                else { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
+                {
+                    if (isLastTabTop == true)
+                    { arrayOfTopMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageTopMetaData[itemIndex].itemText, colourEnd); }
+                    else { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
+                }
+                else
+                {
+                    if (isLastTabTop == true)
+                    { arrayOfTopMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageTopMetaData[itemIndex].itemText, colourEnd); }
+                    else { arrayOfSideMetaText[itemIndex].text = string.Format("{0}<size=115%><b>{1}</size></b>{2}", colourDefault, listOfCurrentPageSideMetaData[itemIndex].itemText, colourEnd); }
+                }
             }
         }
         else

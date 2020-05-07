@@ -335,6 +335,8 @@ namespace packageAPI
         {
             for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i].Clear(); }
+            listOfStatusData.Clear();
+            selectedDefault = new MetaData();
         }
 
         /// <summary>
