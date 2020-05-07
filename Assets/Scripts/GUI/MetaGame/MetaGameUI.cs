@@ -4,6 +4,7 @@ using packageAPI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -95,6 +96,8 @@ public class MetaGameUI : MonoBehaviour
     private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
     private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
+    private float sideTabAlpha = 0.25f;                             //alpha level of side tabs when inactive
+    private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
 
     //button script handlers
     private ButtonInteraction buttonInteractionReset;
@@ -125,7 +128,6 @@ public class MetaGameUI : MonoBehaviour
     private TextMeshProUGUI[] arrayOfTopTabTitles;
     private MetaTopTabUI[] arrayOfTopTabInteractions;
     private int[] arrayOfTopTabOptions;                            //count of how many ACTIVE options are available for this tab
-    private bool[] arrayOfTopTabStatus;                            //if true the relevant tab (index ->  left to right tabs) is active and has data to display
     //Top arrays -> metaData
     private GameObject[] arrayOfTopMetaMain;
     private TextMeshProUGUI[] arrayOfTopMetaText;
@@ -133,6 +135,8 @@ public class MetaGameUI : MonoBehaviour
     private Image[] arrayOfTopMetaBorder;
     private Image[] arrayOfTopMetaCheckMark;
     private Image[] arrayOfTopMetaBackground;
+
+    private MetaData defaultSelected;                               //default metaData item to display when nothing has been selected
 
     //item priority sprites
     private Sprite priorityHigh;
@@ -254,7 +258,6 @@ public class MetaGameUI : MonoBehaviour
         arrayOfTopTabTitles = new TextMeshProUGUI[numOfTopTabs];
         arrayOfTopTabInteractions = new MetaTopTabUI[numOfTopTabs];
         arrayOfTopTabOptions = new int[numOfTopTabs];
-        arrayOfTopTabStatus = new bool[numOfTopTabs];
         //initialise  Top Arrays -> items
         arrayOfTopMetaMain = new GameObject[numOfItemsTotal];
         arrayOfTopMetaIcon = new Image[numOfItemsTotal];
@@ -324,8 +327,6 @@ public class MetaGameUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid MetaTopTabUI (Null) for arrayOfTopTabItems[{0}]", i); }
             }
             else { Debug.LogErrorFormat("Invalid MetaInteraction (Null) for arrayOfTopTabImages[{0}]", i); }
-            //set all tab status's to false initially
-            arrayOfTopTabStatus[i] = false;
         }
         //main
         Debug.Assert(canvasMeta != null, "Invalid canvasMeta (Null)");
@@ -707,6 +708,9 @@ public class MetaGameUI : MonoBehaviour
         renownCurrent = playerRenown;
         Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
         Color portraitColor, backgroundColor;
+        //default metaData for selected tab (when nothing has been selected)
+        defaultSelected = data.selectedDefault;
+        Debug.Assert(defaultSelected != null, "Invalid defaultSelected (Null)");
         //initialise HQ side tabs'
         for (int index = 0; index < numOfSideTabs; index++)
         {
@@ -716,9 +720,7 @@ public class MetaGameUI : MonoBehaviour
                 //sprite
                 Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor((ActorHQ)(index + offset));
                 if (actor != null)
-                {
-                    arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
-                }
+                { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
                 else
                 {
                     //default error sprite if a problem
@@ -732,7 +734,7 @@ public class MetaGameUI : MonoBehaviour
                 if (index == 0)
                 { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
                 else
-                { portraitColor.a = 0.25f; backgroundColor.a = 0.25f; }
+                { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
                 //set colors
                 arrayOfSideTabItems[index].portrait.color = portraitColor;
                 arrayOfSideTabItems[index].background.color = backgroundColor;
@@ -749,21 +751,29 @@ public class MetaGameUI : MonoBehaviour
         }
         //initialise top tabs (start inactive) -> status tab 
         backgroundColor = tabStatus.color;
-        backgroundColor.a = 0.25f;
+        backgroundColor.a = topTabAlpha;
         tabStatus.color = backgroundColor;
         backgroundColor = textStatus.color;
-        backgroundColor.a = 0.25f;
+        backgroundColor.a = topTabAlpha;
         textStatus.color = backgroundColor;
         //Selected tab
         backgroundColor = tabSelected.color;
-        backgroundColor.a = 0.25f;
+        backgroundColor.a = topTabAlpha;
         tabSelected.color = backgroundColor;
         backgroundColor = textSelected.color;
-        backgroundColor.a = 0.25f;
+        backgroundColor.a = topTabAlpha;
         textSelected.color = backgroundColor;
-        //last tab pressed default setting
+        //tab pressed default settings (starts with side tab index 0)
         isLastTabTop = false;
         currentTopTabIndex = 0;
+        //set checkmarks to false
+        for (int index = 0; index < numOfItemsTotal; index++)
+        {
+            arrayOfSideMetaCheckMark[index].gameObject.SetActive(false);
+            arrayOfTopMetaCheckMark[index].gameObject.SetActive(false);
+        }
+        //clear out dict
+        dictOfSelected.Clear();
     }
 
 
@@ -861,8 +871,8 @@ public class MetaGameUI : MonoBehaviour
             }
             else
             {
-                portraitColor.a = 0.25f;
-                backgroundColor.a = 0.25f;
+                portraitColor.a = sideTabAlpha;
+                backgroundColor.a = sideTabAlpha;
             }
             arrayOfSideTabItems[index].portrait.color = portraitColor;
             arrayOfSideTabItems[index].background.color = backgroundColor;
@@ -878,7 +888,7 @@ public class MetaGameUI : MonoBehaviour
         rightTextTop.text = $"{leader} Options";
         rightTextBottom.text = string.Format("Shows any HQ options on offer from your<br><br><b>{0}{1}{2}</b>", colourCancel, leader, colourEnd);
         //redrawn main page
-        DisplayItemPage(tabIndex);
+        DisplaySideItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
         currentSideTabIndex = tabIndex;
@@ -886,10 +896,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == true)
         {
             Color color = arrayOfTopTabImages[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabImages[currentTopTabIndex].color = color;
             color = arrayOfTopTabTitles[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabTitles[currentTopTabIndex].color = color;
         }
         isLastTabTop = false;
@@ -902,11 +912,7 @@ public class MetaGameUI : MonoBehaviour
     private void OpenTopTab(int tabIndex)
     {
         Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfTopTabs, "Invalid tab index {0}", tabIndex);
-        //tab has data to display? -> ignore if not
-        if (CheckTopTab((MetaTabTop)tabIndex) == true)
-        {
 
-        }
         //reset Active tabs to reflect new status
         Color backgroundColor, textColor, portraitColor;
         for (int index = 0; index < numOfTopTabs; index++)
@@ -921,8 +927,8 @@ public class MetaGameUI : MonoBehaviour
             }
             else
             {
-                backgroundColor.a = 0.25f;
-                textColor.a = 0.25f;
+                backgroundColor.a = topTabAlpha;
+                textColor.a = topTabAlpha;
             }
             arrayOfTopTabImages[index].color = backgroundColor;
             arrayOfTopTabTitles[index].color = textColor;
@@ -933,7 +939,7 @@ public class MetaGameUI : MonoBehaviour
             case MetaTabTop.Status:
                 rightTextTop.text = "Player Status Options";
                 rightTextBottom.text = string.Format("Shows all <b>ongoing options</b> that will {0}<b>carry over</b>{1} to the <b>next city</b> if <b>not dealt with</b><br><br>Includes {2}<b>Conditions, " +
-                    "Secrets, Investigations</b>{3} and <b>contacts</b> with {4}<b>Organisations</b>{5} (that <b>would be lost</b>)", colourCancel, colourEnd, colourCancel, colourEnd, colourCancel, colourEnd);
+                    "Secrets, Investigations</b>{3} and <b>contacts</b> with {4}<b>Organisations</b>{5} (that <b>will be lost</b>)", colourCancel, colourEnd, colourCancel, colourEnd, colourCancel, colourEnd);
                 break;
             case MetaTabTop.Selected:
                 rightTextTop.text = "Selected Options";
@@ -946,6 +952,8 @@ public class MetaGameUI : MonoBehaviour
         }
         string leader = arrayOfSideTabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
+        //redrawn main page
+        DisplayTopItemPage(tabIndex);
         //update indexes
         highlightIndex = -1;
         currentTopTabIndex = tabIndex;
@@ -953,10 +961,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == false)
         {
             backgroundColor = arrayOfSideTabItems[currentSideTabIndex].background.color;
-            backgroundColor.a = 0.25f;
+            backgroundColor.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].background.color = backgroundColor;
             portraitColor = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
-            portraitColor.a = 0.25f;
+            portraitColor.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].portrait.color = portraitColor;
         }
         isLastTabTop = true;
@@ -964,10 +972,10 @@ public class MetaGameUI : MonoBehaviour
 
 
     /// <summary>
-    /// sub Method to display a particular page drawing from cached data in dictOfItemData
+    /// sub Method to display a particular page drawing from cached data in dictOfItemData -> side tab
     /// </summary>
     /// <param name="tab"></param>
-    private void DisplayItemPage(int tabIndex)
+    private void DisplaySideItemPage(int tabIndex)
     {
         Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
         //page header
@@ -1049,6 +1057,113 @@ public class MetaGameUI : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// sub Method to display a particular page drawing from cached data in dictOfItemData -> top tab 
+    /// </summary>
+    /// <param name="tab"></param>
+    private void DisplayTopItemPage(int tabIndex)
+    {
+        bool isSelectedTab = false;
+        Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
+        //page header
+        page_header.text = string.Format("{0} Option{1} available", arrayOfTopTabOptions[tabIndex], arrayOfTopTabOptions[tabIndex] != 1 ? "s" : "");
+        //clear out current data
+        listOfCurrentPageTopMetaData.Clear();
+        //Get data -> selected tab
+        if (tabIndex == (int)MetaTabTop.Selected)
+        {
+            isSelectedTab = true;
+            //nothing currently selected, show default
+            if (dictOfSelected.Count == 0)
+            { listOfCurrentPageTopMetaData.Add(defaultSelected); }
+            else { listOfCurrentPageTopMetaData = dictOfSelected.Values.ToList(); }
+        }
+        else
+        {
+            //get data -> all other top tabs
+            listOfCurrentPageTopMetaData.AddRange(arrayOfTopMetaData[tabIndex]);
+        }
+        //display routine
+        if (listOfCurrentPageTopMetaData != null)
+        {
+            numOfItemsCurrent = listOfCurrentPageTopMetaData.Count;
+            maxHighlightIndex = numOfItemsCurrent - 1;
+            if (numOfItemsCurrent > 0)
+            {
+                //populate current messages for the main tab
+                for (int index = 0; index < arrayOfTopMetaText.Length; index++)
+                {
+                    if (index < numOfItemsCurrent)
+                    {
+                        //populate text and set item to active
+                        arrayOfTopMetaText[index].text = listOfCurrentPageTopMetaData[index].itemText;
+                        arrayOfTopMetaMain[index].gameObject.SetActive(true);
+                        //need to toggle checkmark if Selected tab as it's not automatically picked up
+                        if (isSelectedTab == true)
+                        {
+                            if (listOfCurrentPageTopMetaData[index].isSelected == true)
+                            { arrayOfTopMetaCheckMark[index].gameObject.SetActive(true); }
+                            else { arrayOfTopMetaCheckMark[index].gameObject.SetActive(false); }
+                        }
+                        //assign icon
+                        if (listOfCurrentPageTopMetaData[index].isActive == true)
+                        {
+                            switch (listOfCurrentPageTopMetaData[index].priority)
+                            {
+                                case MetaPriority.Extreme:
+                                case MetaPriority.High:
+                                    arrayOfTopMetaIcon[index].sprite = priorityHigh;
+                                    break;
+                                case MetaPriority.Medium:
+                                    arrayOfTopMetaIcon[index].sprite = priorityMedium;
+                                    break;
+                                case MetaPriority.Low:
+                                    arrayOfTopMetaIcon[index].sprite = priorityLow;
+                                    break;
+                                default:
+                                    Debug.LogWarningFormat("Invalid priority \"{0}\"", listOfCurrentPageTopMetaData[index].priority);
+                                    break;
+                            }
+                        }
+                        else { arrayOfTopMetaIcon[index].sprite = priorityInactive; }
+
+                    }
+                    else if (index < numOfItemsPrevious)
+                    {
+                        //efficient -> only disables items that were previously active, not the whole set
+                        arrayOfTopMetaText[index].text = "";
+                        arrayOfTopMetaMain[index].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //no data, blank previous items (not necessarily all), disable line
+                for (int index = 0; index < numOfItemsPrevious; index++)
+                {
+                    arrayOfTopMetaText[index].text = "";
+                    arrayOfTopMetaMain[index].gameObject.SetActive(false);
+                }
+
+            }
+            //update previous count to current
+            numOfItemsPrevious = numOfItemsCurrent;
+        }
+        else { Debug.LogWarning("Invalid MetaInfoData.listOfMainText (Null)"); }
+        //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
+        if (numOfItemsCurrent <= numOfVisibleItems)
+        {
+            scrollRect.verticalScrollbar = null;
+            scrollBarObject.SetActive(false);
+        }
+        else
+        {
+            scrollBarObject.SetActive(true);
+            scrollRect.verticalScrollbar = scrollBar;
+        }
+    }
+
     /// <summary>
     /// Updates cached data (side tabs)
     /// NOTE: data checked for null by the calling procedure
@@ -1076,29 +1191,10 @@ public class MetaGameUI : MonoBehaviour
                 { arrayOfTopMetaData[(int)MetaTabTop.Status].Add(metaData); }
                 else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfStatusData[i]"); }
             }
-            //set flag to indicate status data present -> it's a constant from time of initialisation (items may be selected, or not, but they will either be there at the start or they won't
-            if (arrayOfTopMetaData[(int)MetaTabTop.Status].Count > 0)
-            { SetTopTabStatus(MetaTabTop.Status, true); }
-            else { SetTopTabStatus(MetaTabTop.Status, false); }
         }
         else { Debug.LogError("Invalid data.listOfStatusData (Null)"); }
     }
 
-    /// <summary>
-    /// Returns true if top tab has valid data, false if none
-    /// </summary>
-    /// <param name="tabTop"></param>
-    /// <returns></returns>
-    private bool CheckTopTab(MetaTabTop tabTop)
-    { return arrayOfTopTabStatus[(int)tabTop]; }
-
-    /// <summary>
-    /// Sets status of a top tab, true should be if any data present, false if none
-    /// </summary>
-    /// <param name="tabTop"></param>
-    /// <param name="status"></param>
-    private void SetTopTabStatus(MetaTabTop tabTop, bool status)
-    { arrayOfTopTabStatus[(int)tabTop] = status; }
 
 
     /// <summary>
@@ -1308,10 +1404,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == true)
         {
             Color color = arrayOfTopTabImages[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabImages[currentTopTabIndex].color = color;
             color = arrayOfTopTabTitles[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabTitles[currentTopTabIndex].color = color;
         }
         isLastTabTop = false;
@@ -1341,10 +1437,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == true)
         {
             Color color = arrayOfTopTabImages[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabImages[currentTopTabIndex].color = color;
             color = arrayOfTopTabTitles[currentTopTabIndex].color;
-            color.a = 0.25f;
+            color.a = topTabAlpha;
             arrayOfTopTabTitles[currentTopTabIndex].color = color;
         }
         isLastTabTop = false;
@@ -1373,10 +1469,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == false)
         {
             Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
-            color.a = 0.25f;
+            color.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].background.color = color;
             color = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
-            color.a = 0.25f;
+            color.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
         }
         isLastTabTop = true;
@@ -1405,10 +1501,10 @@ public class MetaGameUI : MonoBehaviour
         if (isLastTabTop == false)
         {
             Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
-            color.a = 0.25f;
+            color.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].background.color = color;
             color = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
-            color.a = 0.25f;
+            color.a = sideTabAlpha;
             arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
         }
         isLastTabTop = true;
@@ -1433,7 +1529,12 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteSelect()
     {
-        MetaData metaData = listOfCurrentPageSideMetaData[highlightIndex];
+        MetaData metaData;
+        //metaData depends on which tab type has been selected (each has it's own records)
+        if (isLastTabTop == true)
+        { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
+        else { metaData = listOfCurrentPageSideMetaData[highlightIndex]; }
+        //process metaData
         if (metaData != null)
         {
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
@@ -1455,19 +1556,7 @@ public class MetaGameUI : MonoBehaviour
                 buttonDeselect.gameObject.SetActive(true);
                 //checkmark
                 arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(true);
-                //top tab
-                if (dictOfSelected.Count == 1)
-                {
-                    //make top selectedTab active
-                    Color backgroundColor = tabSelected.color;
-                    backgroundColor.a = 1.0f;
-                    tabSelected.color = backgroundColor;
-                    backgroundColor = textSelected.color;
-                    backgroundColor.a = 1.0f;
-                    textSelected.color = backgroundColor;
-
-
-                }
+                arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(true);
                 //switch top texts
                 rightTextTop.text = metaData.textDeselect;
                 Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
@@ -1482,7 +1571,12 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteDeselect()
     {
-        MetaData metaData = listOfCurrentPageSideMetaData[highlightIndex];
+        MetaData metaData;
+        //metaData depends on which tab type has been selected (each has it's own records)
+        if (isLastTabTop == true)
+        { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
+        else { metaData = listOfCurrentPageSideMetaData[highlightIndex]; }
+        //process metaData
         if (metaData != null)
         {
             MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
@@ -1501,18 +1595,7 @@ public class MetaGameUI : MonoBehaviour
                 buttonDeselect.gameObject.SetActive(false);
                 //checkmark
                 arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(false);
-                //top tab
-                if (dictOfSelected.Count == 0)
-                {
-                    //make top selectedTab inactive
-                    Color backgroundColor = tabSelected.color;
-                    backgroundColor.a = 0.25f;
-                    tabSelected.color = backgroundColor;
-                    backgroundColor = textSelected.color;
-                    backgroundColor.a = 0.25f;
-                    textSelected.color = backgroundColor;
-
-                }
+                arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
                 buttonSelect.gameObject.SetActive(true);

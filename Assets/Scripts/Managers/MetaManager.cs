@@ -425,6 +425,7 @@ public class MetaManager : MonoBehaviour
                             sprite = metaOption.sprite,
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
+                            isSelected = false,
                             help = 1,
                             tag0 = "test0"
                         };
@@ -465,10 +466,10 @@ public class MetaManager : MonoBehaviour
                         //tab
                         switch (metaOption.hqPosition.level)
                         {
-                            case 0: metaData.tab = MetaTabSide.Boss; break;
-                            case 1: metaData.tab = MetaTabSide.SubBoss1; break;
-                            case 2: metaData.tab = MetaTabSide.SubBoss2; break;
-                            case 3: metaData.tab = MetaTabSide.SubBoss3; break;
+                            case 0: metaData.tabSide = MetaTabSide.Boss; break;
+                            case 1: metaData.tabSide = MetaTabSide.SubBoss1; break;
+                            case 2: metaData.tabSide = MetaTabSide.SubBoss2; break;
+                            case 3: metaData.tabSide = MetaTabSide.SubBoss3; break;
                             default: Debug.LogWarningFormat("Invalid metaOption.hqPosition.level \"{0}\" for metaOption {1}", metaOption.hqPosition.level, metaOption.name); break;
                         }
                         listOfMetaData.Add(metaData);
@@ -511,8 +512,9 @@ public class MetaManager : MonoBehaviour
                             sprite = GameManager.instance.guiScript.infoSprite,
                             isActive = false,
                             isRecommended = false,
+                            isSelected = false,
                             isCriteria = false,
-                            tab = (MetaTabSide)index,
+                            tabSide = (MetaTabSide)index,
                             priority = MetaPriority.Low,
                             help = 1,
                             tag0 = "test0"
@@ -557,7 +559,48 @@ public class MetaManager : MonoBehaviour
                         metaInfoData.arrayOfMetaData[index].AddRange(listInactive);
                     }
                 }
-
+                //defaults for top tabs
+                if (metaInfoData.listOfStatusData.Count == 0)
+                {
+                    //default for status
+                    MetaData metaDataStatus = new MetaData()
+                    {
+                        metaName = "Default",
+                        itemText = string.Format("There are NO Ongoing options"),
+                        textSelect = "No Ongoing Options ",
+                        bottomText = "<b>There are no Conditions, Secrets, Investigations or contacts with Organisations that will carry over to the next city</b>",
+                        sideLevel = level,
+                        sprite = GameManager.instance.guiScript.infoSprite,
+                        isActive = false,
+                        isRecommended = false,
+                        isSelected = false,
+                        isCriteria = false,
+                        tabTop = MetaTabTop.Status,
+                        priority = MetaPriority.Low,
+                        help = 1,
+                        tag0 = "test0"
+                    };
+                    metaInfoData.listOfStatusData.Add(metaDataStatus);
+                }
+                //create a default metaData for Selected (there'll be nothing selected at the start)
+                MetaData metaDataSelected = new MetaData()
+                {
+                    metaName = "Default",
+                    itemText = string.Format("NO options have currently been selected"),
+                    textSelect = "No Options Selected",
+                    bottomText = "<b>Any options that you select will be shown here</b>",
+                    sideLevel = level,
+                    sprite = GameManager.instance.guiScript.infoSprite,
+                    isActive = false,
+                    isRecommended = false,
+                    isSelected = false,
+                    isCriteria = false,
+                    tabTop = MetaTabTop.Selected,
+                    priority = MetaPriority.Low,
+                    help = 1,
+                    tag0 = "test0"
+                };
+                metaInfoData.selectedDefault = metaDataSelected;
             }
             else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
         }

@@ -307,8 +307,9 @@ namespace packageAPI
     /// </summary>
     public class MetaInfoData
     {
-        public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];           //array of lists, one per MainInfoUI.cs tab excluding 'help'
+        public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];           //array of lists, one per MetaGameUI.cs tab excluding 'help'
         public List<MetaData> listOfStatusData = new List<MetaData>();                                  //includes all metaData with metaOption.isPlayerStatus true
+        public MetaData selectedDefault = new MetaData();                                               //default metaData option for Selected tab
 
         public MetaInfoData()
         {
@@ -343,7 +344,7 @@ namespace packageAPI
         public void AddMetaData(MetaData metaData)
         {
             if (metaData != null)
-            { arrayOfMetaData[(int)metaData.tab].Add(metaData); }
+            { arrayOfMetaData[(int)metaData.tabSide].Add(metaData); }
             else { Debug.LogWarning("Invalid metaData (Null)"); }
         }
     }
@@ -364,7 +365,8 @@ namespace packageAPI
         [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public MetaPriority priority;
-        public MetaTabSide tab;
+        public MetaTabSide tabSide;                 //specify a side or top tab
+        public MetaTabTop tabTop;                   //specify a side or top tab
         public int renownCost;                      //cost for option based on priority
         public int sideLevel;                       //GlobalSide.level
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)

@@ -735,3 +735,63 @@ City seed 765 -> New York, America
 Dev seed 189 -> Thursday, 7 May 2020 10:04 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 15126 -> Thursday, 7 May 2020 10:24 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 65105 -> Thursday, 7 May 2020 11:01 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21768 -> Thursday, 7 May 2020 11:07 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 59848 -> Thursday, 7 May 2020 11:18 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 53054 -> Thursday, 7 May 2020 11:28 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 12171 -> Thursday, 7 May 2020 11:39 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27273 -> Thursday, 7 May 2020 11:42 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+ERROR Invalid metaName (duplicate) in dictOfSelected for "MetaOptionLevel2"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:ExecuteSelect() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:1522)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:630)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:306)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 37035 -> Thursday, 7 May 2020 11:47 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+ERROR Invalid metaName (duplicate) in dictOfSelected for "MetaOptionTraitor"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaGameUI:ExecuteSelect() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:1522)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:630)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:306)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54586 -> Thursday, 7 May 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 47643 -> Thursday, 7 May 2020 12:09 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 18947 -> Thursday, 7 May 2020 12:33 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
