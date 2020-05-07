@@ -875,6 +875,11 @@ public class MetaGameUI : MonoBehaviour
         rightImage.sprite = rightImageDefault;
         rightTextTop.text = $"{leader} Options";
         rightTextBottom.text = string.Format("Shows any HQ options on offer from your<br><br><b>{0}{1}{2}</b>", colourCancel, leader, colourEnd);
+        //reset buttons
+        buttonSelect.gameObject.SetActive(false);
+        buttonDeselect.gameObject.SetActive(false);
+        buttonHelpCombined.gameObject.SetActive(false);
+        buttonHelpCentre.gameObject.SetActive(false);
         //redrawn main page
         DisplaySideItemPage(tabIndex);
         //update indexes
@@ -940,6 +945,11 @@ public class MetaGameUI : MonoBehaviour
         }
         string leader = arrayOfSideTabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
+        //reset buttons
+        buttonSelect.gameObject.SetActive(false);
+        buttonDeselect.gameObject.SetActive(false);
+        buttonHelpCombined.gameObject.SetActive(false);
+        buttonHelpCentre.gameObject.SetActive(false);
         //redrawn main page
         DisplayTopItemPage(tabIndex);
         //update indexes
@@ -1657,7 +1667,12 @@ public class MetaGameUI : MonoBehaviour
             //update current item
             if (highlightIndex > -1)
             {
-                MetaData data = listOfCurrentPageSideMetaData[highlightIndex];
+                MetaData data;
+                //check top or side tab
+                if (isLastTabTop == true)
+                { data = listOfCurrentPageTopMetaData[highlightIndex]; }
+                else { data = listOfCurrentPageSideMetaData[highlightIndex]; }
+                //process metaData
                 if (data != null)
                 {
 
