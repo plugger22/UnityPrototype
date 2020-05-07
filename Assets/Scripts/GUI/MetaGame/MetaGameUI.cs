@@ -122,6 +122,7 @@ public class MetaGameUI : MonoBehaviour
 
     //Top arrays -> tabs
     private Image[] arrayOfTopTabImages;
+    private TextMeshProUGUI[] arrayOfTopTabTitles;
     private MetaTopTabUI[] arrayOfTopTabInteractions;
     private int[] arrayOfTopTabOptions;                            //count of how many ACTIVE options are available for this tab
     private bool[] arrayOfTopTabStatus;                            //if true the relevant tab (index ->  left to right tabs) is active and has data to display
@@ -250,6 +251,7 @@ public class MetaGameUI : MonoBehaviour
         arrayOfSideMetaText = new TextMeshProUGUI[numOfItemsTotal];
         //initialise Top Arrays -> tabs
         arrayOfTopTabImages = new Image[numOfTopTabs];
+        arrayOfTopTabTitles = new TextMeshProUGUI[numOfTopTabs];
         arrayOfTopTabInteractions = new MetaTopTabUI[numOfTopTabs];
         arrayOfTopTabOptions = new int[numOfTopTabs];
         arrayOfTopTabStatus = new bool[numOfTopTabs];
@@ -304,6 +306,9 @@ public class MetaGameUI : MonoBehaviour
         index = 0;
         if (tabStatus != null) { arrayOfTopTabImages[index++] = tabStatus; } else { Debug.LogError("Invalid tabStatus (Null)"); }
         if (tabStatus != null) { arrayOfTopTabImages[index++] = tabSelected; } else { Debug.LogError("Invalid tabSelected (Null)"); }
+        index = 0;
+        if (textStatus != null) { arrayOfTopTabTitles[index++] = textStatus; } else { Debug.LogError("Invalid textStatus (Null)"); }
+        if (textSelected != null) { arrayOfTopTabTitles[index++] = textSelected; } else { Debug.LogError("Invalid textSelected (Null)"); }
         //initialise top tab arrays -> interaction
         for (int i = 0; i < numOfTopTabs; i++)
         {
@@ -322,9 +327,6 @@ public class MetaGameUI : MonoBehaviour
             //set all tab status's to false initially
             arrayOfTopTabStatus[i] = false;
         }
-
-        Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
-        Debug.Assert(textSelected != null, "Invalid textSelected (Null)");
         //main
         Debug.Assert(canvasMeta != null, "Invalid canvasMeta (Null)");
         Debug.Assert(canvasScroll != null, "Invalid canvasScroll (Null)");
@@ -579,6 +581,8 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameLeftArrow, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameRightArrow, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
@@ -653,6 +657,12 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameDownArrow:
                 ExecuteDownArrow();
+                break;
+            case EventType.MetaGameLeftArrow:
+                ExecuteLeftArrow();
+                break;
+            case EventType.MetaGameRightArrow:
+                ExecuteRightArrow();
                 break;
             case EventType.MetaGamePageUp:
                 ExecutePageUp();
@@ -878,6 +888,9 @@ public class MetaGameUI : MonoBehaviour
             Color color = arrayOfTopTabImages[currentTopTabIndex].color;
             color.a = 0.25f;
             arrayOfTopTabImages[currentTopTabIndex].color = color;
+            color = arrayOfTopTabTitles[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabTitles[currentTopTabIndex].color = color;
         }
         isLastTabTop = false;
     }
@@ -895,34 +908,36 @@ public class MetaGameUI : MonoBehaviour
 
         }
         //reset Active tabs to reflect new status
-        Color backgroundColor, textColor;
+        Color backgroundColor, textColor, portraitColor;
         for (int index = 0; index < numOfTopTabs; index++)
         {
             backgroundColor = arrayOfTopTabImages[index].color;
+            textColor = arrayOfTopTabTitles[index].color;
             //activate indicated tab and deactivate the rest
             if (index == tabIndex)
             {
-
                 backgroundColor.a = 1.0f;
-
+                textColor.a = 1.0f;
             }
             else
             {
                 backgroundColor.a = 0.25f;
+                textColor.a = 0.25f;
             }
             arrayOfTopTabImages[index].color = backgroundColor;
+            arrayOfTopTabTitles[index].color = textColor;
         }
         //assign default RHS values
         switch ((MetaTabTop)tabIndex)
         {
             case MetaTabTop.Status:
                 rightTextTop.text = "Player Status Options";
-                rightTextBottom.text = string.Format("Shows all options that relate to your <b>ongoing</b><br><br>{0}<b>Conditions, Secrets, Investigations</b>{1} or contacts with {2}<b>Organisations</b>{3}",
-                    colourCancel, colourEnd, colourCancel, colourEnd);
+                rightTextBottom.text = string.Format("Shows all <b>ongoing options</b> that will {0}<b>carry over</b>{1} to the <b>next city</b> if <b>not dealt with</b><br><br>Includes {2}<b>Conditions, " +
+                    "Secrets, Investigations</b>{3} and <b>contacts</b> with {4}<b>Organisations</b>{5} (that <b>would be lost</b>)", colourCancel, colourEnd, colourCancel, colourEnd, colourCancel, colourEnd);
                 break;
             case MetaTabTop.Selected:
                 rightTextTop.text = "Selected Options";
-                rightTextBottom.text = string.Format("Shows all options that you have currently<br><br>{0}<b>Selected</b>{1}", colourCancel, colourEnd);
+                rightTextBottom.text = string.Format("<b>Shows the options that you have currently<br><br>{0}Selected</b>{1}", colourCancel, colourEnd);
                 break;
             default:
                 rightTextTop.text = "Unknown";
@@ -937,15 +952,12 @@ public class MetaGameUI : MonoBehaviour
         //need do to deselect last active side tab
         if (isLastTabTop == false)
         {
-            Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
-            color.a = 0.25f;
-            arrayOfSideTabItems[currentSideTabIndex].background.color = color;
-            color = arrayOfSideTabItems[currentSideTabIndex].title.color;
-            color.a = 0.25f;
-            arrayOfSideTabItems[currentSideTabIndex].title.color = color;
-            color = arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
-            color.a = 0.25f;
-            arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
+            backgroundColor = arrayOfSideTabItems[currentSideTabIndex].background.color;
+            backgroundColor.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].background.color = backgroundColor;
+            portraitColor = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
+            portraitColor.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].portrait.color = portraitColor;
         }
         isLastTabTop = true;
     }
@@ -1288,10 +1300,21 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Page UP (next tab up)
+    /// Page UP (next side tab up)
     /// </summary>
     private void ExecutePageUp()
     {
+        //check if previously using top tab
+        if (isLastTabTop == true)
+        {
+            Color color = arrayOfTopTabImages[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabImages[currentTopTabIndex].color = color;
+            color = arrayOfTopTabTitles[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabTitles[currentTopTabIndex].color = color;
+        }
+        isLastTabTop = false;
         //change tab
         if (currentSideTabIndex > -1)
         {
@@ -1310,10 +1333,21 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Page DOWN (next tab down)
+    /// Page DOWN (next side tab down)
     /// </summary>
     private void ExecutePageDown()
     {
+        //check if previously using top tab
+        if (isLastTabTop == true)
+        {
+            Color color = arrayOfTopTabImages[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabImages[currentTopTabIndex].color = color;
+            color = arrayOfTopTabTitles[currentTopTabIndex].color;
+            color.a = 0.25f;
+            arrayOfTopTabTitles[currentTopTabIndex].color = color;
+        }
+        isLastTabTop = false;
         if (currentSideTabIndex > -1)
         {
             if (currentSideTabIndex < maxSideTabIndex)
@@ -1326,6 +1360,70 @@ public class MetaGameUI : MonoBehaviour
                 //roll over
                 currentSideTabIndex = 0;
                 OpenSideTab(currentSideTabIndex);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Left Arrow (next top tab across)
+    /// </summary>
+    private void ExecuteLeftArrow()
+    {
+        //check if previously using side tab
+        if (isLastTabTop == false)
+        {
+            Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].background.color = color;
+            color = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
+        }
+        isLastTabTop = true;
+        if (currentTopTabIndex > -1)
+        {
+            if (currentTopTabIndex > 0)
+            {
+                currentTopTabIndex -= 1;
+                OpenTopTab(currentTopTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentTopTabIndex = maxTopTabIndex;
+                OpenTopTab(currentTopTabIndex);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Right Arrow (next top tab across)
+    /// </summary>
+    private void ExecuteRightArrow()
+    {
+        //check if previously using side tab
+        if (isLastTabTop == false)
+        {
+            Color color = arrayOfSideTabItems[currentSideTabIndex].background.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].background.color = color;
+            color = arrayOfSideTabItems[currentSideTabIndex].portrait.color;
+            color.a = 0.25f;
+            arrayOfSideTabItems[currentSideTabIndex].portrait.color = color;
+        }
+        isLastTabTop = true;
+        if (currentTopTabIndex > -1)
+        {
+            if (currentTopTabIndex < maxTopTabIndex)
+            {
+                currentTopTabIndex += 1;
+                OpenTopTab(currentTopTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentTopTabIndex = 0;
+                OpenTopTab(currentTopTabIndex);
             }
         }
     }

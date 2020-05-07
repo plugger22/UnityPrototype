@@ -182,6 +182,8 @@ public enum EventType
     MetaGameConfirm,
     MetaGameUpArrow,
     MetaGameDownArrow,
+    MetaGameLeftArrow,
+    MetaGameRightArrow,
     MetaGamePageUp,
     MetaGamePageDown,
     //Topic UI

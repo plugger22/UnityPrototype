@@ -537,6 +537,14 @@ public class InputManager : MonoBehaviour
                                     else if (y_axis < 0)
                                     { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                 }
+                                else if (Input.GetButtonDown("Horizontal"))
+                                {
+                                    x_axis = Input.GetAxisRaw("Horizontal");
+                                    if (x_axis > 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                    else if (x_axis < 0)
+                                    { EventManager.instance.PostNotification(EventType.MetaGameLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                }
                                 else if (Input.GetButtonDown("PageUp") == true)
                                 {
                                     //Keyboard shortcut for forward a day -> PgUp

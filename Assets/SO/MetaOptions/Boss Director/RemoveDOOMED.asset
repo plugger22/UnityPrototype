@@ -21,6 +21,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   isRecommended: 1
   recommendPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  isPlayerStatus: 1
   isAlways: 0
   textInactive: 
   listOfCriteria:
@@ -28,6 +29,6 @@ MonoBehaviour:
   listOfEffects:
   - {fileID: 11400000, guid: 163665f654f004142a5dfa641e9344c7, type: 2}
   statTimesSelected: 0
-  isActive: 1
+  isActive: 0
   dataName: 
   dataTag: 

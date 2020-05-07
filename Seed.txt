@@ -703,3 +703,35 @@ MetaGameUI.OpenSideTab (System.Int32 tabIndex) (at Assets/Scripts/GUI/MetaGame/M
 Dev seed 1995 -> Wednesday, 6 May 2020 9:04 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 4779 -> Thursday, 7 May 2020 9:11 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 10827 -> Thursday, 7 May 2020 9:13 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 54704 -> Thursday, 7 May 2020 9:19 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 4702 -> Thursday, 7 May 2020 9:28 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 2473 -> Thursday, 7 May 2020 9:37 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 2193 -> Thursday, 7 May 2020 9:43 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 51237 -> Thursday, 7 May 2020 9:47 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 189 -> Thursday, 7 May 2020 10:04 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
