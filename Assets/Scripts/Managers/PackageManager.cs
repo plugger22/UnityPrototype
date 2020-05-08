@@ -307,8 +307,10 @@ namespace packageAPI
     /// </summary>
     public class MetaInfoData
     {
+        //NOTE: Don't forget to add any new collections/fields to 'Reset'
         public List<MetaData>[] arrayOfMetaData = new List<MetaData>[(int)MetaTabSide.Count];           //array of lists, one per MetaGameUI.cs tab excluding 'help'
         public List<MetaData> listOfStatusData = new List<MetaData>();                                  //includes all metaData with metaOption.isPlayerStatus true
+        public List<MetaData> listOfRecommended = new List<MetaData>();                                             //all 'isRecommended' true metaOptions sorted by priority
         public MetaData selectedDefault = new MetaData();                                               //default metaData option for Selected tab
 
         public MetaInfoData()
@@ -336,6 +338,7 @@ namespace packageAPI
             for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i].Clear(); }
             listOfStatusData.Clear();
+            listOfRecommended.Clear();
             selectedDefault = new MetaData();
         }
 
@@ -375,7 +378,7 @@ namespace packageAPI
         public bool isRecommended;                  //if true part of recommended selection of options
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
-        public MetaPriority recommendPriority;      //recommendations selected on priority until renown runs out
+        public MetaPriority recommendedPriority;      //recommendations selected on priority until renown runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public string dataName;                     //used to implement outcome
         public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)

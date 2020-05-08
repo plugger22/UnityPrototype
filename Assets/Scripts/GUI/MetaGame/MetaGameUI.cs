@@ -354,6 +354,7 @@ public class MetaGameUI : MonoBehaviour
         buttonInteractionSelect.SetButton(EventType.MetaGameSelect);
         buttonInteractionDeselect.SetButton(EventType.MetaGameDeselect);
         buttonInteractionReset.SetButton(EventType.MetaGameReset);
+        buttonInteractionRecommended.SetButton(EventType.MetaGameRecommended);
         //miscellaneous
         Debug.Assert(page_header != null, "Invalid page_Header (Null)");
         //scrollRect & ScrollBar
@@ -590,6 +591,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameRecommeneded, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameConfirm, OnEvent, "MetaGamesUI");
     }
     #endregion
@@ -637,6 +639,9 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case EventType.MetaGameReset:
                 ExecuteReset();
+                break;
+            case EventType.MetaGameRecommended:
+                ExecuteRecommended();
                 break;
             case EventType.MetaGameConfirm:
                 ExecuteConfirm();
@@ -1718,6 +1723,14 @@ public class MetaGameUI : MonoBehaviour
             };
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         }
+    }
+
+    /// <summary>
+    /// Recommeneded button pressed. All options reset and new ones auto selected based on listOfRecommendations (highest priority on down until run out of renown)
+    /// </summary>
+    void ExecuteRecommended()
+    {
+
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -459,10 +460,10 @@ public class MetaManager : MonoBehaviour
                         {
                             switch (metaOption.recommendPriority.level)
                             {
-                                case 0: metaData.recommendPriority = MetaPriority.Low; break;
-                                case 1: metaData.recommendPriority = MetaPriority.Medium; break;
-                                case 2: metaData.recommendPriority = MetaPriority.High; break;
-                                case 3: metaData.recommendPriority = MetaPriority.Extreme; break;
+                                case 0: metaData.recommendedPriority = MetaPriority.Low; break;
+                                case 1: metaData.recommendedPriority = MetaPriority.Medium; break;
+                                case 2: metaData.recommendedPriority = MetaPriority.High; break;
+                                case 3: metaData.recommendedPriority = MetaPriority.Extreme; break;
                                 default: Debug.LogWarningFormat("Invalid metaOption.recommendPriority.level \"{0}\" for metaOption {1}", metaOption.recommendPriority.level, metaOption.name); break;
                             }
                         }
@@ -479,8 +480,19 @@ public class MetaManager : MonoBehaviour
                         //Player status metaOptions
                         if (metaOption.isPlayerStatus == true)
                         { metaInfoData.listOfStatusData.Add(metaData); }
+                        //Recommended metaOptions
+                        if (metaOption.isRecommended == true)
+                        { metaInfoData.listOfRecommended.Add(metaData); }
                     }
                     else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", index); }
+                }
+                //sort listOfRecommended by RecommendedPriority
+                if (metaInfoData.listOfRecommended.Count > 1)
+                {
+                    var ordered = from element in metaInfoData.listOfRecommended
+                                  orderby element.recommendedPriority descending
+                                  select element;
+                    metaInfoData.listOfRecommended = ordered.ToList();
                 }
 
                 /*Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaData: metaInfoData.listOfStatusData has {0} records{1}", metaInfoData.listOfStatusData.Count, "\n");*/

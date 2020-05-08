@@ -179,6 +179,7 @@ public enum EventType
     MetaGameDeselect,
     MetaGameButton,
     MetaGameReset,
+    MetaGameRecommended,
     MetaGameConfirm,
     MetaGameUpArrow,
     MetaGameDownArrow,
