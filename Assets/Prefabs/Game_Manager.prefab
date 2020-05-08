@@ -546,6 +546,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276fd4b7f93053d44953e632c3d2272f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfChoices: 2
   arrayOfOrganisationOptions:
   - {fileID: 11400000, guid: 37c1fd6d6d79e0f4e8f2ceb34b9ab884, type: 2}
   - {fileID: 11400000, guid: 2d8648348b558e74fbeb4d142dc3c8b6, type: 2}
@@ -561,6 +562,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3eeeae372551a1842b719a1c8fd79361, type: 2}
   - {fileID: 11400000, guid: b8d8fc9942d7fa248928c5af1786bded, type: 2}
   - {fileID: 11400000, guid: 04be7f52e50f64742a7d6a1583a418a1, type: 2}
+  costLowPriority: 2
+  costMediumPriority: 4
+  costHighPriority: 6
+  costExtremePriority: 10
   metaLevel: {fileID: 0}
 --- !u!114 &114297685510842036
 MonoBehaviour:
@@ -5098,6 +5103,7 @@ MonoBehaviour:
   actionMenuScript: {fileID: 0}
   mainMenuScript: {fileID: 0}
   outcomeScript: {fileID: 0}
+  confirmScript: {fileID: 0}
   teamPickerScript: {fileID: 0}
   genericPickerScript: {fileID: 0}
   inventoryScript: {fileID: 0}
@@ -5161,7 +5167,7 @@ MonoBehaviour:
     type: 3}
   outcome_backgroundAuthority: {fileID: 21300000, guid: 75a8ad37895eabc4d893248bcd89639f,
     type: 3}
-  outcome_backgroundRebel: {fileID: 21300000, guid: fb4af75be2f48e44cb372ff951c56970,
+  outcome_backgroundRebel: {fileID: 21300000, guid: 7ca63e31b754b6e47a39fcfb3e449239,
     type: 3}
   picker_background_Authority: {fileID: 21300000, guid: 7f4fc6d32c81cf7409df3bb55cc9cffb,
     type: 3}
