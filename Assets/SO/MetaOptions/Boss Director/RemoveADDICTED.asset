@@ -20,7 +20,7 @@ MonoBehaviour:
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   isRecommended: 1
-  recommendPriority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  recommendPriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   isPlayerStatus: 1
   isAlways: 0
   textInactive: 

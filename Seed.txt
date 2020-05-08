@@ -959,3 +959,34 @@ City seed 765 -> New York, America
 Dev seed 13278 -> Friday, 8 May 2020 10:42 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 42881 -> Friday, 8 May 2020 11:37 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20197 -> Friday, 8 May 2020 12:18 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid effectOutcome "ConditionDoomed"
+UnityEngine.Debug:LogError(Object)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:2423)
+	MetaGameUI:ExecuteConfirm() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:1861)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:648)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 43142 -> Friday, 8 May 2020 12:28 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 20987 -> Friday, 8 May 2020 12:45 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50265 -> Friday, 8 May 2020 12:48 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 4521 -> Friday, 8 May 2020 12:48 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

@@ -1967,14 +1967,18 @@ public class EffectManager : MonoBehaviour
                     //
                     // - - - Conditions (both sides) - - -
                     //
+                    case "ConditionBad":
+                    case "ConditionGroupGood":
+                    case "ConditionAddicted":
+                    case "ConditionDoomed":
+                    case "ConditionImaged":
+                    case "ConditionWounded":
                     case "ConditionStressed":
                     case "ConditionIncompetent":
                     case "ConditionCorrupt":
                     case "ConditionQuestionable":
                     case "ConditionBlackmailer":
                     case "ConditionStar":
-                    case "ConditionBad":
-                    case "ConditionGroupGood":
                         if (node != null)
                         {
                             //it's OK to pass a null actor provided it's a player condition
@@ -2442,7 +2446,7 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     /// <param name="dataResolve"></param>
     /// <param name="dataReturn"></param>
-    private EffectDataReturn ConvertEffectResolveToReturn(EffectDataResolve effectResolve, EffectDataReturn  effectReturn)
+    private EffectDataReturn ConvertEffectResolveToReturn(EffectDataResolve effectResolve, EffectDataReturn effectReturn)
     {
         if (effectResolve != null)
         {

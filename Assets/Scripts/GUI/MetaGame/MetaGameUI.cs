@@ -53,7 +53,7 @@ public class MetaGameUI : MonoBehaviour
 
     [Header("Top")]
     public Image renownBackground;
-    public TextMeshProUGUI renownAmount;
+    public TextMeshProUGUI renownAmount;        //use UpdateRenown() rather than do so directly for enhanced readability and code maintenance
 
     [Header("Centre Miscellanous")]
     public TextMeshProUGUI page_header;
@@ -96,7 +96,7 @@ public class MetaGameUI : MonoBehaviour
     private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
     private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
-    private float sideTabAlpha = 0.25f;                             //alpha level of side tabs when inactive
+    private float sideTabAlpha = 0.30f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
 
     //button script handlers
@@ -137,6 +137,7 @@ public class MetaGameUI : MonoBehaviour
     private Image[] arrayOfTopMetaBackground;
 
     private MetaData defaultSelected;                               //default metaData item to display when nothing has been selected
+    private List<MetaData> listOfRecommended;                       
 
     //item priority sprites
     private Sprite priorityHigh;
@@ -591,7 +592,7 @@ public class MetaGameUI : MonoBehaviour
         EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameRecommeneded, OnEvent, "MetaGamesUI");
+        EventManager.instance.AddListener(EventType.MetaGameRecommended, OnEvent, "MetaGamesUI");
         EventManager.instance.AddListener(EventType.MetaGameConfirm, OnEvent, "MetaGamesUI");
     }
     #endregion
@@ -697,13 +698,15 @@ public class MetaGameUI : MonoBehaviour
         int count;
         //player renown
         int playerRenown = GameManager.instance.playerScript.Renown;
-        renownAmount.text = playerRenown.ToString();
         renownCurrent = playerRenown;
+        UpdateRenown();
         Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
         Color portraitColor, backgroundColor;
         //default metaData for selected tab (when nothing has been selected)
         defaultSelected = data.selectedDefault;
         Debug.Assert(defaultSelected != null, "Invalid defaultSelected (Null)");
+        listOfRecommended = data.listOfRecommended;
+        Debug.Assert(listOfRecommended != null, "Invalid listOfRecommended (Null)");
         //initialise HQ side tabs'
         for (int index = 0; index < numOfSideTabs; index++)
         {
@@ -943,7 +946,8 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case MetaTabTop.Selected:
                 rightTextTop.text = "Selected Options";
-                rightTextBottom.text = string.Format("<b>A summary of all options that you have {0}Selected</b>{1}", colourCancel, colourEnd);
+                rightTextBottom.text = string.Format("A <b>summary</b> of <b>all options</b> that you have {0}<b>Selected</b>{1}<br><br>You can {2}<b>Deselect</b>{3} any option", 
+                    colourCancel, colourEnd, colourCancel, colourEnd);
                 break;
             default:
                 rightTextTop.text = "Unknown";
@@ -1576,14 +1580,11 @@ public class MetaGameUI : MonoBehaviour
             if (metaOption != null)
             {
                 //add to dictOfSelected
-                try
-                { dictOfSelected.Add(metaData.metaName, metaData); }
-                catch (ArgumentException)
-                { Debug.LogErrorFormat("Invalid metaName (duplicate) in dictOfSelected for \"{0}\"", metaData.metaName); }
+                AddToSelected(metaData);
                 //adjust renown display
                 renownCurrent -= metaData.renownCost;
                 renownCurrent = Mathf.Max(0, renownCurrent);
-                renownAmount.text = renownCurrent.ToString();
+                UpdateRenown();
                 //set as selected
                 metaData.isSelected = true;
                 //switch buttons
@@ -1594,12 +1595,14 @@ public class MetaGameUI : MonoBehaviour
                 arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(true);
                 //switch top texts
                 rightTextTop.text = metaData.textDeselect;
-                Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteSelect: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
         }
         else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
     }
+
+
+  
 
     /// <summary>
     /// Deselect button pressed, RHS. ItemIndex parameter returned in case of itemInteraction mouse click, not the case for Select/Deselect button pressed on RHS (uses existing highlight for this)
@@ -1621,23 +1624,20 @@ public class MetaGameUI : MonoBehaviour
             if (metaOption != null)
             {
                 //remove from dictOfSelected
-                if (dictOfSelected.ContainsKey(metaData.metaName) == true)
-                { dictOfSelected.Remove(metaData.metaName); }
-                else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
+                RemoveFromSelected(metaData);
                 //adjust renown display
                 renownCurrent += metaData.renownCost;
-                renownAmount.text = renownCurrent.ToString();
+                UpdateRenown();
                 //set as deSelected
                 metaData.isSelected = false;
                 //switch buttons
                 buttonDeselect.gameObject.SetActive(false);
+                buttonSelect.gameObject.SetActive(true);
                 //checkmark
                 arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
-                buttonSelect.gameObject.SetActive(true);
-                Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteDeselect: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
             }
             else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
         }
@@ -1656,9 +1656,9 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Deselects all metaData options to give a clean slate
+    /// Deselects all metaData options to give a clean slate. Displays a confirmation message by default
     /// </summary>
-    private void ExecuteReset()
+    private void ExecuteReset(bool isDisplayMsg = true)
     {
         if (dictOfSelected.Count > 0)
         {
@@ -1674,7 +1674,7 @@ public class MetaGameUI : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid metaData (Null) for \"{0}\" in dictOfSelected", data.Key); }
             }
-            renownAmount.text = renownCurrent.ToString();
+            UpdateRenown();
             //empty dict
             dictOfSelected.Clear();
 
@@ -1726,11 +1726,117 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Recommeneded button pressed. All options reset and new ones auto selected based on listOfRecommendations (highest priority on down until run out of renown)
+    /// Recommeneded button pressed. All options reset and new ones auto selected based on listOfRecommendations (highest priority on down until run out of renown).
+    /// Generates an outcome windown no matter what (no recommendations / insufficient renown / 'x' recommendations made
+    /// Sets MetaGameUI display to top 'Selected' tab on complettion
     /// </summary>
     void ExecuteRecommended()
     {
-
+        int cost;
+        int count = listOfRecommended.Count;
+        int numSelected = 0;
+        int minRenown = 2;
+        int totalCost = 0;
+        //availableRenown could include bonus renown from taking negative options
+        int availableRenown = Mathf.Max(GameManager.instance.playerScript.Renown, renownCurrent);
+        ModalOutcomeDetails details = null;
+        //must be items on recommended list
+        if (count > 0)
+        {
+            //player must have a minimum amount of renown
+            if ( availableRenown >= minRenown)
+            {
+                //start with a clean slate
+                ExecuteReset(false);
+                //loop through list selecting until available renown expended
+                for (int i = 0; i < count; i++)
+                {
+                    MetaData metaData = listOfRecommended[i];
+                    if (metaData != null)
+                    {
+                        cost = metaData.renownCost;
+                        //check affordability
+                        if (renownCurrent >= cost)
+                        {
+                            //Select item
+                            metaData.isSelected = true;
+                            renownCurrent -= cost;
+                            totalCost += cost;
+                            numSelected++;
+                            AddToSelected(metaData);
+                        }
+                        //run out of available renown -> exit
+                        if (renownCurrent < minRenown)
+                        { break; }
+                    }
+                    else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfRecommended[{0}]", i); }
+                }
+                UpdateRenown();
+                //show selected tab
+                OpenTopTab((int)MetaTabTop.Selected);
+                //Outcome message depends on whether any recommendations have been made
+                if (numSelected > 0)
+                {
+                    //'x' recommendations selected
+                    details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
+                        textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Renown", colourNeutral, numSelected, colourEnd, 
+                        numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd),
+                        sprite = GameManager.instance.guiScript.alertInformationSprite,
+                        modalLevel = 2,
+                        modalState = ModalSubState.MetaGame,
+                        reason = "Recommended pressed"
+                    };
+                }
+                else
+                {
+                    //couldn't afford any recommendations
+                    details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.instance.sideScript.PlayerSide,
+                        textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
+                        textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
+                        sprite = GameManager.instance.guiScript.alertInformationSprite,
+                        modalLevel = 2,
+                        modalState = ModalSubState.MetaGame,
+                        reason = "Recommended pressed"
+                    };
+                }
+            }
+            else
+            {
+                //Insufficient renown
+                details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.instance.sideScript.PlayerSide,
+                    textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
+                    textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
+                    sprite = GameManager.instance.guiScript.alertInformationSprite,
+                    modalLevel = 2,
+                    modalState = ModalSubState.MetaGame,
+                    reason = "Recommended pressed"
+                };
+            }
+        }
+        else
+        {
+            //No Recommendation present
+            details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
+                textBottom = string.Format("No recommendations have been selected as there are {0}no critical issues{1} that need your attention", colourCancel, colourEnd),
+                sprite = GameManager.instance.guiScript.alertInformationSprite,
+                modalLevel = 2,
+                modalState = ModalSubState.MetaGame,
+                reason = "Recommended pressed"
+            };
+        }
+        //outcome message
+        if (details != null)
+        { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details); }
     }
 
     /// <summary>
@@ -1886,6 +1992,51 @@ public class MetaGameUI : MonoBehaviour
         yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
     }
 
+    //
+    // - - - SubMethods
+    //
+
+    /// <summary>
+    /// subMethod to update renown display with renownCurrent (use this for readability and enhanced code maintenance)
+    /// </summary>
+    /// <param name="newRenown"></param>
+    private void UpdateRenown()
+    { renownAmount.text = renownCurrent.ToString(); }
+
+    /// <summary>
+    /// subMethod to add a new entry to dictOfSelected
+    /// </summary>
+    /// <param name="metaData"></param>
+    private void AddToSelected(MetaData metaData)
+    {
+        try
+        {
+            dictOfSelected.Add(metaData.metaName, metaData);
+            Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
+        }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid metaData (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogErrorFormat("Invalid metaName (duplicate) in dictOfSelected for \"{0}\"", metaData.metaName); }
+    }
+
+    /// <summary>
+    /// subMethod to remove an entry from dictOfSelected
+    /// </summary>
+    /// <param name="metaData"></param>
+    private void RemoveFromSelected(MetaData metaData)
+    {
+        if (dictOfSelected.ContainsKey(metaData.metaName) == true)
+        {
+            dictOfSelected.Remove(metaData.metaName);
+            Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
+        }
+        else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
+    }
+
+    //
+    // - - - Debug Methods
+    //
 
     /// <summary>
     /// Debug display of dictOfSelected metaData
