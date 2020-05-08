@@ -482,6 +482,9 @@ public class MetaManager : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", index); }
                 }
+
+                /*Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaData: metaInfoData.listOfStatusData has {0} records{1}", metaInfoData.listOfStatusData.Count, "\n");*/
+
                 for (int i = 0; i < listOfMetaData.Count; i++)
                 {
                     MetaData metaData = listOfMetaData[i];

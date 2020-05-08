@@ -47,8 +47,6 @@
 
 Hi Vic,
 
-We received a card from you both the other day. We've taken a vote and declared Charlez the prettiest girl in France, apart from her Mum. Congratulations!
-
 I took another look at Shadow Empires recently. Patched it up and played for quite a while.
 
 You're no doubt getting a lot of feedback but here's a bit more. Most of what I mention would involve extra development time so I wouldn't get too fussed about it. Throw it into the mix. It might provoke a thought or two.
@@ -59,17 +57,17 @@ I watched a Youtube where you did some promo with the Lizards and had a speaking
 
 You've knocked out a comprehensive manual as well. My take on it is that you would benefit greatly from increasing the games accessibility. If you are happy to restrict your audience to historically agnostic grognards (which is pretty much all your beta testers from what I can see) then it's not an issue but if you wanted to broaden the games appeal beyond this then time spent on enhancing accessibility would be time well spent.
 
-I wouldn't be relying too heavily on the player's willingness to RTFM. Ain't going to happen for the majority. If you went with the opposing opinion I'd be making an effort to reposition the manual from it's current hardcore grog style and format to something more friendlier and accessible with a lot more explanation of how system A ties in with system B, for example (a bunch of those wouldn't help either). 
+I wouldn't be leaning too heavily on the player's willingness to RTFM. Ain't going to happen for the majority. If you went with the opposing opinion I'd be making an effort to reposition the manual from it's current hardcore grog style and format to something more friendlier and accessible with a lot more explanation of how system A ties in with system B, for example (a bunch of those wouldn't help either). 
 
-Personally I think you'd be better off to leave the manual as it is and put the extra effort into an in-game accessibility makeover. I'd have tooltips on absolutely everything. Triple the number of whatever you've already got. On every form/page/window I'd have a help icon that pops up a decent run down of what's contained within and how it fits in with the bigger picture. That's a lot of work, though, probably a couple months worth, at a guess.
+Personally I think you'd be better off to leave the manual as it is and put the extra effort into an in-game accessibility makeover, one that works with the existing UI. I'd have tooltips on absolutely everything. Triple the number of whatever you've already got. On every form/page/window I'd have a help icon that pops up a decent run down of what's contained within and how it fits in with the bigger picture. That's a lot of work, though, probably a couple months worth, at a guess.
 
 You've got in-game help resources and your adivisor but you really need the help to be right in front of the player when they need it. While we're on the subject of sccessibility I'd also do a complete overhaul of all grog terminology and references within the game. It's full of acroynms ('LIS') and code sounding terms. O.K for hard core grogs but poison for a broader audience.
 
-Lastly, (I'm hammering the point 'cause I think it's an important one - doesn't matter how good the game is if people can't wrap their head around it in a reasonable timeframe you've lost them), I'd do something about how the game presents information. It's all there but it's scattered all over the shop. Two quick examples that I struggled with initially were how to find out how many BP points I was making each turn and how the private and public food numbers work. I spent a good fifteen minutes on each and, even now, still can't answer the second one.
+Lastly, (I'm hammering the point 'cause I think it's an important one - doesn't matter how good the game is if people can't wrap their head around it in a reasonable timeframe you've lost them), I'd do something about how the game presents information. It's all there but it's scattered all over the shop. Two quick examples that I struggled with initially were how to find out how many BP points I was making each turn and how the private and public food numbers work. I spent a good fifteen minutes on the first and still can't answer the second.
 
 Decisions are especially lacking here. For most decisions I have to exit out of the decision and hunt around for assorted information in order to get an idea of what's a good option and what's not. That gets to be hard work when there are multiple decisions per turn.
 
-Anyway, you get the message. It boils down to how broad an audience you want to appeal to. The further you want to move away from your core supporter group (hardcore grogs not fussed about historical accuracy), the more accessible the game is going to have to be. As it stands at the moment I'd say you've optimised it for the core.
+Anyway, you get the message. It boils down to how broad an audience you want to appeal to. The further you want to move away from your core supporter group (hardcore grogs not fussed about historical accuracy), the more accessible the game is going to have to be. As it stands at present I'd say you've optimised it for the core.
 
 You had a diagram in a dev blog a long while back that I referred to as a 'bowl of spaghetti'. I now see what you were getting at and it's a very clever mechanic. Well done.
 
@@ -77,19 +75,19 @@ The logistics system is also a highlight. One that isn't easy to figure out, how
 
 Final point is about playability.
 
-I played a number of games to the point where I had multiple zones and had conquered a reasonable section of whatever world I was on. To get a comparison I fired up Advanced Tactic Gold and played a couple of hours. I decided that ATG was the better experience, by far. I had to put a fair bit of thought into figuring out why that was.
+I played a number of games to the point where I had multiple zones and had conquered a reasonable section of whatever world I was on. I had niggles about the playability that I couldn't put a finger on. To get a comparison I fired up Advanced Tactic Gold and played a couple of hours and decided that ATG was the better experience, by far. I've since put a fair bit of thought into figuring out why that was.
 
 I debated about whether to include this as it's highly subjective but I thought you may find it useful. I also wouldn't take it as a negative, more as an observation.
 
-The appeal of SE, to me, is largely in figuring out the relatively complicated, inter-linked systems that it has. Once I'd climbed the learning curve sufficiently to be able to focus on the gameplay, the appeal dropped off.
+The appeal of SE that offered me was largely in figuring out the relatively complicated, inter-linked systems that it has. Once I'd climbed the learning curve sufficiently to be able to focus on the gameplay, the appeal dropped off.
 
-As mentioned, I had to play ATG in order to understand why. Part of it is the map. ATG has a bright, cheerful, map with terrain clearly identifiable. It's an appealing, randomly generated, map that draws you in and gives you instant feedback on the strategic and tactical possibilities. SE, on the other hand, has a lot of maps (that I generated, may not be entirely representative) that are extremely bland. They are all brown, for example. Sure there are multiple different terrain types on the map but they all tend to blend into background. Same with green maps. Same with the lava maps (the lava rivers are great, but that's about it). None of the maps have terrain that clearly stands out like ATG. It's a lot harder to get a sense of unique geography and tie this into strategic and tactical insights. The maps don't draw me in. 
+As mentioned, I had to play ATG in order to understand why. Part of it is the map. ATG has a bright and cheerful map with terrain and resources clearly identifiable. It's an appealing, randomly generated, map that draws you in and gives you instant feedback on the strategic and tactical possibilities. SE, on the other hand, has a lot of maps (that I generated, may not be entirely representative) that are extremely bland. They are all brown, for example. Sure there are multiple different terrain types on the map but they all tend to blend into background. Same with green maps. Same with the lava maps (the lava rivers are great and an exception). None of the maps have terrain that clearly stands out like ATG. It's a lot harder to get a sense of unique geography and tie this into strategic and tactical insights. The maps don't draw me in. 
 
 It's a subtle point that I only realised when I opened ATG and saw the difference. Stood out like dog balls then.
 
 I think that you're seriously underselling the game with your current map gfx. The mountains in ATG look like mountains. In SE they look like chicken scratchings.
 
-Foreign planets should look foreign. There's scope to make the game shine visually by the simple expedient of having brighter, more distinct terrain sprites. They wouldn't have to be super duper. ATG style alien terrain would do the job. The cost/benefit of doing so (hello Fred?) is something that you alone would know but it's an area where I suspect whatever you put in would generate an outsized return. 
+Foreign planets should look foreign. There's scope to make the game shine visually by the simple expedient of having more distinct terrain sprites. Wether you'd want it as bright given the dystopian, gritty UI style, is another matter but there's plenty of room for something that stands out and frightens away the 'sameness' of the existing sprites. They wouldn't have to be super duper. ATG/Barbarossa style alien terrain would do the job. The cost/benefit of doing so (hello Fred?) is something that you alone would know but it's an area where I suspect whatever you put in would generate an outsized return. 
 
 Once again this would come down to how broad an audience you are aiming for. As with the games' current accessibility, you appear to have pitched the  map and terrain gfx at a level acceptable to your core supporters.
 
@@ -97,27 +95,23 @@ Another reason for the difference in playability was the lack of combined arms. 
 
 On the other hand SE offers a broader 4X style experience with more fleshed out leaders, politics and infrastructure. My experience here (limited to 20 hours this time and roughly the same before) is that the early game in SE is pretty good. 
 
-It's good because I'm struggling with resource shortages and trying to build up the necessary infrastructure to enable me to expand outwards. I'm struggling. Once I'm past this point, in the games that I've played, I have plently of resources and an abundance of infrastructure and this side of the game becomes more of a process rather than a source of interest and snjoyment.
+It's good because I'm struggling with resource shortages and trying to build up the necessary infrastructure and logistics to enable me to expand outwards. I'm struggling. Once I'm past this point, in the games that I've played, I have plently of resources and an abundance of infrastructure and this side of the game becomes more of a process rather than a source of interest and enjoyment.
 
 At one point I did nothing but hit end turn. Ran the game forward 40 turns. Ignored all decisions.
 
-At the end of it, nothing terrible had happened. This could well be an outlier (it's a sample size of one) but I got a strong sense of a lot going on 
-but that most of it was noise. ATG gave me a cleaner, tighter, experience where I was struggling with one resource or another and I had clearly defined 
-strategic and tactical problems to solve. There was way less noise and more challenge. I could understand that if I pulled this lever here, this would 
-happen there as a result. With SE I was pulling levers and, in a lot of cases, it was very murky as to what was happening. 
+At the end of it, nothing terrible had happened. This could well be an outlier (it's a sample size of one) but I got a strong sense of stuff going on 
+but that a lot of it was just background noise. ATG gave me a cleaner, tighter, experience where I was struggling with one resource or another and I had clearly defined strategic and tactical problems to solve. There was way less noise and more challenge. I could understand that if I pulled this lever here, this would happen there as a result. With SE I was pulling levers and, in many cases, it was very murky as to what was happening. 
 
 SE gave me feedback whenever I pulled a lever but there was a distinct 'fuzziness' in how that impacted the bigger picture. In ATG there was a cleaner and more direct relationship between pulling the lever and knowing how it's going to impact your strategy.
 
 Once again, this is highly subjective, but I'd be thinking about some of the following.
-	- make the randomly generated maps more visually appealing and easier to 'parse'
-	- cut down on large bodies of freestanding water on the maps as it only highlights the inability of a player to deploy combined arms in a wargame orientated experience
+	- make the randomly generated maps more visually appealing and easier to parse with more distinctive terrain sprites
+	- cut down on large bodies of freestanding water on the maps as it only highlights the inability of a player to deploy combined arms in a wargame orientated experience. Maybe turn them into seas of liquid Ammonia or Sulfuric Acid with different colouring. You can't float a navy on that stuff.
 	- work on balance so that the player is confronted by ongoing resource shortages / infrastructure issues beyond the early game
 	- the fuzziness, I don't know. Not sure what I'd do here or whether it'd be an issue with a few of the above tightened up.
 	
-As before, whether it'd be worth doing any of this would be dependant on your target audience. For your core supporters, it's looking good as it is, apart from tidying up the usual bugs and typos.
- 
+As before, whether it'd be worth doing any of this would be dependant on your target audience. For your core supporters, it's looking good as it is, apart from tidying up the usual bugs and typos. Playability is also something you could tune later on as it wouldn't impact a purchasers decision to ask for a refund. More appealing maps, however, might be worth a thought.
 
-Don't forget to pass on our thanks for the card to Eloise.
 
 Cheers,
 Cameron

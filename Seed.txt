@@ -891,3 +891,63 @@ Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
 Dev seed 23156 -> Thursday, 7 May 2020 4:31 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 51208 -> Friday, 8 May 2020 9:37 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 14498 -> Friday, 8 May 2020 9:48 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 13151 -> Friday, 8 May 2020 9:53 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 18417 -> Friday, 8 May 2020 10:01 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(948,16): warning CS0219: The variable `leader' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(160,18): warning CS0414: The private field `MetaGameUI.isRunning' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(180,12): warning CS0414: The private field `MetaGameUI.colourAlert' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(183,12): warning CS0414: The private field `MetaGameUI.colourNormal' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:112)
+	
+Dev seed 7580 -> Friday, 8 May 2020 10:05 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 23104 -> Friday, 8 May 2020 10:06 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 65238 -> Friday, 8 May 2020 10:10 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

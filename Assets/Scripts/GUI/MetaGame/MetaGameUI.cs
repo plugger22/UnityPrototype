@@ -737,6 +737,8 @@ public class MetaGameUI : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
         }
+        //initialise top status tab count (selected tab is dynamic and resolved at time of DisplayTopItemPage
+        arrayOfTopTabOptions[(int)MetaTabTop.Status] = data.listOfStatusData.Count;
         //initialise top tabs (start inactive) -> status tab 
         backgroundColor = tabStatus.color;
         backgroundColor.a = topTabAlpha;
@@ -936,7 +938,7 @@ public class MetaGameUI : MonoBehaviour
                 break;
             case MetaTabTop.Selected:
                 rightTextTop.text = "Selected Options";
-                rightTextBottom.text = string.Format("<b>Shows the options that you have currently<br><br>{0}Selected</b>{1}", colourCancel, colourEnd);
+                rightTextBottom.text = string.Format("<b>A summary of all options that you have {0}Selected</b>{1}", colourCancel, colourEnd);
                 break;
             default:
                 rightTextTop.text = "Unknown";
@@ -1067,8 +1069,14 @@ public class MetaGameUI : MonoBehaviour
     private void DisplayTopItemPage(int tabIndex)
     {
         Debug.Assert(tabIndex > -1 && tabIndex < (int)ItemTab.Count, string.Format("Invalid tabIndex {0}", tabIndex));
-        //page header
-        page_header.text = string.Format("{0} Option{1} available", arrayOfTopTabOptions[tabIndex], arrayOfTopTabOptions[tabIndex] != 1 ? "s" : "");
+        //page header (dynamic calc for 'Selected' tab)
+        int count = 0;
+        switch((MetaTabTop)tabIndex)
+        {
+            case MetaTabTop.Selected: count = dictOfSelected.Count; break;
+            default: count = arrayOfTopTabOptions[tabIndex]; break;
+        }
+        page_header.text = string.Format("{0} Option{1} available", count, count != 1 ? "s" : "");
         //clear out current data
         listOfCurrentPageTopMetaData.Clear();
         //Get data -> selected tab
@@ -1180,10 +1188,11 @@ public class MetaGameUI : MonoBehaviour
         else { Debug.LogError("Invalid data.arrayOfMetaData (Null)"); }
         if (data.listOfStatusData != null)
         {
+            arrayOfTopMetaData[(int)MetaTabTop.Status].Clear();
             //populate status top tab data
             for (int i = 0; i < data.listOfStatusData.Count; i++)
             {
-                arrayOfTopMetaData[(int)MetaTabTop.Status].Clear();
+
                 MetaData metaData = data.listOfStatusData[i];
                 if (metaData != null)
                 { arrayOfTopMetaData[(int)MetaTabTop.Status].Add(metaData); }
