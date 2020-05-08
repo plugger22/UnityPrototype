@@ -9,6 +9,11 @@ using UnityEngine;
 /// </summary>
 public class MetaManager : MonoBehaviour
 {
+
+    [Header("MetaOption core data")]
+    [Tooltip("The max number of metaOption choices you can choose (UI restrictions displaying more than these, also good to have a cap)")]
+    [Range(1, 10)] public int numOfChoices = 6;
+
     [Header("MetaOption Arrays")]
     [Tooltip("Place metaOptions here to handle the max number of possible organisation metaOptions that may be required")]
     public MetaOption[] arrayOfOrganisationOptions;

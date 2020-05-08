@@ -167,12 +167,14 @@ public class MetaGameUI : MonoBehaviour
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
     private int renownCurrent;                                       //current amount of renown remaining available to spend
+    private int numOfChoicesCurrent = 0;                             //how many choices the player has made (capped at numOfChoicesMax)
 
     //fast access
     private int costLow = -1;                                        //renown cost for low priority metaOptions
     private int costMedium = -1;
     private int costHigh = -1;
     private int costExtreme = -1;
+    private int numOfChoicesMax = -1;                               //max num of items you choose (good or bad)
 
     //colours
     string colourDefault;
@@ -567,6 +569,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(costMedium > -1, "Invalid costMedium (-1)");
         Debug.Assert(costHigh > -1, "Invalid costHigh (-1)");
         Debug.Assert(costExtreme > -1, "Invalid costExtreme (-1)");
+        numOfChoicesMax = GameManager.instance.metaScript.numOfChoices;
+        Debug.Assert(numOfChoicesMax > -1, "Invalid numOfChoicesMax (-1)");
     }
     #endregion
 
@@ -1565,40 +1569,59 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void ExecuteSelect(int itemIndex = -1)
     {
-        MetaData metaData;
-        //update highlight index for itemInteraction right click only
-        if (itemIndex > -1)
-        { highlightIndex = itemIndex; }
-        //metaData depends on which tab type has been selected (each has it's own records)
-        if (isLastTabTop == true)
-        { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
-        else { metaData = listOfCurrentPageSideMetaData[highlightIndex]; }
-        //process metaData
-        if (metaData != null)
+        if (numOfChoicesCurrent < numOfChoicesMax)
         {
-            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
-            if (metaOption != null)
+            MetaData metaData;
+            //update highlight index for itemInteraction right click only
+            if (itemIndex > -1)
+            { highlightIndex = itemIndex; }
+            //metaData depends on which tab type has been selected (each has it's own records)
+            if (isLastTabTop == true)
+            { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
+            else { metaData = listOfCurrentPageSideMetaData[highlightIndex]; }
+            //process metaData
+            if (metaData != null)
             {
-                //add to dictOfSelected
-                AddToSelected(metaData);
-                //adjust renown display
-                renownCurrent -= metaData.renownCost;
-                renownCurrent = Mathf.Max(0, renownCurrent);
-                UpdateRenown();
-                //set as selected
-                metaData.isSelected = true;
-                //switch buttons
-                buttonSelect.gameObject.SetActive(false);
-                buttonDeselect.gameObject.SetActive(true);
-                //checkmark
-                arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(true);
-                arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(true);
-                //switch top texts
-                rightTextTop.text = metaData.textDeselect;
+                MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
+                if (metaOption != null)
+                {
+                    //add to dictOfSelected
+                    AddToSelected(metaData);
+                    //adjust renown display
+                    renownCurrent -= metaData.renownCost;
+                    renownCurrent = Mathf.Max(0, renownCurrent);
+                    UpdateRenown();
+                    //set as selected
+                    metaData.isSelected = true;
+                    //switch buttons
+                    buttonSelect.gameObject.SetActive(false);
+                    buttonDeselect.gameObject.SetActive(true);
+                    //checkmark
+                    arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(true);
+                    arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(true);
+                    //switch top texts
+                    rightTextTop.text = metaData.textDeselect;
+                }
+                else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
             }
-            else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
+            else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
         }
-        else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfCurrentPageMetaData[{0}]", highlightIndex); }
+        else
+        {
+            //maxxed out your available choices
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.instance.sideScript.PlayerSide,
+                textTop = string.Format("{0}LIMIT EXCEEDED{1}", colourAlert, colourEnd),
+                textBottom = string.Format("You have selected {0}{1}{2} option{3}<br><br>You have reached the {4}allowable limit{5} (max {6}{7}{8})<br><br>{9}Deselect{10} to free up more choices", 
+                    colourNeutral, numOfChoicesCurrent, colourEnd, numOfChoicesCurrent != 1 ? "s" : "", colourNeutral, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
+                sprite = GameManager.instance.guiScript.alertInformationSprite,
+                modalLevel = 2,
+                modalState = ModalSubState.MetaGame,
+                reason = "Recommended pressed"
+            };
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        }
     }
 
 
@@ -1768,6 +1791,8 @@ public class MetaGameUI : MonoBehaviour
                         //run out of available renown -> exit
                         if (renownCurrent < minRenown)
                         { break; }
+                        if (numSelected >= numOfChoicesMax)
+                        { break; }
                     }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfRecommended[{0}]", i); }
                 }
@@ -1782,8 +1807,8 @@ public class MetaGameUI : MonoBehaviour
                     {
                         side = GameManager.instance.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
-                        textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Renown", colourNeutral, numSelected, colourEnd, 
-                        numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd),
+                        textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Renown<br><br>There is a {7}{8}{9} option {10}limit{11}", 
+                        colourNeutral, numSelected, colourEnd, numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
                         sprite = GameManager.instance.guiScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
@@ -2012,6 +2037,7 @@ public class MetaGameUI : MonoBehaviour
         try
         {
             dictOfSelected.Add(metaData.metaName, metaData);
+            numOfChoicesCurrent++;
             Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
         }
         catch (ArgumentNullException)
@@ -2029,6 +2055,7 @@ public class MetaGameUI : MonoBehaviour
         if (dictOfSelected.ContainsKey(metaData.metaName) == true)
         {
             dictOfSelected.Remove(metaData.metaName);
+            numOfChoicesCurrent--;
             Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
         }
         else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
