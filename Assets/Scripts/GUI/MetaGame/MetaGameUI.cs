@@ -175,6 +175,7 @@ public class MetaGameUI : MonoBehaviour
     private int costHigh = -1;
     private int costExtreme = -1;
     private int numOfChoicesMax = -1;                               //max num of items you choose (good or bad)
+    private int renownRecommendMin = -1;                            //min amount of renown required for Recommendation button to work
 
     //colours
     string colourDefault;
@@ -571,6 +572,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(costExtreme > -1, "Invalid costExtreme (-1)");
         numOfChoicesMax = GameManager.instance.metaScript.numOfChoices;
         Debug.Assert(numOfChoicesMax > -1, "Invalid numOfChoicesMax (-1)");
+        renownRecommendMin = GameManager.instance.metaScript.renownRecommendMin;
+        Debug.Assert(renownRecommendMin > -1, "Invalid renownRecommendMin (-1)");
     }
     #endregion
 
@@ -1758,7 +1761,6 @@ public class MetaGameUI : MonoBehaviour
         int cost;
         int count = listOfRecommended.Count;
         int numSelected = 0;
-        int minRenown = 2;
         int totalCost = 0;
         //availableRenown could include bonus renown from taking negative options
         int availableRenown = Mathf.Max(GameManager.instance.playerScript.Renown, renownCurrent);
@@ -1767,7 +1769,7 @@ public class MetaGameUI : MonoBehaviour
         if (count > 0)
         {
             //player must have a minimum amount of renown
-            if ( availableRenown >= minRenown)
+            if ( availableRenown >= renownRecommendMin)
             {
                 //start with a clean slate
                 ExecuteReset(false);
@@ -1789,7 +1791,7 @@ public class MetaGameUI : MonoBehaviour
                             AddToSelected(metaData);
                         }
                         //run out of available renown -> exit
-                        if (renownCurrent < minRenown)
+                        if (renownCurrent < renownRecommendMin)
                         { break; }
                         if (numSelected >= numOfChoicesMax)
                         { break; }

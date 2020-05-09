@@ -546,9 +546,9 @@ public class SaveSecret
     public int gainedWhen;
     public int revealedID;
     public string revealedWho;
-    public int revealedWhen;
-    public int deleteWhen;
-    public gameAPI.SecretStatus status;
+    public TimeStamp revealedWhen;
+    public TimeStamp deleteWhen;
+    public SecretStatus status;
     public List<int> listOfActors = new List<int>();
 }
 #endregion

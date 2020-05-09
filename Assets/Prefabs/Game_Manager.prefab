@@ -546,7 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276fd4b7f93053d44953e632c3d2272f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numOfChoices: 2
+  numOfChoices: 6
+  renownRecommendMin: 2
   arrayOfOrganisationOptions:
   - {fileID: 11400000, guid: 37c1fd6d6d79e0f4e8f2ceb34b9ab884, type: 2}
   - {fileID: 11400000, guid: 2d8648348b558e74fbeb4d142dc3c8b6, type: 2}

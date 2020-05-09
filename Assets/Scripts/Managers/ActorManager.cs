@@ -6632,9 +6632,8 @@ public class ActorManager : MonoBehaviour
                 {
                     secret.revealedID = actor.actorID;
                     secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
-                    secret.status = gameAPI.SecretStatus.Revealed;
-                    /*StringBuilder builder = new StringBuilder();*/
+                    secret.revealedWhen = GameManager.SetTimeStamp();
+                    secret.status = SecretStatus.Revealed;
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
                     GameManager.instance.messageScript.ActorBlackmail(msgText, actor, secret);
@@ -8311,8 +8310,8 @@ public class ActorManager : MonoBehaviour
                 {
                     secret.revealedID = actor.actorID;
                     secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
-                    secret.status = gameAPI.SecretStatus.Revealed;
+                    secret.revealedWhen = GameManager.SetTimeStamp();
+                    secret.status = SecretStatus.Revealed;
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {

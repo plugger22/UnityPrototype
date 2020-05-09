@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,8 +37,8 @@ public class Secret : ScriptableObject
     [HideInInspector] public int gainedWhen;                //turn player gains secret
     [HideInInspector] public string revealedWho;            //actor/org who revealed the secret (actor name + arc name / org name)
     [HideInInspector] public int revealedID;                //actorID who revealed (optional, ignore if org (-1))
-    [HideInInspector] public int revealedWhen;              //turn revealed
-    [HideInInspector] public int deletedWhen;               //turn deleted (removed from game without being revealed)
+    [HideInInspector] public TimeStamp revealedWhen;              //turn revealed
+    [HideInInspector] public TimeStamp deletedWhen;               //turn deleted (removed from game without being revealed)
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
     #endregion
 
@@ -59,8 +60,6 @@ public class Secret : ScriptableObject
         status = SecretStatus.Inactive;
         revealedWho = "";
         revealedID = -1;
-        revealedWhen = -1;
-        deletedWhen = -1;
         listOfActors.Clear();
     }
 
@@ -79,8 +78,6 @@ public class Secret : ScriptableObject
     {
         revealedWho = "";
         revealedID = -1;
-        revealedWhen = -1;
-        deletedWhen = -1;
         listOfActors.Clear();
     }
 

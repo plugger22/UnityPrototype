@@ -1070,5 +1070,15 @@ namespace packageAPI
         public string metaOptionName;
     }
 
+    /// <summary>
+    /// Basic class to record time by turn and scenario
+    /// </summary>
+    [System.Serializable]
+    public class TimeStamp
+    {
+        public int turn = -1;
+        public int scenario = -1;                        //scenario index
+    }
+
     //new classes above here
 }

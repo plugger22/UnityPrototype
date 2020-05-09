@@ -535,8 +535,10 @@ public class SecretManager : MonoBehaviour
             {
                 foreach (Secret secret in tempList)
                 {
-                    if (string.IsNullOrEmpty(secret.revealedWho) == false)
-                    { builderTemp.AppendFormat("{0} {1} ({2}), {3} turn {4}, {5}", "\n", secret.name, secret.tag, secret.revealedWho, secret.revealedWhen, secret.status); }
+                    if (secret.revealedWhen != null)
+                    { builderTemp.AppendFormat("{0} {1} ({2}), {3} turn {4}/{5}, {6}", "\n", secret.name, secret.tag, secret.revealedWho, secret.revealedWhen.turn, secret.revealedWhen.scenario, secret.status); }
+                    else if (secret.deletedWhen != null)
+                    { builderTemp.AppendFormat("{0} {1}, {2} turn {3}/{4}, {5}", "\n", secret.name, secret.tag, secret.deletedWhen.turn, secret.deletedWhen.scenario, secret.status); }
                     else { builderTemp.AppendFormat("{0} {1} ({2}) {3}", "\n", secret.name, secret.tag, secret.status ); }
                 }
             }

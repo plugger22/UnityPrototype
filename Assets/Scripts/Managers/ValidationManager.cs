@@ -2621,20 +2621,20 @@ public class ValidationManager : MonoBehaviour
                 key = secret.Key;
                 switch (secret.Value.status)
                 {
-                    case gameAPI.SecretStatus.Inactive:
+                    case SecretStatus.Inactive:
 
                         break;
-                    case gameAPI.SecretStatus.Active:
+                    case SecretStatus.Active:
                         CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
                         break;
-                    case gameAPI.SecretStatus.Revealed:
-                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
-                        CheckDictRange(secret.Value.revealedWhen, 0, highestTurn, "revealedWhen (turn)", tag, key);
+                    case SecretStatus.Revealed:
+                        CheckDictRange(secret.Value.gainedWhen, 0, 999, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.revealedWhen.turn, 0, highestTurn, "revealedWhen (turn)", tag, key);
                         CheckDictString(secret.Value.revealedWho, "secret.revealedWho", tag, key);
                         break;
-                    case gameAPI.SecretStatus.Deleted:
+                    case SecretStatus.Deleted:
                         CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
-                        CheckDictRange(secret.Value.deletedWhen, 0, highestTurn, "deletedWhen", tag, key);
+                        CheckDictRange(secret.Value.deletedWhen.turn, 0, 999, "deletedWhen", tag, key);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised secret.status \"{0}\" for {1}", secret.Value.status, key);

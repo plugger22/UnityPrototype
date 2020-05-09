@@ -13,6 +13,8 @@ public class MetaManager : MonoBehaviour
     [Header("MetaOption core data")]
     [Tooltip("The max number of metaOption choices you can choose (UI restrictions displaying more than these, also good to have a cap)")]
     [Range(1, 10)] public int numOfChoices = 6;
+    [Tooltip("Minimum amount of renown required before Recommendations (button) can be made in MetaGameUI")]
+    [Range(0, 10)] public int renownRecommendMin = 2;
 
     [Header("MetaOption Arrays")]
     [Tooltip("Place metaOptions here to handle the max number of possible organisation metaOptions that may be required")]

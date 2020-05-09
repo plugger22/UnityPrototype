@@ -9,6 +9,7 @@ using System.IO;
 using System.Globalization;
 using modalAPI;
 using System.Text;
+using packageAPI;
 
 public struct StartMethod
 {
@@ -986,7 +987,29 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
+    #region Static Methods
 
+    /// <summary>
+    /// Call this to automatically create a timeStamp with the current turn and scenario index (for a MetaGame turn will be 999 and scenarioIndex will be the previous scenario just completed)
+    /// </summary>
+    /// <returns></returns>
+    public static TimeStamp SetTimeStamp()
+    {
+        TimeStamp timeStamp = new TimeStamp();
+        timeStamp.scenario = instance.campaignScript.GetScenarioIndex();
+        switch (instance.inputScript.GameState)
+        {
+            case GameState.MetaGame:
+                timeStamp.turn = 999;
+                break;
+            default:
+                timeStamp.turn = GameManager.instance.turnScript.Turn;
+                break;
+        }
+        return timeStamp;
+    }
+
+    #endregion
 
 
 

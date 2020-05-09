@@ -2068,7 +2068,7 @@ public class EffectManager : MonoBehaviour
                             if (secret != null)
                             {
                                 secret.status = gameAPI.SecretStatus.Deleted;
-                                secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                                secret.deletedWhen = GameManager.SetTimeStamp();
                                 //remove secret from game
                                 if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
                                 { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
@@ -2095,7 +2095,7 @@ public class EffectManager : MonoBehaviour
                         if (secretPlayer != null)
                         {
                             secretPlayer.status = gameAPI.SecretStatus.Deleted;
-                            secretPlayer.deletedWhen = GameManager.instance.turnScript.Turn;
+                            secretPlayer.deletedWhen = GameManager.SetTimeStamp();
                             //remove secret from game
                             if (GameManager.instance.secretScript.RemoveSecretFromAll(secretPlayer.name, true) == true)
                             { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secretPlayer.tag, colourEnd); }
@@ -5684,7 +5684,7 @@ public class EffectManager : MonoBehaviour
                 if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
                 {
                     secret.revealedWho = org.tag;
-                    secret.revealedWhen = GameManager.instance.turnScript.Turn;
+                    secret.revealedWhen = GameManager.SetTimeStamp();
                     secret.status = gameAPI.SecretStatus.Revealed;
                     //carry out effects
                     if (secret.listOfEffects != null)

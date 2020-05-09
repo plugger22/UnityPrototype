@@ -1381,7 +1381,7 @@ public class PlayerManager : MonoBehaviour
                             break;
                         case SecretStatus.Deleted:
                             //deleted secret
-                            secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                            secret.deletedWhen = GameManager.SetTimeStamp();
                             GameManager.instance.dataScript.AddDeletedSecret(secret);
                             break;
                     }
@@ -2061,8 +2061,8 @@ public class PlayerManager : MonoBehaviour
             Secret secret = listOfSecrets[Random.Range(0, count)];
             if (secret != null)
             {
-                secret.status = gameAPI.SecretStatus.Deleted;
-                secret.deletedWhen = GameManager.instance.turnScript.Turn;
+                secret.status = SecretStatus.Deleted;
+                secret.deletedWhen = GameManager.SetTimeStamp();
                 GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
             }
             else { Debug.LogError("Invalid secret (Null)"); }
