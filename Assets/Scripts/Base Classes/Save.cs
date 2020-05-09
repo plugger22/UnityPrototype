@@ -543,9 +543,9 @@ public class SaveGUIData
 public class SaveSecret
 {
     public string secretName;
-    public int gainedWhen;
     public int revealedID;
     public string revealedWho;
+    public TimeStamp gainedWhen;
     public TimeStamp revealedWhen;
     public TimeStamp deleteWhen;
     public SecretStatus status;

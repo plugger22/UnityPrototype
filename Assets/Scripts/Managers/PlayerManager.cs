@@ -1341,7 +1341,7 @@ public class PlayerManager : MonoBehaviour
                     //add secret & make active
                     listOfSecrets.Add(secret);
                     secret.status = SecretStatus.Active;
-                    secret.gainedWhen = GameManager.instance.turnScript.Turn;
+                    secret.gainedWhen = GameManager.instance.SetTimeStamp();
                     //Msg
                     GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
                     Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.name, "\n");
@@ -1381,7 +1381,7 @@ public class PlayerManager : MonoBehaviour
                             break;
                         case SecretStatus.Deleted:
                             //deleted secret
-                            secret.deletedWhen = GameManager.SetTimeStamp();
+                            secret.deletedWhen = GameManager.instance.SetTimeStamp();
                             GameManager.instance.dataScript.AddDeletedSecret(secret);
                             break;
                     }
@@ -2062,7 +2062,7 @@ public class PlayerManager : MonoBehaviour
             if (secret != null)
             {
                 secret.status = SecretStatus.Deleted;
-                secret.deletedWhen = GameManager.SetTimeStamp();
+                secret.deletedWhen = GameManager.instance.SetTimeStamp();
                 GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
             }
             else { Debug.LogError("Invalid secret (Null)"); }

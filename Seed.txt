@@ -1072,3 +1072,29 @@ City seed 765 -> New York, America
 Dev seed 62310 -> Saturday, 9 May 2020 11:56 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 16554 -> Saturday, 9 May 2020 1:53 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 16229 -> Saturday, 9 May 2020 2:13 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 13883 -> Saturday, 9 May 2020 2:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 3743 -> Saturday, 9 May 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 25985 -> Saturday, 9 May 2020 2:42 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 38910 -> Saturday, 9 May 2020 2:45 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

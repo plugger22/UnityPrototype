@@ -5694,9 +5694,10 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.status == gameAPI.SecretStatus.Revealed)
+            if (secret.status == SecretStatus.Revealed)
             { listOfRevealedSecrets.Add(secret); }
-            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen {2}", secret.tag, secret.name, secret.revealedWhen); }
+            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen t {2} at {3}", secret.tag, secret.name, secret.revealedWhen.turn, 
+                GameManager.instance.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag); }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }
@@ -5709,7 +5710,7 @@ public class DataManager : MonoBehaviour
     {
         if (secret != null)
         {
-            if (secret.status == gameAPI.SecretStatus.Deleted)
+            if (secret.status == SecretStatus.Deleted)
             { listOfDeletedSecrets.Add(secret); }
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.name, secret.deletedWhen); }
         }

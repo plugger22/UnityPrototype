@@ -153,9 +153,12 @@ namespace packageAPI
     public class EffectDataProcess
     {
         public EffectOutcome outcome;
-        public EffectDataOngoing effectOngoing = null;                      //only used if an ongoing effect, ignore otherwise 
+        public EffectDataOngoing effectOngoing;                        //only used if an ongoing effect, ignore otherwise 
         public int value;                                                   //how much the field changes, eg. +1, -1, etc.
         public string text;                                                 //tooltip description for the temporary effect
+
+        public EffectDataProcess()
+        { effectOngoing = null; }
     }
 
     /// <summary>
@@ -164,14 +167,14 @@ namespace packageAPI
     [System.Serializable]
     public class EffectDataOngoing
     {
-        public int ongoingID = -1;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
+        public int ongoingID;                                        //links back to a central registry to enable cancelling of ongoing effect at a later point
         public string text;
         public string description;                                        //description of effect (used for InfoApp)
         public string nodeTooltip;                                        //descriptor used for node tooltip
         public string reason;                                             //reason why (used for InfoApp)
         public int value;                                                 //how much the field changes, eg. +1, -1, etc.
         public int timer;                                                 //how long does the effect last for?
-        public int nodeID = -1;                                           //originating node (used for InfoApp, use only if effect is node based), default -1
+        public int nodeID;                                           //originating node (used for InfoApp, use only if effect is node based), default -1
         public string effectOutcome;
         public int typeLevel;                                             //(GlobalType.level) benefit, or otherwise, of effect from POV of Resistance
         public string effectApply;
@@ -180,6 +183,8 @@ namespace packageAPI
 
         public EffectDataOngoing()
         {
+            nodeID = -1;
+            ongoingID = -1;
             timer = GameManager.instance.effectScript.ongoingEffectTimer;
         }
     }
@@ -219,7 +224,10 @@ namespace packageAPI
         public int value;                                               //change in normal action allocation (use Mathf.ABS value, eg. 1 for both plus and minus)
         public int timer;                                               //number of turns that the effect lasts for (decremented down to zero), set to 999 for continuous (use intended value +1, starts next turn)
         public int turnStart;                                           //turn number where effect commences (added automatically, used for actions tooltip). Ignore.
-        public int ongoingID = -1;                                      //ongoing effects only, ignore otherwise, default -1
+        public int ongoingID;                                      //ongoing effects only, ignore otherwise, default -1
+
+        public ActionAdjustment()
+        { ongoingID = -1; }
     }
 
 
@@ -299,7 +307,10 @@ namespace packageAPI
         public string tag1;
         public string tag2;
         public string tag3;
-        public bool isDisplay = true;               //toggle to enable player to switch on/off certain message types
+        public bool isDisplay;               //toggle to enable player to switch on/off certain message types
+
+        public ItemData()
+        { isDisplay = true; }
     }
 
     /// <summary>
@@ -407,8 +418,11 @@ namespace packageAPI
     public class ShowMeData
     {
         public EventType restoreEvent;
-        public int nodeID = -1;             //if > -1 the relevant node is highlighted in ModalState.ShowMe
-        public int connID = -1;             //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+        public int nodeID;             //if > -1 the relevant node is highlighted in ModalState.ShowMe
+        public int connID;             //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+
+        public ShowMeData()
+        { nodeID = -1; connID = -1; }
     }
 
 
@@ -947,10 +961,12 @@ namespace packageAPI
     {
         public string text;                                                 //text to check
         public bool isValidate = false;                                     //if true, validation check only for correct text tags being present, default false for normal text tag replacement operation      
-        public string objectName = "Unknown";                               //name of object passing text, used for error messages
+        public string objectName;                                           //name of object passing text, used for error messages
         public Node node;                                                   //nodeID if relevant (ignore otherwise)
         public int actorID;                                                 //actor, if relevant (ignore otherwise)
 
+        public CheckTextData()
+        { objectName = "Unknown"; }
     }
 
     /// <summary>
@@ -965,13 +981,16 @@ namespace packageAPI
         public string detailsTop;
         public string detailsBottom;
         public Sprite sprite;
-        public int actorID = -1;
+        public int actorID;
         public Node node = null;
         public Condition condition = null;
         public string help0;                                                //NOTE: help not needed for condition, EffectManager.cs -> SetConditionHelp handles this
         public string help1;
         public string help2;
         public string help3;
+
+        public ActiveEffectData()
+        { actorID = -1; }
     }
 
 
@@ -1076,8 +1095,11 @@ namespace packageAPI
     [System.Serializable]
     public class TimeStamp
     {
-        public int turn = -1;
-        public int scenario = -1;                        //scenario index
+        public int turn;
+        public int scenario;                        //scenario index
+
+        public TimeStamp()
+        { turn = -1; scenario = -1; }
     }
 
     //new classes above here

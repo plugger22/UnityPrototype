@@ -259,13 +259,16 @@ public class CampaignManager : MonoBehaviour
     {
         Scenario scenario = null;
         if (scenarioIndex < campaign.listOfScenarios.Count)
-        { scenario = campaign.listOfScenarios[scenarioIndex]; }
+        { scenario = campaign.listOfScenarios[index]; }
         else { Debug.LogWarningFormat("Invalid scenarioIndex {0} (out of bounds)", index); }
         return scenario;
     }
 
     public int GetScenarioIndex()
     { return scenarioIndex; }
+
+    public int GetMaxScenarioIndex()
+    { return campaign.listOfScenarios.Count - 1; }
 
     public int[] GetArrayOfStoryStatus()
     { return arrayOfStoryStatus; }

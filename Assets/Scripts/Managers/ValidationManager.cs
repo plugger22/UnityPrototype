@@ -1970,6 +1970,7 @@ public class ValidationManager : MonoBehaviour
         int highestMessageID = GameManager.instance.messageScript.messageIDCounter;
         int highestTeamID = GameManager.instance.teamScript.teamIDCounter;
         int highestTurn = GameManager.instance.turnScript.Turn;
+        int highestScenario = GameManager.instance.campaignScript.GetMaxScenarioIndex();
         GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
         //debug checks
         Debug.Assert(highestActorID > 0, "Invalid highestActor (Zero or less)");
@@ -1979,6 +1980,7 @@ public class ValidationManager : MonoBehaviour
         Debug.Assert(highestMessageID > 0, "Invalid highestMessageID (Zero or less)");
         Debug.Assert(highestContactID > 0, "Invalid highestContactID (Zero or less)");
         Debug.Assert(highestTeamID > 0, "Invalid highestTeamID (Zero or less)");
+        Debug.Assert(highestScenario > 0, "Invalid highestScenario (Zero or less)");
         Debug.Assert(playerSide != null, "Invalid playerSide (Null)");
 
         //run checks
@@ -2605,7 +2607,7 @@ public class ValidationManager : MonoBehaviour
     /// <param name="prefix"></param>
     /// <param name="highestActorID"></param>
     /// <param name="highestTurn"></param>
-    private void CheckSecretData(string prefix, int highestActorID, int highestTurn)
+    private void CheckSecretData(string prefix, int highestActorID, int highestScenario)
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckSecretData: ");
@@ -2619,22 +2621,28 @@ public class ValidationManager : MonoBehaviour
             foreach (var secret in dictOfSecrets)
             {
                 key = secret.Key;
+                //Note: turn checks need to be between 0 and 999 to encompass MetaGame actions
                 switch (secret.Value.status)
                 {
                     case SecretStatus.Inactive:
 
                         break;
                     case SecretStatus.Active:
-                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.turn, 0, 999, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.scenario, 0, highestScenario, "gainedWhen", tag, key);
                         break;
                     case SecretStatus.Revealed:
-                        CheckDictRange(secret.Value.gainedWhen, 0, 999, "gainedWhen", tag, key);
-                        CheckDictRange(secret.Value.revealedWhen.turn, 0, highestTurn, "revealedWhen (turn)", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.turn, 0, 999, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.scenario, 0, highestScenario, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.revealedWhen.turn, 0, 999, "revealedWhen (turn)", tag, key);
+                        CheckDictRange(secret.Value.revealedWhen.scenario, 999, highestScenario, "revealedWhen (turn)", tag, key);
                         CheckDictString(secret.Value.revealedWho, "secret.revealedWho", tag, key);
                         break;
                     case SecretStatus.Deleted:
-                        CheckDictRange(secret.Value.gainedWhen, 0, highestTurn, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.turn, 0, 999, "gainedWhen", tag, key);
+                        CheckDictRange(secret.Value.gainedWhen.scenario, 0, highestScenario, "gainedWhen", tag, key);
                         CheckDictRange(secret.Value.deletedWhen.turn, 0, 999, "deletedWhen", tag, key);
+                        CheckDictRange(secret.Value.deletedWhen.scenario, 0, highestScenario, "deletedWhen", tag, key);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised secret.status \"{0}\" for {1}", secret.Value.status, key);

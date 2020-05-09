@@ -34,7 +34,7 @@ public class Secret : ScriptableObject
 
     #region Save Data Compatible
     [HideInInspector] public SecretStatus status;           //enum as dynamic data 
-    [HideInInspector] public int gainedWhen;                //turn player gains secret
+    [HideInInspector] public TimeStamp gainedWhen;                //turn player gains secret
     [HideInInspector] public string revealedWho;            //actor/org who revealed the secret (actor name + arc name / org name)
     [HideInInspector] public int revealedID;                //actorID who revealed (optional, ignore if org (-1))
     [HideInInspector] public TimeStamp revealedWhen;              //turn revealed
