@@ -1098,3 +1098,50 @@ City seed 765 -> New York, America
 Dev seed 38910 -> Saturday, 9 May 2020 2:45 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 45075 -> Saturday, 9 May 2020 2:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17055 -> Saturday, 9 May 2020 4:18 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 65433 -> Saturday, 9 May 2020 4:26 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21816 -> Saturday, 9 May 2020 4:46 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 21671 -> Saturday, 9 May 2020 4:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found in hqID -1, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHqActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3979)
+	ActorManager:PromoteActorToHQ(Actor, List`1, Int32, Int32, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:9268)
+	ActorManager:ProcessMetaActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:9012)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:99)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:401)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.PromoteActorToHQ (gameAPI.Actor actor, System.Collections.Generic.List`1[T] listOfWorkers, System.Int32 maxWorkersAllowed, System.Int32 renownFactor, System.Int32 highestHqID, System.Boolean isPriority) (at Assets/Scripts/Managers/ActorManager.cs:9269)
+	ActorManager.ProcessMetaActors (GlobalSide playerSide) (at Assets/Scripts/Managers/ActorManager.cs:9012)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:99)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:219)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:80)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:307)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:246)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:401)
+	
+Dev seed 46566 -> Saturday, 9 May 2020 5:25 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21671 -> Saturday, 9 May 2020 5:27 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

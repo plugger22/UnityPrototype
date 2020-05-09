@@ -6632,7 +6632,7 @@ public class ActorManager : MonoBehaviour
                 {
                     secret.revealedID = actor.actorID;
                     secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.instance.SetTimeStamp();
+                    secret.revealedWhen = GameManager.SetTimeStamp();
                     secret.status = SecretStatus.Revealed;
                     //message
                     msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
@@ -8310,7 +8310,7 @@ public class ActorManager : MonoBehaviour
                 {
                     secret.revealedID = actor.actorID;
                     secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.instance.SetTimeStamp();
+                    secret.revealedWhen = GameManager.SetTimeStamp();
                     secret.status = SecretStatus.Revealed;
                     //carry out effects
                     if (secret.listOfEffects != null)
@@ -8992,6 +8992,7 @@ public class ActorManager : MonoBehaviour
                 count = arrayOfCurrentActors.Length;
                 if (count > 0)
                 {
+                    //loop current actors
                     for (int i = 0; i < count; i++)
                     {
                         isSuccess = false;
@@ -9304,7 +9305,8 @@ public class ActorManager : MonoBehaviour
         {
             for (int i = 0; i < listOfWorkers.Count; i++)
             {
-                if (listOfWorkers[i].hqID <= highestHqID)
+                //extra condition (hqID > -1) to filter out any recently added OnMap actors (don't get assigned an HqID until end of process)
+                if (listOfWorkers[i].hqID <= highestHqID && listOfWorkers[i].hqID > -1)
                 {
                     if (listOfWorkers[i].Renown < lowestRenown)
                     {

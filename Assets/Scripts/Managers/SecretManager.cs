@@ -107,46 +107,6 @@ public class SecretManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }
         //
-        // - - - SecretStatus - - -
-        //
-        /*Dictionary<string, SecretStatus> dictOfSecretStatus = GameManager.instance.dataScript.GetDictOfSecretStatus();
-        if (dictOfSecretStatus != null)
-        {
-            foreach (var secretStatus in dictOfSecretStatus)
-            {
-                //pick out and assign the ones required for fast access. 
-                //Also dynamically assign SecretStatus.level values (0/1/2). 
-                switch (secretStatus.Key)
-                {
-                    case "Inactive":
-                        secretStatus.Value.level = 0;
-                        secretStatusInactive = secretStatus.Value;
-                        break;
-                    case "Active":
-                        secretStatus.Value.level = 1;
-                        secretStatusActive = secretStatus.Value;
-                        break;
-                    case "Revealed":
-                        secretStatus.Value.level = 2;
-                        secretStatusRevealed = secretStatus.Value;
-                        break;
-                    case "Deleted":
-                        secretStatus.Value.level = 3;
-                        secretStatusDeleted = secretStatus.Value;
-                        break;
-                    default:
-                        Debug.LogWarningFormat("Invalid secretStatus \"{0}\"", secretStatus.Key);
-                        break;
-                }
-            }
-            //error check
-            Debug.Assert(secretStatusActive != null, "Invalid secretStatusActive (Null)");
-            Debug.Assert(secretStatusInactive != null, "Invalid secretStatusInactive (Null)");
-            Debug.Assert(secretStatusRevealed != null, "Invalid secretStatusRevealed (Null)");
-            Debug.Assert(secretStatusDeleted != null, "Invalid secretStatusDeleted (Null)");
-        }
-        else { Debug.LogWarning("Invalid dictOfSecretTypes (Null)"); }*/
-        //
         // - - - - Secrets - - - 
         //
         Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
@@ -168,7 +128,7 @@ public class SecretManager : MonoBehaviour
                         {
                             if (secret.Value != null)
                             {
-                                //set all key secret data to default settings (otherwise will carry over data between sessions)
+                                //set all key secret SO data to default settings (otherwise will carry over data between sessions)
                                 secret.Value.Initialise();
                                 //Only add those of the same side as the player)
                                 if (secret.Value.side.level == playerLevel)

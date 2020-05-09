@@ -987,13 +987,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region General Purpose Methods
+    #region Static Methods
 
     /// <summary>
     /// Call this to automatically create a timeStamp with the current turn and scenario index (for a MetaGame turn will be 999 and scenarioIndex will be the scenario just completed)
     /// </summary>
     /// <returns></returns>
-    public TimeStamp SetTimeStamp()
+    public static TimeStamp SetTimeStamp()
     {
         TimeStamp timeStamp = new TimeStamp();
         timeStamp.scenario = instance.campaignScript.GetScenarioIndex();

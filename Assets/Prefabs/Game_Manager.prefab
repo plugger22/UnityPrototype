@@ -5123,7 +5123,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 21671
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1

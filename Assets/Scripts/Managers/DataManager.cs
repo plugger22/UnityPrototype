@@ -5471,7 +5471,7 @@ public class DataManager : MonoBehaviour
                     if (isActorID == true)
                     {
                         builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8}{9}", actor.actorID, actor.arc.name, actor.level,
-                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer, 
+                            actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer,
                             actor.Renown, actor.Status, "\n"));
                     }
                     else
@@ -5696,8 +5696,11 @@ public class DataManager : MonoBehaviour
         {
             if (secret.status == SecretStatus.Revealed)
             { listOfRevealedSecrets.Add(secret); }
-            else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen t {2} at {3}", secret.tag, secret.name, secret.revealedWhen.turn, 
-                GameManager.instance.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag); }
+            else
+            {
+                Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen t {2} at {3}", secret.tag, secret.name, secret.revealedWhen.turn,
+             GameManager.instance.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag);
+            }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
     }
@@ -5715,6 +5718,32 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has deletedWhen {2}", secret.tag, secret.name, secret.deletedWhen); }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
+    }
+
+    /// <summary>
+    /// Debug display of secret details (all secrets in dictOfSecrets)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplaySecretDetails()
+    {
+        StringBuilder builder = new StringBuilder();
+        int count = dictOfSecrets.Count;
+        builder.AppendFormat("- dictOfSecrets ({0} record{1}){2}{3}", count, count != 1 ? "s" : "", "\n", "\n");
+        if (count > 0)
+        {
+            foreach (var secret in dictOfSecrets)
+            {
+                if (secret.Value != null)
+                {
+                    builder.AppendFormat(" {0} {1} status {2}, {3}{4}", "\n", secret.Value.name, secret.Value.tag, secret.Value.status, "\n");
+                    builder.AppendFormat("  Gained {0}/{1}, Revealed {2}/{3}, Deleted {4}/{5}{6}", secret.Value.gainedWhen.turn, secret.Value.gainedWhen.scenario,
+                        secret.Value.revealedWhen.turn, secret.Value.revealedWhen.scenario, secret.Value.deletedWhen.turn, secret.Value.deletedWhen.scenario, "\n");
+                }
+                else { Debug.LogWarningFormat("Invalid secret (Null) for dictOfSecrets[{0}]", secret.Key); }
+            }
+        }
+        else { builder.Append(" No records present"); }
+        return builder.ToString();
     }
 
     //

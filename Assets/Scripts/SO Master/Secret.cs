@@ -34,9 +34,9 @@ public class Secret : ScriptableObject
 
     #region Save Data Compatible
     [HideInInspector] public SecretStatus status;           //enum as dynamic data 
-    [HideInInspector] public TimeStamp gainedWhen;                //turn player gains secret
     [HideInInspector] public string revealedWho;            //actor/org who revealed the secret (actor name + arc name / org name)
     [HideInInspector] public int revealedID;                //actorID who revealed (optional, ignore if org (-1))
+    [HideInInspector] public TimeStamp gainedWhen;                //turn player gains secret
     [HideInInspector] public TimeStamp revealedWhen;              //turn revealed
     [HideInInspector] public TimeStamp deletedWhen;               //turn deleted (removed from game without being revealed)
     private List<int> listOfActors = new List<int>();       //list of actorID's of actors who know the secret
@@ -61,6 +61,9 @@ public class Secret : ScriptableObject
         revealedWho = "";
         revealedID = -1;
         listOfActors.Clear();
+        gainedWhen = new TimeStamp();
+        revealedWhen = new TimeStamp();
+        deletedWhen = new TimeStamp();
     }
 
     /// <summary>

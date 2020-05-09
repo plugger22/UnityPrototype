@@ -53,6 +53,7 @@ public class DebugGUI : MonoBehaviour
     private int newsToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
+    private int secretToggle = 0;
     private int hqToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
@@ -318,9 +319,12 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 14 + button_height * 14, button_width, button_height), "Secret Data"))
             {
                 Debug.Log("[Dbg] Button -> Secret Data");
-                if (debugDisplay != 25)
-                { debugDisplay = 25; }
-                else { debugDisplay = 0; }
+                switch (secretToggle)
+                {
+                    case 0: debugDisplay = 25; secretToggle = 1; break;
+                    case 1: debugDisplay = 106; secretToggle = 2; break;
+                    case 2: debugDisplay = 0; secretToggle = 0; break;
+                }
             }
 
             //sixteenth button
@@ -1921,6 +1925,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.instance.metaUIScript.DebugDisplaySelected();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 500), analysis, customBackground);
+                        break;
+                    //Secret Details Display
+                    case 106:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.instance.dataScript.DebugDisplaySecretDetails();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }
