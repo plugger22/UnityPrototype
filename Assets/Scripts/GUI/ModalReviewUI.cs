@@ -509,8 +509,8 @@ public class ModalReviewUI : MonoBehaviour
         //outcome text and symbols -> must have a majority and have a minimum number of votes to get a campaign outcome
         if (votesAgainst > votesFor && votesAgainst >= votesMinimum)
         {
-            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("BLACK MARK", ColourType.badText));
-            outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
+            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("BLACK MARK", ColourType.badText));
+            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.instance.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
@@ -524,8 +524,8 @@ public class ModalReviewUI : MonoBehaviour
         }
         else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
-            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.instance.colourScript.GetFormattedString("COMMENDATION", ColourType.goodText));
-            outcomeSymbol = string.Format("{0}", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.guiScript.commendationChar.ToString(), ColourType.dataGood));
+            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("COMMENDATION", ColourType.goodText));
+            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.instance.guiScript.commendationChar.ToString(), ColourType.dataGood));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
@@ -539,7 +539,7 @@ public class ModalReviewUI : MonoBehaviour
         }
         else
         {
-            outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.instance.colourScript.GetFormattedString("INCONCLUSIVE", ColourType.neutralText));
+            outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.GetFormattedString("INCONCLUSIVE", ColourType.neutralText));
             //admin
             GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewInconclusive);
             text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive, "\n");

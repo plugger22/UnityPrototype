@@ -2714,8 +2714,8 @@ public class DataManager : MonoBehaviour
                     {
                         text = string.Format("Cure available for {0} condition", condition.tag),
                         topText = string.Format("{0} Cure", condition.tag),
-                        detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText),
-                        detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
+                        detailsTop = GameManager.GetFormattedString(node.cure.name, ColourType.neutralText),
+                        detailsBottom = GameManager.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
                         sprite = GameManager.instance.guiScript.infoSprite,
                         node = node,
                         help0 = "cure_0",
@@ -2763,8 +2763,8 @@ public class DataManager : MonoBehaviour
                         {
                             text = string.Format("Cure available for {0} condition", condition.tag),
                             topText = string.Format("{0} Cure", condition.tag),
-                            detailsTop = GameManager.instance.colourScript.GetFormattedString(node.cure.name, ColourType.neutralText),
-                            detailsBottom = GameManager.instance.colourScript.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
+                            detailsTop = GameManager.GetFormattedString(node.cure.name, ColourType.neutralText),
+                            detailsBottom = GameManager.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
                             sprite = GameManager.instance.guiScript.infoSprite,
                             node = node,
                             help0 = "cure_0",

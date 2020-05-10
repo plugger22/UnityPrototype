@@ -175,7 +175,7 @@ public class CampaignManager : MonoBehaviour
                 case 2: win = WinStateCampaign.Resistance; break;
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
             }
-            topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been Outstanding", ColourType.goodText));
+            topText = string.Format("<b>{0}</b>", GameManager.GetFormattedString("Your performance has been Outstanding", ColourType.goodText));
             bottomText = string.Format("<b>You have {0} Commendations</b>", commendations);
             GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.Commendations, topText, bottomText);
         }
@@ -189,7 +189,7 @@ public class CampaignManager : MonoBehaviour
                 case 2: win = WinStateCampaign.Authority; break;
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
             }
-            topText = string.Format("<b>{0}</b>", GameManager.instance.colourScript.GetFormattedString("Your performance has been a huge Disappointment", ColourType.badText));
+            topText = string.Format("<b>{0}</b>", GameManager.GetFormattedString("Your performance has been a huge Disappointment", ColourType.badText));
             bottomText = string.Format("<b>You have {0} Blackmarks</b>",  blackmarks);
             GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
         }

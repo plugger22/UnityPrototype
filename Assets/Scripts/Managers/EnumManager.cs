@@ -216,7 +216,7 @@
     //
     public enum HelpType {                                                                  //used to give correct help tooltip tags to certain messages with multiple causes, eg. ActorCondition 
         None,
-        PlayerBreakdown, StressLeave, LieLow
+        PlayerBreakdown, StressLeave, LieLow, BadCondition
     }
 
     //

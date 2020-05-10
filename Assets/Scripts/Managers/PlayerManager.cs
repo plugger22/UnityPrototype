@@ -188,8 +188,8 @@ public class PlayerManager : MonoBehaviour
                 string text = "Unknown";
                 switch (GameManager.instance.sideScript.PlayerSide.level)
                 {
-                    case 1: text = GameManager.instance.colourScript.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
-                    case 2: text = GameManager.instance.colourScript.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
+                    case 1: text = GameManager.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
+                    case 2: text = GameManager.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
                     default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
                 }
                 GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
@@ -1546,7 +1546,7 @@ public class PlayerManager : MonoBehaviour
             //Add to list of services provided by orgHQ
             GameManager.instance.dataScript.AddOrgData(new OrgData() { text = invest.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
             //return
-            return GameManager.instance.colourScript.GetFormattedString(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
+            return GameManager.GetFormattedString(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
         }
         else { Debug.LogError("Invalid investigation (Null), not found in listOfInvestigations"); }
         return "Unknown";
@@ -1594,7 +1594,7 @@ public class PlayerManager : MonoBehaviour
                                     int approvalGain = GameManager.instance.playerScript.investHQApproval;
                                     GameManager.instance.hqScript.ChangeHqApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
-                                    bottomText = string.Format("You are{0}<size=120%>{1}</size>{2}of all charges", "\n", GameManager.instance.colourScript.GetFormattedString("INNOCENT", ColourType.goodText), "\n");
+                                    bottomText = string.Format("You are{0}<size=120%>{1}</size>{2}of all charges", "\n", GameManager.GetFormattedString("INNOCENT", ColourType.goodText), "\n");
                                     break;
                                 case 0:
                                     //player found guilty
@@ -1615,12 +1615,12 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();*/
 
                                     bottomText = string.Format("You have been found{0}<size=120%>{1}</size>{2}on all charges", "\n",
-                                        GameManager.instance.colourScript.GetFormattedString("GUILTY", ColourType.badText), "\n");
+                                        GameManager.GetFormattedString("GUILTY", ColourType.badText), "\n");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised invest.evidence \"{0}\"", invest.evidence); break;
                             }
                             //outcome (message pipeline)
-                            text = string.Format("<size=120%>INVESTIGATION</size>{0}Completed into your{1}{2}", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
+                            text = string.Format("<size=120%>INVESTIGATION</size>{0}Completed into your{1}{2}", "\n", "\n", GameManager.GetFormattedString(invest.tag, ColourType.neutralText));
                             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                             {
                                 textTop = text,
@@ -1906,13 +1906,13 @@ public class PlayerManager : MonoBehaviour
                 if (investigation != null)
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
-                    builder.AppendFormat("{0}{1}", GameManager.instance.colourScript.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
+                    builder.AppendFormat("{0}{1}", GameManager.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
                     builder.AppendFormat("Evidence  {0}{1}", GameManager.instance.guiScript.GetDatapointStars(investigation.evidence), "\n");
-                    builder.AppendFormat("{0} is lead", GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
+                    builder.AppendFormat("{0} is lead", GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
                     if (investigation.timer > 0)
                     {
                         string textVerdict = string.Format("{0}Verdict in {1} day{2}", "\n", investigation.timer, investigation.timer != 1 ? "s" : "");
-                        builder.AppendFormat(GameManager.instance.colourScript.GetFormattedString(textVerdict, investigation.evidence == 3 ? ColourType.goodText : ColourType.badText));
+                        builder.AppendFormat(GameManager.GetFormattedString(textVerdict, investigation.evidence == 3 ? ColourType.goodText : ColourType.badText));
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[i]", i); }
@@ -2279,9 +2279,9 @@ public class PlayerManager : MonoBehaviour
             if (isAddicted == true)
             { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", IMMUNE" : ""); }
             else { text = string.Format("{0} {1}{2} {3}", reason, change > 0 ? "+" : "", change, isStressed == true ? ", STRESSED" : ""); }
-            if (change > 0) { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
-            else if (change < 0) { { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText); } }
-            else { record.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralText); }
+            if (change > 0) { record.descriptor = GameManager.GetFormattedString(text, ColourType.goodText); }
+            else if (change < 0) { { record.descriptor = GameManager.GetFormattedString(text, ColourType.badText); } }
+            else { record.descriptor = GameManager.GetFormattedString(text, ColourType.neutralText); }
             //add to list
             listOfMoodHistory.Add(record);
             //message
@@ -2685,12 +2685,14 @@ public class PlayerManager : MonoBehaviour
     /// <param name="tempList"></param>
     public void SetListOfNodeActions(List<NodeActionData> tempList)
     {
-        if (tempList != null && tempList.Count > 0)
+
+        if (tempList != null)
         {
             listOfNodeActions.Clear();
-            listOfNodeActions.AddRange(tempList);
+            if (tempList.Count > 0)
+            { listOfNodeActions.AddRange(tempList); }
         }
-        else { Debug.LogWarning("Invalid tempList parameter (Null or Empty)"); }
+        else { Debug.LogWarning("Invalid tempList parameter (Null)"); }
     }
 
     /// <summary>

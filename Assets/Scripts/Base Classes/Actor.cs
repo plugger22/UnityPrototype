@@ -360,11 +360,11 @@ namespace gameAPI
                                 history.isNormal = isProceed;
                                 text = string.Format("{0} {1}{2}", reasonForChange, difference > 0 ? "+" : "", difference);
                                 if (isProceed == false)
-                                { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.greyText); }
+                                { history.descriptor = GameManager.GetFormattedString(text, ColourType.greyText); }
                                 else
                                 {
-                                    if (difference > 0) { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.goodText); }
-                                    else { history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.badText); }
+                                    if (difference > 0) { history.descriptor = GameManager.GetFormattedString(text, ColourType.goodText); }
+                                    else { history.descriptor = GameManager.GetFormattedString(text, ColourType.badText); }
                                 }
                                 //add to list
                                 personality.AddMotivation(history);
@@ -388,7 +388,7 @@ namespace gameAPI
                             history.motivation = datapoint1;
                             history.isNormal = true;
                             text = string.Format("Starting Motivation {0}", datapoint1);
-                            history.descriptor = GameManager.instance.colourScript.GetFormattedString(text, ColourType.neutralText);
+                            history.descriptor = GameManager.GetFormattedString(text, ColourType.neutralText);
                             personality.AddMotivation(history);
                         }
                     }

@@ -5853,8 +5853,8 @@ public class EffectManager : MonoBehaviour
         string text = "Unknown";
         switch (GameManager.instance.sideScript.PlayerSide.level)
         {
-            case 1: text = GameManager.instance.colourScript.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
-            case 2: text = GameManager.instance.colourScript.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
+            case 1: text = GameManager.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
+            case 2: text = GameManager.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
             default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
         }
         GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);

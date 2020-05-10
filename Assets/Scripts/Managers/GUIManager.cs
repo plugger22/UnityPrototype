@@ -1002,20 +1002,20 @@ public class GUIManager : MonoBehaviour
     {
         string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player",
             GameManager.instance.guiScript.compatibilityIcon,
-            GameManager.instance.colourScript.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
+            GameManager.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
         string tooltipMain = string.Format("<align=\"left\">Due to Personalities{0}   {1} Good relations{2}   {3} Bad relations {4}{5} of Stars shows {6} of relationship.{7}{8}, doesn't change", "\n",
-            GameManager.instance.colourScript.GetFormattedString(starIconGood, ColourType.goodText), "\n",
-            GameManager.instance.colourScript.GetFormattedString(starIconBad, ColourType.badText), "\n",
-            GameManager.instance.colourScript.GetFormattedString("Number", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString("Intensity", ColourType.salmonText), "\n",
-            GameManager.instance.colourScript.GetFormattedString("Constant", ColourType.salmonText)
+            GameManager.GetFormattedString(starIconGood, ColourType.goodText), "\n",
+            GameManager.GetFormattedString(starIconBad, ColourType.badText), "\n",
+            GameManager.GetFormattedString("Number", ColourType.salmonText),
+            GameManager.GetFormattedString("Intensity", ColourType.salmonText), "\n",
+            GameManager.GetFormattedString("Constant", ColourType.salmonText)
             );
         string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Motivational outcomes",
-            GameManager.instance.colourScript.GetFormattedString("may", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString("GOOD", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString(starIconBad, ColourType.badText),
-            GameManager.instance.colourScript.GetFormattedString("BAD", ColourType.salmonText),
-            GameManager.instance.colourScript.GetFormattedString(starIconGood, ColourType.goodText), "\n", motivationIcon);
+            GameManager.GetFormattedString("may", ColourType.salmonText),
+            GameManager.GetFormattedString("GOOD", ColourType.salmonText),
+            GameManager.GetFormattedString(starIconBad, ColourType.badText),
+            GameManager.GetFormattedString("BAD", ColourType.salmonText),
+            GameManager.GetFormattedString(starIconGood, ColourType.goodText), "\n", motivationIcon);
         GenericTooltipData tooltip = new GenericTooltipData()
         {
             header = tooltipHeader,

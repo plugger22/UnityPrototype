@@ -434,15 +434,15 @@ public class ActorPanelUI : MonoBehaviour
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.instance.colourScript.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
-        playerMoodTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
+        playerMoodTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
         //player stressed UI
-        playerStressedTooltip.tooltipHeader = GameManager.instance.colourScript.GetFormattedString("Stressed", ColourType.badText);
-        playerStressedTooltip.tooltipMain = GameManager.instance.colourScript.GetFormattedString("Mood falls below Zero", ColourType.neutralText);
+        playerStressedTooltip.tooltipHeader = GameManager.GetFormattedString("Stressed", ColourType.badText);
+        playerStressedTooltip.tooltipMain = GameManager.GetFormattedString("Mood falls below Zero", ColourType.neutralText);
         details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
-        playerStressedTooltip.tooltipDetails = GameManager.instance.colourScript.GetFormattedString(details, ColourType.moccasinText);
+        playerStressedTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
         //actor compatibility
         GenericTooltipData data = GameManager.instance.guiScript.GetCompatibilityTooltip();

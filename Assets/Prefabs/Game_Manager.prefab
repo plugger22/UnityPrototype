@@ -5166,9 +5166,9 @@ MonoBehaviour:
     type: 3}
   toolTip_dividerRebel: {fileID: 21300000, guid: 1c565b1edcbefd1408fc8362fb8669e3,
     type: 3}
-  outcome_backgroundAuthority: {fileID: 21300000, guid: 75a8ad37895eabc4d893248bcd89639f,
+  outcome_backgroundAuthority: {fileID: 21300000, guid: 4e3a3c814f0a4f945921e6744d7ccee3,
     type: 3}
-  outcome_backgroundRebel: {fileID: 21300000, guid: 5f437a516e5e4fb469f0f0a4ab74f3de,
+  outcome_backgroundRebel: {fileID: 21300000, guid: 484bc89748bd64c439baf3884b0ccfb1,
     type: 3}
   picker_background_Authority: {fileID: 21300000, guid: 7f4fc6d32c81cf7409df3bb55cc9cffb,
     type: 3}
@@ -5189,7 +5189,7 @@ MonoBehaviour:
   button_Authority: {fileID: 21300002, guid: b191421e418f03b40bc90c356593f467, type: 3}
   button_highlight_Authority: {fileID: 21300000, guid: 1824b016b1f6ae24ca034d9d7b9824c3,
     type: 3}
-  button_Resistance: {fileID: 21300002, guid: 25317bedffad9084c85a2a1affae186d, type: 3}
+  button_Resistance: {fileID: 21300000, guid: 71422af69eca06243a7750d305bbdff6, type: 3}
   button_highlight_Resistance: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
     type: 3}
   button_Click: {fileID: 21300002, guid: 25317bedffad9084c85a2a1affae186d, type: 3}

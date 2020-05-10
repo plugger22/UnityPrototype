@@ -1044,9 +1044,9 @@ public class ContactManager : MonoBehaviour
         string text = "Unknown";
         switch (contactEffectveness)
         {
-            case 1: text = GameManager.instance.colourScript.GetFormattedString("knows stuff", ColourType.badText); break;
-            case 2: text = GameManager.instance.colourScript.GetFormattedString("is networked", ColourType.neutralText); break;
-            case 3: text = GameManager.instance.colourScript.GetFormattedString("is wired-in", ColourType.goodText); break;
+            case 1: text = GameManager.GetFormattedString("knows stuff", ColourType.badText); break;
+            case 2: text = GameManager.GetFormattedString("is networked", ColourType.neutralText); break;
+            case 3: text = GameManager.GetFormattedString("is wired-in", ColourType.goodText); break;
             default: Debug.LogWarningFormat("Invalid contactEffectiveness \"{0}\"", contactEffectveness); break;
         }
         return text;

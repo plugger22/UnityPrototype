@@ -362,7 +362,7 @@ public class HQManager : MonoBehaviour
             {
                 Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
-                string reason = GameManager.instance.colourScript.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
+                string reason = GameManager.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
                 GameManager.instance.messageScript.HqSupportUnavailable(text, reason, hqFaction);
             }
             else { Debug.LogWarning("Invalid current HQ (Null)"); }

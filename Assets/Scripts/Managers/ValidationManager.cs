@@ -1994,7 +1994,7 @@ public class ValidationManager : MonoBehaviour
             CheckGearData(prefix);
             CheckConnectionData(prefix, highestNodeID, highestConnID);
             CheckMessageData(prefix, highestMessageID, highestTurn);
-            CheckSecretData(prefix, highestActorID, highestTurn);
+            CheckSecretData(prefix, highestActorID, highestScenario);
             CheckMainInfoData(prefix, highestTurn);
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
@@ -2635,7 +2635,7 @@ public class ValidationManager : MonoBehaviour
                         CheckDictRange(secret.Value.gainedWhen.turn, 0, 999, "gainedWhen", tag, key);
                         CheckDictRange(secret.Value.gainedWhen.scenario, 0, highestScenario, "gainedWhen", tag, key);
                         CheckDictRange(secret.Value.revealedWhen.turn, 0, 999, "revealedWhen (turn)", tag, key);
-                        CheckDictRange(secret.Value.revealedWhen.scenario, 999, highestScenario, "revealedWhen (turn)", tag, key);
+                        CheckDictRange(secret.Value.revealedWhen.scenario, 0, highestScenario, "revealedWhen (turn)", tag, key);
                         CheckDictString(secret.Value.revealedWho, "secret.revealedWho", tag, key);
                         break;
                     case SecretStatus.Deleted:

@@ -135,7 +135,7 @@ public class ColourManager : MonoBehaviour
         return string.Format("{0}{1}{2}", "<color=", colourReturn, ">");
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns inputted string formatted in the specified colour, ready for display. Returns original, unformatted text if a problem
     /// </summary>
     /// <param name="text"></param>
@@ -148,7 +148,7 @@ public class ColourManager : MonoBehaviour
         { formattedText = string.Format("{0}{1}{2}", GetColour(colourType), text, GetEndTag()); }
         else { Debug.LogError("Invalid text (Null)"); }
         return formattedText;
-    }
+    }*/
 
 
     /// <summary>

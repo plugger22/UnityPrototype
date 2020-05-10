@@ -1158,3 +1158,57 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 59423 -> Saturday, 9 May 2020 7:59 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 22822 -> Sunday, 10 May 2020 10:03 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60041 -> Sunday, 10 May 2020 10:14 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30429 -> Sunday, 10 May 2020 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4887 -> Sunday, 10 May 2020 10:35 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 496 -> Sunday, 10 May 2020 7:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 13122 -> Sunday, 10 May 2020 8:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 48408 -> Sunday, 10 May 2020 8:04 PM
+City seed 5678 -> London, United Kingdom
+City seed 234 -> Sydney, Australia
+WARNING Invalid tempList parameter (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:SetListOfNodeActions(List`1) (at Assets/Scripts/Managers/PlayerManager.cs:2693)
+	FileManager:ReadPlayerData() (at Assets/Scripts/Managers/FileManager.cs:1934)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:201)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:307)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:50)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 52324 -> Sunday, 10 May 2020 8:10 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 19778 -> Sunday, 10 May 2020 8:22 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 34306 -> Sunday, 10 May 2020 8:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 34837 -> Sunday, 10 May 2020 8:56 PM
+City seed 5678 -> London, United Kingdom

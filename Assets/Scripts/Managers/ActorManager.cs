@@ -6902,7 +6902,7 @@ public class ActorManager : MonoBehaviour
                         }
                         //message
                         if (string.IsNullOrEmpty(msgText) == false)
-                        { GameManager.instance.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of Player reputation", actor.actorID, side); }
+                        { GameManager.instance.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of your <b>abysmal reputation</b>", actor.actorID, side, null, HelpType.BadCondition); }
                     }
                     else
                     {

@@ -235,6 +235,7 @@ public class SecretManager : MonoBehaviour
     /// <summary>
     /// Removes a given secret from all actors (OnMap and Reserve) and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
     /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
+    /// Revealed secrets may trigger an investigation, deleted ones not
     /// Returns true if successfully removed secret/s, false otherwise
     /// </summary>
     /// <param name="secretID"></param>
@@ -310,68 +311,72 @@ public class SecretManager : MonoBehaviour
             //chance Investigation launched
             if (GameManager.instance.playerScript.CheckInvestigationPossible() == true)
             {
-                string text;
-                int rnd = Random.Range(0, 100);
-                int chance = GameManager.instance.playerScript.chanceInvestigation;
-                int gameTurn = GameManager.instance.turnScript.Turn;
-                if (rnd < chance)
+                //revealed secrets only (no investigation possible for deleted secrets)
+                if (isDeletedSecret == false)
                 {
-                    //create a new investigation
-                    Investigation invest = new Investigation()
+                    string text;
+                    int rnd = Random.Range(0, 100);
+                    int chance = GameManager.instance.playerScript.chanceInvestigation;
+                    int gameTurn = GameManager.instance.turnScript.Turn;
+                    if (rnd < chance)
                     {
-                        reference = string.Format("{0}{1}", gameTurn, secret.name),
-                        tag = secret.investigationTag,
-                        evidence = secret.investigationEvidence,
-                        turnStart = gameTurn,
-                        lead = GameManager.instance.hqScript.GetRandomHqPosition(),
-                        city = GameManager.instance.campaignScript.scenario.city.name,
-                        status = InvestStatus.Ongoing,
-                        outcome = InvestOutcome.None
-                    };
-                    //add to player's list
-                    GameManager.instance.playerScript.AddInvestigation(invest);
-                    //stats
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsLaunched);
-                    //msgs
-                    Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                    text = "INVESTIGATION commences";
-                    GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
-                    text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
-                    GameManager.instance.messageScript.InvestigationNew(text, invest);
-                    //outcome (message pipeline)
-                    text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.instance.colourScript.GetFormattedString(invest.tag, ColourType.neutralText));
-                    string bottomText = "Unknown";
-                    Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
-                    if (actor == null)
-                    {
-                        Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.hqScript.GetHqTitle(invest.lead));
-                        bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
-                        actor.actorName, GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                        //create a new investigation
+                        Investigation invest = new Investigation()
+                        {
+                            reference = string.Format("{0}{1}", gameTurn, secret.name),
+                            tag = secret.investigationTag,
+                            evidence = secret.investigationEvidence,
+                            turnStart = gameTurn,
+                            lead = GameManager.instance.hqScript.GetRandomHqPosition(),
+                            city = GameManager.instance.campaignScript.scenario.city.name,
+                            status = InvestStatus.Ongoing,
+                            outcome = InvestOutcome.None
+                        };
+                        //add to player's list
+                        GameManager.instance.playerScript.AddInvestigation(invest);
+                        //stats
+                        GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsLaunched);
+                        //msgs
+                        Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                        text = "INVESTIGATION commences";
+                        GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
+                        text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
+                        GameManager.instance.messageScript.InvestigationNew(text, invest);
+                        //outcome (message pipeline)
+                        text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.GetFormattedString(invest.tag, ColourType.neutralText));
+                        string bottomText = "Unknown";
+                        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                        if (actor == null)
+                        {
+                            Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.hqScript.GetHqTitle(invest.lead));
+                            bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
+                            actor.actorName, GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                        }
+                        else
+                        {
+                            bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName,
+                                GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                        }
+                        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                        {
+                            textTop = text,
+                            textBottom = bottomText,
+                            sprite = GameManager.instance.guiScript.investigationSprite,
+                            isAction = false,
+                            side = GameManager.instance.sideScript.PlayerSide,
+                            type = MsgPipelineType.InvestigationLaunched,
+                            help0 = "invest_10"
+                        };
+                        if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                        { Debug.LogWarningFormat("Investigation Launched InfoPipeline message FAILED to be added to dictOfPipeline"); }
                     }
                     else
                     {
-                        bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName, 
-                            GameManager.instance.colourScript.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                        //msgs
+                        Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: No Investigation, need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                        text = "No INVESTIGATION";
+                        GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, false, "rand_4");
                     }
-                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
-                    {
-                        textTop = text,
-                        textBottom = bottomText,
-                        sprite = GameManager.instance.guiScript.investigationSprite,
-                        isAction = false,
-                        side = GameManager.instance.sideScript.PlayerSide,
-                        type = MsgPipelineType.InvestigationLaunched,
-                        help0 = "invest_10"
-                    };
-                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-                    { Debug.LogWarningFormat("Investigation Launched InfoPipeline message FAILED to be added to dictOfPipeline"); }
-                }
-                else
-                {
-                    //msgs
-                    Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: No Investigation, need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                    text = "No INVESTIGATION";
-                    GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, false, "rand_4");
                 }
             }
             else { Debug.LogFormat("[Inv] SecretManager.cs -> RemoveSecretFromAll: Max number of investigations already, new Investigation not possible{0}", "\n"); }

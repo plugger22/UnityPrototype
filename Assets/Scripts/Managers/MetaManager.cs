@@ -457,9 +457,9 @@ public class MetaManager : MonoBehaviour
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
                         //header texts
-                        metaData.textSelect = $"Costs <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textDeselect = $"Gain <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.instance.colourScript.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size>)";
+                        metaData.textSelect = $"Costs <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textDeselect = $"Gain <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size>)";
                         //RenownCost
                         metaData.renownCost = cost;
                         //recommendation priority

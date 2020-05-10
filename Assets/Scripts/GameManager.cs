@@ -1009,6 +1009,21 @@ public class GameManager : MonoBehaviour
         return timeStamp;
     }
 
+    /// <summary>
+    /// returns inputted string formatted in the specified colour, ready for display. Returns original, unformatted text if a problem
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="colorType"></param>
+    /// <returns></returns>
+    public static string GetFormattedString(string text, ColourType colourType)
+    {
+        string formattedText = text;
+        if (string.IsNullOrEmpty(text) == false)
+        { formattedText = string.Format("{0}{1}{2}", instance.colourScript.GetColour(colourType), text, instance.colourScript.GetEndTag()); }
+        else { Debug.LogError("Invalid text (Null)"); }
+        return formattedText;
+    }
+
     #endregion
 
 

@@ -748,6 +748,26 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Bad Condition
+        //
+        // - - - Bad Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "bad_0";
+        data.header = "Poor Show";
+        data.text = string.Format("There are {0}certain conditions{1} you can have that your {2}Subordinates{3} may struggle with and they {4}may resign{5} in protest at the poor example you are setting",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Overview
+        data = new HelpData();
+        data.tag = "bad_1";
+        data.header = "Bad Conditions";
+        data.text = string.Format("Conditions that will upset your Subordinates are {0}CORRUPT{1}, {2}QUESTIONABLE{3} and {4}INCOMPETENT{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #endregion
 
         #region ...Stress

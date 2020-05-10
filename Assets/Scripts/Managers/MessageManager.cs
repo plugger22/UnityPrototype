@@ -1031,6 +1031,10 @@ public class MessageManager : MonoBehaviour
                         data.tag2 = "lielow_2";
                         data.tag3 = "lielow_3";
                         break;
+                    case HelpType.BadCondition:
+                        data.tag0 = "bad_0";
+                        data.tag1 = "bad_1";
+                        break;
                 }
             }
 
