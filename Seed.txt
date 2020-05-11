@@ -1212,3 +1212,55 @@ City seed 765 -> New York, America
 
 Dev seed 34837 -> Sunday, 10 May 2020 8:56 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 64452 -> Monday, 11 May 2020 9:37 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 18802 -> Monday, 11 May 2020 10:13 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 10148 -> Monday, 11 May 2020 10:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57312 -> Monday, 11 May 2020 10:56 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 19834 -> Monday, 11 May 2020 11:01 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid HelpData (duplicate) tag "metaGameUI_3" for listOfHelp["8"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2089)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:845)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	WARNING Not found, tag "metaGameUI_2", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7771)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:100)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:826)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:552)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:223)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	WARNING Invalid HelpData (Null) for tag2 "metaGameUI_2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:103)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:826)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:552)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:223)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	
+Dev seed 29434 -> Monday, 11 May 2020 11:03 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52402 -> Monday, 11 May 2020 11:06 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

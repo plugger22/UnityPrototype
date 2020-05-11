@@ -38,6 +38,8 @@ public class MetaGameUI : MonoBehaviour
     public Button buttonSelect;
     [Tooltip("Right Hand Side")]
     public Button buttonDeselect;
+    [Tooltip("Main UI help at bottom right")]
+    public Button buttonHelpMain;
 
     [Header("HQ Tabs")]
     public GameObject tabBoss;
@@ -109,6 +111,7 @@ public class MetaGameUI : MonoBehaviour
     //button help components                       
     private GenericHelpTooltipUI helpCentre;                    //item help button on RHS panel (where no 'Select' button exists)
     private GenericHelpTooltipUI helpCombined;                  //item help button on RHS panel (adjacent to 'Select' button
+    private GenericHelpTooltipUI helpMain;                      //main UI help button down the bottom right
 
     //Side arrays -> tabs
     private GameObject[] arrayOfSideTabObjects;
@@ -342,6 +345,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(buttonRecommended != null, "Invalid buttonRecommended (Null)");
         Debug.Assert(buttonSelect != null, "Invalid buttonSelect (Null)");
         Debug.Assert(buttonDeselect != null, "Invalid buttonDeselect (Null)");
+        Debug.Assert(buttonHelpMain != null, "Invalid buttonHelpMain (Null)");
         //buttons -> get interaction components
         buttonInteractionReset = buttonReset.GetComponent<ButtonInteraction>();
         buttonInteractionConfirm = buttonConfirm.GetComponent<ButtonInteraction>();
@@ -379,8 +383,10 @@ public class MetaGameUI : MonoBehaviour
         //Help 
         helpCentre = buttonHelpCentre.GetComponent<GenericHelpTooltipUI>();
         helpCombined = buttonHelpCombined.GetComponent<GenericHelpTooltipUI>();
+        helpMain = buttonHelpMain.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(helpCentre != null, "Invalid helpCentre (Null)");
         Debug.Assert(helpCombined != null, "Invalid helpCombined (Null)");
+        Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
         //backgrounds
         Debug.Assert(backgroundMain != null, "Invalid backgroundMain (Null)");
         Debug.Assert(backgroundLeft != null, "Invalid backgroundLeft (Null)");
@@ -543,6 +549,7 @@ public class MetaGameUI : MonoBehaviour
         }
         //Set starting Initialisation states
         InitialiseItems();
+        InitialiseTooltips();
     }
     #endregion
 
@@ -783,7 +790,9 @@ public class MetaGameUI : MonoBehaviour
 
 
 
-
+    /// <summary>
+    /// Initialise MetaData items
+    /// </summary>
     private void InitialiseItems()
     {
         for (int index = 0; index < numOfItemsTotal; index++)
@@ -807,6 +816,19 @@ public class MetaGameUI : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Initialise fixed tooltips
+    /// </summary>
+    private void InitialiseTooltips()
+    {
+        //initialise buttonHelpInfo data
+        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        if (listOfHelp != null)
+        { helpMain.SetHelpTooltip(listOfHelp, 400, 50); }
+        else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
+    }
+
     /// <summary>
     /// Display MetaGame Player options UI
     /// </summary>
@@ -825,6 +847,7 @@ public class MetaGameUI : MonoBehaviour
             buttonDeselect.gameObject.SetActive(false);
             helpCentre.gameObject.SetActive(false);
             helpCombined.gameObject.SetActive(false);
+            helpMain.gameObject.SetActive(true);
             //set game state
             isRunning = true;
             GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });

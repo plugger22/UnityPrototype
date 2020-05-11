@@ -228,6 +228,46 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region MetaGame UI
+        //
+        // - - - Meta Game UI
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "metaGameUI_0";
+        data.header = "HQ Assistance";
+        data.text = string.Format("Your HQ is standing by to offer assistance {0}prior to your next assignment{1}. Each member of your HQ has a {2}unique range of services{3} that you can access. ", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //controls
+        data = new HelpData();
+        data.tag = "metaGameUI_1";
+        data.header = "Controls";
+        data.text = new StringBuilder()
+            .AppendFormat("The following controls are available{0}", "\n")
+            .AppendFormat(" {0} {1}PgUp & PgDown{2}, cycles through the {3}Side Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}Left & Right Arrows{2}, cycles through the {3}Top Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}Right Click{2} an Option to {3}Select/Deselect{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}Mouse Wheel{2} to {3}scroll{4} through options{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}Up & Down Arrows{2} to {3}scroll{4} through options{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .ToString();
+        listOfHelp.Add(data);
+        //Max limit
+        data = new HelpData();
+        data.tag = "metaGameUI_2";
+        data.header = "How many can I select?";
+        data.text = string.Format("You can select up to {0}{1} options{2} of any type, provided you have {3}enough renown{4} to pay for them",
+            colourAlert, GameManager.instance.metaScript.numOfChoices, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Carry Over Renown
+        data = new HelpData();
+        data.tag = "metaGameUI_3";
+        data.header = string.Format("{0}Do I have to?{1}", colourTip, colourEnd);
+        data.text = string.Format("You don't have to select any options. Any {0}renown{1} you have will {2}carry over{3} to your {4}next assignment{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Review UI
         //
         // - - - Review UI
