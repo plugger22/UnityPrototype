@@ -861,17 +861,17 @@ public class MetaGameUI : MonoBehaviour
         { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
         //reset button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_4", "metaGameUI_5");
         if (listOfHelp != null)
         { helpReset.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpReset (Null)"); }
         //confirm button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_6", "metaGameUI_7");
         if (listOfHelp != null)
-        { helpConfirm.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        { helpConfirm.SetHelpTooltip(listOfHelp, x_offset + 25, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpConfirm (Null)"); }
         //recommended button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_8", "metaGameUI_9");
         if (listOfHelp != null)
         { helpRecommended.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpRec0mmended (Null)"); }

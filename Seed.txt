@@ -1322,3 +1322,35 @@ City seed 765 -> New York, America
 Dev seed 47169 -> Monday, 11 May 2020 12:04 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 22339 -> Monday, 11 May 2020 12:18 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 63868 -> Monday, 11 May 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "metaGame_9", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7771)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:92)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:874)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:582)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	WARNING Invalid HelpData (Null) for tag1 "metaGame_9"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:95)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:874)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:582)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	City seed 765 -> New York, America
+
+Dev seed 25823 -> Monday, 11 May 2020 12:31 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

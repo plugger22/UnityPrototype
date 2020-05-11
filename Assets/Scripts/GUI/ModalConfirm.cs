@@ -107,6 +107,9 @@ public class ModalConfirm : MonoBehaviour
     {
         if (details != null)
         {
+            //close tooltips
+            GameManager.instance.guiScript.SetTooltipsOff();
+
             topText.text = details.topText;
             bottomText.text = details.bottomText;
             falseText.text = details.buttonFalse;

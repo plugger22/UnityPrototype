@@ -923,7 +923,9 @@ public class GUIManager : MonoBehaviour
     // - - - Tooltips - - -
     //
 
-    //set all modal 0 tooltips off
+    /// <summary>
+    /// turn off all modal 0 tooltips
+    /// </summary>
     public void SetTooltipsOff()
     {
         //exit any generic or node tooltips

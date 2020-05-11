@@ -266,6 +266,44 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("You don't have to select any options. Any {0}renown{1} you have will {2}carry over{3} to your {4}next assignment{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Reset button
+        data = new HelpData();
+        data.tag = "metaGameUI_4";
+        data.header = "Reset Button";
+        data.text = string.Format("Any {0}previously selected{1} Options will be {2}deselected{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Reset button tip
+        data = new HelpData();
+        data.tag = "metaGameUI_5";
+        data.header = string.Format("{0}Why would I Reset?{1}", colourTip, colourEnd);
+        data.text = string.Format("It will give you a {0}blank slate{1} from which to choose options again, or allow you to exit (press CONFIRM) and {2}save your renown{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Confirm button
+        data = new HelpData();
+        data.tag = "metaGameUI_6";
+        data.header = "Confirm Button";
+        data.text = string.Format("{0}Selected{1} Options will be {2}locked in{3} and any {4}remaining renown{5} will carry over to your {6}next assignment{7}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Confirm button tip
+        data = new HelpData();
+        data.tag = "metaGameUI_7";
+        data.header = string.Format("{0}Can I press this if I haven't selected anything?{1}", colourTip, colourEnd);
+        data.text = string.Format("Yes you can. You'll exit the HQ Options and your {0}renown{1} will carry over to your {2}next assignment{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recommended button
+        data = new HelpData();
+        data.tag = "metaGameUI_8";
+        data.header = "Recommended Button";
+        data.text = string.Format("Recommended options will be selected, within your Renown allowance, and {0}all other options deselected{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recommended button tip
+        data = new HelpData();
+        data.tag = "metaGameUI_9";
+        data.header = string.Format("{0}What's Recommended?{1}", colourTip, colourEnd);
+        data.text = string.Format("It's recommended that you deal with any outstanding {0}liabilities{1} such as {2}Secrets{3}, {4}Investigations{5}, adverse {6}Conditions{7} and that you maintain contact with {8}Organisations{9}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Review UI
