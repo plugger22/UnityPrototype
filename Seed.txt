@@ -1264,3 +1264,61 @@ City seed 765 -> New York, America
 Dev seed 52402 -> Monday, 11 May 2020 11:06 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 22687 -> Monday, 11 May 2020 11:41 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 765 -> New York, America
+
+Dev seed 24448 -> Monday, 11 May 2020 11:53 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.InitialiseTooltips () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:895)
+	MetaGameUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:578)
+	MetaGameUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:233)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:791)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:846)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:371)
+	
+Dev seed 11861 -> Monday, 11 May 2020 11:56 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:105)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 765 -> New York, America
+
+Dev seed 29374 -> Monday, 11 May 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 47169 -> Monday, 11 May 2020 12:04 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

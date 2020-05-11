@@ -112,6 +112,16 @@ public class MetaGameUI : MonoBehaviour
     private GenericHelpTooltipUI helpCentre;                    //item help button on RHS panel (where no 'Select' button exists)
     private GenericHelpTooltipUI helpCombined;                  //item help button on RHS panel (adjacent to 'Select' button
     private GenericHelpTooltipUI helpMain;                      //main UI help button down the bottom right
+    private GenericHelpTooltipUI helpReset;                     //reset button
+    private GenericHelpTooltipUI helpConfirm;                   //confirm button
+    private GenericHelpTooltipUI helpRecommended;               //reset button
+    private GenericHelpTooltipUI helpTabBoss;                   //top side tab
+    private GenericHelpTooltipUI helpTabSubBoss1;               //second side tab from top
+    private GenericHelpTooltipUI helpTabSubBoss2;               //third side tab from top
+    private GenericHelpTooltipUI helpTabSubBoss3;               //fourth side tab from top
+    private GenericHelpTooltipUI helpTabStatus;                 //top tab
+    private GenericHelpTooltipUI helpTabSelected;               //top tab
+    private GenericHelpTooltipUI helpRenown;                    //renown background
 
     //Side arrays -> tabs
     private GameObject[] arrayOfSideTabObjects;
@@ -384,9 +394,29 @@ public class MetaGameUI : MonoBehaviour
         helpCentre = buttonHelpCentre.GetComponent<GenericHelpTooltipUI>();
         helpCombined = buttonHelpCombined.GetComponent<GenericHelpTooltipUI>();
         helpMain = buttonHelpMain.GetComponent<GenericHelpTooltipUI>();
+        helpReset = buttonReset.GetComponent<GenericHelpTooltipUI>();
+        helpConfirm = buttonConfirm.GetComponent<GenericHelpTooltipUI>();
+        helpRecommended = buttonRecommended.GetComponent<GenericHelpTooltipUI>();
+        helpTabBoss = tabBoss.GetComponent<GenericHelpTooltipUI>();
+        helpTabSubBoss1 = tabSubBoss1.GetComponent<GenericHelpTooltipUI>();
+        helpTabSubBoss2 = tabSubBoss2.GetComponent<GenericHelpTooltipUI>();
+        helpTabSubBoss3 = tabSubBoss3.GetComponent<GenericHelpTooltipUI>();
+        helpTabStatus = tabStatus.GetComponent<GenericHelpTooltipUI>();
+        helpTabSelected = tabSelected.GetComponent<GenericHelpTooltipUI>();
+        helpRenown = renownBackground.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(helpCentre != null, "Invalid helpCentre (Null)");
         Debug.Assert(helpCombined != null, "Invalid helpCombined (Null)");
         Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
+        Debug.Assert(helpReset != null, "Invalid helpReset (Null)");
+        Debug.Assert(helpConfirm != null, "Invalid helpConfirm (Null)");
+        Debug.Assert(helpRecommended != null, "Invalid helpRecommended (Null)");
+        Debug.Assert(helpTabBoss != null, "Invalid helpTabBoss (Null)");
+        Debug.Assert(helpTabSubBoss1 != null, "Invalid helpTabSubBoss1 (Null)");
+        Debug.Assert(helpTabSubBoss2 != null, "Invalid helpTabSubBoss2 (Null)");
+        Debug.Assert(helpTabSubBoss3 != null, "Invalid helpTabSubBoss3 (Null)");
+        Debug.Assert(helpTabStatus != null, "Invalid helpTabStatus (Null)");
+        Debug.Assert(helpTabSelected != null, "Invalid helpTabSelected (Null)");
+        Debug.Assert(helpRenown != null, "Invalid helpRenown (Null)");
         //backgrounds
         Debug.Assert(backgroundMain != null, "Invalid backgroundMain (Null)");
         Debug.Assert(backgroundLeft != null, "Invalid backgroundLeft (Null)");
@@ -822,11 +852,64 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void InitialiseTooltips()
     {
-        //initialise buttonHelpInfo data
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        List<HelpData> listOfHelp;
+        int x_offset = 200;
+        int y_offset = 50;
+        //main help button
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
         if (listOfHelp != null)
-        { helpMain.SetHelpTooltip(listOfHelp, 400, 50); }
-        else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
+        { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+        //reset button
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpReset.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpReset (Null)"); }
+        //confirm button
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpConfirm.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpConfirm (Null)"); }
+        //recommended button
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpRecommended.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpRec0mmended (Null)"); }
+        //Boss tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabBoss.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabBoss (Null)"); }
+        //subBoss1 tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabSubBoss1.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss1 (Null)"); }
+        //subBoss2 tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabSubBoss2.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss2 (Null)"); }
+        //subBoss3 tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabSubBoss3.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss3 (Null)"); }
+        //Status tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabStatus.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabStatus (Null)"); }
+        //Selected tab
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpTabSelected.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpTabSelected (Null)"); }
+        //Renown
+        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1");
+        if (listOfHelp != null)
+        { helpRenown.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpRenown (Null)"); }
     }
 
     /// <summary>
