@@ -5168,7 +5168,7 @@ MonoBehaviour:
     type: 3}
   outcome_backgroundAuthority: {fileID: 21300000, guid: 4e3a3c814f0a4f945921e6744d7ccee3,
     type: 3}
-  outcome_backgroundRebel: {fileID: 21300000, guid: 484bc89748bd64c439baf3884b0ccfb1,
+  outcome_backgroundRebel: {fileID: 21300000, guid: 7ca63e31b754b6e47a39fcfb3e449239,
     type: 3}
   picker_background_Authority: {fileID: 21300000, guid: 7f4fc6d32c81cf7409df3bb55cc9cffb,
     type: 3}

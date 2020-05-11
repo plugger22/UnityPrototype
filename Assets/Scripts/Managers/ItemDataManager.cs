@@ -2387,9 +2387,9 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>An Investigation has been launched into your{0}{1}{2}{3}</b>{4}{5}{6}", "\n", "\n", colourNeutral, invest.tag, colourEnd, "\n", "\n");
-        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
         if (actor != null)
-        { builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}will be leading the Investigation", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(actor.statusHQ), colourEnd, "\n"); }
+        { builder.AppendFormat("<b>{0}, {1}{2}{3}</b>{4}will be leading the Investigation", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHqActorPosition(actor.statusHQ), colourEnd, "\n"); }
         else
         {
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
@@ -2457,11 +2457,11 @@ public class ItemDataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         string outcome = "Unknown";
-        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
         if (actor != null)
         {
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-            builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(invest.lead), colourEnd, "\n", "\n");
+            builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHqActorPosition(invest.lead), colourEnd, "\n", "\n");
             builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.instance.guiScript.GetDatapointStars(motivation), "\n", "\n");
         }
         else
@@ -2521,9 +2521,9 @@ public class ItemDataManager : MonoBehaviour
             }
         }
         builder.AppendFormat("Evidence Uncovered by{0}{1}<b>{2}{3}</b>", "\n", colourNeutral, source, colourEnd);
-        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
         if (actor != null)
-        { builder.AppendFormat("<b>{0}{1}, {2}{3}{4}</b>", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(actor.statusHQ), colourEnd); }
+        { builder.AppendFormat("<b>{0}{1}, {2}{3}{4}</b>", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHqActorPosition(actor.statusHQ), colourEnd); }
         else
         { Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead); }
         return builder.ToString();

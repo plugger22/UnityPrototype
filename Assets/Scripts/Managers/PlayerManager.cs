@@ -1670,7 +1670,7 @@ public class PlayerManager : MonoBehaviour
                                 //previous
                                 invest.previousEvidence = invest.evidence;
                                 //good or bad evidence -> depends on HQ actor opinion of you
-                                Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                                Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
                                 if (actor != null)
                                 {
                                     rnd = Random.Range(0, 100);

@@ -1673,7 +1673,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "MotNeutMinHqBoss":
                                                 //Boss of HQ has motivation 2+
-                                                Actor actorBoss = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+                                                Actor actorBoss = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                                                 if (actorBoss != null)
                                                 {
                                                     if (actorBoss.GetDatapoint(ActorDatapoint.Motivation1) < 2)
@@ -1683,7 +1683,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "MotNeutMinHqSubBoss1":
                                                 //subBoss 1 of HQ has motivation 2+
-                                                Actor actorSubBoss1 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss1);
+                                                Actor actorSubBoss1 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
                                                 if (actorSubBoss1 != null)
                                                 {
                                                     if (actorSubBoss1.GetDatapoint(ActorDatapoint.Motivation1) < 2)
@@ -1693,7 +1693,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "MotNeutMinHqSubBoss2":
                                                 //subBoss 2 of HQ has motivation 2+
-                                                Actor actorSubBoss2 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss2);
+                                                Actor actorSubBoss2 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
                                                 if (actorSubBoss2 != null)
                                                 {
                                                     if (actorSubBoss2.GetDatapoint(ActorDatapoint.Motivation1) < 2)
@@ -1703,7 +1703,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "MotNeutMinHqSubBoss3":
                                                 //subBoss 3 of HQ has motivation 2+
-                                                Actor actorSubBoss3 = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.SubBoss3);
+                                                Actor actorSubBoss3 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
                                                 if (actorSubBoss3 != null)
                                                 {
                                                     if (actorSubBoss3.GetDatapoint(ActorDatapoint.Motivation1) < 2)

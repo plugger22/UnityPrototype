@@ -304,6 +304,49 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("It's recommended that you deal with any outstanding {0}liabilities{1} such as {2}Secrets{3}, {4}Investigations{5}, adverse {6}Conditions{7} and that you maintain contact with {8}Organisations{9}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Status tab
+        data = new HelpData();
+        data.tag = "metaGameUI_10";
+        data.header = "Status Tab";
+        data.text = string.Format("Shows all options that will {0}carry over{1} to your next assignment if not dealt with", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Status tab -> organisations
+        data = new HelpData();
+        data.tag = "metaGameUI_11";
+        data.header = "Organisation";
+        data.text = string.Format("Any Organisations that you have {0}been in contact{1} with are shown and, if their option is {2}NOT{3} selected, contact with them will be {4}lost{5}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Status tab -> can I select here?
+        data = new HelpData();
+        data.tag = "metaGameUI_12";
+        data.header = string.Format("{0}Can I Select here?{1}", colourTip, colourEnd);
+        data.text = string.Format("Yes you can. You can {0}do anything here{1} that you would normally do in any other tab", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Selected tab
+        data = new HelpData();
+        data.tag = "metaGameUI_13";
+        data.header = "Selected Tab";
+        data.text = string.Format("Shows all options that you have {0}currently selected{1} (the {2}checkmark icon{3} indicates \'selected\')", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Selected tab -> What can I do?
+        data = new HelpData();
+        data.tag = "metaGameUI_14";
+        data.header = string.Format("{0}What can I do here?{1}", colourTip, colourEnd);
+        data.text = string.Format("You can {0}do anything here{1} that you would normally do in any other tab", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Renown
+        data = new HelpData();
+        data.tag = "metaGameUI_15";
+        data.header = "Renown";
+        data.text = string.Format("Shows the amount of Renown you have {0}available to spend{1} on options. It goes {2}up and down{3} as you make select and deselect options", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Remaining Renown
+        data = new HelpData();
+        data.tag = "metaGameUI_16";
+        data.header = string.Format("{0}Do I have to spend it all?{1}", colourTip, colourEnd);
+        data.text = string.Format("No. You can spend {0}nothing{1} (press CONFIRM to exit) if you wish. Any renown you have will {2}carry over{3} to your next assignment", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Review UI

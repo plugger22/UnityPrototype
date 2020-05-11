@@ -345,7 +345,7 @@ public class SecretManager : MonoBehaviour
                         //outcome (message pipeline)
                         text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.GetFormattedString(invest.tag, ColourType.neutralText));
                         string bottomText = "Unknown";
-                        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
+                        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
                         if (actor == null)
                         {
                             Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.hqScript.GetHqTitle(invest.lead));

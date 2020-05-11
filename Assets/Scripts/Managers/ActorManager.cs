@@ -8634,6 +8634,75 @@ public class ActorManager : MonoBehaviour
         return data;
     }
 
+    /// <summary>
+    /// Returns a listOf HelpData for MetaGameUI side tab help tooltips
+    /// </summary>
+    /// <param name="actorHq"></param>
+    /// <returns></returns>
+    public List<HelpData> GetHqTooltip(ActorHQ actorHq)
+    {
+        List<HelpData> listOfHelp = new List<HelpData>();
+        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(actorHq);
+        if (actor != null)
+        {
+            //opinion of you
+            string assistance = "Unknown";
+            string opinion = "Unknown";
+            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+            switch (motivation)
+                {
+                case 3:
+                    opinion = string.Format("{0}{1}{2} thinks you are doing a {3}great job{4}, by the way", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
+                    assistance = string.Format("{0}{1}{2} is happy to help you and has gone out of their way to offer {3}special options{4}", colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
+                    break;
+                case 2:
+                    opinion = string.Format("{0} is {1}indifferent{2} and considers you {3}just another leader{4}", actor.firstName, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because they have to", 
+                        colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
+                    break;
+                case 1:
+                    opinion = string.Format("{0} is {1}disappointed{2} in your performance to date", actor.firstName, colourAlert, colourEnd);
+                    assistance = string.Format("{0}{1}{2} is reluctant to help you and {3}won't{4} be offering any {5}special options{6}", 
+                        colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    break;
+                case 0:
+                    opinion = string.Format("{0} wonders {1}why you are still here{2} considering that you're a {3}walking disaster{4}", actor.firstName, colourAlert, colourEnd, colourAlert, colourEnd);
+                    assistance = string.Format("{0}{1}{2} can't stand you but will do what is required. You can {3}forget{4} about any {5}special options{6}", 
+                        colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    break;
+            }
+            string status = string.Format("Renown {0}{1}{2}{3}Motivation (their current opinion of you) of {6}", colourAlert, actor.firstName, colourEnd, colourAlert, actor.Renown, colourEnd,
+                GameManager.instance.guiScript.GetDatapointStars(motivation));
+            //title and name
+            HelpData data0 = new HelpData()
+            {
+                header = string.Format("{0}", GameManager.instance.hqScript.GetHqTitle(actorHq)),
+                text = assistance
+            };
+            listOfHelp.Add(data0);
+            //opinion
+            HelpData data1 = new HelpData()
+            {
+                header = "Opinion of You",
+                text = opinion
+            };
+            listOfHelp.Add(data1);
+            //stats
+            HelpData data2 = new HelpData()
+            {
+                header = string.Format("{0} Status", actor.actorName),
+                text = status
+            };
+            listOfHelp.Add(data2);
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid HQ hierarchy actor (Null) for {0}", actorHq);
+            listOfHelp.Add(new HelpData() { tag = "Unknown", header = "Unknown", text = "Unknown" });
+        }
+        return listOfHelp;
+    }
+
 
     /// <summary>
     /// sub method used to calculate adjusted renown cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets

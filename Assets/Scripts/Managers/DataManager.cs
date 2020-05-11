@@ -3833,7 +3833,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="hq"></param>
     /// <returns></returns>
-    public Actor GetHQHierarchyActor(ActorHQ hq)
+    public Actor GetHqHierarchyActor(ActorHQ hq)
     { return arrayOfActorsHQ[(int)hq]; }
 
     /// <summary>
@@ -4017,7 +4017,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="actorHQ"></param>
     /// <returns></returns>
-    public string GetHQActorPosition(ActorHQ actorHQ)
+    public string GetHqActorPosition(ActorHQ actorHQ)
     {
         string hqPosition = "Unknown";
         switch (actorHQ)
@@ -7100,7 +7100,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="side"></param>
     /// <returns></returns>
-    public Hq GetHQ(GlobalSide sideRequired)
+    public Hq GetHq(GlobalSide sideRequired)
     {
         Hq hqReturn = null;
         if (sideRequired != null)

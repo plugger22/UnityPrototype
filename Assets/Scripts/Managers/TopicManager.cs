@@ -3346,7 +3346,7 @@ public class TopicManager : MonoBehaviour
             {
                 if (turnOption.moodEffect != null)
                 {
-                    Actor actorHQ = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+                    Actor actorHQ = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                     if (actorHQ != null)
                     {
                         int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isDislikedByHQ, turnOption.isIgnoredByHQ);
@@ -5110,7 +5110,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="data"></param>
     private void InitialiseBossDetails(TopicUIData data)
     {
-        Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(ActorHQ.Boss);
+        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
         if (actor != null)
         {
             //sprite

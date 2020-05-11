@@ -1354,3 +1354,52 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 Dev seed 25823 -> Monday, 11 May 2020 12:31 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 48818 -> Monday, 11 May 2020 3:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27605 -> Monday, 11 May 2020 3:21 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50640 -> Monday, 11 May 2020 3:32 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 13926 -> Monday, 11 May 2020 3:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:881)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:582)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	City seed 765 -> New York, America
+
+Dev seed 13393 -> Monday, 11 May 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	MetaGameUI:InitialiseTooltips() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:881)
+	MetaGameUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:582)
+	MetaGameUI:Initialise(GameState) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:233)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:791)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:846)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:371)
+	
+Dev seed 61635 -> Monday, 11 May 2020 4:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 65027 -> Monday, 11 May 2020 4:42 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 32143 -> Monday, 11 May 2020 4:48 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

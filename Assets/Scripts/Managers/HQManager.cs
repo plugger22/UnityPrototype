@@ -213,11 +213,11 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         //Authority HQ 
-        hQAuthority = GameManager.instance.dataScript.GetHQ(GameManager.instance.globalScript.sideAuthority);
+        hQAuthority = GameManager.instance.dataScript.GetHq(GameManager.instance.globalScript.sideAuthority);
         if (hQAuthority == null)
         { Debug.LogError("Invalid HqAuthority (Null)"); }
         //Resistance HQ
-        hQResistance = GameManager.instance.dataScript.GetHQ(GameManager.instance.globalScript.sideResistance);
+        hQResistance = GameManager.instance.dataScript.GetHq(GameManager.instance.globalScript.sideResistance);
         if (hQResistance == null)
         { Debug.LogError("Invalid HqResistance (Null)"); }
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
