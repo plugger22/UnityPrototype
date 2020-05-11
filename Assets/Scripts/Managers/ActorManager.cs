@@ -8646,8 +8646,10 @@ public class ActorManager : MonoBehaviour
         if (actor != null)
         {
             //opinion of you
+            string title = GameManager.instance.hqScript.GetHqTitle(actorHq);
             string assistance = "Unknown";
             string opinion = "Unknown";
+            char bullet = '\u2022';
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
             switch (motivation)
                 {
@@ -8656,27 +8658,29 @@ public class ActorManager : MonoBehaviour
                     assistance = string.Format("{0}{1}{2} is happy to help you and has gone out of their way to offer {3}special options{4}", colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 2:
-                    opinion = string.Format("{0} is {1}indifferent{2} and considers you {3}just another leader{4}", actor.firstName, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-                    assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because they have to", 
+                    opinion = string.Format("{0}{1}{2} is {3}indifferent{4} and considers you {5}just another leader{6}", 
+                        colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because it's standard protocol", 
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 1:
-                    opinion = string.Format("{0} is {1}disappointed{2} in your performance to date", actor.firstName, colourAlert, colourEnd);
+                    opinion = string.Format("{0}{1}{2} is {3}disappointed{4} in your performance to date", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} is reluctant to help you and {3}won't{4} be offering any {5}special options{6}", 
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
                 case 0:
-                    opinion = string.Format("{0} wonders {1}why you are still here{2} considering that you're a {3}walking disaster{4}", actor.firstName, colourAlert, colourEnd, colourAlert, colourEnd);
+                    opinion = string.Format("{0}{1}{2} wonders {3}why you are still here{4} considering that you're a {5}walking disaster{6}", 
+                        colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} can't stand you but will do what is required. You can {3}forget{4} about any {5}special options{6}", 
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
             }
-            string status = string.Format("Renown {0}{1}{2}{3}Motivation (their current opinion of you) of {6}", colourAlert, actor.firstName, colourEnd, colourAlert, actor.Renown, colourEnd,
-                GameManager.instance.guiScript.GetDatapointStars(motivation));
+            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Motivation {10}  (current opinion of you)", 
+                colourAlert, actor.actorName, colourEnd, "\n",  bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.instance.guiScript.GetDatapointStars(motivation));
             //title and name
             HelpData data0 = new HelpData()
             {
-                header = string.Format("{0}", GameManager.instance.hqScript.GetHqTitle(actorHq)),
+                header = title,
                 text = assistance
             };
             listOfHelp.Add(data0);
@@ -8690,7 +8694,7 @@ public class ActorManager : MonoBehaviour
             //stats
             HelpData data2 = new HelpData()
             {
-                header = string.Format("{0} Status", actor.actorName),
+                header = string.Format("{0} Status", title),
                 text = status
             };
             listOfHelp.Add(data2);
