@@ -4454,6 +4454,7 @@ MonoBehaviour:
   debugTopicPool: {fileID: 0}
   numOfGearItems: -1
   numOfWorkers: 8
+  bonusRenown: 10
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -4475,13 +4476,6 @@ MonoBehaviour:
   testRatioPlayManageAct: 0
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
-  isValidMetaOptions: 0
-  isDismissed: 1
-  isResigned: 1
-  isLowMotivation: 1
-  isTraitor: 1
-  isLevelTwo: 0
-  isLevelThree: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5122,7 +5116,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  popUiScript: {fileID: 0}
+  popUpScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1

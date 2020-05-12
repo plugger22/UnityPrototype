@@ -135,4 +135,13 @@ public class ModalPopUp : MonoBehaviour
         popObject.SetActive(false);
         isActive = false;
     }
+
+    /// <summary>
+    /// Stop coroutine
+    /// </summary>
+    public void StopCoroutine()
+    {
+        StopCoroutine("PopUp");
+        isActive = false;
+    }
 }

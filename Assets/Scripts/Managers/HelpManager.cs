@@ -248,6 +248,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" {0} {1}PgUp & PgDown{2}, cycles through the {3}Side Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Left & Right Arrows{2}, cycles through the {3}Top Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Right Click{2} an Option to {3}Select/Deselect{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}SPACE{2} to {3}Select/Deselect{4} highlighted Option{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Mouse Wheel{2} to {3}scroll{4} through options{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Up & Down Arrows{2} to {3}scroll{4} through options{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .ToString();
@@ -396,7 +397,6 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, GameManager.i.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
-
 
         #region Inventory UI
         //
