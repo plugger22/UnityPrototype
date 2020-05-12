@@ -345,6 +345,17 @@ namespace modalAPI
         public GenericTooltipDetails[] arrayOfTooltipsResult = new GenericTooltipDetails[9];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Result) tooltip
     }
 
+    /// <summary>
+    /// Data package for ModalPopUp
+    /// </summary>
+    public class ModalPopUpData
+    {
+        public Vector3 position;                    //objectOfInterest.transform.position
+        public int x_offset;                        
+        public int y_offset;
+        public string text;                         //text to display
+    }
+
 
 }
 

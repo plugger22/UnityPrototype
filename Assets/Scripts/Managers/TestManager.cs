@@ -28,6 +28,10 @@ public class TestManager : MonoBehaviour
     [Tooltip("How many worker, at campaign start, are populated in HQ pool (default -1 for normal assignment). Allows number between 0 and HQManager.cs -> maxNumOfWorkers")]
     [Range(0, 8)] public int numOfWorkers = -1;
 
+    [Header("MetaGame")]
+    [Tooltip("Bonus Renown given to player at start of every MetaGame, default 0")]
+    [Range(0, 10)] public int bonusRenown = 0;
+
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]
     public int conditionTurnAuthority = -1;
@@ -80,7 +84,7 @@ public class TestManager : MonoBehaviour
     [Tooltip("Any value other than zero will override calculated ratio each turn")]
     [Range(0, 1)] public float testRatioAddictedDays = 0;
 
-    [Header("MetaGame Options")]
+    /*[Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]
     public bool isValidMetaOptions = false;
     [Tooltip("If true, actors who have previously been dismissed, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
@@ -94,7 +98,7 @@ public class TestManager : MonoBehaviour
     [Tooltip("If true, all actors in the selection pool will be level 2")]
     public bool isLevelTwo = false;
     [Tooltip("If true, all actors in the selection pool will be level 3")]
-    public bool isLevelThree = false;
+    public bool isLevelThree = false;*/
     
 
     Stopwatch timer;

@@ -557,8 +557,8 @@ public class InputManager : MonoBehaviour
                                 }
                                 else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
-                                    //Space bar is keyboard shortcut for 'Select/Deselect' buttons
-                                    EventManager.instance.PostNotification(EventType.MetaGameButton, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                    //Space bar is keyboard shortcut for 'Select/Deselect' buttons (parameter needs to be '-1' for MetaGameUI.cs -> ExecuteButton to deal with correctly
+                                    EventManager.instance.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                     Input.ResetInputAxes();
                                 }
                             }

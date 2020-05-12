@@ -1078,7 +1078,6 @@ namespace packageAPI
         public bool isLowMotivation;        //true -> includes any actor, false -> excludes any actor with motivation < 2
         public bool isTraitor;              //true -> include traitorous actors, actor.isTraitor, false -> exclude
         public bool isLevelTwo;             //true -> all actors will be level 2, or better, false -> base pool of actors will be level 1
-        public bool isLevelThree;           //true -> all actors will be level 3, false -> base pool of actors will be level 1
     }
 
     /// <summary>

@@ -4046,14 +4046,7 @@ public class EffectManager : MonoBehaviour
             case "MetaOptionLevel2":
                 //level 2 and 3 are binary choices
                 GameManager.i.metaScript.SetMetaGameLevelTwo(true);
-                GameManager.i.metaScript.SetMetaGameLevelThree(false);
                 effectResolve.bottomText = string.Format("{0}All Subordinates will be level 2{1}", colourEffect, colourEnd);
-                break;
-            case "MetaOptionLevel3":
-                //level 2 and 3 are binary choices
-                GameManager.i.metaScript.SetMetaGameLevelThree(true);
-                GameManager.i.metaScript.SetMetaGameLevelTwo(false);
-                effectResolve.bottomText = string.Format("{0}All Subordinates will be level 3{1}", colourEffect, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }

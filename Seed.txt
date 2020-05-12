@@ -1456,3 +1456,100 @@ City seed 234 -> Sydney, Australia
 Dev seed 2784 -> Tuesday, 12 May 2020 12:50 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 21595 -> Tuesday, 12 May 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59873 -> Tuesday, 12 May 2020 2:38 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 14574 -> Tuesday, 12 May 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 28900 -> Tuesday, 12 May 2020 3:24 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 21993 -> Tuesday, 12 May 2020 3:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 60386 -> Tuesday, 12 May 2020 3:51 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:687)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:307)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:561)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:403)
+	
+Dev seed 24101 -> Tuesday, 12 May 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31689 -> Tuesday, 12 May 2020 4:09 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaGameUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:687)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:307)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:561)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:403)
+	
+Dev seed 3261 -> Tuesday, 12 May 2020 4:11 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 30450 -> Tuesday, 12 May 2020 4:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 2518 -> Tuesday, 12 May 2020 4:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12253 -> Tuesday, 12 May 2020 4:40 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 16390 -> Tuesday, 12 May 2020 4:46 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 9856 -> Tuesday, 12 May 2020 4:48 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 26373 -> Tuesday, 12 May 2020 4:49 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 63784 -> Tuesday, 12 May 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50611 -> Tuesday, 12 May 2020 4:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 14797 -> Tuesday, 12 May 2020 5:01 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 57690 -> Tuesday, 12 May 2020 5:05 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 19810 -> Tuesday, 12 May 2020 5:08 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 46410 -> Tuesday, 12 May 2020 5:11 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 11041 -> Tuesday, 12 May 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 10678 -> Tuesday, 12 May 2020 5:16 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

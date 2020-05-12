@@ -62,7 +62,7 @@ public class MetaManager : MonoBehaviour
     {
         //debug metaGame options
         metaGameOptions = new MetaGameOptions();
-        if (GameManager.i.testScript.isValidMetaOptions == true)
+        /*if (GameManager.i.testScript.isValidMetaOptions == true)
         {
             metaGameOptions.isDismissed = GameManager.i.testScript.isDismissed;
             metaGameOptions.isResigned = GameManager.i.testScript.isResigned;
@@ -79,7 +79,17 @@ public class MetaManager : MonoBehaviour
             metaGameOptions.isLowMotivation = true;
             metaGameOptions.isTraitor = true;
             metaGameOptions.isLevelTwo = false;
-            metaGameOptions.isLevelThree = false;
+        }*/
+        metaGameOptions.isDismissed = true;
+        metaGameOptions.isResigned = true;
+        metaGameOptions.isLowMotivation = true;
+        metaGameOptions.isTraitor = true;
+        metaGameOptions.isLevelTwo = false;
+        //Debug
+        if (GameManager.i.testScript.bonusRenown > 0)
+        {
+            GameManager.i.playerScript.Renown += GameManager.i.testScript.bonusRenown;
+            Debug.LogFormat("[Met] MetaManager.cs -> InitialiseMetaGame: Player gains {0} bonus Renown (Debug){1}", GameManager.i.testScript.bonusRenown, "\n");
         }
     }
 
@@ -191,15 +201,6 @@ public class MetaManager : MonoBehaviour
         Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionLevelTwo: Option isLevelTwo now {0}{1}", setting, "\n");
     }
 
-    /// <summary>
-    /// Set metaGame setting, isLevelThree
-    /// </summary>
-    /// <param name="setting"></param>
-    public void SetMetaGameLevelThree(bool setting)
-    {
-        metaGameOptions.isLevelThree = setting;
-        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionLevelThree: Option isLevelThree now {0}{1}", setting, "\n");
-    }
 
     //
     // - - - Collections

@@ -672,7 +672,6 @@ public class ActorManager : MonoBehaviour
                     Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
                     Debug.LogFormat("[Tst] isTraitor: {0}{1}", data.isTraitor, "\n");
                     Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
-                    Debug.LogFormat("[Tst] isLevelThree: {0}{1}", data.isLevelThree, "\n");
                 }
 
                 //can't have duplicate actor arcs on map, need a pick list by value
@@ -694,11 +693,6 @@ public class ActorManager : MonoBehaviour
                     listOfActors = GameManager.i.dataScript.GetActorRecruitPool(2, side);
                     //add any level 3 actors that have been previously used (eg. have an listOfHistory.Count > 0)
                     listOfActors.AddRange(GetPreviousActors(2, side));
-                }
-                else if (data.isLevelThree == true)
-                {
-                    //level three actors
-                    listOfActors = GameManager.i.dataScript.GetActorRecruitPool(3, side);
                 }
                 else
                 {
@@ -859,7 +853,6 @@ public class ActorManager : MonoBehaviour
                                 ActorArc arc = listOfArcs[Random.Range(0, listOfArcs.Count)];
                                 int level = 1;
                                 if (data.isLevelTwo == true) { level = 2; }
-                                else if (data.isLevelThree == true) { level = 3; }
                                 Actor newActor = CreateActor(side, arc.name, level, ActorStatus.Active, index);
                                 if (newActor != null)
                                 {
