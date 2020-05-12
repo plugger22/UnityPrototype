@@ -17,7 +17,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
     }
 
     
@@ -27,7 +27,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     /// <param name="eventData"></param>
     public void OnPointerEnter (PointerEventData eventData)
     {
-        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
+        Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, GameManager.i.sideScript.PlayerSide);
         if (actor != null && actor.Status == ActorStatus.Active)
         { myCoroutine = StartCoroutine("ShowActiveNodes"); }
     }
@@ -51,7 +51,7 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     IEnumerator ShowActiveNodes()
     {
         yield return new WaitForSeconds(mouseOverDelay);
-        GameManager.instance.nodeScript.ShowActiveNodes(actorSlotID);
+        GameManager.i.nodeScript.ShowActiveNodes(actorSlotID);
     }
 
 

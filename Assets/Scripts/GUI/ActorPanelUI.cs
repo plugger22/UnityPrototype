@@ -144,7 +144,7 @@ public class ActorPanelUI : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -170,17 +170,17 @@ public class ActorPanelUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        vacantAuthorityActor = GameManager.instance.guiScript.vacantActorSprite;
-        vacantResistanceActor = GameManager.instance.guiScript.vacantActorSprite;
-        starFontSize = GameManager.instance.guiScript.actorFontSize;
+        vacantAuthorityActor = GameManager.i.guiScript.vacantActorSprite;
+        vacantResistanceActor = GameManager.i.guiScript.vacantActorSprite;
+        starFontSize = GameManager.i.guiScript.actorFontSize;
         Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
         Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
         Debug.Assert(starFontSize > -1, "Invalid starFontSize (-1)");
         //mood stars
-        mood0 = GameManager.instance.guiScript.moodStar0;
-        mood1 = GameManager.instance.guiScript.moodStar1;
-        mood2 = GameManager.instance.guiScript.moodStar2;
-        mood3 = GameManager.instance.guiScript.moodStar3;
+        mood0 = GameManager.i.guiScript.moodStar0;
+        mood1 = GameManager.i.guiScript.moodStar1;
+        mood2 = GameManager.i.guiScript.moodStar2;
+        mood3 = GameManager.i.guiScript.moodStar3;
         Debug.Assert(mood0 != null, "Invalid mood0 (Null)");
         Debug.Assert(mood1 != null, "Invalid mood1 (Null)");
         Debug.Assert(mood2 != null, "Invalid mood2 (Null)");
@@ -226,7 +226,7 @@ public class ActorPanelUI : MonoBehaviour
         picture3.GetComponent<ActorTooltipUI>().isText = false;
 
         //populate lists
-        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.i.dataScript.GetListOfActorTypes();
         if (listOfActorTypes != null)
         {
             listOfActorTypes.Add(type0);
@@ -235,7 +235,7 @@ public class ActorPanelUI : MonoBehaviour
             listOfActorTypes.Add(type3);
         }
         else { Debug.LogError("Invalid listOfActorTypes (Null)"); }
-        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        List<Image> listOfActorPortraits = GameManager.i.dataScript.GetListOfActorPortraits();
         if (listOfActorPortraits != null)
         {
             listOfActorPortraits.Add(picture0);
@@ -246,9 +246,9 @@ public class ActorPanelUI : MonoBehaviour
         else { Debug.LogError("Invalid listOfActorPortraits (Null)"); }
         //player Stressed
         playerStressed.text = "STRESSED";
-        if (GameManager.instance.playerScript.sprite != null)
-        { picturePlayer.sprite = GameManager.instance.playerScript.sprite; }
-        else { picturePlayer.sprite = GameManager.instance.guiScript.errorSprite; }
+        if (GameManager.i.playerScript.sprite != null)
+        { picturePlayer.sprite = GameManager.i.playerScript.sprite; }
+        else { picturePlayer.sprite = GameManager.i.guiScript.errorSprite; }
         //initialse arrayOfRenownCircles
         arrayOfRenownCircles[0] = renownCircle0;
         arrayOfRenownCircles[1] = renownCircle1;
@@ -287,7 +287,7 @@ public class ActorPanelUI : MonoBehaviour
     private void SubInitialiseAll()
     {
         //renown UI (default true)
-        if (GameManager.instance.optionScript.showRenown == true)
+        if (GameManager.i.optionScript.showRenown == true)
         { SetActorInfoUI(true); }
         else { SetActorInfoUI(false); }
         //initialise starting line up
@@ -326,11 +326,11 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     public void UpdateActorPanel()
     {
-        int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
-        List<TextMeshProUGUI> listOfActorTypes = GameManager.instance.dataScript.GetListOfActorTypes();
-        List<Image> listOfActorPortraits = GameManager.instance.dataScript.GetListOfActorPortraits();
+        int numOfActors = GameManager.i.actorScript.maxNumOfOnMapActors;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+        List<TextMeshProUGUI> listOfActorTypes = GameManager.i.dataScript.GetListOfActorTypes();
+        List<Image> listOfActorPortraits = GameManager.i.dataScript.GetListOfActorPortraits();
         if (listOfActorTypes != null)
         {
             if (listOfActorPortraits != null)
@@ -343,7 +343,7 @@ public class ActorPanelUI : MonoBehaviour
                         for (int index = 0; index < numOfActors; index++)
                         {
                             //check if actorSlotID has an actor first
-                            if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
+                            if (GameManager.i.dataScript.CheckActorSlotStatus(index, side) == true)
                             {
                                 listOfActorTypes[index].text = arrayOfActors[index].arc.name;
                                 listOfActorPortraits[index].sprite = arrayOfActors[index].sprite;
@@ -363,7 +363,7 @@ public class ActorPanelUI : MonoBehaviour
                             }
                         }
                         //Update Renown/Compatibiliyt indicators (switches off for Vacant actors)
-                        if (GameManager.instance.optionScript.showRenown == true)
+                        if (GameManager.i.optionScript.showRenown == true)
                         { SetActorInfoUI(true); }
                         else { SetActorInfoUI(false); }
                     }
@@ -383,9 +383,9 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="alpha"></param>
     public void UpdateActorAlpha(int actorSlotID, float alpha)
     {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         //check actor present in slot, eg. not vacant
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.i.sideScript.PlayerSide) == true)
         {
             switch (actorSlotID)
             {
@@ -413,9 +413,9 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     public void SetActorsAlphaActive()
     {
-        float activeAlpha = GameManager.instance.guiScript.alphaActive;
+        float activeAlpha = GameManager.i.guiScript.alphaActive;
         //set all actor alpha's to active (may still be set to inactive from previous level)
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         { UpdateActorAlpha(i, activeAlpha); }
     }
 
@@ -434,7 +434,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.instance.guiScript.motivationIcon, GameManager.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.i.guiScript.motivationIcon, GameManager.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
         playerMoodTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
@@ -445,7 +445,7 @@ public class ActorPanelUI : MonoBehaviour
         playerStressedTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
         //actor compatibility
-        GenericTooltipData data = GameManager.instance.guiScript.GetCompatibilityTooltip();
+        GenericTooltipData data = GameManager.i.guiScript.GetCompatibilityTooltip();
         if (data != null)
         {
             for (int i = 0; i < 4; i++)
@@ -506,7 +506,7 @@ public class ActorPanelUI : MonoBehaviour
         {
             playerStressed.gameObject.SetActive(false);
             moodStars.gameObject.SetActive(true);
-            moodStars.text = GameManager.instance.guiScript.GetDatapointStars(mood);
+            moodStars.text = GameManager.i.guiScript.GetDatapointStars(mood);
         }
     }
 
@@ -517,17 +517,17 @@ public class ActorPanelUI : MonoBehaviour
     public void SetActorInfoUI(bool showRenown)
     {
         //switch off any relevant tooltip (renown/compatibility)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorPanelUI", GenericTooltipType.ActorInfo);
+        GameManager.i.tooltipGenericScript.CloseTooltip("ActorPanelUI", GenericTooltipType.ActorInfo);
         //toggle
-        GameManager.instance.optionScript.showRenown = showRenown;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GameManager.i.optionScript.showRenown = showRenown;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         for (int index = 0; index < arrayOfRenownCircles.Length; index++)
         {
             if (showRenown == true)
             {
                 //display RENOWN
                 arrayOfCompatibility[index].gameObject.SetActive(false);
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(index, side) == true)
                 { arrayOfRenownCircles[index].gameObject.SetActive(showRenown); }
                 else
                 {
@@ -539,7 +539,7 @@ public class ActorPanelUI : MonoBehaviour
             {
                 //display COMPATIBILITY
                 arrayOfRenownCircles[index].gameObject.SetActive(false);
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(index, side) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(index, side) == true)
                 { arrayOfCompatibility[index].gameObject.SetActive(true); }
                 else
                 {
@@ -572,7 +572,7 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="renown"></param>
     public void UpdateActorRenownUI(int actorSlotID, int renown)
     {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
         Debug.Assert(renown > -1, "Invalid renown (< 0)");
         switch (actorSlotID)
         {
@@ -591,14 +591,14 @@ public class ActorPanelUI : MonoBehaviour
     /// <param name="compatibility"></param>
     public void UpdateActorCompatibilityUI(int actorSlotID, int compatibility)
     {
-        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
+        Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
         Debug.Assert(compatibility >= -3 && compatibility <= 3, "Invalid compatibility (< -3 or > +3)");
         switch (actorSlotID)
         {
-            case 0: compatibility0.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
-            case 1: compatibility1.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
-            case 2: compatibility2.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
-            case 3: compatibility3.text = GameManager.instance.guiScript.GetCompatibilityStars(compatibility); break;
+            case 0: compatibility0.text = GameManager.i.guiScript.GetCompatibilityStars(compatibility); break;
+            case 1: compatibility1.text = GameManager.i.guiScript.GetCompatibilityStars(compatibility); break;
+            case 2: compatibility2.text = GameManager.i.guiScript.GetCompatibilityStars(compatibility); break;
+            case 3: compatibility3.text = GameManager.i.guiScript.GetCompatibilityStars(compatibility); break;
             default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
         }
     }

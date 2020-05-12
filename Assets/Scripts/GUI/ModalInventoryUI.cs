@@ -149,9 +149,9 @@ public class ModalInventoryUI : MonoBehaviour
     {
         bool errorFlag = false;
         //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //tooltips off
-        GameManager.instance.guiScript.SetTooltipsOff();
+        GameManager.i.guiScript.SetTooltipsOff();
         //activate main panel
         modalPanelObject.SetActive(true);
         modalInventoryObject.SetActive(true);
@@ -165,25 +165,25 @@ public class ModalInventoryUI : MonoBehaviour
             switch (details.side.name)
             {
                 case "Authority":
-                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Authority;
-                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Authority;
+                    modalPanel.sprite = GameManager.i.sideScript.inventory_background_Authority;
+                    headerPanel.sprite = GameManager.i.sideScript.header_background_Authority;
                     //set button sprites
-                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
                     //set sprite transitions
                     SpriteState spriteStateAuthority = new SpriteState();
-                    spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                    spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
+                    spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
                     buttonCancel.spriteState = spriteStateAuthority;
                     break;
                 case "Resistance":
-                    modalPanel.sprite = GameManager.instance.sideScript.inventory_background_Resistance;
-                    headerPanel.sprite = GameManager.instance.sideScript.header_background_Resistance;
+                    modalPanel.sprite = GameManager.i.sideScript.inventory_background_Resistance;
+                    headerPanel.sprite = GameManager.i.sideScript.header_background_Resistance;
                     //set button sprites
-                    buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                    buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
                     //set sprite transitions
                     SpriteState spriteStateRebel = new SpriteState();
-                    spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                    spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                    spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
+                    spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
                     buttonCancel.spriteState = spriteStateRebel;
                     break;
                 default:
@@ -195,7 +195,7 @@ public class ModalInventoryUI : MonoBehaviour
             topText.text = details.textTop;
             bottomText.text = details.textBottom;
             //set help
-            List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+            List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
             if (listOfHelpData != null && listOfHelpData.Count > 0)
             {
                 buttonHelp.gameObject.SetActive(true);
@@ -320,7 +320,7 @@ public class ModalInventoryUI : MonoBehaviour
         {
             //all good, inventory window displayed
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Inventory };
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
     }
@@ -332,13 +332,13 @@ public class ModalInventoryUI : MonoBehaviour
     private void CloseInventoryUI()
     {
         modalInventoryObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
         //close help tooltip
-        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
+        GameManager.i.tooltipHelpScript.CloseTooltip("ModalInventoryUI.cs -> CloseInventory");
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalInventoryUI.cs -> CloseInventoryUI{0}", "\n");
     }
 
@@ -430,7 +430,7 @@ public class ModalInventoryUI : MonoBehaviour
     /// <param name="optionID"></param>
     public void GearRightClicked(string optionName)
     {
-        Gear gear = GameManager.instance.dataScript.GetGear(optionName);
+        Gear gear = GameManager.i.dataScript.GetGear(optionName);
         if (gear != null)
         {
             //adjust position prior to sending
@@ -447,11 +447,11 @@ public class ModalInventoryUI : MonoBehaviour
                 modalState = ModalSubState.Inventory,
                 itemDetails = string.Format("{0}", gear.type.name),
                 menuPos = position,
-                listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.name),
+                listOfButtonDetails = GameManager.i.actorScript.GetGearInventoryActions(gear.name),
                 menuType = ActionMenuType.Gear
             };
             //activate menu
-            GameManager.instance.actionMenuScript.SetActionMenu(details);
+            GameManager.i.actionMenuScript.SetActionMenu(details);
         }
         else
         {

@@ -112,7 +112,7 @@ public class WidgetTopUI : MonoBehaviour
                 SubInitialiseResetWidget();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -123,7 +123,7 @@ public class WidgetTopUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        flashRedTime = GameManager.instance.guiScript.flashRedTime;
+        flashRedTime = GameManager.i.guiScript.flashRedTime;
         Debug.Assert(flashRedTime > 0.0f, "Invalid flashRedTime (Zero)");
     }
     #endregion
@@ -155,11 +155,11 @@ public class WidgetTopUI : MonoBehaviour
         //coroutines
         isCityCoroutine = false;
         isHqCoroutine = false;
-        minFontSize = GameManager.instance.guiScript.iconMinFontSize;
-        maxFontSize = GameManager.instance.guiScript.iconMaxFontSize;
-        defaultFontSize = GameManager.instance.guiScript.iconDefaultFontSize;
-        timeInterval = GameManager.instance.guiScript.iconFlashInterval;
-        fontIncrement = GameManager.instance.guiScript.iconFontIncrement;
+        minFontSize = GameManager.i.guiScript.iconMinFontSize;
+        maxFontSize = GameManager.i.guiScript.iconMaxFontSize;
+        defaultFontSize = GameManager.i.guiScript.iconDefaultFontSize;
+        timeInterval = GameManager.i.guiScript.iconFlashInterval;
+        fontIncrement = GameManager.i.guiScript.iconFontIncrement;
         //flash red inner opacity set to 0
         Color tempColor = flashRedInner.color;
         tempColor.a = 0.0f;
@@ -170,11 +170,11 @@ public class WidgetTopUI : MonoBehaviour
         flashRedOuter.color = tempColor;
         isFading = false;
         //main widget sprite colour
-        tempColor = GameManager.instance.guiScript.colourTopWidget;
+        tempColor = GameManager.i.guiScript.colourTopWidget;
         tempColor.a = 0.75f;
         widgetTopSprite.color = tempColor;
         //back bars
-        tempColor = GameManager.instance.guiScript.colourTopWidgetBarBacks;
+        tempColor = GameManager.i.guiScript.colourTopWidgetBarBacks;
         tempColor.a = 0.4f;
         barCityBack.color = tempColor;
         barHqBack.color = tempColor;
@@ -183,12 +183,12 @@ public class WidgetTopUI : MonoBehaviour
         SetStar(10f, AlignHorizontal.Centre);
         SetStar(10f, AlignHorizontal.Right);
         //set bars to starting values
-        SetSides(GameManager.instance.sideScript.PlayerSide);
+        SetSides(GameManager.i.sideScript.PlayerSide);
         //set city and HQ icons
         city.fontSize = defaultFontSize;
         hq.fontSize = defaultFontSize;
-        city.text = GameManager.instance.guiScript.cityIcon;
-        hq.text = GameManager.instance.guiScript.hqIcon;
+        city.text = GameManager.i.guiScript.cityIcon;
+        hq.text = GameManager.i.guiScript.hqIcon;
     }
     #endregion
 
@@ -198,8 +198,8 @@ public class WidgetTopUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseResetWidget()
     {
-        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
-        SetTurn(GameManager.instance.turnScript.Turn);
+        SetActionPoints(GameManager.i.turnScript.GetActionsTotal());
+        SetTurn(GameManager.i.turnScript.Turn);
         SetSecurityFlasher(false);
     }
     #endregion
@@ -274,17 +274,17 @@ public class WidgetTopUI : MonoBehaviour
     private void SetSides(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        SetCityBar(GameManager.instance.cityScript.CityLoyalty);
-        SetActionPoints(GameManager.instance.turnScript.GetActionsTotal());
+        SetCityBar(GameManager.i.cityScript.CityLoyalty);
+        SetActionPoints(GameManager.i.turnScript.GetActionsTotal());
         switch (side.level)
         {
             case 1:
                 //authority
-                SetFactionBar(GameManager.instance.hqScript.ApprovalAuthority);
+                SetFactionBar(GameManager.i.hqScript.ApprovalAuthority);
                 break;
             case 2:
                 //resistance
-                SetFactionBar(GameManager.instance.hqScript.ApprovalResistance);
+                SetFactionBar(GameManager.i.hqScript.ApprovalResistance);
                 break;
         }
     }
@@ -313,7 +313,7 @@ public class WidgetTopUI : MonoBehaviour
         //set colour
         float factor = floatSize * 0.1f;
         //City Loyalty color depends on side (100% is green for Authority and red for Resistance)
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 //authority
@@ -477,7 +477,7 @@ public class WidgetTopUI : MonoBehaviour
     {
         if (loyalty > 0 && loyalty < 10)
         {
-            city.text = GameManager.instance.guiScript.cityIcon;
+            city.text = GameManager.i.guiScript.cityIcon;
             if (isCityCoroutine == true)
             {
                 StopCoroutine("FlashCtyIcon");
@@ -487,18 +487,18 @@ public class WidgetTopUI : MonoBehaviour
         }
         else
         {
-            switch (GameManager.instance.sideScript.PlayerSide.level)
+            switch (GameManager.i.sideScript.PlayerSide.level)
             {
                 case 1:
                     //authority
                     switch (loyalty)
                     {
                         case 0:
-                            city.text = GameManager.instance.guiScript.cityIconBad;
+                            city.text = GameManager.i.guiScript.cityIconBad;
                             if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
                             break;
                         case 10:
-                            city.text = GameManager.instance.guiScript.cityIconGood;
+                            city.text = GameManager.i.guiScript.cityIconGood;
                             if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
@@ -509,17 +509,17 @@ public class WidgetTopUI : MonoBehaviour
                     switch (loyalty)
                     {
                         case 0:
-                            city.text = GameManager.instance.guiScript.cityIconGood;
+                            city.text = GameManager.i.guiScript.cityIconGood;
                             if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
                             break;
                         case 10:
-                            city.text = GameManager.instance.guiScript.cityIconBad;
+                            city.text = GameManager.i.guiScript.cityIconBad;
                             if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
                     }
                     break;
-                default: Debug.LogWarningFormat("Unrecognised Player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+                default: Debug.LogWarningFormat("Unrecognised Player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name); break;
             }
         }
     }
@@ -532,13 +532,13 @@ public class WidgetTopUI : MonoBehaviour
     {
         if (approval == 0)
         {
-            hq.text = GameManager.instance.guiScript.hqIconBad;
+            hq.text = GameManager.i.guiScript.hqIconBad;
             if (isHqCoroutine == false)
             { StartCoroutine("FlashHqIcon"); }
         }
         else
         {
-            hq.text = GameManager.instance.guiScript.hqIcon;
+            hq.text = GameManager.i.guiScript.hqIcon;
             if (isHqCoroutine == true)
             {
                 StopCoroutine("FlashHqIcon");

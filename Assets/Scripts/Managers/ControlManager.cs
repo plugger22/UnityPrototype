@@ -104,13 +104,13 @@ public class ControlManager : MonoBehaviour
     private void ProcessNewGame()
     {
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //set background
-        GameManager.instance.modalGUIScript.SetBackground(Background.NewGame);
+        GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
         EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
         //change game state (allows inputManager.cs to handle relevant input)
-        GameManager.instance.inputScript.GameState = GameState.NewGame;
+        GameManager.i.inputScript.GameState = GameState.NewGame;
     }
 
     /// <summary>
@@ -119,15 +119,15 @@ public class ControlManager : MonoBehaviour
     private void ProcessNewGameOptions()
     {
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //open NewGame background
-        GameManager.instance.modalGUIScript.SetBackground(Background.NewGameOptions);
+        GameManager.i.modalGUIScript.SetBackground(Background.NewGameOptions);
         //close previous background
-        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.NewGameOptions);
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.NewGameOptions);
         //change game state (allows inputManager.cs to handle relevant input)
-        GameManager.instance.inputScript.GameState = GameState.NewGameOptions;
+        GameManager.i.inputScript.GameState = GameState.NewGameOptions;
     }
 
     /// <summary>
@@ -136,19 +136,19 @@ public class ControlManager : MonoBehaviour
     private void CloseNewGameOptions()
     {
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //revert to playGame state by default
-        GameManager.instance.inputScript.GameState = GameState.NewInitialisation;
+        GameManager.i.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
-        GameManager.instance.campaignScript.Reset();
+        GameManager.i.campaignScript.Reset();
         //set up first level in campaign
-        GameManager.instance.InitialiseNewSession();
+        GameManager.i.InitialiseNewSession();
         //revert to playGame state by default
-        GameManager.instance.inputScript.GameState = GameState.PlayGame;
+        GameManager.i.inputScript.GameState = GameState.PlayGame;
         //close background
-        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
     }
 
 
@@ -160,14 +160,14 @@ public class ControlManager : MonoBehaviour
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: game OPTIONS selected{0}", "\n");
         //modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //open Options background
-        GameManager.instance.modalGUIScript.SetBackground(Background.Options);
+        GameManager.i.modalGUIScript.SetBackground(Background.Options);
         //close MainMenu
         EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessOptions");
         gameState = state;
         //change game state (allows inputManager.cs to handle relevant input)
-        GameManager.instance.inputScript.GameState = GameState.Options;
+        GameManager.i.inputScript.GameState = GameState.Options;
     }
 
     /// <summary>
@@ -176,11 +176,11 @@ public class ControlManager : MonoBehaviour
     private void CloseOptions()
     {
         //revert to original game screen prior to Options being chosen
-        GameManager.instance.inputScript.GameState = gameState;
+        GameManager.i.inputScript.GameState = gameState;
         //close background
-        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
     }
 
     /// <summary>
@@ -189,15 +189,15 @@ public class ControlManager : MonoBehaviour
     private void ProcessEndLevel()
     {
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //close all tooltips
-        GameManager.instance.guiScript.SetTooltipsOff();
+        GameManager.i.guiScript.SetTooltipsOff();
         //modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //Open end level background
-        GameManager.instance.modalGUIScript.SetBackground(Background.EndLevel);
+        GameManager.i.modalGUIScript.SetBackground(Background.EndLevel);
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.ExitLevel;
+        GameManager.i.inputScript.GameState = GameState.ExitLevel;
     }
 
     /// <summary>
@@ -206,17 +206,17 @@ public class ControlManager : MonoBehaviour
     private void ProcessMetaGame()
     {
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //Open end level background
-        GameManager.instance.modalGUIScript.SetBackground(Background.MetaGame);
+        GameManager.i.modalGUIScript.SetBackground(Background.MetaGame);
         //disable end level background
-        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.MetaGame);
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.MetaGame);
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.MetaGame;
+        GameManager.i.inputScript.GameState = GameState.MetaGame;
         //run metaGame
-        GameManager.instance.metaScript.ProcessMetaGame();
+        GameManager.i.metaScript.ProcessMetaGame();
     }
 
     /// <summary>
@@ -225,32 +225,32 @@ public class ControlManager : MonoBehaviour
     private void CloseMetaGame()
     { 
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //go to next scenario
-        if (GameManager.instance.campaignScript.IncrementScenarioIndex() == true)
+        if (GameManager.i.campaignScript.IncrementScenarioIndex() == true)
         {
             //change game state
-            GameManager.instance.inputScript.GameState = GameState.FollowOnInitialisation;
+            GameManager.i.inputScript.GameState = GameState.FollowOnInitialisation;
             //create new followOn level
-            GameManager.instance.InitialiseNewLevel();
+            GameManager.i.InitialiseNewLevel();
             //data Integrity check
-            if (GameManager.instance.isIntegrityCheck == true)
-            { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
+            if (GameManager.i.isIntegrityCheck == true)
+            { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
             //revert to playGame state by default
-            GameManager.instance.inputScript.GameState = GameState.PlayGame;
+            GameManager.i.inputScript.GameState = GameState.PlayGame;
             //close background
-            GameManager.instance.modalGUIScript.CloseBackgrounds();
+            GameManager.i.modalGUIScript.CloseBackgrounds();
             //toggle of modal block
-            GameManager.instance.guiScript.SetIsBlocked(false);
+            GameManager.i.guiScript.SetIsBlocked(false);
         }
         else
         {
             //End of Campaign -> open background
-            GameManager.instance.modalGUIScript.SetBackground(Background.EndCampaign);
+            GameManager.i.modalGUIScript.SetBackground(Background.EndCampaign);
             //disable end level background
-            GameManager.instance.modalGUIScript.CloseBackgrounds(Background.EndCampaign);
+            GameManager.i.modalGUIScript.CloseBackgrounds(Background.EndCampaign);
             //change game state
-            GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
+            GameManager.i.inputScript.GameState = GameState.ExitCampaign;
         }
     }
 
@@ -261,10 +261,10 @@ public class ControlManager : MonoBehaviour
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //if anything other than play Game then set a modal block (it cancels otherwise due to Main Menu closing)
-        if (GameManager.instance.inputScript.GameState != GameState.PlayGame)
-        { GameManager.instance.guiScript.SetIsBlocked(true); }
+        if (GameManager.i.inputScript.GameState != GameState.PlayGame)
+        { GameManager.i.guiScript.SetIsBlocked(true); }
         
     }
 
@@ -277,37 +277,37 @@ public class ControlManager : MonoBehaviour
         //save existing game state
         gameState = state;
         //toggle on modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //Load Game -> open background
-        GameManager.instance.modalGUIScript.SetBackground(Background.LoadGame);
+        GameManager.i.modalGUIScript.SetBackground(Background.LoadGame);
         //Close any open background
-        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.LoadGame);
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.LoadGame);
         //change game state (mid game load or start of session load?)
-        if (GameManager.instance.isSession == true)
+        if (GameManager.i.isSession == true)
         {
-            GameManager.instance.inputScript.GameState = GameState.LoadGame;
+            GameManager.i.inputScript.GameState = GameState.LoadGame;
             //check node display and reset back to normal if not prior to save
-            if (GameManager.instance.nodeScript.NodeShowFlag > 0)
-            { GameManager.instance.nodeScript.ResetAll(); }
+            if (GameManager.i.nodeScript.NodeShowFlag > 0)
+            { GameManager.i.nodeScript.ResetAll(); }
             //check connection display and reset back to normal if not prior to save
-            if (GameManager.instance.connScript.resetConnections == true)
-            { GameManager.instance.connScript.RestoreConnections(); }
+            if (GameManager.i.connScript.resetConnections == true)
+            { GameManager.i.connScript.RestoreConnections(); }
         }
         else
         {
             //load game at start
-            GameManager.instance.inputScript.GameState = GameState.LoadAtStart;
+            GameManager.i.inputScript.GameState = GameState.LoadAtStart;
         }
         //Debug -> time load game process
-        GameManager.instance.testScript.StartTimer();
+        GameManager.i.testScript.StartTimer();
         //read data from file
-        if (GameManager.instance.fileScript.ReadSaveData() == true)
+        if (GameManager.i.fileScript.ReadSaveData() == true)
         {
             //load data into game
-            GameManager.instance.fileScript.LoadSaveData();
+            GameManager.i.fileScript.LoadSaveData();
         }
         //how long did it take?
-        long timeElapsed = GameManager.instance.testScript.StopTimer();
+        long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessLoadGame: LOAD GAME took {0} ms", timeElapsed);
     }
 
@@ -317,20 +317,20 @@ public class ControlManager : MonoBehaviour
     private void CloseLoadGame()
     {
         //LoadAtStart
-        if (GameManager.instance.inputScript.GameState == GameState.LoadAtStart)
+        if (GameManager.i.inputScript.GameState == GameState.LoadAtStart)
         {
             //update colours (not done with FileManager.cs -> ReadOptionData due to sequencing issues (colour changes to objects that aren't yet initialised)
             EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
         }
         //Close any open background
-        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //Integrity check 
-        if (GameManager.instance.isIntegrityCheck == true)
-        { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
+        if (GameManager.i.isIntegrityCheck == true)
+        { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.PlayGame;
+        GameManager.i.inputScript.GameState = GameState.PlayGame;
     }
 
     /// <summary>
@@ -342,25 +342,25 @@ public class ControlManager : MonoBehaviour
         //save existing game state
         gameState = state;
         //toggle on modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //Save Game -> open background
-        GameManager.instance.modalGUIScript.SetBackground(Background.SaveGame);
+        GameManager.i.modalGUIScript.SetBackground(Background.SaveGame);
         //Close any open background
-        GameManager.instance.modalGUIScript.CloseBackgrounds(Background.SaveGame);
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.SaveGame);
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.SaveGame;
+        GameManager.i.inputScript.GameState = GameState.SaveGame;
         //check node display and reset back to normal if not prior to save
-        if (GameManager.instance.nodeScript.NodeShowFlag > 0)
-        { GameManager.instance.nodeScript.ResetAll(); }
+        if (GameManager.i.nodeScript.NodeShowFlag > 0)
+        { GameManager.i.nodeScript.ResetAll(); }
         //check connection display and reset back to normal if not prior to save
-        if (GameManager.instance.connScript.resetConnections == true)
-        { GameManager.instance.connScript.RestoreConnections(); }
+        if (GameManager.i.connScript.resetConnections == true)
+        { GameManager.i.connScript.RestoreConnections(); }
         //Debug -> time load game process
-        GameManager.instance.testScript.StartTimer();
-        GameManager.instance.fileScript.WriteSaveData();
-        GameManager.instance.fileScript.SaveGame();
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData();
+        GameManager.i.fileScript.SaveGame();
         //how long did it take?
-        long timeElapsed = GameManager.instance.testScript.StopTimer();
+        long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
     }
 
@@ -370,13 +370,13 @@ public class ControlManager : MonoBehaviour
     private void ProcessEndCampaign()
     {
         //close any Node tooltip
-        GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+        GameManager.i.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
         //modal block
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //Open end level background
-        GameManager.instance.modalGUIScript.SetBackground(Background.EndCampaign);
+        GameManager.i.modalGUIScript.SetBackground(Background.EndCampaign);
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.ExitCampaign;
+        GameManager.i.inputScript.GameState = GameState.ExitCampaign;
     }
 
     /// <summary>
@@ -385,11 +385,11 @@ public class ControlManager : MonoBehaviour
     private void CloseSaveGame()
     {
         //Close any open background
-        GameManager.instance.modalGUIScript.CloseBackgrounds();
+        GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //change game state
-        GameManager.instance.inputScript.GameState = GameState.PlayGame;
+        GameManager.i.inputScript.GameState = GameState.PlayGame;
     }
 
 
@@ -397,9 +397,9 @@ public class ControlManager : MonoBehaviour
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: QUIT game option selected{0}", "\n");
         //save existing game state
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //quit game
-        GameManager.instance.turnScript.Quit();
+        GameManager.i.turnScript.Quit();
     }
 
 

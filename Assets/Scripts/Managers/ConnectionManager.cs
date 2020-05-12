@@ -48,7 +48,7 @@ public class ConnectionManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -66,7 +66,7 @@ public class ConnectionManager : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
             //flash
-            flashConnectionTime = GameManager.instance.guiScript.flashNodeTime;
+            flashConnectionTime = GameManager.i.guiScript.flashNodeTime;
             Debug.Assert(flashConnectionTime > 0, "Invalid flashConnectionTime (zero)");
             //Data Collections
             listOfSecLevels = new List<ConnectionType>();
@@ -121,10 +121,10 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     private void InitialiseListOfConnections()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.i.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
-            List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+            List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
             if (listOfConnections != null)
             {
                 listOfConnections.Clear();
@@ -152,7 +152,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void SetAllFlagsToFalse()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.i.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach(var connection in dictOfConnections)
@@ -167,7 +167,7 @@ public class ConnectionManager : MonoBehaviour
     /// <param name="ongoingID"></param>
     public void RemoveOngoingEffect(int ongoingID)
     {
-        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
             foreach (Connection connection in listOfConnections)
@@ -184,8 +184,8 @@ public class ConnectionManager : MonoBehaviour
     public void ShowConnectionActivity(ActivityUI activityUI)
     {
         int activityData = -1;
-        int currentTurn = GameManager.instance.turnScript.Turn;
-        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        int currentTurn = GameManager.i.turnScript.Turn;
+        List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
             //reset back to normal prior to any changes
@@ -203,7 +203,7 @@ public class ConnectionManager : MonoBehaviour
                 {
                     //Time (# of turns ago)
                     case ActivityUI.Time:
-                        int limit = GameManager.instance.aiScript.activityTimeLimit;
+                        int limit = GameManager.i.aiScript.activityTimeLimit;
                         activityData = conn.activityTime;
                         if (activityData > -1)
                         {
@@ -276,7 +276,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void SaveConnections()
     {
-        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
             foreach (Connection conn in listOfConnections)
@@ -298,7 +298,7 @@ public class ConnectionManager : MonoBehaviour
     /// </summary>
     public void RestoreConnections()
     {
-        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
             foreach (Connection conn in listOfConnections)
@@ -324,7 +324,7 @@ public class ConnectionManager : MonoBehaviour
     public bool ProcessConnectionSecurityDecision(int connID)
     {
         bool isSuccess = false;
-        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        Connection connection = GameManager.i.dataScript.GetConnection(connID);
         if (connection != null)
         {
             connection.ChangeSecurityLevel(ConnectionType.LOW);
@@ -332,9 +332,9 @@ public class ConnectionManager : MonoBehaviour
             //message
             string descriptor = string.Format("ConnID {0}, Security Level now LOW (btwn nodeID's {1} & {2})",
                 connection.connID, connection.node1.nodeID, connection.node2.nodeID);
-            GameManager.instance.messageScript.DecisionConnection(descriptor, connection, ConnectionType.LOW);
+            GameManager.i.messageScript.DecisionConnection(descriptor, connection, ConnectionType.LOW);
             //recalculate dijkstra weighting data
-            GameManager.instance.dijkstraScript.RecalculateWeightedData();
+            GameManager.i.dijkstraScript.RecalculateWeightedData();
         }
         else
         { Debug.LogWarningFormat("Invalid connection (Null) for connID {0}", connID); }
@@ -347,7 +347,7 @@ public class ConnectionManager : MonoBehaviour
     /// <param name="nodeID"></param>
     private void StartFlashingSingleConnection(int connID)
     {
-        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        Connection connection = GameManager.i.dataScript.GetConnection(connID);
         if (connection != null)
         {
             if (myCoroutine == null)
@@ -372,7 +372,7 @@ public class ConnectionManager : MonoBehaviour
             myCoroutine = null;
         }
         //resture original security level material
-        Connection connection = GameManager.instance.dataScript.GetConnection(connID);
+        Connection connection = GameManager.i.dataScript.GetConnection(connID);
         if (connection != null)
         {
             //connection.ChangeSecurityLevel(secLvl);

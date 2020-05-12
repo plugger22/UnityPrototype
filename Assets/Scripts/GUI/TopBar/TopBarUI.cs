@@ -97,7 +97,7 @@ public class TopBarUI : MonoBehaviour
                 SubInitialiseUpdateTopBar();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -134,9 +134,9 @@ public class TopBarUI : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        colourIconDormant = GameManager.instance.guiScript.colourIconDormant;
-        colourIconActiveGood = GameManager.instance.guiScript.colourIconActiveGood;
-        colourIconActiveBad = GameManager.instance.guiScript.colourIconActiveBad;
+        colourIconDormant = GameManager.i.guiScript.colourIconDormant;
+        colourIconActiveGood = GameManager.i.guiScript.colourIconActiveGood;
+        colourIconActiveBad = GameManager.i.guiScript.colourIconActiveBad;
         colourNumber = Color.white;
         //tooltips
         tipCommendation = commendations.tooltip.GetComponent<GenericTooltipUI>();
@@ -156,7 +156,7 @@ public class TopBarUI : MonoBehaviour
         Debug.Assert(tipBlackmail != null, "Invalid tipBlackmail (Null)");
         Debug.Assert(tipDoom != null, "Invalid tipDoom (Null)");
         //Set UI element colours
-        Color color = GameManager.instance.guiScript.colourTopBarBackground;
+        Color color = GameManager.i.guiScript.colourTopBarBackground;
         topBarMainPanel.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarLeft.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarRight.color = new Color(color.r, color.g, color.b, 0.65f);
@@ -177,14 +177,14 @@ public class TopBarUI : MonoBehaviour
         blackmail.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         doom.textData.color = new Color(color.r, color.g, color.b, opacityHigh);
         //icon symbols
-        commendations.textIcon.text = GameManager.instance.guiScript.commendationChar.ToString();
-        blackmarks.textIcon.text = GameManager.instance.guiScript.blackmarkChar.ToString();
-        investigations.textIcon.text = GameManager.instance.guiScript.investigateChar.ToString();
-        innocence.textIcon.text = GameManager.instance.guiScript.innocenceChar.ToString();
-        unhappy.textIcon.text = GameManager.instance.guiScript.unhappyChar.ToString();
-        conflicts.textIcon.text = GameManager.instance.guiScript.conflictChar.ToString();
-        blackmail.textIcon.text = GameManager.instance.guiScript.blackmailChar.ToString();
-        doom.textIcon.text = GameManager.instance.guiScript.doomChar.ToString();
+        commendations.textIcon.text = GameManager.i.guiScript.commendationChar.ToString();
+        blackmarks.textIcon.text = GameManager.i.guiScript.blackmarkChar.ToString();
+        investigations.textIcon.text = GameManager.i.guiScript.investigateChar.ToString();
+        innocence.textIcon.text = GameManager.i.guiScript.innocenceChar.ToString();
+        unhappy.textIcon.text = GameManager.i.guiScript.unhappyChar.ToString();
+        conflicts.textIcon.text = GameManager.i.guiScript.conflictChar.ToString();
+        blackmail.textIcon.text = GameManager.i.guiScript.blackmailChar.ToString();
+        doom.textIcon.text = GameManager.i.guiScript.doomChar.ToString();
         //Tooltips
         InitialiseTooltips();
 
@@ -200,7 +200,7 @@ public class TopBarUI : MonoBehaviour
         commendations.textData.text = "0";
         blackmarks.textData.text = "0";
         investigations.textData.text = "0";
-        innocence.textData.text = GameManager.instance.playerScript.Innocence.ToString();
+        innocence.textData.text = GameManager.i.playerScript.Innocence.ToString();
         unhappy.textData.text = "0";
         conflicts.textData.text = "0";
         blackmail.textData.text = "0";
@@ -214,14 +214,14 @@ public class TopBarUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseUpdateTopBar()
     {
-        UpdateCommendations(GameManager.instance.campaignScript.GetCommendations());
-        UpdateBlackmarks(GameManager.instance.campaignScript.GetBlackmarks());
-        UpdateInvestigations(GameManager.instance.playerScript.CheckNumOfInvestigations());
-        UpdateInnocence(GameManager.instance.playerScript.Innocence);
-        UpdateUnhappy(GameManager.instance.actorScript.CheckNumOfUnhappyActors());
-        UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors());
-        UpdateBlackmail(GameManager.instance.actorScript.CheckNumOfBlackmailActors());
-        UpdateDoom(GameManager.instance.actorScript.doomTimer);
+        UpdateCommendations(GameManager.i.campaignScript.GetCommendations());
+        UpdateBlackmarks(GameManager.i.campaignScript.GetBlackmarks());
+        UpdateInvestigations(GameManager.i.playerScript.CheckNumOfInvestigations());
+        UpdateInnocence(GameManager.i.playerScript.Innocence);
+        UpdateUnhappy(GameManager.i.actorScript.CheckNumOfUnhappyActors());
+        UpdateConflicts(GameManager.i.actorScript.CheckNumOfConflictActors());
+        UpdateBlackmail(GameManager.i.actorScript.CheckNumOfBlackmailActors());
+        UpdateDoom(GameManager.i.actorScript.doomTimer);
     }
     #endregion
 
@@ -277,7 +277,7 @@ public class TopBarUI : MonoBehaviour
         if (value < 0) { Debug.LogWarningFormat("Invalid Commendation value \"{0}\"", value); value = 0; }
         commendationData = value;
         commendations.textData.text = value.ToString();
-        if (value > 0 && value >= GameManager.instance.campaignScript.GetBlackmarks())
+        if (value > 0 && value >= GameManager.i.campaignScript.GetBlackmarks())
         {
             //active Good
             commendations.textIcon.fontSize = 20.0f;
@@ -310,7 +310,7 @@ public class TopBarUI : MonoBehaviour
         if (value < 0) { Debug.LogWarningFormat("Invalid Blackmarks value \"{0}\"", value); value = 0; }
         blackmarkData = value;
         blackmarks.textData.text = value.ToString();
-        if (value > 0 && value >= GameManager.instance.campaignScript.GetCommendations())
+        if (value > 0 && value >= GameManager.i.campaignScript.GetCommendations())
         {
             //active Bad
             blackmarks.textIcon.fontSize = 20.0f;
@@ -545,7 +545,7 @@ public class TopBarUI : MonoBehaviour
         tipCommendation.tooltipMain = string.Format("HQ have yet to award you {0} Commendations",
             GameManager.GetFormattedString("ANY", ColourType.neutralText));
         tipCommendation.tooltipDetails = string.Format("Gain {0} Commendations and you will{1}{2}",
-            GameManager.GetFormattedString(GameManager.instance.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
+            GameManager.GetFormattedString(GameManager.i.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
             GameManager.GetFormattedString("WIN the Campaign", ColourType.salmonText));
         tipCommendation.x_offset = 5;
         tipCommendation.y_offset = 60;
@@ -554,7 +554,7 @@ public class TopBarUI : MonoBehaviour
         tipBlackmark.tooltipMain = string.Format("You do not yet{0}have {1} Blackmarks{2}on your record", "\n",
             GameManager.GetFormattedString("ANY", ColourType.neutralText), "\n");
         tipBlackmark.tooltipDetails = string.Format("Gain {0} Blackmarks and you will{1}{2}",
-            GameManager.GetFormattedString(GameManager.instance.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
+            GameManager.GetFormattedString(GameManager.i.campaignScript.awardsWinLose.ToString(), ColourType.neutralText), "\n",
             GameManager.GetFormattedString("LOSE the Campaign", ColourType.salmonText));
         tipBlackmark.x_offset = 5;
         tipBlackmark.y_offset = 60;
@@ -565,8 +565,8 @@ public class TopBarUI : MonoBehaviour
         tipInvestigation.y_offset = 60;
         //innocence
         tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-            GameManager.instance.guiScript.GetDatapointStars(GameManager.instance.playerScript.Innocence));
-        tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.instance.topicScript.GetInnocenceDescriptor());
+            GameManager.i.guiScript.GetDatapointStars(GameManager.i.playerScript.Innocence));
+        tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.topicScript.GetInnocenceDescriptor());
         tipInnocence.tooltipDetails = string.Format("If it drops to {0} you will be {1} when next captured{2}{3}",
             GameManager.GetFormattedString("ZERO", ColourType.neutralText),
             GameManager.GetFormattedString("ERASED", ColourType.badText),
@@ -641,7 +641,7 @@ public class TopBarUI : MonoBehaviour
         {
             tipInvestigation.tooltipMain = string.Format("HQ currently pursuing the{0}{1}{2}into your behaviour", "\n",
                 GameManager.GetFormattedString("following investigations", ColourType.salmonText), "\n");
-            tipInvestigation.tooltipDetails = GameManager.instance.playerScript.GetInvestigationTooltip();
+            tipInvestigation.tooltipDetails = GameManager.i.playerScript.GetInvestigationTooltip();
         }
         else
         {
@@ -659,15 +659,15 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-                GameManager.instance.guiScript.GetDatapointStars(value));
+                GameManager.i.guiScript.GetDatapointStars(value));
             tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n",
-                GameManager.GetFormattedString(GameManager.instance.topicScript.GetInnocenceDescriptor(), ColourType.salmonText));
+                GameManager.GetFormattedString(GameManager.i.topicScript.GetInnocenceDescriptor(), ColourType.salmonText));
         }
         else
         {
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.GetFormattedString("Innocence", ColourType.neutralText), "\n",
-                GameManager.instance.guiScript.GetDatapointStars(value));
-            tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.instance.topicScript.GetInnocenceDescriptor());
+                GameManager.i.guiScript.GetDatapointStars(value));
+            tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.topicScript.GetInnocenceDescriptor());
         }
     }
 
@@ -680,7 +680,7 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             tipUnhappy.tooltipMain = "You have the following Unhappy Subordinates in your RESERVES";
-            tipUnhappy.tooltipDetails = GameManager.instance.actorScript.GetUnhappyActorsTooltip();
+            tipUnhappy.tooltipDetails = GameManager.i.actorScript.GetUnhappyActorsTooltip();
         }
         else
         {
@@ -700,7 +700,7 @@ public class TopBarUI : MonoBehaviour
         {
             tipConflict.tooltipMain = string.Format("You currently have{0}{1} Upset Subordinate{2}{3}<i>ON THE EDGE</i>", "\n",
                 GameManager.GetFormattedString(value.ToString(), ColourType.neutralText), value != 1 ? "s" : "", "\n");
-            tipConflict.tooltipDetails = GameManager.instance.actorScript.GetConflictActorsTooltip();
+            tipConflict.tooltipDetails = GameManager.i.actorScript.GetConflictActorsTooltip();
         }
         else
         {
@@ -719,7 +719,7 @@ public class TopBarUI : MonoBehaviour
         if (value > 0)
         {
             tipBlackmail.tooltipMain = string.Format("You are being Blackmailed by the following subordinate{0}", value != 1 ? "s" : "");
-            tipBlackmail.tooltipDetails = GameManager.instance.actorScript.GetBlackmailActorsTooltip();
+            tipBlackmail.tooltipDetails = GameManager.i.actorScript.GetBlackmailActorsTooltip();
         }
         else
         {

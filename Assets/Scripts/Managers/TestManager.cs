@@ -113,7 +113,7 @@ public class TestManager : MonoBehaviour
         isTimerTallyActive = false;
         //campaign
         UnityEngine.Debug.Assert(campaign != null, "Invalid campaign (Null)");
-        GameManager.instance.campaignScript.campaign = campaign;
+        GameManager.i.campaignScript.campaign = campaign;
     }
 
     //

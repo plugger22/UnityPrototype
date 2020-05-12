@@ -154,12 +154,12 @@ public class ModalReviewUI : MonoBehaviour
     private void Start()
     {
         //fast access
-        votesMinimum = GameManager.instance.campaignScript.reviewMinVotes;
+        votesMinimum = GameManager.i.campaignScript.reviewMinVotes;
         Debug.Assert(votesMinimum > -1, "Invalid votesMinimum (-1)");
         //review button
-        maxReviewButtonSize = GameManager.instance.guiScript.reviewMaxButtonSize;
-        reviewButtonIncrement = GameManager.instance.guiScript.reviewButtonIncrement;
-        reviewTimeInterval = GameManager.instance.guiScript.reviewTimeInterval;
+        maxReviewButtonSize = GameManager.i.guiScript.reviewMaxButtonSize;
+        reviewButtonIncrement = GameManager.i.guiScript.reviewButtonIncrement;
+        reviewTimeInterval = GameManager.i.guiScript.reviewTimeInterval;
         Debug.Assert(maxReviewButtonSize > 0, "Invalid maxReviewButtonSize (Zero)");
         Debug.Assert(reviewButtonIncrement > 0, "Invalid reviewButtonIncrement (Zero)");
         Debug.Assert(reviewTimeInterval > 0, "Invalid reviewTimeInterval (Zero)");
@@ -202,9 +202,9 @@ public class ModalReviewUI : MonoBehaviour
     /// </summary>
     private void InitialiseHelp()
     {
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("review_0", "review_1", "review_2");
+        List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("review_0", "review_1", "review_2");
         tooltipHelpOpen.SetHelpTooltip(listOfHelp, 150, 200);
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("review_3", "review_4", "review_5");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("review_3", "review_4", "review_5");
         tooltipHelpClose.SetHelpTooltip(listOfHelp, 150, 200);
     }
 
@@ -219,12 +219,12 @@ public class ModalReviewUI : MonoBehaviour
         reviewWaitTime = reviewWaitTimerDefault;
         Debug.LogFormat("[UI] ModalReviewUI.cs -> OpenReviewUI{0}", "\n");
         //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //activate main panel
         panelObject.SetActive(true);
         reviewObject.SetActive(true);
         headerObject.SetActive(true);
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //buttons
         buttonReview.gameObject.SetActive(true);
         buttonExit.gameObject.SetActive(false);
@@ -239,28 +239,28 @@ public class ModalReviewUI : MonoBehaviour
         switch (playerSide.level)
         {
             case 1:
-                panelBackground.sprite = GameManager.instance.sideScript.inventory_background_Authority;
-                panelHeader.sprite = GameManager.instance.sideScript.header_background_Authority;
+                panelBackground.sprite = GameManager.i.sideScript.inventory_background_Authority;
+                panelHeader.sprite = GameManager.i.sideScript.header_background_Authority;
                 //set button sprites
-                buttonReview.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                buttonExit.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonReview.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
+                buttonExit.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
                 //set sprite transitions
                 SpriteState spriteStateAuthority = new SpriteState();
-                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonReview.spriteState = spriteStateAuthority;
                 buttonExit.spriteState = spriteStateAuthority;
                 break;
             case 2:
-                panelBackground.sprite = GameManager.instance.sideScript.inventory_background_Resistance;
-                panelHeader.sprite = GameManager.instance.sideScript.header_background_Resistance;
+                panelBackground.sprite = GameManager.i.sideScript.inventory_background_Resistance;
+                panelHeader.sprite = GameManager.i.sideScript.header_background_Resistance;
                 //set button sprites
-                buttonReview.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                buttonExit.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonReview.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
+                buttonExit.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
                 //set sprite transitions
                 SpriteState spriteStateRebel = new SpriteState();
-                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
+                spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonReview.spriteState = spriteStateRebel;
                 buttonExit.spriteState = spriteStateRebel;
                 break;
@@ -375,12 +375,12 @@ public class ModalReviewUI : MonoBehaviour
         else
         {
             //all good, review window displayed
-            GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Open;
+            GameManager.i.inputScript.ModalReviewState = ModalReviewSubState.Open;
             votesFor = details.votesFor;
             votesAgainst = details.votesAgainst;
             votesAbstained = details.votesAbstained;
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Review };
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
             //flash review button
             isFlashReviewButton = true;
@@ -393,7 +393,7 @@ public class ModalReviewUI : MonoBehaviour
     /// </summary>
     private void StartReview()
     {
-        GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Review;
+        GameManager.i.inputScript.ModalReviewState = ModalReviewSubState.Review;
         //deactivate review button
         buttonReview.gameObject.SetActive(false);
         buttonHelpOpen.gameObject.SetActive(false);
@@ -403,7 +403,7 @@ public class ModalReviewUI : MonoBehaviour
         StartCoroutine("ShowReview");
         Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");
         //stats
-        GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewsTotal);      
+        GameManager.i.dataScript.StatisticIncrement(StatType.ReviewsTotal);      
     }
 
     /// <summary>
@@ -467,7 +467,7 @@ public class ModalReviewUI : MonoBehaviour
     {
         string text;
         //close any open help tooltips
-        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
+        GameManager.i.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
         //loop array and make review outcomes visibile 
         for (int i = 0; i < arrayOfOptions.Length; i++)
         {
@@ -510,54 +510,54 @@ public class ModalReviewUI : MonoBehaviour
         if (votesAgainst > votesFor && votesAgainst >= votesMinimum)
         {
             outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("BLACK MARK", ColourType.badText));
-            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.instance.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
+            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.i.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
             outcomeRight.text = outcomeSymbol;
-            GameManager.instance.campaignScript.ChangeBlackmarks(1, "Peer Review");
+            GameManager.i.campaignScript.ChangeBlackmarks(1, "Peer Review");
             isOutcome = true;
             //admin
-            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewBlackmarks);
+            GameManager.i.dataScript.StatisticIncrement(StatType.ReviewBlackmarks);
             text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Blackmark, "\n");
-            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Blackmark);
+            GameManager.i.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Blackmark);
         }
         else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
             outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("COMMENDATION", ColourType.goodText));
-            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.instance.guiScript.commendationChar.ToString(), ColourType.dataGood));
+            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.i.guiScript.commendationChar.ToString(), ColourType.dataGood));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
             outcomeRight.text = outcomeSymbol;
-            GameManager.instance.campaignScript.ChangeCommendations(1, "Peer Review");
+            GameManager.i.campaignScript.ChangeCommendations(1, "Peer Review");
             isOutcome = true;
             //admin
-            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewCommendations);
+            GameManager.i.dataScript.StatisticIncrement(StatType.ReviewCommendations);
             text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Commendation, "\n");
-            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Commendation);
+            GameManager.i.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Commendation);
         }
         else
         {
             outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.GetFormattedString("INCONCLUSIVE", ColourType.neutralText));
             //admin
-            GameManager.instance.dataScript.StatisticIncrement(StatType.ReviewInconclusive);
+            GameManager.i.dataScript.StatisticIncrement(StatType.ReviewInconclusive);
             text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive, "\n");
-            GameManager.instance.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive);
+            GameManager.i.messageScript.TopicReview(text, votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive);
         }
         textTop.text = string.Format("Votes For {0}, Votes Against {1}{2}{3}", votesFor, votesAgainst, "\n", outcomeText);
         textBottom.text = "Press ESC or EXIT once done";
         //initialise outcome tooltips (if any)
         if (isOutcome == true)
         {
-            List<HelpData> listOfHelp = GameManager.instance.actorScript.GetOutcomeTooltip();
+            List<HelpData> listOfHelp = GameManager.i.actorScript.GetOutcomeTooltip();
             tooltipOutcomeLeft.SetHelpTooltip(listOfHelp, 150, 50);
             tooltipOutcomeRight.SetHelpTooltip(listOfHelp, 150, 50);
         }
         //hand back control
         buttonHelpClose.gameObject.SetActive(true);
         buttonExit.gameObject.SetActive(true);
-        GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.Close;
+        GameManager.i.inputScript.ModalReviewState = ModalReviewSubState.Close;
         yield return null;
     }
 
@@ -567,17 +567,17 @@ public class ModalReviewUI : MonoBehaviour
     private void CloseReviewUI()
     {
         reviewObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalReviewUI.cs -> CloseReview");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ModalReviewUI.cs -> CloseReview");
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalReviewUI.cs -> CloseReviewUI{0}", "\n");
-        GameManager.instance.inputScript.ModalReviewState = ModalReviewSubState.None;
+        GameManager.i.inputScript.ModalReviewState = ModalReviewSubState.None;
         //close any open help tooltips
-        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
+        GameManager.i.tooltipHelpScript.CloseTooltip("ModalReviewUI.cs -> ShowReview");
         //Close topicUI and go straight to MainInfoApp
-        GameManager.instance.guiScript.waitUntilDone = false;
+        GameManager.i.guiScript.waitUntilDone = false;
     }
 
 }

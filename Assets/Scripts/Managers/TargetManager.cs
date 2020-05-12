@@ -91,7 +91,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
@@ -103,7 +103,7 @@ public class TargetManager : MonoBehaviour
             case GameState.LoadGame:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -114,10 +114,10 @@ public class TargetManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        infiltrationGear = GameManager.instance.dataScript.GetGearType("Infiltration");
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+        infiltrationGear = GameManager.i.dataScript.GetGearType("Infiltration");
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        maxGenericOptions = GameManager.i.genericPickerScript.maxOptions;
         Debug.Assert(infiltrationGear != null, "Invalid infiltrationGear (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -171,11 +171,11 @@ public class TargetManager : MonoBehaviour
     private void InitialiseGenericTargetArray()
     {
         int index;
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
-            GameManager.instance.dataScript.InitialiseArrayOfGenericTargets();
-            List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+            GameManager.i.dataScript.InitialiseArrayOfGenericTargets();
+            List<string>[] arrayOfGenericTargets = GameManager.i.dataScript.GetArrayOfGenericTargets();
             if (arrayOfGenericTargets != null)
             {
                 //assign targets to pools
@@ -245,17 +245,17 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourGear = GameManager.instance.colourScript.GetColour(ColourType.blueText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourGear = GameManager.i.colourScript.GetColour(ColourType.blueText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
         //colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
-        colourTarget = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourTarget = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         //colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     private void ResetAllTargets()
     {
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             foreach (var target in dictOfTargets)
@@ -292,7 +292,7 @@ public class TargetManager : MonoBehaviour
         string targetName;
         int rndNum;
         bool isLive;
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             //loop nodes
@@ -302,7 +302,7 @@ public class TargetManager : MonoBehaviour
                 //Target present
                 if (string.IsNullOrEmpty(targetName) == false)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(targetName);
+                    Target target = GameManager.i.dataScript.GetTarget(targetName);
                     if (target != null)
                     {
                         //
@@ -334,16 +334,16 @@ public class TargetManager : MonoBehaviour
                                 {
                                     Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} Expired", target.targetName);
                                     string text = string.Format("Target {0} at {1}, {2}, has Expired", target.targetName, node.nodeName, node.Arc.name);
-                                    GameManager.instance.messageScript.TargetExpired(text, node, target);
+                                    GameManager.i.messageScript.TargetExpired(text, node, target);
                                     SetTargetDone(target, node);
                                 }
                                 else
                                 {
                                     //warning message -> Resistance player only
-                                    if (target.timerWindow == targetWarning && GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                                    if (target.timerWindow == targetWarning && GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                                     {
                                         string text = string.Format("Target {0} at {1}, {2}, about to Expire", target.targetName, node.nodeName, node.Arc.name);
-                                        GameManager.instance.messageScript.TargetExpiredWarning(text, node, target);
+                                        GameManager.i.messageScript.TargetExpiredWarning(text, node, target);
                                     }
                                     target.timerWindow--;
                                 }
@@ -386,10 +386,10 @@ public class TargetManager : MonoBehaviour
                                     if (isLive == true)
                                     {
                                         target.targetStatus = Status.Live;
-                                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Live);
-                                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Active);
+                                        GameManager.i.dataScript.AddTargetToPool(target, Status.Live);
+                                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
                                         string text = string.Format("New target {0} at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
-                                        GameManager.instance.messageScript.TargetNew(text, node, target);
+                                        GameManager.i.messageScript.TargetNew(text, node, target);
                                         Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} goes LIVE", target.targetName);
                                     }
                                 }
@@ -440,8 +440,8 @@ public class TargetManager : MonoBehaviour
         if (mission.targetBaseCityHall != null)
         {
             target = mission.targetBaseCityHall;
-            nodeID = GameManager.instance.cityScript.cityHallDistrictID;
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            nodeID = GameManager.i.cityScript.cityHallDistrictID;
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
                 SetTargetDetails(target, node);
@@ -454,8 +454,8 @@ public class TargetManager : MonoBehaviour
         if (mission.targetBaseIcon != null)
         {
             target = mission.targetBaseIcon;
-            nodeID = GameManager.instance.cityScript.iconDistrictID;
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            nodeID = GameManager.i.cityScript.iconDistrictID;
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
                 SetTargetDetails(target, node);
@@ -468,8 +468,8 @@ public class TargetManager : MonoBehaviour
         if (mission.targetBaseAirport != null)
         {
             target = mission.targetBaseAirport;
-            nodeID = GameManager.instance.cityScript.airportDistrictID;
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            nodeID = GameManager.i.cityScript.airportDistrictID;
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
                 SetTargetDetails(target, node);
@@ -482,8 +482,8 @@ public class TargetManager : MonoBehaviour
         if (mission.targetBaseHarbour != null)
         {
             target = mission.targetBaseHarbour;
-            nodeID = GameManager.instance.cityScript.harbourDistrictID;
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            nodeID = GameManager.i.cityScript.harbourDistrictID;
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
                 SetTargetDetails(target, node);
@@ -500,7 +500,7 @@ public class TargetManager : MonoBehaviour
     private void AssignGenericTargets(Mission mission)
     {
         int index, counter, numOfNodes, attempts;
-        List<NodeArc> listOfNodeArcs = new List<NodeArc>(GameManager.instance.dataScript.GetDictOfNodeArcs().Values);
+        List<NodeArc> listOfNodeArcs = new List<NodeArc>(GameManager.i.dataScript.GetDictOfNodeArcs().Values);
         int numActive = mission.targetsGenericLive;
         int numLive = mission.targetsGenericActive;
         int numNodeArcs = listOfNodeArcs.Count;
@@ -539,7 +539,7 @@ public class TargetManager : MonoBehaviour
                 if (nodeArc != null)
                 {
                     //get a random node of that type
-                    listOfNodesByType = GameManager.instance.dataScript.GetListOfNodesByType(nodeArc.nodeArcID);
+                    listOfNodesByType = GameManager.i.dataScript.GetListOfNodesByType(nodeArc.nodeArcID);
                     numOfNodes = listOfNodesByType.Count;
                     if (numOfNodes > 0)
                     {
@@ -560,7 +560,7 @@ public class TargetManager : MonoBehaviour
                         if (node != null)
                         {
                             //valid node
-                            target = GameManager.instance.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
+                            target = GameManager.i.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
                             if (target != null)
                             {
                                 //assign target to node
@@ -569,7 +569,7 @@ public class TargetManager : MonoBehaviour
                                     target.targetName);
                                 counter++;
                                 //delete target to prevent dupes
-                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
+                                if (GameManager.i.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
                                 { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, nodeArc {1}", target.targetName, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
@@ -601,7 +601,7 @@ public class TargetManager : MonoBehaviour
                 if (nodeArc != null)
                 {
                     //get a random node of that type
-                    listOfNodesByType = GameManager.instance.dataScript.GetListOfNodesByType(nodeArc.nodeArcID);
+                    listOfNodesByType = GameManager.i.dataScript.GetListOfNodesByType(nodeArc.nodeArcID);
                     numOfNodes = listOfNodesByType.Count;
                     if (numOfNodes > 0)
                     {
@@ -622,7 +622,7 @@ public class TargetManager : MonoBehaviour
                         if (node != null)
                         {
                             //valid node
-                            target = GameManager.instance.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
+                            target = GameManager.i.dataScript.GetRandomGenericTarget(nodeArc.nodeArcID);
                             if (target != null)
                             {
                                 //assign target to node
@@ -631,7 +631,7 @@ public class TargetManager : MonoBehaviour
                                     target.targetName);
                                 counter++;
                                 //delete target to prevent dupes
-                                if (GameManager.instance.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
+                                if (GameManager.i.dataScript.RemoveTargetFromGenericList(target.name, nodeArc.nodeArcID) == false)
                                 { Debug.LogErrorFormat("Target not removed from GenericList, target {0}, nodeArc {1}", target.targetName, nodeArc.nodeArcID); }
                             }
                             else { Debug.LogError("Invalid target (Null)"); }
@@ -657,7 +657,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="mission"></param>
     private void AssignVIPTarget(Mission mission)
     {
-        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        Node node = GameManager.i.dataScript.GetRandomTargetNode();
         if (node != null)
         {
             if (mission.targetBaseVIP != null)
@@ -678,7 +678,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="mission"></param>
     private void AssignStoryTarget(Mission mission)
     {
-        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        Node node = GameManager.i.dataScript.GetRandomTargetNode();
         if (node != null)
         {
             if (mission.targetBaseHarbour != null)
@@ -698,7 +698,7 @@ public class TargetManager : MonoBehaviour
     /// <param name="mission"></param>
     private void AssignGoalTarget(Mission mission)
     {
-        Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+        Node node = GameManager.i.dataScript.GetRandomTargetNode();
         if (node != null)
         {
             if (mission.targetBaseHarbour != null)
@@ -720,12 +720,12 @@ public class TargetManager : MonoBehaviour
         if (mission.targetOrganisation != null)
         {
             //is there room for a new org?
-            int numOfOrgs = GameManager.instance.dataScript.GetNumOfPlayerOrganisations();
-            int maxOrgs = GameManager.instance.orgScript.maxOrgContact;
+            int numOfOrgs = GameManager.i.dataScript.GetNumOfPlayerOrganisations();
+            int maxOrgs = GameManager.i.orgScript.maxOrgContact;
             if (numOfOrgs < maxOrgs)
             {
                 //create a list of all orgs player currently not in contact with
-                List<Organisation> listOfNonContactOrgs = GameManager.instance.dataScript.GetListOfNonContactOrganisations();
+                List<Organisation> listOfNonContactOrgs = GameManager.i.dataScript.GetListOfNonContactOrganisations();
                 if (listOfNonContactOrgs != null)
                 {
                     int count = listOfNonContactOrgs.Count;
@@ -735,7 +735,7 @@ public class TargetManager : MonoBehaviour
                         if (org != null)
                         {
                             //target needs a random node
-                            Node node = GameManager.instance.dataScript.GetRandomTargetNode();
+                            Node node = GameManager.i.dataScript.GetRandomTargetNode();
                             if (node != null)
                             {
                                 //assign Organisation to global so it can be referenced when target is successfully completed
@@ -778,7 +778,7 @@ public class TargetManager : MonoBehaviour
             if (target.nodeID == -1)
             {
                 //only proceed to assign target if successfully added to list
-                if (GameManager.instance.dataScript.AddNodeToTargetList(node.nodeID) == true)
+                if (GameManager.i.dataScript.AddNodeToTargetList(node.nodeID) == true)
                 {
                     //override profile or assign default profile to generic target (generics are override or default) and to all other targets (use existing profile or default if null) if they don't have a profile 
                     if (profileOverride != null)
@@ -806,7 +806,7 @@ public class TargetManager : MonoBehaviour
                             case "Live":
                                 target.targetStatus = Status.Live;
                                 string text = string.Format("New target {0}, at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
-                                GameManager.instance.messageScript.TargetNew(text, node, target);
+                                GameManager.i.messageScript.TargetNew(text, node, target);
                                 break;
                             case "Custom":
                                 target.targetStatus = Status.Active;
@@ -818,7 +818,7 @@ public class TargetManager : MonoBehaviour
                         }
                         //add to pool
                         if (isSuccess == true)
-                        { GameManager.instance.dataScript.AddTargetToPool(target, target.targetStatus); }
+                        { GameManager.i.dataScript.AddTargetToPool(target, target.targetStatus); }
                     }
                     else { Debug.LogWarningFormat("Invalid profile (Null) for target {0}", target.targetName); isSuccess = false; }
                 }
@@ -846,14 +846,14 @@ public class TargetManager : MonoBehaviour
         if (string.IsNullOrEmpty(targetName) == false)
         {
             //find target
-            Target target = GameManager.instance.dataScript.GetTarget(targetName);
+            Target target = GameManager.i.dataScript.GetTarget(targetName);
             if (target != null)
             {
-                switch (GameManager.instance.sideScript.PlayerSide.level)
+                switch (GameManager.i.sideScript.PlayerSide.level)
                 {
                     case 1:
                         //Authority
-                        if (GameManager.instance.optionScript.fogOfWar == true)
+                        if (GameManager.i.optionScript.fogOfWar == true)
                         {
                             //only show if FOW on and target is known
                             if (isTargetKnown == true)
@@ -888,7 +888,7 @@ public class TargetManager : MonoBehaviour
                         break;
                     case 2:
                         //Resistance -> target LIVE & Completed
-                        if (GameManager.instance.optionScript.fogOfWar == true)
+                        if (GameManager.i.optionScript.fogOfWar == true)
                         {
                             //FOW On, only show Live and Completed
                             switch (target.targetStatus)
@@ -935,7 +935,7 @@ public class TargetManager : MonoBehaviour
                 tempList.Add(string.Format("{0}<b>{1} Target</b>{2}", colourNormal, target.targetStatus, colourEnd));
                 tempList.Add(string.Format("{0}<size=110%><b>{1}</b></size>{2}", colourTarget, target.targetName, colourEnd));
                 tempList.Add(string.Format("{0}<b>Level {1}</b>{2}", colourDefault, target.targetLevel, colourEnd));
-                if (GameManager.instance.optionScript.debugData == true)
+                if (GameManager.i.optionScript.debugData == true)
                 {
                     tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.profile.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
@@ -967,16 +967,16 @@ public class TargetManager : MonoBehaviour
                 if (target.OngoingEffect != null)
                 { tempList.Add(string.Format("{0}{1}{2}", colourGood, target.OngoingEffect.description, colourEnd)); }*/
 
-                if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                 {
                     //resistance player
                     tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourDefault, target.descriptorResistance, colourEnd));
                     tempList.Add(string.Format("{0}Intel{1}  {2}<b>{3}</b>{4}", colourDefault, colourEnd,
-                        GameManager.instance.colourScript.GetValueColour(target.intel), target.intel, colourEnd));
+                        GameManager.i.colourScript.GetValueColour(target.intel), target.intel, colourEnd));
                     tempList.Add(string.Format("{0}<b>{1} gear</b>{2}", colourGear, target.gear.name, colourEnd));
                     tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourGear, target.actorArc.name, colourEnd));
                     //target has an objective?
-                    string objectiveInfo = GameManager.instance.objectiveScript.CheckObjectiveInfo(target.name);
+                    string objectiveInfo = GameManager.i.objectiveScript.CheckObjectiveInfo(target.name);
                     if (objectiveInfo != null)
                     { tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourTarget, objectiveInfo, colourEnd)); }
                     tempList.Add(string.Format("Available for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
@@ -987,7 +987,7 @@ public class TargetManager : MonoBehaviour
                     tempList.Add(string.Format("{0}<b>{1}</b>{2}", colourNeutral, target.descriptorAuthority, colourEnd));
                     tempList.Add(string.Format("Exposed for {0}<b>{1}</b>{2} day{3}", colourNeutral, target.timerWindow, colourEnd, target.timerWindow != 1 ? "s" : ""));
                 }
-                if (GameManager.instance.optionScript.debugData == true)
+                if (GameManager.i.optionScript.debugData == true)
                 {
                     tempList.Add(string.Format("{0} \"{1}\"", target.targetStatus, target.profile.activation.name));
                     tempList.Add(string.Format("timerDelay {0}", target.timerDelay));
@@ -1018,7 +1018,7 @@ public class TargetManager : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         //find target
-        Target target = GameManager.instance.dataScript.GetTarget(targetName);
+        Target target = GameManager.i.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //good effects
@@ -1035,7 +1035,7 @@ public class TargetManager : MonoBehaviour
                 }
             }
             //target has an objective?
-            string objectiveInfo = GameManager.instance.objectiveScript.CheckObjectiveInfo(target.name);
+            string objectiveInfo = GameManager.i.objectiveScript.CheckObjectiveInfo(target.name);
             if (objectiveInfo != null)
             { tempList.Add(string.Format("{0}{1}{2}", colourGood, objectiveInfo, colourEnd)); }
             //bad effects
@@ -1055,7 +1055,7 @@ public class TargetManager : MonoBehaviour
             { tempList.Add(string.Format("{0}{1} (Ongoing){2}", colourGood, target.ongoingEffect.description, colourEnd)); }
             //Mood effects (player action only)
             if (target.moodEffect != null && isPlayerAction == true)
-            { tempList.Add(GameManager.instance.personScript.GetMoodTooltip(target.moodEffect.belief, "Player")); }
+            { tempList.Add(GameManager.i.personScript.GetMoodTooltip(target.moodEffect.belief, "Player")); }
         }
         else
         {
@@ -1095,11 +1095,11 @@ public class TargetManager : MonoBehaviour
     {
         List<string> tempList = new List<string>();
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetName);
+        Target target = GameManager.i.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+            Node node = GameManager.i.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
                 //
@@ -1126,7 +1126,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
+                            if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //Player at node -> active actor not applicable
                                 if (target.actorArc != null)
@@ -1134,10 +1134,10 @@ public class TargetManager : MonoBehaviour
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
+                                    string gearName = GameManager.i.playerScript.CheckGearTypePresent(target.gear);
                                     if (string.IsNullOrEmpty(gearName) == false)
                                     {
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                        Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                         else { Debug.LogWarning(string.Format("Invalid Target gear (Null) for gear {0}", gearName)); }
@@ -1148,10 +1148,10 @@ public class TargetManager : MonoBehaviour
                                     if (target.gear.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == false)
                                     {
                                         //check player has infiltration gear
-                                        gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        gearName = GameManager.i.playerScript.CheckGearTypePresent(infiltrationGear);
                                         if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                            Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             { tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, gear.tag, gearEffect * (gear.rarity.level + 1), colourEnd)); }
                                             else { Debug.LogWarning(string.Format("Invalid Infiltration gear (Null) for gear {0}", gearName)); }
@@ -1168,12 +1168,12 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     //check if actor present OnMap and Active (that actor is assumed to be tackling target, the target doesn't have to be part of a contact network)
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
+                                    int slotID = GameManager.i.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor present and available
                                         tempList.Add(string.Format("{0}<size=95%>{1} +{2}</size>{3}", colourGood, target.actorArc.name, actorEffect, colourEnd));
-                                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                                        actor = GameManager.i.dataScript.GetCurrentActor(slotID, globalResistance);
                                     }
                                     else
                                     {
@@ -1191,7 +1191,7 @@ public class TargetManager : MonoBehaviour
                                         string gearName = actor.GetGearName();
                                         if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                            Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             {
                                                 //correct type of gear
@@ -1232,7 +1232,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.Teams:
                             if (node.isSecurityTeam == true)
-                            { tempList.Add(string.Format("{0}<size=95%>Control Team -{1}</size>{2}", colourBad, GameManager.instance.teamScript.controlNodeEffect, colourEnd)); }
+                            { tempList.Add(string.Format("{0}<size=95%>Control Team -{1}</size>{2}", colourBad, GameManager.i.teamScript.controlNodeEffect, colourEnd)); }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
@@ -1282,11 +1282,11 @@ public class TargetManager : MonoBehaviour
         //base chance
         tally += (int)(baseTargetChance * 0.1);
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetName);
+        Target target = GameManager.i.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+            Node node = GameManager.i.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
                 //Loop listOfFactors to ensure consistency of calculations across methods
@@ -1305,21 +1305,21 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.instance.nodeScript.nodePlayer == node.nodeID)
+                            if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
                             {
                                 //player has special gear?
                                 if (target.gear != null)
                                 {
-                                    string gearName = GameManager.instance.playerScript.CheckGearTypePresent(target.gear);
+                                    string gearName = GameManager.i.playerScript.CheckGearTypePresent(target.gear);
                                     if (string.IsNullOrEmpty(gearName) == false)
                                     {
-                                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                        Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                         if (gear != null)
                                         {
                                             tally += gearEffect * (gear.rarity.level + 1);
                                             //gear used?
                                             if (setGearAsUsed == true)
-                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                            { GameManager.i.gearScript.SetGearUsed(gear, "attempt Target"); }
                                         }
                                         else { Debug.LogWarningFormat("Invalid Target gear (Null) for gear {0}", gearName); }
                                     }
@@ -1327,16 +1327,16 @@ public class TargetManager : MonoBehaviour
                                     if (target.gear.name.Equals(infiltrationGear.name, StringComparison.Ordinal) == false)
                                     {
                                         //check player has infiltration gear
-                                        gearName = GameManager.instance.playerScript.CheckGearTypePresent(infiltrationGear);
+                                        gearName = GameManager.i.playerScript.CheckGearTypePresent(infiltrationGear);
                                         if (string.IsNullOrEmpty(gearName) == false)
                                         {
-                                            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                            Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                             if (gear != null)
                                             {
                                                 tally += gearEffect * (gear.rarity.level + 1);
                                                 //gear used?
                                                 if (setGearAsUsed == true)
-                                                { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                                { GameManager.i.gearScript.SetGearUsed(gear, "attempt Target"); }
                                             }
                                             else { Debug.LogWarningFormat("Invalid Infiltration gear (Null) for gear {0}", gearName); }
                                         }
@@ -1349,12 +1349,12 @@ public class TargetManager : MonoBehaviour
                                 if (target.actorArc != null)
                                 {
                                     Actor actor = null;
-                                    int slotID = GameManager.instance.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
+                                    int slotID = GameManager.i.dataScript.CheckActorPresent(target.actorArc.name, globalResistance);
                                     if (slotID > -1)
                                     {
                                         //actor of the required actor Arc is present
                                         tally += actorEffect;
-                                        actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                                        actor = GameManager.i.dataScript.GetCurrentActor(slotID, globalResistance);
                                         if (actor != null)
                                         {
                                             if (target.gear != null)
@@ -1363,7 +1363,7 @@ public class TargetManager : MonoBehaviour
                                                 string gearName = actor.GetGearName();
                                                 if (string.IsNullOrEmpty(gearName) == false)
                                                 {
-                                                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                                                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
                                                     if (gear != null)
                                                     {
                                                         //correct type of gear
@@ -1371,7 +1371,7 @@ public class TargetManager : MonoBehaviour
                                                         {
                                                             tally += gearEffect * (gear.rarity.level + 1);
                                                             if (setGearAsUsed == true)
-                                                            { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                                            { GameManager.i.gearScript.SetGearUsed(gear, "attempt Target"); }
                                                         }
                                                         else
                                                         {
@@ -1380,7 +1380,7 @@ public class TargetManager : MonoBehaviour
                                                             {
                                                                 tally += gearEffect * (gear.rarity.level + 1);
                                                                 if (setGearAsUsed == true)
-                                                                { GameManager.instance.gearScript.SetGearUsed(gear, "attempt Target"); }
+                                                                { GameManager.i.gearScript.SetGearUsed(gear, "attempt Target"); }
                                                             }
                                                         }
                                                     }
@@ -1404,7 +1404,7 @@ public class TargetManager : MonoBehaviour
                         case TargetFactors.Teams:
                             //Teams
                             if (node.isSecurityTeam == true)
-                            { tally -= GameManager.instance.teamScript.controlNodeEffect; }
+                            { tally -= GameManager.i.teamScript.controlNodeEffect; }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
@@ -1431,11 +1431,11 @@ public class TargetManager : MonoBehaviour
         //base chance
         tally += (int)(baseTargetChance * 0.1);
         //get target
-        Target target = GameManager.instance.dataScript.GetTarget(targetName);
+        Target target = GameManager.i.dataScript.GetTarget(targetName);
         if (target != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+            Node node = GameManager.i.dataScript.GetNode(target.nodeID);
             if (node != null)
             {
                 //Loop listOfFactors to ensure consistency of calculations across methods
@@ -1463,7 +1463,7 @@ public class TargetManager : MonoBehaviour
                         case TargetFactors.Teams:
                             //Teams
                             if (node.isSecurityTeam == true)
-                            { tally -= GameManager.instance.teamScript.controlNodeEffect; }
+                            { tally -= GameManager.i.teamScript.controlNodeEffect; }
                             break;
                         default:
                             Debug.LogError(string.Format("Unknown TargetFactor \"{0}\"{1}", factor, "\n"));
@@ -1500,11 +1500,11 @@ public class TargetManager : MonoBehaviour
     /// <param name="target"></param>
     public void ContainTarget(Target target)
     {
-        Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(target.nodeID);
         if (node != null)
         {
-            GameManager.instance.connScript.RemoveOngoingEffect(target.ongoingID);
-            GameManager.instance.nodeScript.RemoveOngoingEffect(target.ongoingID);
+            GameManager.i.connScript.RemoveOngoingEffect(target.ongoingID);
+            GameManager.i.nodeScript.RemoveOngoingEffect(target.ongoingID);
             //admin
             SetTargetDone(target, node);
         }
@@ -1528,13 +1528,13 @@ public class TargetManager : MonoBehaviour
                 switch (target.targetStatus)
                 {
                     case Status.Live:
-                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Live);
                         break;
                     case Status.Active:
-                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Active);
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
                         break;
                     case Status.Outstanding:
-                        GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Outstanding);
+                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Outstanding);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid targetStatus \"{0}\". Lists not updated", target.targetStatus);
@@ -1545,7 +1545,7 @@ public class TargetManager : MonoBehaviour
                 if (isSuccess == true)
                 {
                     //remove from list
-                    if (GameManager.instance.dataScript.RemoveNodeFromTargetList(node.nodeID) == false)
+                    if (GameManager.i.dataScript.RemoveNodeFromTargetList(node.nodeID) == false)
                     { Debug.LogWarningFormat("Node id {0} NOT removed from listOfNodesWithTargets", node.nodeID); }
                     //id's back to default
                     node.targetName = null;
@@ -1564,7 +1564,7 @@ public class TargetManager : MonoBehaviour
                             {
                                 case "Generic":
                                     //Generic can't repeat and must follow On to the same node
-                                    Mission mission = GameManager.instance.missionScript.mission;
+                                    Mission mission = GameManager.i.missionScript.mission;
                                     //use override profile if one available (ignored if not)
                                     if (mission != null)
                                     {
@@ -1597,7 +1597,7 @@ public class TargetManager : MonoBehaviour
                                     break;
                                 default:
                                     //Story / VIP / Goal Follow On targets -> random node
-                                    Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
+                                    Node nodeRandom = GameManager.i.dataScript.GetRandomTargetNode();
                                     if (nodeRandom != null)
                                     {
                                         if (SetTargetDetails(target.followOnTarget, nodeRandom) == true)
@@ -1642,7 +1642,7 @@ public class TargetManager : MonoBehaviour
                                     //City targets can't have random repeats
                                     if (target.targetType.name.Equals("City", StringComparison.Ordinal) == false)
                                     {
-                                        Node nodeRandom = GameManager.instance.dataScript.GetRandomTargetNode();
+                                        Node nodeRandom = GameManager.i.dataScript.GetRandomTargetNode();
                                         if (nodeRandom != null)
                                         {
                                             if (SetTargetDetails(target, nodeRandom) == true)
@@ -1676,9 +1676,9 @@ public class TargetManager : MonoBehaviour
                     if (isSuccess == true && isDone == true)
                     {
                         target.targetStatus = Status.Done;
-                        target.turnDone = GameManager.instance.turnScript.Turn;
+                        target.turnDone = GameManager.i.turnScript.Turn;
                         //Add to pool 
-                        GameManager.instance.dataScript.AddTargetToPool(target, Status.Done);
+                        GameManager.i.dataScript.AddTargetToPool(target, Status.Done);
                     }
                 }
             }
@@ -1701,16 +1701,16 @@ public class TargetManager : MonoBehaviour
         bool errorFlag = false;
         int count;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
 
             #region CaptureCheck
             //check for player/actor being captured
-            int actorID = GameManager.instance.playerScript.actorID;
-            if (node.nodeID != GameManager.instance.nodeScript.nodePlayer)
+            int actorID = GameManager.i.playerScript.actorID;
+            if (node.nodeID != GameManager.i.nodeScript.nodePlayer)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
+                Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                 if (actor != null)
                 { actorID = actor.actorID; }
                 else { Debug.LogError(string.Format("Invalid actor (Null) from details.ActorSlotID {0}", details.actorDataID)); errorFlag = true; }
@@ -1718,7 +1718,7 @@ public class TargetManager : MonoBehaviour
             //check capture provided no errors
             if (errorFlag == false)
             {
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
                 if (captureDetails != null)
                 {
                     //capture happened, abort recruitment
@@ -1751,7 +1751,7 @@ public class TargetManager : MonoBehaviour
             genericDetails.textBottom = "Click on a Target to Select. Press CONFIRM. Mouseover target for more information.";
             //generate temp list of gear to choose from
 
-            List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+            List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
             if (listOfLiveTargets != null)
             {
                 //
@@ -1784,7 +1784,7 @@ public class TargetManager : MonoBehaviour
                                 { dictOfTargetDistances.Add(target, 0); distance = 0; }
                                 else
                                 {
-                                    distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, target.nodeID);
+                                    distance = GameManager.i.dijkstraScript.GetDistanceUnweighted(node.nodeID, target.nodeID);
                                     if (distance > -1)
                                     { dictOfTargetDistances.Add(target, distance); }
                                     else { Debug.LogErrorFormat("Invalid dijkstra distance between nodeID {0} and target nodeID {1}", node.nodeID, target.nodeID); }
@@ -1834,7 +1834,7 @@ public class TargetManager : MonoBehaviour
                                     /*optionDetails.optionID = target.targetID;*/
                                     optionDetails.optionName = target.name;
                                     optionDetails.text = target.targetName.ToUpper();
-                                    optionDetails.sprite = GameManager.instance.guiScript.targetInfoSprite;
+                                    optionDetails.sprite = GameManager.i.guiScript.targetInfoSprite;
                                     //add to master arrays
                                     genericDetails.arrayOfOptions[i] = optionDetails;
                                     genericDetails.arrayOfTooltips[i] = tooltipDetails;
@@ -1868,7 +1868,7 @@ public class TargetManager : MonoBehaviour
         else
         {
             //deactivate back button
-            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
+            GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
@@ -1888,7 +1888,7 @@ public class TargetManager : MonoBehaviour
             StringBuilder builderHeader = new StringBuilder();
             StringBuilder builderMain = new StringBuilder();
             StringBuilder builderDetails = new StringBuilder();
-            string colourIntel = GameManager.instance.colourScript.GetValueColour(target.intel);
+            string colourIntel = GameManager.i.colourScript.GetValueColour(target.intel);
             builderHeader.AppendFormat("{0}{1}{2}", colourGear, target.targetName, colourEnd);
             builderMain.AppendFormat("<b>Existing Intel {0}{1}{2}</b>{3}", colourIntel, target.intel, colourEnd, "\n");
             builderMain.AppendFormat("{0}<size=130%>+{1}{2} Intel{3}{4}</size>MAX Intel allowed is {5}{6}", colourNeutral, target.intelGain, colourEnd, "\n", colourTarget, maxTargetInfo, colourEnd);
@@ -1909,28 +1909,28 @@ public class TargetManager : MonoBehaviour
     private void ProcessTargetInfo(GenericReturnData detailsGeneric)
     {
         bool isPlayer = false;
-        Target target = GameManager.instance.dataScript.GetTarget(detailsGeneric.optionName);
+        Target target = GameManager.i.dataScript.GetTarget(detailsGeneric.optionName);
         if (target != null)
         {
             //Get actor
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(detailsGeneric.actorSlotID, globalResistance);
+            Actor actor = GameManager.i.dataScript.GetCurrentActor(detailsGeneric.actorSlotID, globalResistance);
             if (actor != null)
             {
                 Sprite sprite = actor.sprite;
-                Node node = GameManager.instance.dataScript.GetNode(detailsGeneric.nodeID);
+                Node node = GameManager.i.dataScript.GetNode(detailsGeneric.nodeID);
                 if (node != null)
                 {
 
                     StringBuilder builderTop = new StringBuilder();
                     StringBuilder builderBottom = new StringBuilder();
                     //check if player action
-                    if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { isPlayer = true; }
+                    if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { isPlayer = true; }
                     //update target info level
                     target.intel = target.newIntel;
                     if (target.intel > maxTargetInfo)
                     { target.intel = maxTargetInfo; }
                     builderTop.AppendFormat("{0}{1} target{2}{3}{4}", colourGear, target.targetName, colourEnd, "\n", "\n");
-                    builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.instance.colourScript.GetValueColour(target.intel),
+                    builderTop.AppendFormat("{0}+{1}{2} INTEL gained, now {3}{4}{5}", colourNeutral, target.intelGain, colourEnd, GameManager.i.colourScript.GetValueColour(target.intel),
                         target.intel, colourEnd);
                     //message
                     Debug.LogFormat("[Tar] TargetManager.cs -> ProcessTargetInfo: {0} at {1}, {2}, id {3}, Intel +{4}, now {5} (PLANNER action){6}", target.targetName,
@@ -1947,7 +1947,7 @@ public class TargetManager : MonoBehaviour
                             if (effect.ignoreEffect == false)
                             {
                                 //process effect normally
-                                EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                 if (effectReturn != null)
                                 {
                                     builderTop.AppendLine();
@@ -1966,7 +1966,7 @@ public class TargetManager : MonoBehaviour
                         //actor action
                         NodeActionData nodeActionData = new NodeActionData()
                         {
-                            turn = GameManager.instance.turnScript.Turn,
+                            turn = GameManager.i.turnScript.Turn,
                             actorID = actor.actorID,
                             nodeID = node.nodeID,
                             dataName = target.targetName,
@@ -1981,25 +1981,25 @@ public class TargetManager : MonoBehaviour
                         //player action
                         NodeActionData nodeActionData = new NodeActionData()
                         {
-                            turn = GameManager.instance.turnScript.Turn,
+                            turn = GameManager.i.turnScript.Turn,
                             actorID = 999,
                             nodeID = node.nodeID,
                             dataName = target.targetName,
                             nodeAction = NodeAction.PlayerGainTargetInfo
                         };
                         //add to player's personal list
-                        GameManager.instance.playerScript.AddNodeAction(nodeActionData);
-                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");                        //statistics
-                        GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
+                        GameManager.i.playerScript.AddNodeAction(nodeActionData);
+                        Debug.LogFormat("[Tst] TargetManager.cs -> ProcessTargetInfo: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");                        //statistics
+                        GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                     }
                     //statistics
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                     //OUTCOME Window
                     ModalOutcomeDetails detailsModal = new ModalOutcomeDetails();
                     detailsModal.textTop = builderTop.ToString();
                     detailsModal.textBottom = builderBottom.ToString();
                     detailsModal.sprite = sprite;
-                    detailsModal.side = GameManager.instance.globalScript.sideResistance;
+                    detailsModal.side = GameManager.i.globalScript.sideResistance;
                     detailsModal.isAction = true;
                     detailsModal.reason = "Gain Target Intel";
                     EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
@@ -2042,7 +2042,7 @@ public class TargetManager : MonoBehaviour
     {
         bool isSuccess = true;
         int intel, before;
-        List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+        List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
         if (listOfLiveTargets != null)
         {
             for (int i = 0; i < listOfLiveTargets.Count; i++)

@@ -33,7 +33,7 @@ public class TraitManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -45,7 +45,7 @@ public class TraitManager : MonoBehaviour
     {
         SetColours();
         //initialise trait formatted field
-        Dictionary<string, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
+        Dictionary<string, Trait> dictOfTraits = GameManager.i.dataScript.GetDictOfTraits();
         if (dictOfTraits != null)
         {
             foreach (var trait in dictOfTraits)
@@ -122,10 +122,10 @@ public class TraitManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     //new methods above here

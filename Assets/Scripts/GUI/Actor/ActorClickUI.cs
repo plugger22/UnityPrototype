@@ -23,30 +23,30 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         bool proceedFlag = true;
         int data = -1;
         AlertType alertType = AlertType.None;
         //is there an actor in this slot?
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
         {
             //close actor tooltip
-            GameManager.instance.tooltipActorScript.CloseTooltip("ActorClickUI.cs -> OnPointerClick");
+            GameManager.i.tooltipActorScript.CloseTooltip("ActorClickUI.cs -> OnPointerClick");
             //which button
             switch (eventData.button)
             {
                 case PointerEventData.InputButton.Left:
                     break;
                 case PointerEventData.InputButton.Right:
-                    if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                    if (GameManager.i.guiScript.CheckIsBlocked() == false)
                     {
                         //Action Menu -> not valid if AI is active for side
-                        if (GameManager.instance.sideScript.CheckInteraction() == false)
+                        if (GameManager.i.sideScript.CheckInteraction() == false)
                         { proceedFlag = false; alertType = AlertType.SideStatus; }
                         //Action Menu -> not valid if  Player inactive
-                        else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                        else if (GameManager.i.playerScript.status != ActorStatus.Active)
                         { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, side);
                         if (actor != null)
                         {
                             if (actor.Status != ActorStatus.Active)
@@ -66,17 +66,17 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                     itemName = actor.actorName,
                                     itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                     menuPos = position,
-                                    listOfButtonDetails = GameManager.instance.actorScript.GetActorActions(actorSlotID),
+                                    listOfButtonDetails = GameManager.i.actorScript.GetActorActions(actorSlotID),
                                     menuType = ActionMenuType.Actor
                                 };
                                 //activate menu
-                                GameManager.instance.actionMenuScript.SetActionMenu(details);
+                                GameManager.i.actionMenuScript.SetActionMenu(details);
                             }
                             else
                             {
                                 //explanatory message
                                 if (alertType != AlertType.None)
-                                { GameManager.instance.guiScript.SetAlertMessage(alertType, data); }
+                                { GameManager.i.guiScript.SetAlertMessage(alertType, data); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }

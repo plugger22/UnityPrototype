@@ -247,7 +247,7 @@ public class AIRebelManager : MonoBehaviour
                 SubInitialiseAllLate();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -259,7 +259,7 @@ public class AIRebelManager : MonoBehaviour
     private void SubInitialiseAllEarly()
     {
         //always (data could change in both situations)
-        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        numOfNodes = GameManager.i.dataScript.CheckNumOfNodes();
         Debug.Assert(numOfNodes > -1, "Invalid numOfNodes (-1)");
     }
     #endregion
@@ -268,23 +268,23 @@ public class AIRebelManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access     
-        playerID = GameManager.instance.playerScript.actorID;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        failedTargetChance = GameManager.instance.aiScript.targetAttemptChance;
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
-        conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
-        priorityHigh = GameManager.instance.aiScript.priorityHighWeight;
-        priorityMedium = GameManager.instance.aiScript.priorityMediumWeight;
-        priorityLow = GameManager.instance.aiScript.priorityLowWeight;
-        turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
-        maxStatValue = GameManager.instance.actorScript.maxStatValue;
-        maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
-        delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
-        arcFixer = GameManager.instance.dataScript.GetActorArc("FIXER");
+        playerID = GameManager.i.playerScript.actorID;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        failedTargetChance = GameManager.i.aiScript.targetAttemptChance;
+        conditionStressed = GameManager.i.dataScript.GetCondition("STRESSED");
+        conditionQuestionable = GameManager.i.dataScript.GetCondition("QUESTIONABLE");
+        conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
+        conditionDoomed = GameManager.i.dataScript.GetCondition("DOOMED");
+        conditionAutoRunTest = GameManager.i.testScript.conditionResistance;
+        priorityHigh = GameManager.i.aiScript.priorityHighWeight;
+        priorityMedium = GameManager.i.aiScript.priorityMediumWeight;
+        priorityLow = GameManager.i.aiScript.priorityLowWeight;
+        turnForCondition = GameManager.i.testScript.conditionTurnResistance;
+        maxStatValue = GameManager.i.actorScript.maxStatValue;
+        maxNumOfOnMapActors = GameManager.i.actorScript.maxNumOfOnMapActors;
+        delayNoSpider = GameManager.i.nodeScript.nodeNoSpiderDelay;
+        delayYesSpider = GameManager.i.nodeScript.nodeYesSpiderDelay;
+        arcFixer = GameManager.i.dataScript.GetActorArc("FIXER");
         actorRemoveActionDoubled = "ActorRemoveActionDoubled";
         actorRemoveActionHalved = "ActorRemoveActionHalved";
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
@@ -320,14 +320,14 @@ public class AIRebelManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //player (human / AI revert to human)
-        playerName = GameManager.instance.playerScript.GetPlayerNameResistance();
+        playerName = GameManager.i.playerScript.GetPlayerNameResistance();
         /*playerTag = GameManager.instance.campaignScript.scenario.leaderResistance.tag;
         playerBackground = GameManager.instance.campaignScript.scenario.descriptorResistance;*/
-        if (GameManager.instance.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
+        if (GameManager.i.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
         //gear pool
-        gearPool = GameManager.instance.campaignScript.scenario.leaderResistance.gearPoints;
+        gearPool = GameManager.i.campaignScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         //Rebel leader
         InitialiseRebelLeader();
@@ -348,19 +348,19 @@ public class AIRebelManager : MonoBehaviour
         //AFTER session specific initialisation
 
         //set initial move node to start position (will trigger a new targetNodeID)
-        targetNodeID = GameManager.instance.nodeScript.nodePlayer;
-        aiPlayerStartNodeID = GameManager.instance.nodeScript.nodePlayer;
+        targetNodeID = GameManager.i.nodeScript.nodePlayer;
+        aiPlayerStartNodeID = GameManager.i.nodeScript.nodePlayer;
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
-        GameManager.instance.playerScript.Invisibility = GameManager.instance.actorScript.maxStatValue;
+        GameManager.i.playerScript.Invisibility = GameManager.i.actorScript.maxStatValue;
         //set AI resource levels
-        GameManager.instance.dataScript.SetAIResources(globalResistance, GameManager.instance.campaignScript.scenario.leaderResistance.resourcesStarting);
+        GameManager.i.dataScript.SetAIResources(globalResistance, GameManager.i.campaignScript.scenario.leaderResistance.resourcesStarting);
         //autoRun test
-        if (GameManager.instance.testScript.conditionResistance != null && GameManager.instance.testScript.conditionTurnResistance > -1)
+        if (GameManager.i.testScript.conditionResistance != null && GameManager.i.testScript.conditionTurnResistance > -1)
         {
             isAutoRunTest = true;
-            turnForCondition = GameManager.instance.testScript.conditionTurnResistance;
-            conditionAutoRunTest = GameManager.instance.testScript.conditionResistance;
+            turnForCondition = GameManager.i.testScript.conditionTurnResistance;
+            conditionAutoRunTest = GameManager.i.testScript.conditionResistance;
         }
         else { isAutoRunTest = false; }
     }
@@ -401,30 +401,30 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void InitialiseRebelLeader()
     {
-        survivalMove = GameManager.instance.campaignScript.scenario.leaderResistance.moveChance;
-        playerAction = GameManager.instance.campaignScript.scenario.leaderResistance.playerChance;
-        targetAttemptMinOdds = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
-        targetAttemptPlayerChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptPlayerChance;
-        targetAttemptActorChance = GameManager.instance.campaignScript.scenario.leaderResistance.targetAttemptActorChance;
-        dismissChance = GameManager.instance.actorScript.dismissQuestionableChance;
-        priorityStressLeavePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeavePlayer);
-        priorityStressLeaveActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.stressLeaveActor);
-        priorityMovePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.movePriority);
-        priorityIdlePlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.idlePriority);
-        priorityAnarchistTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskAnarchist);
-        priorityBloggerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskBlogger);
-        priorityFixerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskFixer);
-        priorityHackerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHacker);
-        priorityHeavyTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskHeavy);
-        priorityObserverTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskObserver);
-        priorityOperatorTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskOperator);
-        priorityPlannerTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskPlanner);
-        priorityRecruiterTask = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.taskRecruiter);
-        priorityTargetPlayer = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetPlayer);
-        priorityTargetActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.targetActor);
-        priorityFactionApproval = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.approvalPriority);
-        priorityReserveActors = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageReserve);
-        priorityQuestionableActor = GetPriority(GameManager.instance.campaignScript.scenario.leaderResistance.manageQuestionable);
+        survivalMove = GameManager.i.campaignScript.scenario.leaderResistance.moveChance;
+        playerAction = GameManager.i.campaignScript.scenario.leaderResistance.playerChance;
+        targetAttemptMinOdds = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
+        targetAttemptPlayerChance = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptPlayerChance;
+        targetAttemptActorChance = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptActorChance;
+        dismissChance = GameManager.i.actorScript.dismissQuestionableChance;
+        priorityStressLeavePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.stressLeavePlayer);
+        priorityStressLeaveActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.stressLeaveActor);
+        priorityMovePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.movePriority);
+        priorityIdlePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.idlePriority);
+        priorityAnarchistTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskAnarchist);
+        priorityBloggerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskBlogger);
+        priorityFixerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskFixer);
+        priorityHackerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskHacker);
+        priorityHeavyTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskHeavy);
+        priorityObserverTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskObserver);
+        priorityOperatorTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskOperator);
+        priorityPlannerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskPlanner);
+        priorityRecruiterTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskRecruiter);
+        priorityTargetPlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.targetPlayer);
+        priorityTargetActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.targetActor);
+        priorityFactionApproval = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.approvalPriority);
+        priorityReserveActors = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.manageReserve);
+        priorityQuestionableActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.manageQuestionable);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");
@@ -484,7 +484,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     public void ProcessAI()
     {
-        int numOfAutoRunTurns = GameManager.instance.autoRunTurns - 1;
+        int numOfAutoRunTurns = GameManager.i.autoRunTurns - 1;
         isConnectionsChanged = false;
         //debugging
         if (isAutoRunTest == true)
@@ -582,7 +582,7 @@ public class AIRebelManager : MonoBehaviour
         //top up reserve actors if last turn of AutoRun
         if (numOfAutoRunTurns > 0 && isPlayer == true)
         {
-            if (numOfAutoRunTurns == GameManager.instance.turnScript.Turn)
+            if (numOfAutoRunTurns == GameManager.i.turnScript.Turn)
             { ExecuteReserveTask(); }
         }
     }
@@ -606,7 +606,7 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Sighting Reports
         //
-        int threshold = GameManager.instance.turnScript.Turn - 1;
+        int threshold = GameManager.i.turnScript.Turn - 1;
         //NEMESIS reports entries that are older than 'x' turns ago
         int count = listOfNemesisReports.Count;
         if (count > 0)
@@ -633,7 +633,7 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         //ERASURE reports entries that are older than last turn
-        threshold = GameManager.instance.turnScript.Turn;
+        threshold = GameManager.i.turnScript.Turn;
         count = listOfErasureReports.Count;
         if (count > 0)
         {
@@ -687,7 +687,7 @@ public class AIRebelManager : MonoBehaviour
         actionAllowance = actionsBase;
         actionsUsed = 0;
         //security state
-        security = GameManager.instance.turnScript.authoritySecurityState;
+        security = GameManager.i.turnScript.authoritySecurityState;
         //renown (equivalent to resources for AI Rebel player)
         ProcessResources();
         //conditions
@@ -715,7 +715,7 @@ public class AIRebelManager : MonoBehaviour
                     Debug.Assert(message.data1 > -1 && message.data1 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data1));
                     //add to Nemesis list
                     AITracker trackerContact = new AITracker(message.data1, message.turnCreated);
-                    Contact contact = GameManager.instance.dataScript.GetContact(message.data2);
+                    Contact contact = GameManager.i.dataScript.GetContact(message.data2);
                     if (contact != null)
                     { trackerContact.data1 = contact.effectiveness; }
                     else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
@@ -738,7 +738,7 @@ public class AIRebelManager : MonoBehaviour
                     Debug.Assert(message.data1 > -1 && message.data1 < numOfNodes, string.Format("Invalid nodeID {0} (less than Zero or >= numOfNodes)", message.data1));
                     //add to Erasure Team list
                     AITracker trackerContactTeam = new AITracker(message.data1, message.turnCreated);
-                    Contact contactTeam = GameManager.instance.dataScript.GetContact(message.data2);
+                    Contact contactTeam = GameManager.i.dataScript.GetContact(message.data2);
                     if (contactTeam != null)
                     { trackerContactTeam.data1 = contactTeam.effectiveness; }
                     else { Debug.LogErrorFormat("Invalid contact (Null) for contactID {0}", message.data2); }
@@ -770,7 +770,7 @@ public class AIRebelManager : MonoBehaviour
         stressedActorID = -1;
         questionableID = -1;
         //check for conditions
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)
         {
             int count = listOfConditions.Count;
@@ -791,7 +791,7 @@ public class AIRebelManager : MonoBehaviour
                                 if (actionAllowance > 1)
                                 {
                                     //Restricts actions
-                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, globalResistance) == true)
+                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, globalResistance) == true)
                                     {
                                         actionAllowance = 1;
                                         Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateAdmin: Rebel AI Player WOUNDED. Maximum one action{0}", "\n");
@@ -826,7 +826,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessSpiderData()
     {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             //loop nodes looking for ones where the Spider is known to be
@@ -943,7 +943,7 @@ public class AIRebelManager : MonoBehaviour
         if (isConnectionsChanged == true)
         {
             //save connection state prior to changing
-            GameManager.instance.connScript.SaveConnections();
+            GameManager.i.connScript.SaveConnections();
             //change connections based on selected NEMESIS sighting report
             if (sightingNemesis != null)
             {
@@ -968,7 +968,7 @@ public class AIRebelManager : MonoBehaviour
                     if (security == AuthoritySecurityState.SecurityAlert)
                     {
                         //all neighbouring nodes of erasure team sighting are added to the listOfBadNodes
-                        Node node = GameManager.instance.dataScript.GetNode(sightingErasure.nodeID);
+                        Node node = GameManager.i.dataScript.GetNode(sightingErasure.nodeID);
                         if (node != null)
                         {
                             List<Node> listOfNeighbours = node.GetNeighbouringNodes();
@@ -984,7 +984,7 @@ public class AIRebelManager : MonoBehaviour
                 }
             }
             //recalculate weighted data
-            GameManager.instance.dijkstraScript.RecalculateWeightedData();
+            GameManager.i.dijkstraScript.RecalculateWeightedData();
         }
     }
 
@@ -1031,7 +1031,7 @@ public class AIRebelManager : MonoBehaviour
     private void UpdateNodeConnectionSecurity(SightingData sight)
     {
         ConnectionType sightLevel = ConnectionType.None;
-        Node node = GameManager.instance.dataScript.GetNode(sight.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(sight.nodeID);
         if (node != null)
         {
             List<Connection> listOfConnections = node.GetListOfConnections();
@@ -1096,7 +1096,7 @@ public class AIRebelManager : MonoBehaviour
         int priorityLevel = 0;
         SightingData sighting = null;
         //set a base priority
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         int turnsAgo = turn - tracker.turn;
         /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ConvertTrackerToSighting: t:{0}, turnsAgo: {1}, nodeID {2}, contact eff {3}{4}", tracker.turn, turnsAgo, tracker.data0, tracker.data1, "\n");*/
         switch (turnsAgo)
@@ -1120,7 +1120,7 @@ public class AIRebelManager : MonoBehaviour
                 break;
         }
         //adjust for AI rebel player invisibility
-        switch (GameManager.instance.playerScript.Invisibility)
+        switch (GameManager.i.playerScript.Invisibility)
         {
             case 3:
                 //max level
@@ -1170,7 +1170,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessTargetData()
     {
-        List<Target> listOfTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+        List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
         if (listOfTargets != null)
         {
             //temp dict with key -> Target, value -> distance (weighted)
@@ -1179,14 +1179,14 @@ public class AIRebelManager : MonoBehaviour
             int count = listOfTargets.Count;
             if (count > 0)
             {
-                int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+                int playerNodeID = GameManager.i.nodeScript.nodePlayer;
                 //loop targets and get weighted distance to each
                 for (int i = 0; i < count; i++)
                 {
                     Target target = listOfTargets[i];
                     if (target != null)
                     {
-                        distance = GameManager.instance.dijkstraScript.GetDistanceWeighted(playerNodeID, target.nodeID);
+                        distance = GameManager.i.dijkstraScript.GetDistanceWeighted(playerNodeID, target.nodeID);
                         /*Debug.LogFormat("[Tst] AIRebelManager.cs -> ProcessTargetData: playerNodeID {0}, targetNodeID {1} DISTANCE {2}{3}", playerNodeID, target.nodeID, distance, "\n");*/
                         if (distance > -1)
                         {
@@ -1221,26 +1221,26 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessPeopleData()
     {
-        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
-        int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
+        int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
+        int numOfActors = GameManager.i.dataScript.CheckNumOfOnMapActors(globalResistance);
         //Stress Leave
         if (resources >= stressLeaveCost)
         {
             if (isPlayerStressed)
             {
                 //must have max invis
-                if (GameManager.instance.playerScript.Invisibility == maxStatValue)
+                if (GameManager.i.playerScript.Invisibility == maxStatValue)
                 { stressedActorID = playerID; }
             }
         }
         //check  Resistance actors
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -1298,13 +1298,13 @@ public class AIRebelManager : MonoBehaviour
     {
         int index;
         //get by value as we'll be deleting
-        List<ActorArc> tempList = new List<ActorArc>(GameManager.instance.dataScript.GetListOfResistanceActorArcs());
+        List<ActorArc> tempList = new List<ActorArc>(GameManager.i.dataScript.GetListOfResistanceActorArcs());
         if (tempList != null)
         {
             //Filter out any arcs that match OnMap actors and who are currently not Active -> reverse loop tempList
             tempList = FilterActorArcList(tempList);
             //Randomly select from filtered pool of actorArcs
-            int limit = GameManager.instance.dataScript.CheckNumOfActiveActors(globalResistance);
+            int limit = GameManager.i.dataScript.CheckNumOfActiveActors(globalResistance);
             if (limit > tempList.Count)
             {
                 Debug.LogWarningFormat("There are not enough actorArcs in the pool (need {0}, have {1})", limit, tempList.Count);
@@ -1339,10 +1339,10 @@ public class AIRebelManager : MonoBehaviour
                 if (arc != null)
                 {
                     //is ActorArc present in the current OnMap lineup?
-                    if (GameManager.instance.dataScript.CheckActorArcPresent(arc, globalResistance, true) == true)
+                    if (GameManager.i.dataScript.CheckActorArcPresent(arc, globalResistance, true) == true)
                     {
                         //check actor is Active
-                        if (GameManager.instance.dataScript.CheckActorPresent(arc.name, globalResistance) < 0)
+                        if (GameManager.i.dataScript.CheckActorPresent(arc.name, globalResistance) < 0)
                         {
                             //remove that arc from the list as actors who aren't currently active can't perform actions
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> FilterActorArcList: {0} removed from pool as actor OnMap and NOT ACTIVE{1}", arc.name, "\n");
@@ -1365,27 +1365,27 @@ public class AIRebelManager : MonoBehaviour
     {
         int resources;
         int rnd = Random.Range(0, 100);
-        int approvalResistance = GameManager.instance.hqScript.ApprovalResistance;
-        int renownPerTurn = GameManager.instance.hqScript.renownPerTurn;
+        int approvalResistance = GameManager.i.hqScript.ApprovalResistance;
+        int renownPerTurn = GameManager.i.hqScript.renownPerTurn;
         int threshold = approvalResistance * 10;
-        factionResistance = GameManager.instance.hqScript.hQResistance;
+        factionResistance = GameManager.i.hqScript.hQResistance;
         if (factionResistance != null)
         {
-            resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+            resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
             if (rnd < threshold)
             {
                 //Support given
                 resources += resourcesAllowance;
-                GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                GameManager.i.dataScript.SetAIResources(globalResistance, resources);
                 //Support Provided
                 Debug.LogFormat("[Rnd] FactionManager.cs -> CheckFactionSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                 if (isPlayer == true)
                 {
                     string msgText = string.Format("{0} provides +{1} SUPPORT (now {2} Resource{3})", factionResistance.name, resourcesAllowance, resources, resources != 1 ? "s" : "");
-                    GameManager.instance.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Renown, renownPerTurn);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: {0}", msgText);
                     //random
-                    GameManager.instance.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
+                    GameManager.i.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
                 }
             }
             else
@@ -1395,10 +1395,10 @@ public class AIRebelManager : MonoBehaviour
                 if (isPlayer == true)
                 {
                     string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                    GameManager.instance.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.instance.playerScript.Renown);
+                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Renown);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: No Support provided (now {0} Resource{1}){2}", resources, resources != 1 ? "s" : "", "\n");
                     //random
-                    GameManager.instance.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
+                    GameManager.i.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
                 }
             }
         }
@@ -1415,10 +1415,10 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessSurvivalTask()
     {
         int rnd, threshold, count;
-        int invisibility = GameManager.instance.playerScript.Invisibility;
-        int lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
-        int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
-        int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
+        int invisibility = GameManager.i.playerScript.Invisibility;
+        int lieLowTimer = GameManager.i.actorScript.lieLowTimer;
+        int playerNodeID = GameManager.i.nodeScript.nodePlayer;
+        int numOfActors = GameManager.i.dataScript.CheckNumOfOnMapActors(globalResistance);
         bool isSuccess = false;
         //can only take action if Active (Captured/Stressed/Lie Low etc. can't do anything)
         if (status == ActorStatus.Active)
@@ -1431,7 +1431,7 @@ public class AIRebelManager : MonoBehaviour
                 if (CheckForBadNode(playerNodeID, true) == true)
                 {
                     //first response -> Move away
-                    Node nodePlayer = GameManager.instance.dataScript.GetNode(playerNodeID);
+                    Node nodePlayer = GameManager.i.dataScript.GetNode(playerNodeID);
                     if (nodePlayer != null)
                     {
                         Node nodeMoveTo = GetRandomGoodNode(nodePlayer);
@@ -1550,13 +1550,13 @@ public class AIRebelManager : MonoBehaviour
                         {
                             List<Actor> listOfActors = new List<Actor>();
                             //loop actors and check for any < lieLowThreshold
-                            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
                             if (arrayOfActors != null)
                             {
                                 for (int i = 0; i < arrayOfActors.Length; i++)
                                 {
                                     //check actor is present in slot (not vacant)
-                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                                    if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                                     {
                                         Actor actor = arrayOfActors[i];
                                         if (actor != null)
@@ -1617,7 +1617,7 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessCureData()
     {
         //does player have a condition that comes with a cure?
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(globalResistance);
         
         //reset flags each turn
         isCureNeeded = false;
@@ -1642,7 +1642,7 @@ public class AIRebelManager : MonoBehaviour
                         {
                             isCureCritical = true;
                             //is there a cure available -> if so assign node to move towards (overrides all other cure nodes)
-                            node = GameManager.instance.dataScript.GetCureNode(conditionDoomed.cure);
+                            node = GameManager.i.dataScript.GetCureNode(conditionDoomed.cure);
                             if (node != null && node.cure.isActive == true)
                             { cureNodeID = node.nodeID; }
                             break;
@@ -1650,7 +1650,7 @@ public class AIRebelManager : MonoBehaviour
                         else
                         {
                             //non-critical condition -> take last one found with a cure as a node to move towards
-                            node = GameManager.instance.dataScript.GetCureNode(listOfConditions[i].cure);
+                            node = GameManager.i.dataScript.GetCureNode(listOfConditions[i].cure);
                             //can't override a critical condition cure node
                             if (node != null && isCureCritical == false && node.cure.isActive == true)
                             { cureNodeID = node.nodeID; }
@@ -1671,7 +1671,7 @@ public class AIRebelManager : MonoBehaviour
         //is there a valid cure node destination?
         if (cureNodeID > -1)
         {
-            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+            Node nodePlayer = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
             Node nodeMoveTo = null;
             Connection connection = null;
             bool isProceed = true;
@@ -1710,14 +1710,14 @@ public class AIRebelManager : MonoBehaviour
                 else
                 {
                     //check there is still a valid cure to move towards
-                    Node nodeCure = GameManager.instance.dataScript.GetNode(cureNodeID);
+                    Node nodeCure = GameManager.i.dataScript.GetNode(cureNodeID);
                     if (nodeCure != null)
                     {
                         if (nodeCure.cure != null)
                         {
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessCureTask: AI Player continues to move towards Cure at nodeID {0}{1}", cureNodeID, "\n");
                             //path to cure 
-                            List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, cureNodeID, true);
+                            List<Connection> pathList = GameManager.i.dijkstraScript.GetPath(nodePlayer.nodeID, cureNodeID, true);
                             //get next node in sequence
                             if (pathList != null)
                             {
@@ -1776,7 +1776,7 @@ public class AIRebelManager : MonoBehaviour
                     else { Debug.LogErrorFormat("Invalid nodeCure (Null) for nodeID {0}", cureNodeID); }
                 }
             }
-            else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+            else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer); }
         }
     }
 
@@ -1786,7 +1786,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void ProcessMoveToTargetTask()
     {
-        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        Node nodePlayer = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
         Node nodeMoveTo = null;
         Connection connection = null;
         bool isProceed = true;
@@ -1807,7 +1807,7 @@ public class AIRebelManager : MonoBehaviour
                         {
                             //assign new target
                             targetNodeID = record.Key.nodeID;
-                            nodeMoveTo = GameManager.instance.dataScript.GetNode(targetNodeID);
+                            nodeMoveTo = GameManager.i.dataScript.GetNode(targetNodeID);
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player at Target Node, new target chosen{0}", "\n");
                             break;
                         }
@@ -1820,7 +1820,7 @@ public class AIRebelManager : MonoBehaviour
                     int counter = 0;
                     do
                     {
-                        randomNode = GameManager.instance.dataScript.GetRandomNode();
+                        randomNode = GameManager.i.dataScript.GetRandomNode();
                         counter++;
                         if (counter > 10)
                         {
@@ -1839,7 +1839,7 @@ public class AIRebelManager : MonoBehaviour
             else
             { Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessMoveTask: AI Player continues to move towards target{0}", "\n"); }
             //path to target   
-            List<Connection> pathList = GameManager.instance.dijkstraScript.GetPath(nodePlayer.nodeID, targetNodeID, true);
+            List<Connection> pathList = GameManager.i.dijkstraScript.GetPath(nodePlayer.nodeID, targetNodeID, true);
             //get next node in sequence
             if (pathList != null)
             {
@@ -1886,7 +1886,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid nodeMoveTo (Null)"); }
         }
-        else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.instance.nodeScript.nodePlayer); }
+        else { Debug.LogErrorFormat("Invalid player node (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer); }
     }
 
 
@@ -1898,7 +1898,7 @@ public class AIRebelManager : MonoBehaviour
         int targetTally, rnd;
         string targetName;
         bool isSuccess = false;
-        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        Node nodePlayer = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
         //intel assumed to be used at max for any target attempt
         int intelTemp;
         if (targetIntel >= targetIntelAttempt) { intelTemp = targetIntelAttempt; }
@@ -1910,7 +1910,7 @@ public class AIRebelManager : MonoBehaviour
         //target present
         if (string.IsNullOrEmpty(targetName) == false)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(targetName);
+            Target target = GameManager.i.dataScript.GetTarget(targetName);
             if (target != null)
             {
                 //Live target
@@ -1923,7 +1923,7 @@ public class AIRebelManager : MonoBehaviour
                         //node not bad
                         if (CheckForBadNode(nodePlayer.nodeID) == false)
                         {
-                            targetTally = GameManager.instance.targetScript.GetTargetTallyAI(targetName);
+                            targetTally = GameManager.i.targetScript.GetTargetTallyAI(targetName);
                             targetTally += intelTemp;
                             if (gearPool > 0 && CheckGearAvailable(false) == true)
                             { targetTally++; }
@@ -1964,7 +1964,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 int numOfTasks = 0;
                 //is there at least on Live target available
-                List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
                 if (listOfLiveTargets != null)
                 {
                     int actorID;
@@ -1979,7 +1979,7 @@ public class AIRebelManager : MonoBehaviour
                             {
                                 if (CheckActorArcPresent(target.actorArc.name) == true)
                                 {
-                                    Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+                                    Node node = GameManager.i.dataScript.GetNode(target.nodeID);
                                     if (node != null)
                                     {
                                         //not a bad node
@@ -1992,7 +1992,7 @@ public class AIRebelManager : MonoBehaviour
                                                 if (rnd < targetAttemptActorChance)
                                                 {
                                                     //Actor present, check target odds
-                                                    targetTally = GameManager.instance.targetScript.GetTargetTallyAI(target.name);
+                                                    targetTally = GameManager.i.targetScript.GetTargetTallyAI(target.name);
                                                     targetTally += intelTemp;
                                                     if (gearPool > 0 && CheckGearAvailable(false) == true)
                                                     { targetTally++; }
@@ -2067,13 +2067,13 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessAdminTask()
     {
         //create a list of all active, current, onMap actors (used for AI decision logic)
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot & Active
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null && actor.Status == ActorStatus.Active)
@@ -2206,11 +2206,11 @@ public class AIRebelManager : MonoBehaviour
         //
         // - - - Approval Level - - -
         //
-        int approvalLevel = GameManager.instance.hqScript.ApprovalResistance;
+        int approvalLevel = GameManager.i.hqScript.ApprovalResistance;
         if (approvalLevel < factionSupportThreshold)
         {
             //check only if Player Active (node irrelevant in this situation as invisibility not an issue)
-            if (GameManager.instance.playerScript.status == ActorStatus.Active)
+            if (GameManager.i.playerScript.status == ActorStatus.Active)
             {
                 //generate task
                 AITask task = new AITask();
@@ -2236,7 +2236,7 @@ public class AIRebelManager : MonoBehaviour
         //generate task
         AITask task = new AITask();
         task.type = AITaskType.Idle;
-        task.data0 = GameManager.instance.nodeScript.nodePlayer;
+        task.data0 = GameManager.i.nodeScript.nodePlayer;
         task.data1 = playerID;
         task.priority = priorityIdlePlayer;        
         //add task to list of potential tasks
@@ -2258,7 +2258,7 @@ public class AIRebelManager : MonoBehaviour
                 if (CheckPlayerAction(actorArcName) == true)
                 {
                     actorID = playerID;
-                    nodeID = GameManager.instance.nodeScript.nodePlayer;
+                    nodeID = GameManager.i.nodeScript.nodePlayer;
                 }
                 else
                 {
@@ -2298,7 +2298,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2335,7 +2335,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2372,7 +2372,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2410,7 +2410,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2448,7 +2448,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2485,7 +2485,7 @@ public class AIRebelManager : MonoBehaviour
         if (CheckPlayerAction(actorArcName) == true)
         {
             actorID = playerID;
-            nodeID = GameManager.instance.nodeScript.nodePlayer;
+            nodeID = GameManager.i.nodeScript.nodePlayer;
         }
         else
         {
@@ -2524,7 +2524,7 @@ public class AIRebelManager : MonoBehaviour
             if (CheckPlayerAction(actorArcName) == true)
             {
                 actorID = playerID;
-                nodeID = GameManager.instance.nodeScript.nodePlayer;
+                nodeID = GameManager.i.nodeScript.nodePlayer;
             }
             else
             {
@@ -2561,14 +2561,14 @@ public class AIRebelManager : MonoBehaviour
         int actorID = -1;
         int nodeID = -1;
         //check if vacancy in current line-up
-        int slotID = GameManager.instance.dataScript.CheckForSpareActorSlot(globalResistance);
+        int slotID = GameManager.i.dataScript.CheckForSpareActorSlot(globalResistance);
         if (slotID > -1)
         {
             //Player does action?
             if (CheckPlayerAction(actorArcName) == true)
             {
                 actorID = playerID;
-                nodeID = GameManager.instance.nodeScript.nodePlayer;
+                nodeID = GameManager.i.nodeScript.nodePlayer;
             }
             else
             {
@@ -2584,8 +2584,8 @@ public class AIRebelManager : MonoBehaviour
                 if (isAutoPlayer == true)
                 {
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessRecruiterTask: No viable option available, AUTOMATIC Player Recruit action invoked{0}", "\n");
-                    nodeID = GameManager.instance.nodeScript.nodePlayer;
-                    Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                    nodeID = GameManager.i.nodeScript.nodePlayer;
+                    Node node = GameManager.i.dataScript.GetNode(nodeID);
                     if (node != null)
                     {
                         if (CheckNodeCriteria("RECRUITER", node) == true)
@@ -2605,7 +2605,7 @@ public class AIRebelManager : MonoBehaviour
                 task.data2 = slotID;
                 task.name0 = actorArcName;
                 //priority can be automatically overidden depending on number of OnMap actors present
-                int numOfActors = GameManager.instance.dataScript.CheckNumOfOnMapActors(globalResistance);
+                int numOfActors = GameManager.i.dataScript.CheckNumOfOnMapActors(globalResistance);
                 if (numOfActors < actorNumThreshold)
                 {
                     if (isAutoPlayer == true)
@@ -2844,11 +2844,11 @@ public class AIRebelManager : MonoBehaviour
     private bool ExecuteMoveTask(AITask task, bool isAction = true)
     {
         bool isSuccess = false;
-        Node node = GameManager.instance.dataScript.GetNode(task.data0);
+        Node node = GameManager.i.dataScript.GetNode(task.data0);
         if (node != null)
         {
             //update player node
-            GameManager.instance.nodeScript.nodePlayer = node.nodeID;
+            GameManager.i.nodeScript.nodePlayer = node.nodeID;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteMoveTask: AI Player moves to {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
             //expend action
             if (isAction == true)
@@ -2857,7 +2857,7 @@ public class AIRebelManager : MonoBehaviour
             node.SetPlayerMoveNodes();
             isSuccess = true;
             //invisibility
-            Connection connection = GameManager.instance.dataScript.GetConnection(task.data1);
+            Connection connection = GameManager.i.dataScript.GetConnection(task.data1);
             if (connection != null)
             {
                 if (connection.SecurityLevel != ConnectionType.None)
@@ -2873,16 +2873,16 @@ public class AIRebelManager : MonoBehaviour
 
             //Tracker data
             HistoryRebelMove history = new HistoryRebelMove();
-            history.turn = GameManager.instance.turnScript.Turn;
+            history.turn = GameManager.i.turnScript.Turn;
             history.playerNodeID = node.nodeID;
-            history.invisibility = GameManager.instance.playerScript.Invisibility;
-            history.nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
-            GameManager.instance.dataScript.AddHistoryRebelMove(history);
+            history.invisibility = GameManager.i.playerScript.Invisibility;
+            history.nemesisNodeID = GameManager.i.nodeScript.nodeNemesis;
+            GameManager.i.dataScript.AddHistoryRebelMove(history);
 
             //Erasure team may pick up player  if invisibility 1 or less
-            if (GameManager.instance.playerScript.Invisibility <= 1)
+            if (GameManager.i.playerScript.Invisibility <= 1)
             {
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, playerID);
                 if (captureDetails != null)
                 {
                     //Player captured!
@@ -2890,10 +2890,10 @@ public class AIRebelManager : MonoBehaviour
                     EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> ExecuteMoveTask");
                 }
             }
-            if (GameManager.instance.playerScript.status != ActorStatus.Captured)
+            if (GameManager.i.playerScript.status != ActorStatus.Captured)
             {
                 //Nemesis, if at same node, can interact and damage player
-                GameManager.instance.nemesisScript.CheckNemesisAtPlayerNode(true);
+                GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
             }
         }
         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", task.data0);}
@@ -2907,8 +2907,8 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteLieLowTask(AITask task)
     {
-        Debug.Assert(GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
-            GameManager.instance.turnScript.authoritySecurityState));
+        Debug.Assert(GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.SurveillanceCrackdown, string.Format("Invalid authoritySecurityState {0}",
+            GameManager.i.turnScript.authoritySecurityState));
         string aiName = "Unknown";
         bool isSuccess = true;
         if (task.data1 == playerID)
@@ -2918,16 +2918,16 @@ public class AIRebelManager : MonoBehaviour
             //default data 
             status = ActorStatus.Inactive;
             inactiveStatus = ActorInactive.LieLow;
-            GameManager.instance.playerScript.isLieLowFirstturn = true;
+            GameManager.i.playerScript.isLieLowFirstturn = true;
             //message (only if human player after an autorun)
             if (isPlayer == true)
             {
-                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
                 Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
                 //message
                 string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
                 string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");
-                GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, playerID, globalResistance);
+                GameManager.i.messageScript.ActorStatus(text, "is LYING LOW", reason, playerID, globalResistance);
             }
             //expend action
             UseAction("Lie Low (Player)");
@@ -2935,7 +2935,7 @@ public class AIRebelManager : MonoBehaviour
         else
         {
             //Actor Lie Low
-            Actor actor = GameManager.instance.dataScript.GetActor(task.data1);
+            Actor actor = GameManager.i.dataScript.GetActor(task.data1);
             if (actor != null)
             {
                 aiName = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
@@ -2951,7 +2951,7 @@ public class AIRebelManager : MonoBehaviour
                     //message
                     string text = string.Format("{0} is lying Low. Status: {1}", aiName, actor.Status);
                     string reason = string.Format("is currently Lying Low and is{0}{1}<b>out of communication</b>", "\n", "\n");
-                    GameManager.instance.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, globalResistance);
+                    GameManager.i.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, globalResistance);
                 }
                 //expend action
                 UseAction("Lie Low (Actor)");
@@ -2961,7 +2961,7 @@ public class AIRebelManager : MonoBehaviour
         if (isSuccess == true)
         {
             //set lie low timer
-            GameManager.instance.actorScript.SetLieLowTimer();
+            GameManager.i.actorScript.SetLieLowTimer();
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteLieLowTask: \"{0}\", id {1} is LYING LOW at node ID {2}{3}", aiName, task.data1, task.data0, "\n");
         }
     }
@@ -2977,20 +2977,20 @@ public class AIRebelManager : MonoBehaviour
             string text = "Unknown";
             string actorName = "Unknown";
             string actorType = "Unknown";
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
             if (resources >= stressLeaveCost)
             {
                 //remove condition
                 if (task.data0 == playerID)
                 {
-                    actorName = GameManager.instance.playerScript.GetPlayerNameResistance();
+                    actorName = GameManager.i.playerScript.GetPlayerNameResistance();
                     actorType = "Player";
-                    isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalResistance, "Stress Leave");
+                    isSuccess = GameManager.i.playerScript.RemoveCondition(conditionStressed, globalResistance, "Stress Leave");
                     text = string.Format("{0}, Player, takes Stress Leave", actorName);
                 }
                 else
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
+                    Actor actor = GameManager.i.dataScript.GetActor(task.data0);
                     if (actor != null)
                     {
                         actorName = actor.actorName;
@@ -3005,7 +3005,7 @@ public class AIRebelManager : MonoBehaviour
                 if (isSuccess == true)
                 {
                     stressedActorID = -1;
-                    GameManager.instance.messageScript.ActorStressLeave(text, task.data0, globalResistance);
+                    GameManager.i.messageScript.ActorStressLeave(text, task.data0, globalResistance);
                     //expend resources
                     resources -= stressLeaveCost;
                     if (resources < 0)
@@ -3013,9 +3013,9 @@ public class AIRebelManager : MonoBehaviour
                         Debug.LogWarning("Not enough resources for Stress Leave");
                         resources = 0;
                     }
-                    GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                    GameManager.i.dataScript.SetAIResources(globalResistance, resources);
                     //statistic
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveResistance);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.StressLeaveResistance);
                     //expend action
                     UseAction(string.Format("give {0} Stress Leave", actorName));
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteStressLeaveTask: {0}, {1}, takes STRESS LEAVE, cost {2} resources{3}", actorName, actorType, stressLeaveCost, "\n");
@@ -3084,7 +3084,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node name
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
@@ -3103,7 +3103,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3140,7 +3140,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node name
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
@@ -3160,7 +3160,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3197,12 +3197,12 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node name
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName; nodeArc = node.Arc.name; nodeID = node.nodeID;
             //effect
-            GameManager.instance.actorScript.AddNewActorOnMapAI(globalResistance, node, task.data2);
+            GameManager.i.actorScript.AddNewActorOnMapAI(globalResistance, node, task.data2);
             //expend an action -> get actor Name
             if (task.data0 == playerID)
             {
@@ -3214,7 +3214,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3253,7 +3253,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3276,7 +3276,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3316,7 +3316,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3338,7 +3338,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3378,7 +3378,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3401,7 +3401,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3442,7 +3442,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3464,7 +3464,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3504,7 +3504,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3526,7 +3526,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3567,7 +3567,7 @@ public class AIRebelManager : MonoBehaviour
         int counter = 0;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3608,7 +3608,7 @@ public class AIRebelManager : MonoBehaviour
                 }
                 else
                 {
-                    actor = GameManager.instance.dataScript.GetActor(task.data0);
+                    actor = GameManager.i.dataScript.GetActor(task.data0);
                     if (actor != null)
                     {
                         actorName = actor.actorName;
@@ -3645,7 +3645,7 @@ public class AIRebelManager : MonoBehaviour
     {
         bool isSuccess = false;
         string reason = "Unknown";
-        Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+        Node nodePlayer = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
         //check situation
         if (task.data0 == nodePlayer.nodeID)
         {
@@ -3658,7 +3658,7 @@ public class AIRebelManager : MonoBehaviour
                     if (condition != null)
                     {
                         reason = string.Format("cure {0} condition", condition.tag);
-                        if (GameManager.instance.playerScript.RemoveCondition(condition, globalResistance, reason) == true)
+                        if (GameManager.i.playerScript.RemoveCondition(condition, globalResistance, reason) == true)
                         {
                             isSuccess = true;
                             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteCureTask: Player {0} condition CURED by {1} at {2}, {3}, ID {4}{5}", condition.tag, condition.cure.cureName,
@@ -3708,7 +3708,7 @@ public class AIRebelManager : MonoBehaviour
         int nodeID = -1;
         Actor actor = null;
         //get node
-        Node node = GameManager.instance.dataScript.GetNode(task.data1);
+        Node node = GameManager.i.dataScript.GetNode(task.data1);
         if (node != null)
         {
             nodeName = node.nodeName;
@@ -3726,7 +3726,7 @@ public class AIRebelManager : MonoBehaviour
             }
             else
             {
-                actor = GameManager.instance.dataScript.GetActor(task.data0);
+                actor = GameManager.i.dataScript.GetActor(task.data0);
                 if (actor != null)
                 {
                     actorName = actor.actorName;
@@ -3760,14 +3760,14 @@ public class AIRebelManager : MonoBehaviour
         Actor actor = null;
         if (isPlayerAction == false)
         {
-            actor = GameManager.instance.dataScript.GetActor(actorID);
+            actor = GameManager.i.dataScript.GetActor(actorID);
             if (actor != null)
             { actorArc = actor.arc.name; }
             else
             { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
         }
         //target
-        Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+        Target target = GameManager.i.dataScript.GetTarget(node.targetName);
         if (target != null)
         {
             //
@@ -3786,7 +3786,7 @@ public class AIRebelManager : MonoBehaviour
                     //set flags for immediate notification of rebel activity
                     if (isPlayerAction == true)
                     {
-                        if (GameManager.instance.playerScript.Invisibility == 0)
+                        if (GameManager.i.playerScript.Invisibility == 0)
                         { isZeroInvisibility = true; }
                     }
                     else
@@ -3804,7 +3804,7 @@ public class AIRebelManager : MonoBehaviour
             //
             // - - - Attempt Target - - -  
             //
-            int tally = GameManager.instance.targetScript.GetTargetTallyAI(target.name);
+            int tally = GameManager.i.targetScript.GetTargetTallyAI(target.name);
             //gear used for target attempt
             if (CheckGearAvailable() == true)
             {
@@ -3820,35 +3820,35 @@ public class AIRebelManager : MonoBehaviour
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetTask: {0} Intel used during target attempt (remaining Intel {1}){2}", usedIntel, targetIntel, "\n");
             tally += usedIntel;
             //convert to % chance
-            int chance = GameManager.instance.targetScript.GetTargetChance(tally);
+            int chance = GameManager.i.targetScript.GetTargetChance(tally);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}{1}", target.targetName, "\n");
             target.numOfAttempts++;
-            GameManager.instance.dataScript.StatisticIncrement(StatType.TargetAttempts);
+            GameManager.i.dataScript.StatisticIncrement(StatType.TargetAttempts);
             int roll = Random.Range(0, 100);
             if (roll < chance)
             {
                 //Success
                 isSuccessful = true;
-                GameManager.instance.dataScript.StatisticIncrement(StatType.TargetSuccesses);
-                target.turnSuccess = GameManager.instance.turnScript.Turn;
+                GameManager.i.dataScript.StatisticIncrement(StatType.TargetSuccesses);
+                target.turnSuccess = GameManager.i.turnScript.Turn;
                 //Ongoing effects then target moved to completed pool
                 if (target.ongoingEffect != null)
                 {
-                    GameManager.instance.dataScript.RemoveTargetFromPool(target, Status.Live);
-                    GameManager.instance.dataScript.AddTargetToPool(target, Status.Outstanding);
+                    GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Live);
+                    GameManager.i.dataScript.AddTargetToPool(target, Status.Outstanding);
                     target.targetStatus = Status.Outstanding;
                 }
                 //NO ongoing effects -> target  done with. 
                 else
-                { GameManager.instance.targetScript.SetTargetDone(target, node); }
+                { GameManager.i.targetScript.SetTargetDone(target, node); }
                 text = string.Format("Target \"{0}\" successfully attempted", target.targetName, "\n");
-                GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
+                GameManager.i.messageScript.TargetAttempt(text, node, actorID, target);
                 //random roll
                 Debug.LogFormat("[Rnd] AIRebelManager.cs -> ExecuteTargetAttempt: Target attempt SUCCESS need < {0}, rolled {1}{2}", chance, roll, "\n");
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, attempted SUCCESSFULLY by {1}, ID {2}, at nodeID {3}{4}", target.targetName, actorArc,
                     actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt SUCCESS", target.targetName);
-                GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
+                GameManager.i.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
             }
             else
             {
@@ -3856,7 +3856,7 @@ public class AIRebelManager : MonoBehaviour
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteTargetAttempt: Target {0}, attempt FAILED by {1}, ID {2}, at nodeID {3}{4}", target.targetName, actorArc,
                     actorID, node.nodeID, "\n");
                 text = string.Format("Target {0} attempt FAILED", target.targetName);
-                GameManager.instance.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
+                GameManager.i.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
             }
             //set isTargetKnown -> auto if success, % chance otherwise
             if (isSuccessful == true) { node.isTargetKnown = true; }
@@ -3896,7 +3896,7 @@ public class AIRebelManager : MonoBehaviour
                 //FAILED target attempt
                 listOfEffects.AddRange(target.listOfFailEffects);
                 text = string.Format("Target \"{0}\" unsuccessfully attempted", target.targetName, "\n");
-                GameManager.instance.messageScript.TargetAttempt(text, node, actorID, target);
+                GameManager.i.messageScript.TargetAttempt(text, node, actorID, target);
             }
             //Process effects
             EffectDataReturn effectReturn = new EffectDataReturn();
@@ -3904,11 +3904,11 @@ public class AIRebelManager : MonoBehaviour
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = "Target Attempt";
             //org name, if present (only applies to ContactOrg effect for Organisation targets but send regardless)
-            dataInput.dataName = GameManager.instance.targetScript.targetOrgName;
+            dataInput.dataName = GameManager.i.targetScript.targetOrgName;
             //handle any Ongoing effects of target completed -> only if target Successful
             if (isSuccessful == true && target.ongoingEffect != null)
             {
-                dataInput.ongoingID = GameManager.instance.effectScript.GetOngoingEffectID();
+                dataInput.ongoingID = GameManager.i.effectScript.GetOngoingEffectID();
                 dataInput.ongoingText = target.reasonText;
                 //add to target so it can link to effects
                 target.ongoingID = dataInput.ongoingID;
@@ -3920,7 +3920,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     if (effect != null)
                     {
-                        effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                        effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
                         if (effectReturn != null)
                         {
                             //exit effect loop on error
@@ -3946,7 +3946,7 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteFactionTask(AITask task)
     {
-        GameManager.instance.hqScript.ChangeHqApproval(1, globalResistance, "Rebel Leader lobbies HQ");
+        GameManager.i.hqScript.ChangeHqApproval(1, globalResistance, "Rebel Leader lobbies HQ");
         //action
         UseAction("raise Faction Approval Level");
     }
@@ -3957,12 +3957,12 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="task"></param>
     private void ExecuteDismissTask(AITask task)
     {
-        Actor actor = GameManager.instance.dataScript.GetActor(task.data0);
+        Actor actor = GameManager.i.dataScript.GetActor(task.data0);
         if (actor != null)
         {
             //calc renown/resources cost (need to do prior to DismissActorAI as secrets will be removed
             int numOfSecrets = actor.CheckNumOfSecrets();
-            int cost = numOfSecrets * GameManager.instance.actorScript.manageSecretRenown + GameManager.instance.actorScript.manageDismissRenown;
+            int cost = numOfSecrets * GameManager.i.actorScript.manageSecretRenown + GameManager.i.actorScript.manageDismissRenown;
             cost *= 2;
             //check trait -> Connected/Unconnected
             if (actor.CheckTraitEffect(actorRemoveActionDoubled) == true)
@@ -3976,14 +3976,14 @@ public class AIRebelManager : MonoBehaviour
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, UNCONNECTED, cost Halved{0}", "\n");
             }
             //Dismiss actor
-            if (GameManager.instance.actorScript.DismissActorAI(globalResistance, actor) == true)
+            if (GameManager.i.actorScript.DismissActorAI(globalResistance, actor) == true)
             {
                 //history
                 actor.AddHistory(new HistoryActor() { text = "Fired from active service" });
                 //deduct resources
-                int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
                 resources = Mathf.Max(0, resources - cost);
-                GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                GameManager.i.dataScript.SetAIResources(globalResistance, resources);
                 //admin
                 Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} Renown ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
             }
@@ -4016,7 +4016,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 //add the required number of actors to the reserve
                 for (int i = 0; i < numOfActors; i++)
-                { GameManager.instance.actorScript.AddNewActorReserveAI(globalResistance); }
+                { GameManager.i.actorScript.AddNewActorReserveAI(globalResistance); }
             }
         }
         else { Debug.LogError("Invalid RebelLeader.SO manageReserve priority (None)"); }
@@ -4049,9 +4049,9 @@ public class AIRebelManager : MonoBehaviour
         if (actor == null)
         {
             //Player -> Resources
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
             resources++;
-            GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+            GameManager.i.dataScript.SetAIResources(globalResistance, resources);
         }
         else
         {
@@ -4068,7 +4068,7 @@ public class AIRebelManager : MonoBehaviour
     private void UpdateInvisibilityMove(Connection connection, Node node)
     {
         int changeInvisibility = 0;
-        int aiPlayerInvisibility = GameManager.instance.playerScript.Invisibility;
+        int aiPlayerInvisibility = GameManager.i.playerScript.Invisibility;
         int aiDelay = 0;
         switch (connection.SecurityLevel)
         {
@@ -4097,23 +4097,23 @@ public class AIRebelManager : MonoBehaviour
             aiPlayerInvisibility = Mathf.Max(0, aiPlayerInvisibility);
             Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibility: Invisibility -1, now {0}{1}", aiPlayerInvisibility, "\n");
             //update player invisibility
-            GameManager.instance.playerScript.Invisibility = aiPlayerInvisibility;
+            GameManager.i.playerScript.Invisibility = aiPlayerInvisibility;
             //message
             string text = string.Format("AI Resistance Player has moved to {0}, {1}, id {2}, Invisibility now {3}", node.nodeName, node.Arc.name, node.nodeID, aiPlayerInvisibility);
-            GameManager.instance.messageScript.PlayerMove(text, node, changeInvisibility, aiDelay);
+            GameManager.i.messageScript.PlayerMove(text, node, changeInvisibility, aiDelay);
             //AI message
             string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
             if (aiDelay == 0)
             {
                 //moving while invisibility already 0 triggers immediate alert flag
-                GameManager.instance.aiScript.immediateFlagResistance = true;
+                GameManager.i.aiScript.immediateFlagResistance = true;
                 //AI Immediate notification
-                GameManager.instance.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (AI Player)", "Moving", node.nodeID, connection.connID);
+                GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (AI Player)", "Moving", node.nodeID, connection.connID);
             }
             else
             {
                 //AI delayed notification
-                GameManager.instance.messageScript.AIConnectionActivity(textAI, node, connection, aiDelay);
+                GameManager.i.messageScript.AIConnectionActivity(textAI, node, connection, aiDelay);
             }
         }
     }
@@ -4139,14 +4139,14 @@ public class AIRebelManager : MonoBehaviour
             actorID = playerID;
             actorName = playerName;
             actorArc = "Player";
-            aiInvisibility = GameManager.instance.playerScript.Invisibility;
+            aiInvisibility = GameManager.i.playerScript.Invisibility;
             //player did an action with invisibility zero
             if (aiInvisibility == 0)
             {
                 //delay of Zero
                 delay = 0;
                 //immediate flag true
-                GameManager.instance.aiScript.immediateFlagResistance = true;
+                GameManager.i.aiScript.immediateFlagResistance = true;
             }
             aiInvisibility -= 1;
             //double loss of invisibility if spider present
@@ -4155,12 +4155,12 @@ public class AIRebelManager : MonoBehaviour
             //min cap zero
             aiInvisibility = Mathf.Max(0, aiInvisibility);
             //update player Invisibility
-            GameManager.instance.playerScript.Invisibility = aiInvisibility;
+            GameManager.i.playerScript.Invisibility = aiInvisibility;
             //capture check
             if (aiInvisibility <= 1)
             {
                 //Erasure team picks up player immediately if invisibility 0
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, playerID);
+                CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, playerID);
                 if (captureDetails != null)
                 {
                     //Player captured!
@@ -4186,7 +4186,7 @@ public class AIRebelManager : MonoBehaviour
                 //delay of Zero
                 delay = 0;
                 //immediate flag true
-                GameManager.instance.aiScript.immediateFlagResistance = true;
+                GameManager.i.aiScript.immediateFlagResistance = true;
             }
             aiInvisibility -= 1;
             Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, invisibility -1, now {3}{4}", actorName, actorArc, actorID, aiInvisibility, "\n");
@@ -4204,7 +4204,7 @@ public class AIRebelManager : MonoBehaviour
             if (aiInvisibility <= 1)
             {
                 //Erasure team picks up actor immediately if invisibility 0
-                CaptureDetails captureDetails = GameManager.instance.captureScript.CheckCaptured(node.nodeID, actorID);
+                CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
                 if (captureDetails != null)
                 {
                     //actor captured!
@@ -4225,13 +4225,13 @@ public class AIRebelManager : MonoBehaviour
             else { delay = delayNoSpider; }
         }
         string text = string.Format("Resistance Activity \"{0}\" ({1})", actorArc, actorName);
-        GameManager.instance.messageScript.AINodeActivity(text, node, actorID, delay);
+        GameManager.i.messageScript.AINodeActivity(text, node, actorID, delay);
         //AI Immediate message
-        if (GameManager.instance.aiScript.immediateFlagResistance == true)
+        if (GameManager.i.aiScript.immediateFlagResistance == true)
         {
             text = string.Format("Immediate Activity \"{0}\" ({1})", actorArc, actorName);
             string reason = "district action";
-            GameManager.instance.messageScript.AIImmediateActivity(text, reason, node.nodeID, -1, actorID);
+            GameManager.i.messageScript.AIImmediateActivity(text, reason, node.nodeID, -1, actorID);
         }
         return isCaptured;
     }
@@ -4258,7 +4258,7 @@ public class AIRebelManager : MonoBehaviour
     private bool CheckPlayerAction(string actorArcName)
     {
         int rnd = -1;
-        int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+        int playerNodeID = GameManager.i.nodeScript.nodePlayer;
         bool isPlayerAction = false;
         string reasonNot = "Unknown";
         if (string.IsNullOrEmpty(actorArcName) == false)
@@ -4270,7 +4270,7 @@ public class AIRebelManager : MonoBehaviour
                 //pass a random check
                 if (rnd < playerAction)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(playerNodeID);
+                    Node node = GameManager.i.dataScript.GetNode(playerNodeID);
                     if (node != null)
                     {
                         if (CheckNodeCriteria(actorArcName, node) == true)
@@ -4299,7 +4299,7 @@ public class AIRebelManager : MonoBehaviour
     private int FindActor(ActorArc arc)
     {
         //is there an actor of this type present and Active
-        int actorID = GameManager.instance.dataScript.CheckActorPresent(arc.name, globalResistance);
+        int actorID = GameManager.i.dataScript.CheckActorPresent(arc.name, globalResistance);
         if (actorID < 0)
         {
             //select a random onMap, Active, actor
@@ -4322,7 +4322,7 @@ public class AIRebelManager : MonoBehaviour
         int count;
         int nodeID = -1;
         //get list of all nodes where actor has an active contact. 
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfActorContacts(actorID);
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfActorContacts(actorID);
         List<int> listOfNodeID = new List<int>();
         count = listOfNodes.Count();
         if (count > 0)
@@ -4367,7 +4367,7 @@ public class AIRebelManager : MonoBehaviour
         for (int i = 0; i < listOfCurrentActors.Count; i++)
         {
             //get actor network contact nodes
-            List<Node> tempList = GameManager.instance.dataScript.GetListOfActorContacts(listOfCurrentActors[i].actorID);
+            List<Node> tempList = GameManager.i.dataScript.GetListOfActorContacts(listOfCurrentActors[i].actorID);
             if (tempList != null)
             {
                 //add to list (by Value)
@@ -4422,7 +4422,7 @@ public class AIRebelManager : MonoBehaviour
                 tempNodeID = listOfSuitableNodes[i];
                 int actorToFind;
                 //already null checked, get list of actorID's who have contacts at node
-                listOfActorsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(tempNodeID);
+                listOfActorsAtNode = GameManager.i.dataScript.CheckContactResistanceAtNode(tempNodeID);
                 if (listOfActorsAtNode != null)
                 {
                     //look for a match with any OnMap, active, Actor. Take the first you get (listOfActorID has been randomly shuffled so no actor is favoured)
@@ -4601,11 +4601,11 @@ public class AIRebelManager : MonoBehaviour
             if (rnd < gearRenownChance)
             {
                 //deduct one resource but cannot go below zero
-                int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
                 if (resources > 0)
                 {
                     resources--;
-                    GameManager.instance.dataScript.SetAIResources(globalResistance, resources);
+                    GameManager.i.dataScript.SetAIResources(globalResistance, resources);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: 1 resource expended on Gear retention (need {0}, rolled {1}){2}", gearRenownChance, rnd, "\n");
                 }
             }
@@ -4646,7 +4646,7 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void RestoreConnections()
     {
-        GameManager.instance.connScript.RestoreConnections();
+        GameManager.i.connScript.RestoreConnections();
         Debug.LogFormat("[Rim] AIRebelManager.cs -> RestoreConnections: Connections Restored to original state prior to AIRebelManager.cs calc's{0}", "\n");
     }
 
@@ -4656,7 +4656,7 @@ public class AIRebelManager : MonoBehaviour
     private void RestoreDijkstraCalculations()
     {
         //recalculate weighted data
-        GameManager.instance.dijkstraScript.RecalculateWeightedData();
+        GameManager.i.dijkstraScript.RecalculateWeightedData();
         isConnectionsChanged = false;
     }
 
@@ -4680,7 +4680,7 @@ public class AIRebelManager : MonoBehaviour
     private int GetOnMapActor(string arcName)
     {
         int actorID = -1;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         List<int> listOfActiveActorID = new List<int>();
         if (arrayOfActors != null)
         {
@@ -4688,7 +4688,7 @@ public class AIRebelManager : MonoBehaviour
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -4883,22 +4883,22 @@ public class AIRebelManager : MonoBehaviour
     public string DebugShowRebelAIStatus()
     {
         StringBuilder builder = new StringBuilder();
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         builder.AppendFormat(" Resistance AI Status {0}{1}", "\n", "\n");
         //player stats
         builder.AppendFormat("- AI Player \"{0}\"{1}", playerName, "\n");
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
         builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
-        builder.AppendFormat(" Invisbility: {0}{1}", GameManager.instance.playerScript.Invisibility, "\n");
-        builder.AppendFormat(" Renown: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n");
-        builder.AppendFormat(" Doom Timer: {0}{1}", GameManager.instance.actorScript.doomTimer, "\n");
-        builder.AppendFormat(" Capture Timer: {0}{1}", GameManager.instance.actorScript.captureTimerPlayer, "\n");
+        builder.AppendFormat(" Invisbility: {0}{1}", GameManager.i.playerScript.Invisibility, "\n");
+        builder.AppendFormat(" Renown: {0}{1}", GameManager.i.dataScript.CheckAIResourcePool(globalResistance), "\n");
+        builder.AppendFormat(" Doom Timer: {0}{1}", GameManager.i.actorScript.doomTimer, "\n");
+        builder.AppendFormat(" Capture Timer: {0}{1}", GameManager.i.actorScript.captureTimerPlayer, "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");
         builder.AppendFormat(" Gear Used: {0}{1}", gearPointsUsed, "\n");
         builder.AppendFormat(" Target Intel: {0}{1}", targetIntel, "\n");
         builder.AppendFormat(" Target Intel Used: {0}{1}", targetIntelUsed, "\n");
 
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(globalResistance);
         if (listOfConditions != null)
         {
             builder.Append(string.Format("{0}- Conditions{1}", "\n", "\n"));
@@ -5029,20 +5029,20 @@ public class AIRebelManager : MonoBehaviour
     private void DebugTest()
     {
         //Add condition to a set actor/player at a set turn (condition assumed to not be Null due to code at initialisation)
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         //Add Condition
         if (turn == turnForCondition)
         {
-            int slotID = GameManager.instance.testScript.conditionWhoResistance;
+            int slotID = GameManager.i.testScript.conditionWhoResistance;
             //Resistance player stressed
             if (slotID == 999)
-            { GameManager.instance.playerScript.AddCondition(conditionAutoRunTest, globalResistance, "for Debugging"); }
+            { GameManager.i.playerScript.AddCondition(conditionAutoRunTest, globalResistance, "for Debugging"); }
             else if (slotID > -1 && slotID < 4)
             {
                 //Resistance actor given condition -> check present
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(slotID, globalResistance) == true)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalResistance);
+                    Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, globalResistance);
                     if (actor != null)
                     { actor.AddCondition(conditionAutoRunTest, "Debug Test Action"); }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
@@ -5097,14 +5097,14 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="dataName"></param>
     private void DebugCreateNodeActionActorRecord(int nodeID, Actor actor, NodeAction nodeAction, string dataName)
     {
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
         {
             if (actor != null)
             {
                 //actor action
                 NodeActionData nodeActionData = new NodeActionData()
                 {
-                    turn = GameManager.instance.turnScript.Turn,
+                    turn = GameManager.i.turnScript.Turn,
                     actorID = actor.actorID,
                     nodeID = nodeID,
                     dataName = dataName,
@@ -5128,19 +5128,19 @@ public class AIRebelManager : MonoBehaviour
     /// <param name="dataName"></param>
     private void DebugCreateNodeActionPlayerRecord(int nodeID, NodeAction nodeAction, string dataName)
     {
-        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+        if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
         {
                 //actor action
                 NodeActionData nodeActionData = new NodeActionData()
                 {
-                    turn = GameManager.instance.turnScript.Turn,
+                    turn = GameManager.i.turnScript.Turn,
                     actorID = 999,
                     nodeID = nodeID,
                     dataName = dataName,
                     nodeAction = nodeAction
                 };
                 //add to player's personal list
-                GameManager.instance.playerScript.AddNodeAction(nodeActionData);
+                GameManager.i.playerScript.AddNodeAction(nodeActionData);
                 /*Debug.LogFormat("[Tst] AIRebelManager.cs -> DebugCreateNodeActionPlayerRecord: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");*/
         }
     }

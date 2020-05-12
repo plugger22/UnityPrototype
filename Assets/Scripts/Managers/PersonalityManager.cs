@@ -128,11 +128,11 @@ public class PersonalityManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        arrayOfFactors = GameManager.instance.dataScript.GetArrayOfFactors();
-        arrayOfFactorTags = GameManager.instance.dataScript.GetArrayOfFactorTags();
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        playerPersonality = GameManager.instance.playerScript.GetPersonality();
+        arrayOfFactors = GameManager.i.dataScript.GetArrayOfFactors();
+        arrayOfFactorTags = GameManager.i.dataScript.GetArrayOfFactorTags();
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        playerPersonality = GameManager.i.playerScript.GetPersonality();
         Debug.Assert(arrayOfFactors != null, "Invalid arrayOfFactors (Null)");
         Debug.Assert(arrayOfFactorTags != null, "Invalid arrayOfFactorTags (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
@@ -165,17 +165,17 @@ public class PersonalityManager : MonoBehaviour
         //set compatibility of all current actors with each other
         SetAllActorsCompatibility();
         //update actorPanelUI for OnMap actors compatibility
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(GameManager.instance.sideScript.PlayerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(GameManager.i.sideScript.PlayerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
-                    { GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer()); }
+                    { GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer()); }
                 }
             }
         }
@@ -288,8 +288,8 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     private void SetAllActorsPersonality()
     {
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
-        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfActors();
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.i.dataScript.GetDictOfProfiles();
         if (dictOfProfiles != null)
         {
             if (dictOfActors != null)
@@ -326,8 +326,8 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     public void SetHqActorsCompatibility()
     {
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfHq();
-        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfHq();
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.i.dataScript.GetDictOfProfiles();
         if (dictOfProfiles != null)
         {
             if (dictOfActors != null)
@@ -374,7 +374,7 @@ public class PersonalityManager : MonoBehaviour
             //descriptors
             SetDescriptors(personality);
             //profile
-            CheckPersonalityProfile(GameManager.instance.dataScript.GetDictOfProfiles(), personality);
+            CheckPersonalityProfile(GameManager.i.dataScript.GetDictOfProfiles(), personality);
         }
         else { Debug.LogError("Invalid personality (Null)"); }
     }
@@ -456,23 +456,23 @@ public class PersonalityManager : MonoBehaviour
     /// </summary>
     public void SetAllActorsCompatibility()
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         if (side != null)
         {
             int compatibility;
             Actor firstActor, secondActor;
             Personality firstPersonality, secondPersonality;
             //reset all actors compatibility prior to updating
-            GameManager.instance.dataScript.ResetAllActorsCompatibility();
+            GameManager.i.dataScript.ResetAllActorsCompatibility();
             //you only need to check 1 less than the max number of actors in order
-            int numOfChecks = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
+            int numOfChecks = GameManager.i.actorScript.maxNumOfOnMapActors - 1;
             //loop slot #'s with an outer loop for first actor and inner loop for second (to compare against)
             for (int outer = 0; outer < numOfChecks; outer++)
             {
                 //first actor actor present in slot
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(outer, side) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(outer, side) == true)
                 {
-                    firstActor = GameManager.instance.dataScript.GetCurrentActor(outer, side);
+                    firstActor = GameManager.i.dataScript.GetCurrentActor(outer, side);
                     if (firstActor != null)
                     {
                         firstPersonality = firstActor.GetPersonality();
@@ -484,18 +484,18 @@ public class PersonalityManager : MonoBehaviour
                                 if (outer != inner)
                                 {
                                     //check second actor present in slot
-                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(inner, side) == true)
+                                    if (GameManager.i.dataScript.CheckActorSlotStatus(inner, side) == true)
                                     {
-                                        secondActor = GameManager.instance.dataScript.GetCurrentActor(inner, side);
+                                        secondActor = GameManager.i.dataScript.GetCurrentActor(inner, side);
                                         if (secondActor != null)
                                         {
                                             secondPersonality = secondActor.GetPersonality();
                                             if (secondPersonality != null)
                                             {
                                                 compatibility = CheckCompatibility(firstPersonality.GetFactors(), secondPersonality.GetFactors());
-                                                GameManager.instance.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
+                                                GameManager.i.dataScript.AddActorCompatibility(firstActor.slotID, secondActor.slotID, compatibility);
                                                 //if a slotID 3 actor need to add as last firstactor is ignored in loop
-                                                if (inner == numOfChecks) { GameManager.instance.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
+                                                if (inner == numOfChecks) { GameManager.i.dataScript.AddActorCompatibility(secondActor.slotID, firstActor.slotID, compatibility); }
                                             }
                                             else { Debug.LogErrorFormat("Invalid personality (Null) for secondActor, slotID {0}", inner); }
                                         }
@@ -642,7 +642,7 @@ public class PersonalityManager : MonoBehaviour
                             break;
                         }
                         //Get profile and add to personality
-                        PersonProfile profile = GameManager.instance.dataScript.GetProfile(profileName);
+                        PersonProfile profile = GameManager.i.dataScript.GetProfile(profileName);
                         if (profile != null)
                         {
                             personality.SetProfile(profileName);
@@ -674,7 +674,7 @@ public class PersonalityManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(actorArcName) == true)
         { actorArcName = "Unknown"; }
-        int mood = GameManager.instance.playerScript.GetMood();
+        int mood = GameManager.i.playerScript.GetMood();
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, actorArcName);
         return GetMoodMessage(results);
@@ -691,7 +691,7 @@ public class PersonalityManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(multiText) == true)
         { multiText = "Unknown"; }
-        int mood = GameManager.instance.playerScript.GetMood();
+        int mood = GameManager.i.playerScript.GetMood();
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(type, mood, multiText);
         int change = results.Item1;
@@ -699,7 +699,7 @@ public class PersonalityManager : MonoBehaviour
         string reason = results.Item4;
         //change mood, add history item, stressed condition added if mood < 0
         if (change != 0)
-        { GameManager.instance.playerScript.ChangeMood(change, reason, factorName); }
+        { GameManager.i.playerScript.ChangeMood(change, reason, factorName); }
         //outcome message string (formatted)
         return GetMoodMessage(results);
     }
@@ -793,7 +793,7 @@ public class PersonalityManager : MonoBehaviour
             factorName = actionBelief.factor.tag;
             factorType = actionBelief.type.name;
             //get index of factor array
-            int index = GameManager.instance.dataScript.GetFactorIndex(actionBelief.factor.name);
+            int index = GameManager.i.dataScript.GetFactorIndex(actionBelief.factor.name);
             if (index > -1)
             {
                 //get value of player's corresponding factor
@@ -848,7 +848,7 @@ public class PersonalityManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(actorArcName) == true)
         { actorArcName = "Unknown"; }
-        int mood = GameManager.instance.playerScript.GetMood();
+        int mood = GameManager.i.playerScript.GetMood();
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(belief, mood, actorArcName);
         return GetMoodMessage(results);
@@ -865,7 +865,7 @@ public class PersonalityManager : MonoBehaviour
     {
         string tooltip = "Unknown";
         //get index of factor array
-        int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
+        int index = GameManager.i.dataScript.GetFactorIndex(belief.factor.name);
         if (index > -1)
         {
             //get value of player's corresponding factor
@@ -905,7 +905,7 @@ public class PersonalityManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(multiText) == true)
         { multiText = "Unknown"; }
-        int mood = GameManager.instance.playerScript.GetMood();
+        int mood = GameManager.i.playerScript.GetMood();
         //get the effect
         Tuple<int, string, string, string, string, bool> results = CheckMoodEffect(belief, mood, multiText);
         int change = results.Item1;
@@ -913,7 +913,7 @@ public class PersonalityManager : MonoBehaviour
         string reason = results.Item4;
         //change mood, add history item, stressed condition added if mood < 0
         if (change != 0)
-        { GameManager.instance.playerScript.ChangeMood(change, reason, factorName); }
+        { GameManager.i.playerScript.ChangeMood(change, reason, factorName); }
         //outcome message string (formatted)
         return GetMoodMessage(results);
     }
@@ -930,7 +930,7 @@ public class PersonalityManager : MonoBehaviour
         if (isHQPreferredOption == false && isHQIgnoredOption == false && isHQDislikeOption == false)
         {
             //get index of factor array
-            int index = GameManager.instance.dataScript.GetFactorIndex(belief.factor.name);
+            int index = GameManager.i.dataScript.GetFactorIndex(belief.factor.name);
             if (index > -1)
             {
                 //get value of player's corresponding factor
@@ -999,7 +999,7 @@ public class PersonalityManager : MonoBehaviour
             factorName = actionBelief.factor.tag;
             factorType = actionBelief.type.name;
             //get index of factor array
-            int index = GameManager.instance.dataScript.GetFactorIndex(actionBelief.factor.name);
+            int index = GameManager.i.dataScript.GetFactorIndex(actionBelief.factor.name);
             if (index > -1)
             {
                 //get value of player's corresponding factor
@@ -1077,10 +1077,10 @@ public class PersonalityManager : MonoBehaviour
         {
 
             //Player stressed, show mood change in grey to indicate that effect will have no impact
-            if (GameManager.instance.playerScript.isStressed == false)
+            if (GameManager.i.playerScript.isStressed == false)
             {
                 //player may be immune to stress (drugs)
-                if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
+                if (GameManager.i.playerScript.stressImmunityCurrent == 0)
                 { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : ""); }
                 else { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", IMMUNE" : ""); }
                 builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.badText));
@@ -1088,13 +1088,13 @@ public class PersonalityManager : MonoBehaviour
             else
             {
                 //already stressed prior to becoming stressed again -> Super Stressed!
-                if (GameManager.instance.playerScript.stressImmunityCurrent == 0)
+                if (GameManager.i.playerScript.stressImmunityCurrent == 0)
                 { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "SUPER STRESSED" : ""); }
                 else { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "IMMUNE" : ""); }
                 builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.badText));
             }
         }
-        if (GameManager.instance.optionScript.fullMoodInfo == true)
+        if (GameManager.i.optionScript.fullMoodInfo == true)
         {
             //second line of msg -> determining factor
             builder.AppendLine();
@@ -1144,17 +1144,17 @@ public class PersonalityManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-OnMap Personalities{0}{1}", "\n", "\n");
         //player
-        builder.AppendFormat("-Player {0}{1}", GameManager.instance.playerScript.PlayerName, "\n");
-        builder.Append(DebugDisplayIndividualPersonality(GameManager.instance.playerScript.GetPersonality()));
+        builder.AppendFormat("-Player {0}{1}", GameManager.i.playerScript.PlayerName, "\n");
+        builder.Append(DebugDisplayIndividualPersonality(GameManager.i.playerScript.GetPersonality()));
         builder.AppendLine();
         //OnMap actors
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -1223,11 +1223,11 @@ public class PersonalityManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-HQ Personalities{0}{1}", "\n", "\n");
         //player
-        builder.AppendFormat("-Player {0}{1}", GameManager.instance.playerScript.PlayerName, "\n");
-        builder.Append(DebugDisplayIndividualPersonality(GameManager.instance.playerScript.GetPersonality()));
+        builder.AppendFormat("-Player {0}{1}", GameManager.i.playerScript.PlayerName, "\n");
+        builder.Append(DebugDisplayIndividualPersonality(GameManager.i.playerScript.GetPersonality()));
         builder.AppendLine();
         //OnMap actors
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -1324,7 +1324,7 @@ public class PersonalityManager : MonoBehaviour
     public string DebugCheckActorCompatibilityRange()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
             float tally = 0.0f;
@@ -1353,14 +1353,14 @@ public class PersonalityManager : MonoBehaviour
         int count;
         builder.AppendFormat("- Emotional History{0}{1}", "\n", "\n");
         //loop OnMap actors
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -1575,16 +1575,16 @@ public class PersonalityManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorCompatibility()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Actor Compatibility with other Actors{0}", "\n");
-        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.i.dataScript.GetDictOfRelations();
         if (dictOfRelations != null)
         {
             foreach (var relation in dictOfRelations)
             {
                 builder.AppendLine();
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(relation.Key, playerSide);
+                Actor actor = GameManager.i.dataScript.GetCurrentActor(relation.Key, playerSide);
                 if (actor != null)
                 {
                     builder.AppendFormat(" {0}, {1}, ID {2}, slotID {3}{4}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
@@ -1594,7 +1594,7 @@ public class PersonalityManager : MonoBehaviour
                     { builder.AppendFormat("  No current relationship{0}", "\n"); }
                     else
                     {
-                        Actor actorOther = GameManager.instance.dataScript.GetActor(relation.Value.actorID);
+                        Actor actorOther = GameManager.i.dataScript.GetActor(relation.Value.actorID);
                         if (actorOther != null)
                         {
                             builder.AppendFormat("  {0} with {1}, actorID {2}, slotID {3}{4}", relation.Value.relationship == ActorRelationship.Friend ? "Friends" : "Enemies",

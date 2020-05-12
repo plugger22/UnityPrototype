@@ -67,7 +67,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseEarly(Mayor mayor)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
                 SubInitialiseAllEarly(mayor);
@@ -84,7 +84,7 @@ public class CityManager : MonoBehaviour
                 SubInitialiseAllEarly(mayor);
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -95,7 +95,7 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate()
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
                 SubInitialiseLevelStart();
@@ -113,7 +113,7 @@ public class CityManager : MonoBehaviour
                 SubInitialiseAllLate();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -124,8 +124,8 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseAllEarly(Mayor mayor)
     {
         //use a random city if GameManager dev option set true, uses Scenario specified city otherwise
-        if (GameManager.instance.isRandomCity == true)
-        { city = GameManager.instance.dataScript.GetRandomCity(); }
+        if (GameManager.i.isRandomCity == true)
+        { city = GameManager.i.dataScript.GetRandomCity(); }
 
         isLoyaltyCheckedThisTurn = false;
         loyaltyMinTimer = 0;
@@ -152,7 +152,7 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
-        int loyalty = GameManager.instance.campaignScript.scenario.cityStartLoyalty;
+        int loyalty = GameManager.i.campaignScript.scenario.cityStartLoyalty;
         if (loyalty == 0) { loyalty = Random.Range(2, 9); }
         CityLoyalty = loyalty;
     }
@@ -162,11 +162,11 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseAllLate()
     {
         //initialise number of districts
-        city.SetDistrictTotals(GameManager.instance.dataScript.GetNodeTypeTotals());
+        city.SetDistrictTotals(GameManager.i.dataScript.GetNodeTypeTotals());
         /*//organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);*/
         //set up base panel UI
-        GameManager.instance.basePanelScript.SetNames(city.tag, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.instance.guiScript.alphaBaseText);
+        GameManager.i.basePanelScript.SetNames(city.tag, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.i.guiScript.alphaBaseText);
     }
     #endregion
 
@@ -201,17 +201,17 @@ public class CityManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourAuthority = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourRebel = GameManager.i.colourScript.GetColour(ColourType.blueText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
         //current Player side colour
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
     }
@@ -281,7 +281,7 @@ public class CityManager : MonoBehaviour
         string text = "";
         if (_cityLoyalty == 0 || _cityLoyalty == 10 && isLoyaltyCheckedThisTurn == true)
         {
-            switch (GameManager.instance.sideScript.PlayerSide.level)
+            switch (GameManager.i.sideScript.PlayerSide.level)
             {
                 case 1:
                     //Authority
@@ -448,7 +448,7 @@ public class CityManager : MonoBehaviour
         bool isMinLoyalty = false;
         string msgText, itemText, reason, warning;
         bool isBad;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         //check if loyalty at limit
         if (_cityLoyalty == 0) { isAtLimit = true; isMinLoyalty = true; }
         else if (_cityLoyalty >= maxCityLoyalty) { isAtLimit = true; isMaxLoyalty = true; }
@@ -472,8 +472,8 @@ public class CityManager : MonoBehaviour
                     warning = string.Format("Resistance wins in {0} turn{1}", loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
                     //good for Resistance, bad for Authority player
                     isBad = false;
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "City Loyalty Crisis", reason, warning, true, isBad);
+                    if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = true; }
+                    GameManager.i.messageScript.GeneralWarning(msgText, itemText, "City Loyalty Crisis", reason, warning, true, isBad);
                 }
                 else
                 {
@@ -489,12 +489,12 @@ public class CityManager : MonoBehaviour
                         warning = "Resistance has Won";
                         //good for Resistance, bad for Authority player
                         isBad = false;
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Resistance Wins", reason, warning, true, isBad);
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = true; }
+                        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Resistance Wins", reason, warning, true, isBad);
                         //Loyalty at Min -> Resistance wins
                         string textTop = string.Format("{0}{1} has lost faith in the Authorities and joined the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Resistance WINS{1}{2}{3}{4}Authority LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
-                        GameManager.instance.turnScript.SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.CityLoyaltyMin, textTop, textBottom);
+                        GameManager.i.turnScript.SetWinStateLevel(WinStateLevel.Resistance, WinReasonLevel.CityLoyaltyMin, textTop, textBottom);
 
 
                     }
@@ -507,8 +507,8 @@ public class CityManager : MonoBehaviour
                         warning = string.Format("Resistance wins in {0} turn{1}", loyaltyMinTimer, loyaltyMinTimer != 1 ? "s" : "");
                         //good for Resistance, bad for Authority player
                         isBad = false;
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = true; }
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loyalty at Zero", reason, warning, true, isBad);
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = true; }
+                        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loyalty at Zero", reason, warning, true, isBad);
                     }
                 }
             }
@@ -528,8 +528,8 @@ public class CityManager : MonoBehaviour
                     warning = string.Format("Authority wins in {0} turn{1}", loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                     //good for Authority, bad for Resistance player
                     isBad = true;
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = false; }
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Maximum Loyalty", reason, warning, true, isBad);
+                    if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = false; }
+                    GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Maximum Loyalty", reason, warning, true, isBad);
                 }
                 else
                 {
@@ -545,12 +545,12 @@ public class CityManager : MonoBehaviour
                         warning = "Authority has Won";
                         //good for Authority, bad for Resistance player
                         isBad = true;
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = false; }
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Authority Wins", reason, warning, true, isBad);
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = false; }
+                        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Authority Wins", reason, warning, true, isBad);
                         //Loyalty at Max -> Authority wins
                         string textTop = string.Format("{0}{1} has lost all interest in joining the Resistance{2}", colourNormal, city.tag, colourEnd);
                         string textBottom = string.Format("{0}Authority WINS{1}{2}{3}{4}Resistance LOSES{5}", colourGood, colourEnd, "\n", "\n", colourBad, colourEnd);
-                        GameManager.instance.turnScript.SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.CityLoyaltyMax, textTop, textBottom);
+                        GameManager.i.turnScript.SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.CityLoyaltyMax, textTop, textBottom);
                     }
                     else
                     {
@@ -561,8 +561,8 @@ public class CityManager : MonoBehaviour
                         warning = string.Format("Authority wins in {0} turn{1}", loyaltyMaxTimer, loyaltyMaxTimer != 1 ? "s" : "");
                         //good for Authority, bad for Resistance player
                         isBad = true;
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level) { isBad = false; }
-                        GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "Loyalty MAXXED", reason, warning, true, isBad);
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level) { isBad = false; }
+                        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loyalty MAXXED", reason, warning, true, isBad);
                     }
                 }
             }
@@ -590,7 +590,7 @@ public class CityManager : MonoBehaviour
     /// <returns></returns>
     public string DebugSetLoyalty(string input_0)
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         string reply = "";
         int newLoyalty = -1;
         try

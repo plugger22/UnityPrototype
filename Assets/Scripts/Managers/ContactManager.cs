@@ -79,7 +79,7 @@ public class ContactManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -90,7 +90,7 @@ public class ContactManager : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         //collections
-        int numOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        int numOfOnMapActors = GameManager.i.actorScript.maxNumOfOnMapActors;
         arrayOfContactNetworks = new int[numOfOnMapActors];
         arrayOfActors = new Actor[numOfOnMapActors];
     }
@@ -108,8 +108,8 @@ public class ContactManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access fields
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
         actorContactEffectHigh = "ActorContactEffectHigh";
         actorContactEffectLow = "ActorContactEffectLow";
         //check O.K
@@ -157,7 +157,7 @@ public class ContactManager : MonoBehaviour
         InitialiseNetworkArrays();
         CheckTargetRumours();
         CheckContacts();
-        GameManager.instance.nemesisScript.CheckNemesisContactSighting();
+        GameManager.i.nemesisScript.CheckNemesisContactSighting();
     }
 
     /// <summary>
@@ -172,8 +172,8 @@ public class ContactManager : MonoBehaviour
     public void CreateContacts(int numOfContacts)
     {
         Debug.Assert(numOfContacts > 0, "Invalid numOfContacts (zero, or less)");
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
-        List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
+        List<int> contactPool = GameManager.i.dataScript.GetContactPool();
         //weighted array for randomly determining effectiveness (weighted for an average outcome)
         int[] arrayOfEffectiveness = new int[] { 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3 };
         int numEffectiveness = arrayOfEffectiveness.Length;
@@ -183,7 +183,7 @@ public class ContactManager : MonoBehaviour
             {
                 //Get NameSet SO from Country
                 NameSet nameSet = null;
-                City city = GameManager.instance.cityScript.GetCity();
+                City city = GameManager.i.cityScript.GetCity();
                 if (city != null)
                 {
                     nameSet = city.country.nameSet;
@@ -253,7 +253,7 @@ public class ContactManager : MonoBehaviour
         Debug.Assert(nodeID > -1, "Invalid nodeID (Less than Zero)");
         Contact contact = null;
         int contactID = -1;
-        List<int> contactPool = GameManager.instance.dataScript.GetContactPool();
+        List<int> contactPool = GameManager.i.dataScript.GetContactPool();
         if (contactPool != null)
         {
             int index = Random.Range(0, contactPool.Count);
@@ -261,7 +261,7 @@ public class ContactManager : MonoBehaviour
             //delete record from pool to prevent duplicates
             contactPool.RemoveAt(index);
             //get contact
-            contact = GameManager.instance.dataScript.GetContact(contactID);
+            contact = GameManager.i.dataScript.GetContact(contactID);
             if (contact != null)
             {
                 //initialise data
@@ -269,9 +269,9 @@ public class ContactManager : MonoBehaviour
                 contact.nodeID = nodeID;
                 contact.timerInactive = 0;
                 contact.status = ContactStatus.Active;
-                contact.turnStart = GameManager.instance.turnScript.Turn;
+                contact.turnStart = GameManager.i.turnScript.Turn;
                 //assign type and job
-                Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                Node node = GameManager.i.dataScript.GetNode(nodeID);
                 Debug.Assert(node.Arc != null, string.Format("Invalid node.Arc for nodeID {0}", node.nodeID));
                 if (node != null)
                 {
@@ -286,18 +286,18 @@ public class ContactManager : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                 //traits affecting effectiveness (do at end of initialisation, eg. need type)
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     if (actor.CheckTraitEffect(actorContactEffectHigh) == true)
                     {
                         contact.effectiveness++;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to raise their Effectiveness +1");
+                        GameManager.i.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to raise their Effectiveness +1");
                     }
                     if (actor.CheckTraitEffect(actorContactEffectLow) == true)
                     {
                         contact.effectiveness--;
-                        GameManager.instance.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to lower their Effectiveness -1");
+                        GameManager.i.actorScript.TraitLogMessage(actor, string.Format("for <b>{0}</b> contact, <b>{1}</b>", contact.typeName, contact.nameFirst), "to lower their Effectiveness -1");
                     }
                     //keep effectiveness with bounds
                     contact.effectiveness = Mathf.Clamp(contact.effectiveness, minEffectiveness, maxEffectiveness);
@@ -328,7 +328,7 @@ public class ContactManager : MonoBehaviour
         if (actor != null)
         {
             //check if actor already has been OnMap and has a previous set of contacts
-            Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+            Dictionary<int, List<int>> dictOfActorContacts = GameManager.i.dataScript.GetDictOfActorContacts();
             if (dictOfActorContacts != null)
             {
                 //actor in dictionary?
@@ -339,7 +339,7 @@ public class ContactManager : MonoBehaviour
                     if (listOfNodes != null)
                     {
                         //add to dictOfNodeContacts only (already an entry present in dictOfActorContacts)
-                        GameManager.instance.dataScript.AddContacts(actor.actorID, listOfNodes, false);
+                        GameManager.i.dataScript.AddContacts(actor.actorID, listOfNodes, false);
                         //reactivate (set status -> 'active') all relevant actor contacts
                         Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
                         if (dictOfContacts != null)
@@ -370,7 +370,7 @@ public class ContactManager : MonoBehaviour
                     //generate a new set of contacts for the actor
                     int contactLevel = actor.GetDatapoint(ActorDatapoint.Datapoint0);
                     int totalContacts = contactLevel * contactsPerLevel;
-                    List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                    List<Node> listOfAllNodes = GameManager.i.dataScript.GetListOfAllNodes();
                     List<int> listOfContactNodes = new List<int>();
                     if (listOfAllNodes != null)
                     {
@@ -396,7 +396,7 @@ public class ContactManager : MonoBehaviour
                         if (numOfContacts > 0)
                         {
                             //add to dictOfActorContacts & dictOfNodeContacts
-                            GameManager.instance.dataScript.AddContacts(actor.actorID, listOfContactNodes);
+                            GameManager.i.dataScript.AddContacts(actor.actorID, listOfContactNodes);
                             if (actor.side.level == globalResistance.level)
                             {
                                 //add to actor (Resistance side only)
@@ -422,7 +422,7 @@ public class ContactManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid actor (Null)"); }
         //build contacts by node dictionary
-        GameManager.instance.dataScript.CreateNodeContacts();
+        GameManager.i.dataScript.CreateNodeContacts();
     }
 
     /// <summary>
@@ -430,7 +430,7 @@ public class ContactManager : MonoBehaviour
     /// </summary>
     public void CheckContacts()
     {
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
         if (dictOfContacts != null)
         {
             foreach (var contact in dictOfContacts)
@@ -455,17 +455,17 @@ public class ContactManager : MonoBehaviour
                                     //message -> only if a valid actor present (may no longer be OnMap)
                                     if (contact.Value.actorID > -1)
                                     {
-                                        Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
+                                        Actor actor = GameManager.i.dataScript.GetActor(contact.Value.actorID);
                                         if (actor != null)
                                         {
                                             if (contact.Value.nodeID > -1)
                                             {
-                                                Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
+                                                Node node = GameManager.i.dataScript.GetNode(contact.Value.nodeID);
                                                 if (node != null)
                                                 {
                                                     string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Contact becomes ACTIVE {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
                                                         contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
-                                                    GameManager.instance.messageScript.ContactActive(text, actor, node, contact.Value);
+                                                    GameManager.i.messageScript.ContactActive(text, actor, node, contact.Value);
                                                 }
                                                 else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
                                             }
@@ -478,17 +478,17 @@ public class ContactManager : MonoBehaviour
                                     //Still Inactive -> effects tab message
                                     if (contact.Value.actorID > -1)
                                     {
-                                        Actor actor = GameManager.instance.dataScript.GetActor(contact.Value.actorID);
+                                        Actor actor = GameManager.i.dataScript.GetActor(contact.Value.actorID);
                                         if (actor != null)
                                         {
                                             if (contact.Value.nodeID > -1)
                                             {
-                                                Node node = GameManager.instance.dataScript.GetNode(contact.Value.nodeID);
+                                                Node node = GameManager.i.dataScript.GetNode(contact.Value.nodeID);
                                                 if (node != null)
                                                 {
                                                     string text = string.Format("[Cnt] ContactManager.cs -> CheckContacts: Inactive Contact {0} {1}, {2}, nodeID {3}, {4}, actorID {5}{6}", contact.Value.nameFirst,
                                                         contact.Value.nameLast, contact.Value.job, contact.Value.nodeID, actor.arc.name, contact.Value.actorID, "\n");
-                                                    GameManager.instance.messageScript.ContactTimer(text, actor, node, contact.Value);
+                                                    GameManager.i.messageScript.ContactTimer(text, actor, node, contact.Value);
                                                 }
                                                 else { Debug.LogWarningFormat("Invalid node (Null) for contact.nodeID {0}", contact.Value.nodeID); }
                                             }
@@ -520,8 +520,8 @@ public class ContactManager : MonoBehaviour
     /// </summary>
     public void UpdateNodeContacts(bool isCurrentSide = true)
     {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.instance.dataScript.GetDictOfNodeContacts(isCurrentSide);
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        Dictionary<int, List<int>> dictOfNodeContacts = GameManager.i.dataScript.GetDictOfNodeContacts(isCurrentSide);
         if (dictOfNodeContacts != null)
         {
             if (listOfNodes != null)
@@ -531,14 +531,14 @@ public class ContactManager : MonoBehaviour
                 if (isCurrentSide == true)
                 {
                     //player side
-                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                    if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                     { isResistance = false; }
                     else { isResistance = true; }
                 }
                 else
                 {
                     //non player side
-                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                    if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                     { isResistance = true; }
                     else { isResistance = false; }
                 }
@@ -609,7 +609,7 @@ public class ContactManager : MonoBehaviour
         Debug.Assert(string.IsNullOrEmpty(textInput_0) == false, "Invalid textInput_0 string (Null or Empty)");
         string resultText = "Unknown";
         int nodeID = Convert.ToInt32(textInput_0);
-        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        Node node = GameManager.i.dataScript.GetNode(nodeID);
         if (node != null)
         {
             if (node.isContactKnown == true)
@@ -635,14 +635,14 @@ public class ContactManager : MonoBehaviour
     private void InitialiseNetworkArrays()
     {
         //Need to set up actors and contacts ready for assignment
-        arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         //loop actors and create an int array containing tally of their contact network effectiveness, indexed to actorSlotID
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -661,7 +661,7 @@ public class ContactManager : MonoBehaviour
     {
         int numOfTargets;
         int numOfRumours = 0;
-        List<Target> listOfActiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Active);
+        List<Target> listOfActiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Active);
         List<Target> listOfRumourTargets = new List<Target>();  //temp list to hold targets that have triggered a rumour
         if (listOfActiveTargets != null)
         {
@@ -721,12 +721,12 @@ public class ContactManager : MonoBehaviour
                                             contact.contactID, target.targetName, target.targetID, "\n");*/
 
                                         //correct node used? -> depends on contact effectiveness
-                                        Node node = GameManager.instance.dataScript.GetNode(target.nodeID);
+                                        Node node = GameManager.i.dataScript.GetNode(target.nodeID);
                                         //if valid node generate message
                                         if (node != null)
                                         {
                                             string text = string.Format("Contact {0} {1}, {2} learns of rumour about target {3}", contact.nameFirst, contact.nameLast, contact.job, target.targetName);
-                                            GameManager.instance.messageScript.ContactTargetRumour(text, actor, node, contact, target);
+                                            GameManager.i.messageScript.ContactTargetRumour(text, actor, node, contact, target);
                                         }
                                         else { Debug.LogWarning("Invalid node (Null)"); }
                                     }
@@ -788,7 +788,7 @@ public class ContactManager : MonoBehaviour
     public string DebugDisplayContacts()
     {
         StringBuilder builder = new StringBuilder();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
         if (arrayOfActors != null)
         {
             Dictionary<int, Contact> dictOfContacts;
@@ -797,7 +797,7 @@ public class ContactManager : MonoBehaviour
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -831,12 +831,12 @@ public class ContactManager : MonoBehaviour
                 builder.AppendLine();
             }
             //Reserve actors
-            List<int> listOfReserveActors = GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve);
+            List<int> listOfReserveActors = GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Reserve);
             if (listOfReserveActors != null)
             {
                 for (int i = 0; i < listOfReserveActors.Count; i++)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfReserveActors[i]);
                     if (actor != null)
                     {
                         builder.AppendFormat("RESERVE {0}, {1}, actorID {2}{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
@@ -876,7 +876,7 @@ public class ContactManager : MonoBehaviour
     public string DebugDisplayContactsByNode()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<int, List<Contact>> dictOfContactsByNode = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        Dictionary<int, List<Contact>> dictOfContactsByNode = GameManager.i.dataScript.GetDictOfContactsByNodeResistance();
         if (dictOfContactsByNode != null)
         {
             List<Contact> listOfContacts = new List<Contact>();
@@ -885,7 +885,7 @@ public class ContactManager : MonoBehaviour
             {
                 if (record.Value != null)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(record.Key);
+                    Node node = GameManager.i.dataScript.GetNode(record.Key);
                     if (node != null)
                     {
                         builder.AppendLine();
@@ -916,7 +916,7 @@ public class ContactManager : MonoBehaviour
     public string DebugDisplayContactsDict()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
 
         if (dictOfContacts != null)
         {
@@ -974,7 +974,7 @@ public class ContactManager : MonoBehaviour
                 actorID = listOfActors[i];
                 if (actorID > -1)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                    Actor actor = GameManager.i.dataScript.GetActor(actorID);
                     if (actor != null)
                     { arrayOfActors[i] = actor; }
                 }
@@ -999,7 +999,7 @@ public class ContactManager : MonoBehaviour
         if (actor != null)
         {
             //get a random node for contact
-            List<Node> listOfActorContactNodes = GameManager.instance.dataScript.GetListOfActorContacts(actor.actorID);
+            List<Node> listOfActorContactNodes = GameManager.i.dataScript.GetListOfActorContacts(actor.actorID);
             if (listOfActorContactNodes != null)
             {
                 //convert to an exclusion list of nodeID where actor has existing contacts (if any)
@@ -1008,7 +1008,7 @@ public class ContactManager : MonoBehaviour
                 //keep looking until a suitable node is found
                 while (newNodeID == -1)
                 {
-                    Node node = GameManager.instance.dataScript.GetRandomNode();
+                    Node node = GameManager.i.dataScript.GetRandomNode();
                     if (node != null)
                     {
                         //is node on exclusion list?

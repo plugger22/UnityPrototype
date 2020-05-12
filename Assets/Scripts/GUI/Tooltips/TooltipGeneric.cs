@@ -36,8 +36,8 @@ public class TooltipGeneric : MonoBehaviour
     {
         canvasGroup = tooltipGenericObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.guiScript.tooltipFade / 2;
-        offset = GameManager.instance.guiScript.tooltipOffset;
+        fadeInTime = GameManager.i.guiScript.tooltipFade / 2;
+        offset = GameManager.i.guiScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid vertical Offset (zero, or less)");
         Debug.Assert(genericHeader != null, "Invalid genericHeader (Null)");
         Debug.Assert(genericText != null, "Invalid genericText (Null)");

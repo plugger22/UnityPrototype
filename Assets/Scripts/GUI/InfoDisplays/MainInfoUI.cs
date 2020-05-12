@@ -245,7 +245,7 @@ public class MainInfoUI : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -282,7 +282,7 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(leftBackground != null, "Invalid leftBackground (Null)");
         Debug.Assert(rightBackground != null, "Invalid rightBackground (Null)");
         //assign backgrounds and active tab colours
-        Color colour = GameManager.instance.guiScript.colourMainBackground;
+        Color colour = GameManager.i.guiScript.colourMainBackground;
         leftBackground.color = new Color(colour.r, colour.g, colour.b);
         rightBackground.color = new Color(colour.r, colour.g, colour.b);
         tab_active_0.color = new Color(colour.r, colour.g, colour.b);
@@ -534,7 +534,7 @@ public class MainInfoUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid GameObject (Null) for mainItemArray[{0}]", index); }
         }
         //flashing alert over tabs
-        flashTimer = GameManager.instance.guiScript.flashInfoTabTime;
+        flashTimer = GameManager.i.guiScript.flashInfoTabTime;
         Debug.Assert(flashTimer > -1.0f, "Invalid flashTimer (-1f)");
         //Set starting Initialisation states
         SetColours();
@@ -548,9 +548,9 @@ public class MainInfoUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //priority icons
-        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
-        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
-        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
+        priorityHigh = GameManager.i.guiScript.priorityHighSprite;
+        priorityMedium = GameManager.i.guiScript.priorityMediumSprite;
+        priorityLow = GameManager.i.guiScript.priorityLowSprite;
         Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
@@ -615,14 +615,14 @@ public class MainInfoUI : MonoBehaviour
     private void InitialiseTooltips()
     {
         //guiManager.cs provides a standard ShowMe tooltip implementation
-        Tuple<string, string, string> texts = GameManager.instance.guiScript.GetShowMeTooltip();
+        Tuple<string, string, string> texts = GameManager.i.guiScript.GetShowMeTooltip();
         //itemButton
         itemButtonTooltip.tooltipHeader = texts.Item1;
         itemButtonTooltip.tooltipMain = texts.Item2;
         itemButtonTooltip.tooltipDetails = texts.Item3;
         itemButtonTooltip.x_offset = 125;
         //initialise buttonHelpInfo data
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
+        List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3");
         if (listOfHelp != null)
         { infoHelpTop.SetHelpTooltip(listOfHelp, 400, 50); }
         else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
@@ -708,13 +708,13 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
 
         /*if (GameManager.instance.sideScript.PlayerSide.level == 1)
         { colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText); }
@@ -723,8 +723,8 @@ public class MainInfoUI : MonoBehaviour
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
 
@@ -736,14 +736,14 @@ public class MainInfoUI : MonoBehaviour
         if (data != null)
         {
             //close any Alert Message
-            GameManager.instance.alertScript.CloseAlertUI(true);
-            currentTurn = GameManager.instance.turnScript.Turn;
+            GameManager.i.alertScript.CloseAlertUI(true);
+            currentTurn = GameManager.i.turnScript.Turn;
             viewTurnNumber = currentTurn;
             // Populate data
             UpdateData(data);
             //exit any generic or node tooltips
-            GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
-            GameManager.instance.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
+            GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
+            GameManager.i.tooltipNodeScript.CloseTooltip("MainInfoUI.cs -> SetMainInfo");
             // Display Main page by default
             OpenTab(0);
             // Navigation buttons
@@ -792,13 +792,13 @@ public class MainInfoUI : MonoBehaviour
             //combine news and adverts (news always first, advert always second)
             tickerTextHelp.SetHelpTooltip(listOfHelpData, -50, 250);
             //set modal status
-            GameManager.instance.guiScript.SetIsBlocked(true);
+            GameManager.i.guiScript.SetIsBlocked(true);
             //set game state
             isRunning = true;
             ModalStateData package = new ModalStateData();
             package.mainState = ModalSubState.InfoDisplay;
             package.infoState = ModalInfoSubState.MainInfo;
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] MainInfoUI.cs -> SetMainInfo{0}", "\n");
         }
         else { Debug.LogWarning("Invalid MainInfoData package (Null)"); }
@@ -1050,10 +1050,10 @@ public class MainInfoUI : MonoBehaviour
     /// </summary>
     private void CloseMainInfo()
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
-        GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         mainInfoCanvas.gameObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //switch off coroutines
         if (myCoroutineRequest != null)
         { StopCoroutine(myCoroutineRequest); }
@@ -1062,11 +1062,11 @@ public class MainInfoUI : MonoBehaviour
         if (myCoroutineTicker != null)
         { StopCoroutine(myCoroutineTicker); }
         //switch of AlertUI 
-        GameManager.instance.alertScript.CloseAlertUI();
+        GameManager.i.alertScript.CloseAlertUI();
         /*StopFlares();*/
         //set game state
         isRunning = false;
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
     }
 
@@ -1217,7 +1217,7 @@ public class MainInfoUI : MonoBehaviour
             tag2 = data.tag2;
             tag3 = data.tag3;
         }
-        return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
+        return GameManager.i.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
 
 
@@ -1302,9 +1302,9 @@ public class MainInfoUI : MonoBehaviour
         if (currentTurn > 0 && isRunning == false)
         {
             //only if player is active
-            if (GameManager.instance.playerScript.status == ActorStatus.Active)
+            if (GameManager.i.playerScript.status == ActorStatus.Active)
             {
-                MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+                MainInfoData data = GameManager.i.dataScript.GetCurrentInfoData();
                 if (data != null)
                 {
                     SetMainInfo(data);
@@ -1314,7 +1314,7 @@ public class MainInfoUI : MonoBehaviour
             else
             {
                 //outcome message explaining why not
-                GameManager.instance.guiScript.SetAlertMessage(AlertType.PlayerStatus);
+                GameManager.i.guiScript.SetAlertMessage(AlertType.PlayerStatus);
             }
         }
     }
@@ -1325,7 +1325,7 @@ public class MainInfoUI : MonoBehaviour
     private void ExecuteButtonHome()
     {
         //get & update data
-        MainInfoData data = GameManager.instance.dataScript.GetNotifications();
+        MainInfoData data = GameManager.i.dataScript.GetNotifications();
         if (data != null)
         {
             viewTurnNumber = currentTurn;
@@ -1352,7 +1352,7 @@ public class MainInfoUI : MonoBehaviour
     {
         //get & update data
         viewTurnNumber = 0;
-        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        MainInfoData data = GameManager.i.dataScript.GetNotifications(viewTurnNumber);
         if (data != null)
         {
             UpdateData(data);
@@ -1379,7 +1379,7 @@ public class MainInfoUI : MonoBehaviour
         //get & update data
         viewTurnNumber -= 1;
         viewTurnNumber = Mathf.Max(0, viewTurnNumber);
-        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        MainInfoData data = GameManager.i.dataScript.GetNotifications(viewTurnNumber);
         if (data != null)
         {
             UpdateData(data);
@@ -1406,7 +1406,7 @@ public class MainInfoUI : MonoBehaviour
         //get & update data
         viewTurnNumber += 1;
         viewTurnNumber = Mathf.Min(currentTurn, viewTurnNumber);
-        MainInfoData data = GameManager.instance.dataScript.GetNotifications(viewTurnNumber);
+        MainInfoData data = GameManager.i.dataScript.GetNotifications(viewTurnNumber);
         if (data != null)
         {
             UpdateData(data);
@@ -1523,7 +1523,7 @@ public class MainInfoUI : MonoBehaviour
             data.restoreEvent = EventType.MainInfoRestore;
             data.nodeID = currentItemNodeID;
             data.connID = currentItemConnID;
-            GameManager.instance.guiScript.SetShowMe(data);
+            GameManager.i.guiScript.SetShowMe(data);
         }
     }
 
@@ -1536,9 +1536,9 @@ public class MainInfoUI : MonoBehaviour
         ModalStateData package = new ModalStateData();
         package.mainState = ModalSubState.InfoDisplay;
         package.infoState = ModalInfoSubState.MainInfo;
-        GameManager.instance.inputScript.SetModalState(package);
+        GameManager.i.inputScript.SetModalState(package);
         //alert message
-        GameManager.instance.alertScript.CloseAlertUI();
+        GameManager.i.alertScript.CloseAlertUI();
         //turn infoApp back on
         mainInfoCanvas.gameObject.SetActive(true);
     }
@@ -1551,7 +1551,7 @@ public class MainInfoUI : MonoBehaviour
         tickerSpeed++;
         tickerSpeed = Mathf.Min(tickerSpeedMax, tickerSpeed);
         //feedback to player
-        GameManager.instance.alertScript.SetAlertUI(string.Format("{0}<b>News Ticker Speed increased to {1}</b>{2}", colourNeutral, tickerSpeed, colourEnd));
+        GameManager.i.alertScript.SetAlertUI(string.Format("{0}<b>News Ticker Speed increased to {1}</b>{2}", colourNeutral, tickerSpeed, colourEnd));
     }
 
     /// <summary>
@@ -1562,7 +1562,7 @@ public class MainInfoUI : MonoBehaviour
         tickerSpeed--;
         tickerSpeed = Mathf.Max(tickerSpeedMin, tickerSpeed);
         //feedback to player
-        GameManager.instance.alertScript.SetAlertUI(string.Format("</b>News Ticker Speed decreased to {0}</b>", tickerSpeed));
+        GameManager.i.alertScript.SetAlertUI(string.Format("</b>News Ticker Speed decreased to {0}</b>", tickerSpeed));
     }
 
     /// <summary>

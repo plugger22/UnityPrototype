@@ -50,7 +50,7 @@ public class ObjectiveManager : MonoBehaviour
                 SubInitialiseObjectives();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -99,17 +99,17 @@ public class ObjectiveManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourAuthority = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourRebel = GameManager.i.colourScript.GetColour(ColourType.blueText);
         //colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
         //current Player side colour
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }
     }
@@ -177,7 +177,7 @@ public class ObjectiveManager : MonoBehaviour
                 SetObjectiveStar(index, objective.progress);
                 //message
                 string text = string.Format("{0} progressed +{1}% due to {2}, progress now {3}%", objective.tag, progressAdjust, reason, objective.progress);
-                GameManager.instance.messageScript.ObjectiveProgress(text, reason, progressAdjust, objective);
+                GameManager.i.messageScript.ObjectiveProgress(text, reason, progressAdjust, objective);
             }
             else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
         }
@@ -199,15 +199,15 @@ public class ObjectiveManager : MonoBehaviour
         {
             case 0:
                 //left hand, first star/objective
-                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Left);
+                GameManager.i.widgetTopScript.SetStar(opacity, AlignHorizontal.Left);
                 break;
             case 1:
                 //middle, second star/objective
-                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Centre);
+                GameManager.i.widgetTopScript.SetStar(opacity, AlignHorizontal.Centre);
                 break;
             case 2:
                 //right hand, third star/objective
-                GameManager.instance.widgetTopScript.SetStar(opacity, AlignHorizontal.Right);
+                GameManager.i.widgetTopScript.SetStar(opacity, AlignHorizontal.Right);
                 break;
             default:
                 Debug.LogWarningFormat("Index not valid, {0}", index);
@@ -279,7 +279,7 @@ public class ObjectiveManager : MonoBehaviour
     public string GetObjectivesTitle()
     {
         string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 description = string.Format("{0}Authority Objectives{1}", colourSide, colourEnd);
@@ -298,10 +298,10 @@ public class ObjectiveManager : MonoBehaviour
     public string GetObjectivesSummary()
     {
         string description = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
-                if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                 {
                     description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
                         colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
@@ -309,7 +309,7 @@ public class ObjectiveManager : MonoBehaviour
                 else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
                 break;
             case 2:
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
                 {
                     description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
                         colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);

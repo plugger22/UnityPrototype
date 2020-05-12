@@ -41,11 +41,11 @@ public class FileManager : MonoBehaviour
         filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
         codeKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        alphaActive = GameManager.instance.guiScript.alphaActive;
-        alphaInactive = GameManager.instance.guiScript.alphaInactive;
-        defaultSprite = GameManager.instance.guiScript.alertInformationSprite;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        alphaActive = GameManager.i.guiScript.alphaActive;
+        alphaInactive = GameManager.i.guiScript.alphaInactive;
+        defaultSprite = GameManager.i.guiScript.alertInformationSprite;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(alphaActive > -1, "Invalid alphaActive (-1)");
@@ -105,7 +105,7 @@ public class FileManager : MonoBehaviour
                 catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
             }
 
-            if (GameManager.instance.isEncrypted == false)
+            if (GameManager.i.isEncrypted == false)
             {
                 //create new file
                 try { File.WriteAllText(filename, jsonWrite); }
@@ -136,7 +136,7 @@ public class FileManager : MonoBehaviour
         bool isSuccess = false;
         if (File.Exists(filename) == true)
         {
-            if (GameManager.instance.isEncrypted == false)
+            if (GameManager.i.isEncrypted == false)
             {
                 //read data from File
                 try { jsonRead = File.ReadAllText(filename); }
@@ -178,7 +178,7 @@ public class FileManager : MonoBehaviour
     {
         if (read != null)
         {
-            GlobalSide playerSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.playerSide);
+            GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
             if (playerSide != null)
             {
                 //side (player) at start
@@ -187,7 +187,7 @@ public class FileManager : MonoBehaviour
                 ReadCampaignData();
                 ReadGameData(playerSide);
                 //set up level based on loaded current scenario seed
-                GameManager.instance.InitialiseLoadGame(playerSide.level);
+                GameManager.i.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();
                 ReadNodeData();
                 ReadNpcData();
@@ -221,14 +221,14 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteCampaignData()
     {
-        write.campaignData.campaignName = GameManager.instance.campaignScript.campaign.name;
-        write.campaignData.scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex();
-        write.campaignData.arrayOfStoryStatus = GameManager.instance.campaignScript.GetArrayOfStoryStatus();
-        write.campaignData.commendations = GameManager.instance.campaignScript.GetCommendations();
-        write.campaignData.blackMarks = GameManager.instance.campaignScript.GetBlackmarks();
-        write.campaignData.investigationBlackMarks = GameManager.instance.campaignScript.GetInvestigationBlackmarks();
+        write.campaignData.campaignName = GameManager.i.campaignScript.campaign.name;
+        write.campaignData.scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
+        write.campaignData.arrayOfStoryStatus = GameManager.i.campaignScript.GetArrayOfStoryStatus();
+        write.campaignData.commendations = GameManager.i.campaignScript.GetCommendations();
+        write.campaignData.blackMarks = GameManager.i.campaignScript.GetBlackmarks();
+        write.campaignData.investigationBlackMarks = GameManager.i.campaignScript.GetInvestigationBlackmarks();
         //Npc
-        Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
+        Npc npc = GameManager.i.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
         {
             write.campaignData.isNpc = true;
@@ -264,14 +264,14 @@ public class FileManager : MonoBehaviour
     private void WriteGUIData()
     {
         //TopBarUI
-        write.guiData.commendationData = GameManager.instance.topBarScript.commendationData;
-        write.guiData.blackmarkData = GameManager.instance.topBarScript.blackmarkData;
-        write.guiData.investigationData = GameManager.instance.topBarScript.investigationData;
-        write.guiData.innocenceData = GameManager.instance.playerScript.Innocence;
-        write.guiData.unhappyData = GameManager.instance.topBarScript.unhappyData;
-        write.guiData.conflictData = GameManager.instance.topBarScript.conflictData;
-        write.guiData.blackmailData = GameManager.instance.topBarScript.blackmailData;
-        write.guiData.doomData = GameManager.instance.topBarScript.doomData;
+        write.guiData.commendationData = GameManager.i.topBarScript.commendationData;
+        write.guiData.blackmarkData = GameManager.i.topBarScript.blackmarkData;
+        write.guiData.investigationData = GameManager.i.topBarScript.investigationData;
+        write.guiData.innocenceData = GameManager.i.playerScript.Innocence;
+        write.guiData.unhappyData = GameManager.i.topBarScript.unhappyData;
+        write.guiData.conflictData = GameManager.i.topBarScript.conflictData;
+        write.guiData.blackmailData = GameManager.i.topBarScript.blackmailData;
+        write.guiData.doomData = GameManager.i.topBarScript.doomData;
     }
     #endregion
 
@@ -282,14 +282,14 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteOptionData()
     {
-        write.optionData.autoGearResolution = GameManager.instance.optionScript.autoGearResolution;
-        write.optionData.fogOfWar = GameManager.instance.optionScript.fogOfWar;
-        write.optionData.debugData = GameManager.instance.optionScript.debugData;
-        write.optionData.noAI = GameManager.instance.optionScript.noAI;
-        write.optionData.showContacts = GameManager.instance.optionScript.showContacts;
-        write.optionData.showRenown = GameManager.instance.optionScript.showRenown;
-        write.optionData.connectorTooltips = GameManager.instance.optionScript.connectorTooltips;
-        write.optionData.colourScheme = GameManager.instance.optionScript.ColourOption;
+        write.optionData.autoGearResolution = GameManager.i.optionScript.autoGearResolution;
+        write.optionData.fogOfWar = GameManager.i.optionScript.fogOfWar;
+        write.optionData.debugData = GameManager.i.optionScript.debugData;
+        write.optionData.noAI = GameManager.i.optionScript.noAI;
+        write.optionData.showContacts = GameManager.i.optionScript.showContacts;
+        write.optionData.showRenown = GameManager.i.optionScript.showRenown;
+        write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
+        write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
     }
     #endregion
 
@@ -300,7 +300,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteNemesisData()
     {
-        write.nemesisData.saveData = GameManager.instance.nemesisScript.WriteSaveData();
+        write.nemesisData.saveData = GameManager.i.nemesisScript.WriteSaveData();
         Debug.Assert(write.nemesisData.saveData != null, "Invalid Nemesis saveData (Null)");
     }
     #endregion
@@ -312,27 +312,27 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WritePlayerData()
     {
-        write.playerData.renown = GameManager.instance.playerScript.Renown;
-        write.playerData.status = GameManager.instance.playerScript.status;
-        write.playerData.sex = GameManager.instance.playerScript.sex;
-        write.playerData.Invisibility = GameManager.instance.playerScript.Invisibility;
-        write.playerData.Innocence = GameManager.instance.playerScript.Innocence;
-        write.playerData.mood = GameManager.instance.playerScript.GetMood();
-        write.playerData.tooltipStatus = GameManager.instance.playerScript.tooltipStatus;
-        write.playerData.inactiveStatus = GameManager.instance.playerScript.inactiveStatus;
-        write.playerData.listOfGear = GameManager.instance.playerScript.GetListOfGear();
-        write.playerData.isBreakdown = GameManager.instance.playerScript.isBreakdown;
-        write.playerData.isEndOfTurnGearCheck = GameManager.instance.playerScript.isEndOfTurnGearCheck;
-        write.playerData.isLieLowFirstturn = GameManager.instance.playerScript.isLieLowFirstturn;
-        write.playerData.isAddicted = GameManager.instance.playerScript.isAddicted;
-        write.playerData.isStressLeave = GameManager.instance.playerScript.isStressLeave;
-        write.playerData.isStressed = GameManager.instance.playerScript.isStressed;
-        write.playerData.numOfSuperStress = GameManager.instance.playerScript.numOfSuperStress;
-        write.playerData.stressImmunityCurrent = GameManager.instance.playerScript.stressImmunityCurrent;
-        write.playerData.stressImmunityStart = GameManager.instance.playerScript.stressImmunityStart;
-        write.playerData.addictedTally = GameManager.instance.playerScript.addictedTally;
-        write.playerData.arrayOfCaptureTools = GameManager.instance.playerScript.GetArrayOfCaptureTools();
-        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        write.playerData.renown = GameManager.i.playerScript.Renown;
+        write.playerData.status = GameManager.i.playerScript.status;
+        write.playerData.sex = GameManager.i.playerScript.sex;
+        write.playerData.Invisibility = GameManager.i.playerScript.Invisibility;
+        write.playerData.Innocence = GameManager.i.playerScript.Innocence;
+        write.playerData.mood = GameManager.i.playerScript.GetMood();
+        write.playerData.tooltipStatus = GameManager.i.playerScript.tooltipStatus;
+        write.playerData.inactiveStatus = GameManager.i.playerScript.inactiveStatus;
+        write.playerData.listOfGear = GameManager.i.playerScript.GetListOfGear();
+        write.playerData.isBreakdown = GameManager.i.playerScript.isBreakdown;
+        write.playerData.isEndOfTurnGearCheck = GameManager.i.playerScript.isEndOfTurnGearCheck;
+        write.playerData.isLieLowFirstturn = GameManager.i.playerScript.isLieLowFirstturn;
+        write.playerData.isAddicted = GameManager.i.playerScript.isAddicted;
+        write.playerData.isStressLeave = GameManager.i.playerScript.isStressLeave;
+        write.playerData.isStressed = GameManager.i.playerScript.isStressed;
+        write.playerData.numOfSuperStress = GameManager.i.playerScript.numOfSuperStress;
+        write.playerData.stressImmunityCurrent = GameManager.i.playerScript.stressImmunityCurrent;
+        write.playerData.stressImmunityStart = GameManager.i.playerScript.stressImmunityStart;
+        write.playerData.addictedTally = GameManager.i.playerScript.addictedTally;
+        write.playerData.arrayOfCaptureTools = GameManager.i.playerScript.GetArrayOfCaptureTools();
+        Personality personality = GameManager.i.playerScript.GetPersonality();
         if (personality != null)
         {
             write.playerData.listOfPersonalityFactors = personality.GetFactors().ToList();
@@ -343,7 +343,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //secrets
-        List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+        List<Secret> listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
         foreach (Secret secret in listOfSecrets)
         {
             if (secret != null)
@@ -351,12 +351,12 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarning("Invalid secret (Null)"); }
         }
         //investigations
-        List<Investigation> listOfInvestigations = GameManager.instance.playerScript.GetListOfInvestigations();
+        List<Investigation> listOfInvestigations = GameManager.i.playerScript.GetListOfInvestigations();
         if (listOfInvestigations != null)
         { write.playerData.listOfInvestigations.AddRange(listOfInvestigations); }
         else { Debug.LogError("Invalid listOfInvestigations (Null)"); }
         //mood history
-        List<HistoryMood> listOfHistory = GameManager.instance.playerScript.GetListOfMoodHistory();
+        List<HistoryMood> listOfHistory = GameManager.i.playerScript.GetListOfMoodHistory();
         foreach (HistoryMood history in listOfHistory)
         {
             if (history != null)
@@ -364,14 +364,14 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarning("Invalid historyMood (Null)"); }
         }
         //conditions
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalResistance);
+        List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(globalResistance);
         foreach (Condition condition in listOfConditions)
         {
             if (condition != null)
             { write.playerData.listOfConditionsResistance.Add(condition.tag); }
             else { Debug.LogWarning("Invalid Resistance condition (Null)"); }
         }
-        listOfConditions = GameManager.instance.playerScript.GetListOfConditions(globalAuthority);
+        listOfConditions = GameManager.i.playerScript.GetListOfConditions(globalAuthority);
         foreach (Condition condition in listOfConditions)
         {
             if (condition != null)
@@ -379,7 +379,7 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarning("Invalid Authority condition (Null)"); }
         }
         //node Actions
-        write.playerData.listOfNodeActions = GameManager.instance.playerScript.GetListOfNodeActions();
+        write.playerData.listOfNodeActions = GameManager.i.playerScript.GetListOfNodeActions();
     }
     #endregion
 
@@ -391,23 +391,23 @@ public class FileManager : MonoBehaviour
     private void WriteGameData()
     {
         //sideManager.cs
-        write.gameData.resistanceCurrent = GameManager.instance.sideScript.resistanceCurrent;
-        write.gameData.authorityCurrent = GameManager.instance.sideScript.authorityCurrent;
-        write.gameData.resistanceOverall = GameManager.instance.sideScript.resistanceOverall;
-        write.gameData.authorityOverall = GameManager.instance.sideScript.authorityOverall;
-        write.gameData.playerSide = GameManager.instance.sideScript.PlayerSide.name;
+        write.gameData.resistanceCurrent = GameManager.i.sideScript.resistanceCurrent;
+        write.gameData.authorityCurrent = GameManager.i.sideScript.authorityCurrent;
+        write.gameData.resistanceOverall = GameManager.i.sideScript.resistanceOverall;
+        write.gameData.authorityOverall = GameManager.i.sideScript.authorityOverall;
+        write.gameData.playerSide = GameManager.i.sideScript.PlayerSide.name;
         //turnManager.cs -> private fields
-        write.gameData.turnData = GameManager.instance.turnScript.LoadWriteData();
+        write.gameData.turnData = GameManager.i.turnScript.LoadWriteData();
         //turnManager.cs -> public fields
-        write.gameData.winStateLevel = GameManager.instance.turnScript.winStateLevel;
-        write.gameData.winReasonLevel = GameManager.instance.turnScript.winReasonLevel;
-        write.gameData.winStateCampaign = GameManager.instance.turnScript.winStateCampaign;
-        write.gameData.winReasonCampaign = GameManager.instance.turnScript.winReasonCampaign;
-        write.gameData.authoritySecurity = GameManager.instance.turnScript.authoritySecurityState;
-        write.gameData.currentSide = GameManager.instance.turnScript.currentSide.name;
-        write.gameData.haltExecution = GameManager.instance.turnScript.haltExecution;
+        write.gameData.winStateLevel = GameManager.i.turnScript.winStateLevel;
+        write.gameData.winReasonLevel = GameManager.i.turnScript.winReasonLevel;
+        write.gameData.winStateCampaign = GameManager.i.turnScript.winStateCampaign;
+        write.gameData.winReasonCampaign = GameManager.i.turnScript.winReasonCampaign;
+        write.gameData.authoritySecurity = GameManager.i.turnScript.authoritySecurityState;
+        write.gameData.currentSide = GameManager.i.turnScript.currentSide.name;
+        write.gameData.haltExecution = GameManager.i.turnScript.haltExecution;
         //top widget
-        write.gameData.isSecurityFlash = GameManager.instance.widgetTopScript.CheckSecurityFlash();
+        write.gameData.isSecurityFlash = GameManager.i.widgetTopScript.CheckSecurityFlash();
     }
     #endregion
 
@@ -419,16 +419,16 @@ public class FileManager : MonoBehaviour
     public void WriteScenarioData()
     {
         //cityManager.cs
-        write.scenarioData.cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        write.scenarioData.cityLoyalty = GameManager.i.cityScript.CityLoyalty;
         //HqManager.cs
-        write.scenarioData.bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
-        write.scenarioData.approvalZeroTimer = GameManager.instance.hqScript.GetApprovalZeroTimer();
-        write.scenarioData.hqSupportAuthority = GameManager.instance.hqScript.ApprovalAuthority;
-        write.scenarioData.hqSupportResistance = GameManager.instance.hqScript.ApprovalResistance;
-        write.scenarioData.isHqRelocating = GameManager.instance.hqScript.isHqRelocating;
-        write.scenarioData.timerHqRelocating = GameManager.instance.hqScript.GetHqRelocationTimer();
+        write.scenarioData.bossOpinion = GameManager.i.hqScript.GetBossOpinion();
+        write.scenarioData.approvalZeroTimer = GameManager.i.hqScript.GetApprovalZeroTimer();
+        write.scenarioData.hqSupportAuthority = GameManager.i.hqScript.ApprovalAuthority;
+        write.scenarioData.hqSupportResistance = GameManager.i.hqScript.ApprovalResistance;
+        write.scenarioData.isHqRelocating = GameManager.i.hqScript.isHqRelocating;
+        write.scenarioData.timerHqRelocating = GameManager.i.hqScript.GetHqRelocationTimer();
         //objectiveManager.cs
-        List<Objective> tempList = GameManager.instance.objectiveScript.GetListOfObjectives();
+        List<Objective> tempList = GameManager.i.objectiveScript.GetListOfObjectives();
         if (tempList != null)
         {
             for (int i = 0; i < tempList.Count; i++)
@@ -459,7 +459,7 @@ public class FileManager : MonoBehaviour
         // - - - Secrets
         //
         //individual secret SO dynamic data for Secrets in dictOfSecrets
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             foreach (var secret in dictOfSecrets)
@@ -484,7 +484,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfSecrets (Null)"); }
         //secret list -> PlayerSecrets
-        List<Secret> listOfSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
@@ -492,7 +492,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfPlayerSecrets (Null)"); }
         //secret list -> OrganisationSecrets
-        listOfSecrets = GameManager.instance.dataScript.GetListOfOrganisationSecrets();
+        listOfSecrets = GameManager.i.dataScript.GetListOfOrganisationSecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
@@ -500,7 +500,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfOrganisationSecrets (Null)"); }
         //secret list -> StorySecrets
-        listOfSecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
+        listOfSecrets = GameManager.i.dataScript.GetListOfStorySecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
@@ -508,7 +508,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfStorySecrets (Null)"); }
         //secret list -> RevealSecrets
-        listOfSecrets = GameManager.instance.dataScript.GetListOfRevealedSecrets();
+        listOfSecrets = GameManager.i.dataScript.GetListOfRevealedSecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
@@ -516,7 +516,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfRevealedSecrets (Null)"); }
         //secret list -> DeletedSecrets
-        listOfSecrets = GameManager.instance.dataScript.GetListOfDeletedSecrets();
+        listOfSecrets = GameManager.i.dataScript.GetListOfDeletedSecrets();
         if (listOfSecrets != null)
         {
             for (int i = 0; i < listOfSecrets.Count; i++)
@@ -526,7 +526,7 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region investigations
-        List<Investigation> listOfInvestigations = GameManager.instance.dataScript.GetListOfCompletedInvestigations();
+        List<Investigation> listOfInvestigations = GameManager.i.dataScript.GetListOfCompletedInvestigations();
         if (listOfInvestigations != null)
         { write.dataData.listOfInvestigations.AddRange(listOfInvestigations); }
         else { Debug.LogError("Invalid listOfCompletedInvestigations (Null)"); }
@@ -534,19 +534,19 @@ public class FileManager : MonoBehaviour
 
         #region awards
         //Commendations
-        List<AwardData> listOfCommendations = GameManager.instance.dataScript.GetListOfCommendations();
+        List<AwardData> listOfCommendations = GameManager.i.dataScript.GetListOfCommendations();
         if (listOfCommendations != null)
         { write.dataData.listOfCommendations.AddRange(listOfCommendations); }
         else { Debug.LogError("Invalid listOfCommendations (Null)"); }
         //Blackmarks
-        List<AwardData> listOfBlackmarks = GameManager.instance.dataScript.GetListOfBlackmarks();
+        List<AwardData> listOfBlackmarks = GameManager.i.dataScript.GetListOfBlackmarks();
         if (listOfBlackmarks != null)
         { write.dataData.listOfBlackmarks.AddRange(listOfBlackmarks); }
         else { Debug.LogError("Invalid listOfBlackmarks (Null)"); }
         #endregion
 
         #region Organisations
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
             foreach (Organisation org in listOfOrgs)
@@ -568,19 +568,19 @@ public class FileManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid org (Null) in listOfCurrentOrganisations"); }
             }
-            write.dataData.listOfCureOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Cure));
-            write.dataData.listOfContractOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Contract));
-            write.dataData.listOfEmergencyOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Emergency));
-            write.dataData.listOfHQOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.HQ));
-            write.dataData.listOfInfoOrgData.AddRange(GameManager.instance.dataScript.GetListOfOrgData(OrganisationType.Info));
+            write.dataData.listOfCureOrgData.AddRange(GameManager.i.dataScript.GetListOfOrgData(OrganisationType.Cure));
+            write.dataData.listOfContractOrgData.AddRange(GameManager.i.dataScript.GetListOfOrgData(OrganisationType.Contract));
+            write.dataData.listOfEmergencyOrgData.AddRange(GameManager.i.dataScript.GetListOfOrgData(OrganisationType.Emergency));
+            write.dataData.listOfHQOrgData.AddRange(GameManager.i.dataScript.GetListOfOrgData(OrganisationType.HQ));
+            write.dataData.listOfInfoOrgData.AddRange(GameManager.i.dataScript.GetListOfOrgData(OrganisationType.Info));
             //OrgInfoArray
-            write.dataData.listOfOrgInfoData.AddRange(GameManager.instance.dataScript.GetArrayOfOrgInfo().ToList());
+            write.dataData.listOfOrgInfoData.AddRange(GameManager.i.dataScript.GetArrayOfOrgInfo().ToList());
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
         #endregion
 
         #region MetaOptions
-        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
             foreach(var metaOption in dictOfMetaOptions)
@@ -602,7 +602,7 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region Cures
-        Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+        Dictionary<string, Cure> dictOfCures = GameManager.i.dataScript.GetDictOfCures();
         if (dictOfCures != null)
         {
             foreach (var record in dictOfCures)
@@ -628,7 +628,7 @@ public class FileManager : MonoBehaviour
         // - - - Contacts
         //
         //main contact dictionary (do first)
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
         if (dictOfContacts != null)
         {
             foreach (var contact in dictOfContacts)
@@ -639,12 +639,12 @@ public class FileManager : MonoBehaviour
             }
         }
         //contact pool
-        List<int> listOfContactPool = GameManager.instance.dataScript.GetContactPool();
+        List<int> listOfContactPool = GameManager.i.dataScript.GetContactPool();
         if (listOfContactPool != null)
         { write.dataData.listOfContactPool.AddRange(listOfContactPool); }
         else { Debug.LogError("Invalid listOfContactPool (Null)"); }
         //contact dict's of lists -> dictOfActorContacts
-        Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+        Dictionary<int, List<int>> dictOfActorContacts = GameManager.i.dataScript.GetDictOfActorContacts();
         if (dictOfActorContacts != null)
         {
             foreach (var contactList in dictOfActorContacts)
@@ -661,7 +661,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
         //dictOfNodeContactsResistance
-        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.i.dataScript.GetDictOfNodeContacts(globalResistance);
         if (dictOfNodeContactsResistance != null)
         {
             foreach (var actorList in dictOfNodeContactsResistance)
@@ -678,7 +678,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
         //dictOfNodeContactsAuthority
-        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.i.dataScript.GetDictOfNodeContacts(globalAuthority);
         if (dictOfNodeContactsAuthority != null)
         {
             foreach (var actorList in dictOfNodeContactsAuthority)
@@ -695,7 +695,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
         //dictOfNodeContactsResistance
-        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.i.dataScript.GetDictOfContactsByNodeResistance();
         if (dictOfContactsByNodeResistance != null)
         {
             foreach (var contactList in dictOfContactsByNodeResistance)
@@ -717,7 +717,7 @@ public class FileManager : MonoBehaviour
         //
         // - - - Teams
         //
-        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        Dictionary<int, Team> dictOfTeams = GameManager.i.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
             foreach (var record in dictOfTeams)
@@ -742,11 +742,11 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTeams (Null)"); }
         //arrayOfTeams
-        int[,] arrayOfTeams = GameManager.instance.dataScript.GetArrayOfTeams();
+        int[,] arrayOfTeams = GameManager.i.dataScript.GetArrayOfTeams();
         if (arrayOfTeams != null)
         {
             //check array dimensions (similar check on load)
-            int numOfArcs = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+            int numOfArcs = GameManager.i.dataScript.CheckNumOfNodeArcs();
             int numOfInfo = (int)TeamInfo.Count;
             int size0 = arrayOfTeams.GetUpperBound(0) + 1;
             int size1 = arrayOfTeams.GetUpperBound(1) + 1;
@@ -761,27 +761,27 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfTeams (Null)"); }
         //list -> reserves
-        List<int> tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve);
+        List<int> tempList = GameManager.i.dataScript.GetTeamPool(TeamPool.Reserve);
         if (tempList != null)
         { write.dataData.listOfTeamPoolReserve.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolReserve list (Null)"); }
         //list -> OnMap
-        tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        tempList = GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap);
         if (tempList != null)
         { write.dataData.listOfTeamPoolOnMap.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolOnMap list (Null)"); }
         //list -> InTransit
-        tempList = GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit);
+        tempList = GameManager.i.dataScript.GetTeamPool(TeamPool.InTransit);
         if (tempList != null)
         { write.dataData.listOfTeamPoolInTransit.AddRange(tempList); }
         else { Debug.LogError("Invalid teamPoolInTransit list (Null)"); }
         //counter
-        write.dataData.teamCounter = GameManager.instance.teamScript.teamIDCounter;
+        write.dataData.teamCounter = GameManager.i.teamScript.teamIDCounter;
         #endregion
 
         #region statistics
         //level stats
-        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.i.dataScript.GetDictOfStatisticsLevel();
         if (dictOfStatisticsLevel != null)
         {
             //only need to save stats as StatType Key's are sequentially numbered enums
@@ -790,7 +790,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
         //campaign stats
-        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.i.dataScript.GetDictOfStatisticsCampaign();
         if (dictOfStatisticsCampaign != null)
         {
             //only need to save stats as StatType Key's are sequentially numbered enums
@@ -802,17 +802,17 @@ public class FileManager : MonoBehaviour
 
         #region AI
         //array -> AI Resources
-        int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
+        int[] arrayOfAIResources = GameManager.i.dataScript.GetArrayOfAIResources();
         if (arrayOfAIResources != null)
         { write.dataData.listOfArrayOfAIResources.AddRange(arrayOfAIResources); }
         else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
         //queue -> recentNodes
-        Queue<AITracker> queueOfRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Queue<AITracker> queueOfRecentNodes = GameManager.i.dataScript.GetRecentNodesQueue();
         if (queueOfRecentNodes != null)
         { write.dataData.listOfRecentNodes.AddRange(queueOfRecentNodes); }
         else { Debug.LogError("Invalid queueOfRecentNodes (Null)"); }
         //queue -> recentConnections
-        Queue<AITracker> queueOfRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueOfRecentConnections = GameManager.i.dataScript.GetRecentConnectionsQueue();
         if (queueOfRecentConnections != null)
         { write.dataData.listOfRecentConnections.AddRange(queueOfRecentConnections); }
         else { Debug.LogError("Invalid queueOfRecentConnections (Null)"); }
@@ -820,7 +820,7 @@ public class FileManager : MonoBehaviour
 
         #region messages
         //archive
-        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Archive);
         if (dictOfArchiveMessages != null)
         {
             write.dataData.listOfArchiveMessagesKey.AddRange(dictOfArchiveMessages.Keys);
@@ -828,7 +828,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
         //pending
-        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Pending);
         if (dictOfPendingMessages != null)
         {
             write.dataData.listOfPendingMessagesKey.AddRange(dictOfPendingMessages.Keys);
@@ -836,7 +836,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
         //current
-        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
             write.dataData.listOfCurrentMessagesKey.AddRange(dictOfCurrentMessages.Keys);
@@ -844,7 +844,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
         //ai
-        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        Dictionary<int, Message> dictOfAIMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.AI);
         if (dictOfAIMessages != null)
         {
             write.dataData.listOfAIMessagesKey.AddRange(dictOfAIMessages.Keys);
@@ -852,12 +852,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //id counter
-        write.dataData.messageIDCounter = GameManager.instance.messageScript.messageIDCounter;
+        write.dataData.messageIDCounter = GameManager.i.messageScript.messageIDCounter;
         #endregion
 
         #region topics
         //topic types
-        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.i.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             write.dataData.listOfTopicTypeValues.AddRange(dictOfTopicTypes.Values);
@@ -865,7 +865,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //topic sub types
-        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.i.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             write.dataData.listOfTopicSubTypeValues.AddRange(dictOfTopicSubTypes.Values);
@@ -873,7 +873,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
         //topic history
-        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.i.dataScript.GetDictOfTopicHistory();
         if (dictOfTopicHistory != null)
         {
             write.dataData.listOfTopicHistoryValues.AddRange(dictOfTopicHistory.Values);
@@ -881,12 +881,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicHistory (Null)"); }
         //listOfTopicTypesLevel
-        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        List<TopicType> listOfTopicTypesLevel = GameManager.i.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
         { write.dataData.listOfTopicTypesLevel.AddRange(listOfTopicTypesLevel.Select(x => x.name).ToList()); }
         else { Debug.LogError("Invalid listOfTopicTypesLevel (Null)"); }
         //dictOfTopicPools
-        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.i.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
         {
             foreach (var topicList in dictOfTopicPools)
@@ -906,7 +906,7 @@ public class FileManager : MonoBehaviour
 
         #region relations
         //dictOfRelations
-        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.i.dataScript.GetDictOfRelations();
         if (dictOfRelations != null)
         {
             write.dataData.listOfRelationshipKeys.AddRange(dictOfRelations.Keys);
@@ -917,7 +917,7 @@ public class FileManager : MonoBehaviour
 
         #region registers
         //Ongoing Effects
-        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
+        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.i.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoing != null)
         {
             foreach (var ongoing in dictOfOngoing)
@@ -929,21 +929,21 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
         //Action adjustmehts
-        List<ActionAdjustment> listOFAdjustments = GameManager.instance.dataScript.GetListOfActionAdjustments();
+        List<ActionAdjustment> listOFAdjustments = GameManager.i.dataScript.GetListOfActionAdjustments();
         if (listOFAdjustments != null)
         { write.dataData.listOfActionAdjustments.AddRange(listOFAdjustments); }
         else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         #endregion
 
         #region moveNodes
-        List<int> listOfNodes = GameManager.instance.dataScript.GetListOfMoveNodes();
+        List<int> listOfNodes = GameManager.i.dataScript.GetListOfMoveNodes();
         if (listOfNodes != null)
         { write.dataData.listOfMoveNodes.AddRange(listOfNodes); }
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
         #endregion
 
         #region InfoPipeLine
-        Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = GameManager.instance.guiScript.GetDictOfPipeline();
+        Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = GameManager.i.guiScript.GetDictOfPipeline();
         if (dictOfPipeline != null)
         {
             if (dictOfPipeline.Count > 0)
@@ -981,12 +981,12 @@ public class FileManager : MonoBehaviour
         #region mainInfoApp
 
         //delayed itemData
-        List<ItemData> listOfDelayed = GameManager.instance.dataScript.GetListOfDelayedItemData();
+        List<ItemData> listOfDelayed = GameManager.i.dataScript.GetListOfDelayedItemData();
         if (listOfDelayed != null)
         { write.dataData.listOfDelayedItemData.AddRange(listOfDelayed); }
         else { Debug.LogError("Invalid listOfDelayedItemData (Null)"); }
         //currentInfoData
-        MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+        MainInfoData data = GameManager.i.dataScript.GetCurrentInfoData();
         if (data != null)
         {
             //ticker text
@@ -1014,7 +1014,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid MainInfoData (Null)"); }
         //dictOfHistory
-        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.i.dataScript.GetDictOfHistory();
         if (dictOfHistory != null)
         {
             foreach (var info in dictOfHistory)
@@ -1053,7 +1053,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfHistory (Null)"); }
         //arrayOfItemDataByPriority
-        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.instance.dataScript.GetArrayOfItemDataByPriority();
+        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.i.dataScript.GetArrayOfItemDataByPriority();
         if (arrayOfItemDataByPriority != null)
         {
             for (int outer = 0; outer < (int)ItemTab.Count; outer++)
@@ -1078,22 +1078,22 @@ public class FileManager : MonoBehaviour
 
         #region history
         //rebel moves
-        List<HistoryRebelMove> listOfHistoryRebel = GameManager.instance.dataScript.GetListOfHistoryRebelMove();
+        List<HistoryRebelMove> listOfHistoryRebel = GameManager.i.dataScript.GetListOfHistoryRebelMove();
         if (listOfHistoryRebel != null)
         { write.dataData.listOfHistoryRebel.AddRange(listOfHistoryRebel); }
         else { Debug.LogError("Invalid listOfHistoryRebelMove (Null)"); }
         //nemesis moves
-        List<HistoryNemesisMove> listOfHistoryNemesis = GameManager.instance.dataScript.GetListOfHistoryNemesisMove();
+        List<HistoryNemesisMove> listOfHistoryNemesis = GameManager.i.dataScript.GetListOfHistoryNemesisMove();
         if (listOfHistoryNemesis != null)
         { write.dataData.listOfHistoryNemesis.AddRange(listOfHistoryNemesis); }
         else { Debug.LogError("Invalid listOfHistoryNemesisMove (Null)"); }
         //VIP moves
-        List<HistoryNpcMove> listOfHistoryVip = GameManager.instance.dataScript.GetListOfHistoryVipMove();
+        List<HistoryNpcMove> listOfHistoryVip = GameManager.i.dataScript.GetListOfHistoryVipMove();
         if (listOfHistoryVip != null)
         { write.dataData.listOfHistoryVip.AddRange(listOfHistoryVip); }
         else { Debug.LogError("Invalid listOfHistoryVipMove (Null)"); }
         //Player History
-        List<HistoryActor> listOfHistoryPlayer = GameManager.instance.dataScript.GetListOfHistoryPlayer();
+        List<HistoryActor> listOfHistoryPlayer = GameManager.i.dataScript.GetListOfHistoryPlayer();
         if (listOfHistoryPlayer != null)
         { write.dataData.listOfHistoryPlayer.AddRange(listOfHistoryPlayer); }
         else { Debug.LogError("Invalid listOfHistoryPlayer (Null)"); }
@@ -1101,12 +1101,12 @@ public class FileManager : MonoBehaviour
 
         #region newsFeed
         //news items
-        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        List<NewsItem> listOfNewsItems = GameManager.i.dataScript.GetListOfNewsItems();
         if (listOfNewsItems != null)
         { write.dataData.listOfNewsItems.AddRange(listOfNewsItems); }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         //adverts
-        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+        List<string> listOfAdverts = GameManager.i.dataScript.GetListOfAdverts();
         if (listOfAdverts != null)
         { write.dataData.listOfAdverts.AddRange(listOfAdverts); }
         else { Debug.LogError("Invalid listOfAdverts (Null)"); }
@@ -1114,7 +1114,7 @@ public class FileManager : MonoBehaviour
 
         #region textLists
         //Test lists indexes
-        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        Dictionary<string, TextList> dictOfTextLists = GameManager.i.dataScript.GetDictOfTextList();
         if (dictOfTextLists != null)
         {
             write.dataData.listOfTextListNames = dictOfTextLists.Keys.ToList();
@@ -1136,7 +1136,7 @@ public class FileManager : MonoBehaviour
         // - - - Main dictionarys
         //
         //dictOfActors
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
             foreach (var actor in dictOfActors)
@@ -1152,7 +1152,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
         //dictOfHQ
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
+        Dictionary<int, Actor> dictOfHQ = GameManager.i.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             foreach (var actor in dictOfHQ)
@@ -1170,12 +1170,12 @@ public class FileManager : MonoBehaviour
         //
         // - - - Actor arrays
         //
-        int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
-        int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        int sideNum = GameManager.i.dataScript.GetNumOfGlobalSide();
+        int actorNum = GameManager.i.actorScript.maxNumOfOnMapActors;
         Debug.Assert(sideNum > 0, "Invalid sideNum (Zero or less)");
         Debug.Assert(actorNum > 0, "Invalid actorNum (Zero or less)");
         //write data to lists (not multidimensional arrays split into single lists for serialization)
-        Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+        Actor[,] arrayOfActors = GameManager.i.dataScript.GetArrayOfActors();
         Debug.Assert(arrayOfActors.GetUpperBound(0) + 1 == sideNum, "Invalid arrayOfActors dimension [x, ]");
         Debug.Assert(arrayOfActors.GetUpperBound(1) + 1 == actorNum, "Invalid arrayOfActors dimension [ ,x]");
         if (arrayOfActors != null)
@@ -1194,7 +1194,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //arrayOfActorsPresent
-        bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+        bool[,] arrayOfActorsPresent = GameManager.i.dataScript.GetArrayOfActorsPresent();
         if (arrayOfActorsPresent != null)
         {
             for (int i = 0; i < arrayOfActorsPresent.GetUpperBound(0) + 1; i++)
@@ -1205,7 +1205,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
         //arrayOfActorsHQ
-        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActorsHQ = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActorsHQ != null)
         {
             for (int i = 0; i < arrayOfActorsHQ.Length; i++)
@@ -1220,36 +1220,36 @@ public class FileManager : MonoBehaviour
         //
         // - - - Pool lists
         //
-        write.actorData.authorityActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority));
-        write.actorData.authorityActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority));
-        write.actorData.authorityActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority));
-        write.actorData.resistanceActorPoolLevelOne.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance));
-        write.actorData.resistanceActorPoolLevelTwo.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance));
-        write.actorData.resistanceActorPoolLevelThree.AddRange(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance));
+        write.actorData.authorityActorPoolLevelOne.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, globalAuthority));
+        write.actorData.authorityActorPoolLevelTwo.AddRange(GameManager.i.dataScript.GetActorRecruitPool(2, globalAuthority));
+        write.actorData.authorityActorPoolLevelThree.AddRange(GameManager.i.dataScript.GetActorRecruitPool(3, globalAuthority));
+        write.actorData.resistanceActorPoolLevelOne.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, globalResistance));
+        write.actorData.resistanceActorPoolLevelTwo.AddRange(GameManager.i.dataScript.GetActorRecruitPool(2, globalResistance));
+        write.actorData.resistanceActorPoolLevelThree.AddRange(GameManager.i.dataScript.GetActorRecruitPool(3, globalResistance));
 
-        write.actorData.authorityActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalAuthority));
-        write.actorData.authorityActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalAuthority));
-        write.actorData.authorityActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalAuthority));
-        write.actorData.authorityActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalAuthority));
-        write.actorData.authorityActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalAuthority));
+        write.actorData.authorityActorReserve.AddRange(GameManager.i.dataScript.GetListOfReserveActors(globalAuthority));
+        write.actorData.authorityActorDismissed.AddRange(GameManager.i.dataScript.GetListOfDismissedActors(globalAuthority));
+        write.actorData.authorityActorPromoted.AddRange(GameManager.i.dataScript.GetListOfPromotedActors(globalAuthority));
+        write.actorData.authorityActorDisposedOf.AddRange(GameManager.i.dataScript.GetListOfDisposedOfActors(globalAuthority));
+        write.actorData.authorityActorResigned.AddRange(GameManager.i.dataScript.GetListOfResignedActors(globalAuthority));
 
-        write.actorData.resistanceActorReserve.AddRange(GameManager.instance.dataScript.GetListOfReserveActors(globalResistance));
-        write.actorData.resistanceActorDismissed.AddRange(GameManager.instance.dataScript.GetListOfDismissedActors(globalResistance));
-        write.actorData.resistanceActorPromoted.AddRange(GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance));
-        write.actorData.resistanceActorDisposedOf.AddRange(GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance));
-        write.actorData.resistanceActorResigned.AddRange(GameManager.instance.dataScript.GetListOfResignedActors(globalResistance));
+        write.actorData.resistanceActorReserve.AddRange(GameManager.i.dataScript.GetListOfReserveActors(globalResistance));
+        write.actorData.resistanceActorDismissed.AddRange(GameManager.i.dataScript.GetListOfDismissedActors(globalResistance));
+        write.actorData.resistanceActorPromoted.AddRange(GameManager.i.dataScript.GetListOfPromotedActors(globalResistance));
+        write.actorData.resistanceActorDisposedOf.AddRange(GameManager.i.dataScript.GetListOfDisposedOfActors(globalResistance));
+        write.actorData.resistanceActorResigned.AddRange(GameManager.i.dataScript.GetListOfResignedActors(globalResistance));
 
-        write.actorData.actorHQPool.AddRange(GameManager.instance.dataScript.GetListOfActorHq());
+        write.actorData.actorHQPool.AddRange(GameManager.i.dataScript.GetListOfActorHq());
         //
         // - - - ActorManager.cs 
         //
-        write.actorData.actorIDCounter = GameManager.instance.actorScript.actorIDCounter;
-        write.actorData.hqIDCounter = GameManager.instance.actorScript.hqIDCounter;
-        write.actorData.lieLowTimer = GameManager.instance.actorScript.lieLowTimer;
-        write.actorData.doomTimer = GameManager.instance.actorScript.doomTimer;
-        write.actorData.captureTimer = GameManager.instance.actorScript.captureTimerPlayer;
-        write.actorData.isGearCheckRequired = GameManager.instance.actorScript.isGearCheckRequired;
-        write.actorData.nameSet = GameManager.instance.actorScript.nameSet.name;
+        write.actorData.actorIDCounter = GameManager.i.actorScript.actorIDCounter;
+        write.actorData.hqIDCounter = GameManager.i.actorScript.hqIDCounter;
+        write.actorData.lieLowTimer = GameManager.i.actorScript.lieLowTimer;
+        write.actorData.doomTimer = GameManager.i.actorScript.doomTimer;
+        write.actorData.captureTimer = GameManager.i.actorScript.captureTimerPlayer;
+        write.actorData.isGearCheckRequired = GameManager.i.actorScript.isGearCheckRequired;
+        write.actorData.nameSet = GameManager.i.actorScript.nameSet.name;
         //
         // - - - Actor.cs fast access fields
         //
@@ -1259,10 +1259,10 @@ public class FileManager : MonoBehaviour
         write.actorData.actorBlackmailNone = "ActorBlackmailNone";
         write.actorData.actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
         write.actorData.actorBlackmailTimerLow = "ActorBlackmailTimerLow";
-        write.actorData.maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-        write.actorData.compatibilityOne = GameManager.instance.personScript.compatibilityChanceOne;
-        write.actorData.compatibilityTwo = GameManager.instance.personScript.compatibilityChanceTwo;
-        write.actorData.compatibilityThree = GameManager.instance.personScript.compatibilityChanceThree;
+        write.actorData.maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
+        write.actorData.compatibilityOne = GameManager.i.personScript.compatibilityChanceOne;
+        write.actorData.compatibilityTwo = GameManager.i.personScript.compatibilityChanceTwo;
+        write.actorData.compatibilityThree = GameManager.i.personScript.compatibilityChanceThree;
         Debug.Assert(write.actorData.maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1)");
         Debug.Assert(write.actorData.compatibilityOne > 0, "Invalid compatibilityOne (Zero)");
     }
@@ -1276,17 +1276,17 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteNodeData()
     {
-        write.nodeData.crisisPolicyModifier = GameManager.instance.nodeScript.crisisPolicyModifier;
-        write.nodeData.nodeCounter = GameManager.instance.nodeScript.nodeIDCounter;
-        write.nodeData.connCounter = GameManager.instance.nodeScript.connIDCounter;
-        write.nodeData.nodeHighlight = GameManager.instance.nodeScript.nodeHighlight;
-        write.nodeData.nodePlayer = GameManager.instance.nodeScript.nodePlayer;
-        write.nodeData.nodeNemesis = GameManager.instance.nodeScript.nodeNemesis;
-        write.nodeData.nodeCaptured = GameManager.instance.nodeScript.nodeCaptured;
+        write.nodeData.crisisPolicyModifier = GameManager.i.nodeScript.crisisPolicyModifier;
+        write.nodeData.nodeCounter = GameManager.i.nodeScript.nodeIDCounter;
+        write.nodeData.connCounter = GameManager.i.nodeScript.connIDCounter;
+        write.nodeData.nodeHighlight = GameManager.i.nodeScript.nodeHighlight;
+        write.nodeData.nodePlayer = GameManager.i.nodeScript.nodePlayer;
+        write.nodeData.nodeNemesis = GameManager.i.nodeScript.nodeNemesis;
+        write.nodeData.nodeCaptured = GameManager.i.nodeScript.nodeCaptured;
         //
         // - - - Node.cs
         //
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.i.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             foreach (var record in dictOfNodes)
@@ -1375,7 +1375,7 @@ public class FileManager : MonoBehaviour
         //
         // - - - Crisis Nodes
         //
-        List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
+        List<Node> listOfCrisisNodes = GameManager.i.dataScript.GetListOfCrisisNodes();
         if (listOfCrisisNodes != null)
         {
             //save nodeID's
@@ -1391,7 +1391,7 @@ public class FileManager : MonoBehaviour
         //
         // - - - Cure Nodes
         //
-        List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+        List<Node> listOfCureNodes = GameManager.i.dataScript.GetListOfCureNodes();
         if (listOfCureNodes != null)
         {
             //save nodeID's
@@ -1414,7 +1414,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteConnectionData()
     {
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.i.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach (var conn in dictOfConnections)
@@ -1447,7 +1447,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteGearData()
     {
-        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             foreach (var gear in dictOfGear)
@@ -1476,33 +1476,33 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
         //list -> listOfCommonGear
-        List<string> tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon);
+        List<string> tempList = GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearCommon);
         if (tempList != null)
         { write.gearData.listOfCommonGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
         //list -> listOfRareGear
-        tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearRare);
+        tempList = GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearRare);
         if (tempList != null)
         { write.gearData.listOfRareGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfRareGear (Null)"); }
         //list -> listOfUniqueGear
-        tempList = GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearUnique);
+        tempList = GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearUnique);
         if (tempList != null)
         { write.gearData.listOfUniqueGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfUniqueGear (Null)"); }
         //list -> listOfLostGear
-        tempList = GameManager.instance.dataScript.GetListOfLostGear();
+        tempList = GameManager.i.dataScript.GetListOfLostGear();
         if (tempList != null)
         { write.gearData.listOfLostGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfLostGear (Null)"); }
         //list -> listOfCurrentGear
-        tempList = GameManager.instance.dataScript.GetListOfCurrentGear();
+        tempList = GameManager.i.dataScript.GetListOfCurrentGear();
         if (tempList != null)
         { write.gearData.listOfCurrentGear.AddRange(tempList); }
         else { Debug.LogError("Invalid listOfCurrentGear (Null)"); }
         //GearManager fields
-        write.gearData.gearSaveCurrentCost = GameManager.instance.gearScript.GetGearSaveCurrentCost();
-        write.gearData.listOfCompromisedGear.AddRange(GameManager.instance.gearScript.GetListOfCompromisedGear());
+        write.gearData.gearSaveCurrentCost = GameManager.i.gearScript.GetGearSaveCurrentCost();
+        write.gearData.listOfCompromisedGear.AddRange(GameManager.i.gearScript.GetListOfCompromisedGear());
     }
     #endregion
 
@@ -1513,7 +1513,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteTopicData()
     {
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
             foreach (var topic in dictOfTopics)
@@ -1548,14 +1548,14 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteContactData()
     {
-        write.contactData.contactIDCounter = GameManager.instance.contactScript.contactIDCounter;
+        write.contactData.contactIDCounter = GameManager.i.contactScript.contactIDCounter;
         //arrayOfContactNetworks
-        int[] arrayOfContacts = GameManager.instance.contactScript.GetArrayOfContactNetworks();
+        int[] arrayOfContacts = GameManager.i.contactScript.GetArrayOfContactNetworks();
         if (arrayOfContacts != null)
         { write.contactData.listOfContactNetworks.AddRange(arrayOfContacts); }
         else { Debug.LogError("Invalid arrayOfContactNetworks (Null)"); }
         //arrayOfActors
-        Actor[] arrayOfActors = GameManager.instance.contactScript.GetArrayOfActors();
+        Actor[] arrayOfActors = GameManager.i.contactScript.GetArrayOfActors();
         if (arrayOfActors != null)
         {
             //loop array and store actorID's in list
@@ -1584,65 +1584,65 @@ public class FileManager : MonoBehaviour
     private void WriteAIData()
     {
         //list -> tasks final
-        List<AITask> listOfTasksFinal = GameManager.instance.aiScript.GetListOfTasksFinal();
+        List<AITask> listOfTasksFinal = GameManager.i.aiScript.GetListOfTasksFinal();
         if (listOfTasksFinal != null)
         { write.aiData.listOfTasksFinal.AddRange(listOfTasksFinal); }
         else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
         //list -> tasks potential
-        List<AITask> listOfTasksPotential = GameManager.instance.aiScript.GetListOfTasksPotential();
+        List<AITask> listOfTasksPotential = GameManager.i.aiScript.GetListOfTasksPotential();
         if (listOfTasksPotential != null)
         { write.aiData.listOfTasksPotential.AddRange(listOfTasksPotential); }
         else { Debug.LogError("Invalid listOfTaskFinal (Null)"); }
         //list -> player effects
-        List<string> listOfPlayerEffects = GameManager.instance.aiScript.GetListOfPlayerEffects();
+        List<string> listOfPlayerEffects = GameManager.i.aiScript.GetListOfPlayerEffects();
         if (listOfPlayerEffects != null)
         { write.aiData.listOfPlayerEffects.AddRange(listOfPlayerEffects); }
         else { Debug.LogError("Invalid listOfPlayerEffects (Null)"); }
         //list -> player effect descriptors
-        List<string> listOfPlayerEffectDescriptors = GameManager.instance.aiScript.GetListOfPlayerEffectDescriptors();
+        List<string> listOfPlayerEffectDescriptors = GameManager.i.aiScript.GetListOfPlayerEffectDescriptors();
         if (listOfPlayerEffectDescriptors != null)
         { write.aiData.listOfPlayerEffectDescriptors.AddRange(listOfPlayerEffectDescriptors); }
         else { Debug.LogError("Invalid listOfPlayerEffectDescriptors (Null)"); }
         //list -> arrayOfAITaskTypes (Authority)
-        int[] arrayOfAITaskTypes = GameManager.instance.aiScript.GetArrayOfAITaskTypes();
+        int[] arrayOfAITaskTypes = GameManager.i.aiScript.GetArrayOfAITaskTypes();
         if (arrayOfAITaskTypes != null)
         { write.aiData.listOfAITaskTypesAuthority.AddRange(arrayOfAITaskTypes); }
         else { Debug.LogError("Invalid arrayOfAITaskTypesAuthority (Null)"); }
         //AIManager.cs -> public fields
-        write.aiData.immediateFlagAuthority = GameManager.instance.aiScript.immediateFlagAuthority;
-        write.aiData.immediateFlagResistance = GameManager.instance.aiScript.immediateFlagResistance;
-        write.aiData.resourcesGainAuthority = GameManager.instance.aiScript.resourcesGainAuthority;
-        write.aiData.resourcesGainResistance = GameManager.instance.aiScript.resourcesGainResistance;
-        write.aiData.aiTaskCounter = GameManager.instance.aiScript.aiTaskCounter;
-        write.aiData.hackingAttemptsTotal = GameManager.instance.aiScript.hackingAttemptsTotal;
-        write.aiData.hackingAttemptsReboot = GameManager.instance.aiScript.hackingAttemptsReboot;
-        write.aiData.hackingAttemptsDetected = GameManager.instance.aiScript.hackingAttemptsDetected;
-        write.aiData.hackingCurrentCost = GameManager.instance.aiScript.hackingCurrentCost;
-        write.aiData.hackingModifiedCost = GameManager.instance.aiScript.hackingModifiedCost;
-        write.aiData.isHacked = GameManager.instance.aiScript.isHacked;
-        write.aiData.aiAlertStatus = GameManager.instance.aiScript.aiAlertStatus;
-        write.aiData.isRebooting = GameManager.instance.aiScript.isRebooting;
-        write.aiData.rebootTimer = GameManager.instance.aiScript.rebootTimer;
-        write.aiData.numOfCrisis = GameManager.instance.aiScript.numOfCrisis;
-        write.aiData.status = GameManager.instance.aiScript.status;
-        write.aiData.inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
+        write.aiData.immediateFlagAuthority = GameManager.i.aiScript.immediateFlagAuthority;
+        write.aiData.immediateFlagResistance = GameManager.i.aiScript.immediateFlagResistance;
+        write.aiData.resourcesGainAuthority = GameManager.i.aiScript.resourcesGainAuthority;
+        write.aiData.resourcesGainResistance = GameManager.i.aiScript.resourcesGainResistance;
+        write.aiData.aiTaskCounter = GameManager.i.aiScript.aiTaskCounter;
+        write.aiData.hackingAttemptsTotal = GameManager.i.aiScript.hackingAttemptsTotal;
+        write.aiData.hackingAttemptsReboot = GameManager.i.aiScript.hackingAttemptsReboot;
+        write.aiData.hackingAttemptsDetected = GameManager.i.aiScript.hackingAttemptsDetected;
+        write.aiData.hackingCurrentCost = GameManager.i.aiScript.hackingCurrentCost;
+        write.aiData.hackingModifiedCost = GameManager.i.aiScript.hackingModifiedCost;
+        write.aiData.isHacked = GameManager.i.aiScript.isHacked;
+        write.aiData.aiAlertStatus = GameManager.i.aiScript.aiAlertStatus;
+        write.aiData.isRebooting = GameManager.i.aiScript.isRebooting;
+        write.aiData.rebootTimer = GameManager.i.aiScript.rebootTimer;
+        write.aiData.numOfCrisis = GameManager.i.aiScript.numOfCrisis;
+        write.aiData.status = GameManager.i.aiScript.status;
+        write.aiData.inactiveStatus = GameManager.i.aiScript.inactiveStatus;
         //AIManager.cs -> private fields
-        write.aiData.saveAI = GameManager.instance.aiScript.LoadWriteData();
+        write.aiData.saveAI = GameManager.i.aiScript.LoadWriteData();
         //AIRebelManager.cs -> private fields
-        write.aiData.saveRebel = GameManager.instance.aiRebelScript.WriteSaveData();
+        write.aiData.saveRebel = GameManager.i.aiRebelScript.WriteSaveData();
         if (write.aiData.saveRebel == null)
         { Debug.LogError("Invalid AIRebelManager.cs saveRebel data (Null)"); }
         //AIRebelManager -> Nemesis Reports
-        List<AITracker> tempListNemesis = GameManager.instance.aiRebelScript.GetListOfNemesisReports();
+        List<AITracker> tempListNemesis = GameManager.i.aiRebelScript.GetListOfNemesisReports();
         if (tempListNemesis != null)
         { write.aiData.listOfNemesisReports.AddRange(tempListNemesis); }
         else { Debug.LogError("Invalid listOfNemesisReports (Null)"); }
         //AIRebelManager -> Erasure Reports
-        List<AITracker> tempListErasure = GameManager.instance.aiRebelScript.GetListOfErasureReports();
+        List<AITracker> tempListErasure = GameManager.i.aiRebelScript.GetListOfErasureReports();
         if (tempListErasure != null)
         { write.aiData.listOfErasureReports.AddRange(tempListErasure); }
         else { Debug.LogError("Invalid listOfErasureReports (Null)"); }
-        arrayOfAITaskTypes = GameManager.instance.aiRebelScript.GetArrayOfAITaskTypes();
+        arrayOfAITaskTypes = GameManager.i.aiRebelScript.GetArrayOfAITaskTypes();
         if (arrayOfAITaskTypes != null)
         { write.aiData.listOfAITaskTypesRebel.AddRange(arrayOfAITaskTypes); }
         else { Debug.LogError("Invalid arrayOfAITaskTypesRebel (Null)"); }
@@ -1656,13 +1656,13 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteTargetData()
     {
-        write.targetData.startTargets = GameManager.instance.targetScript.StartTargets;
-        write.targetData.activeTargets = GameManager.instance.targetScript.ActiveTargets;
-        write.targetData.liveTargets = GameManager.instance.targetScript.LiveTargets;
-        write.targetData.maxTargets = GameManager.instance.targetScript.MaxTargets;
-        write.targetData.targetOrgName = GameManager.instance.targetScript.targetOrgName;
+        write.targetData.startTargets = GameManager.i.targetScript.StartTargets;
+        write.targetData.activeTargets = GameManager.i.targetScript.ActiveTargets;
+        write.targetData.liveTargets = GameManager.i.targetScript.LiveTargets;
+        write.targetData.maxTargets = GameManager.i.targetScript.MaxTargets;
+        write.targetData.targetOrgName = GameManager.i.targetScript.targetOrgName;
         //target.SO dynamic data
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             foreach (var target in dictOfTargets)
@@ -1695,7 +1695,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
         //arrayOfGenericTargets
-        List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        List<string>[] arrayOfGenericTargets = GameManager.i.dataScript.GetArrayOfGenericTargets();
         if (arrayOfGenericTargets != null)
         {
             for (int i = 0; i < arrayOfGenericTargets.Length; i++)
@@ -1709,12 +1709,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
         //listOfNodesWithTargets
-        List<int> listOfNodesWithTargets = GameManager.instance.dataScript.GetListOfNodesWithTargets();
+        List<int> listOfNodesWithTargets = GameManager.i.dataScript.GetListOfNodesWithTargets();
         if (listOfNodesWithTargets != null)
         { write.targetData.listOfNodesWithTargets.AddRange(listOfNodesWithTargets); }
         else { Debug.LogError("Invalid listOfNodesWithTargets (Null)"); }
         //targetPoolActive
-        List<Target> listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Active);
+        List<Target> listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Active);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -1727,7 +1727,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolActive (Null)"); }
         //targetPoolLive
-        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Live);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -1740,7 +1740,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolLive (Null)"); }
         //targetPoolOutstanding
-        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Outstanding);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Outstanding);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -1753,7 +1753,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTargetPoolOutstanding (Null)"); }
         //targetPoolDone
-        listOfTargetPool = GameManager.instance.dataScript.GetTargetPool(Status.Done);
+        listOfTargetPool = GameManager.i.dataScript.GetTargetPool(Status.Done);
         if (listOfTargetPool != null)
         {
             for (int i = 0; i < listOfTargetPool.Count; i++)
@@ -1775,13 +1775,13 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteStatisticsData()
     {
-        write.statisticsData.ratioPlayerNodeActions = GameManager.instance.statScript.ratioPlayerNodeActions;
-        write.statisticsData.ratioPlayerTargetAttempts = GameManager.instance.statScript.ratioPlayerTargetAttempts;
-        write.statisticsData.ratioPlayerMoveActions = GameManager.instance.statScript.ratioPlayerMoveActions;
-        write.statisticsData.ratioPlayerLieLowDays = GameManager.instance.statScript.ratioPlayerLieLowDays;
-        write.statisticsData.ratioPlayerGiveGear = GameManager.instance.statScript.ratioPlayerGiveGear;
-        write.statisticsData.ratioPlayerManageActions = GameManager.instance.statScript.ratioPlayerManageActions;
-        write.statisticsData.ratioPlayerDoNothing = GameManager.instance.statScript.ratioPlayerDoNothing;
+        write.statisticsData.ratioPlayerNodeActions = GameManager.i.statScript.ratioPlayerNodeActions;
+        write.statisticsData.ratioPlayerTargetAttempts = GameManager.i.statScript.ratioPlayerTargetAttempts;
+        write.statisticsData.ratioPlayerMoveActions = GameManager.i.statScript.ratioPlayerMoveActions;
+        write.statisticsData.ratioPlayerLieLowDays = GameManager.i.statScript.ratioPlayerLieLowDays;
+        write.statisticsData.ratioPlayerGiveGear = GameManager.i.statScript.ratioPlayerGiveGear;
+        write.statisticsData.ratioPlayerManageActions = GameManager.i.statScript.ratioPlayerManageActions;
+        write.statisticsData.ratioPlayerDoNothing = GameManager.i.statScript.ratioPlayerDoNothing;
     }
     #endregion
 
@@ -1796,20 +1796,20 @@ public class FileManager : MonoBehaviour
     private void ReadCampaignData()
     {
         //campaign
-        Campaign campaign = GameManager.instance.dataScript.GetCampaign(read.campaignData.campaignName);
+        Campaign campaign = GameManager.i.dataScript.GetCampaign(read.campaignData.campaignName);
         if (campaign != null)
-        { GameManager.instance.campaignScript.campaign = campaign; }
+        { GameManager.i.campaignScript.campaign = campaign; }
         else { Debug.LogErrorFormat("Invalid campaign (Null) for campaign {0}", read.campaignData.campaignName); }
         //scenario
-        GameManager.instance.campaignScript.SetScenario(read.campaignData.scenarioIndex);
+        GameManager.i.campaignScript.SetScenario(read.campaignData.scenarioIndex);
         //arrayOfStoryStatus
-        GameManager.instance.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
+        GameManager.i.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
         //mission
-        GameManager.instance.campaignScript.SetMission();
+        GameManager.i.campaignScript.SetMission();
         //campaign status
-        GameManager.instance.campaignScript.SetCommendations(read.campaignData.commendations);
-        GameManager.instance.campaignScript.SetBlackMarks(read.campaignData.blackMarks);
-        GameManager.instance.campaignScript.SetInvestigationBlackmarks(read.campaignData.investigationBlackMarks);
+        GameManager.i.campaignScript.SetCommendations(read.campaignData.commendations);
+        GameManager.i.campaignScript.SetBlackMarks(read.campaignData.blackMarks);
+        GameManager.i.campaignScript.SetInvestigationBlackmarks(read.campaignData.investigationBlackMarks);
     }
     #endregion
 
@@ -1822,8 +1822,8 @@ public class FileManager : MonoBehaviour
     {
         //npc
         if (read.campaignData.isNpc == true)
-        { GameManager.instance.missionScript.SetNpcData(read.campaignData.npc); }
-        else { GameManager.instance.missionScript.SetNpcData(); }
+        { GameManager.i.missionScript.SetNpcData(read.campaignData.npc); }
+        else { GameManager.i.missionScript.SetNpcData(); }
     }
     #endregion
 
@@ -1834,27 +1834,27 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadOptionData()
     {
-        GameManager.instance.optionScript.autoGearResolution = read.optionData.autoGearResolution;
-        GameManager.instance.optionScript.fogOfWar = read.optionData.fogOfWar;
-        GameManager.instance.optionScript.debugData = read.optionData.debugData;
-        GameManager.instance.optionScript.noAI = read.optionData.noAI;
-        GameManager.instance.optionScript.showContacts = read.optionData.showContacts;
-        GameManager.instance.optionScript.showRenown = read.optionData.showRenown;
-        GameManager.instance.optionScript.connectorTooltips = read.optionData.connectorTooltips;
-        GameManager.instance.optionScript.ColourOption = read.optionData.colourScheme;
+        GameManager.i.optionScript.autoGearResolution = read.optionData.autoGearResolution;
+        GameManager.i.optionScript.fogOfWar = read.optionData.fogOfWar;
+        GameManager.i.optionScript.debugData = read.optionData.debugData;
+        GameManager.i.optionScript.noAI = read.optionData.noAI;
+        GameManager.i.optionScript.showContacts = read.optionData.showContacts;
+        GameManager.i.optionScript.showRenown = read.optionData.showRenown;
+        GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
+        GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
         //Debug button texts
         if (read.optionData.autoGearResolution == true)
-        { GameManager.instance.debugScript.optionAutoGear = "Auto Gear OFF"; }
+        { GameManager.i.debugScript.optionAutoGear = "Auto Gear OFF"; }
         if (read.optionData.fogOfWar == true)
-        { GameManager.instance.debugScript.optionFogOfWar = "Fog Of War OFF"; }
+        { GameManager.i.debugScript.optionFogOfWar = "Fog Of War OFF"; }
         if (read.optionData.connectorTooltips == true)
-        { GameManager.instance.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
+        { GameManager.i.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
         if (read.optionData.debugData == true)
-        { GameManager.instance.debugScript.optionDebugData = "Debug Data OFF"; }
+        { GameManager.i.debugScript.optionDebugData = "Debug Data OFF"; }
         if (read.optionData.showRenown == false)
-        { GameManager.instance.debugScript.optionRenownUI = "Renown UI ON"; }
+        { GameManager.i.debugScript.optionRenownUI = "Renown UI ON"; }
         if (read.optionData.showContacts == true)
-        { GameManager.instance.debugScript.optionContacts = "Contacts OFF"; }
+        { GameManager.i.debugScript.optionContacts = "Contacts OFF"; }
     }
     #endregion
 
@@ -1865,26 +1865,26 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadPlayerData()
     {
-        GameManager.instance.playerScript.Renown = read.playerData.renown;
-        GameManager.instance.playerScript.Invisibility = read.playerData.Invisibility;
-        GameManager.instance.playerScript.Innocence = read.playerData.Innocence;
-        GameManager.instance.playerScript.sex = read.playerData.sex;
-        GameManager.instance.playerScript.SetMood(read.playerData.mood);
-        GameManager.instance.playerScript.status = read.playerData.status;
-        GameManager.instance.playerScript.tooltipStatus = read.playerData.tooltipStatus;
-        GameManager.instance.playerScript.inactiveStatus = read.playerData.inactiveStatus;
-        GameManager.instance.playerScript.isBreakdown = read.playerData.isBreakdown;
-        GameManager.instance.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
-        GameManager.instance.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
-        GameManager.instance.playerScript.isAddicted = read.playerData.isAddicted;
-        GameManager.instance.playerScript.isStressLeave = read.playerData.isStressLeave;
-        GameManager.instance.playerScript.isStressed = read.playerData.isStressed;
-        GameManager.instance.playerScript.numOfSuperStress = read.playerData.numOfSuperStress;
-        GameManager.instance.playerScript.stressImmunityCurrent = read.playerData.stressImmunityCurrent;
-        GameManager.instance.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;
-        GameManager.instance.playerScript.addictedTally = read.playerData.addictedTally;
-        GameManager.instance.playerScript.SetArrayOfCaptureTools(read.playerData.arrayOfCaptureTools);
-        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        GameManager.i.playerScript.Renown = read.playerData.renown;
+        GameManager.i.playerScript.Invisibility = read.playerData.Invisibility;
+        GameManager.i.playerScript.Innocence = read.playerData.Innocence;
+        GameManager.i.playerScript.sex = read.playerData.sex;
+        GameManager.i.playerScript.SetMood(read.playerData.mood);
+        GameManager.i.playerScript.status = read.playerData.status;
+        GameManager.i.playerScript.tooltipStatus = read.playerData.tooltipStatus;
+        GameManager.i.playerScript.inactiveStatus = read.playerData.inactiveStatus;
+        GameManager.i.playerScript.isBreakdown = read.playerData.isBreakdown;
+        GameManager.i.playerScript.isEndOfTurnGearCheck = read.playerData.isEndOfTurnGearCheck;
+        GameManager.i.playerScript.isLieLowFirstturn = read.playerData.isLieLowFirstturn;
+        GameManager.i.playerScript.isAddicted = read.playerData.isAddicted;
+        GameManager.i.playerScript.isStressLeave = read.playerData.isStressLeave;
+        GameManager.i.playerScript.isStressed = read.playerData.isStressed;
+        GameManager.i.playerScript.numOfSuperStress = read.playerData.numOfSuperStress;
+        GameManager.i.playerScript.stressImmunityCurrent = read.playerData.stressImmunityCurrent;
+        GameManager.i.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;
+        GameManager.i.playerScript.addictedTally = read.playerData.addictedTally;
+        GameManager.i.playerScript.SetArrayOfCaptureTools(read.playerData.arrayOfCaptureTools);
+        Personality personality = GameManager.i.playerScript.GetPersonality();
         if (personality != null)
         {
             personality.SetFactors(read.playerData.listOfPersonalityFactors.ToArray());
@@ -1898,40 +1898,40 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid Player personality (Null)"); }
         //gear
-        GameManager.instance.playerScript.SetListOfGear(read.playerData.listOfGear);
+        GameManager.i.playerScript.SetListOfGear(read.playerData.listOfGear);
         //secrets
         List<Secret> listOfSecrets = new List<Secret>();
         for (int i = 0; i < read.playerData.listOfSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.playerData.listOfSecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.playerData.listOfSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.playerScript.SetSecrets(listOfSecrets);
+        GameManager.i.playerScript.SetSecrets(listOfSecrets);
         //investigations
-        GameManager.instance.playerScript.SetListOfInvestigations(read.playerData.listOfInvestigations);
+        GameManager.i.playerScript.SetListOfInvestigations(read.playerData.listOfInvestigations);
         //mood history
-        GameManager.instance.playerScript.SetMoodHistory(read.playerData.listOfMoodHistory);
+        GameManager.i.playerScript.SetMoodHistory(read.playerData.listOfMoodHistory);
         //conditions -> Resistance
         List<Condition> listOfConditions = new List<Condition>();
         for (int i = 0; i < read.playerData.listOfConditionsResistance.Count; i++)
         {
-            Condition condition = GameManager.instance.dataScript.GetCondition(read.playerData.listOfConditionsResistance[i]);
+            Condition condition = GameManager.i.dataScript.GetCondition(read.playerData.listOfConditionsResistance[i]);
             if (condition != null)
             { listOfConditions.Add(condition); }
         }
-        GameManager.instance.playerScript.SetConditions(listOfConditions, globalResistance);
+        GameManager.i.playerScript.SetConditions(listOfConditions, globalResistance);
         //conditions -> Authority
         listOfConditions = new List<Condition>();
         for (int i = 0; i < read.playerData.listOfConditionsAuthority.Count; i++)
         {
-            Condition condition = GameManager.instance.dataScript.GetCondition(read.playerData.listOfConditionsAuthority[i]);
+            Condition condition = GameManager.i.dataScript.GetCondition(read.playerData.listOfConditionsAuthority[i]);
             if (condition != null)
             { listOfConditions.Add(condition); }
         }
-        GameManager.instance.playerScript.SetConditions(listOfConditions, globalAuthority);
+        GameManager.i.playerScript.SetConditions(listOfConditions, globalAuthority);
         //nodeActions
-        GameManager.instance.playerScript.SetListOfNodeActions(read.playerData.listOfNodeActions);
+        GameManager.i.playerScript.SetListOfNodeActions(read.playerData.listOfNodeActions);
     }
     #endregion
 
@@ -1943,24 +1943,24 @@ public class FileManager : MonoBehaviour
     private void ReadGameData(GlobalSide side)
     {
         //Sidemanager.cs
-        GameManager.instance.sideScript.resistanceCurrent = read.gameData.resistanceCurrent;
-        GameManager.instance.sideScript.authorityCurrent = read.gameData.authorityCurrent;
-        GameManager.instance.sideScript.resistanceOverall = read.gameData.resistanceOverall;
-        GameManager.instance.sideScript.authorityOverall = read.gameData.authorityOverall;
-        GameManager.instance.sideScript.PlayerSide = side;
+        GameManager.i.sideScript.resistanceCurrent = read.gameData.resistanceCurrent;
+        GameManager.i.sideScript.authorityCurrent = read.gameData.authorityCurrent;
+        GameManager.i.sideScript.resistanceOverall = read.gameData.resistanceOverall;
+        GameManager.i.sideScript.authorityOverall = read.gameData.authorityOverall;
+        GameManager.i.sideScript.PlayerSide = side;
         //turnManager.cs -> private fields
-        GameManager.instance.turnScript.LoadReadData(read.gameData.turnData);
+        GameManager.i.turnScript.LoadReadData(read.gameData.turnData);
         //turnManager.cs -> public fields
-        GameManager.instance.turnScript.winStateLevel = read.gameData.winStateLevel;
-        GameManager.instance.turnScript.winReasonLevel = read.gameData.winReasonLevel;
-        GameManager.instance.turnScript.winStateCampaign = read.gameData.winStateCampaign;
-        GameManager.instance.turnScript.winReasonCampaign = read.gameData.winReasonCampaign;
-        GameManager.instance.turnScript.authoritySecurityState = read.gameData.authoritySecurity;
-        GlobalSide currentSide = GameManager.instance.dataScript.GetGlobalSide(read.gameData.currentSide);
+        GameManager.i.turnScript.winStateLevel = read.gameData.winStateLevel;
+        GameManager.i.turnScript.winReasonLevel = read.gameData.winReasonLevel;
+        GameManager.i.turnScript.winStateCampaign = read.gameData.winStateCampaign;
+        GameManager.i.turnScript.winReasonCampaign = read.gameData.winReasonCampaign;
+        GameManager.i.turnScript.authoritySecurityState = read.gameData.authoritySecurity;
+        GlobalSide currentSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.currentSide);
         if (currentSide != null)
-        { GameManager.instance.turnScript.currentSide = currentSide; }
+        { GameManager.i.turnScript.currentSide = currentSide; }
         else { Debug.LogError("Invalid currentSide (Null)"); }
-        GameManager.instance.turnScript.haltExecution = read.gameData.haltExecution;
+        GameManager.i.turnScript.haltExecution = read.gameData.haltExecution;
 
 
     }
@@ -1974,19 +1974,19 @@ public class FileManager : MonoBehaviour
     private void ReadScenarioData()
     {
         //cityManager.cs
-        GameManager.instance.cityScript.CityLoyalty = read.scenarioData.cityLoyalty;
+        GameManager.i.cityScript.CityLoyalty = read.scenarioData.cityLoyalty;
         //factionManager.cs
-        GameManager.instance.hqScript.LoadSetHqApproval(globalAuthority, read.scenarioData.hqSupportAuthority);
-        GameManager.instance.hqScript.LoadSetHqApproval(globalResistance, read.scenarioData.hqSupportResistance);
-        GameManager.instance.hqScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
-        GameManager.instance.hqScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
-        GameManager.instance.hqScript.SetHqRelocationTimer(read.scenarioData.timerHqRelocating);
-        GameManager.instance.hqScript.isHqRelocating = read.scenarioData.isHqRelocating;
+        GameManager.i.hqScript.LoadSetHqApproval(globalAuthority, read.scenarioData.hqSupportAuthority);
+        GameManager.i.hqScript.LoadSetHqApproval(globalResistance, read.scenarioData.hqSupportResistance);
+        GameManager.i.hqScript.LoadApprovalZeroTimer(read.scenarioData.approvalZeroTimer);
+        GameManager.i.hqScript.SetBossOpinion(read.scenarioData.bossOpinion, "Load Game");
+        GameManager.i.hqScript.SetHqRelocationTimer(read.scenarioData.timerHqRelocating);
+        GameManager.i.hqScript.isHqRelocating = read.scenarioData.isHqRelocating;
         //objectiveManager.cs
         List<Objective> tempList = new List<Objective>();
         for (int i = 0; i < read.scenarioData.listOfObjectiveNames.Count; i++)
         {
-            Objective objective = GameManager.instance.dataScript.GetObjective(read.scenarioData.listOfObjectiveNames[i]);
+            Objective objective = GameManager.i.dataScript.GetObjective(read.scenarioData.listOfObjectiveNames[i]);
             if (objective != null)
             {
                 objective.progress = read.scenarioData.listOfObjectiveProgress[i];
@@ -1996,7 +1996,7 @@ public class FileManager : MonoBehaviour
         }
         //update objectives
         if (tempList.Count > 0)
-        { GameManager.instance.objectiveScript.SetObjectives(tempList, false); }
+        { GameManager.i.objectiveScript.SetObjectives(tempList, false); }
     }
     #endregion
 
@@ -2013,7 +2013,7 @@ public class FileManager : MonoBehaviour
 
         #region statistics
         //level stats
-        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        Dictionary<StatType, int> dictOfStatisticsLevel = GameManager.i.dataScript.GetDictOfStatisticsLevel();
         if (dictOfStatisticsLevel != null)
         {
             int count = read.dataData.listOfStatisticsLevel.Count;
@@ -2037,7 +2037,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
         //campaign stats
-        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+        Dictionary<StatType, int> dictOfStatisticsCampaign = GameManager.i.dataScript.GetDictOfStatisticsCampaign();
         if (dictOfStatisticsCampaign != null)
         {
             int count = read.dataData.listOfStatisticsCampaign.Count;
@@ -2067,7 +2067,7 @@ public class FileManager : MonoBehaviour
         // - - - Secrets
         //
         //Copy any dynamic data into dictOfSecrets
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             //loop saved list of secret changes
@@ -2104,56 +2104,56 @@ public class FileManager : MonoBehaviour
         List<Secret> listOfSecrets = new List<Secret>();
         for (int i = 0; i < read.dataData.listOfPlayerSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfPlayerSecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.dataData.listOfPlayerSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfPlayerSecrets(listOfSecrets);
+        GameManager.i.dataScript.SetListOfPlayerSecrets(listOfSecrets);
         //Secrets List -> DesperateSecrets
         listOfSecrets.Clear();
         for (int i = 0; i < read.dataData.listOfOrganisationSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfOrganisationSecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.dataData.listOfOrganisationSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfOrganisationSecrets(listOfSecrets);
+        GameManager.i.dataScript.SetListOfOrganisationSecrets(listOfSecrets);
         //Secrets List -> Storysecrets
         listOfSecrets.Clear();
         for (int i = 0; i < read.dataData.listOfStorySecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfStorySecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.dataData.listOfStorySecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfStorySecrets(listOfSecrets);
+        GameManager.i.dataScript.SetListOfStorySecrets(listOfSecrets);
         //Secrets List -> RevealedSecrets
         listOfSecrets = new List<Secret>();
         for (int i = 0; i < read.dataData.listOfRevealedSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfRevealedSecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.dataData.listOfRevealedSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfRevealedSecrets(listOfSecrets);
+        GameManager.i.dataScript.SetListOfRevealedSecrets(listOfSecrets);
         //Secrets List -> DeletedSecrets
         listOfSecrets = new List<Secret>();
         for (int i = 0; i < read.dataData.listOfDeletedSecrets.Count; i++)
         {
-            Secret secret = GameManager.instance.dataScript.GetSecret(read.dataData.listOfDeletedSecrets[i]);
+            Secret secret = GameManager.i.dataScript.GetSecret(read.dataData.listOfDeletedSecrets[i]);
             if (secret != null)
             { listOfSecrets.Add(secret); }
         }
-        GameManager.instance.dataScript.SetListOfDeletedSecrets(listOfSecrets);
+        GameManager.i.dataScript.SetListOfDeletedSecrets(listOfSecrets);
         #endregion
 
         #region investigations
-        GameManager.instance.dataScript.SetListOfCompletedInvestigations(read.dataData.listOfInvestigations);
+        GameManager.i.dataScript.SetListOfCompletedInvestigations(read.dataData.listOfInvestigations);
         #endregion
 
         #region awards
-        GameManager.instance.dataScript.SetListOfCommendations(read.dataData.listOfCommendations);
-        GameManager.instance.dataScript.SetListOfBlackmarks(read.dataData.listOfBlackmarks);
+        GameManager.i.dataScript.SetListOfCommendations(read.dataData.listOfCommendations);
+        GameManager.i.dataScript.SetListOfBlackmarks(read.dataData.listOfBlackmarks);
         #endregion
 
         #region organisations
@@ -2165,7 +2165,7 @@ public class FileManager : MonoBehaviour
                 if (string.IsNullOrEmpty(orgName) == false)
                 {
                     //get org from dict
-                    Organisation org = GameManager.instance.dataScript.GetOrganisaton(orgName);
+                    Organisation org = GameManager.i.dataScript.GetOrganisaton(orgName);
                     if (org != null)
                     {
                         //get dynamic data
@@ -2190,15 +2190,15 @@ public class FileManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid orgName (Null or Empty) for listOfCurrentOrganisations[{0}]", i); }
             }
             //update DM -> listOfCurrentOrganisations
-            GameManager.instance.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
+            GameManager.i.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
             //OrgData lists
-            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfCureOrgData, OrganisationType.Cure);
-            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfContractOrgData, OrganisationType.Contract);
-            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
-            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
-            GameManager.instance.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
+            GameManager.i.dataScript.SetOrgData(read.dataData.listOfCureOrgData, OrganisationType.Cure);
+            GameManager.i.dataScript.SetOrgData(read.dataData.listOfContractOrgData, OrganisationType.Contract);
+            GameManager.i.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
+            GameManager.i.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
+            GameManager.i.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
             //OrgInfoArray
-            GameManager.instance.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
+            GameManager.i.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
         #endregion
 
         #region metaOptions
@@ -2209,7 +2209,7 @@ public class FileManager : MonoBehaviour
                 //copy across dynamic data
                 SaveMetaOption metaOption = read.dataData.listOfMetaOptions[i];
                 if (metaOption != null)
-                { GameManager.instance.dataScript.LoadMetaOptionData(metaOption); }
+                { GameManager.i.dataScript.LoadMetaOptionData(metaOption); }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) for listOfMetaOptions[{0}]", i); }
             }
         }
@@ -2224,7 +2224,7 @@ public class FileManager : MonoBehaviour
                 //copy across dynamic data
                 SaveCure saveCure = read.dataData.listOfCures[i];
                 if (saveCure != null)
-                { GameManager.instance.dataScript.LoadCureData(saveCure); }
+                { GameManager.i.dataScript.LoadCureData(saveCure); }
                 else { Debug.LogWarningFormat("Invalid saveCure in listOfCures[{0}]", i); }
             }
         }
@@ -2236,7 +2236,7 @@ public class FileManager : MonoBehaviour
         // - - - Contacts
         //
         //main contact dictionary (do first)
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
         if (dictOfContacts != null)
         {
             //clear dictionary
@@ -2257,7 +2257,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfContacts (Null)"); }
         //contact Pool
-        List<int> listOfContactPool = GameManager.instance.dataScript.GetContactPool();
+        List<int> listOfContactPool = GameManager.i.dataScript.GetContactPool();
         if (listOfContactPool != null)
         {
             listOfContactPool.Clear();
@@ -2265,7 +2265,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfContactPool (Null)"); }
         //dictOfActorContacts
-        Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+        Dictionary<int, List<int>> dictOfActorContacts = GameManager.i.dataScript.GetDictOfActorContacts();
         if (dictOfActorContacts != null)
         {
             //clear dictionary
@@ -2286,7 +2286,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
         //dictOfNodeContactsResistance
-        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+        Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.i.dataScript.GetDictOfNodeContacts(globalResistance);
         if (dictOfNodeContactsResistance != null)
         {
             //clear dictionary
@@ -2307,7 +2307,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
         //dictOfNodeContactsAuthority
-        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.i.dataScript.GetDictOfNodeContacts(globalAuthority);
         if (dictOfNodeContactsAuthority != null)
         {
             //clear dictionary
@@ -2328,7 +2328,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfNodeContactsAuthority (Null)"); }
         //dictOfContactsByNodeResistance
-        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+        Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.i.dataScript.GetDictOfContactsByNodeResistance();
         if (dictOfContactsByNodeResistance != null)
         {
             //clear dictionary
@@ -2354,7 +2354,7 @@ public class FileManager : MonoBehaviour
         //
         // - - - Teams
         //
-        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        Dictionary<int, Team> dictOfTeams = GameManager.i.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
             //clear dict
@@ -2373,7 +2373,7 @@ public class FileManager : MonoBehaviour
                     team.timer = saveTeam.timer;
                     team.turnDeployed = saveTeam.turnDeployed;
                     //team arc
-                    TeamArc arc = GameManager.instance.dataScript.GetTeamArc(saveTeam.arcID);
+                    TeamArc arc = GameManager.i.dataScript.GetTeamArc(saveTeam.arcID);
                     if (arc != null)
                     { team.arc = arc; }
                     else { Debug.LogErrorFormat("Invalid teamArc (Null) for arcID {0}", saveTeam.arcID); }
@@ -2388,12 +2388,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTeams (Null)"); }
         //arrayOfTeams
-        int[,] arrayOfTeams = GameManager.instance.dataScript.GetArrayOfTeams();
+        int[,] arrayOfTeams = GameManager.i.dataScript.GetArrayOfTeams();
         if (arrayOfTeams != null)
         {
             //check bounds match are the same as the ones the save data used
             int index;
-            int numOfArcs = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+            int numOfArcs = GameManager.i.dataScript.CheckNumOfNodeArcs();
             int numOfInfo = (int)TeamInfo.Count;
             int size0 = arrayOfTeams.GetUpperBound(0) + 1;
             int size1 = arrayOfTeams.GetUpperBound(1) + 1;
@@ -2417,7 +2417,7 @@ public class FileManager : MonoBehaviour
         if (teamPool != null)
         {
             //clear list and copy across data
-            GameManager.instance.dataScript.SetTeamPool(TeamPool.Reserve, teamPool);
+            GameManager.i.dataScript.SetTeamPool(TeamPool.Reserve, teamPool);
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //list -> OnMap
@@ -2425,7 +2425,7 @@ public class FileManager : MonoBehaviour
         if (teamPool != null)
         {
             //clear list and copy across data
-            GameManager.instance.dataScript.SetTeamPool(TeamPool.OnMap, teamPool);
+            GameManager.i.dataScript.SetTeamPool(TeamPool.OnMap, teamPool);
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //list -> InTransit
@@ -2433,16 +2433,16 @@ public class FileManager : MonoBehaviour
         if (teamPool != null)
         {
             //clear list and copy across data
-            GameManager.instance.dataScript.SetTeamPool(TeamPool.InTransit, teamPool);
+            GameManager.i.dataScript.SetTeamPool(TeamPool.InTransit, teamPool);
         }
         else { Debug.LogError("Invalid teampPoolReserve list (Null)"); }
         //team counter
-        GameManager.instance.teamScript.teamIDCounter = read.dataData.teamCounter;
+        GameManager.i.teamScript.teamIDCounter = read.dataData.teamCounter;
         #endregion
 
         #region AI
         //array -> AI Resources
-        int[] arrayOfAIResources = GameManager.instance.dataScript.GetArrayOfAIResources();
+        int[] arrayOfAIResources = GameManager.i.dataScript.GetArrayOfAIResources();
         if (arrayOfAIResources != null)
         {
             int lengthOfArray = arrayOfAIResources.Length;
@@ -2454,7 +2454,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfAIResources (Null)"); }
         //queue -> recentNodes
-        Queue<AITracker> queueOfRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Queue<AITracker> queueOfRecentNodes = GameManager.i.dataScript.GetRecentNodesQueue();
         if (queueOfRecentNodes != null)
         {
             //clear queue and copy data across
@@ -2464,7 +2464,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid queueOfRecentNodes (Null)"); }
         //queue -> recentConnections
-        Queue<AITracker> queueOfRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueOfRecentConnections = GameManager.i.dataScript.GetRecentConnectionsQueue();
         if (queueOfRecentConnections != null)
         {
             //clear queue and copy data across
@@ -2477,7 +2477,7 @@ public class FileManager : MonoBehaviour
 
         #region messages
         //archive
-        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Archive);
         if (dictOfArchiveMessages != null)
         {
             //clear dict and copy across data
@@ -2500,7 +2500,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfArchiveMessages (Null)"); }
         //pending
-        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Pending);
         if (dictOfPendingMessages != null)
         {
             //clear dict and copy across data
@@ -2523,7 +2523,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
         //current
-        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
             //clear dict and copy across data
@@ -2546,7 +2546,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfCurrentMessages (Null)"); }
         //ai
-        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        Dictionary<int, Message> dictOfAIMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.AI);
         if (dictOfAIMessages != null)
         {
             //clear dict and copy across data
@@ -2569,12 +2569,12 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfAIMessages (Null)"); }
         //message counter
-        GameManager.instance.messageScript.messageIDCounter = read.dataData.messageIDCounter;
+        GameManager.i.messageScript.messageIDCounter = read.dataData.messageIDCounter;
         #endregion
 
         #region topics
         //Topic Types
-        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.i.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
             dictOfTopicTypes.Clear();
@@ -2601,7 +2601,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicTypes (Null)"); }
         //Topic Sub Types
-        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.i.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             dictOfTopicSubTypes.Clear();
@@ -2628,7 +2628,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTopicSubTypes (Null)"); }
         //Topic History
-        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.i.dataScript.GetDictOfTopicHistory();
         if (dictOfTopicHistory != null)
         {
             dictOfTopicHistory.Clear();
@@ -2657,15 +2657,15 @@ public class FileManager : MonoBehaviour
             topicTypeName = read.dataData.listOfTopicTypesLevel[i];
             if (string.IsNullOrEmpty(topicTypeName) == false)
             {
-                TopicType topicType = GameManager.instance.dataScript.GetTopicType(topicTypeName);
+                TopicType topicType = GameManager.i.dataScript.GetTopicType(topicTypeName);
                 if (topicType != null)
                 { listOfTopicTypes.Add(topicType); }
             }
             else { Debug.LogWarningFormat("Invalid topicTypeName (Null) for listOfTopicTypesLevel[{0}]", i); }
         }
-        GameManager.instance.dataScript.SetListOfTopicTypesLevel(listOfTopicTypes);
+        GameManager.i.dataScript.SetListOfTopicTypesLevel(listOfTopicTypes);
         //dictOfTopicPools
-        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.i.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
         {
             string subTypeName;
@@ -2688,7 +2688,7 @@ public class FileManager : MonoBehaviour
                         for (int j = 0; j < countKey; j++)
                         {
                             //Generate topics from topicNames
-                            Topic topic = GameManager.instance.dataScript.GetTopic(listOfTopicNames[j]);
+                            Topic topic = GameManager.i.dataScript.GetTopic(listOfTopicNames[j]);
                             if (topic != null)
                             { listOfTopics.Add(topic); }
                             else { Debug.LogWarningFormat("Invalid topic (Null) for topic \"{0}\" for topicSubType \"{1}\"", listOfTopicNames[j], subTypeName); }
@@ -2697,7 +2697,7 @@ public class FileManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid listOfTppicNames (Null) for topicSubType \"{0}\"", subTypeName); }
                 //add to dict
-                GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, listOfTopics);
+                GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, listOfTopics);
             }
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
@@ -2705,12 +2705,12 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region relations
-        GameManager.instance.dataScript.SetDictOfRelations(read.dataData.listOfRelationshipKeys, read.dataData.listOfRelationshipValues);
+        GameManager.i.dataScript.SetDictOfRelations(read.dataData.listOfRelationshipKeys, read.dataData.listOfRelationshipValues);
         #endregion
 
         #region registers
         //ongoing effects
-        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.instance.dataScript.GetDictOfOngoingEffects();
+        Dictionary<int, EffectDataOngoing> dictOfOngoing = GameManager.i.dataScript.GetDictOfOngoingEffects();
         if (dictOfOngoing != null)
         {
             //clear dict and copy data across
@@ -2730,23 +2730,23 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfOngoing (Null)"); }
         //action adjustments
-        GameManager.instance.dataScript.SetListOfActionAdjustments(read.dataData.listOfActionAdjustments);
+        GameManager.i.dataScript.SetListOfActionAdjustments(read.dataData.listOfActionAdjustments);
 
         #endregion
 
         #region moveNodes
-        GameManager.instance.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
+        GameManager.i.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
         #endregion
 
         #region infoPipeLine
         if (read.dataData.listOfInfoPipelineDetails != null && read.dataData.listOfInfoPipelineDetails.Count > 0)
-        { GameManager.instance.guiScript.SetDictOfPipeline(read.dataData.listOfInfoPipelineDetails); }
+        { GameManager.i.guiScript.SetDictOfPipeline(read.dataData.listOfInfoPipelineDetails); }
         #endregion
 
         #region mainInfoApp
-        GameManager.instance.dataScript.SetListOfDelayedItemData(read.dataData.listOfDelayedItemData);
+        GameManager.i.dataScript.SetListOfDelayedItemData(read.dataData.listOfDelayedItemData);
         //main info
-        MainInfoData data = GameManager.instance.dataScript.GetCurrentInfoData();
+        MainInfoData data = GameManager.i.dataScript.GetCurrentInfoData();
         if (data != null)
         {
             if (read.dataData.currentInfo != null)
@@ -2755,7 +2755,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid currentInfoData (Null)"); }
         //dictOfHistory
-        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.i.dataScript.GetDictOfHistory();
         if (dictOfHistory != null)
         {
             //clear dictionary
@@ -2781,7 +2781,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfHistory (Null)"); }
         //arrayOfItemDataByPriority
-        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.instance.dataScript.GetArrayOfItemDataByPriority();
+        List<ItemData>[,] arrayOfItemDataByPriority = GameManager.i.dataScript.GetArrayOfItemDataByPriority();
         if (arrayOfItemDataByPriority != null)
         {
             int count;
@@ -2806,7 +2806,7 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        itemData.sprite = GameManager.i.dataScript.GetSprite(itemData.spriteName);
                                         if (itemData.sprite == null)
                                         { itemData.sprite = defaultSprite; }
                                         //add to array list
@@ -2824,7 +2824,7 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        itemData.sprite = GameManager.i.dataScript.GetSprite(itemData.spriteName);
                                         if (itemData.sprite == null)
                                         { itemData.sprite = defaultSprite; }
                                         //add to array list
@@ -2842,7 +2842,7 @@ public class FileManager : MonoBehaviour
                                     if (itemData != null)
                                     {
                                         //sprite
-                                        itemData.sprite = GameManager.instance.dataScript.GetSprite(itemData.spriteName);
+                                        itemData.sprite = GameManager.i.dataScript.GetSprite(itemData.spriteName);
                                         if (itemData.sprite == null)
                                         { itemData.sprite = defaultSprite; }
                                         //add to array list
@@ -2862,20 +2862,20 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region history
-        GameManager.instance.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
-        GameManager.instance.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
-        GameManager.instance.dataScript.SetListOfHistoryNpcMove(read.dataData.listOfHistoryVip);
-        GameManager.instance.dataScript.SetListOfHistoryPlayer(read.dataData.listOfHistoryPlayer);
+        GameManager.i.dataScript.SetListOfHistoryRebelMove(read.dataData.listOfHistoryRebel);
+        GameManager.i.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
+        GameManager.i.dataScript.SetListOfHistoryNpcMove(read.dataData.listOfHistoryVip);
+        GameManager.i.dataScript.SetListOfHistoryPlayer(read.dataData.listOfHistoryPlayer);
         #endregion
 
         #region News
-        GameManager.instance.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
-        GameManager.instance.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
+        GameManager.i.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
+        GameManager.i.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
         #endregion
 
         #region textLists
         //Text Lists -> update indexes
-        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        Dictionary<string, TextList> dictOfTextLists = GameManager.i.dataScript.GetDictOfTextList();
         if (dictOfTextLists != null)
         {
             TextList textList;
@@ -2917,7 +2917,7 @@ public class FileManager : MonoBehaviour
     private void ReadActorData()
     {
         //dictOfActors (load first)
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
             if (read.actorData.listOfDictActors != null)
@@ -2948,7 +2948,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfActors (Null)"); }
         //dictOfHQ
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
+        Dictionary<int, Actor> dictOfHQ = GameManager.i.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             if (read.actorData.listOfDictHQ != null)
@@ -2984,12 +2984,12 @@ public class FileManager : MonoBehaviour
         int index;
         int maxIndex;
         int actorID, hqID;
-        int sideNum = GameManager.instance.dataScript.GetNumOfGlobalSide();
-        int actorNum = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        int sideNum = GameManager.i.dataScript.GetNumOfGlobalSide();
+        int actorNum = GameManager.i.actorScript.maxNumOfOnMapActors;
         if (read.actorData.listOfActors != null)
         {
             //arrayOfActors
-            Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+            Actor[,] arrayOfActors = GameManager.i.dataScript.GetArrayOfActors();
             if (arrayOfActors != null)
             {
                 maxIndex = arrayOfActors.Length;
@@ -3008,7 +3008,7 @@ public class FileManager : MonoBehaviour
                         { actor = null; }
                         else
                         {
-                            actor = GameManager.instance.dataScript.GetActor(actorID);
+                            actor = GameManager.i.dataScript.GetActor(actorID);
                             if (actor == null)
                             { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
                         }
@@ -3021,7 +3021,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid read.actorData.listOfActorsActor (Nul)"); }
         //arrayOfActorsPresent
-        bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+        bool[,] arrayOfActorsPresent = GameManager.i.dataScript.GetArrayOfActorsPresent();
         if (arrayOfActorsPresent != null)
         {
             //empty out array
@@ -3037,7 +3037,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsPresent (Null)"); }
         //arrayOfActorsHQ
-        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActorsHQ = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActorsHQ != null)
         {
             int records = arrayOfActorsHQ.Length;
@@ -3048,7 +3048,7 @@ public class FileManager : MonoBehaviour
                 hqID = read.actorData.listOfActorsHQ[i];
                 if (hqID > -1)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetHqActor(hqID);
+                    Actor actor = GameManager.i.dataScript.GetHqActor(hqID);
                     if (actor != null)
                     { arrayOfActorsHQ[i] = actor; }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for hqID {0}", hqID); }
@@ -3059,36 +3059,36 @@ public class FileManager : MonoBehaviour
         //
         // - - - ActorManager.cs
         //
-        GameManager.instance.actorScript.actorIDCounter = read.actorData.actorIDCounter;
-        GameManager.instance.actorScript.hqIDCounter = read.actorData.hqIDCounter;
-        GameManager.instance.actorScript.lieLowTimer = read.actorData.lieLowTimer;
-        GameManager.instance.actorScript.doomTimer = read.actorData.doomTimer;
-        GameManager.instance.actorScript.captureTimerPlayer = read.actorData.captureTimer;
-        GameManager.instance.actorScript.isGearCheckRequired = read.actorData.isGearCheckRequired;
-        NameSet nameSet = GameManager.instance.dataScript.GetNameSet(read.actorData.nameSet);
+        GameManager.i.actorScript.actorIDCounter = read.actorData.actorIDCounter;
+        GameManager.i.actorScript.hqIDCounter = read.actorData.hqIDCounter;
+        GameManager.i.actorScript.lieLowTimer = read.actorData.lieLowTimer;
+        GameManager.i.actorScript.doomTimer = read.actorData.doomTimer;
+        GameManager.i.actorScript.captureTimerPlayer = read.actorData.captureTimer;
+        GameManager.i.actorScript.isGearCheckRequired = read.actorData.isGearCheckRequired;
+        NameSet nameSet = GameManager.i.dataScript.GetNameSet(read.actorData.nameSet);
         if (nameSet != null)
-        { GameManager.instance.actorScript.nameSet = nameSet; }
+        { GameManager.i.actorScript.nameSet = nameSet; }
         else { Debug.LogWarningFormat("Invalid nameSet (Null) for \"{0}\"", read.actorData.nameSet); }
         //
         // - - - Actor Lists
         //
-        List<int> authorityActorPoolLevelOne = GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority);
-        List<int> authorityActorPoolLevelTwo = GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority);
-        List<int> authorityActorPoolLevelThree = GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority);
-        List<int> resistanceActorPoolLevelOne = GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance);
-        List<int> resistanceActorPoolLevelTwo = GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance);
-        List<int> resistanceActorPoolLevelThree = GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance);
-        List<int> authorityActorReserve = GameManager.instance.dataScript.GetListOfReserveActors(globalAuthority);
-        List<int> authorityActorDismissed = GameManager.instance.dataScript.GetListOfDismissedActors(globalAuthority);
-        List<int> authorityActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalAuthority);
-        List<int> authorityActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalAuthority);
-        List<int> authorityActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalAuthority);
-        List<int> resistanceActorReserve = GameManager.instance.dataScript.GetListOfReserveActors(globalResistance);
-        List<int> resistanceActorDismissed = GameManager.instance.dataScript.GetListOfDismissedActors(globalResistance);
-        List<int> resistanceActorPromoted = GameManager.instance.dataScript.GetListOfPromotedActors(globalResistance);
-        List<int> resistanceActorDisposedOf = GameManager.instance.dataScript.GetListOfDisposedOfActors(globalResistance);
-        List<int> resistanceActorResigned = GameManager.instance.dataScript.GetListOfResignedActors(globalResistance);
-        List<int> actorHQPool = GameManager.instance.dataScript.GetListOfActorHq();
+        List<int> authorityActorPoolLevelOne = GameManager.i.dataScript.GetActorRecruitPool(1, globalAuthority);
+        List<int> authorityActorPoolLevelTwo = GameManager.i.dataScript.GetActorRecruitPool(2, globalAuthority);
+        List<int> authorityActorPoolLevelThree = GameManager.i.dataScript.GetActorRecruitPool(3, globalAuthority);
+        List<int> resistanceActorPoolLevelOne = GameManager.i.dataScript.GetActorRecruitPool(1, globalResistance);
+        List<int> resistanceActorPoolLevelTwo = GameManager.i.dataScript.GetActorRecruitPool(2, globalResistance);
+        List<int> resistanceActorPoolLevelThree = GameManager.i.dataScript.GetActorRecruitPool(3, globalResistance);
+        List<int> authorityActorReserve = GameManager.i.dataScript.GetListOfReserveActors(globalAuthority);
+        List<int> authorityActorDismissed = GameManager.i.dataScript.GetListOfDismissedActors(globalAuthority);
+        List<int> authorityActorPromoted = GameManager.i.dataScript.GetListOfPromotedActors(globalAuthority);
+        List<int> authorityActorDisposedOf = GameManager.i.dataScript.GetListOfDisposedOfActors(globalAuthority);
+        List<int> authorityActorResigned = GameManager.i.dataScript.GetListOfResignedActors(globalAuthority);
+        List<int> resistanceActorReserve = GameManager.i.dataScript.GetListOfReserveActors(globalResistance);
+        List<int> resistanceActorDismissed = GameManager.i.dataScript.GetListOfDismissedActors(globalResistance);
+        List<int> resistanceActorPromoted = GameManager.i.dataScript.GetListOfPromotedActors(globalResistance);
+        List<int> resistanceActorDisposedOf = GameManager.i.dataScript.GetListOfDisposedOfActors(globalResistance);
+        List<int> resistanceActorResigned = GameManager.i.dataScript.GetListOfResignedActors(globalResistance);
+        List<int> actorHQPool = GameManager.i.dataScript.GetListOfActorHq();
         //null checks
         if (authorityActorPoolLevelOne == null) { Debug.LogError("Invalid authorityActorPoolLevelOne (Null)"); }
         if (authorityActorPoolLevelTwo == null) { Debug.LogError("Invalid authorityActorPoolLevelTwo (Null)"); }
@@ -3155,13 +3155,13 @@ public class FileManager : MonoBehaviour
     private void ReadNodeData()
     {
         //NodeManager.cs dynamic data
-        GameManager.instance.nodeScript.crisisPolicyModifier = read.nodeData.crisisPolicyModifier;
-        GameManager.instance.nodeScript.nodeIDCounter = read.nodeData.nodeCounter;
-        GameManager.instance.nodeScript.connIDCounter = read.nodeData.connCounter;
-        GameManager.instance.nodeScript.nodeHighlight = read.nodeData.nodeHighlight;
-        GameManager.instance.nodeScript.nodePlayer = read.nodeData.nodePlayer;
-        GameManager.instance.nodeScript.nodeNemesis = read.nodeData.nodeNemesis;
-        GameManager.instance.nodeScript.nodeCaptured = read.nodeData.nodeCaptured;
+        GameManager.i.nodeScript.crisisPolicyModifier = read.nodeData.crisisPolicyModifier;
+        GameManager.i.nodeScript.nodeIDCounter = read.nodeData.nodeCounter;
+        GameManager.i.nodeScript.connIDCounter = read.nodeData.connCounter;
+        GameManager.i.nodeScript.nodeHighlight = read.nodeData.nodeHighlight;
+        GameManager.i.nodeScript.nodePlayer = read.nodeData.nodePlayer;
+        GameManager.i.nodeScript.nodeNemesis = read.nodeData.nodeNemesis;
+        GameManager.i.nodeScript.nodeCaptured = read.nodeData.nodeCaptured;
         //update node data
         for (int i = 0; i < read.nodeData.listOfNodes.Count; i++)
         {
@@ -3169,7 +3169,7 @@ public class FileManager : MonoBehaviour
             if (saveNode != null)
             {
                 //find equivalent inGame node
-                Node node = GameManager.instance.dataScript.GetNode(saveNode.nodeID);
+                Node node = GameManager.i.dataScript.GetNode(saveNode.nodeID);
                 if (node != null)
                 {
                     //copy save data over to node
@@ -3208,7 +3208,7 @@ public class FileManager : MonoBehaviour
                     node.defaultChar = saveNode.defaultChar;
                     if (string.IsNullOrEmpty(saveNode.nodeCrisisName) == false)
                     {
-                        NodeCrisis crisis = GameManager.instance.dataScript.GetNodeCrisis(saveNode.nodeCrisisName);
+                        NodeCrisis crisis = GameManager.i.dataScript.GetNodeCrisis(saveNode.nodeCrisisName);
                         if (crisis != null)
                         { node.crisis = crisis; }
                         else
@@ -3226,7 +3226,7 @@ public class FileManager : MonoBehaviour
                         //get cure from dictionary
                         if (saveNode.cureName != null)
                         {
-                            Cure cure = GameManager.instance.dataScript.GetCure(saveNode.cureName);
+                            Cure cure = GameManager.i.dataScript.GetCure(saveNode.cureName);
                             if (cure == null)
                             { Debug.LogWarningFormat("Invalid cure (Null) for saveNode.cureName {0}", saveNode.cureName); }
                             node.cure = cure;
@@ -3241,7 +3241,7 @@ public class FileManager : MonoBehaviour
                     {
                         for (int j = 0; j < count; j++)
                         {
-                            Team team = GameManager.instance.dataScript.GetTeam(saveNode.listOfTeams[j]);
+                            Team team = GameManager.i.dataScript.GetTeam(saveNode.listOfTeams[j]);
                             if (team != null)
                             { node.LoadAddTeam(team); }
                             else { Debug.LogWarningFormat("Invalid team (Null) for listOfTeams[{0}] for nodeID {1}", j, saveNode.nodeID); }
@@ -3254,7 +3254,7 @@ public class FileManager : MonoBehaviour
                     {
                         for (int j = 0; j < count; j++)
                         {
-                            EffectDataOngoing effectOngoing = GameManager.instance.dataScript.GetOngoingEffect(saveNode.listOfOngoingEffects[j]);
+                            EffectDataOngoing effectOngoing = GameManager.i.dataScript.GetOngoingEffect(saveNode.listOfOngoingEffects[j]);
                             if (effectOngoing != null)
                             { node.LoadAddOngoingEffect(effectOngoing); }
                             else { Debug.LogWarningFormat("Invalid effectOngoing (Null) for listOfOngoingEffects[{0}] for nodeID {1}", j, saveNode.nodeID); }
@@ -3268,7 +3268,7 @@ public class FileManager : MonoBehaviour
         //
         // - - - Crisis Nodes
         //
-        List<Node> listOfCrisisNodes = GameManager.instance.dataScript.GetListOfCrisisNodes();
+        List<Node> listOfCrisisNodes = GameManager.i.dataScript.GetListOfCrisisNodes();
         if (listOfCrisisNodes != null)
         {
             //clear list
@@ -3279,20 +3279,20 @@ public class FileManager : MonoBehaviour
                 //repopulate list with save data
                 for (int i = 0; i < count; i++)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(read.nodeData.listOfCrisisNodes[i]);
+                    Node node = GameManager.i.dataScript.GetNode(read.nodeData.listOfCrisisNodes[i]);
                     if (node != null)
                     { listOfCrisisNodes.Add(node); }
                     else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", read.nodeData.listOfCrisisNodes[i]); }
                 }
                 //activate smoke
-                GameManager.instance.nodeScript.ProcessLoadNodeCrisis();
+                GameManager.i.nodeScript.ProcessLoadNodeCrisis();
             }
         }
         else { Debug.LogError("Invalid listOfCrisisNodes (Null)"); }
         //
         // - - - Cure Nodes
         //
-        List<Node> listOfCureNodes = GameManager.instance.dataScript.GetListOfCureNodes();
+        List<Node> listOfCureNodes = GameManager.i.dataScript.GetListOfCureNodes();
         if (listOfCureNodes != null)
         {
             //clear list
@@ -3303,7 +3303,7 @@ public class FileManager : MonoBehaviour
                 //repopulate list with save data
                 for (int i = 0; i < count; i++)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(read.nodeData.listOfCureNodes[i]);
+                    Node node = GameManager.i.dataScript.GetNode(read.nodeData.listOfCureNodes[i]);
                     if (node != null)
                     { listOfCureNodes.Add(node); }
                     else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", read.nodeData.listOfCureNodes[i]); }
@@ -3328,7 +3328,7 @@ public class FileManager : MonoBehaviour
             if (save != null)
             {
                 //find record in dictionary
-                Connection conn = GameManager.instance.dataScript.GetConnection(save.connID);
+                Connection conn = GameManager.i.dataScript.GetConnection(save.connID);
                 if (conn != null)
                 {
                     //copy across loaded save game dynamic data
@@ -3352,7 +3352,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadGearData()
     {
-        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             for (int i = 0; i < read.gearData.listOfGear.Count; i++)
@@ -3388,36 +3388,36 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfGear (Null)"); }
         //list -> Common gear
-        GearRarity rarity = GameManager.instance.gearScript.gearCommon;
-        List<string> tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        GearRarity rarity = GameManager.i.gearScript.gearCommon;
+        List<string> tempList = GameManager.i.dataScript.GetListOfGear(rarity);
         if (tempList != null)
-        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfCommonGear, rarity); }
+        { GameManager.i.dataScript.SetGearList(read.gearData.listOfCommonGear, rarity); }
         else { Debug.LogError("Invalid listOfCommonGear (Null)"); }
         //list -> Rare gear
-        rarity = GameManager.instance.gearScript.gearRare;
-        tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        rarity = GameManager.i.gearScript.gearRare;
+        tempList = GameManager.i.dataScript.GetListOfGear(rarity);
         if (tempList != null)
-        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfRareGear, rarity); }
+        { GameManager.i.dataScript.SetGearList(read.gearData.listOfRareGear, rarity); }
         else { Debug.LogError("Invalid listOfRareGear (Null)"); }
         //list -> Unique gear
-        rarity = GameManager.instance.gearScript.gearUnique;
-        tempList = GameManager.instance.dataScript.GetListOfGear(rarity);
+        rarity = GameManager.i.gearScript.gearUnique;
+        tempList = GameManager.i.dataScript.GetListOfGear(rarity);
         if (tempList != null)
-        { GameManager.instance.dataScript.SetGearList(read.gearData.listOfUniqueGear, rarity); }
+        { GameManager.i.dataScript.SetGearList(read.gearData.listOfUniqueGear, rarity); }
         else { Debug.LogError("Invalid listOfUniqueGear (Null)"); }
         //list -> Current gear
-        tempList = GameManager.instance.dataScript.GetListOfCurrentGear();
+        tempList = GameManager.i.dataScript.GetListOfCurrentGear();
         if (tempList != null)
-        { GameManager.instance.dataScript.SetListOfGearCurrent(read.gearData.listOfCurrentGear); }
+        { GameManager.i.dataScript.SetListOfGearCurrent(read.gearData.listOfCurrentGear); }
         else { Debug.LogError("Invalid listOfCurrentGear (Null)"); }
         //list -> Lost gear
-        tempList = GameManager.instance.dataScript.GetListOfLostGear();
+        tempList = GameManager.i.dataScript.GetListOfLostGear();
         if (tempList != null)
-        { GameManager.instance.dataScript.SetListOfGearLost(read.gearData.listOfLostGear); }
+        { GameManager.i.dataScript.SetListOfGearLost(read.gearData.listOfLostGear); }
         else { Debug.LogError("Invalid listOfLostGear (Null)"); }
         //GearManager.cs fields
-        GameManager.instance.gearScript.SetGearSaveCurrentCost(read.gearData.gearSaveCurrentCost);
-        GameManager.instance.gearScript.SetListOfCompromisedGear(read.gearData.listOfCompromisedGear);
+        GameManager.i.gearScript.SetGearSaveCurrentCost(read.gearData.gearSaveCurrentCost);
+        GameManager.i.gearScript.SetListOfCompromisedGear(read.gearData.listOfCompromisedGear);
     }
     #endregion
 
@@ -3429,9 +3429,9 @@ public class FileManager : MonoBehaviour
     private void ReadTopicData()
     {
         //reset topics (isCurrent to False) prior to loading changes
-        GameManager.instance.dataScript.ResetTopics();
+        GameManager.i.dataScript.ResetTopics();
         //read in dynamic data
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
             if (read.topicData.listOfTopics != null)
@@ -3442,7 +3442,7 @@ public class FileManager : MonoBehaviour
                     if (saveTopic != null)
                     {
                         //update topic dynamic data
-                        Topic topic = GameManager.instance.dataScript.GetTopic(saveTopic.topicName);
+                        Topic topic = GameManager.i.dataScript.GetTopic(saveTopic.topicName);
                         if (topic != null)
                         {
                             topic.status = saveTopic.status;
@@ -3475,7 +3475,7 @@ public class FileManager : MonoBehaviour
     private void ReadNemesisData()
     {
         if (read.nemesisData.saveData != null)
-        { GameManager.instance.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
+        { GameManager.i.nemesisScript.ReadSaveData(read.nemesisData.saveData); }
         else { Debug.LogError("Invalid read.nemesisData.saveData (Null)"); }
     }
     #endregion
@@ -3487,9 +3487,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadContactData()
     {
-        GameManager.instance.contactScript.contactIDCounter = read.contactData.contactIDCounter;
-        GameManager.instance.contactScript.SetArrayOfContactNetworks(read.contactData.listOfContactNetworks);
-        GameManager.instance.contactScript.SetArrayOfActors(read.contactData.listOfActors);
+        GameManager.i.contactScript.contactIDCounter = read.contactData.contactIDCounter;
+        GameManager.i.contactScript.SetArrayOfContactNetworks(read.contactData.listOfContactNetworks);
+        GameManager.i.contactScript.SetArrayOfActors(read.contactData.listOfActors);
     }
     #endregion
 
@@ -3501,49 +3501,49 @@ public class FileManager : MonoBehaviour
     private void ReadAIData()
     {
         //AIManager -> collection
-        GameManager.instance.aiScript.SetListOfTasksFinal(read.aiData.listOfTasksFinal);
-        GameManager.instance.aiScript.SetListOfTasksPotential(read.aiData.listOfTasksPotential);
-        GameManager.instance.aiScript.SetListOfPlayerEffects(read.aiData.listOfPlayerEffects);
-        GameManager.instance.aiScript.SetListOfPlayerEffectDescriptors(read.aiData.listOfPlayerEffectDescriptors);
-        GameManager.instance.aiScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesAuthority);
+        GameManager.i.aiScript.SetListOfTasksFinal(read.aiData.listOfTasksFinal);
+        GameManager.i.aiScript.SetListOfTasksPotential(read.aiData.listOfTasksPotential);
+        GameManager.i.aiScript.SetListOfPlayerEffects(read.aiData.listOfPlayerEffects);
+        GameManager.i.aiScript.SetListOfPlayerEffectDescriptors(read.aiData.listOfPlayerEffectDescriptors);
+        GameManager.i.aiScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesAuthority);
         //
         // - - - update displays -> load game could have been called from a hot key or the main menu
         //
-        GameState controlState = GameManager.instance.controlScript.GetExistingGameState();
+        GameState controlState = GameManager.i.controlScript.GetExistingGameState();
         //resistance player only
-        if (controlState == GameState.PlayGame && GameManager.instance.sideScript.PlayerSide.level == 2)
+        if (controlState == GameState.PlayGame && GameManager.i.sideScript.PlayerSide.level == 2)
         {
-            GameManager.instance.aiScript.UpdateTaskDisplayData();
-            GameManager.instance.aiScript.UpdateSideTabData();
-            GameManager.instance.aiScript.UpdateBottomTabData();
+            GameManager.i.aiScript.UpdateTaskDisplayData();
+            GameManager.i.aiScript.UpdateSideTabData();
+            GameManager.i.aiScript.UpdateBottomTabData();
         }
         //AIManager.cs -> public fields
-        GameManager.instance.aiScript.immediateFlagAuthority = read.aiData.immediateFlagAuthority;
-        GameManager.instance.aiScript.immediateFlagResistance = read.aiData.immediateFlagResistance;
-        GameManager.instance.aiScript.resourcesGainAuthority = read.aiData.resourcesGainAuthority;
-        GameManager.instance.aiScript.resourcesGainResistance = read.aiData.resourcesGainResistance;
-        GameManager.instance.aiScript.aiTaskCounter = read.aiData.aiTaskCounter;
-        GameManager.instance.aiScript.hackingAttemptsTotal = read.aiData.hackingAttemptsTotal;
-        GameManager.instance.aiScript.hackingAttemptsReboot = read.aiData.hackingAttemptsReboot;
-        GameManager.instance.aiScript.hackingAttemptsDetected = read.aiData.hackingAttemptsDetected;
-        GameManager.instance.aiScript.hackingCurrentCost = read.aiData.hackingCurrentCost;
-        GameManager.instance.aiScript.hackingModifiedCost = read.aiData.hackingModifiedCost;
-        GameManager.instance.aiScript.isHacked = read.aiData.isHacked;
-        GameManager.instance.aiScript.aiAlertStatus = read.aiData.aiAlertStatus;
-        GameManager.instance.aiScript.isRebooting = read.aiData.isRebooting;
-        GameManager.instance.aiScript.rebootTimer = read.aiData.rebootTimer;
-        GameManager.instance.aiScript.numOfCrisis = read.aiData.numOfCrisis;
-        GameManager.instance.aiScript.status = read.aiData.status;
-        GameManager.instance.aiScript.inactiveStatus = read.aiData.inactiveStatus;
+        GameManager.i.aiScript.immediateFlagAuthority = read.aiData.immediateFlagAuthority;
+        GameManager.i.aiScript.immediateFlagResistance = read.aiData.immediateFlagResistance;
+        GameManager.i.aiScript.resourcesGainAuthority = read.aiData.resourcesGainAuthority;
+        GameManager.i.aiScript.resourcesGainResistance = read.aiData.resourcesGainResistance;
+        GameManager.i.aiScript.aiTaskCounter = read.aiData.aiTaskCounter;
+        GameManager.i.aiScript.hackingAttemptsTotal = read.aiData.hackingAttemptsTotal;
+        GameManager.i.aiScript.hackingAttemptsReboot = read.aiData.hackingAttemptsReboot;
+        GameManager.i.aiScript.hackingAttemptsDetected = read.aiData.hackingAttemptsDetected;
+        GameManager.i.aiScript.hackingCurrentCost = read.aiData.hackingCurrentCost;
+        GameManager.i.aiScript.hackingModifiedCost = read.aiData.hackingModifiedCost;
+        GameManager.i.aiScript.isHacked = read.aiData.isHacked;
+        GameManager.i.aiScript.aiAlertStatus = read.aiData.aiAlertStatus;
+        GameManager.i.aiScript.isRebooting = read.aiData.isRebooting;
+        GameManager.i.aiScript.rebootTimer = read.aiData.rebootTimer;
+        GameManager.i.aiScript.numOfCrisis = read.aiData.numOfCrisis;
+        GameManager.i.aiScript.status = read.aiData.status;
+        GameManager.i.aiScript.inactiveStatus = read.aiData.inactiveStatus;
         //AIManager.cs -> private fields
-        GameManager.instance.aiScript.LoadReadData(read.aiData.saveAI);
+        GameManager.i.aiScript.LoadReadData(read.aiData.saveAI);
         //AIRebelManager.cs -> private fields
-        GameManager.instance.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
+        GameManager.i.aiRebelScript.ReadSaveData(read.aiData.saveRebel);
         //AIRebelManager -> Nemesis Reports
-        GameManager.instance.aiRebelScript.SetListOfNemesisReports(read.aiData.listOfNemesisReports);
+        GameManager.i.aiRebelScript.SetListOfNemesisReports(read.aiData.listOfNemesisReports);
         //AIRebelManager -> Erasure Reports
-        GameManager.instance.aiRebelScript.SetListOfErasureReports(read.aiData.listOfErasureReports);
-        GameManager.instance.aiRebelScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesRebel);
+        GameManager.i.aiRebelScript.SetListOfErasureReports(read.aiData.listOfErasureReports);
+        GameManager.i.aiRebelScript.SetArrayOfAITaskTypes(read.aiData.listOfAITaskTypesRebel);
     }
     #endregion
 
@@ -3555,13 +3555,13 @@ public class FileManager : MonoBehaviour
     private void ReadTargetData()
     {
         //targetManager.cs
-        GameManager.instance.targetScript.StartTargets = read.targetData.startTargets;
-        GameManager.instance.targetScript.ActiveTargets = read.targetData.activeTargets;
-        GameManager.instance.targetScript.LiveTargets = read.targetData.liveTargets;
-        GameManager.instance.targetScript.MaxTargets = read.targetData.maxTargets;
-        GameManager.instance.targetScript.targetOrgName = read.targetData.targetOrgName;
+        GameManager.i.targetScript.StartTargets = read.targetData.startTargets;
+        GameManager.i.targetScript.ActiveTargets = read.targetData.activeTargets;
+        GameManager.i.targetScript.LiveTargets = read.targetData.liveTargets;
+        GameManager.i.targetScript.MaxTargets = read.targetData.maxTargets;
+        GameManager.i.targetScript.targetOrgName = read.targetData.targetOrgName;
         //dynamic Target.SO data
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             for (int i = 0; i < read.targetData.listOfTargets.Count; i++)
@@ -3570,7 +3570,7 @@ public class FileManager : MonoBehaviour
                 if (save != null)
                 {
                     //find target in dictionary
-                    Target target = GameManager.instance.dataScript.GetTarget(save.targetName);
+                    Target target = GameManager.i.dataScript.GetTarget(save.targetName);
                     if (target != null)
                     {
                         //copy across loaded save game dynamic data
@@ -3597,7 +3597,7 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
         //arrayOfGenericTargets
-        List<string>[] arrayOfGenericTargets = GameManager.instance.dataScript.GetArrayOfGenericTargets();
+        List<string>[] arrayOfGenericTargets = GameManager.i.dataScript.GetArrayOfGenericTargets();
         if (arrayOfGenericTargets != null)
         {
             int count = arrayOfGenericTargets.Length;
@@ -3615,47 +3615,47 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfGenericTargets (Null)"); }
         //listOfNodesWithTargets
-        GameManager.instance.dataScript.SetListOfNodesWithTargets(read.targetData.listOfNodesWithTargets);
+        GameManager.i.dataScript.SetListOfNodesWithTargets(read.targetData.listOfNodesWithTargets);
         //target Pool -> Active
         List<Target> listOfActive = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolActive.Count; i++)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolActive[i]);
+            Target target = GameManager.i.dataScript.GetTarget(read.targetData.listOfTargetPoolActive[i]);
             if (target != null)
             { listOfActive.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolActive[{0}]", i); }
         }
-        GameManager.instance.dataScript.SetTargetPool(listOfActive, Status.Active);
+        GameManager.i.dataScript.SetTargetPool(listOfActive, Status.Active);
         //target Pool -> Live
         List<Target> listOfLive = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolLive.Count; i++)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolLive[i]);
+            Target target = GameManager.i.dataScript.GetTarget(read.targetData.listOfTargetPoolLive[i]);
             if (target != null)
             { listOfLive.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolLive[{0}]", i); }
         }
-        GameManager.instance.dataScript.SetTargetPool(listOfLive, Status.Live);
+        GameManager.i.dataScript.SetTargetPool(listOfLive, Status.Live);
         //target Pool -> Outstanding
         List<Target> listOfOutstanding = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolOutstanding.Count; i++)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolOutstanding[i]);
+            Target target = GameManager.i.dataScript.GetTarget(read.targetData.listOfTargetPoolOutstanding[i]);
             if (target != null)
             { listOfOutstanding.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolOutstanding[{0}]", i); }
         }
-        GameManager.instance.dataScript.SetTargetPool(listOfOutstanding, Status.Outstanding);
+        GameManager.i.dataScript.SetTargetPool(listOfOutstanding, Status.Outstanding);
         //target Pool -> Done
         List<Target> listOfDone = new List<Target>();
         for (int i = 0; i < read.targetData.listOfTargetPoolDone.Count; i++)
         {
-            Target target = GameManager.instance.dataScript.GetTarget(read.targetData.listOfTargetPoolDone[i]);
+            Target target = GameManager.i.dataScript.GetTarget(read.targetData.listOfTargetPoolDone[i]);
             if (target != null)
             { listOfDone.Add(target); }
             else { Debug.LogWarningFormat("Invalid target (Null) for listOfTargetPoolDone[{0}]", i); }
         }
-        GameManager.instance.dataScript.SetTargetPool(listOfDone, Status.Done);
+        GameManager.i.dataScript.SetTargetPool(listOfDone, Status.Done);
     }
     #endregion
 
@@ -3666,13 +3666,13 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadStatisticsData()
     {
-        GameManager.instance.statScript.ratioPlayerNodeActions = read.statisticsData.ratioPlayerNodeActions;
-        GameManager.instance.statScript.ratioPlayerTargetAttempts = read.statisticsData.ratioPlayerTargetAttempts;
-        GameManager.instance.statScript.ratioPlayerMoveActions = read.statisticsData.ratioPlayerMoveActions;
-        GameManager.instance.statScript.ratioPlayerLieLowDays = read.statisticsData.ratioPlayerLieLowDays;
-        GameManager.instance.statScript.ratioPlayerGiveGear = read.statisticsData.ratioPlayerGiveGear;
-        GameManager.instance.statScript.ratioPlayerManageActions = read.statisticsData.ratioPlayerManageActions;
-        GameManager.instance.statScript.ratioPlayerDoNothing = read.statisticsData.ratioPlayerDoNothing;
+        GameManager.i.statScript.ratioPlayerNodeActions = read.statisticsData.ratioPlayerNodeActions;
+        GameManager.i.statScript.ratioPlayerTargetAttempts = read.statisticsData.ratioPlayerTargetAttempts;
+        GameManager.i.statScript.ratioPlayerMoveActions = read.statisticsData.ratioPlayerMoveActions;
+        GameManager.i.statScript.ratioPlayerLieLowDays = read.statisticsData.ratioPlayerLieLowDays;
+        GameManager.i.statScript.ratioPlayerGiveGear = read.statisticsData.ratioPlayerGiveGear;
+        GameManager.i.statScript.ratioPlayerManageActions = read.statisticsData.ratioPlayerManageActions;
+        GameManager.i.statScript.ratioPlayerDoNothing = read.statisticsData.ratioPlayerDoNothing;
     }
     #endregion
 
@@ -3695,12 +3695,12 @@ public class FileManager : MonoBehaviour
             if (tooltipStatus != ActorTooltip.None)
             {
                 Debug.LogWarningFormat("[Fil] FileManager.cs -> ValidatePlayerData: tooltipStatus \"{0}\" invalid, changed to 'None'{1}", tooltipStatus, "\n");
-                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
             }
             if (inactiveStatus != ActorInactive.None)
             {
                 Debug.LogWarningFormat("Player status Active -> inactiveStatus \"{0}\" invalid, changed to 'None'{1}", inactiveStatus, "\n");
-                GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
             }
         }
         else if (status == ActorStatus.Inactive)
@@ -3710,14 +3710,14 @@ public class FileManager : MonoBehaviour
             {
                 Debug.LogWarningFormat("Player INACTIVE -> tooltipStatus \"{0}\" Or inactiveStatus \"{1}\" invalid,   PlayerStatus changed to 'Active'{2}",
                     tooltipStatus, inactiveStatus, "\n");
-                GameManager.instance.playerScript.status = ActorStatus.Active;
-                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
-                GameManager.instance.playerScript.inactiveStatus = ActorInactive.None;
+                GameManager.i.playerScript.status = ActorStatus.Active;
+                GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
+                GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
             }
             else
             {
                 //change alpha of player to indicate inactive status
-                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaInactive);
+                GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaInactive);
             }
         }
     }
@@ -3731,35 +3731,35 @@ public class FileManager : MonoBehaviour
     private void ValidateActorData()
     {
         //update actor UI Panel
-        GameManager.instance.actorPanelScript.UpdateActorPanel();
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GameManager.i.actorPanelScript.UpdateActorPanel();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //loop each OnMap actor and update alpha and renown
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
                         //update alpha
                         if (actor.Status == ActorStatus.Active)
-                        { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaActive); }
+                        { GameManager.i.actorPanelScript.UpdateActorAlpha(i, alphaActive); }
                         else
-                        { GameManager.instance.actorPanelScript.UpdateActorAlpha(i, alphaInactive); }
+                        { GameManager.i.actorPanelScript.UpdateActorAlpha(i, alphaInactive); }
                         //update renown & compatibiliyt
-                        GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, actor.Renown);
-                        GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer());
+                        GameManager.i.actorPanelScript.UpdateActorRenownUI(i, actor.Renown);
+                        GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer());
                     }
                 }
                 else
                 {
                     //actor not present in slot, reset renown and compatibility to 0
-                    GameManager.instance.actorPanelScript.UpdateActorRenownUI(i, 0);
-                    GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(i, 0);
+                    GameManager.i.actorPanelScript.UpdateActorRenownUI(i, 0);
+                    GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(i, 0);
                 }
             }
         }
@@ -3798,20 +3798,20 @@ public class FileManager : MonoBehaviour
         //objectives -> TO DO
 
         //Update top widget UI
-        GameManager.instance.widgetTopScript.LoadSavedData(widget);
+        GameManager.i.widgetTopScript.LoadSavedData(widget);
         //
         // - - - Top Bar UI
         //
-        GameManager.instance.topBarScript.commendationData = read.guiData.commendationData;
-        GameManager.instance.topBarScript.blackmarkData = read.guiData.blackmarkData;
-        GameManager.instance.topBarScript.investigationData = read.guiData.investigationData;
-        GameManager.instance.topBarScript.innocenceData = read.guiData.innocenceData;
-        GameManager.instance.topBarScript.unhappyData = read.guiData.unhappyData;
-        GameManager.instance.topBarScript.conflictData = read.guiData.conflictData;
-        GameManager.instance.topBarScript.blackmailData = read.guiData.blackmailData;
-        GameManager.instance.topBarScript.doomData = read.guiData.doomData;
+        GameManager.i.topBarScript.commendationData = read.guiData.commendationData;
+        GameManager.i.topBarScript.blackmarkData = read.guiData.blackmarkData;
+        GameManager.i.topBarScript.investigationData = read.guiData.investigationData;
+        GameManager.i.topBarScript.innocenceData = read.guiData.innocenceData;
+        GameManager.i.topBarScript.unhappyData = read.guiData.unhappyData;
+        GameManager.i.topBarScript.conflictData = read.guiData.conflictData;
+        GameManager.i.topBarScript.blackmailData = read.guiData.blackmailData;
+        GameManager.i.topBarScript.doomData = read.guiData.doomData;
         //update top Bar with saved data
-        GameManager.instance.topBarScript.LoadSavedData();
+        GameManager.i.topBarScript.LoadSavedData();
     }
     #endregion
 
@@ -3844,7 +3844,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -3859,7 +3859,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -3874,7 +3874,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -3889,7 +3889,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -3904,7 +3904,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -3919,7 +3919,7 @@ public class FileManager : MonoBehaviour
                         {
                             ItemData item = listOfItemData[j];
                             if (item != null)
-                            { item.sprite = GameManager.instance.dataScript.GetSprite(item.spriteName); }
+                            { item.sprite = GameManager.i.dataScript.GetSprite(item.spriteName); }
                             else
                             {
                                 Debug.LogWarningFormat("Invalid ItemData (Null) in listOfItemData[{0}] for array[1]", j, i);
@@ -4107,7 +4107,7 @@ public class FileManager : MonoBehaviour
         actor.SetDatapointLoad(ActorDatapoint.Datapoint0, readActor.datapoint0);
         actor.SetDatapointLoad(ActorDatapoint.Datapoint1, readActor.datapoint1);
         actor.SetDatapointLoad(ActorDatapoint.Datapoint2, readActor.datapoint2);
-        GlobalSide actorSide = GameManager.instance.dataScript.GetGlobalSide(readActor.side);
+        GlobalSide actorSide = GameManager.i.dataScript.GetGlobalSide(readActor.side);
         if (actorSide != null)
         { actor.side = actorSide; }
         else { Debug.LogError("Invalid actorSide (Null)"); }
@@ -4118,8 +4118,8 @@ public class FileManager : MonoBehaviour
         actor.sex = readActor.sex;
         actor.actorName = readActor.actorName;
         actor.firstName = readActor.firstName;
-        actor.arc = GameManager.instance.dataScript.GetActorArc(readActor.arcName);
-        Trait trait = GameManager.instance.dataScript.GetTrait(readActor.traitName);
+        actor.arc = GameManager.i.dataScript.GetActorArc(readActor.arcName);
+        Trait trait = GameManager.i.dataScript.GetTrait(readActor.traitName);
         if (trait != null)
         { actor.AddTrait(trait); }
         else { Debug.LogWarningFormat("Invalid trait (Null) for traitID {0}", readActor.traitName); }
@@ -4144,7 +4144,7 @@ public class FileManager : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid personality (Null) for {0}, actorID {1}", actor.actorName, actor.actorID); }
         //sprite
         actor.spriteName = readActor.spriteName;
-        actor.sprite = GameManager.instance.dataScript.GetSprite(actor.spriteName);
+        actor.sprite = GameManager.i.dataScript.GetSprite(actor.spriteName);
         if (actor.sprite == null)
         { actor.sprite = defaultSprite; }
         //fast access
@@ -4203,7 +4203,7 @@ public class FileManager : MonoBehaviour
                 listOfSecrets.Clear();
                 for (int j = 0; j < readActor.listOfSecrets.Count; j++)
                 {
-                    Secret secret = GameManager.instance.dataScript.GetSecret(readActor.listOfSecrets[j]);
+                    Secret secret = GameManager.i.dataScript.GetSecret(readActor.listOfSecrets[j]);
                     if (secret != null)
                     { listOfSecrets.Add(secret); }
                     else { Debug.LogWarningFormat("Invalid secret in readActor.listOfSecrets[{0}]", j); }
@@ -4217,7 +4217,7 @@ public class FileManager : MonoBehaviour
                 dictOfContacts.Clear();
                 for (int j = 0; j < readActor.listOfContactNodes.Count; j++)
                 {
-                    Contact contact = GameManager.instance.dataScript.GetContact(readActor.listOfContacts[j]);
+                    Contact contact = GameManager.i.dataScript.GetContact(readActor.listOfContacts[j]);
                     if (contact != null)
                     {
                         //add to dictionary
@@ -4246,7 +4246,7 @@ public class FileManager : MonoBehaviour
                 listOfConditions.Clear();
                 for (int j = 0; j < readActor.listOfConditions.Count; j++)
                 {
-                    Condition condition = GameManager.instance.dataScript.GetCondition(readActor.listOfConditions[j]);
+                    Condition condition = GameManager.i.dataScript.GetCondition(readActor.listOfConditions[j]);
                     if (condition != null)
                     { listOfConditions.Add(condition); }
                     else { Debug.LogWarningFormat("Invalid Condition in readActor.listOfConditions[{0}]", j); }

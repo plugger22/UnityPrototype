@@ -194,12 +194,12 @@ public class LoadManager : MonoBehaviour
         List<Factor> listOfFactors = new List<Factor>();
         listOfFactors.AddRange(arrayOfFiveFactorModel);
         /*listOfFactors.AddRange(arrayOfDarkTriad);*/
-        GameManager.instance.dataScript.SetFactorArrays(listOfFactors);
+        GameManager.i.dataScript.SetFactorArrays(listOfFactors);
         Debug.LogFormat("[Loa] LoadManager.cs -> InitialiseStart: listOfFactors has {0} entries{1}", listOfFactors.Count, "\n");
         //
         // - - - PersonProfile
         //
-        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.instance.dataScript.GetDictOfProfiles();
+        Dictionary<string, PersonProfile> dictOfProfiles = GameManager.i.dataScript.GetDictOfProfiles();
         if (dictOfProfiles != null)
         {
             numArray = arrayOfPersonProfiles.Length;
@@ -230,7 +230,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Beliefs
         //
-        Dictionary<string, int> dictOfBeliefs = GameManager.instance.dataScript.GetDictOfBeliefs();
+        Dictionary<string, int> dictOfBeliefs = GameManager.i.dataScript.GetDictOfBeliefs();
         if (dictOfBeliefs != null)
         {
             numArray = arrayOfBeliefs.Length;
@@ -314,7 +314,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - GlobalType
         //
-        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.instance.dataScript.GetDictOfGlobalType();
+        Dictionary<string, GlobalType> dictOfGlobalType = GameManager.i.dataScript.GetDictOfGlobalType();
         if (dictOfGlobalType != null)
         {
             numArray = arrayOfGlobalType.Length;
@@ -340,7 +340,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - GlobalSide
         //
-        Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.instance.dataScript.GetDictOfGlobalSide();
+        Dictionary<string, GlobalSide> dictOfGlobalSide = GameManager.i.dataScript.GetDictOfGlobalSide();
         if (dictOfGlobalSide != null)
         {
             numArray = arrayOfGlobalSide.Length;
@@ -553,7 +553,7 @@ public class LoadManager : MonoBehaviour
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTextLists has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning("LoadManager.cs -> InitialiseStart: No TextLists present"); }
         //add to dictOfTextsLists
-        Dictionary<string, TextList> dictOfTextLists = GameManager.instance.dataScript.GetDictOfTextList();
+        Dictionary<string, TextList> dictOfTextLists = GameManager.i.dataScript.GetDictOfTextList();
         foreach (TextList textList in arrayOfTextLists)
         {
             if (textList != null)
@@ -569,7 +569,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - NameSets (not stored in a collection)
         //
-        Dictionary<string, NameSet> dictOfNameSet = GameManager.instance.dataScript.GetDictOfNameSet();
+        Dictionary<string, NameSet> dictOfNameSet = GameManager.i.dataScript.GetDictOfNameSet();
         if (dictOfNameSet != null)
         {
             numArray = arrayOfNameSets.Length;
@@ -735,13 +735,13 @@ public class LoadManager : MonoBehaviour
                         break;
                 }
             }
-            int numOfQualities = GameManager.instance.preloadScript.numOfQualities;
+            int numOfQualities = GameManager.i.preloadScript.numOfQualities;
             //resistance
             if (listResistance.Count == numOfQualities)
             {
                 //order list then pass to dataManager.array
                 IEnumerable<Quality> sortedList = listResistance.OrderBy(o => o.order);
-                GameManager.instance.dataScript.InitialiseResistanceQualities(sortedList);
+                GameManager.i.dataScript.InitialiseResistanceQualities(sortedList);
             }
             else { Debug.LogWarning("Invalid listResistance (size different to numOfQualities)"); }
             //authority
@@ -749,7 +749,7 @@ public class LoadManager : MonoBehaviour
             {
                 //order list then pass to dataManager.array
                 IEnumerable<Quality> sortedList = listAuthority.OrderBy(o => o.order);
-                GameManager.instance.dataScript.InitialiseAuthorityQualities(sortedList);
+                GameManager.i.dataScript.InitialiseAuthorityQualities(sortedList);
             }
             else { Debug.LogWarning("Invalid listAuthority (size different to numOfQualities)"); }
         }
@@ -774,7 +774,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfConditions.Length;
         if (numArray > 0)
         {
-            Dictionary<string, Condition> dictOfConditions = GameManager.instance.dataScript.GetDictOfConditions();
+            Dictionary<string, Condition> dictOfConditions = GameManager.i.dataScript.GetDictOfConditions();
             for (int i = 0; i < numArray; i++)
             {
                 //assign a zero based unique ID number
@@ -799,7 +799,7 @@ public class LoadManager : MonoBehaviour
         numArray = arrayOfCures.Length;
         if (numArray > 0)
         {
-            Dictionary<string, Cure> dictOfCures = GameManager.instance.dataScript.GetDictOfCures();
+            Dictionary<string, Cure> dictOfCures = GameManager.i.dataScript.GetDictOfCures();
             for (int i = 0; i < numArray; i++)
             {
                 //assign a zero based unique ID number
@@ -825,7 +825,7 @@ public class LoadManager : MonoBehaviour
         // - - - TraitCategories - - -
         //
         numArray = arrayOfTraitCategories.Length;
-        Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.instance.dataScript.GetDictOfTraitCategories();
+        Dictionary<string, TraitCategory> dictOfTraitCategories = GameManager.i.dataScript.GetDictOfTraitCategories();
         if (numArray > 0)
         {
             for (int i = 0; i < numArray; i++)
@@ -848,7 +848,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - TraitEffects - - -
         //
-        Dictionary<string, TraitEffect> dictOfTraitEffects = GameManager.instance.dataScript.GetDictOfTraitEffects();
+        Dictionary<string, TraitEffect> dictOfTraitEffects = GameManager.i.dataScript.GetDictOfTraitEffects();
         if (dictOfTraitCategories != null)
         {
 
@@ -880,7 +880,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Secret Type - - -
         //
-        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
+        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.i.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
         {
             numArray = arrayOfSecretTypes.Length;
@@ -921,13 +921,13 @@ public class LoadManager : MonoBehaviour
     public void InitialiseEarly(GameState state)
     {
         int numArray, numDict, counter;
-        GlobalSide globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        GlobalSide globalResistance = GameManager.instance.globalScript.sideResistance;
+        GlobalSide globalAuthority = GameManager.i.globalScript.sideAuthority;
+        GlobalSide globalResistance = GameManager.i.globalScript.sideResistance;
         //
         // - - - Node Arcs - - -
         //
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
-        Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.i.dataScript.GetDictOfNodeArcs();
+        Dictionary<string, int> dictOfLookUpNodeArcs = GameManager.i.dataScript.GetDictOfLookUpNodeArcs();
         if (dictOfNodeArcs != null)
         {
             counter = 0;
@@ -995,7 +995,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Node Crisis - - -
         //
-        Dictionary<string, NodeCrisis> dictOfNodeCrisis = GameManager.instance.dataScript.GetDictOfNodeCrisis();
+        Dictionary<string, NodeCrisis> dictOfNodeCrisis = GameManager.i.dataScript.GetDictOfNodeCrisis();
         if (dictOfNodeCrisis != null)
         {
             counter = 0;
@@ -1025,8 +1025,8 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Traits - - -
         //
-        Dictionary<string, Trait> dictOfTraits = GameManager.instance.dataScript.GetDictOfTraits();
-        List<Trait> listOfAllTraits = GameManager.instance.dataScript.GetListOfAllTraits();
+        Dictionary<string, Trait> dictOfTraits = GameManager.i.dataScript.GetDictOfTraits();
+        List<Trait> listOfAllTraits = GameManager.i.dataScript.GetListOfAllTraits();
         if (dictOfTraits != null)
         {
             if (listOfAllTraits != null)
@@ -1087,9 +1087,9 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Actor Arcs - - 
         //
-        Dictionary<string, ActorArc> dictOfActorArcs = GameManager.instance.dataScript.GetDictOfActorArcs();
-        List<ActorArc> authorityActorArcs = GameManager.instance.dataScript.GetListOfAuthorityActorArcs();
-        List<ActorArc> resistanceActorArcs = GameManager.instance.dataScript.GetListOfResistanceActorArcs();
+        Dictionary<string, ActorArc> dictOfActorArcs = GameManager.i.dataScript.GetDictOfActorArcs();
+        List<ActorArc> authorityActorArcs = GameManager.i.dataScript.GetListOfAuthorityActorArcs();
+        List<ActorArc> resistanceActorArcs = GameManager.i.dataScript.GetListOfResistanceActorArcs();
         if (dictOfActorArcs != null)
         {
             if (authorityActorArcs != null)
@@ -1139,7 +1139,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfTargetsStory.Length > 0, "Invalid arrayOfTargetsStory (no records)");
         Debug.Assert(arrayOfTargetsGoal.Length > 0, "Invalid arrayOfTargetsGoal (no records)");
         Debug.AssertFormat(arrayOfTargetsOrg.Length == 1, "Invalid arrayOfTargetOrg (should be one OrgTemplate record only, there are {0})", arrayOfTargetsOrg.Length);
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             counter = 0;
@@ -1197,7 +1197,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfNodeArcSprites.Length > 0, "Invalid arrayOfNodeArcSprites (No records)");
         Debug.Assert(arrayOfTargetSprites.Length > 0, "Invalid arrayOfTargetSprites (No records)");
         Debug.Assert(arrayOfPortraitSprites.Length > 0, "Invalid arrayOfPortraitSprites (No records)");
-        Dictionary<string, Sprite> dictOfSprites = GameManager.instance.dataScript.GetDictOfSprites();
+        Dictionary<string, Sprite> dictOfSprites = GameManager.i.dataScript.GetDictOfSprites();
         if (dictOfSprites != null)
         {
             counter = 0;
@@ -1233,7 +1233,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - MetaOptions - - -
         //
-        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
             List<MetaOption> listOfMetaOptions = arrayOfMetaOptions.ToList();
@@ -1264,7 +1264,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Actions - - -
         //
-        Dictionary<string, Action> dictOfActions = GameManager.instance.dataScript.GetDictOfActions();
+        Dictionary<string, Action> dictOfActions = GameManager.i.dataScript.GetDictOfActions();
         if (dictOfActions != null)
         {
             counter = 0;
@@ -1291,8 +1291,8 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Team Arcs - - -
         //
-        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
-        Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.instance.dataScript.GetDictOfLookUpTeamArcs();
+        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.i.dataScript.GetDictOfTeamArcs();
+        Dictionary<string, int> dictOfLookUpTeamArcs = GameManager.i.dataScript.GetDictOfLookUpTeamArcs();
         if (dictOfTeamArcs != null)
         {
             if (dictOfLookUpTeamArcs != null)
@@ -1353,7 +1353,7 @@ public class LoadManager : MonoBehaviour
                 Debug.Assert(dictOfLookUpTeamArcs.Count > 0, "No Team Arcs in Lookup dictionary");
                 Debug.Assert(numArray == numDict, string.Format("Mismatch in TeamArc count, array {0}, dict {1}", numArray, numDict));
                 //arrayOfTeams
-                GameManager.instance.dataScript.InitialiseArrayOfTeams(counter, (int)TeamInfo.Count);
+                GameManager.i.dataScript.InitialiseArrayOfTeams(counter, (int)TeamInfo.Count);
             }
             else { Debug.LogError("Invalid dictOfLookUpTeamArcs (Null) -> Import failed"); }
         }
@@ -1361,7 +1361,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Gear - - -
         //
-        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             counter = 0;
@@ -1388,7 +1388,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Gear Rarity - - -
         //
-        List<GearRarity> listOfGearRarity = GameManager.instance.dataScript.GetListOfGearRarity();
+        List<GearRarity> listOfGearRarity = GameManager.i.dataScript.GetListOfGearRarity();
         if (listOfGearRarity != null)
         {
             numArray = arrayOfGearRarity.Length;
@@ -1408,7 +1408,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Gear Type - - -
         //
-        List<GearType> listOfGearType = GameManager.instance.dataScript.GetListOfGearType();
+        List<GearType> listOfGearType = GameManager.i.dataScript.GetListOfGearType();
         if (listOfGearType != null)
         {
             numArray = arrayOfGearType.Length;
@@ -1428,8 +1428,8 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic Types Data - - -
         //
-        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.i.dataScript.GetDictOfTopicTypeData();
+        List<TopicType> listOfTopicTypes = GameManager.i.dataScript.GetListOfTopicTypes();
         if (dictOfTopicTypes != null)
         {
             if (listOfTopicTypes != null)
@@ -1473,7 +1473,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic SubTypes Data - - -
         //
-        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.i.dataScript.GetDictOfTopicSubTypeData();
         if (dictOfTopicSubTypes != null)
         {
             counter = 0;
@@ -1511,7 +1511,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topic Options - - -
         //
-        Dictionary<string, TopicOption> dictOfTopicOptions = GameManager.instance.dataScript.GetDictOfTopicOptions();
+        Dictionary<string, TopicOption> dictOfTopicOptions = GameManager.i.dataScript.GetDictOfTopicOptions();
         if (dictOfTopicOptions != null)
         {
             counter = 0;
@@ -1573,7 +1573,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Topics - - -
         //
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
             counter = 0;
@@ -1600,7 +1600,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - TopicSubTypes - - -
         //
-        Dictionary<string, TopicSubType> dictOfTopicSubs = GameManager.instance.dataScript.GetDictOfTopicSubTypes();
+        Dictionary<string, TopicSubType> dictOfTopicSubs = GameManager.i.dataScript.GetDictOfTopicSubTypes();
         if (dictOfTopicSubs != null)
         {
             counter = 0;
@@ -1634,7 +1634,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Manage Actions - - -
         //
-        Dictionary<string, ManageAction> dictOfManageActions = GameManager.instance.dataScript.GetDictOfManageActions();
+        Dictionary<string, ManageAction> dictOfManageActions = GameManager.i.dataScript.GetDictOfManageActions();
         List<ManageAction> listOfActorHandle = new List<ManageAction>();
         List<ManageAction> listOfActorReserve = new List<ManageAction>();
         List<ManageAction> listOfActorDismiss = new List<ManageAction>();
@@ -1681,7 +1681,7 @@ public class LoadManager : MonoBehaviour
                 var manageHandle = listOfActorHandle.OrderBy(o => o.order);
                 listOfActorHandle = manageHandle.ToList();
                 Debug.Assert(listOfActorHandle.Count > 0, "Invalid count (empty) for listOfActorHandle");
-                GameManager.instance.dataScript.SetListOfActorHandle(listOfActorHandle);
+                GameManager.i.dataScript.SetListOfActorHandle(listOfActorHandle);
             }
             else { Debug.LogError("There are no entries in listOfActorHandle"); }
             //ActorReserve
@@ -1689,7 +1689,7 @@ public class LoadManager : MonoBehaviour
             {
                 var manageReserve = listOfActorReserve.OrderBy(o => o.order);
                 listOfActorReserve = manageReserve.ToList();
-                GameManager.instance.dataScript.SetListOfActorReserve(listOfActorReserve);
+                GameManager.i.dataScript.SetListOfActorReserve(listOfActorReserve);
                 Debug.Assert(listOfActorReserve.Count > 0, "Invalid count (empty) for listOfActorReserve");
             }
             else { Debug.LogError("There are no entries in listOfActorReserve"); }
@@ -1698,7 +1698,7 @@ public class LoadManager : MonoBehaviour
             {
                 var manageDismiss = listOfActorDismiss.OrderBy(o => o.order);
                 listOfActorDismiss = manageDismiss.ToList();
-                GameManager.instance.dataScript.SetListOfActorDismiss(listOfActorDismiss);
+                GameManager.i.dataScript.SetListOfActorDismiss(listOfActorDismiss);
                 Debug.Assert(listOfActorDismiss.Count > 0, "Invalid count (empty) for listOfActorDismiss");
             }
             else { Debug.LogError("There are no entries in listOfActorDismiss"); }
@@ -1707,7 +1707,7 @@ public class LoadManager : MonoBehaviour
             {
                 var manageDispose = listOfActorDispose.OrderBy(o => o.order);
                 listOfActorDispose = manageDispose.ToList();
-                GameManager.instance.dataScript.SetListOfActorDispose(listOfActorDispose);
+                GameManager.i.dataScript.SetListOfActorDispose(listOfActorDispose);
                 Debug.Assert(listOfActorDispose.Count > 0, "Invalid count (empty) for listOfActorDispose");
             }
             else { Debug.LogError("There are no entries in listOfActorDispose"); }
@@ -1718,15 +1718,15 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Actor Qualities - - -
         //
-        Quality[] authorityQualities = GameManager.instance.dataScript.GetArrayOfAuthorityQualities();
-        Quality[] resistanceQualities = GameManager.instance.dataScript.GetArrayOfResistanceQualities();
+        Quality[] authorityQualities = GameManager.i.dataScript.GetArrayOfAuthorityQualities();
+        Quality[] resistanceQualities = GameManager.i.dataScript.GetArrayOfResistanceQualities();
         if (authorityQualities != null)
         {
             if (resistanceQualities != null)
             {
                 //initialise StatTags array
-                GameManager.instance.dataScript.InitialiseArrayOfStatTags();
-                string[,] arrayOfStatTags = GameManager.instance.dataScript.GetArrayOfStatTags();
+                GameManager.i.dataScript.InitialiseArrayOfStatTags();
+                string[,] arrayOfStatTags = GameManager.i.dataScript.GetArrayOfStatTags();
                 if (arrayOfStatTags != null)
                 {
                     for (int i = 0; i < 3; i++)
@@ -1757,7 +1757,7 @@ public class LoadManager : MonoBehaviour
                         else { arrayOfStatTags[globalResistance.level, i] = "Unknown"; }
                     }
                     //Initialise Actor Arrays
-                    GameManager.instance.dataScript.InitialiseActorArrays();
+                    GameManager.i.dataScript.InitialiseActorArrays();
                 }
                 else { Debug.LogError("Invalid arrayOfStatTags (Null) -> Import failed"); }
             }
@@ -1767,7 +1767,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - ActorConflicts - - -
         //
-        Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.instance.dataScript.GetDictOfActorConflicts();
+        Dictionary<string, ActorConflict> dictOfActorConflicts = GameManager.i.dataScript.GetDictOfActorConflicts();
         if (dictOfActorConflicts != null)
         {
             counter = 0;
@@ -1795,7 +1795,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Secrets - - -
         //
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             counter = 0;
@@ -1823,7 +1823,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - HQs - - - (done higher as no dictionary requirement)
         //
-        Dictionary<string, Hq> dictOfHQs = GameManager.instance.dataScript.GetDictOfHQs();
+        Dictionary<string, Hq> dictOfHQs = GameManager.i.dataScript.GetDictOfHQs();
         if (dictOfHQs != null)
         {
             counter = 0;
@@ -1850,7 +1850,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Cities - - -
         //
-        Dictionary<string, City> dictOfCities = GameManager.instance.dataScript.GetDictOfCities();
+        Dictionary<string, City> dictOfCities = GameManager.i.dataScript.GetDictOfCities();
         if (dictOfCities != null)
         {
             counter = 0;
@@ -1877,7 +1877,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Objectives - - -
         //
-        Dictionary<string, Objective> dictOfObjectives = GameManager.instance.dataScript.GetDictOfObjectives();
+        Dictionary<string, Objective> dictOfObjectives = GameManager.i.dataScript.GetDictOfObjectives();
         if (dictOfObjectives != null)
         {
             counter = 0;
@@ -1904,7 +1904,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Organisations - - -
         //
-        Dictionary<string, Organisation> dictOfOrganisations = GameManager.instance.dataScript.GetDictOfOrganisations();
+        Dictionary<string, Organisation> dictOfOrganisations = GameManager.i.dataScript.GetDictOfOrganisations();
         if (dictOfOrganisations != null)
         {
             counter = 0;
@@ -1932,7 +1932,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Mayors - - -
         //
-        Dictionary<string, Mayor> dictOfMayors = GameManager.instance.dataScript.GetDictOfMayors();
+        Dictionary<string, Mayor> dictOfMayors = GameManager.i.dataScript.GetDictOfMayors();
         if (dictOfMayors != null)
         {
             counter = 0;
@@ -1965,7 +1965,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - AI Decisions - - -
         //
-        Dictionary<string, DecisionAI> dictOfAIDecisions = GameManager.instance.dataScript.GetDictOfAIDecisions();
+        Dictionary<string, DecisionAI> dictOfAIDecisions = GameManager.i.dataScript.GetDictOfAIDecisions();
         if (dictOfAIDecisions != null)
         {
             counter = 0;
@@ -1992,7 +1992,7 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Campaigns - - -
         //
-        Dictionary<string, Campaign> dictOfCampaigns = GameManager.instance.dataScript.GetDictOfCampaigns();
+        Dictionary<string, Campaign> dictOfCampaigns = GameManager.i.dataScript.GetDictOfCampaigns();
         if (dictOfCampaigns != null)
         {
             counter = 0;
@@ -2031,14 +2031,14 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Nodes - - -
         //
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.i.dataScript.GetDictOfNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (dictOfNodes != null)
         {
             counter = 0;
             /*//clear dictionary (may be a followOn level) -> done in DataManager.Reset
             dictOfNodes.Clear();*/
-            List<Node> tempNodeList = GameManager.instance.levelScript.GetListOfNodes();
+            List<Node> tempNodeList = GameManager.i.levelScript.GetListOfNodes();
             if (tempNodeList != null)
             {
                 foreach (Node node in tempNodeList)
@@ -2070,11 +2070,11 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Help - - -
         //
-        Dictionary<string, HelpData> dictOfHelp = GameManager.instance.dataScript.GetDictOfHelpData();
+        Dictionary<string, HelpData> dictOfHelp = GameManager.i.dataScript.GetDictOfHelpData();
         //load only if not already present
         if (dictOfHelp.Count == 0)
         {
-            List<HelpData> listOfHelp = GameManager.instance.helpScript.CreateItemDataHelp();
+            List<HelpData> listOfHelp = GameManager.i.helpScript.CreateItemDataHelp();
             int count = listOfHelp.Count;
             if (count > 0)
             {

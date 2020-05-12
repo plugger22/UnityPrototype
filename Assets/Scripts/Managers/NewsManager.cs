@@ -49,7 +49,7 @@ public class NewsManager : MonoBehaviour
                 //do nothing
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -69,7 +69,7 @@ public class NewsManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //set up adverts for ticker text
-        GameManager.instance.dataScript.InitialiseAdvertList();
+        GameManager.i.dataScript.InitialiseAdvertList();
     }
     #endregion
 
@@ -122,9 +122,9 @@ public class NewsManager : MonoBehaviour
     private void UpdateNewsItems()
     {
         //not if autoRun
-        if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+        if (GameManager.i.turnScript.CheckIsAutoRun() == false)
         {
-            List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+            List<NewsItem> listOfNewsItems = GameManager.i.dataScript.GetListOfNewsItems();
             if (listOfNewsItems != null)
             {
                 int counter = 0;
@@ -162,10 +162,10 @@ public class NewsManager : MonoBehaviour
         //
         // - - - News Items
         //
-        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        List<NewsItem> listOfNewsItems = GameManager.i.dataScript.GetListOfNewsItems();
         if (listOfNewsItems != null)
         {
-            List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+            List<string> listOfAdverts = GameManager.i.dataScript.GetListOfAdverts();
             if (listOfAdverts != null)
             {
                 countNews = listOfNewsItems.Count;
@@ -190,7 +190,7 @@ public class NewsManager : MonoBehaviour
                             if (countAdvert == 0)
                             {
                                 //reinitialise
-                                GameManager.instance.dataScript.InitialiseAdvertList();
+                                GameManager.i.dataScript.InitialiseAdvertList();
                                 countAdvert = listOfAdverts.Count;
                             }
                             if (countAdvert > 0)
@@ -271,7 +271,7 @@ public class NewsManager : MonoBehaviour
                             {
                                 if (data.actorID > -1)
                                 {
-                                    Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+                                    Actor actor = GameManager.i.dataScript.GetActor(data.actorID);
                                     if (actor != null)
                                     { replaceText = actor.arc.name; }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID \"{0}\"", data.actorID); }
@@ -282,7 +282,7 @@ public class NewsManager : MonoBehaviour
                             break;
                         case "player":
                             if (data.isValidate == false)
-                            { replaceText = GameManager.instance.playerScript.PlayerName; }
+                            { replaceText = GameManager.i.playerScript.PlayerName; }
                             break;
                         case "node":
                             if (data.isValidate == false)
@@ -301,20 +301,20 @@ public class NewsManager : MonoBehaviour
                         case "npc":
                             if (data.isValidate == false)
                             {
-                                if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                                else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                                replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                                if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                                else { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                                replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
                             }
                             break;
                         case "npcIs":
                             //npc is/was something
                             if (data.isValidate == false)
-                            { replaceText = GameManager.instance.topicScript.textListNpcSomething.GetRandomRecord(); }
+                            { replaceText = GameManager.i.topicScript.textListNpcSomething.GetRandomRecord(); }
                             break;
                         case "handicap":
                             //npc has a handicap
                             if (data.isValidate == false)
-                            { replaceText = GameManager.instance.topicScript.textListHandicap.GetRandomRecord(); }
+                            { replaceText = GameManager.i.topicScript.textListHandicap.GetRandomRecord(); }
                             break;
                         case "job":
                             //Random job name appropriate to node arc
@@ -338,30 +338,30 @@ public class NewsManager : MonoBehaviour
                             if (data.isValidate == false)
                             {
                                 string location = "Unknown";
-                                location = GameManager.instance.topicScript.textlistGenericLocation.GetRandomRecord();
+                                location = GameManager.i.topicScript.textlistGenericLocation.GetRandomRecord();
                                 replaceText = location;
                             }
                             break;
                         case "mayor":
                             //mayor + first name
                             if (data.isValidate == false)
-                            { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                            { replaceText = GameManager.i.cityScript.GetCity().mayor.mayorName; }
                             break;
                         case "city":
                             //city name
                             if (data.isValidate == false)
-                            { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                            { replaceText = GameManager.i.cityScript.GetCity().name; }
                             break;
                         case "citys":
                             //city name plural
                             if (data.isValidate == false)
-                            { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
+                            { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCity().name); }
                             break;
                         case "who":
                             //My '[best friend]'s [crazy] [sister]' 
                             if (data.isValidate == false)
-                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho0.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
-                                GameManager.instance.topicScript.textListWho1.GetRandomRecord()); }
+                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.i.topicScript.textListWho0.GetRandomRecord(), GameManager.i.topicScript.textListCondition.GetRandomRecord(),
+                                GameManager.i.topicScript.textListWho1.GetRandomRecord()); }
                             break;
                         default:
                             if (data.isValidate == false)
@@ -393,7 +393,7 @@ public class NewsManager : MonoBehaviour
     public string DebugDisplayNewsItems()
     {
         int count, length, subLength;
-        List<NewsItem> listOfNewsItems = GameManager.instance.dataScript.GetListOfNewsItems();
+        List<NewsItem> listOfNewsItems = GameManager.i.dataScript.GetListOfNewsItems();
         StringBuilder builder = new StringBuilder();
         if (listOfNewsItems != null)
         {
@@ -440,7 +440,7 @@ public class NewsManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfAdverts{0}", "\n");
-        List<string> listOfAdverts = GameManager.instance.dataScript.GetListOfAdverts();
+        List<string> listOfAdverts = GameManager.i.dataScript.GetListOfAdverts();
         if (listOfAdverts != null)
         {
             int count = listOfAdverts.Count;

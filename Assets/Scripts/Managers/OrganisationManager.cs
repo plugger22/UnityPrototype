@@ -44,7 +44,7 @@ public class OrganisationManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -55,7 +55,7 @@ public class OrganisationManager : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         //get list of all Orgs involved in campaign
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
             //reset isCutOff in case of a new Game
@@ -70,34 +70,34 @@ public class OrganisationManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //get list of all Orgs involved in campaign
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         //empty list just to be sure
         listOfOrgs.Clear();
         //load all campaign organisations into list
         if (listOfOrgs != null)
         {
             //cure
-            Organisation org = GameManager.instance.campaignScript.campaign.orgCure;
+            Organisation org = GameManager.i.campaignScript.campaign.orgCure;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgCure (Null)"); }
             //contract
-            org = GameManager.instance.campaignScript.campaign.orgContract;
+            org = GameManager.i.campaignScript.campaign.orgContract;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgContract (Null)"); }
             //HQ
-            org = GameManager.instance.campaignScript.campaign.orgHQ;
+            org = GameManager.i.campaignScript.campaign.orgHQ;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgHQ (Null)"); }
             //Emergency
-            org = GameManager.instance.campaignScript.campaign.orgEmergency;
+            org = GameManager.i.campaignScript.campaign.orgEmergency;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgEmergency (Null)"); }
             //Info
-            org = GameManager.instance.campaignScript.campaign.orgInfo;
+            org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             { listOfOrgs.Add(org); }
             else { Debug.LogWarningFormat("Invalid campaign.orgInfo (Null)"); }
@@ -106,9 +106,9 @@ public class OrganisationManager : MonoBehaviour
         //initialise orgs in list
         foreach (Organisation org in listOfOrgs)
         {
-            org.maxStat = GameManager.instance.actorScript.maxStatValue;
-            org.SetReputation(GameManager.instance.testScript.orgReputation);
-            org.SetFreedom(GameManager.instance.testScript.orgFreedom);
+            org.maxStat = GameManager.i.actorScript.maxStatValue;
+            org.SetReputation(GameManager.i.testScript.orgReputation);
+            org.SetFreedom(GameManager.i.testScript.orgFreedom);
             org.isContact = false;
             org.isSecretKnown = false;
             org.timer = 0;
@@ -137,7 +137,7 @@ public class OrganisationManager : MonoBehaviour
     private void SubInitialiseFollowOn()
     {
         //get list of all Orgs involved in campaign
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
             //reset org values where needed
@@ -184,7 +184,7 @@ public class OrganisationManager : MonoBehaviour
     private void StartTurnLate()
     {
         //poll all active orgs
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
             string text;
@@ -196,7 +196,7 @@ public class OrganisationManager : MonoBehaviour
                     {
                         //rep 0, generate warning message
                         text = string.Format("Poor Reputation (Zero) with {0}", org.name);
-                        GameManager.instance.messageScript.OrganisationReputation(text, org);
+                        GameManager.i.messageScript.OrganisationReputation(text, org);
                     }
                     //decrement timers where appropriate
                     if (org.timer > 0)
@@ -229,7 +229,7 @@ public class OrganisationManager : MonoBehaviour
                 if (org.timer <= 0)
                 {
                     //reset array to false (Not tracking anything)
-                    GameManager.instance.dataScript.ResetOrgInfoArray(false);
+                    GameManager.i.dataScript.ResetOrgInfoArray(false);
                 }
                 else
                 { ProcessOrgInfoEffectMessage(org); }
@@ -245,7 +245,7 @@ public class OrganisationManager : MonoBehaviour
     public void ProcessOrgInfoEffectMessage(Organisation org, OrgInfoType orgType = OrgInfoType.Count)
     {
         //if default orginfoType.Count need to get correct type
-        orgType = GameManager.instance.dataScript.GetOrgInfoType();
+        orgType = GameManager.i.dataScript.GetOrgInfoType();
         string orgText = "";
         switch (orgType)
         {
@@ -256,8 +256,8 @@ public class OrganisationManager : MonoBehaviour
                 orgText = string.Format("Reporting the position of any {0}", GameManager.GetFormattedString("Erasure Teams", ColourType.salmonText));
                 break;
             case OrgInfoType.Npc:
-                if (GameManager.instance.missionScript.mission.npc != null)
-                { orgText = string.Format("Reporting the position of the {0}", GameManager.GetFormattedString(GameManager.instance.missionScript.mission.npc.tag, ColourType.salmonText)); }
+                if (GameManager.i.missionScript.mission.npc != null)
+                { orgText = string.Format("Reporting the position of the {0}", GameManager.GetFormattedString(GameManager.i.missionScript.mission.npc.tag, ColourType.salmonText)); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
         }
@@ -274,7 +274,7 @@ public class OrganisationManager : MonoBehaviour
             help1 = "orgInfo_1",
             help2 = "orgInfo_2"
         };
-        GameManager.instance.messageScript.ActiveEffect(data);
+        GameManager.i.messageScript.ActiveEffect(data);
     }
 
     /// <summary>
@@ -282,7 +282,7 @@ public class OrganisationManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaOrgs()
     {
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations(); //note that this is orgs current for campaign, NOT currently in contact with player
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations(); //note that this is orgs current for campaign, NOT currently in contact with player
         List<Organisation> tempList = new List<Organisation>();
         if (listOfOrgs != null)
         {
@@ -306,7 +306,7 @@ public class OrganisationManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid org (Null) in listOfOrgs[{0}]", i); }
                 }
                 //send list to MetaGame
-                GameManager.instance.metaScript.SetMetaOrganisations(tempList);
+                GameManager.i.metaScript.SetMetaOrganisations(tempList);
             }
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
@@ -319,9 +319,9 @@ public class OrganisationManager : MonoBehaviour
     public void CancelOrgInfoTracking(OrgInfoType orgInfoType)
     {
         //reset array to false (Not tracking anything)
-        GameManager.instance.dataScript.SetOrgInfoType(orgInfoType, false);
+        GameManager.i.dataScript.SetOrgInfoType(orgInfoType, false);
         //reset timer
-        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
         if (org != null)
         { org.timer = 0; }
         else { Debug.LogError("Invalid orgInfo (Null)"); }
@@ -370,7 +370,7 @@ public class OrganisationManager : MonoBehaviour
     /// </summary>
     public void DebugToggleAllOrganisations()
     {
-        List<Organisation> listOfOrgs = GameManager.instance.dataScript.GetListOfCurrentOrganisations();
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
         if (listOfOrgs != null)
         {
             foreach (Organisation org in listOfOrgs)

@@ -73,7 +73,7 @@ public class DijkstraManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -83,7 +83,7 @@ public class DijkstraManager : MonoBehaviour
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
-        numOfNodes = GameManager.instance.dataScript.CheckNumOfNodes();
+        numOfNodes = GameManager.i.dataScript.CheckNumOfNodes();
         //Unweighted
         InitialiseDictDataUnweighted();
         InitialiseNodeDataUnweighted();
@@ -101,11 +101,11 @@ public class DijkstraManager : MonoBehaviour
     private void InitialiseDictDataUnweighted()
     {
         //existing nodes
-        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
+        List<Node> listOfNodes = new List<Node>(GameManager.i.dataScript.GetDictOfNodes().Values);
         Debug.Assert(listOfNodes.Count == numOfNodes, string.Format("Mismatch on Node Count, listOfNodes {0} vs. numOfNodes {1}", listOfNodes.Count, numOfNodes));
         //set up mirror dijkstra friendly nodes (refered to as 'nodeD')
         List<NodeD> listOfNodeD = new List<NodeD>();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.i.dataScript.GetDictOfNodeDUnweighted();
         if (listOfNodes != null)
         {
             if (dictOfNodeD != null)
@@ -196,11 +196,11 @@ public class DijkstraManager : MonoBehaviour
     private void InitialiseDictDataWeighted()
     {
         //existing nodes
-        List<Node> listOfNodes = new List<Node>(GameManager.instance.dataScript.GetDictOfNodes().Values);
+        List<Node> listOfNodes = new List<Node>(GameManager.i.dataScript.GetDictOfNodes().Values);
         Debug.Assert(listOfNodes.Count == numOfNodes, string.Format("Mismatch on Node Count, listOfNodes {0} vs. numOfNodes {1}", listOfNodes.Count, numOfNodes));
         //set up mirror dijkstra friendly nodes (refered to as 'nodeD')
         List<NodeD> listOfNodeD = new List<NodeD>();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.i.dataScript.GetDictOfNodeDWeighted();
         if (listOfNodes != null)
         {
             if (dictOfNodeD != null)
@@ -316,9 +316,9 @@ public class DijkstraManager : MonoBehaviour
     private void InitialiseNodeDataUnweighted()
     {
         int nodeID;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
-        Dictionary<int, PathData> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstraUnweighted();
+        Dictionary<int, Node> dictOfNodes = GameManager.i.dataScript.GetDictOfNodes();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.i.dataScript.GetDictOfNodeDUnweighted();
+        Dictionary<int, PathData> dictOfDijkstra = GameManager.i.dataScript.GetDictOfDijkstraUnweighted();
         if (dictOfNodes != null)
         {
             if (dictOfDijkstra != null)
@@ -373,9 +373,9 @@ public class DijkstraManager : MonoBehaviour
     private void InitialiseNodeDataWeighted()
     {
         int nodeID;
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
-        Dictionary<int, NodeD> dictOfNodeD = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
-        Dictionary<int, PathData> dictOfDijkstra = GameManager.instance.dataScript.GetDictOfDijkstraWeighted();
+        Dictionary<int, Node> dictOfNodes = GameManager.i.dataScript.GetDictOfNodes();
+        Dictionary<int, NodeD> dictOfNodeD = GameManager.i.dataScript.GetDictOfNodeDWeighted();
+        Dictionary<int, PathData> dictOfDijkstra = GameManager.i.dataScript.GetDictOfDijkstraWeighted();
         if (dictOfNodes != null)
         {
             if (dictOfDijkstra != null)
@@ -468,8 +468,8 @@ public class DijkstraManager : MonoBehaviour
             //get path array (weighted / unweighted)
             PathData data;
             if (isWeighted == false)
-            { data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID); }
-            else { data = GameManager.instance.dataScript.GetDijkstraPathWeighted(nodeSourceID); }
+            { data = GameManager.i.dataScript.GetDijkstraPathUnweighted(nodeSourceID); }
+            else { data = GameManager.i.dataScript.GetDijkstraPathWeighted(nodeSourceID); }
             if (data != null)
             {
                 //find destinationID in pathArray
@@ -477,7 +477,7 @@ public class DijkstraManager : MonoBehaviour
                 do
                 {
                     nodeNextID = data.pathArray[nodeCurrentID];
-                    Node nodeCurrent = GameManager.instance.dataScript.GetNode(nodeCurrentID);
+                    Node nodeCurrent = GameManager.i.dataScript.GetNode(nodeCurrentID);
                     if (nodeCurrent != null)
                     {
                         Connection connection = nodeCurrent.GetConnection(nodeNextID);
@@ -517,7 +517,7 @@ public class DijkstraManager : MonoBehaviour
     public void RecalculateWeightedData()
     {
         //empty out collections
-        GameManager.instance.dataScript.SetWeightedDijkstraDataClear();
+        GameManager.i.dataScript.SetWeightedDijkstraDataClear();
         //recalculate
         InitialiseDictDataWeighted();
         InitialiseNodeDataWeighted();
@@ -539,7 +539,7 @@ public class DijkstraManager : MonoBehaviour
         Debug.Assert(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes)");
         if (nodeSourceID != nodeDestinationID)
         {
-            PathData data = GameManager.instance.dataScript.GetDijkstraPathWeighted(nodeSourceID);
+            PathData data = GameManager.i.dataScript.GetDijkstraPathWeighted(nodeSourceID);
             if (data != null)
             { distance = data.distanceArray[nodeDestinationID]; }
             else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
@@ -566,7 +566,7 @@ public class DijkstraManager : MonoBehaviour
         Debug.AssertFormat(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes) destID {0}, numOfNodes {1}", nodeDestinationID, numOfNodes);
         if (nodeSourceID != nodeDestinationID)
         {
-            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(nodeSourceID);
+            PathData data = GameManager.i.dataScript.GetDijkstraPathUnweighted(nodeSourceID);
             if (data != null)
             { distance = data.distanceArray[nodeDestinationID]; }
             else { Debug.LogErrorFormat("Invalid PathData (Null) for sourceNodeID {0}", nodeSourceID); }
@@ -686,7 +686,7 @@ public class DijkstraManager : MonoBehaviour
         Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
         if (sourceNode != null)
         {
-            PathData data = GameManager.instance.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);
+            PathData data = GameManager.i.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);
             if (data != null)
             {
                 if (data.distanceArray != null)
@@ -753,7 +753,7 @@ public class DijkstraManager : MonoBehaviour
         if (selectionList.Count > 0)
         {
             nodeID = selectionList[Random.Range(0, selectionList.Count)];
-            node = GameManager.instance.dataScript.GetNode(nodeID);
+            node = GameManager.i.dataScript.GetNode(nodeID);
             if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
         else { Debug.LogWarning("Invalid selectionList (Empty)"); }

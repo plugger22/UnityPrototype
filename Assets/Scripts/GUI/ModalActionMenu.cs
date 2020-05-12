@@ -56,7 +56,7 @@ public class ModalActionMenu : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        offset = GameManager.instance.guiScript.tooltipOffset * 2;
+        offset = GameManager.i.guiScript.tooltipOffset * 2;
         //register listener
         EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }
@@ -102,7 +102,7 @@ public class ModalActionMenu : MonoBehaviour
     /// <param name="details"></param>
     public void SetActionMenu(ModalGenericMenuDetails details)
     {
-        if (GameManager.instance.turnScript.CheckRemainingActions() == true)
+        if (GameManager.i.turnScript.CheckRemainingActions() == true)
         {
             //modalActionObject.SetActive(true);
             modalMenuObject.SetActive(true);
@@ -214,9 +214,9 @@ public class ModalActionMenu : MonoBehaviour
             modalMenuObject.transform.position = screenPos;
             //set states
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.ActionMenu };
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             //block raycasts to gameobjects
-            GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+            GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
             modalLevel = details.modalLevel;
             modalState = details.modalState;
             Debug.LogFormat("[UI] ModalActionMenu.cs -> SetActionMenu{0}", "\n");
@@ -225,12 +225,12 @@ public class ModalActionMenu : MonoBehaviour
         {
             //insufficient actions remaining -> create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
+            outcomeDetails.side = GameManager.i.sideScript.PlayerSide;
             outcomeDetails.textTop = "You have used up all your Actions for this turn";
             //extra text if player is wounded
-            if (GameManager.instance.turnScript.CheckPlayerWounded() == true)
+            if (GameManager.i.turnScript.CheckPlayerWounded() == true)
             { outcomeDetails.textBottom = "Maximum ONE Action allowed while WOUNDED"; }
-            outcomeDetails.sprite = GameManager.instance.guiScript.infoSprite;
+            outcomeDetails.sprite = GameManager.i.guiScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");
@@ -245,15 +245,15 @@ public class ModalActionMenu : MonoBehaviour
     {
         //modalActionObject.SetActive(false);
         modalMenuObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
+        GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //remove highlight from node
-        GameManager.instance.nodeScript.ToggleNodeHighlight();
+        GameManager.i.nodeScript.ToggleNodeHighlight();
         //close Alert UI safety check (ignored if not active)
-        GameManager.instance.alertScript.CloseAlertUI();
+        GameManager.i.alertScript.CloseAlertUI();
         //close Generic toolip (eg. from button)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalActionMenu -> CloseActionMenu");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ModalActionMenu -> CloseActionMenu");
         //set game state
-        GameManager.instance.inputScript.ResetStates(modalState);
+        GameManager.i.inputScript.ResetStates(modalState);
         Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");
     }
 }

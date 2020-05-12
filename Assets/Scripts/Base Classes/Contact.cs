@@ -43,16 +43,16 @@ public class Contact
     public void SetInactive(string reason = "Unknown")
     {
         status = ContactStatus.Inactive;
-        timerInactive = GameManager.instance.contactScript.timerInactive;
+        timerInactive = GameManager.i.contactScript.timerInactive;
         //admin
         Debug.LogFormat("[Cnt] Contact.cs -> SetInactive: {0} {1}, {2} at nodeID {3}, actorID {4}, Status now INACTIVE ({5}){6}", nameFirst, nameLast, job, nodeID, actorID, status, "\n");
         string text = string.Format("Contact {0} {1}, {2}, nodeID {3}, actorID {4}, goes INACTIVE{5}", nameFirst, nameLast, job, nodeID, actorID, "\n");
-        Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+        Actor actor = GameManager.i.dataScript.GetActor(actorID);
         if (actor != null)
         {
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
-            { GameManager.instance.messageScript.ContactInactive(text, reason, actor, node, this); }
+            { GameManager.i.messageScript.ContactInactive(text, reason, actor, node, this); }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }
         else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }

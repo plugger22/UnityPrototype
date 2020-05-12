@@ -57,7 +57,7 @@ public class AISideTabUI : MonoBehaviour
     public void Initialise(GameState state)
     {
         //Resistance player only
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
         {
             switch (state)
             {
@@ -79,7 +79,7 @@ public class AISideTabUI : MonoBehaviour
                 case GameState.FollowOnInitialisation:
                     break;
                 default:
-                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                     break;
             }
         }
@@ -117,7 +117,7 @@ public class AISideTabUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        flashAlertTime = GameManager.instance.guiScript.flashAlertTime;
+        flashAlertTime = GameManager.i.guiScript.flashAlertTime;
         Debug.Assert(flashAlertTime > 0, "Invalid flashAlertTime (zero)");
     }
     #endregion
@@ -194,7 +194,7 @@ public class AISideTabUI : MonoBehaviour
             myCoroutine = null;
         }
         //close tooltip if open
-        GameManager.instance.tooltipGenericScript.CloseTooltip("AISideTabUI.cs -> CloseSideTab");
+        GameManager.i.tooltipGenericScript.CloseTooltip("AISideTabUI.cs -> CloseSideTab");
     }
 
 

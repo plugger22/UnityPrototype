@@ -31,15 +31,15 @@ public class MessageManager : MonoBehaviour
     public void InitialiseEarly(GameState state)
     {
         //Run in GameManager.cs -> listOfGlobalMethods with GameState.StartUp so doesn't need check for GameState.NewInitialisation
-        playerActorID = GameManager.instance.playerScript.actorID;
-        playerSprite = GameManager.instance.playerScript.sprite;
+        playerActorID = GameManager.i.playerScript.actorID;
+        playerSprite = GameManager.i.playerScript.sprite;
         Debug.Assert(playerActorID > -1, "Invalid playerActorID (-1)");
         Debug.Assert(playerSprite != null, "Invalid playerSprite (Null)");
 
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalBoth = GameManager.instance.globalScript.sideBoth;
-        tagAIName = GameManager.instance.globalScript.tagGlobalAIName;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalBoth = GameManager.i.globalScript.sideBoth;
+        tagAIName = GameManager.i.globalScript.tagGlobalAIName;
 
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
@@ -58,7 +58,7 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     public void InitialiseLate(GameState state)
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
@@ -66,7 +66,7 @@ public class MessageManager : MonoBehaviour
                 SubInitialiseAllLate();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -76,7 +76,7 @@ public class MessageManager : MonoBehaviour
     #region SubInitialiseAllLate
     private void SubInitialiseAllLate()
     {
-        mayor = GameManager.instance.cityScript.GetCity().mayor;
+        mayor = GameManager.i.cityScript.GetCity().mayor;
         Debug.Assert(mayor != null, "Invalid mayor (Null)");
     }
     #endregion
@@ -124,7 +124,7 @@ public class MessageManager : MonoBehaviour
         //
         // - - - Messages - - -
         //
-        Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>(GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending));
+        Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>(GameManager.i.dataScript.GetMessageDict(MessageCategory.Pending));
         if (dictOfPendingMessages != null)
         {
             List<int> listOfMessagesToMove = new List<int>();
@@ -138,7 +138,7 @@ public class MessageManager : MonoBehaviour
                     listOfMessagesToMove.Add(message.Key);
                     //AI message
                     if (message.Value.type == gameAPI.MessageType.AI)
-                    { GameManager.instance.dataScript.AIMessage(message.Value); }
+                    { GameManager.i.dataScript.AIMessage(message.Value); }
                 }
                 else
                 {
@@ -149,14 +149,14 @@ public class MessageManager : MonoBehaviour
             //loop list and move all specified messages to the Current dictionary for display
             for (int i = 0; i < listOfMessagesToMove.Count; i++)
             {
-                GameManager.instance.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Pending, MessageCategory.Current);
+                GameManager.i.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Pending, MessageCategory.Current);
             }
         }
         else { Debug.LogError("Invalid dictOfPendingMessages (Null)"); }
         //
         // - - - ItemData - - -
         //
-        List<ItemData> listOfDelayedItemData = GameManager.instance.dataScript.GetListOfDelayedItemData();
+        List<ItemData> listOfDelayedItemData = GameManager.i.dataScript.GetListOfDelayedItemData();
         if (listOfDelayedItemData != null)
         {
             for (int index = listOfDelayedItemData.Count - 1; index >= 0; index--)
@@ -168,7 +168,7 @@ public class MessageManager : MonoBehaviour
                 if (data.delay <= 0)
                 {
                     //add to display list
-                    GameManager.instance.dataScript.AddItemData(data);
+                    GameManager.i.dataScript.AddItemData(data);
                     //remove from delay list
                     listOfDelayedItemData.RemoveAt(index);
                 }
@@ -185,7 +185,7 @@ public class MessageManager : MonoBehaviour
     /// </summary>
     private void EndTurn()
     {
-        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
             List<int> listOfMessagesToMove = new List<int>();
@@ -193,7 +193,7 @@ public class MessageManager : MonoBehaviour
             { listOfMessagesToMove.Add(record.Key); }
             //loop list and move all specified messages to the Archive dictionary for display
             for (int i = 0; i < listOfMessagesToMove.Count; i++)
-            { GameManager.instance.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Current, MessageCategory.Archive); }
+            { GameManager.i.dataScript.MoveMessage(listOfMessagesToMove[i], MessageCategory.Current, MessageCategory.Archive); }
             //error check
             if (dictOfCurrentMessages.Count > 0)
             { Debug.LogError(string.Format("There are {0} records in dictOfCurrentMethods (should be empty)", dictOfCurrentMessages.Count)); }
@@ -226,15 +226,15 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Info;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = topText;
-            data.bottomText = GameManager.instance.itemDataScript.GetGeneralInfoDetails(reason, explanation, isBad);
+            data.bottomText = GameManager.i.itemDataScript.GetGeneralInfoDetails(reason, explanation, isBad);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.alertInformationSprite;
+            data.sprite = GameManager.i.guiScript.alertInformationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -256,8 +256,8 @@ public class MessageManager : MonoBehaviour
                 data.help = 1;
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -284,17 +284,17 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Warning;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = topText;
-            data.bottomText = GameManager.instance.itemDataScript.GetGeneralWarningDetails(reason, warning, isBad);
+            data.bottomText = GameManager.i.itemDataScript.GetGeneralWarningDetails(reason, warning, isBad);
             if (isHighPriority == true)
             { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
-            data.sprite = GameManager.instance.guiScript.alertWarningSprite;
+            data.sprite = GameManager.i.guiScript.alertWarningSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -316,8 +316,8 @@ public class MessageManager : MonoBehaviour
                 data.help = 1;
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -343,16 +343,16 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.GENERAL;
             message.subType = MessageSubType.General_Random;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = numNeeded;
             message.data1 = numRolled;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
-            data.topText = GameManager.instance.itemDataScript.GetRandomTopText(typeOfCheck, isReversed);
-            data.bottomText = GameManager.instance.itemDataScript.GetRandomDetails(numNeeded, numRolled, isReversed);
+            data.topText = GameManager.i.itemDataScript.GetRandomTopText(typeOfCheck, isReversed);
+            data.bottomText = GameManager.i.itemDataScript.GetRandomDetails(numNeeded, numRolled, isReversed);
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.alertRandomSprite;
+            data.sprite = GameManager.i.guiScript.alertRandomSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Random;
             data.type = message.type;
@@ -373,10 +373,10 @@ public class MessageManager : MonoBehaviour
             }
             //add (message only if a meaningful outcome)
             if (isReversed == false)
-            { if (numRolled >= numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
-            else { if (numRolled < numNeeded) { GameManager.instance.dataScript.AddMessage(message); } }
+            { if (numRolled >= numNeeded) { GameManager.i.dataScript.AddMessage(message); } }
+            else { if (numRolled < numNeeded) { GameManager.i.dataScript.AddMessage(message); } }
 
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
     }
@@ -415,7 +415,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = "Player moves";
                 data.topText = "Move";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoveDetails(node, changeInvisibility, aiDelay);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerMoveDetails(node, changeInvisibility, aiDelay);
             data.priority = ItemPriority.Low;
             data.sprite = node.Arc.sprite;
             data.spriteName = data.sprite.name;
@@ -427,8 +427,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.isDisplay = false;     //DEBUG
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -449,13 +449,13 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Secret;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.dataName = secret.name;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerSecretDetails(secret, isGained);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerSecretDetails(secret, isGained);
             if (isGained == true)
             { data.itemText = "Player gains a Secret"; }
             else
@@ -473,8 +473,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "secret_2";
             data.tag3 = "secret_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -496,13 +496,13 @@ public class MessageManager : MonoBehaviour
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Escapes;
             message.data0 = node.nodeID;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             //ItemData
             ItemData data = new ItemData();
             data.topText = "Player Escapes";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerEscapesDetails(node);
-            data.itemText = string.Format("{0}, has ESCAPED", GameManager.instance.playerScript.PlayerName);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerEscapesDetails(node);
+            data.itemText = string.Format("{0}, has ESCAPED", GameManager.i.playerScript.PlayerName);
             data.priority = ItemPriority.High;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -514,8 +514,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "questionable_0";
             data.tag1 = "questionable_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -538,12 +538,12 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Renown;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = amount;
             message.data1 = dataID;
             message.data2 = nodeID;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddMessage(message);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -562,7 +562,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             bool isResistance = true;
-            if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
             { isResistance = false; }
             Message message = new Message();
             message.text = text;
@@ -573,10 +573,10 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.topText = "Nemesis Attacks";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect, isResistance);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerDamageDetails(damageInfo, damageEffect, isResistance);
             if (isResistance)
             { data.itemText = "You have been Damaged by your NEMESIS"; }
-            else { data.itemText = string.Format("{0} has been Damaged by their NEMESIS", GameManager.instance.playerScript.GetPlayerNameResistance()); }
+            else { data.itemText = string.Format("{0} has been Damaged by their NEMESIS", GameManager.i.playerScript.GetPlayerNameResistance()); }
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -586,8 +586,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -613,14 +613,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Recognised;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerSpottedDetails(detailsTop, detailsBottom, node);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerSpottedDetails(detailsTop, detailsBottom, node);
             data.priority = ItemPriority.High;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -632,8 +632,8 @@ public class MessageManager : MonoBehaviour
             { data.nodeID = node.nodeID; }
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -659,7 +659,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "You have been BETRAYED";
             data.topText = "Information Leaked";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerBetrayedDetails(isImmediate);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerBetrayedDetails(isImmediate);
             data.priority = ItemPriority.High;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -673,8 +673,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "betrayal_2";
             data.tag3 = "betrayal_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -700,7 +700,7 @@ public class MessageManager : MonoBehaviour
         message.text = text;
         message.type = MessageType.PLAYER;
         message.subType = MessageSubType.Plyr_Mood;
-        message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+        message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
         message.isPublic = true;
         message.data0 = change;
         message.data1 = moodAfterChange;
@@ -708,7 +708,7 @@ public class MessageManager : MonoBehaviour
         ItemData data = new ItemData();
         data.itemText = text;
         data.topText = topText;
-        data.bottomText = GameManager.instance.itemDataScript.GetPlayerMoodChangeDetails(details, change, moodAfterChange, isStressed);
+        data.bottomText = GameManager.i.itemDataScript.GetPlayerMoodChangeDetails(details, change, moodAfterChange, isStressed);
         data.priority = ItemPriority.Low;
         data.sprite = playerSprite;
         data.spriteName = data.sprite.name;
@@ -722,8 +722,8 @@ public class MessageManager : MonoBehaviour
         data.tag2 = "mood_2";
         data.tag3 = "mood_3";
         //add
-        GameManager.instance.dataScript.AddMessage(message);
-        GameManager.instance.dataScript.AddItemData(data);
+        GameManager.i.dataScript.AddMessage(message);
+        GameManager.i.dataScript.AddItemData(data);
         return null;
     }
 
@@ -743,7 +743,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Immune;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = immunePeriodCurrent;
             message.data1 = immunePeriodStart;
@@ -751,7 +751,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Taking drugs has given you an IMMUNITY to Stress";
             data.topText = "Stress Immunity";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneStartDetails(immunePeriodCurrent, isAddicted);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerImmuneStartDetails(immunePeriodCurrent, isAddicted);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -763,8 +763,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "immune_0";
             data.tag1 = "immune_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -786,7 +786,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Immune;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = immunePeriodCurrent;
             message.data1 = immunePeriodStart;
@@ -794,7 +794,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Drugs prevented you from becoming STRESSED";
             data.topText = "Stress Resistance";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneStressDetails(immunePeriodCurrent, isAddicted);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerImmuneStressDetails(immunePeriodCurrent, isAddicted);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -806,8 +806,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "immune_0";
             data.tag1 = "immune_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -828,7 +828,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Immune;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = immunePeriodCurrent;
             message.data1 = immunePeriodStart;
@@ -836,7 +836,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "You are IMMUNE to STRESS";
             data.topText = "Stress Immunity";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerImmuneEffectDetails(immunePeriodCurrent, isAddicted);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerImmuneEffectDetails(immunePeriodCurrent, isAddicted);
             data.priority = ItemPriority.Low;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -848,8 +848,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "immune_0";
             data.tag1 = "immune_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -872,7 +872,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Addicted;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = renownCost;
             message.data1 = hqApprovalCost;
@@ -880,7 +880,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "You FEED your drug ADDICTION";
             data.topText = "Feed the Need";
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -894,8 +894,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "addict_2";
             data.tag3 = "addict_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -918,7 +918,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.PLAYER;
             message.subType = MessageSubType.Plyr_Cure;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = Convert.ToInt32(isActivated);
@@ -929,7 +929,7 @@ public class MessageManager : MonoBehaviour
             { data.itemText = string.Format("Cure available for your {0} condition", condition.tag); }
             else { data.itemText = string.Format("{0} Cure NO LONGER available", condition.tag); }
             data.topText = string.Format("{0} Cure", condition.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetPlayerCureDetails(node, condition, isActivated);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerCureDetails(node, condition, isActivated);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -944,8 +944,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "cure_2";
             data.tag3 = "cure_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -988,22 +988,22 @@ public class MessageManager : MonoBehaviour
             if (actorID == playerActorID)
             {
                 message.type = MessageType.PLAYER;
-                data.itemText = string.Format("{0}, Player, {1}", GameManager.instance.playerScript.PlayerName, itemTextTag);
+                data.itemText = string.Format("{0}, Player, {1}", GameManager.i.playerScript.PlayerName, itemTextTag);
                 data.sprite = playerSprite;
                 data.spriteName = data.sprite.name;
-                data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, null);
+                data.bottomText = GameManager.i.itemDataScript.GetActorStatusDetails(reason, details, null);
             }
             else
             {
                 //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, {2}", actor.actorName, actor.arc.name, itemTextTag);
                     data.sprite = actor.sprite;
                     data.spriteName = data.sprite.name;
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorStatusDetails(reason, details, actor);
+                    data.bottomText = GameManager.i.itemDataScript.GetActorStatusDetails(reason, details, actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
@@ -1039,8 +1039,8 @@ public class MessageManager : MonoBehaviour
             }
 
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1082,29 +1082,29 @@ public class MessageManager : MonoBehaviour
             {
                 message.type = MessageType.PLAYER;
                 if (side.level == globalAuthority.level)
-                { data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority()); }
-                else { data.itemText = string.Format("{0}, Player, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameResistance()); }
+                { data.itemText = string.Format("{0}, Mayor, takes Stress Leave", GameManager.i.playerScript.GetPlayerNameAuthority()); }
+                else { data.itemText = string.Format("{0}, Player, takes Stress Leave", GameManager.i.playerScript.GetPlayerNameResistance()); }
                 data.sprite = playerSprite;
                 data.spriteName = data.sprite.name;
-                data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(side);
+                data.bottomText = GameManager.i.itemDataScript.GetActorStressLeaveDetails(side);
             }
             else
             {
                 //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     message.type = MessageType.ACTOR;
                     data.itemText = string.Format("{0}, {1}, has taken Stress Leave", actor.actorName, actor.arc.name);
                     data.sprite = actor.sprite;
                     data.spriteName = data.sprite.name;
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorStressLeaveDetails(side, actor);
+                    data.bottomText = GameManager.i.itemDataScript.GetActorStressLeaveDetails(side, actor);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1127,14 +1127,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Complains;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} has COMPLAINED", actor.arc.name);
             data.topText = "Complaint Lodged";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorComplainsDetails(actor, reason, warning);
+            data.bottomText = GameManager.i.itemDataScript.GetActorComplainsDetails(actor, reason, warning);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1144,8 +1144,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1168,7 +1168,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Reassured;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = isPublic;
             message.data0 = actor.actorID;
             message.data1 = benefit;
@@ -1176,7 +1176,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} has been Spoken too", actor.arc.name);
             data.topText = "You've had words";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorSpokenTooDetails(actor, reason, benefit);
+            data.bottomText = GameManager.i.itemDataScript.GetActorSpokenTooDetails(actor, reason, benefit);
             data.priority = ItemPriority.Low;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1186,8 +1186,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1211,7 +1211,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Condition;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
@@ -1221,14 +1221,14 @@ public class MessageManager : MonoBehaviour
             if (actorID == 999)
             {
                 //player -> player who is affected which can be different from playerSide (who gets the message)
-                if (isResistancePlayerAffected == true) { genericActorName = GameManager.instance.playerScript.GetPlayerNameResistance(); }
-                else { genericActorName = GameManager.instance.playerScript.GetPlayerNameAuthority(); }
+                if (isResistancePlayerAffected == true) { genericActorName = GameManager.i.playerScript.GetPlayerNameResistance(); }
+                else { genericActorName = GameManager.i.playerScript.GetPlayerNameAuthority(); }
                 genericActorArc = "Player";
             }
             else
             {
                 //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     genericActorName = actor.actorName;
@@ -1241,7 +1241,7 @@ public class MessageManager : MonoBehaviour
             else { data.itemText = string.Format("{0} is no longer {1}{2}", genericActorArc, condition.isNowA == true ? "a " : "", condition.tag); }
             data.topText = "Condition Change";
             if (condition != null)
-            { data.bottomText = GameManager.instance.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }
+            { data.bottomText = GameManager.i.itemDataScript.GetActorConditionDetails(genericActorName, genericActorArc, condition, isGained, reason); }
             else { Debug.LogWarning("Invalid condition (Null)"); }
             //Medium priority if gain, Low if lost for Actor, always medium for Player
             if (actorID != 999)
@@ -1266,7 +1266,7 @@ public class MessageManager : MonoBehaviour
             else
             {
                 //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     data.sprite = actor.sprite;
@@ -1275,8 +1275,8 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1299,7 +1299,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Blackmail;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             if (secret != null)
@@ -1308,7 +1308,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Blackmail threat resolved", actor.arc.name);
             data.topText = "Blackmail Resolved";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorBlackmailDetails(actor, message.dataName, isThreatDropped, reason);
+            data.bottomText = GameManager.i.itemDataScript.GetActorBlackmailDetails(actor, message.dataName, isThreatDropped, reason);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1318,8 +1318,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1342,14 +1342,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Secret;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.itemDataScript.GetActorSecretDetails(actor, secret, isLearnt);
+            data.bottomText = GameManager.i.itemDataScript.GetActorSecretDetails(actor, secret, isLearnt);
             if (isLearnt == true)
             { data.itemText = string.Format("{0}, {1}, learns one of your Secrets", actor.actorName, actor.arc.name); }
             else
@@ -1363,8 +1363,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1388,14 +1388,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Secret;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actor.actorID;
             message.dataName = secret.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.itemDataScript.GetActorRevealSecretDetails(actor, secret, reason);
+            data.bottomText = GameManager.i.itemDataScript.GetActorRevealSecretDetails(actor, secret, reason);
             data.itemText = string.Format("{0} reveals your SECRET", actor.arc.name);
             data.priority = ItemPriority.High;
             data.sprite = actor.sprite;
@@ -1406,8 +1406,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1424,7 +1424,7 @@ public class MessageManager : MonoBehaviour
     public Message ActorRecruited(string text, int nodeID, Actor actor, int unhappyTimer)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         if (side.level == globalResistance.level)
         { Debug.Assert(nodeID >= 0, string.Format("Invalid nodeID {0}", nodeID)); }
         if (string.IsNullOrEmpty(text) == false)
@@ -1441,7 +1441,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Recruited", actor.arc.name);
             data.topText = "Recruited";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorRecruitedDetails(actor, unhappyTimer);
+            data.bottomText = GameManager.i.itemDataScript.GetActorRecruitedDetails(actor, unhappyTimer);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1451,8 +1451,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1475,14 +1475,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Conflict;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
             if (conflict != null) { message.dataName = conflict.name; }
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Relationship Conflict", actor.arc.name);
             data.topText = "Relationship Conflict";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorConflictDetails(actor, conflict, reasonNoConflict);
+            data.bottomText = GameManager.i.itemDataScript.GetActorConflictDetails(actor, conflict, reasonNoConflict);
             data.priority = ItemPriority.High;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1495,8 +1495,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "conflict_2";
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1523,14 +1523,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Trait;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
             message.dataName = trait.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} uses {1} trait", actor.arc.name, trait.tag);
             data.topText = string.Format("{0} trait used", trait.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
+            data.bottomText = GameManager.i.itemDataScript.GetActorTraitDetails(actor, trait, forText, toText);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1540,8 +1540,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1558,7 +1558,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             bool isCrackdown = false;
-            if (GameManager.instance.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown) { isCrackdown = true; }
+            if (GameManager.i.turnScript.authoritySecurityState == AuthoritySecurityState.SurveillanceCrackdown) { isCrackdown = true; }
             Message message = new Message();
             message.text = text;
             message.type = MessageType.ONGOING;
@@ -1586,9 +1586,9 @@ public class MessageManager : MonoBehaviour
                 data.itemText = "Lie Low action UNAVAILABLE";
                 data.topText = "Lie Low Unavailable";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetActorLieLowOngoingDetails(timer, isCrackdown);
+            data.bottomText = GameManager.i.itemDataScript.GetActorLieLowOngoingDetails(timer, isCrackdown);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.infoSprite;
+            data.sprite = GameManager.i.guiScript.infoSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -1599,8 +1599,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "lielow_1";
             data.tag2 = "lielow_2";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1631,28 +1631,28 @@ public class MessageManager : MonoBehaviour
             message.data2 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            string playerName = GameManager.instance.playerScript.PlayerName;
+            string playerName = GameManager.i.playerScript.PlayerName;
             if (actorID == 999)
             {
                 //player captured
                 data.itemText = string.Format("{0}, Player, has been CAPTURED", playerName);
                 data.topText = "Player Captured";
-                data.bottomText = GameManager.instance.itemDataScript.GetActorCaptureDetails(playerName, "Player", node, team);
+                data.bottomText = GameManager.i.itemDataScript.GetActorCaptureDetails(playerName, "Player", node, team);
             }
             else
             {
                 //actor captured
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     data.itemText = string.Format("{0}, {1}, has been CAPTURED", actor.actorName, actor.arc.name);
                     data.topText = string.Format("{0} Captured", actor.arc.name);
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorCaptureDetails(actor.actorName, actor.arc.name, node, team);
+                    data.bottomText = GameManager.i.itemDataScript.GetActorCaptureDetails(actor.actorName, actor.arc.name, node, team);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.capturedSprite;
+            data.sprite = GameManager.i.guiScript.capturedSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1661,8 +1661,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1690,14 +1690,14 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ONGOING;
             message.subType = MessageSubType.Ongoing_Warning;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = actorID;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = "Warning";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorWarningOngoingDetails(detailsTop, detailsBottom);
+            data.bottomText = GameManager.i.itemDataScript.GetActorWarningOngoingDetails(detailsTop, detailsBottom);
             data.priority = ItemPriority.Low;
             data.sprite = sprite;
             data.spriteName = data.sprite.name;
@@ -1721,8 +1721,8 @@ public class MessageManager : MonoBehaviour
                 data.help = 1;
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1751,28 +1751,28 @@ public class MessageManager : MonoBehaviour
             message.data1 = actorID;
             //ItemData
             ItemData data = new ItemData();
-            string playerName = GameManager.instance.playerScript.PlayerName;
+            string playerName = GameManager.i.playerScript.PlayerName;
             if (actorID == 999)
             {
                 //player captured
                 data.itemText = string.Format("{0}, Player, has been RELEASED", playerName);
                 data.topText = "Player Released";
-                data.bottomText = GameManager.instance.itemDataScript.GetActorReleaseDetails(playerName, "Player", node);
+                data.bottomText = GameManager.i.itemDataScript.GetActorReleaseDetails(playerName, "Player", node);
             }
             else
             {
                 //actor captured
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     data.itemText = string.Format("{0}, {1}, has been RELEASED", actor.actorName, actor.arc.name);
                     data.topText = string.Format("{0} Released", actor.arc.name);
-                    data.bottomText = GameManager.instance.itemDataScript.GetActorReleaseDetails(actor.actorName, actor.arc.name, node);
+                    data.bottomText = GameManager.i.itemDataScript.GetActorReleaseDetails(actor.actorName, actor.arc.name, node);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.releasedSprite;
+            data.sprite = GameManager.i.guiScript.releasedSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1792,8 +1792,8 @@ public class MessageManager : MonoBehaviour
                 data.tag2 = "traitor_2";
             }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1817,7 +1817,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTOR;
             message.subType = MessageSubType.Actor_Compatibility;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
             message.data1 = motivationChangeNegated;
             message.data2 = actor.GetPersonality().GetCompatibilityWithPlayer();
@@ -1826,7 +1826,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} ignores change to MOTIVATION", actor.arc.name);
             data.topText = "No change to Motivation";
-            data.bottomText = GameManager.instance.itemDataScript.GetActorCompatibilityDetails(actor, motivationChangeNegated, reasonForChange);
+            data.bottomText = GameManager.i.itemDataScript.GetActorCompatibilityDetails(actor, motivationChangeNegated, reasonForChange);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1840,8 +1840,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "compatibility_2";
             data.tag3 = "compatibility_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1883,7 +1883,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("{0}, Loses an existing CONTACT", actor.arc.name);
                 data.topText = "Contact Lost";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetContactDetails(reason, actor, node, contact, isGained);
+            data.bottomText = GameManager.i.itemDataScript.GetContactDetails(reason, actor, node, contact, isGained);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1900,8 +1900,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "contact_1";
             data.tag3 = "contact_2";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1937,7 +1937,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts learns of a RUMOUR", actor.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactTargetRumourDetails(actor, node, contact, target);
+            data.bottomText = GameManager.i.itemDataScript.GetContactTargetRumourDetails(actor, node, contact, target);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -1951,8 +1951,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "contact_3";
             data.tag2 = "contact_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -1988,9 +1988,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts spots your NEMESIS", actor.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis, moveNumber);
+            data.bottomText = GameManager.i.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis, moveNumber);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2002,8 +2002,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "contact_1";
             data.tag2 = "nemesis_0";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2039,9 +2039,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s network of contacts spots the {1}", actor.arc.name, npc.tag);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactNpcSpottedDetails(actor, node, contact, npc);
+            data.bottomText = GameManager.i.itemDataScript.GetContactNpcSpottedDetails(actor, node, contact, npc);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2053,8 +2053,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "contact_1";
             data.tag2 = "npc_5";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2090,7 +2090,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s contacts spots an {1} Team", actor.arc.name, team.arc.name);
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
-            data.bottomText = GameManager.instance.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
+            data.bottomText = GameManager.i.itemDataScript.GetContactTeamSpottedDetails(actor, node, contact, team);
             data.priority = ItemPriority.High;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -2103,8 +2103,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "contact_0";
             data.tag1 = "contact_7";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2138,7 +2138,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s contacts goes Silent", actor.arc.name);
             data.topText = "Contact goes Silent";
-            data.bottomText = GameManager.instance.itemDataScript.GetContactInactiveDetails(node, contact, reason);
+            data.bottomText = GameManager.i.itemDataScript.GetContactInactiveDetails(node, contact, reason);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -2151,8 +2151,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "contact_8";
             data.tag1 = "contact_9";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2185,7 +2185,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s contacts returns", actor.arc.name);
             data.topText = "Contact Active";
-            data.bottomText = GameManager.instance.itemDataScript.GetContactActiveDetails(node, contact);
+            data.bottomText = GameManager.i.itemDataScript.GetContactActiveDetails(node, contact);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -2197,8 +2197,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "contact_10";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2232,7 +2232,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("One of {0}'s contacts is Silent", actor.arc.name);
             data.topText = "Contact off the Grid";
-            data.bottomText = GameManager.instance.itemDataScript.GetContactTimerDetails(node, contact);
+            data.bottomText = GameManager.i.itemDataScript.GetContactTimerDetails(node, contact);
             data.priority = ItemPriority.Low;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -2244,8 +2244,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.tag0 = "contact_8";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2274,9 +2274,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "TRACER picks up an ANOMALOUS reading";
             data.topText = "Threat Detected";
-            data.bottomText = GameManager.instance.itemDataScript.GetTracerNemesisSpottedDetails(node, nemesis, moveNumber);
+            data.bottomText = GameManager.i.itemDataScript.GetTracerNemesisSpottedDetails(node, nemesis, moveNumber);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2285,8 +2285,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2316,9 +2316,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "TRACER detects presence of an ERASURE Team";
             data.topText = "Threat Detected";
-            data.bottomText = GameManager.instance.itemDataScript.GetTracerTeamSpottedDetails(node, team);
+            data.bottomText = GameManager.i.itemDataScript.GetTracerTeamSpottedDetails(node, team);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2327,8 +2327,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2356,7 +2356,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("TRACER detects the {0}", npc.tag);
             data.topText = string.Format("{0} Detected", npc.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetTracerNpcSpottedDetails(npc);
+            data.bottomText = GameManager.i.itemDataScript.GetTracerNpcSpottedDetails(npc);
             data.priority = ItemPriority.High;
             data.sprite = npc.sprite;
             data.spriteName = npc.sprite.name;
@@ -2369,8 +2369,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "npc_5";
             data.tag1 = "npc_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2395,15 +2395,15 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Ongoing_Nemesis;
             message.sideLevel = globalResistance.level;
             message.data0 = nodeID;
-            message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
-            message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
+            message.data1 = GameManager.i.nemesisScript.GetSearchRatingAdjusted();
+            message.data2 = GameManager.i.nemesisScript.GetStealthRatingAdjusted();
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Nemesis current Status", nemesis.name);
             data.topText = "Nemesis Status";
-            data.bottomText = GameManager.instance.itemDataScript.GetNemesisOngoingEffectDetails(nemesis, message.data1);
+            data.bottomText = GameManager.i.itemDataScript.GetNemesisOngoingEffectDetails(nemesis, message.data1);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -2411,8 +2411,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2437,15 +2437,15 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.AI_Nemesis;
             message.sideLevel = globalResistance.level;
             message.data0 = nodeID;
-            message.data1 = GameManager.instance.nemesisScript.GetSearchRatingAdjusted();
-            message.data2 = GameManager.instance.nemesisScript.GetStealthRatingAdjusted();
+            message.data1 = GameManager.i.nemesisScript.GetSearchRatingAdjusted();
+            message.data2 = GameManager.i.nemesisScript.GetStealthRatingAdjusted();
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Nemesis changes mode", nemesis.name);
             data.topText = "New Nemesis Mode";
-            data.bottomText = GameManager.instance.itemDataScript.GetNemesisNewModeDetails(nemesis, message.data1);
+            data.bottomText = GameManager.i.itemDataScript.GetNemesisNewModeDetails(nemesis, message.data1);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2453,8 +2453,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2481,7 +2481,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = controlTimer;
             //ItemData
             ItemData data = new ItemData();
-            if (GameManager.instance.nemesisScript.GetMode() != NemesisMode.Inactive)
+            if (GameManager.i.nemesisScript.GetMode() != NemesisMode.Inactive)
             {
                 if (isPlayerControl == true)
                 {
@@ -2507,9 +2507,9 @@ public class MessageManager : MonoBehaviour
                 data.itemText = "Nemesis currently INACTIVE";
                 data.topText = "Nemesis Inactive";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, nodeControl, nodeCurrent);
+            data.bottomText = GameManager.i.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, nodeControl, nodeCurrent);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -2519,8 +2519,8 @@ public class MessageManager : MonoBehaviour
             { data.nodeID = nodeControl.nodeID; }
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2559,9 +2559,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Resistance Leader detected using CONNECTION";
             data.topText = "Connection Activity";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIConnectionActivityDetails(destinationNode, delay);
+            data.bottomText = GameManager.i.itemDataScript.GetAIConnectionActivityDetails(destinationNode, delay);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2572,8 +2572,8 @@ public class MessageManager : MonoBehaviour
             data.connID = connection.connID;
             data.delay = delay;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2607,9 +2607,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Resistance activity detected in DISTRICT";
             data.topText = "Resistance Activity";
-            data.bottomText = GameManager.instance.itemDataScript.GetAINodeActivityDetails(node, delay);
+            data.bottomText = GameManager.i.itemDataScript.GetAINodeActivityDetails(node, delay);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2619,8 +2619,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.delay = delay;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2648,16 +2648,16 @@ public class MessageManager : MonoBehaviour
             message.isPublic = true;
             message.displayDelay = delay;
             message.data0 = nodeID;
-            message.data1 = GameManager.instance.playerScript.actorID;
+            message.data1 = GameManager.i.playerScript.actorID;
             //ItemData
             ItemData data = new ItemData();
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
             { data.itemText = "AI Traceback DETECTS Resistance leader"; }
             else { data.itemText = "AI Traceback DETECTS you"; }
             data.topText = "Detected!";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIDetectedDetails(nodeID, delay);
+            data.bottomText = GameManager.i.itemDataScript.GetAIDetectedDetails(nodeID, delay);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
+            data.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2667,8 +2667,8 @@ public class MessageManager : MonoBehaviour
             data.help = 1;
             data.delay = delay;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2704,19 +2704,19 @@ public class MessageManager : MonoBehaviour
             data.topText = "Location Known";
             if (actorID == 999)
             {
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
                 { data.itemText = "AI knows Resistance leader's CURRENT LOCATION"; }
                 else { data.itemText = "AI knows of your  CURRENT LOCATION"; }
-                data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, GameManager.instance.playerScript.PlayerName, "Player");
+                data.bottomText = GameManager.i.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, GameManager.i.playerScript.PlayerName, "Player");
             }
             else
             {
                 //actor
-                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                 if (actor != null)
                 {
                     data.itemText = string.Format("AI knows of {0}, {1}'s, CURRENT LOCATION", actor.actorName, actor.arc.name);
-                    data.bottomText = GameManager.instance.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, actor.actorName, actor.arc.name);
+                    data.bottomText = GameManager.i.itemDataScript.GetAIImmediateActivityDetails(reason, nodeID, connID, actor.actorName, actor.arc.name);
                 }
                 else
                 {
@@ -2725,7 +2725,7 @@ public class MessageManager : MonoBehaviour
                 }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2735,8 +2735,8 @@ public class MessageManager : MonoBehaviour
             data.connID = connID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2766,10 +2766,10 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Resistance HACKS AI";
             data.topText = "Hacking Detected";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIHackedDetails(isDetected, attemptsDetected, attemptsTotal);
+            data.bottomText = GameManager.i.itemDataScript.GetAIHackedDetails(isDetected, attemptsDetected, attemptsTotal);
             if (isDetected == true) { data.priority = ItemPriority.Medium; }
             else { data.priority = ItemPriority.Low; }
-            data.sprite = GameManager.instance.guiScript.alarmSprite;
+            data.sprite = GameManager.i.guiScript.alarmSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2777,8 +2777,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2808,9 +2808,9 @@ public class MessageManager : MonoBehaviour
             if (rebootTimer > 0) { data.itemText = "AI REBOOTS Commences"; }
             else { data.itemText = "AI REBOOT Completed"; }
             data.topText = "AI Reboots";
-            data.bottomText = GameManager.instance.itemDataScript.GetAIRebootDetails(rebootTimer, currentRenownCost);
+            data.bottomText = GameManager.i.itemDataScript.GetAIRebootDetails(rebootTimer, currentRenownCost);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiRebootSprite;
+            data.sprite = GameManager.i.guiScript.aiRebootSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2818,8 +2818,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2848,9 +2848,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "AI Countermeasures";
-            data.bottomText = GameManager.instance.itemDataScript.GetAICounterMeasureDetails(warning, timerStartValue, protocolLevelNew);
+            data.bottomText = GameManager.i.itemDataScript.GetAICounterMeasureDetails(warning, timerStartValue, protocolLevelNew);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
+            data.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2858,8 +2858,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2885,7 +2885,7 @@ public class MessageManager : MonoBehaviour
             message.data0 = chanceOfIncrease;
             message.data1 = randomRoll;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddMessage(message);
             /*GameManager.instance.dataScript.AddItemData(data);*/
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -2920,7 +2920,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "City Wide Decision";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionGlobalDetails(description, duration, loyaltyAdjust, crisisAdjust);
+            data.bottomText = GameManager.i.itemDataScript.GetDecisionGlobalDetails(description, duration, loyaltyAdjust, crisisAdjust);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.spriteName = data.sprite.name;
@@ -2930,8 +2930,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -2963,7 +2963,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Connection Security changed";
             data.topText = "Connection Security";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionConnectionDetails(connection, secLevel);
+            data.bottomText = GameManager.i.itemDataScript.GetDecisionConnectionDetails(connection, secLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = mayor.sprite;
             data.spriteName = data.sprite.name;
@@ -2974,8 +2974,8 @@ public class MessageManager : MonoBehaviour
             data.connID = connection.connID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3015,8 +3015,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3054,8 +3054,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3086,9 +3086,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "Ongoing Effect";
-            data.bottomText = GameManager.instance.itemDataScript.GetDecisionOngoingEffectDetails(topText, middleText, bottomText);
+            data.bottomText = GameManager.i.itemDataScript.GetDecisionOngoingEffectDetails(topText, middleText, bottomText);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.guiScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -3096,8 +3096,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3128,7 +3128,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} team added to Reserve Pool", team.arc.name);
             data.topText = "Team Added";
-            data.bottomText = GameManager.instance.itemDataScript.GetAddTeamDetails(team, reason);
+            data.bottomText = GameManager.i.itemDataScript.GetAddTeamDetails(team, reason);
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
             data.spriteName = data.sprite.name;
@@ -3138,8 +3138,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3156,7 +3156,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid teamID {Null}");
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+        if (GameManager.i.sideScript.authorityOverall == SideState.Human)
             if (string.IsNullOrEmpty(text) == false)
             {
                 Message message = new Message();
@@ -3173,7 +3173,7 @@ public class MessageManager : MonoBehaviour
                     ItemData data = new ItemData();
                     data.itemText = string.Format("{0} team Deployed", team.arc.name);
                     data.topText = "Team Deployed";
-                    data.bottomText = GameManager.instance.itemDataScript.GetTeamDeployDetails(team, node, actor);
+                    data.bottomText = GameManager.i.itemDataScript.GetTeamDeployDetails(team, node, actor);
                     data.priority = ItemPriority.Low;
                     data.sprite = team.arc.sprite;
                     data.spriteName = data.sprite.name;
@@ -3184,10 +3184,10 @@ public class MessageManager : MonoBehaviour
                     data.nodeID = node.nodeID;
                     data.help = 1;
                     //add
-                    GameManager.instance.dataScript.AddItemData(data);
+                    GameManager.i.dataScript.AddItemData(data);
                 }
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddMessage(message);
 
             }
             else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -3206,7 +3206,7 @@ public class MessageManager : MonoBehaviour
     {
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(team != null, "Invalid team (Null)");
-        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+        if (GameManager.i.sideScript.authorityOverall == SideState.Human)
             if (string.IsNullOrEmpty(text) == false)
             {
                 Message message = new Message();
@@ -3225,7 +3225,7 @@ public class MessageManager : MonoBehaviour
                     ItemData data = new ItemData();
                     data.itemText = string.Format("{0} team AutoRecalled", team.arc.name);
                     data.topText = "Team Autorecalled";
-                    data.bottomText = GameManager.instance.itemDataScript.GetTeamAutoRecallDetails(node, team, actor);
+                    data.bottomText = GameManager.i.itemDataScript.GetTeamAutoRecallDetails(node, team, actor);
                     data.priority = ItemPriority.Low;
                     data.sprite = team.arc.sprite;
                     data.spriteName = data.sprite.name;
@@ -3235,10 +3235,10 @@ public class MessageManager : MonoBehaviour
                     data.sideLevel = message.sideLevel;
                     data.nodeID = node.nodeID;
                     data.help = 1;
-                    GameManager.instance.dataScript.AddItemData(data);
+                    GameManager.i.dataScript.AddItemData(data);
                 }
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddMessage(message);
             }
             else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3270,7 +3270,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} team Withdrawn", team.arc.name);
             data.topText = "Team Withdrawn";
-            data.bottomText = GameManager.instance.itemDataScript.GetTeamWithdrawDetails(reason, team, node, actor);
+            data.bottomText = GameManager.i.itemDataScript.GetTeamWithdrawDetails(reason, team, node, actor);
             data.priority = ItemPriority.Low;
             data.sprite = team.arc.sprite;
             data.spriteName = data.sprite.name;
@@ -3281,8 +3281,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3316,7 +3316,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "Team Outcome";
-            data.bottomText = GameManager.instance.itemDataScript.GetTeamEffectDetails(effectText, node, team);
+            data.bottomText = GameManager.i.itemDataScript.GetTeamEffectDetails(effectText, node, team);
             data.priority = ItemPriority.Medium;
             data.sprite = team.arc.sprite;
             data.spriteName = data.sprite.name;
@@ -3327,8 +3327,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3363,7 +3363,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} team NEUTRALISED by Resistance", team.arc.name);
             data.topText = "Team Neutralised";
-            data.bottomText = GameManager.instance.itemDataScript.GetTeamNeutraliseDetails(node, team);
+            data.bottomText = GameManager.i.itemDataScript.GetTeamNeutraliseDetails(node, team);
             data.priority = ItemPriority.High;
             data.sprite = team.arc.sprite;
             data.spriteName = data.sprite.name;
@@ -3374,8 +3374,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3420,7 +3420,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("{0} gear Taken", gear.tag);
                 data.topText = "Gear Taken";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
+            data.bottomText = GameManager.i.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3430,8 +3430,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3463,7 +3463,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Compromised", gear.tag);
             data.topText = "Gear Compromised";
-            data.bottomText = GameManager.instance.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
+            data.bottomText = GameManager.i.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3473,8 +3473,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3503,7 +3503,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Used", gear.tag);
             data.topText = "Gear Used";
-            data.bottomText = GameManager.instance.itemDataScript.GetGearUsedDetails(gear);
+            data.bottomText = GameManager.i.itemDataScript.GetGearUsedDetails(gear);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3513,8 +3513,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3545,7 +3545,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Lost", gear.tag);
             data.topText = "Gear Lost";
-            data.bottomText = GameManager.instance.itemDataScript.GetGearLostDetails(gear, actor, isGivenToHQ);
+            data.bottomText = GameManager.i.itemDataScript.GetGearLostDetails(gear, actor, isGivenToHQ);
             data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3555,8 +3555,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3587,7 +3587,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Available", gear.tag);
             data.topText = "Gear Available";
-            data.bottomText = GameManager.instance.itemDataScript.GetGearAvailableDetails(gear, actor);
+            data.bottomText = GameManager.i.itemDataScript.GetGearAvailableDetails(gear, actor);
             data.priority = ItemPriority.Medium;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3597,8 +3597,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3630,7 +3630,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Obtained", gear.tag);
             data.topText = "Gear Obtained";
-            data.bottomText = GameManager.instance.itemDataScript.GetGearObtainedDetails(gear, node, actorID);
+            data.bottomText = GameManager.i.itemDataScript.GetGearObtainedDetails(gear, node, actorID);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -3641,8 +3641,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3672,7 +3672,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_New;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.dataName = target.name;
@@ -3692,7 +3692,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Target Vulnerability";
                 sideText = "Vulnerability";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetNewDetails(node, target, sideText, message.sideLevel);
+            data.bottomText = GameManager.i.itemDataScript.GetTargetNewDetails(node, target, sideText, message.sideLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
@@ -3703,8 +3703,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3729,7 +3729,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Expired;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.numOfAttempts;
             message.dataName = target.name;
@@ -3749,7 +3749,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Vulnerability Closed";
                 sideText = "Vulnerability";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredDetails(node, target, sideText, message.sideLevel);
+            data.bottomText = GameManager.i.itemDataScript.GetTargetExpiredDetails(node, target, sideText, message.sideLevel);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
@@ -3760,8 +3760,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3785,7 +3785,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TARGET;
             message.subType = MessageSubType.Target_Expired;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = node.nodeID;
             message.data1 = target.timerWindow;
             message.dataName = target.name;
@@ -3794,7 +3794,7 @@ public class MessageManager : MonoBehaviour
             //resistance player only
             data.itemText = string.Format("Window of Opportunity at {0} CLOSING SOON", node.nodeName);
             data.topText = "Target Warning";
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetExpiredWarningDetails(node, target);
+            data.bottomText = GameManager.i.itemDataScript.GetTargetExpiredWarningDetails(node, target);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
@@ -3805,7 +3805,7 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3836,7 +3836,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = actorID;
             message.dataName = target.name;
             //ItemData, resistance only
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
             {
                 ItemData data = new ItemData();
                 if (target.targetStatus == Status.Live)
@@ -3850,7 +3850,7 @@ public class MessageManager : MonoBehaviour
                     data.priority = ItemPriority.Medium;
                 }
                 data.topText = "Target attempt";
-                data.bottomText = GameManager.instance.itemDataScript.GetTargetAttemptDetails(node, actorID, target);
+                data.bottomText = GameManager.i.itemDataScript.GetTargetAttemptDetails(node, actorID, target);
                 data.sprite = target.sprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
@@ -3860,8 +3860,8 @@ public class MessageManager : MonoBehaviour
                 data.nodeID = node.nodeID;
                 data.help = 1;
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.i.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddItemData(data);
             }
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
@@ -3895,7 +3895,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("Target CONTAINED at {0}", node.nodeName);
             data.topText = "Target Contained";
-            data.bottomText = GameManager.instance.itemDataScript.GetTargetContainedDetails(node, team, target);
+            data.bottomText = GameManager.i.itemDataScript.GetTargetContainedDetails(node, team, target);
             data.priority = ItemPriority.Medium;
             data.sprite = target.sprite;
             data.spriteName = data.sprite.name;
@@ -3906,8 +3906,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3937,7 +3937,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = globalBoth.level;
             message.data0 = nodeID;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddMessage(message);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -3963,7 +3963,7 @@ public class MessageManager : MonoBehaviour
             message.data1 = ongoing.timer;
             //ItemData
             ItemData data = new ItemData();
-            Node node = GameManager.instance.dataScript.GetNode(ongoing.nodeID);
+            Node node = GameManager.i.dataScript.GetNode(ongoing.nodeID);
             if (node != null)
             { data.itemText = string.Format("{0}, {1} district, ONGOING EFFECT", node.nodeName, node.Arc.name); }
             else
@@ -3972,9 +3972,9 @@ public class MessageManager : MonoBehaviour
                 data.itemText = "Unknown Node";
             }
             data.topText = "District Ongoing Effect";
-            data.bottomText = GameManager.instance.itemDataScript.GetOngoingEffectDetails(ongoing);
+            data.bottomText = GameManager.i.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.ongoingEffectSprite;
+            data.sprite = GameManager.i.guiScript.ongoingEffectSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -3982,8 +3982,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4006,7 +4006,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = globalBoth.level;
             message.isPublic = true;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddMessage(message);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4031,7 +4031,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ACTIVE;
             message.subType = MessageSubType.Active_Effect;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             if (node != null) { message.data0 = node.nodeID; }
             if (actorID > -1) { message.data1 = actorID; }
@@ -4039,7 +4039,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = text;
             data.topText = topText;
-            data.bottomText = GameManager.instance.itemDataScript.GetActiveEffectDetails(detailsTop, detailsBottom, actorID, node);
+            data.bottomText = GameManager.i.itemDataScript.GetActiveEffectDetails(detailsTop, detailsBottom, actorID, node);
             data.priority = ItemPriority.Low;
             data.sprite = sprite;
             data.spriteName = data.sprite.name;
@@ -4052,8 +4052,8 @@ public class MessageManager : MonoBehaviour
             if (condition != null)
             { data.help = 1;  SetConditionHelp(condition, data); }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4080,7 +4080,7 @@ public class MessageManager : MonoBehaviour
             message.text = dataEffect.text;
             message.type = MessageType.ACTIVE;
             message.subType = MessageSubType.Active_Effect;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             if (dataEffect.node != null) { message.data0 = dataEffect.node.nodeID; }
             if (dataEffect.actorID > -1) { message.data1 = dataEffect.actorID; }
@@ -4088,7 +4088,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = dataEffect.text;
             data.topText = dataEffect.topText;
-            data.bottomText = GameManager.instance.itemDataScript.GetActiveEffectDetails(dataEffect.detailsTop, dataEffect.detailsBottom, dataEffect.actorID, dataEffect.node);
+            data.bottomText = GameManager.i.itemDataScript.GetActiveEffectDetails(dataEffect.detailsTop, dataEffect.detailsBottom, dataEffect.actorID, dataEffect.node);
             data.priority = ItemPriority.Low;
             data.sprite = dataEffect.sprite;
             data.spriteName = data.sprite.name;
@@ -4119,8 +4119,8 @@ public class MessageManager : MonoBehaviour
             if (dataEffect.condition != null)
             { SetConditionHelp(dataEffect.condition, data); }
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4168,7 +4168,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("Support request to {0} declined", factionHQ.tag);
                 data.topText = "Support Declined";
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetHqSupportDetails(factionHQ, hqApprovalLevel, supportGiven);
+            data.bottomText = GameManager.i.itemDataScript.GetHqSupportDetails(factionHQ, hqApprovalLevel, supportGiven);
             //high priority if given
             if (supportGiven > 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
@@ -4183,8 +4183,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "hq_supp_1";
             data.tag2 = "hq_supp_2";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4209,8 +4209,8 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.HQ_SupportUnavailable;
             message.sideLevel = factionHQ.side.level;
             message.isPublic = true;
-            message.data0 = GameManager.instance.hqScript.GetHqApproval();
-            message.data1 = GameManager.instance.playerScript.Renown;
+            message.data0 = GameManager.i.hqScript.GetHqApproval();
+            message.data1 = GameManager.i.playerScript.Renown;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Support Unavailable", factionHQ.tag);
@@ -4224,8 +4224,8 @@ public class MessageManager : MonoBehaviour
             data.sprite = factionHQ.sprite;
             data.spriteName = data.sprite.name;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4263,7 +4263,7 @@ public class MessageManager : MonoBehaviour
             else
             { data.itemText = string.Format("{0} Approval DECREASES", factionHQ.tag); }
             data.topText = "Approval Changes";
-            data.bottomText = GameManager.instance.itemDataScript.GetHqApprovalDetails(factionHQ, reason, change, newLevel);
+            data.bottomText = GameManager.i.itemDataScript.GetHqApprovalDetails(factionHQ, reason, change, newLevel);
             data.priority = ItemPriority.Medium;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4275,8 +4275,8 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "hq_supp_0";
             data.tag2 = "hq_supp_2";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4290,12 +4290,12 @@ public class MessageManager : MonoBehaviour
     /// <returns></returns>
     public Message HqRelocates(string text, string reason)
     {
-        Hq factionHQ = GameManager.instance.hqScript.GetCurrentHQ();
+        Hq factionHQ = GameManager.i.hqScript.GetCurrentHQ();
         Debug.Assert(string.IsNullOrEmpty(reason) == false, "Invalid reason (Null or Empty)");
         Debug.Assert(factionHQ != null, "Invalid current HQ (Null)");
         if (string.IsNullOrEmpty(text) == false)
         {
-            int timer = GameManager.instance.hqScript.GetHqRelocationTimer();
+            int timer = GameManager.i.hqScript.GetHqRelocationTimer();
             Message message = new Message();
             message.text = text;
             message.type = MessageType.HQ;
@@ -4310,7 +4310,7 @@ public class MessageManager : MonoBehaviour
             else
             { data.itemText = string.Format("{0} completed RELOCATION", factionHQ.tag); }
             data.topText = "HQ Relocation";
-            data.bottomText = GameManager.instance.itemDataScript.GetHqRelocationDetails(factionHQ, reason, timer);
+            data.bottomText = GameManager.i.itemDataScript.GetHqRelocationDetails(factionHQ, reason, timer);
             data.priority = ItemPriority.High;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4323,8 +4323,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "hq_1";
             data.tag2 = "hq_2";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4350,7 +4350,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.NODE;
             message.subType = MessageSubType.Node_Crisis;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = node.nodeID;
             message.data1 = reductionInCityLoyalty;
@@ -4358,9 +4358,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = itemText;
             data.topText = "District Crisis";
-            data.bottomText = GameManager.instance.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
+            data.bottomText = GameManager.i.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
+            data.sprite = GameManager.i.guiScript.nodeCrisisSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4369,8 +4369,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4393,9 +4393,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0}, {1}, district temporarily IMMUNE to CRISIS", node.nodeName, node.Arc.name);
             data.topText = "District Immunity";
-            data.bottomText = GameManager.instance.itemDataScript.GetNodeOngoingEffectDetails(node);
+            data.bottomText = GameManager.i.itemDataScript.GetNodeOngoingEffectDetails(node);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.nodeCrisisSprite;
+            data.sprite = GameManager.i.guiScript.nodeCrisisSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -4404,8 +4404,8 @@ public class MessageManager : MonoBehaviour
             data.nodeID = node.nodeID;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4430,7 +4430,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.CITY;
             message.subType = MessageSubType.City_Loyalty;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = newCityLoyalty;
             message.data1 = changeInLoyalty;
@@ -4439,9 +4439,9 @@ public class MessageManager : MonoBehaviour
             if (changeInLoyalty < 0) { data.itemText = string.Format("City Loyalty DECREASES"); }
             else { data.itemText = string.Format("City Loyalty INCREASES"); }
             data.topText = "City Loyalty";
-            data.bottomText = GameManager.instance.itemDataScript.GetCityLoyaltyDetails(reason, newCityLoyalty, changeInLoyalty);
+            data.bottomText = GameManager.i.itemDataScript.GetCityLoyaltyDetails(reason, newCityLoyalty, changeInLoyalty);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.cityLoyaltySprite;
+            data.sprite = GameManager.i.guiScript.cityLoyaltySprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4449,8 +4449,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4478,7 +4478,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.OBJECTIVE;
             message.subType = MessageSubType.Objective_Progress;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = adjustment;
             message.data1 = objective.progress;
@@ -4497,9 +4497,9 @@ public class MessageManager : MonoBehaviour
                 data.topText = "Objective Achieved";
                 data.itemText = string.Format("Objective \'{0}\' COMPLETED", objective.tag);
             }
-            data.bottomText = GameManager.instance.itemDataScript.GetObjectiveProgressDetails(reason, adjustment, objective);
+            data.bottomText = GameManager.i.itemDataScript.GetObjectiveProgressDetails(reason, adjustment, objective);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.objectiveSprite;
+            data.sprite = GameManager.i.guiScript.objectiveSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4507,8 +4507,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4540,9 +4540,9 @@ public class MessageManager : MonoBehaviour
             }
             if (topicData.sprite == null)
             {
-                if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+                if (GameManager.i.turnScript.CheckIsAutoRun() == false)
                 { Debug.LogWarning("Invalid sprite (Null)"); }
-                topicData.sprite = GameManager.instance.guiScript.infoSprite;
+                topicData.sprite = GameManager.i.guiScript.infoSprite;
             }
             if (string.IsNullOrEmpty(topicData.text) == false)
             {
@@ -4550,7 +4550,7 @@ public class MessageManager : MonoBehaviour
                 //message.text = text;
                 message.type = MessageType.TOPIC;
                 message.subType = MessageSubType.Topic_Decision;
-                message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+                message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
                 message.isPublic = true;
                 message.data0 = topicData.nodeID;
                 message.data1 = topicData.actorID;
@@ -4573,8 +4573,8 @@ public class MessageManager : MonoBehaviour
                 data.help = 1;
                 data.tag0 = "topicMess_0";
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.i.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddItemData(data);
             }
             else { Debug.LogWarning("Invalid text (Null or empty)"); }
         }
@@ -4599,7 +4599,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.TOPIC;
             message.subType = MessageSubType.Topic_Review;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = votesFor;
             message.data1 = votesAgainst;
@@ -4608,10 +4608,10 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.topText = "Peer Review";
-            data.bottomText = GameManager.instance.itemDataScript.GetTopicReviewDetails(votesFor, votesAgainst, votesAbstain, outcome);
+            data.bottomText = GameManager.i.itemDataScript.GetTopicReviewDetails(votesFor, votesAgainst, votesAbstain, outcome);
             data.itemText = "Performance REVIEW Outcome";
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.instance.guiScript.topicReviewSprite;
+            data.sprite = GameManager.i.guiScript.topicReviewSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4622,8 +4622,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "review_4";
             data.tag2 = "review_5";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4647,13 +4647,13 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ORGANISATION;
             message.subType = MessageSubType.Org_Secret;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.dataName = org.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = secret.tag;
-            data.bottomText = GameManager.instance.itemDataScript.GetOrgRevealSecretDetails(org.tag, secret, reason);
+            data.bottomText = GameManager.i.itemDataScript.GetOrgRevealSecretDetails(org.tag, secret, reason);
             data.itemText = string.Format("{0} reveals your SECRET", org.tag);
             data.priority = ItemPriority.High;
             data.sprite = org.sprite;
@@ -4664,8 +4664,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4686,13 +4686,13 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.ORGANISATION;
             message.subType = MessageSubType.Org_Reputation;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.dataName = org.name;
             //ItemData
             ItemData data = new ItemData();
             data.topText = "Lost Patience";
-            data.bottomText = GameManager.instance.itemDataScript.GetOrgReputationDetails(org.tag);
+            data.bottomText = GameManager.i.itemDataScript.GetOrgReputationDetails(org.tag);
             data.itemText = string.Format("POOR REPUTATION with {0}", org.tag);
             data.priority = ItemPriority.Low;
             data.sprite = org.sprite;
@@ -4703,8 +4703,8 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4727,7 +4727,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             {
                 Message message = new Message();
@@ -4741,9 +4741,9 @@ public class MessageManager : MonoBehaviour
                 ItemData data = new ItemData();
                 data.itemText = string.Format("The {0} track your NEMESIS", org.tag);
                 data.topText = string.Format("{0} Direct Feed", org.tag);
-                data.bottomText = GameManager.instance.itemDataScript.GetOrgNemesisDetails(node, nemesis, org, moveNumber);
+                data.bottomText = GameManager.i.itemDataScript.GetOrgNemesisDetails(node, nemesis, org, moveNumber);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.guiScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -4755,8 +4755,8 @@ public class MessageManager : MonoBehaviour
                 data.tag1 = "orgInfo_1";
                 data.tag2 = "orgInfo_2";
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.i.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddItemData(data);
             }
             else { Debug.LogWarning("Invalid orgInfo (Null)"); }
         }
@@ -4778,7 +4778,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             {
                 Message message = new Message();
@@ -4792,9 +4792,9 @@ public class MessageManager : MonoBehaviour
                 ItemData data = new ItemData();
                 data.itemText = string.Format("The {0} track an ERASURE team", org.tag);
                 data.topText = string.Format("{0} Direct Feed", org.tag);
-                data.bottomText = GameManager.instance.itemDataScript.GetOrgErasureTeamDetails(node, team, org);
+                data.bottomText = GameManager.i.itemDataScript.GetOrgErasureTeamDetails(node, team, org);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.guiScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -4806,8 +4806,8 @@ public class MessageManager : MonoBehaviour
                 data.tag1 = "orgInfo_1";
                 data.tag2 = "orgInfo_2";
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.i.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddItemData(data);
             }
             else { Debug.LogWarning("Invalid orgInfo (Null)"); }
         }
@@ -4823,7 +4823,7 @@ public class MessageManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //get org info
-            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             {
                 Message message = new Message();
@@ -4837,9 +4837,9 @@ public class MessageManager : MonoBehaviour
                 ItemData data = new ItemData();
                 data.itemText = string.Format("The {0} track the {1}", org.tag, npc.tag);
                 data.topText = string.Format("{0} Direct Feed", org.tag);
-                data.bottomText = GameManager.instance.itemDataScript.GetOrgNpcDetails(node, npc, org);
+                data.bottomText = GameManager.i.itemDataScript.GetOrgNpcDetails(node, npc, org);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.instance.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.guiScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -4851,8 +4851,8 @@ public class MessageManager : MonoBehaviour
                 data.tag1 = "orgInfo_1";
                 data.tag2 = "orgInfo_2";
                 //add
-                GameManager.instance.dataScript.AddMessage(message);
-                GameManager.instance.dataScript.AddItemData(data);
+                GameManager.i.dataScript.AddMessage(message);
+                GameManager.i.dataScript.AddItemData(data);
             }
             else { Debug.LogWarning("Invalid orgInfo (Null)"); }
         }
@@ -4879,7 +4879,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.NPC;
             message.subType = MessageSubType.Npc_Arrival;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = npc.currentStartNode.nodeID;
             message.data1 = npc.currentEndNode.nodeID;
@@ -4888,8 +4888,8 @@ public class MessageManager : MonoBehaviour
             //ItemData
             ItemData data = new ItemData();
             data.topText = "HQ Notification";
-            data.bottomText = GameManager.instance.itemDataScript.GetNpcArrivalDetails(npc);
-            data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.bottomText = GameManager.i.itemDataScript.GetNpcArrivalDetails(npc);
+            data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -4908,8 +4908,8 @@ public class MessageManager : MonoBehaviour
             data.tag3 = "npc_3";
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4930,15 +4930,15 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.NPC;
             message.subType = MessageSubType.Npc_Depart;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = npc.currentStartNode.nodeID;
             message.dataName = npc.tag;
             //ItemData
             ItemData data = new ItemData();
             data.topText = "HQ Notification";
-            data.bottomText = GameManager.instance.itemDataScript.GetNpcDepartDetails(npc);
-            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.bottomText = GameManager.i.itemDataScript.GetNpcDepartDetails(npc);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -4952,8 +4952,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "npc_1";
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -4974,15 +4974,15 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.NPC;
             message.subType = MessageSubType.Npc_Interact;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
             message.data0 = npc.currentStartNode.nodeID;
             message.dataName = npc.tag;
             //ItemData
             ItemData data = new ItemData();
             data.topText = string.Format("{0} Departs", npc.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetNpcInteractDetails(npc);
-            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.instance.cityScript.GetCity().tag);
+            data.bottomText = GameManager.i.itemDataScript.GetNpcInteractDetails(npc);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -4996,8 +4996,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "npc_1";
             data.help = 1;
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5029,7 +5029,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} current Status", npc.tag);
             data.topText = string.Format("{0} Status", npc.tag);
-            data.bottomText = GameManager.instance.itemDataScript.GetNpcOngoingEffectDetails(npc);
+            data.bottomText = GameManager.i.itemDataScript.GetNpcOngoingEffectDetails(npc);
             data.priority = ItemPriority.High;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -5042,8 +5042,8 @@ public class MessageManager : MonoBehaviour
             data.tag1 = "npc_4";
             data.tag2 = "npc_1";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5069,7 +5069,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_New;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5077,9 +5077,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Investigation launched";
             data.topText = "Under Investigation";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestNewDetails(invest);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestNewDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5091,8 +5091,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_2";
             data.tag3 = "invest_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5113,7 +5113,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_Ongoing;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5121,9 +5121,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Investigation status", invest.tag);
             data.topText = "Ongoing Investigation";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestOngoingDetails(invest);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestOngoingDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -5135,8 +5135,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_4";
             data.tag3 = "invest_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5157,7 +5157,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_Evidence;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5165,9 +5165,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Investigation EVIDENCE uncovered";
             data.topText = "New Evidence";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestEvidenceDetails(invest, source);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestEvidenceDetails(invest, source);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5179,8 +5179,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_4";
             data.tag3 = "invest_3";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5202,7 +5202,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_Resolution;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5210,10 +5210,10 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Investigation counting down to a Resolution";
             data.topText = "Resolution Countdown";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestResolutionDetails(invest);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestResolutionDetails(invest);
             if (invest.evidence <= 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5225,8 +5225,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_8";
             data.tag3 = "invest_9";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5247,7 +5247,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_Completed;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5255,9 +5255,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Investigation COMPLETED";
             data.topText = "Verdict Enforced";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestCompletedDetails(invest);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestCompletedDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5269,8 +5269,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_8";
             data.tag3 = "invest_9";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;
@@ -5291,7 +5291,7 @@ public class MessageManager : MonoBehaviour
             message.text = text;
             message.type = MessageType.INVESTIGATION;
             message.subType = MessageSubType.Invest_Dropped;
-            message.sideLevel = GameManager.instance.sideScript.PlayerSide.level;
+            message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = invest.evidence;
             message.data1 = invest.timer;
             message.dataName = invest.tag;
@@ -5299,9 +5299,9 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.itemText = "Investigation DROPPED";
             data.topText = "Investigation Falters";
-            data.bottomText = GameManager.instance.itemDataScript.GetInvestDroppedDetails(invest);
+            data.bottomText = GameManager.i.itemDataScript.GetInvestDroppedDetails(invest);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.instance.guiScript.investigationSprite;
+            data.sprite = GameManager.i.guiScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5313,8 +5313,8 @@ public class MessageManager : MonoBehaviour
             data.tag2 = "invest_8";
             data.tag3 = "invest_9";
             //add
-            GameManager.instance.dataScript.AddMessage(message);
-            GameManager.instance.dataScript.AddItemData(data);
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
         }
         else { Debug.LogWarning("Invalid text (Null or empty)"); }
         return null;

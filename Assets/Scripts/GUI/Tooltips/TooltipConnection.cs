@@ -42,8 +42,8 @@ public class TooltipConnection : MonoBehaviour
     {
         canvasGroup = tooltipConnectionObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipConnectionObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.guiScript.tooltipFade;
-        offset = GameManager.instance.guiScript.tooltipOffset;
+        fadeInTime = GameManager.i.guiScript.tooltipFade;
+        offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipConnection");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipConnection");
@@ -88,12 +88,12 @@ public class TooltipConnection : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.dataNeutral);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourArc = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
 
@@ -131,10 +131,10 @@ public class TooltipConnection : MonoBehaviour
         //top text
         string debugID = "";
         //show connID if debug data on
-        if (GameManager.instance.optionScript.debugData == true)
+        if (GameManager.i.optionScript.debugData == true)
         { debugID = string.Format("<font=\"LiberationSans SDF\"> ID {0}</font>", connID); }
         //context sensitive depending on ActivityUI
-        switch (GameManager.instance.nodeScript.activityState)
+        switch (GameManager.i.nodeScript.activityState)
         {
             case ActivityUI.None:
                 switch (securityLevel)
@@ -267,15 +267,15 @@ public class TooltipConnection : MonoBehaviour
         {
             case 1:
                 //Authority
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundAuthority;
+                dividerTop.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerBottom.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
                 break;
             case 2:
                 //Resistance
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundRebel;
+                dividerTop.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerBottom.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

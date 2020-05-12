@@ -111,20 +111,20 @@ public class Node : MonoBehaviour
     //Properties for backing fields
     public int Security
     {
-        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSecurity) + GetTeamEffect(NodeData.Security), minValue, maxValue); }
+        get { return Mathf.Clamp(_security + GetOngoingEffect(GameManager.i.nodeScript.outcomeNodeSecurity) + GetTeamEffect(NodeData.Security), minValue, maxValue); }
         set { _security = value; _security = Mathf.Clamp(_security, 0, 3); }
     }
 
     public int Stability
     {
         get
-        { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeStability) + GetTeamEffect(NodeData.Stability), minValue, maxValue); }
+        { return Mathf.Clamp(_stability + GetOngoingEffect(GameManager.i.nodeScript.outcomeNodeStability) + GetTeamEffect(NodeData.Stability), minValue, maxValue); }
         set { _stability = value; _stability = Mathf.Clamp(_stability, 0, 3); }
     }
 
     public int Support
     {
-        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.instance.nodeScript.outcomeNodeSupport) + GetTeamEffect(NodeData.Support), minValue, maxValue); }
+        get { return Mathf.Clamp(_support + GetOngoingEffect(GameManager.i.nodeScript.outcomeNodeSupport) + GetTeamEffect(NodeData.Support), minValue, maxValue); }
         set { _support = value; _support = Mathf.Clamp(_support, 0, 3); }
     }
 
@@ -133,7 +133,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTracers);
+            int value = GetOngoingEffect(GameManager.i.nodeScript.outcomeStatusTracers);
             if (value < 0 && isProbeTeam == false) { return false; }
             else if (value > 0 || isProbeTeam == true) { return true; }
             else { return _isTracerKnown; }
@@ -146,7 +146,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusSpiders);
+            int value = GetOngoingEffect(GameManager.i.nodeScript.outcomeStatusSpiders);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isSpiderKnown; }
@@ -162,7 +162,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect & presence of a Probe team overides current setting (if no ongoing effect then current setting stands)
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusContacts);
+            int value = GetOngoingEffect(GameManager.i.nodeScript.outcomeStatusContacts);
             if (value < 0 && isProbeTeam == false) { return false; }
             else if (value > 0 || isProbeTeam == true) { return true; }
             else { return _isContactKnown; }
@@ -175,7 +175,7 @@ public class Node : MonoBehaviour
         get
         {
             //any Ongoing effect overides current setting (if no ongoing effect then current setting stands)
-            int value = GetOngoingEffect(GameManager.instance.nodeScript.outcomeStatusTeams);
+            int value = GetOngoingEffect(GameManager.i.nodeScript.outcomeStatusTeams);
             if (value < 0) { return false; }
             else if (value > 0) { return true; }
             else { return _isTeamKnown; }
@@ -235,16 +235,16 @@ public class Node : MonoBehaviour
     private void OnEnable()
     {
         //fast access
-        _Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
-        materialNormal = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
-        materialActive = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Active);
-        materialHighlight = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Highlight);
-        materialNemesis = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Nemesis);
-        materialPlayer = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        _Material = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
+        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
+        materialActive = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Active);
+        materialHighlight = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Highlight);
+        materialNemesis = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Nemesis);
+        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Player);
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
-        maxValue = GameManager.instance.nodeScript.maxNodeValue;
-        minValue = GameManager.instance.nodeScript.minNodeValue;
+        maxValue = GameManager.i.nodeScript.maxNodeValue;
+        minValue = GameManager.i.nodeScript.minNodeValue;
         Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
@@ -259,10 +259,10 @@ public class Node : MonoBehaviour
         _supportStart = _support;
         _securityStart = _security;
         //fast access
-        stabilityTeamEffect = GameManager.instance.teamScript.civilNodeEffect;
-        securityTeamEffect = GameManager.instance.teamScript.controlNodeEffect;
-        supportTeamEffect = GameManager.instance.teamScript.mediaNodeEffect * -1;
-        crisisCityLoyalty = GameManager.instance.nodeScript.crisisCityLoyalty;
+        stabilityTeamEffect = GameManager.i.teamScript.civilNodeEffect;
+        securityTeamEffect = GameManager.i.teamScript.controlNodeEffect;
+        supportTeamEffect = GameManager.i.teamScript.mediaNodeEffect * -1;
+        crisisCityLoyalty = GameManager.i.nodeScript.crisisCityLoyalty;
         Debug.Assert(stabilityTeamEffect != 999, "Invalid stabilityTeamEffect (999)");
         Debug.Assert(securityTeamEffect != 999, "Invalid securityTeamEffect (999)");
         Debug.Assert(supportTeamEffect != 999, "Invalid supportTeamEffect (999)");
@@ -277,26 +277,26 @@ public class Node : MonoBehaviour
     {
         bool proceedFlag = true;
         AlertType alertType = AlertType.None;
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             //exit any tooltip
             if (onMouseFlag == true)
             {
                 onMouseFlag = false;
                 StopCoroutine("ShowTooltip");
-                GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
+                GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
             }
             //Action Menu -> not valid if AI is active for side
-            if (GameManager.instance.sideScript.CheckInteraction() == false)
+            if (GameManager.i.sideScript.CheckInteraction() == false)
             { proceedFlag = false; alertType = AlertType.SideStatus; }
             //Action Menu -> not valid if  Player inactive
-            else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+            else if (GameManager.i.playerScript.status != ActorStatus.Active)
             { proceedFlag = false; alertType = AlertType.PlayerStatus; }
             //Proceed
             if (proceedFlag == true)
             {
                 //highlight current node
-                GameManager.instance.nodeScript.ToggleNodeHighlight(nodeID);
+                GameManager.i.nodeScript.ToggleNodeHighlight(nodeID);
                 //Action menu data package
                 ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                 {
@@ -304,17 +304,17 @@ public class Node : MonoBehaviour
                     itemName = nodeName,
                     itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
                     menuPos = transform.position,
-                    listOfButtonDetails = GameManager.instance.actorScript.GetNodeActions(nodeID),
+                    listOfButtonDetails = GameManager.i.actorScript.GetNodeActions(nodeID),
                     menuType = ActionMenuType.Node
                 };
                 //activate menu
-                GameManager.instance.actionMenuScript.SetActionMenu(details);
+                GameManager.i.actionMenuScript.SetActionMenu(details);
             }
             else
             {
                 //explanatory message
                 if (alertType != AlertType.None)
-                { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+                { GameManager.i.guiScript.SetAlertMessage(alertType); }
             }
         }
     }
@@ -324,12 +324,12 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseExit()
     {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
+            GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
         }
     }
 
@@ -341,7 +341,7 @@ public class Node : MonoBehaviour
         bool proceedFlag = true;
         AlertType alertType = AlertType.None;
         //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             //Right click node -> Show either move options (node highlights) or Move Menu
             if (Input.GetMouseButtonDown(1) == true)
@@ -354,31 +354,31 @@ public class Node : MonoBehaviour
                 {
                     onMouseFlag = false;
                     StopCoroutine("ShowTooltip");
-                    GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
+                    GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
                 }
                 //move action invalid if resistance player is captured, etc.
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
                 {
                     //Action Menu -> not valid if AI is active for side
-                    if (GameManager.instance.sideScript.CheckInteraction() == false)
+                    if (GameManager.i.sideScript.CheckInteraction() == false)
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
                     //Action Menu -> not valid if  Player inactive
-                    else if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                    else if (GameManager.i.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                     //proceed
                     if (proceedFlag == true)
                     {
                         //exit any tooltip
-                        GameManager.instance.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
+                        GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
                         //Create a Move Menu at the node
-                        if (GameManager.instance.dataScript.CheckValidMoveNode(nodeID) == true)
+                        if (GameManager.i.dataScript.CheckValidMoveNode(nodeID) == true)
                         { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         //highlight all possible move options
                         else
                         {
                             EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
                             //if at Player's current node then Gear Node menu
-                            if (nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            if (nodeID == GameManager.i.nodeScript.nodePlayer)
                             { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         }
                     }
@@ -386,7 +386,7 @@ public class Node : MonoBehaviour
                     {
                         //explanatory message
                         if (alertType != AlertType.None)
-                        { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+                        { GameManager.i.guiScript.SetAlertMessage(alertType); }
                     }
                 }
             }
@@ -408,30 +408,30 @@ public class Node : MonoBehaviour
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over node
-        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.Normal)
+        if (onMouseFlag == true && GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
             //check modal block isn't in place
-            if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+            if (GameManager.i.guiScript.CheckIsBlocked() == false)
             {
                 //do once
-                while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
+                while (GameManager.i.tooltipNodeScript.CheckTooltipActive() == false)
                 {
                     List<string> contactListCurrent = new List<string>();
                     List<string> contactListOther = new List<string>();
                     //
                     // - - - CONTACTS vary depending on whether viewing player side or debug viewing other side
                     //
-                    switch (GameManager.instance.turnScript.currentSide.level)
+                    switch (GameManager.i.turnScript.currentSide.level)
                     {
                         case 1:
                             //authority
-                            contactListCurrent = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
-                            contactListOther = GameManager.instance.dataScript.GetActiveContactsAtNodeResistance(nodeID);
+                            contactListCurrent = GameManager.i.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
+                            contactListOther = GameManager.i.dataScript.GetActiveContactsAtNodeResistance(nodeID);
                             break;
                         case 2:
                             //resistance
-                            contactListCurrent = GameManager.instance.dataScript.GetActiveContactsAtNodeResistance(nodeID);
-                            contactListOther = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
+                            contactListCurrent = GameManager.i.dataScript.GetActiveContactsAtNodeResistance(nodeID);
+                            contactListOther = GameManager.i.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
                             break;
                     }
                     List<EffectDataTooltip> effectsList = GetListOfOngoingEffectTooltips();
@@ -446,7 +446,7 @@ public class Node : MonoBehaviour
                     //
                     List<string> targetList = new List<string>();
                     if (targetName != null)
-                    { targetList = GameManager.instance.targetScript.GetTargetTooltip(targetName, isTargetKnown); }
+                    { targetList = GameManager.i.targetScript.GetTargetTooltip(targetName, isTargetKnown); }
                     //crisis info
                     List<string> crisisList= new List<string>();
                     if (crisis != null)
@@ -460,13 +460,13 @@ public class Node : MonoBehaviour
                     // - - - ACTIVITY info
                     //
                     List<string> activityList = null;
-                    if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
+                    if (GameManager.i.nodeScript.activityState != ActivityUI.None)
                     { activityList = GetActivityInfo(); }
                     //
                     // - - - DEBUG Data
                     //
                     string textType, textName;
-                    if (GameManager.instance.optionScript.debugData == true)
+                    if (GameManager.i.optionScript.debugData == true)
                     {
                         textType = string.Format("{0}<font=\"LiberationSans SDF\"> ID {1}</font>", Arc.name, nodeID);
                         /*textName = string.Format("PrfA {0} Conn {1} Chk {2}", Convert.ToInt32(isPreferredAuthority), Convert.ToInt32(isConnectedNode),
@@ -487,10 +487,10 @@ public class Node : MonoBehaviour
                     bool showSpider = false;
                     if (isSpider == true)
                     {
-                        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level 
-                            || GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideBoth.level)
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level 
+                            || GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideBoth.level)
                         {
-                            if (GameManager.instance.optionScript.fogOfWar == true)
+                            if (GameManager.i.optionScript.fogOfWar == true)
                             {
                                 if (isSpiderKnown == true) { showSpider = true; }
                             }
@@ -538,18 +538,18 @@ public class Node : MonoBehaviour
                         tooltipPos = transform.position
                     };
                     //isContact side dependant
-                    GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-                    if (playerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                    GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+                    if (playerSide.level == GameManager.i.globalScript.sideResistance.level)
                     {
                         //broad check first for contacts then narrow check for active contact with an active parent actor
                         dataTooltip.isActiveContact = isContactResistance;
                         if (isContactResistance == true)
-                        { dataTooltip.isActiveContact = GameManager.instance.dataScript.CheckActiveContactAtNode(nodeID, playerSide); }
+                        { dataTooltip.isActiveContact = GameManager.i.dataScript.CheckActiveContactAtNode(nodeID, playerSide); }
                     }
                     //if Authority contacts present then automatically active
                     else { dataTooltip.isActiveContact = isContactAuthority; }
 
-                    GameManager.instance.tooltipNodeScript.SetTooltip(dataTooltip);
+                    GameManager.i.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
                 }
                 /*//fade in -> only if normal gamestate (eg. not modal)
@@ -672,7 +672,7 @@ public class Node : MonoBehaviour
         foreach (Node node in listOfNeighbourNodes)
         { listOfNodeID.Add(node.nodeID); }
         if (listOfNodeID.Count > 0)
-        { GameManager.instance.dataScript.UpdateMoveNodes(listOfNodeID); }
+        { GameManager.i.dataScript.UpdateMoveNodes(listOfNodeID); }
         else { Debug.LogError("listOfNeighbourNodes has no records, listOfNodeID has no records -> MoveNodes not updated"); }
     }
 
@@ -699,7 +699,7 @@ public class Node : MonoBehaviour
     {
         Connection connection = null;
         int node1, node2;
-        if (GameManager.instance.dataScript.GetNode(nodeID) != null)
+        if (GameManager.i.dataScript.GetNode(nodeID) != null)
         {
             //loop list and find matching connection
             foreach (Connection connTemp in listOfConnections)
@@ -821,7 +821,7 @@ public class Node : MonoBehaviour
         if (isSpider == true)
         { isSpiderKnown = true; }
         //set timer
-        tracerTimer = GameManager.instance.nodeScript.observerTimer;
+        tracerTimer = GameManager.i.nodeScript.observerTimer;
         //teams
         if (listOfTeams.Count > 0)
         { isTeamKnown = true; }
@@ -900,7 +900,7 @@ public class Node : MonoBehaviour
         if (team != null)
         {
             //check there is room for another team
-            if (listOfTeams.Count < GameManager.instance.teamScript.maxTeamsAtNode)
+            if (listOfTeams.Count < GameManager.i.teamScript.maxTeamsAtNode)
             {
                 //check a similar type of team not already present
                 int nodeArcID = team.arc.TeamArcID;
@@ -936,7 +936,7 @@ public class Node : MonoBehaviour
                 team.nodeID = nodeID;
                 team.actorSlotID = actorSlotID;
                 team.pool = TeamPool.OnMap;
-                team.timer = GameManager.instance.teamScript.deployTime;
+                team.timer = GameManager.i.teamScript.deployTime;
                 /*Debug.Log(string.Format("{0} Team added to node {1}, ID {2}{3}", team.arc.name, nodeName, nodeID, "\n"));*/
                 return true;
             }
@@ -1008,7 +1008,7 @@ public class Node : MonoBehaviour
                     {
                         //remove Erasure team
                         team = listOfTeams[i];
-                        if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                        if (GameManager.i.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
                         {
                             teamArcName = team.arc.name;
                             break;
@@ -1019,7 +1019,7 @@ public class Node : MonoBehaviour
                             //remove a random team
                             index = Random.Range(0, count);
                             team = listOfTeams[index];
-                            if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                            if (GameManager.i.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
                             {
                                 teamArcName = team.arc.name;
                                 break;
@@ -1034,7 +1034,7 @@ public class Node : MonoBehaviour
                 index = Random.Range(0, count);
                 team = listOfTeams[index];
                 //Move Team handles all admin including removing from team node list
-                if (GameManager.instance.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
+                if (GameManager.i.teamScript.MoveTeamAI(TeamPool.InTransit, team.teamID, this) == true)
                 { teamArcName = team.arc.name; }
             }
         }
@@ -1154,7 +1154,7 @@ public class Node : MonoBehaviour
             //add new ongoing effect
             listOfOngoingEffects.Add(effect);
             //add to register & create message
-            GameManager.instance.dataScript.AddOngoingEffectToDict(effect, nodeID);
+            GameManager.i.dataScript.AddOngoingEffectToDict(effect, nodeID);
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
     }
@@ -1173,7 +1173,7 @@ public class Node : MonoBehaviour
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
                 if (ongoing.ongoingID == uniqueID)
                 {
-                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
+                    GameManager.i.dataScript.RemoveOngoingEffectFromDict(ongoing);
                     listOfOngoingEffects.RemoveAt(i);
                 }
             }
@@ -1223,7 +1223,7 @@ public class Node : MonoBehaviour
                 if (ongoing.timer <= 0)
                 {
                     //node and any connections
-                    GameManager.instance.connScript.RemoveOngoingEffect(ongoing.ongoingID);
+                    GameManager.i.connScript.RemoveOngoingEffect(ongoing.ongoingID);
                     RemoveOngoingEffect(ongoing.ongoingID);
                     //message
                     Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: REMOVE Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.description, nodeID, "\n");
@@ -1438,7 +1438,7 @@ public class Node : MonoBehaviour
     private int[] GetStats()
     {
         int[] arrayOfStats;
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.i.sideScript.PlayerSide.name)
         {
             case "Resistance":
             case "Authority":
@@ -1449,7 +1449,7 @@ public class Node : MonoBehaviour
                 break;*/
             default:
                 arrayOfStats = new int[] { Stability, Support, Security };
-                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                 break;
         }
 
@@ -1499,7 +1499,7 @@ public class Node : MonoBehaviour
                 break;
             case ActivityUI.Time:
                 if (activityTime > -1)
-                { activityLevel = GameManager.instance.turnScript.Turn - activityTime; }
+                { activityLevel = GameManager.i.turnScript.Turn - activityTime; }
                 break;
             default:
                 Debug.LogWarning(string.Format("Invalid activityUI \"{0}\"", activityUI));
@@ -1517,7 +1517,7 @@ public class Node : MonoBehaviour
     {
         List<string> listOfActivity = new List<string>();
         //debug activity data
-        if (GameManager.instance.optionScript.debugData == true)
+        if (GameManager.i.optionScript.debugData == true)
         {
             listOfActivity.Add(string.Format("activityTime     {0}{1}", activityTime > 0 ? "T" : "", activityTime));
             listOfActivity.Add(string.Format("activityCount    {0}{1}", activityCount > 0 ? "+" : "", activityCount));
@@ -1525,11 +1525,11 @@ public class Node : MonoBehaviour
         else
         {
             //Activity info details
-            switch (GameManager.instance.nodeScript.activityState)
+            switch (GameManager.i.nodeScript.activityState)
             {
                 case ActivityUI.Time:
-                    int limit = GameManager.instance.aiScript.activityTimeLimit;
-                    int turnCurrent = GameManager.instance.turnScript.Turn;
+                    int limit = GameManager.i.aiScript.activityTimeLimit;
+                    int turnCurrent = GameManager.i.turnScript.Turn;
                     int elapsedTime = -1;
 
                     if (activityTime > -1)

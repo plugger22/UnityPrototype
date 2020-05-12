@@ -42,7 +42,7 @@ public class DebugGraphics : MonoBehaviour
                 SubInitialiseSessionStart();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -53,7 +53,7 @@ public class DebugGraphics : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         //adjust scale of centre Plane
-        float scaleFactor = GameManager.instance.aiScript.nodeGeographicCentre;
+        float scaleFactor = GameManager.i.aiScript.nodeGeographicCentre;
         float newScale = 1.1f * scaleFactor / 100f;
         centrePlane.transform.localScale = new Vector3(newScale, 1.15f, newScale);
     }

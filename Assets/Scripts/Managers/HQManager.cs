@@ -115,7 +115,7 @@ public class HQManager : MonoBehaviour
             _approvalAuthority = value;
             _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxHqApproval);
             //update top widget bar if current side is authority
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
             { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalAuthority, "HqManager.cs -> ApprovalAuthority"); }
         }
     }
@@ -131,7 +131,7 @@ public class HQManager : MonoBehaviour
             _approvalResistance = value;
             _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxHqApproval);
             //update top widget bar if current side is resistance
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
             { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalResistance, "HqManager.cs -> ApprovalResistance"); }
         }
     }
@@ -160,7 +160,7 @@ public class HQManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -172,14 +172,14 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //initialise HQ actors starting lineUp
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        GameManager.instance.actorScript.InitialiseHqActors(playerSide);
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        GameManager.i.actorScript.InitialiseHqActors(playerSide);
         //add workers (possible testManager.cs override)
-        if (GameManager.instance.testScript.numOfWorkers > -1)
-        { GameManager.instance.actorScript.InitialiseHqWorkers(GameManager.instance.testScript.numOfWorkers, playerSide); }
-        else { GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide); }
+        if (GameManager.i.testScript.numOfWorkers > -1)
+        { GameManager.i.actorScript.InitialiseHqWorkers(GameManager.i.testScript.numOfWorkers, playerSide); }
+        else { GameManager.i.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide); }
         //assign compatibility with player and descriptors
-        GameManager.instance.personScript.SetHqActorsCompatibility();
+        GameManager.i.personScript.SetHqActorsCompatibility();
     }
     #endregion
 
@@ -187,8 +187,8 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
     }
@@ -213,18 +213,18 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         //Authority HQ 
-        hQAuthority = GameManager.instance.dataScript.GetHq(GameManager.instance.globalScript.sideAuthority);
+        hQAuthority = GameManager.i.dataScript.GetHq(GameManager.i.globalScript.sideAuthority);
         if (hQAuthority == null)
         { Debug.LogError("Invalid HqAuthority (Null)"); }
         //Resistance HQ
-        hQResistance = GameManager.instance.dataScript.GetHq(GameManager.instance.globalScript.sideResistance);
+        hQResistance = GameManager.i.dataScript.GetHq(GameManager.i.globalScript.sideResistance);
         if (hQResistance == null)
         { Debug.LogError("Invalid HqResistance (Null)"); }
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
-        int approval = GameManager.instance.campaignScript.scenario.approvalStartAuthorityHQ;
+        int approval = GameManager.i.campaignScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
         ApprovalAuthority = approval;
-        approval = GameManager.instance.campaignScript.scenario.approvalStartRebelHQ;
+        approval = GameManager.i.campaignScript.scenario.approvalStartRebelHQ;
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;
@@ -282,15 +282,15 @@ public class HQManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourAuthority = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourRebel = GameManager.i.colourScript.GetColour(ColourType.blueText);
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
         /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
         else { colourSide = colourRebel; }*/
@@ -314,7 +314,7 @@ public class HQManager : MonoBehaviour
                 isHqRelocating = false;
                 timerHqRelocating = 0;
                 text = "HQ has successfully Relocated";
-                GameManager.instance.messageScript.HqRelocates(text, "Relocation Successful");
+                GameManager.i.messageScript.HqRelocates(text, "Relocation Successful");
                 Debug.LogFormat("[HQ] HqManager.cs -> EndTurnLate: HQ has successfully Relocated{0}", "\n");
             }
             else
@@ -332,7 +332,7 @@ public class HQManager : MonoBehaviour
                     help1 = "hq_1",
                     help2 = "hq_2"
                 };
-                GameManager.instance.messageScript.ActiveEffect(dataEffect);
+                GameManager.i.messageScript.ActiveEffect(dataEffect);
                 Debug.LogFormat("[HQ] HqManager.cs -> EndTurnLate: {0}{1}", text, "\n");
             }
         }
@@ -345,13 +345,13 @@ public class HQManager : MonoBehaviour
     {
         bool isProceed = true;
         //ignore if autorun with both sides AI
-        if (GameManager.instance.turnScript.CheckIsAutoRun() == true && GameManager.instance.autoRunTurns > 0)
+        if (GameManager.i.turnScript.CheckIsAutoRun() == true && GameManager.i.autoRunTurns > 0)
         { isProceed = false; }
         //ignore if player is inactive
-        if (GameManager.instance.playerScript.status == ActorStatus.Inactive)
+        if (GameManager.i.playerScript.status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.instance.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.i.playerScript.inactiveStatus, "\n");
         }
         //HQ relocating
         if (isHqRelocating == true)
@@ -363,13 +363,13 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
                 string reason = GameManager.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
-                GameManager.instance.messageScript.HqSupportUnavailable(text, reason, hqFaction);
+                GameManager.i.messageScript.HqSupportUnavailable(text, reason, hqFaction);
             }
             else { Debug.LogWarning("Invalid current HQ (Null)"); }
         }
         if (isProceed == true)
         {
-            int side = GameManager.instance.sideScript.PlayerSide.level;
+            int side = GameManager.i.sideScript.PlayerSide.level;
             if (side > 0)
             {
                 int rnd = Random.Range(0, 100);
@@ -384,20 +384,20 @@ public class HQManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQAuthority.tag);
-                            GameManager.instance.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Renown, renownPerTurn);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
+                            GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
                             //Support given
-                            GameManager.instance.playerScript.Renown += renownPerTurn;
+                            GameManager.i.playerScript.Renown += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQAuthority.tag, threshold);
-                            GameManager.instance.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.instance.playerScript.Renown);
+                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Renown);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd);
+                            GameManager.i.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd);
                         }
                         break;
                     case 2:
@@ -408,20 +408,20 @@ public class HQManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQResistance.tag);
-                            GameManager.instance.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.instance.playerScript.Renown, renownPerTurn);
+                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Renown, renownPerTurn);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
+                            GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
                             //Support given
-                            GameManager.instance.playerScript.Renown += renownPerTurn;
+                            GameManager.i.playerScript.Renown += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQResistance.tag, threshold);
-                            GameManager.instance.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.instance.playerScript.Renown);
+                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Renown);
                             //random
-                            GameManager.instance.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd, false, "rand_1");
+                            GameManager.i.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd, false, "rand_1");
                         }
                         break;
                     default:
@@ -450,7 +450,7 @@ public class HQManager : MonoBehaviour
         string msgText, itemText, reason, warning;
         //get approval
         int approval = -1;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         Hq playerHQ = null;
         switch (side.level)
         {
@@ -482,7 +482,7 @@ public class HQManager : MonoBehaviour
                 itemText = string.Format("{0} HQ approval at ZERO", playerHQ.name);
                 reason = string.Format("{0} HQ have lost faith in you", playerHQ.name);
                 warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "HQ Approval", reason, warning);
+                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "HQ Approval", reason, warning);
             }
             else
             {
@@ -493,7 +493,7 @@ public class HQManager : MonoBehaviour
                 {
                     WinStateLevel winState = WinStateLevel.Authority;
                     //you lost, opposite side won
-                    if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+                    if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
                     {
                         //Resistance side wins
                         winState = WinStateLevel.Resistance;
@@ -502,11 +502,11 @@ public class HQManager : MonoBehaviour
                     itemText = string.Format("{0} has LOST PATIENCE", playerHQ.tag);
                     reason = string.Format("{0} approval at ZERO for an extended period", playerHQ.tag);
                     warning = "You've been FIRED, game over";
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
+                    GameManager.i.messageScript.GeneralWarning(msgText, itemText, "You're FIRED", reason, warning);
                     //Player fired -> outcome
                     string textTop = string.Format("{0}The {1} has lost faith in your abilities{2}", colourNormal, GetHqName(side), colourEnd);
                     string textBottom = string.Format("{0}You've been FIRED{1}", colourBad, colourEnd);
-                    GameManager.instance.turnScript.SetWinStateLevel(winState, WinReasonLevel.HqSupportMin, textTop, textBottom);
+                    GameManager.i.turnScript.SetWinStateLevel(winState, WinReasonLevel.HqSupportMin, textTop, textBottom);
 
                 }
                 else
@@ -516,7 +516,7 @@ public class HQManager : MonoBehaviour
                     itemText = string.Format("{0} about to FIRE you", playerHQ.tag);
                     reason = string.Format("{0} are displeased with your performance", playerHQ.tag);
                     warning = string.Format("You will be FIRED in {0} turn{1}", approvalZeroTimer, approvalZeroTimer != 1 ? "s" : "");
-                    GameManager.instance.messageScript.GeneralWarning(msgText, itemText, "HQ Unhappy", reason, warning);
+                    GameManager.i.messageScript.GeneralWarning(msgText, itemText, "HQ Unhappy", reason, warning);
                 }
             }
         }
@@ -536,7 +536,7 @@ public class HQManager : MonoBehaviour
     public string GetHqTitle(ActorHQ hqPosition)
     {
         string title = "Unknown";
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         switch (playerSide.level)
         {
             case 1:
@@ -578,7 +578,7 @@ public class HQManager : MonoBehaviour
     public Hq GetCurrentHQ()
     {
         Hq factionHQ = null;
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.i.sideScript.PlayerSide.name)
         {
             case "Authority":
                 factionHQ = hQAuthority;
@@ -587,7 +587,7 @@ public class HQManager : MonoBehaviour
                 factionHQ = hQResistance;
                 break;
             default:
-                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                 break;
         }
         return factionHQ;
@@ -614,7 +614,7 @@ public class HQManager : MonoBehaviour
                         description = string.Format("<b><size=115%>{0}{1}{2}</size></b>", colourRebel, hQResistance.tag, colourEnd);
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                         break;
                 }
             }
@@ -630,7 +630,7 @@ public class HQManager : MonoBehaviour
                         description = string.Format("<b>{0}</b>", hQResistance.name);
                         break;
                     default:
-                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                        Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                         break;
                 }
             }
@@ -658,7 +658,7 @@ public class HQManager : MonoBehaviour
                     description = string.Format("{0}{1}{2}", colourNormal, hQResistance.descriptor, colourEnd);
                     break;
                 default:
-                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                    Debug.LogError(string.Format("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                     break;
             }
         }
@@ -673,11 +673,11 @@ public class HQManager : MonoBehaviour
     public int GetHqApproval()
     {
         int approval = -1;
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1: approval = _approvalAuthority; break;
             case 2: approval = _approvalResistance; break;
-            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.instance.sideScript.PlayerSide.level); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.i.sideScript.PlayerSide.level); break;
         }
         return approval;
     }
@@ -688,12 +688,12 @@ public class HQManager : MonoBehaviour
     /// <returns></returns>
     public Sprite GetHqMainSpirte()
     {
-        Sprite sprite = GameManager.instance.guiScript.errorSprite;
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1: sprite = hQAuthority.sprite; break;
             case 2: sprite = hQResistance.sprite; break;
-            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.instance.sideScript.PlayerSide.level); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide.level \"{0}\"", GameManager.i.sideScript.PlayerSide.level); break;
         }
         return sprite;
     }
@@ -718,7 +718,7 @@ public class HQManager : MonoBehaviour
                     description = string.Format("{0}<size=130%>{1}{2} out of {3}</size>", colourNeutral, _approvalResistance, colourEnd, maxHqApproval);
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name);
                     break;
             }
         }
@@ -759,7 +759,7 @@ public class HQManager : MonoBehaviour
                     { text = string.Format("{0}You will be FIRED{1}{2}in {3}{4}{5} turn{6}", colourBad, colourEnd, "\n", colourNeutral, approvalZeroTimer, colourEnd, approvalZeroTimer != 1 ? "s" : ""); }
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                    Debug.LogErrorFormat("Invalid player side \"{0}\"", GameManager.i.sideScript.PlayerSide.name);
                     break;
             }
         }
@@ -787,10 +787,10 @@ public class HQManager : MonoBehaviour
                     oldApproval = ApprovalAuthority;
                     ApprovalAuthority += amountToChange;
                     Debug.LogFormat("[HQ] <b>Authority</b> HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalAuthority, reason, "\n");
-                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                    if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                     {
                         msgText = string.Format("{0} HQ approval {1}{2}", hQAuthority.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.HqApproval(msgText, reason, hQAuthority, oldApproval, amountToChange, ApprovalAuthority);
+                        GameManager.i.messageScript.HqApproval(msgText, reason, hQAuthority, oldApproval, amountToChange, ApprovalAuthority);
                     }
                     break;
                 case 2:
@@ -798,10 +798,10 @@ public class HQManager : MonoBehaviour
                     oldApproval = ApprovalResistance;
                     ApprovalResistance += amountToChange;
                     Debug.LogFormat("[HQ] Resistance HQ Approval: change {0}{1} now {2} ({3}){4}", amountToChange > 0 ? "+" : "", amountToChange, ApprovalResistance, reason, "\n");
-                    if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                    if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                     {
                         msgText = string.Format("{0} HQ approval {1}{2}", hQResistance.name, amountToChange > 0 ? "+" : "", amountToChange);
-                        GameManager.instance.messageScript.HqApproval(msgText, reason, hQResistance, oldApproval, amountToChange, ApprovalResistance);
+                        GameManager.i.messageScript.HqApproval(msgText, reason, hQResistance, oldApproval, amountToChange, ApprovalResistance);
                     }
                     break;
                 default:
@@ -895,15 +895,15 @@ public class HQManager : MonoBehaviour
     public void RelocateHq(string reason = "Unknown")
     {
         //stats (do first as needed for calcs below) 
-        GameManager.instance.dataScript.StatisticIncrement(StatType.HQRelocations);
+        GameManager.i.dataScript.StatisticIncrement(StatType.HQRelocations);
         //use max value of level or campaign (as campaign data isn't updated until metagame)
-        int timesRelocated = Mathf.Max(GameManager.instance.dataScript.StatisticGetLevel(StatType.HQRelocations), GameManager.instance.dataScript.StatisticGetCampaign(StatType.HQRelocations));
+        int timesRelocated = Mathf.Max(GameManager.i.dataScript.StatisticGetLevel(StatType.HQRelocations), GameManager.i.dataScript.StatisticGetCampaign(StatType.HQRelocations));
         isHqRelocating = true;
         timerHqRelocating = timerRelocationBase * timesRelocated;
         //messages
         Debug.LogFormat("[HQ] HqManager.cs -> RelocateHQ: HQ relocates due to {0}{1}", reason, "\n");
         string text = string.Format("HQ is relocating due to {0} (will take {1} turns)", reason, timerHqRelocating);
-        GameManager.instance.messageScript.HqRelocates(text, reason);
+        GameManager.i.messageScript.HqRelocates(text, reason);
     }
 
 
@@ -927,16 +927,16 @@ public class HQManager : MonoBehaviour
         //check for random events
         int numOfEvents = 0;
         //Hq Hierarchy checked first
-        Actor[] arrayOfHierarchy = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfHierarchy = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfHierarchy != null)
         {
             //HQ workers present in pool (No Major event allowed if none 'cause how do you replace a vacant hierarchy slot?)
-            int numOfWorkers = GameManager.instance.dataScript.CheckHqWorkers();
+            int numOfWorkers = GameManager.i.dataScript.CheckHqWorkers();
             //should be at least same number as hierarchy actors (to cover for any departures due to Major events)
             if (numOfWorkers < numOfActorsHQ)
             {
                 //add new workers (create new actors)
-                GameManager.instance.actorScript.InitialiseHqWorkers(numOfActorsHQ - numOfWorkers, playerSide);
+                GameManager.i.actorScript.InitialiseHqWorkers(numOfActorsHQ - numOfWorkers, playerSide);
             }
 
             for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
@@ -955,11 +955,11 @@ public class HQManager : MonoBehaviour
         //Hq Workers checked last -> Minor (renown) events only
         if (numOfEvents < maxNumOfEvents)
         {
-            List<int> ListOfHqActors = GameManager.instance.dataScript.GetListOfActorHq();
+            List<int> ListOfHqActors = GameManager.i.dataScript.GetListOfActorHq();
             //reverse loop as workers may be 'removed' due to renown dropping below zero
             for (int i = ListOfHqActors.Count - 1; i >= 0; i--)
             {
-                Actor actor = GameManager.instance.dataScript.GetHqActor(ListOfHqActors[i]);
+                Actor actor = GameManager.i.dataScript.GetHqActor(ListOfHqActors[i]);
                 if (actor != null)
                 {
                     //worker?
@@ -1013,7 +1013,7 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
                 //remove actor from hierarcy and hq current list (permanent departure)
-                GameManager.instance.dataScript.RemoveHqActor(actor.hqID);
+                GameManager.i.dataScript.RemoveHqActor(actor.hqID);
             }
             else
             {
@@ -1053,7 +1053,7 @@ public class HQManager : MonoBehaviour
                 HqRenownData renownData = new HqRenownData()
                 {
                     turn = 0,
-                    scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex() + 1,
+                    scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                     change = change,
                     newRenown = actor.Renown,
                     reason = text
@@ -1125,7 +1125,7 @@ public class HQManager : MonoBehaviour
             HqRenownData renownData = new HqRenownData()
             {
                 turn = 0,
-                scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex() + 1,
+                scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                 change = change,
                 newRenown = actor.Renown,
                 reason = text
@@ -1137,7 +1137,7 @@ public class HQManager : MonoBehaviour
             //Renown dropped below Zero, remove actor from hq
             if (renownBefore + change < 0)
             {
-                GameManager.instance.dataScript.RemoveHqActor(actor.hqID);
+                GameManager.i.dataScript.RemoveHqActor(actor.hqID);
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorker: {0}, {1}, hqID {2}, Worker, forcefully removed from HQ (Renown < 0){3}", actor.actorName, actor.arc.name, actor.hqID, "\n");
             }
         }
@@ -1171,8 +1171,8 @@ public class HQManager : MonoBehaviour
     /// </summary>
     private void CheckHqHierarchy()
     {
-        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
-        List<int> listOfHqActors = GameManager.instance.dataScript.GetListOfActorHq();
+        Actor[] arrayOfHqActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
+        List<int> listOfHqActors = GameManager.i.dataScript.GetListOfActorHq();
         if (arrayOfHqActors != null)
         {
             if (listOfHqActors != null)
@@ -1221,7 +1221,7 @@ public class HQManager : MonoBehaviour
                         {
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
-                            if (GameManager.instance.campaignScript.GetScenarioIndex() > 0)
+                            if (GameManager.i.campaignScript.GetScenarioIndex() > 0)
                             { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}", GetHqTitle(currentActor.statusHQ)) }); }
                         }
                     }
@@ -1269,7 +1269,7 @@ public class HQManager : MonoBehaviour
         for (int i = 0; i < listOfActors.Count; i++)
         {
             hqID = listOfActors[i];
-            actorTemp = GameManager.instance.dataScript.GetHqActor(hqID);
+            actorTemp = GameManager.i.dataScript.GetHqActor(hqID);
             if (actorTemp != null)
             {
                 if (actorTemp.Renown > candidateHqRenown && actorTemp.Renown < limitRenown)
@@ -1286,7 +1286,7 @@ public class HQManager : MonoBehaviour
         }
         Actor actorReturn = null;
         if (candidateHqID > -1)
-        { actorReturn = GameManager.instance.dataScript.GetHqActor(candidateHqID); }
+        { actorReturn = GameManager.i.dataScript.GetHqActor(candidateHqID); }
         return actorReturn;
     }
 
@@ -1305,14 +1305,14 @@ public class HQManager : MonoBehaviour
         builder.AppendFormat(" AUTHORITY{0}", "\n");
         builder.AppendFormat(" {0} HQ{1}", hQAuthority.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", hQAuthority.descriptor, "\n", "\n");
-        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideAuthority), "\n");
-        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainAuthority, "\n", "\n");
+        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.i.dataScript.CheckAIResourcePool(GameManager.i.globalScript.sideAuthority), "\n");
+        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.i.aiScript.resourcesGainAuthority, "\n", "\n");
         //resistance
         builder.AppendFormat("{0} RESISTANCE{1}", "\n", "\n");
         builder.AppendFormat(" {0} HQ{1}", hQResistance.name, "\n");
         builder.AppendFormat(" {0}{1}{2}", hQResistance.descriptor, "\n", "\n");
-        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.instance.dataScript.CheckAIResourcePool(GameManager.instance.globalScript.sideResistance), "\n");
-        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.instance.aiScript.resourcesGainResistance, "\n", "\n");
+        builder.AppendFormat(" AI Resource Pool: {0}{1}", GameManager.i.dataScript.CheckAIResourcePool(GameManager.i.globalScript.sideResistance), "\n");
+        builder.AppendFormat(" AI Resource Allowance: {0}{1}{2}", GameManager.i.aiScript.resourcesGainResistance, "\n", "\n");
         //HQ data
         builder.AppendFormat("{0}- HQ Hierarchy{1}", "\n", "\n");
         builder.AppendFormat(" bossOpinion {0}{1}, {2}{3}", bossOpinion > 0 ? "+" : "", bossOpinion, GetBossOpinionFormatted(), "\n");
@@ -1330,7 +1330,7 @@ public class HQManager : MonoBehaviour
     public string DebugDisplayHqActors()
     {
         StringBuilder builder = new StringBuilder();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActors != null)
         {
             builder.AppendFormat("-HQ Hierarchy{0}", "\n");
@@ -1350,7 +1350,7 @@ public class HQManager : MonoBehaviour
             //loop dictOfHQ and get Workers and LeftHQ
             List<Actor> listOfWorkers = new List<Actor>();
             List<Actor> listOfLeftHQ = new List<Actor>();
-            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
+            Dictionary<int, Actor> dictOfHQ = GameManager.i.dataScript.GetDictOfHq();
             if (dictOfHQ != null)
             {
                 foreach (var actor in dictOfHQ)
@@ -1402,7 +1402,7 @@ public class HQManager : MonoBehaviour
     public string DebugDisplayHqActorRenown()
     {
         StringBuilder builder = new StringBuilder();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActors != null)
         {
             builder.AppendFormat("-HQ Hierarchy Renown Data{0}", "\n");
@@ -1431,7 +1431,7 @@ public class HQManager : MonoBehaviour
             }
             //loop dictOfHQ and get Workers and LeftHQ
             List<Actor> listOfWorkers = new List<Actor>();
-            Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
+            Dictionary<int, Actor> dictOfHQ = GameManager.i.dataScript.GetDictOfHq();
             if (dictOfHQ != null)
             {
                 foreach (var actor in dictOfHQ)

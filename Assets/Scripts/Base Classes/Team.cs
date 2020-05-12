@@ -30,14 +30,14 @@ namespace gameAPI
         public Team(string arcType, int natoCount)
         {
             //valid arcType
-            int teamArcID = GameManager.instance.dataScript.GetTeamArcID(arcType);
+            int teamArcID = GameManager.i.dataScript.GetTeamArcID(arcType);
             if (teamArcID > -1)
             {
                 //get teamArc
-                TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
+                TeamArc teamArc = GameManager.i.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = GameManager.instance.teamScript.teamIDCounter++;
+                    teamID = GameManager.i.teamScript.teamIDCounter++;
                     arc = teamArc;
                     InitialiseTeamData(natoCount);
                     AddToCollections(this);
@@ -58,10 +58,10 @@ namespace gameAPI
             if (teamArcID > -1)
             {
                 //get teamArc
-                TeamArc teamArc = GameManager.instance.dataScript.GetTeamArc(teamArcID);
+                TeamArc teamArc = GameManager.i.dataScript.GetTeamArc(teamArcID);
                 if (teamArc != null)
                 {
-                    teamID = GameManager.instance.teamScript.teamIDCounter++;
+                    teamID = GameManager.i.teamScript.teamIDCounter++;
                     this.arc = teamArc;
                     InitialiseTeamData(natoCount);
                     AddToCollections(this);
@@ -108,8 +108,8 @@ namespace gameAPI
         /// <param name="team"></param>
         private void AddToCollections(Team team)
         {
-            if (GameManager.instance.dataScript.AddTeamToDict(team) == true)
-            { GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID); }
+            if (GameManager.i.dataScript.AddTeamToDict(team) == true)
+            { GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID); }
         }
 
     }

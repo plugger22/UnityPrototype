@@ -28,7 +28,7 @@ public class HelpManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         SetColours();
-        bullet = GameManager.instance.guiScript.bulletChar;
+        bullet = GameManager.i.guiScript.bulletChar;
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -60,9 +60,9 @@ public class HelpManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourTip = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourTip = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
     #endregion
 
@@ -81,7 +81,7 @@ public class HelpManager : MonoBehaviour
         //first topic, skip if null
         if (string.IsNullOrEmpty(tag0) == false)
         {
-            HelpData help0 = GameManager.instance.dataScript.GetHelpData(tag0);
+            HelpData help0 = GameManager.i.dataScript.GetHelpData(tag0);
             if (help0 != null)
             { listOfHelp.Add(help0); }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag0 \"{0}\"", tag0); }
@@ -89,7 +89,7 @@ public class HelpManager : MonoBehaviour
         //second topic, skip if null
         if (string.IsNullOrEmpty(tag1) == false)
         {
-            HelpData help1 = GameManager.instance.dataScript.GetHelpData(tag1);
+            HelpData help1 = GameManager.i.dataScript.GetHelpData(tag1);
             if (help1 != null)
             { listOfHelp.Add(help1); }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag1 \"{0}\"", tag1); }
@@ -97,7 +97,7 @@ public class HelpManager : MonoBehaviour
         //third topic, skip if null
         if (string.IsNullOrEmpty(tag2) == false)
         {
-            HelpData help2 = GameManager.instance.dataScript.GetHelpData(tag2);
+            HelpData help2 = GameManager.i.dataScript.GetHelpData(tag2);
             if (help2 != null)
             { listOfHelp.Add(help2); }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag2 \"{0}\"", tag2); }
@@ -105,7 +105,7 @@ public class HelpManager : MonoBehaviour
         //fourth topic, skip if null
         if (string.IsNullOrEmpty(tag3) == false)
         {
-            HelpData help3 = GameManager.instance.dataScript.GetHelpData(tag3);
+            HelpData help3 = GameManager.i.dataScript.GetHelpData(tag3);
             if (help3 != null)
             { listOfHelp.Add(help3); }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag3 \"{0}\"", tag3); }
@@ -123,7 +123,7 @@ public class HelpManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(tag) == false)
         {
-            HelpData help = GameManager.instance.dataScript.GetHelpData(tag);
+            HelpData help = GameManager.i.dataScript.GetHelpData(tag);
             if (help != null)
             { return help.text; }
             else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag \"{0}\"", tag); }
@@ -149,7 +149,7 @@ public class HelpManager : MonoBehaviour
                 tag = listOfHelpStrings[i];
                 if (string.IsNullOrEmpty(tag) == false)
                 {
-                    HelpData help = GameManager.instance.dataScript.GetHelpData(tag);
+                    HelpData help = GameManager.i.dataScript.GetHelpData(tag);
                     if (help != null)
                     { listOfHelp.Add(help); }
                     else { Debug.LogWarningFormat("Invalid HelpData (Null) for tag \"{0}\"", tag); }
@@ -257,7 +257,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "metaGameUI_2";
         data.header = "How many can I select?";
         data.text = string.Format("You can select up to {0}{1} options{2} of any type, provided you have {3}enough renown{4} to pay for them",
-            colourAlert, GameManager.instance.metaScript.numOfChoices, colourEnd, colourAlert, colourEnd);
+            colourAlert, GameManager.i.metaScript.numOfChoices, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Carry Over Renown
         data = new HelpData();
@@ -379,21 +379,21 @@ public class HelpManager : MonoBehaviour
         data.tag = "review_3";
         data.header = "Outcome";
         data.text = string.Format("If there is a {0}majority of votes{1} FOR (Green Tick) or AGAINST (Red Cross) and there is enough to meet the {2}minimum requirement{3} ({4} votes) you gain a Commendation or a Black Star", 
-            colourAlert, colourEnd, colourAlert, colourEnd, GameManager.instance.campaignScript.reviewMinVotes);
+            colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.campaignScript.reviewMinVotes);
         listOfHelp.Add(data);
         //Commendations
         data = new HelpData();
         data.tag = "review_4";
         data.header = "Commendations";
         data.text = string.Format("You have done good things and your efforts have been {0}rewarded{1}. Gain {2} Commendations and you will {3}Win the Campaign{4}", 
-            colourAlert, colourEnd, GameManager.instance.campaignScript.awardsWinLose, colourAlert, colourEnd);
+            colourAlert, colourEnd, GameManager.i.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Black Marks
         data = new HelpData();
         data.tag = "review_5";
         data.header = "Black Marks";
         data.text = string.Format("Your performance is {0}below an acceptable standard{1} and it has been noted on your record. Gain {2} Black Marks and you will {3}Lose the Campaign{4}",
-            colourAlert, colourEnd, GameManager.instance.campaignScript.awardsWinLose, colourAlert, colourEnd);
+            colourAlert, colourEnd, GameManager.i.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -825,7 +825,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "stress_2";
         data.header = "Chance of Breakdowns";
         data.text = string.Format("There is {0}{1} %{2} chance of a Breakdown each turn. Subordinates can have {3}traits{4} that modify this. If you become Stressed when you are already Stressed, the {5}odds increase{6}",
-            colourAlert, GameManager.instance.actorScript.breakdownChance, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+            colourAlert, GameManager.i.actorScript.breakdownChance, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Recovering from Stress
         data = new HelpData();
@@ -845,14 +845,14 @@ public class HelpManager : MonoBehaviour
         data.tag = "addict_0";
         data.header = "Addicted Condition";
         data.text = string.Format("You have become addicted to the drug {0}{1}{2} and at periodic intervals will need to {3}feed your addiction{4}",
-            colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd);
+            colourAlert, GameManager.i.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Breakdowns
         data = new HelpData();
         data.tag = "addict_1";
         data.header = "Feeding your Habit";
         data.text = string.Format("If you fail your Addiction Check you will need to spend {0}{1} Renown{2} to obtain enough {3}{4}{5} to feed your Addiction. ",
-            colourAlert, GameManager.instance.actorScript.playerAddictedRenownCost, colourEnd, colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+            colourAlert, GameManager.i.actorScript.playerAddictedRenownCost, colourEnd, colourAlert, GameManager.i.globalScript.tagGlobalDrug, colourEnd);
         listOfHelp.Add(data);
         //Chance of Breakdowns
         data = new HelpData();
@@ -902,15 +902,15 @@ public class HelpManager : MonoBehaviour
         data.tag = "immune_0";
         data.header = "Stress Immunity";
         data.text = string.Format("You've taken a dose of {0}{1}{2} and have developed an immunity from stress for a set number of days",
-            colourAlert, GameManager.instance.globalScript.tagGlobalDrug, colourEnd);
+            colourAlert, GameManager.i.globalScript.tagGlobalDrug, colourEnd);
         listOfHelp.Add(data);
         //Decreasing effect
         data = new HelpData();
         data.tag = "immune_1";
         data.header = "Diminishing Returns";
-        int immuneMin = GameManager.instance.actorScript.playerAddictedImmuneMin;
+        int immuneMin = GameManager.i.actorScript.playerAddictedImmuneMin;
         data.text = string.Format("Every time you take a dose of {0}{1}{2} your period of immunity {3}decreases by one day{4} down to a minimum of {5}{6}{7} day{8}", colourAlert,
-            GameManager.instance.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd, colourAlert, immuneMin, colourEnd, immuneMin != 1 ? "s" : "");           
+            GameManager.i.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd, colourAlert, immuneMin, colourEnd, immuneMin != 1 ? "s" : "");           
         listOfHelp.Add(data);
         #endregion
 
@@ -923,8 +923,8 @@ public class HelpManager : MonoBehaviour
         data.tag = "stressLeave_0";
         data.header = "Stress Leave";
         data.text = string.Format("Is only available when your, or your subordinate, (Resistance only) has {0}Invisibility{1} at Max ({2} stars), and are {3}STRESSED{4}. You also need permission from HQ ({5}{6}{7})",
-            colourAlert, colourEnd, GameManager.instance.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert, 
-            GameManager.instance.actorScript.stressLeaveHQApproval == true ? "Given" : "Denied", colourEnd);
+            colourAlert, colourEnd, GameManager.i.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert, 
+            GameManager.i.actorScript.stressLeaveHQApproval == true ? "Given" : "Denied", colourEnd);
         listOfHelp.Add(data);
         //Breakdowns
         data = new HelpData();
@@ -932,7 +932,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Taking Stress Leave";
         data.text = string.Format("It's {0}quicker{1} (one turn) than Lying Low but costs {2}{3}{4} Renown. You are {5}Safe{6} while taking Stress Leave",
             colourAlert, colourEnd, colourAlert,
-            GameManager.instance.sideScript.PlayerSide.level == 1 ? GameManager.instance.actorScript.stressLeaveRenownCostAuthority : GameManager.instance.actorScript.stressLeaveRenownCostResistance, 
+            GameManager.i.sideScript.PlayerSide.level == 1 ? GameManager.i.actorScript.stressLeaveRenownCostAuthority : GameManager.i.actorScript.stressLeaveRenownCostResistance, 
             colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Chance of Breakdowns
@@ -960,18 +960,18 @@ public class HelpManager : MonoBehaviour
         //Overview
         data = new HelpData();
         data.tag = "orgInfo_0";
-        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
         if (org != null)
         {
             data.header = org.tag;
             data.text = string.Format("The {0}{1}{2} will track your chosen target for {3}{4} days{5}. They will automatically find the target wherever they are {6}regardless of their stealth{7}", colourAlert,
-                org.tag, colourEnd, colourAlert, GameManager.instance.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
+                org.tag, colourEnd, colourAlert, GameManager.i.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
         }
         else
         {
             data.header = "Overview";
             data.text = string.Format("The Organisation will track your chosen target for {0}{1} days{2}. They will automatically find the target wherever they are {3}(ignores Stealth Rating){4}", colourAlert,
-                GameManager.instance.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
+                GameManager.i.orgScript.timerOrgInfoMax, colourEnd, colourAlert, colourEnd);
         }
         listOfHelp.Add(data);
         //Limitations
@@ -1178,7 +1178,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "rand_2";
         data.header = string.Format("{0}Addiction Need Check{1}", colourTip, colourEnd);
         data.text = string.Format("You're ADDICTED. At random intervals ({0}{1}% chance per turn{2}) you will need to {3}feed your addiction{4}", colourAlert,
-            GameManager.instance.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
+            GameManager.i.actorScript.playerAddictedChance, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Take Drugs check
         data = new HelpData();
@@ -1191,7 +1191,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "rand_4";
         data.header = string.Format("{0}Investigation Check{1}", colourTip, colourEnd);
         data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd,
-            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
+            colourAlert, GameManager.i.playerScript.chanceInvestigation, colourEnd);
         listOfHelp.Add(data);
         //New Evidence
         data = new HelpData();
@@ -1316,7 +1316,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "secret_4";
         data.header = "Secret Revealed";
         data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}Investigation{4} into your conduct", 
-            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd, colourAlert, colourEnd);
+            colourAlert, GameManager.i.playerScript.chanceInvestigation, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -1361,7 +1361,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "lielow_0";
         data.header = "Lying Low";
         data.text = string.Format("Resistance only. You, or your subordinate, must have Invisibility {0}less than{1} the Max ({2}{3} stars{4}) and HQ must have sourced a {5}Safe House{6}",
-            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd);
+            colourAlert, colourEnd, colourAlert, GameManager.i.actorScript.maxStatValue, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Breakdowns
         data = new HelpData();
@@ -1381,7 +1381,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "lielow_3";
         data.header = "Lying Low Effects";
         data.text = string.Format("Removes Stress, increases your Invisibility (to {0}{1} stars{2}) and improves your Mood (to {3}{4} stars{5}, Player only)", colourAlert,
-            GameManager.instance.actorScript.maxStatValue, colourEnd, colourAlert, GameManager.instance.playerScript.moodReset, colourEnd); ;
+            GameManager.i.actorScript.maxStatValue, colourEnd, colourAlert, GameManager.i.playerScript.moodReset, colourEnd); ;
         listOfHelp.Add(data);
         #endregion
 
@@ -1400,7 +1400,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "mood_1";
         data.header = "Mood and Stress";
-        data.text = string.Format("Your mood moves between 0 and {0}. If it drops {1}below Zero{2} you become {3}STRESSED{4}", GameManager.instance.playerScript.moodMax, colourAlert, colourEnd,
+        data.text = string.Format("Your mood moves between 0 and {0}. If it drops {1}below Zero{2} you become {3}STRESSED{4}", GameManager.i.playerScript.moodMax, colourAlert, colourEnd,
             colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Improving mood
@@ -1580,7 +1580,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "invest_0";
         data.header = "Launched";
         data.text = string.Format("Whenever a {0}Secret{1} is revealed there is a {2}{3} %{4} chance of an Investigation being launched into your conduct", colourAlert, colourEnd,
-            colourAlert, GameManager.instance.playerScript.chanceInvestigation, colourEnd);
+            colourAlert, GameManager.i.playerScript.chanceInvestigation, colourEnd);
         listOfHelp.Add(data);
         //Process
         data = new HelpData();
@@ -1609,7 +1609,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Lead Investigator";
         data.text = new StringBuilder()
         .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Motivation of the Lead{5}", 
-            colourAlert, GameManager.instance.playerScript.chanceEvidence, colourEnd, colourAlert, colourEnd, "\n")
+            colourAlert, GameManager.i.playerScript.chanceEvidence, colourEnd, colourAlert, colourEnd, "\n")
         .AppendFormat("  {0} Motivation 3, {1}Good 80%{2}, Bad 20%{3}", bullet, colourAlert, colourEnd, "\n")
         .AppendFormat("  {0} Motivation 2, {1}Good 60%{2}, Bad 40%{3}", bullet, colourAlert, colourEnd, "\n")
         .AppendFormat("  {0} Motivation 1, Good 40%, {1}Bad 60%{2}{3}", bullet, colourAlert, colourEnd, "\n")
@@ -1628,7 +1628,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "invest_6";
         data.header = "Verdict";
         data.text = string.Format("Once a verdict has been reached the investigation will {0}cease{1} taking into account any {2}new evidence{3} and in {4}{5}{6} turns there will be a formal resolution",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.instance.playerScript.timerInvestigationBase, colourEnd);
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.playerScript.timerInvestigationBase, colourEnd);
         listOfHelp.Add(data);
         //Politics
         data = new HelpData();
@@ -1648,7 +1648,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "invest_9";
         data.header = "Innocent";
         data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd, 
-            colourTip, GameManager.instance.playerScript.investHQApproval, colourEnd);
+            colourTip, GameManager.i.playerScript.investHQApproval, colourEnd);
         listOfHelp.Add(data);
         //Tip
         data = new HelpData();
@@ -1677,7 +1677,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "relation_1";
         data.header = "Motivation";
         data.text = string.Format("If either party in a relationship experiences a {0}change in Motivation{1} then there is a {2}{3} % chance{4} of the other subordinate experiencing a change at the {5}same time{6}",
-            colourAlert, colourEnd, colourAlert, GameManager.instance.actorScript.chanceRelationShift, colourEnd, colourAlert, colourEnd);
+            colourAlert, colourEnd, colourAlert, GameManager.i.actorScript.chanceRelationShift, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Friends
         data = new HelpData();
@@ -1717,7 +1717,7 @@ public class HelpManager : MonoBehaviour
         string tag3 = "relation_3";
         List<HelpData> listOfHelp = GetHelpData(tag0, tag1, tag2, tag3);
         Vector3 screenPos = new Vector3(Screen.width / 2, Screen.height / 2);
-        GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
+        GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
     }
 
     /// <summary>

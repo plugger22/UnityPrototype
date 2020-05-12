@@ -23,7 +23,7 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         //mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
@@ -33,13 +33,13 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
     public void OnPointerEnter(PointerEventData eventData)
     {
         //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
             onMouseFlag = true;
             //exit any node tooltip that might be open
             /*StopCoroutine("ShowTooltip");*/
-            GameManager.instance.tooltipNodeScript.CloseTooltip("WidgetBarLeftMouseUI.cs -> OnPointerEnter");
+            GameManager.i.tooltipNodeScript.CloseTooltip("WidgetBarLeftMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
         }
@@ -56,12 +56,12 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetBarLeftMouseUI.cs -> OnPointerExit");
+            GameManager.i.tooltipGenericScript.CloseTooltip("WidgetBarLeftMouseUI.cs -> OnPointerExit");
         }
     }
 
@@ -74,19 +74,19 @@ public class WidgetBarLeftMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.Normal)
+        if (onMouseFlag == true && GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
             //do once
             Vector3 screenPos = transform.position;
             screenPos.x -= 280;
             screenPos.y -= 55;
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                tooltipHeader = string.Format("{0}{1}<size=115%>Loyalty</size>", GameManager.instance.cityScript.GetCityNameFormatted(), "\n");
-                tooltipMain = GameManager.instance.cityScript.GetCityLoyaltyFormatted();
-                tooltipDetails = GameManager.instance.cityScript.GetCityDetails(true);
+                tooltipHeader = string.Format("{0}{1}<size=115%>Loyalty</size>", GameManager.i.cityScript.GetCityNameFormatted(), "\n");
+                tooltipMain = GameManager.i.cityScript.GetCityLoyaltyFormatted();
+                tooltipDetails = GameManager.i.cityScript.GetCityDetails(true);
                 GenericTooltipData data = new GenericTooltipData() { screenPos =screenPos , main = tooltipMain , header = tooltipHeader, details = tooltipDetails };
-                GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                GameManager.i.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             /*//fade in

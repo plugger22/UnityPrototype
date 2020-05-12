@@ -91,7 +91,7 @@ public class AIDisplayUI : MonoBehaviour
     public void Initialise(GameState state)
     {
         //Resistance Player only
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
         {
             switch (state)
             {
@@ -116,7 +116,7 @@ public class AIDisplayUI : MonoBehaviour
                 case GameState.FollowOnInitialisation:
                     break;
                 default:
-                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                     break;
             }
         }
@@ -128,8 +128,8 @@ public class AIDisplayUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        aiSide = GameManager.instance.sideScript.GetAISide();      
-        flashRedTime = GameManager.instance.guiScript.flashRedTime;
+        aiSide = GameManager.i.sideScript.GetAISide();      
+        flashRedTime = GameManager.i.guiScript.flashRedTime;
         Debug.Assert(aiSide != null, "Invalid AI side (Null)");
         Debug.Assert(flashRedTime > 0, "Invalid flashRedTime ( <= 0 )");
     }
@@ -154,10 +154,10 @@ public class AIDisplayUI : MonoBehaviour
         InitialiseTooltips();
         Debug.Assert(string.IsNullOrEmpty(hackingDetected) == false, "Invalid hackingDetected (Null or Empty)");
         //set button sprites
-        cancelButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-        proceedButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+        cancelButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
+        proceedButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
         //top text
-        tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagGlobalAIName, "\n");
+        tabTopText.text = string.Format("{0}{1}Authority AI", GameManager.i.globalScript.tagGlobalAIName, "\n");
         //active
         isActive = true;
         //set all sub compoponents
@@ -269,9 +269,9 @@ public class AIDisplayUI : MonoBehaviour
     public void InitialiseTooltips()
     {
         //faction top tab tooltip
-        topTabTooltip.tooltipHeader = GameManager.instance.hqScript.GetHqName(aiSide);
-        topTabTooltip.tooltipMain = GameManager.instance.hqScript.GetHqDescription(aiSide);
-        topTabTooltip.tooltipDetails = GameManager.instance.hqScript.GetHqDetails(aiSide);
+        topTabTooltip.tooltipHeader = GameManager.i.hqScript.GetHqName(aiSide);
+        topTabTooltip.tooltipMain = GameManager.i.hqScript.GetHqDescription(aiSide);
+        topTabTooltip.tooltipDetails = GameManager.i.hqScript.GetHqDetails(aiSide);
         topTabTooltip.x_offset = 175;
         //hacking bottom tab tooltip
         bottomTabTooltip.tooltipHeader = "";
@@ -279,7 +279,7 @@ public class AIDisplayUI : MonoBehaviour
         bottomTabTooltip.tooltipDetails = string.Format("Check back for detailed information{0}once you've{1}<b>HACKED the AI</b>", "\n", "\n");
         bottomTabTooltip.x_offset = 175;
         //side tab tooltip
-        sideTabTooltip.tooltipMain = GameManager.instance.aiScript.GetCloseAITabTooltip();
+        sideTabTooltip.tooltipMain = GameManager.i.aiScript.GetCloseAITabTooltip();
         sideTabTooltip.x_offset = 25;
         //sideTabTooltip.x_offset = 30;
         //top Task tooltip
@@ -432,23 +432,23 @@ public class AIDisplayUI : MonoBehaviour
         else
         {
             //get any relevant player modifiers
-            GameManager.instance.aiScript.UpdatePlayerHackingLists();
+            GameManager.i.aiScript.UpdatePlayerHackingLists();
             //gear text
-            gearText.text = GameManager.instance.aiScript.UpdateGearText();
+            gearText.text = GameManager.i.aiScript.UpdateGearText();
             //open UI
             renownPanel.gameObject.SetActive(true);
         }
         //switch on display
         aiDisplayObject.SetActive(true);
         //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //turn off any alert message
-        GameManager.instance.alertScript.CloseAlertUI(true);
+        GameManager.i.alertScript.CloseAlertUI(true);
         //set game state
         ModalStateData package = new ModalStateData();
         package.mainState = ModalSubState.InfoDisplay;
         package.infoState = ModalInfoSubState.AIInfo;
-        GameManager.instance.inputScript.SetModalState(package);
+        GameManager.i.inputScript.SetModalState(package);
     }
 
     /// <summary>
@@ -463,7 +463,7 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.instance.aiScript.UpdateHackingCost();*/
 
         //update hacking status
-        if (GameManager.instance.aiScript.UpdateHackingStatus() == true)
+        if (GameManager.i.aiScript.UpdateHackingStatus() == true)
         {
             //switch on flashers
             detectedFlasher.gameObject.SetActive(true);
@@ -483,14 +483,14 @@ public class AIDisplayUI : MonoBehaviour
     /// </summary>
     private void CloseAIDisplay()
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip("AIDisplayUI.cs -> CloseAIDisplay");
+        GameManager.i.tooltipGenericScript.CloseTooltip("AIDisplayUI.cs -> CloseAIDisplay");
         aiDisplayObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //switch off flashers
         detectedFlasher.gameObject.SetActive(false);
         SetDetectedFlasher(false);
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] AIDisplay.cs -> CloseAIDisplay{0}", "\n");
         //open side tab
         EventManager.instance.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");

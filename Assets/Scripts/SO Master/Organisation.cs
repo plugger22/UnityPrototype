@@ -71,7 +71,7 @@ public class Organisation : ScriptableObject
     {
         int orginalValue = reputation;
         reputation = value;
-        reputation = Mathf.Clamp(reputation, 0, GameManager.instance.actorScript.maxStatValue);
+        reputation = Mathf.Clamp(reputation, 0, GameManager.i.actorScript.maxStatValue);
         Debug.LogFormat("[Org] Organisation.cs -> SetReputation: Reputation now {0}, was {1}{2}", reputation, orginalValue, "\n");
     }
 
@@ -83,7 +83,7 @@ public class Organisation : ScriptableObject
     {
         int orginalValue = freedom;
         freedom = value;
-        freedom = Mathf.Clamp(freedom, 0, GameManager.instance.actorScript.maxStatValue);
+        freedom = Mathf.Clamp(freedom, 0, GameManager.i.actorScript.maxStatValue);
         Debug.LogFormat("[Org] Organisation.cs -> SetFreedom: Freedom now {0}, was {1}{2}", freedom, orginalValue, "\n");
     }
 
@@ -95,7 +95,7 @@ public class Organisation : ScriptableObject
     {
         int orginalValue = reputation;
         reputation += change;
-        reputation = Mathf.Clamp(reputation, 0, GameManager.instance.actorScript.maxStatValue);
+        reputation = Mathf.Clamp(reputation, 0, GameManager.i.actorScript.maxStatValue);
         Debug.LogFormat("[Org] Organisation.cs -> ChangeReputation: Reputation now {0}, was {1} (change {2}{3}){4}", reputation, orginalValue, change > 0 ? "+" : "", change, "\n");
     }
 
@@ -107,7 +107,7 @@ public class Organisation : ScriptableObject
     {
         int orginalValue = freedom;
         freedom += change;
-        freedom = Mathf.Clamp(freedom, 0, GameManager.instance.actorScript.maxStatValue);
+        freedom = Mathf.Clamp(freedom, 0, GameManager.i.actorScript.maxStatValue);
         Debug.LogFormat("[Org] Organisation.cs -> ChangeFreedom: Freedom now {0}, was {1} (change {2}{3}){4}", freedom, orginalValue, change > 0 ? "+" : "", change, "\n");
     }
 

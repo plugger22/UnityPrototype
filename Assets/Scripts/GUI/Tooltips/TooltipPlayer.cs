@@ -60,7 +60,7 @@ public class TooltipPlayer : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -75,9 +75,9 @@ public class TooltipPlayer : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //node datapoint icons
-        arrayOfIcons[0] = GameManager.instance.guiScript.invisibilityIcon;
-        arrayOfIcons[1] = GameManager.instance.guiScript.motivationIcon;
-        arrayOfIcons[2] = GameManager.instance.guiScript.innocenceIcon;
+        arrayOfIcons[0] = GameManager.i.guiScript.invisibilityIcon;
+        arrayOfIcons[1] = GameManager.i.guiScript.motivationIcon;
+        arrayOfIcons[2] = GameManager.i.guiScript.innocenceIcon;
         Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0] (Null)");
         Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1] (Null)");
         Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2] (Null)");
@@ -93,8 +93,8 @@ public class TooltipPlayer : MonoBehaviour
     {
         canvasGroup = tooltipPlayerObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipPlayerObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.guiScript.tooltipFade;
-        offset = GameManager.instance.guiScript.tooltipOffset;
+        fadeInTime = GameManager.i.guiScript.tooltipFade;
+        offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipPlayer");
         EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipPlayer");
@@ -139,14 +139,14 @@ public class TooltipPlayer : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.dataNeutral);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourName = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     #region SetToolip
@@ -160,7 +160,7 @@ public class TooltipPlayer : MonoBehaviour
         bool isConditions = false;
         //open panel at start
         tooltipPlayerObject.SetActive(true);
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window (Status and Conditions are switched on later only if present)
@@ -178,23 +178,23 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - Name - - -
         //
-        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}<size=110%><b>{4}</b></size>{5}", colourCancel, colourEnd, "\n", colourName, GameManager.instance.playerScript.PlayerName, colourEnd);
+        playerName.text = string.Format("{0}<b>PLAYER</b>{1}{2}{3}<size=110%><b>{4}</b></size>{5}", colourCancel, colourEnd, "\n", colourName, GameManager.i.playerScript.PlayerName, colourEnd);
         //
         // - - - Status - - -
         //
-        if (GameManager.instance.playerScript.status != ActorStatus.Active)
+        if (GameManager.i.playerScript.status != ActorStatus.Active)
         {
             //activate UI components
             playerStatus.gameObject.SetActive(true);
             isStatus = true;
-            switch (GameManager.instance.playerScript.status)
+            switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Inactive:
-                    switch (GameManager.instance.playerScript.inactiveStatus)
+                    switch (GameManager.i.playerScript.inactiveStatus)
                     {
                         case ActorInactive.LieLow:
-                            int numOfTurns = GameManager.instance.actorScript.maxStatValue - GameManager.instance.playerScript.Invisibility;
-                            if (GameManager.instance.playerScript.isLieLowFirstturn == true) { numOfTurns++; }
+                            int numOfTurns = GameManager.i.actorScript.maxStatValue - GameManager.i.playerScript.Invisibility;
+                            if (GameManager.i.playerScript.isLieLowFirstturn == true) { numOfTurns++; }
                             playerStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
                                 numOfTurns != 1 ? "s" : "");
                             break;
@@ -207,16 +207,16 @@ public class TooltipPlayer : MonoBehaviour
                     playerStatus.text = string.Format("{0}<b>CAPTURED</b>{1}{2}Whereabouts unknown", colourBad, colourEnd, "\n");
                     break;
                 default:
-                    playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, GameManager.instance.playerScript.status.ToString().ToUpper(), colourEnd);
+                    playerStatus.text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, GameManager.i.playerScript.status.ToString().ToUpper(), colourEnd);
                     break;
             }
         }
         //
         // - - - Conditions - - -
         //
-        if (GameManager.instance.playerScript.CheckNumOfConditions(playerSide) > 0)
+        if (GameManager.i.playerScript.CheckNumOfConditions(playerSide) > 0)
         {
-            List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(playerSide);
+            List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(playerSide);
             if (listOfConditions != null)
             {
                 playerConditions.gameObject.SetActive(true);
@@ -259,23 +259,23 @@ public class TooltipPlayer : MonoBehaviour
                 //Authority
                 StringBuilder builderAut = new StringBuilder();
                 builderAut.AppendFormat("{0}Teams{1}{2}", colourAlert, colourEnd, "\n");
-                builderAut.AppendFormat("<b>On Map<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
-                builderAut.AppendFormat("<b>In Transit<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
-                builderAut.AppendFormat("<b>Reserves<pos=70%>{0}</b>{1}", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
+                builderAut.AppendFormat("<b>On Map<pos=70%>{0}</b>{1}", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.OnMap), "\n");
+                builderAut.AppendFormat("<b>In Transit<pos=70%>{0}</b>{1}", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.InTransit), "\n");
+                builderAut.AppendFormat("<b>Reserves<pos=70%>{0}</b>{1}", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.Reserve), "\n");
                 playerStats.text = builderAut.ToString();
                 break;
             case 2:
                 //Resistance
-                int invisibility = GameManager.instance.playerScript.Invisibility;
-                int mood = GameManager.instance.playerScript.GetMood();
+                int invisibility = GameManager.i.playerScript.Invisibility;
+                int mood = GameManager.i.playerScript.GetMood();
                 StringBuilder builderRes = new StringBuilder();
 
                 /*builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
                 builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);*/
 
-                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.instance.guiScript.GetDatapointStars(invisibility), "\n");
-                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.instance.guiScript.GetDatapointStars(mood), "\n");
-                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.instance.guiScript.GetDatapointStars(GameManager.instance.playerScript.Innocence));
+                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.i.guiScript.GetDatapointStars(invisibility), "\n");
+                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.i.guiScript.GetDatapointStars(mood), "\n");
+                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.i.guiScript.GetDatapointStars(GameManager.i.playerScript.Innocence));
                 playerStats.text = builderRes.ToString();
                 break;
         }
@@ -290,7 +290,7 @@ public class TooltipPlayer : MonoBehaviour
                 break;
             case 2:
                 //Resistance -> Gear
-                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
                 if (listOfGear != null && listOfGear.Count > 0)
                 {
                     StringBuilder builderGear = new StringBuilder();
@@ -298,7 +298,7 @@ public class TooltipPlayer : MonoBehaviour
                     //gear in inventory
                     foreach (string gearName in listOfGear)
                     {
-                        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                        Gear gear = GameManager.i.dataScript.GetGear(gearName);
                         if (gear != null)
                         { builderGear.AppendFormat("<b>{0}{1}{2}{3}</b>", "\n", colourNeutral, gear.tag, colourEnd); }
                     }
@@ -310,7 +310,7 @@ public class TooltipPlayer : MonoBehaviour
         //
         // - - - MultiPurpose 2 (Secrets) - - - 
         //
-        List<Secret> listOfSecrets = GameManager.instance.playerScript.GetListOfSecrets();
+        List<Secret> listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
         if (listOfSecrets != null && listOfSecrets.Count > 0)
         {
             StringBuilder builderSecrets = new StringBuilder();
@@ -401,21 +401,21 @@ public class TooltipPlayer : MonoBehaviour
         {
             case 1:
                 //Authority
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
-                divider_1.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                divider_2.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                divider_3.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                divider_4.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                divider_5.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundAuthority;
+                divider_1.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                divider_2.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                divider_3.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                divider_4.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                divider_5.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
                 break;
             case 2:
                 //Resistance
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
-                divider_1.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                divider_2.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                divider_3.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                divider_4.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                divider_5.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundRebel;
+                divider_1.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                divider_2.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                divider_3.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                divider_4.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                divider_5.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

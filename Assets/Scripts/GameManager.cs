@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,7 +7,6 @@ using delegateAPI;
 using System.IO;
 using System.Globalization;
 using modalAPI;
-using System.Text;
 using packageAPI;
 
 public struct StartMethod
@@ -26,7 +24,7 @@ public class GameManager : MonoBehaviour
 {
 
     #region Components
-    public static GameManager instance = null;                          //static instance of GameManager which allows it to be accessed by any other script
+    public static GameManager i = null;                                 //static instance of GameManager which allows it to be accessed by any other script
     [HideInInspector] public StartManager startScript;                  //Start Manager
     [HideInInspector] public LevelManager levelScript;                  //Level Manager
     [HideInInspector] public PreLoadManager preloadScript;              //PreLoad Manager
@@ -78,6 +76,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ColourManager colourScript;                //Colour Manager
     [HideInInspector] public TestManager testScript;                    //Test Manager
     [HideInInspector] public TextManager textScript;                    //Text Manager
+    //GUI
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
     [HideInInspector] public TooltipActor tooltipActorScript;           //actor tooltip static instance
@@ -107,6 +106,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public DebugGraphics debugGraphicsScript;         //Debug only Graphics
     [HideInInspector] public DebugGUI debugScript;                      //Debug GUI
     [HideInInspector] public TopicUI topicDisplayScript;                //Topic UI
+    [HideInInspector] public ModalPopUp popUpScript;                    //TextPopUp UI
     #endregion
 
 
@@ -154,10 +154,10 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //check if instance already exists
-        if (instance == null)
-        { instance = this; }
+        if (i == null)
+        { i = this; }
         //if instance already exists and it's not this
-        else if (instance != this)
+        else if (i != this)
         {
             //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of GameManager)
             Destroy(gameObject);
@@ -253,6 +253,7 @@ public class GameManager : MonoBehaviour
         basePanelScript = BasePanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         topicDisplayScript = TopicUI.Instance();
+        popUpScript = ModalPopUp.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -330,6 +331,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
         Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
         Debug.Assert(topicDisplayScript != null, "Invalid topicDisplayScript (Null)");
+        Debug.Assert(popUpScript != null, "Invalid popUpScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
@@ -758,7 +760,7 @@ public class GameManager : MonoBehaviour
         //run each method via delegates in their preset order
         if (listOfMethods != null)
         {
-            GameState state = GameManager.instance.inputScript.GameState;
+            GameState state = GameManager.i.inputScript.GameState;
             foreach (StartMethod method in listOfMethods)
             {
                 if (method.handler != null)
@@ -780,14 +782,14 @@ public class GameManager : MonoBehaviour
         //run each method via delegates in their preset order
         if (listOfMethods != null)
         {
-            GameState state = GameManager.instance.inputScript.GameState;
+            GameState state = GameManager.i.inputScript.GameState;
             //start timer tally to get an overall performance time
-            GameManager.instance.testScript.TimerTallyStart();
+            GameManager.i.testScript.TimerTallyStart();
             foreach (StartMethod method in listOfMethods)
             {
                 if (method.handler != null)
                 {
-                    GameManager.instance.testScript.StartTimer();
+                    GameManager.i.testScript.StartTimer();
                     method.handler(state);
                     long elapsed = testScript.StopTimer();
                     Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", method.className, method.handler.Method.Name, elapsed, "\n");
@@ -996,14 +998,14 @@ public class GameManager : MonoBehaviour
     public static TimeStamp SetTimeStamp()
     {
         TimeStamp timeStamp = new TimeStamp();
-        timeStamp.scenario = instance.campaignScript.GetScenarioIndex();
-        switch (instance.inputScript.GameState)
+        timeStamp.scenario = i.campaignScript.GetScenarioIndex();
+        switch (i.inputScript.GameState)
         {
             case GameState.MetaGame:
                 timeStamp.turn = 999;
                 break;
             default:
-                timeStamp.turn = GameManager.instance.turnScript.Turn;
+                timeStamp.turn = GameManager.i.turnScript.Turn;
                 break;
         }
         return timeStamp;
@@ -1019,7 +1021,7 @@ public class GameManager : MonoBehaviour
     {
         string formattedText = text;
         if (string.IsNullOrEmpty(text) == false)
-        { formattedText = string.Format("{0}{1}{2}", instance.colourScript.GetColour(colourType), text, instance.colourScript.GetEndTag()); }
+        { formattedText = string.Format("{0}{1}{2}", i.colourScript.GetColour(colourType), text, i.colourScript.GetEndTag()); }
         else { Debug.LogError("Invalid text (Null)"); }
         return formattedText;
     }

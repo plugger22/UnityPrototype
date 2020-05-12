@@ -117,7 +117,7 @@ namespace packageAPI
         public EffectDataInput()
         {
             ongoingID = -1; ongoingText = "";
-            side = GameManager.instance.sideScript.PlayerSide;
+            side = GameManager.i.sideScript.PlayerSide;
         }
     }
 
@@ -185,7 +185,7 @@ namespace packageAPI
         {
             nodeID = -1;
             ongoingID = -1;
-            timer = GameManager.instance.effectScript.ongoingEffectTimer;
+            timer = GameManager.i.effectScript.ongoingEffectTimer;
         }
     }
 
@@ -568,9 +568,9 @@ namespace packageAPI
 
         public HistoryActor()
         {
-            turn = GameManager.instance.turnScript.Turn;
-            city = GameManager.instance.campaignScript.scenario.city.name;
-            cityTag = GameManager.instance.campaignScript.scenario.city.tag;
+            turn = GameManager.i.turnScript.Turn;
+            city = GameManager.i.campaignScript.scenario.city.name;
+            cityTag = GameManager.i.campaignScript.scenario.city.tag;
         }
     }
 
@@ -748,7 +748,7 @@ namespace packageAPI
         public int chance;                     //dynamically added by ProcessTasksFinal (for display to player of % chance of this task being chosen)
 
         public AITask()
-        { taskID = GameManager.instance.aiScript.aiTaskCounter++; }
+        { taskID = GameManager.i.aiScript.aiTaskCounter++; }
     }
 
     /// <summary>
@@ -903,7 +903,7 @@ namespace packageAPI
         public List<string> listOfHelp = new List<string>();                //list of help tags for, optional, second help mouseover down the bottom (not shown if listOfHelp is empty)
 
         public TopicUIData()
-        { colour = GameManager.instance.guiScript.colourTopicNormal; }
+        { colour = GameManager.i.guiScript.colourTopicNormal; }
     }
 
     /// <summary>
@@ -950,7 +950,7 @@ namespace packageAPI
 
         public NewsItem()
         {
-            timer = GameManager.instance.newsScript.timerMaxItemTurns;
+            timer = GameManager.i.newsScript.timerMaxItemTurns;
         }
     }
 
@@ -1021,8 +1021,8 @@ namespace packageAPI
             slotID = -1;
             actorID = -1;
             relationship = ActorRelationship.None;
-            timer = GameManager.instance.actorScript.timerRelations;
-            arrayOfCompatibility = new int[GameManager.instance.actorScript.maxNumOfOnMapActors];
+            timer = GameManager.i.actorScript.timerRelations;
+            arrayOfCompatibility = new int[GameManager.i.actorScript.maxNumOfOnMapActors];
         }
     }
 
@@ -1065,7 +1065,7 @@ namespace packageAPI
         public string reason;
 
         public HqRenownData()
-        { scenarioIndex = GameManager.instance.campaignScript.GetScenarioIndex(); }
+        { scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex(); }
     }
 
     /// <summary>

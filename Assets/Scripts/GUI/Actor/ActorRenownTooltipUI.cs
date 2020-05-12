@@ -24,8 +24,8 @@ public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     private void Start()
     {
         myCoroutine = null;
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.i.guiScript.tooltipFade;
     }
 
 
@@ -54,7 +54,7 @@ public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             myCoroutine = null;
         }
 
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorRenownTooltipUI.cs -> OnPointerExit");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ActorRenownTooltipUI.cs -> OnPointerExit");
     }
 
 
@@ -67,23 +67,23 @@ public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.instance.actorScript.GetRenownActorTooltip();
+                data = GameManager.i.actorScript.GetRenownActorTooltip();
                 data.screenPos = transform.position;
                 if (data != null)
-                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
+                { GameManager.i.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
             }
             //fade in
             if (data != null)
             {
                 float alphaCurrent;
-                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                while (GameManager.i.tooltipGenericScript.GetOpacity() < 1.0)
                 {
-                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent = GameManager.i.tooltipGenericScript.GetOpacity();
                     alphaCurrent += Time.deltaTime / mouseOverFade;
-                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    GameManager.i.tooltipGenericScript.SetOpacity(alphaCurrent);
                     yield return null;
                 }
             }

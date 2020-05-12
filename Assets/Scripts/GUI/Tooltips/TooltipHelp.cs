@@ -41,7 +41,7 @@ public class TooltipHelp : MonoBehaviour
     private void Start()
     {
         rectTransform = tooltipHelpObject.GetComponent<RectTransform>();
-        offset = GameManager.instance.guiScript.tooltipOffset;
+        offset = GameManager.i.guiScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid offset (Zero)");
         Debug.Assert(tooltipHelpObject != null, "Invalid tooltipHelpOjbect (Null)");
         Debug.Assert(topicObject_0 != null, "Invalid topicOjbect_0 (Null)");
@@ -97,8 +97,8 @@ public class TooltipHelp : MonoBehaviour
     public void SetTooltip(List<HelpData> listOfHelpData, Vector3 screenPos)
     {
         //exit any node tooltip that might be open
-        GameManager.instance.tooltipNodeScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
-        GameManager.instance.tooltipGenericScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
+        GameManager.i.tooltipNodeScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
+        GameManager.i.tooltipGenericScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
         //number of topics
         int count = listOfHelpData.Count;
         if (count > 0)

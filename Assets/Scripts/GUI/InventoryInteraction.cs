@@ -40,7 +40,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         bool proceedFlag = true;
         switch (eventData.button)
         {
@@ -51,17 +51,17 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 
                 break;
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
+                if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
                 {
                     //Action Menu -> not valid if Resistance Plyr and player captured, etc.
-                    if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                    if (GameManager.i.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; }
                     if (proceedFlag == true)
                     {
                         switch (type)
                         {
                             case InventoryState.Gear:
-                                Gear gear = GameManager.instance.dataScript.GetGear(optionName);
+                                Gear gear = GameManager.i.dataScript.GetGear(optionName);
                                 if (gear != null)
                                 {
                                     //adjust position prior to sending
@@ -78,18 +78,18 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                         modalState = ModalSubState.Inventory,
                                         itemDetails = string.Format("{0}", gear.type.name),
                                         menuPos = position,
-                                        listOfButtonDetails = GameManager.instance.actorScript.GetGearInventoryActions(gear.name),
+                                        listOfButtonDetails = GameManager.i.actorScript.GetGearInventoryActions(gear.name),
                                         menuType = ActionMenuType.Gear
                                     };
                                     //activate menu
-                                    GameManager.instance.actionMenuScript.SetActionMenu(details);
+                                    GameManager.i.actionMenuScript.SetActionMenu(details);
 
                                 }
                                 else
                                 { Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData)); }
                                 break;
                             case InventoryState.ReservePool:
-                                Actor actor = GameManager.instance.dataScript.GetActor(optionData);
+                                Actor actor = GameManager.i.dataScript.GetActor(optionData);
                                 if (actor != null)
                                 {
                                     //adjust position prior to sending
@@ -106,11 +106,11 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                         modalState = ModalSubState.Inventory,
                                         itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
                                         menuPos = position,
-                                        listOfButtonDetails = GameManager.instance.actorScript.GetReservePoolActions(actor.actorID),
+                                        listOfButtonDetails = GameManager.i.actorScript.GetReservePoolActions(actor.actorID),
                                         menuType = ActionMenuType.Reserve
                                     };
                                     //activate menu
-                                    GameManager.instance.actionMenuScript.SetActionMenu(details);
+                                    GameManager.i.actionMenuScript.SetActionMenu(details);
 
                                 }
                                 else

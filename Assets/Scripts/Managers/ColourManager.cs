@@ -96,17 +96,17 @@ public class ColourManager : MonoBehaviour
         //automatically handle an access call to an arrayIndex that hasn't been populated
         try
         {
-            colourTag = GameManager.instance.colourScript.arrayOfColours[(int)colour, (int)GameManager.instance.optionScript.ColourOption].hexCode;
+            colourTag = GameManager.i.colourScript.arrayOfColours[(int)colour, (int)GameManager.i.optionScript.ColourOption].hexCode;
         }
         catch (IndexOutOfRangeException)
         {
             //return default white colour if no entry present
-            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1}. Return default WHITE", colour, GameManager.instance.optionScript.ColourOption));
+            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1}. Return default WHITE", colour, GameManager.i.optionScript.ColourOption));
         }
         catch (NullReferenceException)
         {
             //return default white colour if no entry present
-            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1} (Null). Return default WHITE", colour, GameManager.instance.optionScript.ColourOption));
+            Debug.LogError(string.Format("No colour present for {0} with ColourScheme {1} (Null). Return default WHITE", colour, GameManager.i.optionScript.ColourOption));
         }
         return string.Format("{0}{1}{2}", "<color=", colourTag, ">");
     }
@@ -126,11 +126,11 @@ public class ColourManager : MonoBehaviour
         string colourReturn;
         switch (value)
         {
-            case 0: colourReturn = dataTerrible[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
-            case 1: colourReturn = dataBad[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
-            case 2: colourReturn = dataNeutral[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
-            case 3: colourReturn = dataGood[(int)GameManager.instance.optionScript.ColourOption].hexCode; break;
-            default: colourReturn = dataGood[(int)GameManager.instance.optionScript.ColourOption].hexCode; break; //default is > 3 (all good)
+            case 0: colourReturn = dataTerrible[(int)GameManager.i.optionScript.ColourOption].hexCode; break;
+            case 1: colourReturn = dataBad[(int)GameManager.i.optionScript.ColourOption].hexCode; break;
+            case 2: colourReturn = dataNeutral[(int)GameManager.i.optionScript.ColourOption].hexCode; break;
+            case 3: colourReturn = dataGood[(int)GameManager.i.optionScript.ColourOption].hexCode; break;
+            default: colourReturn = dataGood[(int)GameManager.i.optionScript.ColourOption].hexCode; break; //default is > 3 (all good)
         }
         return string.Format("{0}{1}{2}", "<color=", colourReturn, ">");
     }
@@ -158,10 +158,10 @@ public class ColourManager : MonoBehaviour
     {
         //create an outcome window to notify player
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.side = GameManager.instance.sideScript.PlayerSide;
+        outcomeDetails.side = GameManager.i.sideScript.PlayerSide;
         outcomeDetails.textTop = "Colour Palette";
         StringBuilder builder = new StringBuilder();
-        Colour[] arrayOfColour = GameManager.instance.loadScript.arrayOfColours;
+        Colour[] arrayOfColour = GameManager.i.loadScript.arrayOfColours;
         if (arrayOfColour != null)
         {
             foreach(Colour colour in arrayOfColour)

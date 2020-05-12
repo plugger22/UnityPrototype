@@ -152,7 +152,7 @@ public class ValidationManager : MonoBehaviour
             //do nothing
             //break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -168,8 +168,8 @@ public class ValidationManager : MonoBehaviour
         Debug.Assert(string.IsNullOrEmpty(levelScopeName) == false, "Invalid levelScopeName (Null or Empty)");
         Debug.Assert(campaignScope != null, "Invalid campaignScope (Null)");
         Debug.Assert(string.IsNullOrEmpty(campaignScopeName) == false, "Invalid campaignScopeName (Null or Empty)");
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(normalProfile != null, "Invalid normalProfile (Null)");
@@ -467,7 +467,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTargets()
     {
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         /*for (int index = 0; index < dictOfTargets.Count; index++)*/
         foreach (var target in dictOfTargets)
         {
@@ -541,7 +541,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateGear()
     {
-        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             foreach (var gear in dictOfGear)
@@ -583,7 +583,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateMissions()
     {
-        Mission[] arrayOfMissions = GameManager.instance.loadScript.arrayOfMissions;
+        Mission[] arrayOfMissions = GameManager.i.loadScript.arrayOfMissions;
         if (arrayOfMissions != null)
         {
             List<string> listOfNames = new List<string>();
@@ -715,7 +715,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTextLists()
     {
-        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        TextList[] arrayOfTextLists = GameManager.i.loadScript.arrayOfTextLists;
         if (arrayOfTextLists != null)
         {
             //loop textlists
@@ -757,7 +757,7 @@ public class ValidationManager : MonoBehaviour
                         {
                             data.text = textList.randomList[j];
                             data.objectName = string.Format("{0}, line {1}", textList.name, j);
-                            GameManager.instance.newsScript.CheckNewsText(data);
+                            GameManager.i.newsScript.CheckNewsText(data);
                         }
                     }
                 }
@@ -773,7 +773,7 @@ public class ValidationManager : MonoBehaviour
     //checks that city speciality district names (icon, airport, harbour) aren't present in the cities list of DistrictNames
     private void ValidateCities()
     {
-        City[] arrayOfCities = GameManager.instance.loadScript.arrayOfCities;
+        City[] arrayOfCities = GameManager.i.loadScript.arrayOfCities;
         if (arrayOfCities != null)
         {
             for (int i = 0; i < arrayOfCities.Length; i++)
@@ -812,17 +812,17 @@ public class ValidationManager : MonoBehaviour
     {
         int count, countSubType, textLength, num;
         bool isPassedCheck;
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (playerSide == null) { Debug.LogError("Invalid playerSide (Null)"); }
 
         #region TopicTypes and TopicSubTypes
         //
         // - - - TopicTypes and TopicSubTypes
         //
-        TopicType[] arrayOfTopicTypes = GameManager.instance.loadScript.arrayOfTopicTypes;
+        TopicType[] arrayOfTopicTypes = GameManager.i.loadScript.arrayOfTopicTypes;
         if (arrayOfTopicTypes != null)
         {
-            TopicSubType[] arrayOfTopicSubTypes = GameManager.instance.loadScript.arrayOfTopicSubTypes;
+            TopicSubType[] arrayOfTopicSubTypes = GameManager.i.loadScript.arrayOfTopicSubTypes;
             if (arrayOfTopicSubTypes != null)
             {
                 List<TopicSubType> listOfSubTypes = new List<TopicSubType>();
@@ -882,11 +882,11 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Topics and TopicOptions
         //
-        Topic[] arrayOfTopics = GameManager.instance.loadScript.arrayOfTopics;
-        TopicOption[] arrayOfTopicOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        Topic[] arrayOfTopics = GameManager.i.loadScript.arrayOfTopics;
+        TopicOption[] arrayOfTopicOptions = GameManager.i.loadScript.arrayOfTopicOptions;
         List<string> listOfMoodEffects = new List<string>();
-        Dictionary<string, int> dictOfBeliefs = GameManager.instance.dataScript.GetDictOfBeliefs();
-        int maxOptions = GameManager.instance.topicScript.maxOptions;
+        Dictionary<string, int> dictOfBeliefs = GameManager.i.dataScript.GetDictOfBeliefs();
+        int maxOptions = GameManager.i.topicScript.maxOptions;
         int hqOptions;
         if (arrayOfTopics != null)
         {
@@ -912,7 +912,7 @@ public class ValidationManager : MonoBehaviour
                                   textLength, maxTopicTextLength, topicName, "\n");
                             }
                             //check topic text tags
-                            GameManager.instance.topicScript.CheckTopicText(topic.text, false, true, topicName);
+                            GameManager.i.topicScript.CheckTopicText(topic.text, false, true, topicName);
                             //check topic disabled
                             if (topic.isDisabled == true)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" is Disabled{1}", topic.name, "\n"); }
@@ -942,7 +942,7 @@ public class ValidationManager : MonoBehaviour
                                         //
                                         //check text tags
                                         if (string.IsNullOrEmpty(option.text) == false)
-                                        { GameManager.instance.topicScript.CheckTopicText(option.text, false, true, option.name); }
+                                        { GameManager.i.topicScript.CheckTopicText(option.text, false, true, option.name); }
                                         //text
                                         if (option.text != null && option.text.Length > 0)
                                         {
@@ -1035,7 +1035,7 @@ public class ValidationManager : MonoBehaviour
                                             //News snippet (check text tags are valid), only if a news snippet is present
                                             if (string.IsNullOrEmpty(option.news) == false)
                                             {
-                                                GameManager.instance.topicScript.CheckTopicText(option.news, false, true, option.name);
+                                                GameManager.i.topicScript.CheckTopicText(option.news, false, true, option.name);
                                                 //check max length
                                                 if (option.news.Length > maxTopicTextLength)
                                                 {
@@ -1076,7 +1076,7 @@ public class ValidationManager : MonoBehaviour
                             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
 
                             //subType matches type
-                            TopicType topicType = GameManager.instance.dataScript.GetTopicType(topic.type.name);
+                            TopicType topicType = GameManager.i.dataScript.GetTopicType(topic.type.name);
                             if (topicType != null)
                             {
                                 //check topic subType is on the listOfSubTypes
@@ -1156,7 +1156,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Topic Pools
         //
-        TopicPool[] arrayOfTopicPools = GameManager.instance.loadScript.arrayOfTopicPools;
+        TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
         if (arrayOfTopicPools != null)
         {
             string topicName, topicSubName;
@@ -1237,7 +1237,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Campaigns (Topic Pools and Scenario sides
         //
-        Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
+        Campaign[] arrayOfCampaigns = GameManager.i.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
         {
             count = arrayOfCampaigns.Length;
@@ -1429,7 +1429,7 @@ public class ValidationManager : MonoBehaviour
         #endregion
 
         #region City Topic Pools
-        City[] arrayOfCities = GameManager.instance.loadScript.arrayOfCities;
+        City[] arrayOfCities = GameManager.i.loadScript.arrayOfCities;
         if (arrayOfCities != null)
         {
             count = arrayOfCities.Length;
@@ -1490,7 +1490,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateScenarios()
     {
-        Scenario[] arrayOfScenarios = GameManager.instance.loadScript.arrayOfScenarios;
+        Scenario[] arrayOfScenarios = GameManager.i.loadScript.arrayOfScenarios;
         if (arrayOfScenarios != null)
         {
             for (int i = 0; i < arrayOfScenarios.Length; i++)
@@ -1554,7 +1554,7 @@ public class ValidationManager : MonoBehaviour
     //runs checks on campaigns
     private void ValidateCampaigns()
     {
-        Campaign[] arrayOfCampaigns = GameManager.instance.loadScript.arrayOfCampaigns;
+        Campaign[] arrayOfCampaigns = GameManager.i.loadScript.arrayOfCampaigns;
         if (arrayOfCampaigns != null)
         {
             //Check organisations are the correct type
@@ -1603,39 +1603,39 @@ public class ValidationManager : MonoBehaviour
     private void ValidateCapture()
     {
         //Capture Tools -> tool innocence level should match captureManager field level
-        if (GameManager.instance.captureScript.innocence_0 != null)
+        if (GameManager.i.captureScript.innocence_0 != null)
         {
-            if (GameManager.instance.captureScript.innocence_0.innocenceLevel != 0)
+            if (GameManager.i.captureScript.innocence_0.innocenceLevel != 0)
             {
                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_0 \"{0}\" has incorrent innocence level (is {1}, should be 0){2}",
-                    GameManager.instance.captureScript.innocence_0.name, GameManager.instance.captureScript.innocence_0.innocenceLevel, "\n");
+                    GameManager.i.captureScript.innocence_0.name, GameManager.i.captureScript.innocence_0.innocenceLevel, "\n");
             }
         }
         //Innocence level 1
-        if (GameManager.instance.captureScript.innocence_1 != null)
+        if (GameManager.i.captureScript.innocence_1 != null)
         {
-            if (GameManager.instance.captureScript.innocence_1.innocenceLevel != 1)
+            if (GameManager.i.captureScript.innocence_1.innocenceLevel != 1)
             {
                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_1 \"{0}\" has incorrent innocence level (is {1}, should be 1){2}",
-                    GameManager.instance.captureScript.innocence_1.name, GameManager.instance.captureScript.innocence_1.innocenceLevel, "\n");
+                    GameManager.i.captureScript.innocence_1.name, GameManager.i.captureScript.innocence_1.innocenceLevel, "\n");
             }
         }
         //Innocence level 2
-        if (GameManager.instance.captureScript.innocence_2 != null)
+        if (GameManager.i.captureScript.innocence_2 != null)
         {
-            if (GameManager.instance.captureScript.innocence_2.innocenceLevel != 2)
+            if (GameManager.i.captureScript.innocence_2.innocenceLevel != 2)
             {
                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_2 \"{0}\" has incorrent innocence level (is {1}, should be 2){2}",
-                    GameManager.instance.captureScript.innocence_2.name, GameManager.instance.captureScript.innocence_2.innocenceLevel, "\n");
+                    GameManager.i.captureScript.innocence_2.name, GameManager.i.captureScript.innocence_2.innocenceLevel, "\n");
             }
         }
         //Innocence level 3
-        if (GameManager.instance.captureScript.innocence_3 != null)
+        if (GameManager.i.captureScript.innocence_3 != null)
         {
-            if (GameManager.instance.captureScript.innocence_3.innocenceLevel != 3)
+            if (GameManager.i.captureScript.innocence_3.innocenceLevel != 3)
             {
                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateCapture: captureTool innocence_3 \"{0}\" has incorrent innocence level (is {1}, should be 3){2}",
-                    GameManager.instance.captureScript.innocence_3.name, GameManager.instance.captureScript.innocence_3.innocenceLevel, "\n");
+                    GameManager.i.captureScript.innocence_3.name, GameManager.i.captureScript.innocence_3.innocenceLevel, "\n");
             }
         }
     }
@@ -1648,25 +1648,25 @@ public class ValidationManager : MonoBehaviour
     private void ValidateMetaOptions()
     {
         //check MetaManager special arrays, each should have a set number in order to handle worst case scenarios -> Organisations
-        if (GameManager.instance.metaScript.arrayOfOrganisationOptions.Length != GameManager.instance.loadScript.arrayOfOrgTypes.Length)
+        if (GameManager.i.metaScript.arrayOfOrganisationOptions.Length != GameManager.i.loadScript.arrayOfOrgTypes.Length)
         {
             Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfOrganisations (has {0} records, should be {1}){2}",
-              GameManager.instance.metaScript.arrayOfOrganisationOptions.Length, GameManager.instance.loadScript.arrayOfOrgTypes.Length, "\n");
+              GameManager.i.metaScript.arrayOfOrganisationOptions.Length, GameManager.i.loadScript.arrayOfOrgTypes.Length, "\n");
         }
         //Secrets
-        if (GameManager.instance.metaScript.arrayOfSecretOptions.Length != GameManager.instance.secretScript.secretMaxNum)
+        if (GameManager.i.metaScript.arrayOfSecretOptions.Length != GameManager.i.secretScript.secretMaxNum)
         {
             Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfSecrets (has {0} records, should be {1}){2})",
-                GameManager.instance.metaScript.arrayOfSecretOptions.Length, GameManager.instance.secretScript.secretMaxNum, "\n");
+                GameManager.i.metaScript.arrayOfSecretOptions.Length, GameManager.i.secretScript.secretMaxNum, "\n");
         }
         //Investigations
-        if (GameManager.instance.metaScript.arrayOfInvestigationOptions.Length != GameManager.instance.playerScript.maxInvestigations)
+        if (GameManager.i.metaScript.arrayOfInvestigationOptions.Length != GameManager.i.playerScript.maxInvestigations)
         {
             Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Mismatch on count for arrayOfInvestigations (has {0} records, should be {1}){2})",
-                GameManager.instance.metaScript.arrayOfInvestigationOptions.Length, GameManager.instance.playerScript.maxInvestigations, "\n");
+                GameManager.i.metaScript.arrayOfInvestigationOptions.Length, GameManager.i.playerScript.maxInvestigations, "\n");
         }
         //check each metaOption in the special arrays to ensure that 'isAlways' is false and there are NO Criteria
-        MetaOption[] arrayOfMeta = GameManager.instance.metaScript.arrayOfOrganisationOptions;
+        MetaOption[] arrayOfMeta = GameManager.i.metaScript.arrayOfOrganisationOptions;
         if (arrayOfMeta != null)
         {
             for (int i = 0; i < arrayOfMeta.Length; i++)
@@ -1684,7 +1684,7 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid MetaManager.cs -> arrayOfOrganisationOptions (Null)"); }
         //check all MetaOptions
-        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
             foreach(var meta in dictOfMetaOptions)
@@ -1753,151 +1753,151 @@ public class ValidationManager : MonoBehaviour
     public void ValidateSO(GameState state)
     {
         //GlobalMeta
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalMeta);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalMeta);
         //GlobalChance
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalChance);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalChance);
         //GlobalType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalType);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalType);
         //GlobalSide
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalSide);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalSide);
         //GlobalWho
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGlobalWho);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalWho);
         //Criteria
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCriteria);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCriteria);
         //EffectApply
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectApply);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffectApply);
         //EffectCriteria
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectCriteria);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffectCriteria);
         //EffectDuration
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectDuration);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffectDuration);
         //EffectOperator
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectOperator);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffectOperator);
         //EffectOutcome
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffectOutcome);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffectOutcome);
         //ContactType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfContactTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfContactTypes);
         //TargetType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTargetTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTargetTypes);
         //TargetTrigger
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTargetTriggers);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTargetTriggers);
         //TargetProfile
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTargetProfiles);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTargetProfiles);
         //Quality
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfQualities);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfQualities);
         //Condition
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfConditions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfConditions);
         //Cure
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCures);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCures);
         //TraitCategory
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTraitCategories);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraitCategories);
         //TraitEffect
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTraitEffects);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraitEffects);
         //SecretType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfSecretTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfSecretTypes);
         //CityArc
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCityArcs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCityArcs);
         //City
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCities);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCities);
         //CitySize
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCitySize);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCitySize);
         //CitySpacing
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCitySpacing);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCitySpacing);
         //CityConnections
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCityConnections);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCityConnections);
         //CitySecurity
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCitySecurity);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCitySecurity);
         //Damage
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfDamages);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfDamages);
         //Challenge
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfChallenges);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfChallenges);
         //Nemesis
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfNemesis);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNemesis);
         //Rebel Leaders
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfRebelLeaders);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfRebelLeaders);
         //Scenario
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfScenarios);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfScenarios);
         //Campaign
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfCampaigns);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaigns);
         //NameSet
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfNameSets);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNameSets);
         //NodeDatapoint
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfNodeDatapoints);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeDatapoints);
         //NodeArc
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfNodeArcs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeArcs);
         //NodeCrisis
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfNodeCrisis);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeCrisis);
         //Trait
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTraits);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraits);
         //ActorArc
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfActorArcs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorArcs);
         //Effect
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfEffects);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffects);
         //Action
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfActions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActions);
         //TeamArc
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTeamArcs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTeamArcs);
         //Gear
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGear);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGear);
         //GearRarity
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGearRarity);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGearRarity);
         //GearType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfGearType);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGearType);
         //TopicType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicTypes);
         //TopicSubType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicSubTypes);
         //TopicSubSubType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicSubSubTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicSubSubTypes);
         //TopicOption
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicOptions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicOptions);
         //TopicPool
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicPools);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicPools);
         //TopicScope
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicScopes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicScopes);
         //TopicGroupType
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicGroupTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicGroupTypes);
         //Topics
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopics);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopics);
         //TopicProfiles
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfTopicProfiles);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicProfiles);
         //ManageActor
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfManageActors);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfManageActors);
         //ManageAction
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfManageActions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfManageActions);
         //ActorConflict
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfActorConflicts);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorConflicts);
         //Secret
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfSecrets);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfSecrets);
         //HQ
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfHQs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfHQs);
         //Objective
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfObjectives);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfObjectives);
         //Organisation
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfOrganisations);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfOrganisations);
         //OrgTypes
-        ValidateSOGeneric<OrgType>(GameManager.instance.loadScript.arrayOfOrgTypes);
+        ValidateSOGeneric<OrgType>(GameManager.i.loadScript.arrayOfOrgTypes);
         //Mayor
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfMayors);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfMayors);
         //DecisionAI
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfDecisionAI);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfDecisionAI);
         //Mission
-        ValidateSOGeneric(GameManager.instance.loadScript.arrayOfMissions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfMissions);
         //TextList
-        ValidateSOGeneric<TextList>(GameManager.instance.loadScript.arrayOfTextLists);
+        ValidateSOGeneric<TextList>(GameManager.i.loadScript.arrayOfTextLists);
         //Target
-        ValidateSOGeneric<Target>(GameManager.instance.loadScript.arrayOfTargets);
+        ValidateSOGeneric<Target>(GameManager.i.loadScript.arrayOfTargets);
         //VIP
-        ValidateSOGeneric<Npc>(GameManager.instance.loadScript.arrayOfNpcs);
+        ValidateSOGeneric<Npc>(GameManager.i.loadScript.arrayOfNpcs);
         //VIP Nodes
-        ValidateSOGeneric<NpcNode>(GameManager.instance.loadScript.arrayOfNpcNodes);
+        ValidateSOGeneric<NpcNode>(GameManager.i.loadScript.arrayOfNpcNodes);
         //VIP Actions
-        ValidateSOGeneric<NpcAction>(GameManager.instance.loadScript.arrayOfNpcActions);
+        ValidateSOGeneric<NpcAction>(GameManager.i.loadScript.arrayOfNpcActions);
         //HqPositions
-        ValidateSOGeneric<HqPosition>(GameManager.instance.loadScript.arrayOfHqPositions);
+        ValidateSOGeneric<HqPosition>(GameManager.i.loadScript.arrayOfHqPositions);
         //CaptureTools
-        ValidateSOGeneric<CaptureTool>(GameManager.instance.loadScript.arrayOfCaptureTools);
+        ValidateSOGeneric<CaptureTool>(GameManager.i.loadScript.arrayOfCaptureTools);
         //MetaOptions
-        ValidateSOGeneric<MetaOption>(GameManager.instance.loadScript.arrayOfMetaOptions);
+        ValidateSOGeneric<MetaOption>(GameManager.i.loadScript.arrayOfMetaOptions);
 
     }
     #endregion
@@ -1961,17 +1961,17 @@ public class ValidationManager : MonoBehaviour
     {
         string prefix = "[Val] ValidationManager.cs -> ";
         //range limits
-        int highestActorID = GameManager.instance.actorScript.actorIDCounter;
-        int highestHQID = GameManager.instance.actorScript.hqIDCounter;
-        int highestNodeID = GameManager.instance.nodeScript.nodeIDCounter;
-        int highestConnID = GameManager.instance.nodeScript.connIDCounter;
-        int highestSlotID = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
-        int highestContactID = GameManager.instance.contactScript.contactIDCounter;
-        int highestMessageID = GameManager.instance.messageScript.messageIDCounter;
-        int highestTeamID = GameManager.instance.teamScript.teamIDCounter;
-        int highestTurn = GameManager.instance.turnScript.Turn;
-        int highestScenario = GameManager.instance.campaignScript.GetMaxScenarioIndex();
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        int highestActorID = GameManager.i.actorScript.actorIDCounter;
+        int highestHQID = GameManager.i.actorScript.hqIDCounter;
+        int highestNodeID = GameManager.i.nodeScript.nodeIDCounter;
+        int highestConnID = GameManager.i.nodeScript.connIDCounter;
+        int highestSlotID = GameManager.i.actorScript.maxNumOfOnMapActors - 1;
+        int highestContactID = GameManager.i.contactScript.contactIDCounter;
+        int highestMessageID = GameManager.i.messageScript.messageIDCounter;
+        int highestTeamID = GameManager.i.teamScript.teamIDCounter;
+        int highestTurn = GameManager.i.turnScript.Turn;
+        int highestScenario = GameManager.i.campaignScript.GetMaxScenarioIndex();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //debug checks
         Debug.Assert(highestActorID > 0, "Invalid highestActor (Zero or less)");
         Debug.Assert(highestNodeID > 0, "Invalid highestNodeID (Zero or less)");
@@ -2016,13 +2016,13 @@ public class ValidationManager : MonoBehaviour
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckNodeData: ");
 
-        int maxStatValue = GameManager.instance.nodeScript.maxNodeValue;
+        int maxStatValue = GameManager.i.nodeScript.maxNodeValue;
         //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
         // - - - dictOfNodes
         //
         //check dictionaries all have the same number of entries
-        Dictionary<int, Node> dictOfNodes = GameManager.instance.dataScript.GetDictOfNodes();
+        Dictionary<int, Node> dictOfNodes = GameManager.i.dataScript.GetDictOfNodes();
         if (dictOfNodes != null)
         {
             //check count
@@ -2063,7 +2063,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfNodeObjects
         //
-        Dictionary<int, GameObject> dictOfNodeObjects = GameManager.instance.dataScript.GetDictOfNodeObjects();
+        Dictionary<int, GameObject> dictOfNodeObjects = GameManager.i.dataScript.GetDictOfNodeObjects();
         if (dictOfNodeObjects != null)
         {
             foreach (var node in dictOfNodeObjects)
@@ -2077,7 +2077,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfNodeArcs
         //
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.i.dataScript.GetDictOfNodeArcs();
         if (dictOfNodeArcs != null)
         {
             foreach (var arc in dictOfNodeArcs)
@@ -2092,7 +2092,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfNodeDUnweighted
         //
-        Dictionary<int, NodeD> dictOfNodeUnweighted = GameManager.instance.dataScript.GetDictOfNodeDUnweighted();
+        Dictionary<int, NodeD> dictOfNodeUnweighted = GameManager.i.dataScript.GetDictOfNodeDUnweighted();
         if (dictOfNodeUnweighted != null)
         {
             foreach (var nodeD in dictOfNodeUnweighted)
@@ -2110,7 +2110,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfNodeDWeighted
         //
-        Dictionary<int, NodeD> dictOfNodeWeighted = GameManager.instance.dataScript.GetDictOfNodeDWeighted();
+        Dictionary<int, NodeD> dictOfNodeWeighted = GameManager.i.dataScript.GetDictOfNodeDWeighted();
         if (dictOfNodeWeighted != null)
         {
             foreach (var nodeD in dictOfNodeWeighted)
@@ -2128,18 +2128,18 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Node lists
         //
-        CheckList(GameManager.instance.dataScript.GetListOfAllNodes(), tag, "listOfNodes", highestNodeID);
-        CheckList(GameManager.instance.dataScript.GetListOfMostConnectedNodes(), "listOfMostConnectedNodes", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfDecisionNodes(), "listOfDecisionNodes", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfLoiterNodes(), "listOfLoiterNodes", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfCureNodes(), "listOfCureNodes", tag);
+        CheckList(GameManager.i.dataScript.GetListOfAllNodes(), tag, "listOfNodes", highestNodeID);
+        CheckList(GameManager.i.dataScript.GetListOfMostConnectedNodes(), "listOfMostConnectedNodes", tag);
+        CheckList(GameManager.i.dataScript.GetListOfDecisionNodes(), "listOfDecisionNodes", tag);
+        CheckList(GameManager.i.dataScript.GetListOfLoiterNodes(), "listOfLoiterNodes", tag);
+        CheckList(GameManager.i.dataScript.GetListOfCureNodes(), "listOfCureNodes", tag);
         //duplicate checks
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfNodeID(), "Node", "nodeID", "listOfNodes");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfMostConnectedNodeID(), "Node", "nodeID", "listOfMostConnectedNodes");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfDecisionNodeID(), "Node", "nodeID", "listOfDecisionNodes");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfLoiterNodeID(), "Node", "nodeID", "listOfLoiterNodes");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCureNodeID(), "Node", "nodeID", "listOfCureNodes");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCrisisNodeID(), "Node", "nodeID", "listOfCrisisNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfNodeID(), "Node", "nodeID", "listOfNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfMostConnectedNodeID(), "Node", "nodeID", "listOfMostConnectedNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfDecisionNodeID(), "Node", "nodeID", "listOfDecisionNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfLoiterNodeID(), "Node", "nodeID", "listOfLoiterNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfCureNodeID(), "Node", "nodeID", "listOfCureNodes");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfCrisisNodeID(), "Node", "nodeID", "listOfCrisisNodes");
     }
     #endregion
 
@@ -2153,16 +2153,16 @@ public class ValidationManager : MonoBehaviour
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckActorData: ");
-        int maxNumOfOnMapActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
-        int maxStatValue = GameManager.instance.actorScript.maxStatValue;
-        int maxCompatibility = GameManager.instance.personScript.maxCompatibilityWithPlayer;
-        int minCompatibility = GameManager.instance.personScript.minCompatibilityWithPlayer;
-        int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
-        int minFactor = GameManager.instance.personScript.minPersonalityFactor;
+        int maxNumOfOnMapActors = GameManager.i.actorScript.maxNumOfOnMapActors;
+        int maxStatValue = GameManager.i.actorScript.maxStatValue;
+        int maxCompatibility = GameManager.i.personScript.maxCompatibilityWithPlayer;
+        int minCompatibility = GameManager.i.personScript.minCompatibilityWithPlayer;
+        int maxFactor = GameManager.i.personScript.maxPersonalityFactor;
+        int minFactor = GameManager.i.personScript.minPersonalityFactor;
         //
         // - - - dictOfActors
         //
-        Dictionary<int, Actor> dictOfActors = GameManager.instance.dataScript.GetDictOfActors();
+        Dictionary<int, Actor> dictOfActors = GameManager.i.dataScript.GetDictOfActors();
         if (dictOfActors != null)
         {
             foreach (var actor in dictOfActors)
@@ -2211,7 +2211,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfHQ
         //
-        Dictionary<int, Actor> dictOfHQ = GameManager.instance.dataScript.GetDictOfHq();
+        Dictionary<int, Actor> dictOfHQ = GameManager.i.dataScript.GetDictOfHq();
         if (dictOfHQ != null)
         {
             foreach (var actor in dictOfHQ)
@@ -2265,55 +2265,55 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Other Actor Collections
         //
-        CheckList(GameManager.instance.dataScript.GetListOfActorTypes(), "listOfActorTypes", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfActorPortraits(), "listOfActorPortraits", tag);
+        CheckList(GameManager.i.dataScript.GetListOfActorTypes(), "listOfActorTypes", tag);
+        CheckList(GameManager.i.dataScript.GetListOfActorPortraits(), "listOfActorPortraits", tag);
         //authority
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "authorityActorPoolLevelOne", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "authorityActorPoolLevelTwo", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority), "authorityActorPoolLevelThree", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "authorityActorReserve", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "authorityActorDismissed", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "authorityActorPromoted", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "authorityActorDisposedOff", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "authorityActorResigned", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(1, globalAuthority), "authorityActorPoolLevelOne", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(2, globalAuthority), "authorityActorPoolLevelTwo", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(3, globalAuthority), "authorityActorPoolLevelThree", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "authorityActorReserve", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "authorityActorDismissed", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "authorityActorPromoted", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "authorityActorDisposedOff", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "authorityActorResigned", tag, 0, false);
         //resistance
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), "resistanceActorPoolLevelOne", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance), "resistanceActorPoolLevelTwo", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance), "resistanceActorPoolLevelThree", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve), "resistanceActorReserve", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "resistanceActorDismissed", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "resistanceActorPromoted", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "resistanceActorDisposedOff", tag, 0, false);
-        CheckList(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "resistanceActorResigned", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(1, globalResistance), "resistanceActorPoolLevelOne", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(2, globalResistance), "resistanceActorPoolLevelTwo", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorRecruitPool(3, globalResistance), "resistanceActorPoolLevelThree", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Reserve), "resistanceActorReserve", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "resistanceActorDismissed", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Promoted), "resistanceActorPromoted", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Disposed), "resistanceActorDisposedOff", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Resigned), "resistanceActorResigned", tag, 0, false);
         //hq
-        CheckList(GameManager.instance.dataScript.GetListOfActorHq(), "listOfActorHQ", tag, 0, false);
+        CheckList(GameManager.i.dataScript.GetListOfActorHq(), "listOfActorHQ", tag, 0, false);
         //authority duplicates
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalAuthority), "actorID", "actor", "authorityActorPoolLevelOne");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalAuthority), "actorID", "actor", "authorityActorPoolLevelTwo");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(3, globalAuthority), "actorID", "actor", "authorityActorPoolLevelThree");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "actorID", "actor", "authorityActorReserve");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "actorID", "actor", "authorityActorDismissed");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "actorID", "actor", "authorityActorPromoted");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "actorID", "actor", "authorityActorDisposedOff");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "actorID", "actor", "authorityActorResigned");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(1, globalAuthority), "actorID", "actor", "authorityActorPoolLevelOne");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(2, globalAuthority), "actorID", "actor", "authorityActorPoolLevelTwo");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(3, globalAuthority), "actorID", "actor", "authorityActorPoolLevelThree");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Reserve), "actorID", "actor", "authorityActorReserve");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Dismissed), "actorID", "actor", "authorityActorDismissed");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Promoted), "actorID", "actor", "authorityActorPromoted");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Disposed), "actorID", "actor", "authorityActorDisposedOff");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalAuthority, ActorList.Resigned), "actorID", "actor", "authorityActorResigned");
         //resistence duplicates
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(1, globalResistance), "actorID", "actor", "resistanceActorPoolLevelOne");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(2, globalResistance), "actorID", "actor", "resistanceActorPoolLevelTwo");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorRecruitPool(3, globalResistance), "actorID", "actor", "resistanceActorPoolLevelThree");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Reserve), "actorID", "actor", "resistanceActorReserve");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "actorID", "actor", "resistanceActorDismissed");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Promoted), "actorID", "actor", "resistanceActorPromoted");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(1, globalResistance), "actorID", "actor", "resistanceActorPoolLevelOne");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(2, globalResistance), "actorID", "actor", "resistanceActorPoolLevelTwo");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorRecruitPool(3, globalResistance), "actorID", "actor", "resistanceActorPoolLevelThree");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Reserve), "actorID", "actor", "resistanceActorReserve");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Dismissed), "actorID", "actor", "resistanceActorDismissed");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Promoted), "actorID", "actor", "resistanceActorPromoted");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Disposed), "actorID", "actor", "resistanceActorDisposedOff");
+        CheckListForDuplicates(GameManager.i.dataScript.GetActorList(globalResistance, ActorList.Resigned), "actorID", "actor", "resistanceActorResigned");
         //hq
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfActorHq(), "actorID", "actor", "actorHQPool");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfActorHq(), "actorID", "actor", "actorHQPool");
         //
         // - - - arrayOfActors
         //
-        Actor[,] arrayOfActors = GameManager.instance.dataScript.GetArrayOfActors();
+        Actor[,] arrayOfActors = GameManager.i.dataScript.GetArrayOfActors();
         if (arrayOfActors != null)
         {
-            bool[,] arrayOfActorsPresent = GameManager.instance.dataScript.GetArrayOfActorsPresent();
+            bool[,] arrayOfActorsPresent = GameManager.i.dataScript.GetArrayOfActorsPresent();
             if (arrayOfActorsPresent != null)
             {
                 //check for actors being, or not being, present (eg. cross check both arrays to see if in synch)
@@ -2342,7 +2342,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - arrayOfActorsHQ
         //
-        Actor[] arrayOfActorsHQ = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfActorsHQ = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActorsHQ != null)
         {
             //check first and last indexes are empty (due to enum.ActorHQ as indexes have to correspond, so first, 'None' and last 'Worker' should be Null)
@@ -2368,12 +2368,12 @@ public class ValidationManager : MonoBehaviour
     {
         string key;
         string tag = string.Format("{0}{1}", prefix, "CheckTargetData: ");
-        int maxTargetIntel = GameManager.instance.targetScript.maxTargetInfo;
+        int maxTargetIntel = GameManager.i.targetScript.maxTargetInfo;
         //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
         //
         // - - - dictOfTargets
         //
-        Dictionary<string, Target> dictOfTargets = GameManager.instance.dataScript.GetDictOfTargets();
+        Dictionary<string, Target> dictOfTargets = GameManager.i.dataScript.GetDictOfTargets();
         if (dictOfTargets != null)
         {
             foreach (var target in dictOfTargets)
@@ -2394,11 +2394,11 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Target lists
         //
-        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Active), "targetPoolActive", tag);
-        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Live), "targetPoolLive", tag);
-        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Outstanding), "targetPoolOutstanding", tag);
-        CheckList(GameManager.instance.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfNodesWithTargets(), "nodes", "nodeID", "listOfNodesWithTargets");
+        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Active), "targetPoolActive", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Live), "targetPoolLive", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Outstanding), "targetPoolOutstanding", tag);
+        CheckList(GameManager.i.dataScript.GetTargetPool(Status.Done), "targetPoolDone", tag);
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfNodesWithTargets(), "nodes", "nodeID", "listOfNodesWithTargets");
     }
     #endregion
 
@@ -2417,7 +2417,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfTeams
         //
-        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        Dictionary<int, Team> dictOfTeams = GameManager.i.dataScript.GetDictOfTeams();
         if (dictOfTeams != null)
         {
             foreach (var team in dictOfTeams)
@@ -2448,9 +2448,9 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Team pools
         //
-        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.Reserve), "team", "teamID", "teamPoolReserve");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap), "team", "teamID", "teamPoolOnMap");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit), "team", "teamID", "teamPoolInTransit");
+        CheckListForDuplicates(GameManager.i.dataScript.GetTeamPool(TeamPool.Reserve), "team", "teamID", "teamPoolReserve");
+        CheckListForDuplicates(GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap), "team", "teamID", "teamPoolOnMap");
+        CheckListForDuplicates(GameManager.i.dataScript.GetTeamPool(TeamPool.InTransit), "team", "teamID", "teamPoolInTransit");
     }
     #endregion
 
@@ -2467,7 +2467,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfGear
         //
-        Dictionary<string, Gear> dictOfGear = GameManager.instance.dataScript.GetDictOfGear();
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
         if (dictOfGear != null)
         {
             foreach (var gear in dictOfGear)
@@ -2480,10 +2480,10 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Gear lists
         //
-        CheckList(GameManager.instance.dataScript.GetListOfGearRarity(), "listOfGearRarity", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfGearType(), "listOfGearType", tag);
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfCurrentGear(), "Gear", "gearName", "listOfCurrentGear");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetListOfLostGear(), "Gear", "gearName", "listOfLostGear");
+        CheckList(GameManager.i.dataScript.GetListOfGearRarity(), "listOfGearRarity", tag);
+        CheckList(GameManager.i.dataScript.GetListOfGearType(), "listOfGearType", tag);
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfCurrentGear(), "Gear", "gearName", "listOfCurrentGear");
+        CheckListForDuplicates(GameManager.i.dataScript.GetListOfLostGear(), "Gear", "gearName", "listOfLostGear");
     }
     #endregion
 
@@ -2500,7 +2500,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfConnections
         //
-        Dictionary<int, Connection> dictOfConnections = GameManager.instance.dataScript.GetDictOfConnections();
+        Dictionary<int, Connection> dictOfConnections = GameManager.i.dataScript.GetDictOfConnections();
         if (dictOfConnections != null)
         {
             foreach (var conn in dictOfConnections)
@@ -2517,7 +2517,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - listOfConnections
         //
-        CheckList(GameManager.instance.dataScript.GetListOfConnections(), "listOfConnections", tag, highestConnID);
+        CheckList(GameManager.i.dataScript.GetListOfConnections(), "listOfConnections", tag, highestConnID);
     }
     #endregion
 
@@ -2533,7 +2533,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfArchiveMessages
         //
-        Dictionary<int, Message> dictOfArchiveMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Archive);
+        Dictionary<int, Message> dictOfArchiveMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Archive);
         if (dictOfArchiveMessages != null)
         {
             foreach (var message in dictOfArchiveMessages)
@@ -2548,7 +2548,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfPendingMessages
         //
-        Dictionary<int, Message> dictOfPendingMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Pending);
+        Dictionary<int, Message> dictOfPendingMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Pending);
         if (dictOfPendingMessages != null)
         {
             foreach (var message in dictOfPendingMessages)
@@ -2563,7 +2563,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfCurrentMessages
         //
-        Dictionary<int, Message> dictOfCurrentMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.Current);
+        Dictionary<int, Message> dictOfCurrentMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.Current);
         if (dictOfCurrentMessages != null)
         {
             foreach (var message in dictOfCurrentMessages)
@@ -2578,7 +2578,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfAIMessages
         //
-        Dictionary<int, Message> dictOfAIMessages = GameManager.instance.dataScript.GetMessageDict(MessageCategory.AI);
+        Dictionary<int, Message> dictOfAIMessages = GameManager.i.dataScript.GetMessageDict(MessageCategory.AI);
         if (dictOfAIMessages != null)
         {
             foreach (var message in dictOfAIMessages)
@@ -2593,10 +2593,10 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - Duplicate check all dictionaries
         //
-        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Archive), "Message", "msgID", "dictOfArchiveMessages");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Pending), "Message", "msgID", "dictOfPendingMessages");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.Current), "Message", "msgID", "dictOfCurrentMessages");
-        CheckListForDuplicates(GameManager.instance.dataScript.GetMessageListOfID(MessageCategory.AI), "Message", "msgID", "dictOfAIMessages");
+        CheckListForDuplicates(GameManager.i.dataScript.GetMessageListOfID(MessageCategory.Archive), "Message", "msgID", "dictOfArchiveMessages");
+        CheckListForDuplicates(GameManager.i.dataScript.GetMessageListOfID(MessageCategory.Pending), "Message", "msgID", "dictOfPendingMessages");
+        CheckListForDuplicates(GameManager.i.dataScript.GetMessageListOfID(MessageCategory.Current), "Message", "msgID", "dictOfCurrentMessages");
+        CheckListForDuplicates(GameManager.i.dataScript.GetMessageListOfID(MessageCategory.AI), "Message", "msgID", "dictOfAIMessages");
     }
     #endregion
 
@@ -2615,7 +2615,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfSecrets
         //
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
         if (dictOfSecrets != null)
         {
             foreach (var secret in dictOfSecrets)
@@ -2661,9 +2661,9 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - lists Of Secrets
         //
-        CheckList(GameManager.instance.dataScript.GetListOfPlayerSecrets(), "listOfPlayerSecrets", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfRevealedSecrets(), "listOfRevealedSecrets", tag);
-        CheckList(GameManager.instance.dataScript.GetListOfDeletedSecrets(), "listOfDeletedSecrets", tag);
+        CheckList(GameManager.i.dataScript.GetListOfPlayerSecrets(), "listOfPlayerSecrets", tag);
+        CheckList(GameManager.i.dataScript.GetListOfRevealedSecrets(), "listOfRevealedSecrets", tag);
+        CheckList(GameManager.i.dataScript.GetListOfDeletedSecrets(), "listOfDeletedSecrets", tag);
     }
     #endregion
 
@@ -2679,7 +2679,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfHistory
         //
-        Dictionary<int, MainInfoData> dictOfHistory = GameManager.instance.dataScript.GetDictOfHistory();
+        Dictionary<int, MainInfoData> dictOfHistory = GameManager.i.dataScript.GetDictOfHistory();
         if (dictOfHistory != null)
         {
             foreach (var info in dictOfHistory)
@@ -2711,7 +2711,7 @@ public class ValidationManager : MonoBehaviour
         //
         // - - - dictOfContacts
         //
-        Dictionary<int, Contact> dictOfContacts = GameManager.instance.dataScript.GetDictOfContacts();
+        Dictionary<int, Contact> dictOfContacts = GameManager.i.dataScript.GetDictOfContacts();
         if (dictOfContacts != null)
         {
             foreach (var contact in dictOfContacts)
@@ -2749,9 +2749,9 @@ public class ValidationManager : MonoBehaviour
         //
         if (playerSide.level == globalResistance.level)
         {
-            CheckListForDuplicates(GameManager.instance.dataScript.GetContactPool(), "Contact", "contactID", "contactPool");
+            CheckListForDuplicates(GameManager.i.dataScript.GetContactPool(), "Contact", "contactID", "contactPool");
             //dictOfActorContacts
-            Dictionary<int, List<int>> dictOfActorContacts = GameManager.instance.dataScript.GetDictOfActorContacts();
+            Dictionary<int, List<int>> dictOfActorContacts = GameManager.i.dataScript.GetDictOfActorContacts();
             if (dictOfActorContacts != null)
             {
                 foreach (var record in dictOfActorContacts)
@@ -2765,7 +2765,7 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid dictOfActorContacts (Null)"); }
             //dictOfNodeContactsResistance
-            Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.instance.dataScript.GetDictOfNodeContacts(globalResistance);
+            Dictionary<int, List<int>> dictOfNodeContactsResistance = GameManager.i.dataScript.GetDictOfNodeContacts(globalResistance);
             if (dictOfNodeContactsResistance != null)
             {
                 foreach (var record in dictOfNodeContactsResistance)
@@ -2778,7 +2778,7 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid dictOfNodeContactsResistance (Null)"); }
             //dictOfContactsByNodeResistance
-            Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.instance.dataScript.GetDictOfContactsByNodeResistance();
+            Dictionary<int, List<Contact>> dictOfContactsByNodeResistance = GameManager.i.dataScript.GetDictOfContactsByNodeResistance();
             if (dictOfContactsByNodeResistance != null)
             {
                 foreach (var record in dictOfContactsByNodeResistance)
@@ -2794,7 +2794,7 @@ public class ValidationManager : MonoBehaviour
         // - - - Both sides
         //
         //dictOfNodeContactsAuthority
-        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.instance.dataScript.GetDictOfNodeContacts(globalAuthority);
+        Dictionary<int, List<int>> dictOfNodeContactsAuthority = GameManager.i.dataScript.GetDictOfNodeContacts(globalAuthority);
         if (dictOfNodeContactsAuthority != null)
         {
             foreach (var record in dictOfNodeContactsAuthority)
@@ -2816,16 +2816,16 @@ public class ValidationManager : MonoBehaviour
     private void CheckPlayerData(string prefix)
     {
         string tag = string.Format("{0}{1}", prefix, "CheckPlayerData: ");
-        int maxFactor = GameManager.instance.personScript.maxPersonalityFactor;
-        int minFactor = GameManager.instance.personScript.minPersonalityFactor;
+        int maxFactor = GameManager.i.personScript.maxPersonalityFactor;
+        int minFactor = GameManager.i.personScript.minPersonalityFactor;
         //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
-        CheckRange(GameManager.instance.playerScript.GetMood(), 0, GameManager.instance.playerScript.moodMax, "mood", tag);
-        CheckRange(GameManager.instance.playerScript.actorID, 999, 999, "actorID", tag);
+        CheckRange(GameManager.i.playerScript.GetMood(), 0, GameManager.i.playerScript.moodMax, "mood", tag);
+        CheckRange(GameManager.i.playerScript.actorID, 999, 999, "actorID", tag);
         //sex
-        if (GameManager.instance.playerScript.sex == ActorSex.None)
+        if (GameManager.i.playerScript.sex == ActorSex.None)
         { Debug.LogFormat("{0}Invalid sex ('None') for Player{1}", tag, "\n"); }
         //personality
-        Personality personality = GameManager.instance.playerScript.GetPersonality();
+        Personality personality = GameManager.i.playerScript.GetPersonality();
         if (personality != null)
         {
             CheckArrayBounds(personality.GetFactors(), "arrayOfFactors", tag, minFactor, maxFactor);
@@ -2839,12 +2839,12 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogFormat("{0}Invalid personality (Null) for Player {1}", tag, "\n"); }
         //collections
-        CheckList(GameManager.instance.playerScript.GetListOfGear(), "listOfGear", tag);
-        CheckListForDuplicates(GameManager.instance.playerScript.GetListOfGear(), "Gear", "gearName", "ListOfGear");
-        CheckList(GameManager.instance.playerScript.GetListOfConditions(globalAuthority), "listOfConditionsAuthority", tag);
-        CheckList(GameManager.instance.playerScript.GetListOfConditions(globalResistance), "listOfConditionsResistance", tag);
-        CheckList(GameManager.instance.playerScript.GetListOfSecrets(), "listOfSecrets", tag);
-        CheckList(GameManager.instance.playerScript.GetListOfMoodHistory(), "listOfModdHistory", tag);
+        CheckList(GameManager.i.playerScript.GetListOfGear(), "listOfGear", tag);
+        CheckListForDuplicates(GameManager.i.playerScript.GetListOfGear(), "Gear", "gearName", "ListOfGear");
+        CheckList(GameManager.i.playerScript.GetListOfConditions(globalAuthority), "listOfConditionsAuthority", tag);
+        CheckList(GameManager.i.playerScript.GetListOfConditions(globalResistance), "listOfConditionsResistance", tag);
+        CheckList(GameManager.i.playerScript.GetListOfSecrets(), "listOfSecrets", tag);
+        CheckList(GameManager.i.playerScript.GetListOfMoodHistory(), "listOfModdHistory", tag);
 
     }
     #endregion
@@ -2858,7 +2858,7 @@ public class ValidationManager : MonoBehaviour
     {
         int index;
         string tag = string.Format("{0}{1}", prefix, "CheckTopicData: ");
-        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.instance.dataScript.GetDictOfTopicPools();
+        Dictionary<string, List<Topic>> dictOfTopicPools = GameManager.i.dataScript.GetDictOfTopicPools();
         if (dictOfTopicPools != null)
         {
             //
@@ -2979,7 +2979,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckTextListData(string prefix)
     {
         string tag = string.Format("{0}{1}", prefix, "CheckTextListData: ");
-        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        TextList[] arrayOfTextLists = GameManager.i.loadScript.arrayOfTextLists;
         if (arrayOfTextLists != null)
         {
             for (int i = 0; i < arrayOfTextLists.Length; i++)
@@ -3010,13 +3010,13 @@ public class ValidationManager : MonoBehaviour
     /// <param name="prefix"></param>
     private void CheckRelationsData(string prefix)
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         string tag = string.Format("{0}{1}", prefix, "CheckRelationsData: ");
-        Dictionary<int, RelationshipData> dictOfRelations = GameManager.instance.dataScript.GetDictOfRelations();
+        Dictionary<int, RelationshipData> dictOfRelations = GameManager.i.dataScript.GetDictOfRelations();
         if (dictOfRelations != null)
         {
-            int timer = GameManager.instance.actorScript.timerRelations;
-            for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+            int timer = GameManager.i.actorScript.timerRelations;
+            for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
             {
                 //ensure that there's an entry for each slotID
                 if (dictOfRelations.ContainsKey(i) == true)
@@ -3038,7 +3038,7 @@ public class ValidationManager : MonoBehaviour
                                         if (dataOther.slotID != i) { Debug.LogFormat("{0}relationshipData.other.slotID \"{1}\" doesn't match original slotID {2}{3}", tag, dataOther.slotID, i, "\n"); }
                                         if (dataOther.timer != data.timer) { Debug.LogFormat("{0}relationshipData.other.timer \"{1}\" doesn't match original slotID timer {2}{3}", tag, dataOther.timer, data.timer, "\n"); }
                                         if (dataOther.relationship != data.relationship) { Debug.LogFormat("{0}relationshipData.other.relationship \"{1}\" doesn't match original slotID relationship {2}{3}", tag, dataOther.relationship, data.relationship, "\n"); }
-                                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, playerSide);
+                                        Actor actor = GameManager.i.dataScript.GetCurrentActor(i, playerSide);
                                         if (actor != null)
                                         { if (dataOther.actorID != actor.actorID) { Debug.LogFormat("{0}relationshipData.other.actorID \"{1}\" doesn't match original actorID {2} for slotID {3}{4}", tag, dataOther.actorID, actor.actorID, i, "\n"); } }
                                         else { Debug.LogFormat("{0}Invalid actor (Null) for slotID {1}{2}", tag, i, "\n"); }
@@ -3074,7 +3074,7 @@ public class ValidationManager : MonoBehaviour
     {
         int count;
         string tag = string.Format("{0}{1}", prefix, "CheckTrait: ");
-        Trait[] arrayOfTraits = GameManager.instance.loadScript.arrayOfTraits;
+        Trait[] arrayOfTraits = GameManager.i.loadScript.arrayOfTraits;
         if (arrayOfTraits != null)
         {
             for (int i = 0; i < arrayOfTraits.Length; i++)

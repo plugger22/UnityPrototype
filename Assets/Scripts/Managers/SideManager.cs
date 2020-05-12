@@ -56,7 +56,7 @@ public class SideManager : MonoBehaviour
             {
                 case 1:
                     //Authority
-                    if (GameManager.instance.optionScript.noAI == false)
+                    if (GameManager.i.optionScript.noAI == false)
                     {
                         resistanceCurrent = SideState.AI;
                         authorityCurrent = SideState.Human;
@@ -70,7 +70,7 @@ public class SideManager : MonoBehaviour
                     break;
                 case 2:
                     //Resistance
-                    if (GameManager.instance.optionScript.noAI == false)
+                    if (GameManager.i.optionScript.noAI == false)
                     {
                         resistanceCurrent = SideState.Human;
                         authorityCurrent = SideState.AI;
@@ -111,7 +111,7 @@ public class SideManager : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -124,8 +124,8 @@ public class SideManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseFastAccess()
     {
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid GlobalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid GlobalResistance (Null)");
     }
@@ -134,11 +134,11 @@ public class SideManager : MonoBehaviour
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        Campaign campaign = GameManager.instance.campaignScript.campaign;
+        Campaign campaign = GameManager.i.campaignScript.campaign;
         if (campaign != null)
         {
             //AUTORUN (first scenario in a campaign only)
-            if (GameManager.instance.autoRunTurns > 0 && GameManager.instance.campaignScript.CheckIsFirstScenario() == true)
+            if (GameManager.i.autoRunTurns > 0 && GameManager.i.campaignScript.CheckIsFirstScenario() == true)
             {
                 //Campaign determines what side will be Player side (for GUI and Messages once auto run finished)
                 switch (campaign.side.level)
@@ -147,15 +147,15 @@ public class SideManager : MonoBehaviour
                         //Authority
                         PlayerSide = globalAuthority;
                         //reverts to Human authority player
-                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
-                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.preloadScript.nameAuthority);
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.campaignScript.scenario.leaderResistance.leaderName);
                         break;
                     case 2:
                         //Resistance
                         PlayerSide = globalResistance;
                         //reverts to Human resistance player
-                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.name);
-                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.campaignScript.scenario.leaderAuthority.name);
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.preloadScript.nameResistance);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised campaign side \"{0}\"", campaign.side.name);
@@ -181,20 +181,20 @@ public class SideManager : MonoBehaviour
                         resistanceCurrent = SideState.AI;
                         authorityCurrent = SideState.Human;
                         //names
-                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.campaignScript.scenario.leaderResistance.leaderName);
-                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.preloadScript.nameAuthority);
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.campaignScript.scenario.leaderResistance.leaderName);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.preloadScript.nameAuthority);
                         break;
                     case 2:
                         //Resistance player
-                        PlayerSide = GameManager.instance.globalScript.sideResistance;
+                        PlayerSide = GameManager.i.globalScript.sideResistance;
                         Debug.Log("[Start] Player set to RESISTANCE side");
                         resistanceOverall = SideState.Human;
                         authorityOverall = SideState.AI;
                         resistanceCurrent = SideState.Human;
                         authorityCurrent = SideState.AI;
                         //names
-                        GameManager.instance.playerScript.SetPlayerNameResistance(GameManager.instance.preloadScript.nameResistance);
-                        GameManager.instance.playerScript.SetPlayerNameAuthority(GameManager.instance.campaignScript.scenario.leaderAuthority.mayorName);
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.preloadScript.nameResistance);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.campaignScript.scenario.leaderAuthority.mayorName);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised campaign side \"{0}\"", campaign.side.name);
@@ -216,7 +216,7 @@ public class SideManager : MonoBehaviour
     public bool CheckInteraction()
     {
         bool isPossible = true;
-        if (GameManager.instance.optionScript.noAI == false)
+        if (GameManager.i.optionScript.noAI == false)
         {
             switch (_playerSide.level)
             {
@@ -277,10 +277,10 @@ public class SideManager : MonoBehaviour
         int renown;
         ActorStatus status;
         ActorInactive inactiveStatus;
-        float inactiveAlpha = GameManager.instance.guiScript.alphaInactive;
-        float activeAlpha = GameManager.instance.guiScript.alphaActive;
+        float inactiveAlpha = GameManager.i.guiScript.alphaInactive;
+        float activeAlpha = GameManager.i.guiScript.alphaActive;
         //flashing red alert at top UI for Security Status -> switch on/off
-        if (GameManager.instance.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+        if (GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
         else
         { EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
@@ -295,16 +295,16 @@ public class SideManager : MonoBehaviour
                 resistanceOverall = SideState.AI;
                 resistanceCurrent = SideState.AI;
                 //convert resources to renown
-                renown = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+                renown = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
                 Debug.LogFormat("[Aim] SideManager.cs -> RevertToHumanPlayer: Authority has {0} Resources{1}", renown, "\n");
-                renown /= GameManager.instance.aiScript.renownFactor;
-                GameManager.instance.playerScript.Renown = renown;
+                renown /= GameManager.i.aiScript.renownFactor;
+                GameManager.i.playerScript.Renown = renown;
                 //update states
-                status = GameManager.instance.aiScript.status;
-                inactiveStatus = GameManager.instance.aiScript.inactiveStatus;
-                GameManager.instance.playerScript.status = status;
-                GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
-                GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
+                status = GameManager.i.aiScript.status;
+                inactiveStatus = GameManager.i.aiScript.inactiveStatus;
+                GameManager.i.playerScript.status = status;
+                GameManager.i.playerScript.inactiveStatus = inactiveStatus;
+                GameManager.i.playerScript.isBreakdown = GameManager.i.aiScript.isBreakdown;
                 //player
                 switch (status)
                 {
@@ -313,27 +313,27 @@ public class SideManager : MonoBehaviour
                         {
                             case ActorInactive.Breakdown:
                                 //reduce player alpha to show inactive (sprite and text)
-                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
-                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                GameManager.i.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
+                                GameManager.i.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 break;
                             case ActorInactive.None:
                                 //change actor alpha to show active (sprite and text)
-                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
-                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                                GameManager.i.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
+                                GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                                 break;
                         }
                         break;
                 }
                 //clear out debug NodeActionData records for Player
-                GameManager.instance.playerScript.ClearAllNodeActions();
+                GameManager.i.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
-                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
                     {
                         //check actor is present in slot (not vacant)
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                        if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                         {
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
@@ -342,12 +342,12 @@ public class SideManager : MonoBehaviour
                                 {
                                     case ActorInactive.Breakdown:
                                         //change actor alpha to show inactive (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
+                                        GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                         actor.tooltipStatus = ActorTooltip.Breakdown;
                                         break;
                                     case ActorInactive.None:
                                         //change actor alpha to show active (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
+                                        GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
                                         actor.tooltipStatus = ActorTooltip.None;
                                         break;
                                 }
@@ -357,7 +357,7 @@ public class SideManager : MonoBehaviour
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 //teams need actors assigned
-                GameManager.instance.teamScript.AutoRunAssignActors();
+                GameManager.i.teamScript.AutoRunAssignActors();
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Authority side now under HUMAN control{0}", "\n");
                 break;
             case 2:
@@ -368,55 +368,55 @@ public class SideManager : MonoBehaviour
                 resistanceCurrent = SideState.Human;
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
-                GameManager.instance.nemesisScript.SetResistancePlayer(SideState.Human);
+                GameManager.i.nemesisScript.SetResistancePlayer(SideState.Human);
                 //convert resources to renown
-                renown = GameManager.instance.dataScript.CheckAIResourcePool(globalResistance);
+                renown = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
                 Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", renown, "\n");
-                renown /= GameManager.instance.aiRebelScript.renownFactor;
-                GameManager.instance.playerScript.Renown = renown;
+                renown /= GameManager.i.aiRebelScript.renownFactor;
+                GameManager.i.playerScript.Renown = renown;
                 //update states
-                status = GameManager.instance.aiRebelScript.status;
-                inactiveStatus = GameManager.instance.aiRebelScript.inactiveStatus;
-                GameManager.instance.playerScript.status = status;
-                GameManager.instance.playerScript.inactiveStatus = inactiveStatus;
-                GameManager.instance.playerScript.isBreakdown = GameManager.instance.aiScript.isBreakdown;
+                status = GameManager.i.aiRebelScript.status;
+                inactiveStatus = GameManager.i.aiRebelScript.inactiveStatus;
+                GameManager.i.playerScript.status = status;
+                GameManager.i.playerScript.inactiveStatus = inactiveStatus;
+                GameManager.i.playerScript.isBreakdown = GameManager.i.aiScript.isBreakdown;
                 //player
                 switch (status)
                 {
                     case ActorStatus.Captured:
-                        GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Captured;
+                        GameManager.i.playerScript.tooltipStatus = ActorTooltip.Captured;
                         //reduce player alpha to show inactive (sprite and text)
-                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
+                        GameManager.i.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                         break;
                     case ActorStatus.Inactive:
                         //reduce player alpha to show inactive (sprite and text)
-                        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
+                        GameManager.i.actorPanelScript.UpdatePlayerAlpha(inactiveAlpha);
                         switch (inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
-                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.Breakdown;
+                                GameManager.i.playerScript.tooltipStatus = ActorTooltip.Breakdown;
                                 break;
                             case ActorInactive.LieLow:
-                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.LieLow;
+                                GameManager.i.playerScript.tooltipStatus = ActorTooltip.LieLow;
                                 break;
                             case ActorInactive.None:
                                 //change actor alpha to show active (sprite and text)
-                                GameManager.instance.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
-                                GameManager.instance.playerScript.tooltipStatus = ActorTooltip.None;
+                                GameManager.i.actorPanelScript.UpdatePlayerAlpha(activeAlpha);
+                                GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                                 break;
                         }
                         break;
                 }
                 //clear out debug NodeActionData records for Player
-                GameManager.instance.playerScript.ClearAllNodeActions();
+                GameManager.i.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
-                arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalResistance);
+                arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
                     {
                         //check actor is present in slot (not vacant)
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                        if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
                         {
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
@@ -440,7 +440,7 @@ public class SideManager : MonoBehaviour
                                         break;
                                     case ActorStatus.Captured:
                                         //change actor alpha to show inactive (sprite and text)
-                                        GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
+                                        GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                         actor.tooltipStatus = ActorTooltip.Captured;
                                         break;
                                     case ActorStatus.Inactive:
@@ -448,16 +448,16 @@ public class SideManager : MonoBehaviour
                                         {
                                             case ActorInactive.Breakdown:
                                                 //change actor alpha to show inactive (sprite and text)
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
+                                                GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                                 actor.tooltipStatus = ActorTooltip.Breakdown;
                                                 break;
                                             case ActorInactive.LieLow:
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
+                                                GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, inactiveAlpha);
                                                 actor.tooltipStatus = ActorTooltip.LieLow;
                                                 break;
                                             case ActorInactive.None:
                                                 //change actor alpha to show active (sprite and text)
-                                                GameManager.instance.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
+                                                GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, activeAlpha);
                                                 actor.tooltipStatus = ActorTooltip.None;
                                                 break;
                                         }
@@ -470,32 +470,32 @@ public class SideManager : MonoBehaviour
                 else { Debug.LogError("Invalid arrayOfActors (Null)"); }
                 
                 //DEBUG -> add false (but more accurate) NodeAction records for testing purposes
-                GameManager.instance.actorScript.DebugCreateNodeActionResistanceData();
+                GameManager.i.actorScript.DebugCreateNodeActionResistanceData();
 
                 //Gear
-                int gearUsed = GameManager.instance.aiRebelScript.GetGearUsedAdjusted();
+                int gearUsed = GameManager.i.aiRebelScript.GetGearUsedAdjusted();
                 int gearPoints = 0;
-                if (GameManager.instance.testScript.numOfGearItems == -1)
+                if (GameManager.i.testScript.numOfGearItems == -1)
                 {
                     //normal gear point allocation according to AI gear pool
-                    gearPoints = GameManager.instance.aiRebelScript.GetGearPoints();
+                    gearPoints = GameManager.i.aiRebelScript.GetGearPoints();
                     Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: Rebel AIManager Gear points set to {0}{1}", gearPoints, "\n");
                 }
                 else
                 {
                     //Test Manager specified gear points
-                    gearPoints = GameManager.instance.testScript.numOfGearItems;
+                    gearPoints = GameManager.i.testScript.numOfGearItems;
                     Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: TestManager Gear points set to {0}{1}", gearPoints, "\n");
                 }
                 if (gearUsed > 0)
                 {
                     //delete gear from common and rare pools to reflect gear that's been used
-                    GameManager.instance.dataScript.UpdateGearLostOnRevert(gearUsed);
+                    GameManager.i.dataScript.UpdateGearLostOnRevert(gearUsed);
                 }
                 if (gearPoints > 0)
                 {
                     //add gear to reflect gear that is currently in use
-                    GameManager.instance.dataScript.UpdateGearCurrentOnRevert(gearPoints);
+                    GameManager.i.dataScript.UpdateGearCurrentOnRevert(gearPoints);
                 }
                 Debug.LogFormat("[Ply] SideManager.cs -> RevertToHumanPlayer: Resistance side now under HUMAN control{0}", "\n");
                 break;
@@ -515,9 +515,9 @@ public class SideManager : MonoBehaviour
     public void ShowAutoRunMessage()
     {
         //only if nobody has yet won
-        if (GameManager.instance.turnScript.winStateLevel == WinStateLevel.None)
+        if (GameManager.i.turnScript.winStateLevel == WinStateLevel.None)
         {
-            List<string> listOfEvents = GameManager.instance.dataScript.GetListOfHistoryAutoRun();
+            List<string> listOfEvents = GameManager.i.dataScript.GetListOfHistoryAutoRun();
             if (listOfEvents != null)
             {
                 StringBuilder builder = new StringBuilder();

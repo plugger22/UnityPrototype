@@ -20,7 +20,7 @@ public class AlertUI : MonoBehaviour
 
     public void Start()
     {
-        timeDefault = GameManager.instance.guiScript.alertDefaultTime;
+        timeDefault = GameManager.i.guiScript.alertDefaultTime;
         Debug.Assert(timeDefault > 0, "Invalid timeDefault (must be > Zero)");
     }
 
@@ -78,7 +78,7 @@ public class AlertUI : MonoBehaviour
         {
             Debug.LogFormat("[UI] AlertUI.cs -> CloseAlertUI{0}", "\n");
             alertObject.SetActive(false);
-            GameManager.instance.nodeScript.NodeShowFlag = 0;
+            GameManager.i.nodeScript.NodeShowFlag = 0;
             //stop coroutine if still running
             if (myCoroutine != null)
             { StopCoroutine("AlertTimer"); }

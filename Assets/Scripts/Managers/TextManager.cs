@@ -127,7 +127,7 @@ public class TextManager : MonoBehaviour
     /// </summary>
     public void ExportTopicOptions()
     {
-        TopicOption[] arrayOfOptions = GameManager.instance.loadScript.arrayOfTopicOptions;
+        TopicOption[] arrayOfOptions = GameManager.i.loadScript.arrayOfTopicOptions;
         if (arrayOfOptions != null)
         {
             int count = arrayOfOptions.Length;

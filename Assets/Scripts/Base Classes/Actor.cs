@@ -122,7 +122,7 @@ namespace gameAPI
                 _renown = Mathf.Max(0, _renown);
                 //update renownUI regardless of whether it is on or off (check in place for load save game purposes as the RenownUI is updated later due to sequencing issues)
                 if (slotID > -1)
-                { GameManager.instance.actorPanelScript.UpdateActorRenownUI(slotID, _renown); }
+                { GameManager.i.actorPanelScript.UpdateActorRenownUI(slotID, _renown); }
             }
         }
 
@@ -142,7 +142,7 @@ namespace gameAPI
             numOfTimesBullied = 0;
             personality = new Personality();
             //call only if a new session
-            if (GameManager.instance.isSession == false)
+            if (GameManager.i.isSession == false)
             {
                 //fast access & cached
                 actorStressNone = "ActorStressNone";
@@ -151,11 +151,11 @@ namespace gameAPI
                 actorBlackmailNone = "ActorBlackmailNone";
                 actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
                 actorBlackmailTimerLow = "ActorBlackmailTimerLow";
-                maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-                contactsPerLevel = GameManager.instance.contactScript.contactsPerLevel;
-                compatibilityOne = GameManager.instance.personScript.compatibilityChanceOne;
-                compatibilityTwo = GameManager.instance.personScript.compatibilityChanceTwo;
-                compatibilityThree = GameManager.instance.personScript.compatibilityChanceThree;
+                maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
+                contactsPerLevel = GameManager.i.contactScript.contactsPerLevel;
+                compatibilityOne = GameManager.i.personScript.compatibilityChanceOne;
+                compatibilityTwo = GameManager.i.personScript.compatibilityChanceTwo;
+                compatibilityThree = GameManager.i.personScript.compatibilityChanceThree;
                 Debug.AssertFormat(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1) for {0}", actorName);
                 Debug.AssertFormat(contactsPerLevel > -1, "Invalid contactsPerLevel (-1) for {0}", actorName);
                 Debug.AssertFormat(compatibilityOne > 0, "Invalid compatibilityOne (Zero) for {0}", actorName);
@@ -225,7 +225,7 @@ namespace gameAPI
         {
             bool isSuccess = true;
             string text;
-            int turn = GameManager.instance.turnScript.Turn;
+            int turn = GameManager.i.turnScript.Turn;
             switch (datapoint)
             {
                 case ActorDatapoint.Influence0:
@@ -238,7 +238,7 @@ namespace gameAPI
                 case ActorDatapoint.Motivation1:
                 case ActorDatapoint.Datapoint1:
                     //player side actor, take into account actor's compatibility with the player
-                    if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+                    if (side.level == GameManager.i.sideScript.PlayerSide.level)
                     {
                         //doesn't apply on first turn (creating actors)
                         if (turn > 0)
@@ -338,18 +338,18 @@ namespace gameAPI
                                     //Motivational shift negated due to compatibility
                                     text = string.Format("{0}, {1}, ID {2}, negates Motivational change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
                                         difference > 0 ? "+" : "", difference, "\n");
-                                    GameManager.instance.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
+                                    GameManager.i.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
                                     isSuccess = false;
                                     //Stats
                                     if (isBadOutcome == true)
-                                    { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorCompatibilityBad); }
-                                    else { GameManager.instance.dataScript.StatisticIncrement(StatType.ActorCompatibilityGood); }
+                                    { GameManager.i.dataScript.StatisticIncrement(StatType.ActorCompatibilityBad); }
+                                    else { GameManager.i.dataScript.StatisticIncrement(StatType.ActorCompatibilityGood); }
                                 }
                                 //random roll message regardless, provided a check was made
                                 if (numNeeded > 0)
                                 {
                                     text = string.Format("{0}, {1}, ignore Motivation {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
-                                    GameManager.instance.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome, "rand_0");
+                                    GameManager.i.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome, "rand_0");
                                     Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2} for datapoint {3}{4}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, datapoint, "\n");
                                 }
                                 //motivational History
@@ -514,7 +514,7 @@ namespace gameAPI
                     contact.actorID = -1;
                     contact.nodeID = -1;
                     contact.status = ContactStatus.Inactive;
-                    contact.turnFinish = GameManager.instance.turnScript.Turn;
+                    contact.turnFinish = GameManager.i.turnScript.Turn;
 
                 }
                 else { Debug.LogWarningFormat("Invalid contact (Null) for nodeID {0}", nodeID); }
@@ -545,7 +545,7 @@ namespace gameAPI
                     //update contact status
                     contact.status = ContactStatus.Inactive;
                     contact.timerInactive = 0;
-                    contact.turnFinish = GameManager.instance.turnScript.Turn;
+                    contact.turnFinish = GameManager.i.turnScript.Turn;
 
                 }
                 else { Debug.LogWarningFormat("Invalid contact (Null) for nodeID {0}", nodeID); }
@@ -715,17 +715,17 @@ namespace gameAPI
                 {
                     case "STRESSED":
                         if (CheckTraitEffect(actorStressNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Stressed check", "to AVOID becoming Stressed"); }
+                        { GameManager.i.actorScript.TraitLogMessage(this, "for a become Stressed check", "to AVOID becoming Stressed"); }
                         else { proceedFlag = true; }
                         break;
                     case "CORRUPT":
                         if (CheckTraitEffect(actorCorruptNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Corrupt check", "to AVOID becoming Corrupt"); }
+                        { GameManager.i.actorScript.TraitLogMessage(this, "for a become Corrupt check", "to AVOID becoming Corrupt"); }
                         else { proceedFlag = true; }
                         break;
                     case "UNHAPPY":
                         if (CheckTraitEffect(actorUnhappyNone) == true)
-                        { GameManager.instance.actorScript.TraitLogMessage(this, "for a become Unhappy check", "to AVOID becoming Unhappy"); }
+                        { GameManager.i.actorScript.TraitLogMessage(this, "for a become Unhappy check", "to AVOID becoming Unhappy"); }
                         else { proceedFlag = true; }
                         break;
                     case "BLACKMAILER":
@@ -735,7 +735,7 @@ namespace gameAPI
                         else
                         {
                             if (CheckTraitEffect(actorBlackmailNone) == true)
-                            { GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer check", "to AVOID Blackmailing"); }
+                            { GameManager.i.actorScript.TraitLogMessage(this, "for a Blackmailer check", "to AVOID Blackmailing"); }
                             else { proceedFlag = true; }
                         }
                         break;
@@ -757,28 +757,28 @@ namespace gameAPI
                                 //actor is threatening player
                                 isThreatening = true;
                                 //blackmail timer
-                                int timer = GameManager.instance.secretScript.secretBlackmailTimer;
+                                int timer = GameManager.i.secretScript.secretBlackmailTimer;
                                 //traits
                                 if (CheckTraitEffect(actorBlackmailTimerHigh) == true)
                                 {
                                     timer *= 3;
-                                    GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to TRIPLE Blackmail timer");
+                                    GameManager.i.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to TRIPLE Blackmail timer");
                                 }
                                 if (CheckTraitEffect(actorBlackmailTimerLow) == true)
                                 {
                                     timer /= 2;
                                     timer = Mathf.Max(0, timer);
-                                    GameManager.instance.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to HALVE Blackmail timer");
+                                    GameManager.i.actorScript.TraitLogMessage(this, "for a Blackmailer Timer check", "to HALVE Blackmail timer");
                                 }
                                 blackmailTimer = timer;
                                 break;
                         }
                         Debug.LogFormat("[Cnd] Actor.cs -> AddCondition: {0}, {1} gained {2} condition{3}", actorName, arc.name, condition.tag, "\n");
                         //message
-                        if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+                        if (side.level == GameManager.i.sideScript.PlayerSide.level)
                         {
                             string msgText = string.Format("{0} {1} gains condition \"{2}\"", arc.name, actorName, condition.tag);
-                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
+                            GameManager.i.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                         }
                         //history
                         AddHistory(new HistoryActor() { text = string.Format("Is now {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
@@ -843,11 +843,11 @@ namespace gameAPI
                             }
                             listOfConditions.RemoveAt(i);
                             Debug.LogFormat("[Cnd] Actor.cs -> RemoveCondition: {0}, {1} lost {2} condition{3}", actorName, arc.name, condition.tag, "\n");
-                            if (side.level == GameManager.instance.sideScript.PlayerSide.level)
+                            if (side.level == GameManager.i.sideScript.PlayerSide.level)
                             {
                                 //message
                                 string msgText = string.Format("{0} {1} condition \"{2}\" removed", arc.name, actorName, condition.tag);
-                                GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
+                                GameManager.i.messageScript.ActorCondition(msgText, actorID, false, condition, reason);
                                 //history
                                 AddHistory( new HistoryActor() { text = string.Format("Is no longer {0}{1}", condition.isNowA == true ? "a " : "", condition.tag, reason) });
                             }
@@ -915,7 +915,7 @@ namespace gameAPI
                         listOfSecrets.Add(secret);
                         //message
                         string msgText = string.Format("{0} learns of Secret ({1})", arc.name, secret.tag);
-                        GameManager.instance.messageScript.ActorSecret(msgText, this, secret);
+                        GameManager.i.messageScript.ActorSecret(msgText, this, secret);
                         Debug.LogFormat("[Sec] Actor.cs -> AddSecret: {0}, {1}, ID {2}, learns {3} secret, {4}{5}", actorName, arc.name, actorID, secret.tag, secret.name, "\n");
                     }
                     else { Debug.LogFormat("[Sec] Actor.cs -> AddSecret: Secret NOT added to {0}, {1}, ID {2} as no space available{3}", actorName, arc.name, actorID, "\n"); }
@@ -945,7 +945,7 @@ namespace gameAPI
                             listOfSecrets.RemoveAt(i);
                             isSuccess = true;
                             //admin
-                            Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
+                            Secret secret = GameManager.i.dataScript.GetSecret(secretName);
                             if (secret != null)
                             { Debug.LogFormat("[Sec] Actor.cs -> RemoveSecret: {0}, {1}, {2}, {3} secret REMOVED {4}{5}", actorName, arc.name, actorID, secret.tag, secret.name, "\n"); }
                             else { Debug.LogErrorFormat("Invalid secret (Null) for secret {0}", secret.name); }
@@ -1024,7 +1024,7 @@ namespace gameAPI
         {
             Secret secret = null;
             int numOfSecrets = listOfSecrets.Count;
-            Condition condition = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+            Condition condition = GameManager.i.dataScript.GetCondition("BLACKMAILER");
             if (condition != null)
             {
                 //can't have blackmailer trait as could be using secret
@@ -1094,29 +1094,29 @@ namespace gameAPI
             //existing gear?
             if (string.IsNullOrEmpty(gearName) == false)
             {
-                Gear gearOld = GameManager.instance.dataScript.GetGear(gearName);
+                Gear gearOld = GameManager.i.dataScript.GetGear(gearName);
                 if (gearOld != null)
                 {
                     text = gearOld.name;
                     Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} given to HQ by {1}{2}", gearOld.name, arc.name, "\n");
                     //gear has been lost
-                    if (GameManager.instance.dataScript.RemoveGearLost(gearOld) == false)
+                    if (GameManager.i.dataScript.RemoveGearLost(gearOld) == false)
                     { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\"", gearOld.name); }
                     //let player know that gear has been Lost
                     string msgText = string.Format("{0} ({1}), has been GIVEN TO HQ by {2}", gearOld.name, gearOld.type.name, arc.name);
-                    GameManager.instance.messageScript.GearLost(msgText, gearOld, this, true);
+                    GameManager.i.messageScript.GearLost(msgText, gearOld, this, true);
                 }
                 else { Debug.LogWarningFormat("Invalid gear Old (Null) for gear {0}", gearName); }
             }
             //add new gear
-            Gear gearNew = GameManager.instance.dataScript.GetGear(gearNewName);
+            Gear gearNew = GameManager.i.dataScript.GetGear(gearNewName);
             if (gearNew != null)
             {
                 gearName = gearNewName;
                 gearTimer = 0;
                 Debug.LogFormat("[Gea] Actor.cs -> AddGear: {0} added to inventory of {1}{2}", gearNew.tag, arc.name, "\n");
                 //add to listOfCurrentGear (if not already present)
-                GameManager.instance.dataScript.AddGearNew(gearNew);
+                GameManager.i.dataScript.AddGearNew(gearNew);
             }
             else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", gearNewName); }
             //return name and type of any gear that was lost (existing prior to new gear being added)
@@ -1130,7 +1130,7 @@ namespace gameAPI
         {
             if (string.IsNullOrEmpty(gearName) == false)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                Gear gear = GameManager.i.dataScript.GetGear(gearName);
                 if (gear != null)
                 { Debug.LogFormat("[Gea] Actor.cs -> RemoveGear: {0} removed from inventory of {1}{2}", gear.tag, arc.name, "\n"); }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", gearName); }
@@ -1145,7 +1145,7 @@ namespace gameAPI
                     case GearRemoved.Decision:
                     case GearRemoved.Lost:
                     case GearRemoved.Compromised:
-                        if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+                        if (GameManager.i.dataScript.RemoveGearLost(gear) == false)
                         { Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\", gear {1}", gear.tag, gear.name); }
                         break;
                     case GearRemoved.RecruitPool:
@@ -1226,7 +1226,7 @@ namespace gameAPI
         {
             Gear gear = null;
             if (string.IsNullOrEmpty(gearName) == false)
-            { gear = GameManager.instance.dataScript.GetGear(gearName); }
+            { gear = GameManager.i.dataScript.GetGear(gearName); }
             ActorTooltipData data = new ActorTooltipData()
             {
                 tooltipPos = position,
@@ -1236,8 +1236,8 @@ namespace gameAPI
                 action = arc.nodeAction,
                 gear = gear,
                 listOfSecrets = GetSecretsTooltipList(),
-                arrayOfQualities = GameManager.instance.dataScript.GetQualities(side),
-                arrayOfStats = GameManager.instance.dataScript.GetActorStats(slotID, side)
+                arrayOfQualities = GameManager.i.dataScript.GetQualities(side),
+                arrayOfStats = GameManager.i.dataScript.GetActorStats(slotID, side)
             };
             return data;
         }
@@ -1265,11 +1265,11 @@ namespace gameAPI
             if (data != null)
             {
                 //validate data
-                if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+                if (data.turn < 0 || data.turn > GameManager.i.turnScript.Turn)
                 { Debug.LogWarningFormat("Invalid NodeActionData turn \"{0}\" for {1}, {2}", data.turn, actorName, arc.name); }
-                if (data.actorID < 0 || data.actorID > GameManager.instance.actorScript.actorIDCounter)
+                if (data.actorID < 0 || data.actorID > GameManager.i.actorScript.actorIDCounter)
                 { Debug.LogWarningFormat("Invalid NodeActionData actorID \"{0}\" for {1}, {2}", data.actorID, actorName, arc.name); }
-                if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+                if (data.nodeID < 0 || data.nodeID > GameManager.i.nodeScript.nodeIDCounter)
                 { Debug.LogWarningFormat("Invalid NodeActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, actorName, arc.name); }
                 if (data.nodeAction == NodeAction.None)
                 { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, actorName, arc.name); }
@@ -1344,11 +1344,11 @@ namespace gameAPI
             if (data != null)
             {
                 //validate data
-                if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+                if (data.turn < 0 || data.turn > GameManager.i.turnScript.Turn)
                 { Debug.LogWarningFormat("Invalid TeamActionData turn \"{0}\" for {1}, {2}", data.turn, actorName, arc.name); }
-                if (data.actorID < 0 || data.actorID > GameManager.instance.actorScript.actorIDCounter)
+                if (data.actorID < 0 || data.actorID > GameManager.i.actorScript.actorIDCounter)
                 { Debug.LogWarningFormat("Invalid TeamActionData actorID \"{0}\" for {1}, {2}", data.actorID, actorName, arc.name); }
-                if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+                if (data.nodeID < 0 || data.nodeID > GameManager.i.nodeScript.nodeIDCounter)
                 { Debug.LogWarningFormat("Invalid TeamActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, actorName, arc.name); }
                 if (data.teamAction == TeamAction.None)
                 { Debug.LogWarningFormat("Invalid TeamActionData teamAction \"{0}\" for {1}, {2}", data.teamAction, actorName, arc.name); }

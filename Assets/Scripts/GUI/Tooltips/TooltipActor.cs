@@ -71,7 +71,7 @@ public class TooltipActor : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -86,9 +86,9 @@ public class TooltipActor : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //node datapoint icons
-        arrayOfIcons[0] = GameManager.instance.guiScript.connectionsIcon;
-        arrayOfIcons[1] = GameManager.instance.guiScript.motivationIcon;
-        arrayOfIcons[2] = GameManager.instance.guiScript.invisibilityIcon;
+        arrayOfIcons[0] = GameManager.i.guiScript.connectionsIcon;
+        arrayOfIcons[1] = GameManager.i.guiScript.motivationIcon;
+        arrayOfIcons[2] = GameManager.i.guiScript.invisibilityIcon;
         Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0] (Null)");
         Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1] (Null)");
         Debug.Assert(arrayOfIcons[2] != null, "Invalid arrayOfIcons[2] (Null)");
@@ -104,10 +104,10 @@ public class TooltipActor : MonoBehaviour
     {
         canvasGroup = tooltipActorObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.instance.guiScript.tooltipFade;
-        offset = GameManager.instance.guiScript.tooltipOffset;
+        fadeInTime = GameManager.i.guiScript.tooltipFade;
+        offset = GameManager.i.guiScript.tooltipOffset;
         //fast access
-        gracePeriod = GameManager.instance.gearScript.actorGearGracePeriod;
+        gracePeriod = GameManager.i.gearScript.actorGearGracePeriod;
         Debug.Assert(gracePeriod > -1, "Invalid gracePeriod (-1)");
 
         //event listener
@@ -154,16 +154,16 @@ public class TooltipActor : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.dataNeutral);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourName = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.dataNeutral);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourName = GameManager.i.colourScript.GetColour(ColourType.normalText);
         /*colourQuality = GameManager.instance.colourScript.GetColour(ColourType.whiteText);*/
-        colourAction = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourArc = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourAction = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourArc = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
 
@@ -177,7 +177,7 @@ public class TooltipActor : MonoBehaviour
     public void SetTooltip(ActorTooltipData data, int actorSlotID)
     {
         bool isResistance = true;
-        if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistance = false; }
+        if (GameManager.i.sideScript.PlayerSide.level == 1) { isResistance = false; }
         //open panel at start
         tooltipActorObject.SetActive(true);
         //set opacity to zero (invisible)
@@ -215,7 +215,7 @@ public class TooltipActor : MonoBehaviour
                         switch (data.actor.inactiveStatus)
                         {
                             case ActorInactive.LieLow:
-                                int numOfTurns = GameManager.instance.actorScript.maxStatValue - data.actor.GetDatapoint(ActorDatapoint.Invisibility2);
+                                int numOfTurns = GameManager.i.actorScript.maxStatValue - data.actor.GetDatapoint(ActorDatapoint.Invisibility2);
                                 if (data.actor.isLieLowFirstturn == true)
                                 { numOfTurns++; }
                                 actorStatus.text = string.Format("{0}<b>LYING LOW</b>{1}{2}Back in {3} turn{4}", colourNeutral, colourEnd, "\n", numOfTurns,
@@ -299,7 +299,7 @@ public class TooltipActor : MonoBehaviour
 
         //Stats -> only takes the first three Qualities, eg. "Connections, Motivation, Invisibility"
         int dataStats;
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        int numOfQualities = GameManager.i.actorScript.numOfQualities;
         if (data.arrayOfStats.Length > 0 || data.arrayOfStats.Length < numOfQualities)
         {
             StringBuilder builder = new StringBuilder();
@@ -307,7 +307,7 @@ public class TooltipActor : MonoBehaviour
             {
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.instance.guiScript.GetDatapointStars(dataStats));
+                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.i.guiScript.GetDatapointStars(dataStats));
             }
             actorStats.text = builder.ToString();
         }
@@ -424,23 +424,23 @@ public class TooltipActor : MonoBehaviour
         {
             case 1:
                 //Authority
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundAuthority;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
-                dividerSecrets.sprite = GameManager.instance.sideScript.toolTip_dividerAuthority;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundAuthority;
+                dividerTop.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerMiddleUpper.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerMiddleLower.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerBottom.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerGear.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
+                dividerSecrets.sprite = GameManager.i.sideScript.toolTip_dividerAuthority;
                 break;
             case 2:
                 //Resistance
-                background.sprite = GameManager.instance.sideScript.toolTip_backgroundRebel;
-                dividerTop.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddleUpper.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerMiddleLower.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerBottom.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerGear.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
-                dividerSecrets.sprite = GameManager.instance.sideScript.toolTip_dividerRebel;
+                background.sprite = GameManager.i.sideScript.toolTip_backgroundRebel;
+                dividerTop.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerMiddleUpper.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerMiddleLower.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerBottom.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerGear.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
+                dividerSecrets.sprite = GameManager.i.sideScript.toolTip_dividerRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

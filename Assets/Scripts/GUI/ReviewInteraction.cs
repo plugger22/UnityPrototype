@@ -35,7 +35,7 @@ public class ReviewInteraction : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:

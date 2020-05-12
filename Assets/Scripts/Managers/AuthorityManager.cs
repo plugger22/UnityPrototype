@@ -28,7 +28,7 @@ public class AuthorityManager : MonoBehaviour
                 SubInitialiseFastAccess();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -40,8 +40,8 @@ public class AuthorityManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access fields
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalBoth = GameManager.instance.globalScript.sideBoth;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalBoth = GameManager.i.globalScript.sideBoth;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalBoth != null, "Invalid globalBoth (Null)");
         //decisions
@@ -67,7 +67,7 @@ public class AuthorityManager : MonoBehaviour
         if (string.IsNullOrEmpty(descriptor) == false)
         {
             //set state
-            GameManager.instance.turnScript.authoritySecurityState = state;
+            GameManager.i.turnScript.authoritySecurityState = state;
             //message
             switch (state)
             {
@@ -92,7 +92,7 @@ public class AuthorityManager : MonoBehaviour
                     break;
             }
             //message
-            GameManager.instance.messageScript.DecisionGlobal(descriptor, itemText, warning, decName);
+            GameManager.i.messageScript.DecisionGlobal(descriptor, itemText, warning, decName);
         }
         else { Debug.LogWarning("AuthorityManager.cs -> SetAuthorityState: Invalid descriptor (Null or empty)"); }
         return isDone;

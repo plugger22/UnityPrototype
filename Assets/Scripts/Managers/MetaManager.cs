@@ -50,7 +50,7 @@ public class MetaManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         //set state
-        metaLevel = GameManager.instance.globalScript.metaBottom;
+        metaLevel = GameManager.i.globalScript.metaBottom;
         /*metaEffect = new MetaEffectData();*/
     }
 
@@ -62,14 +62,14 @@ public class MetaManager : MonoBehaviour
     {
         //debug metaGame options
         metaGameOptions = new MetaGameOptions();
-        if (GameManager.instance.testScript.isValidMetaOptions == true)
+        if (GameManager.i.testScript.isValidMetaOptions == true)
         {
-            metaGameOptions.isDismissed = GameManager.instance.testScript.isDismissed;
-            metaGameOptions.isResigned = GameManager.instance.testScript.isResigned;
-            metaGameOptions.isLowMotivation = GameManager.instance.testScript.isLowMotivation;
-            metaGameOptions.isTraitor = GameManager.instance.testScript.isTraitor;
-            metaGameOptions.isLevelTwo = GameManager.instance.testScript.isLevelTwo;
-            metaGameOptions.isLevelThree = GameManager.instance.testScript.isLevelThree;
+            metaGameOptions.isDismissed = GameManager.i.testScript.isDismissed;
+            metaGameOptions.isResigned = GameManager.i.testScript.isResigned;
+            metaGameOptions.isLowMotivation = GameManager.i.testScript.isLowMotivation;
+            metaGameOptions.isTraitor = GameManager.i.testScript.isTraitor;
+            metaGameOptions.isLevelTwo = GameManager.i.testScript.isLevelTwo;
+            metaGameOptions.isLevelThree = GameManager.i.testScript.isLevelThree;
         }
         else
         {
@@ -88,24 +88,24 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaGame()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         InitialiseMetaGameOptions();
         ResetMetaAdmin();
         //hide top bar UI at start of meta game
         EventManager.instance.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
-        GameManager.instance.statScript.ProcessMetaStatistics();
-        GameManager.instance.topicScript.ProcessMetaTopics();
-        GameManager.instance.hqScript.ProcessMetaHq(playerSide);          //needs to be BEFORE MetaActors
-        GameManager.instance.actorScript.ProcessMetaActors(playerSide);
-        GameManager.instance.dataScript.ProcessMetaCures();
-        GameManager.instance.orgScript.ProcessMetaOrgs();
-        GameManager.instance.playerScript.ProcessMetaPlayer();
+        GameManager.i.statScript.ProcessMetaStatistics();
+        GameManager.i.topicScript.ProcessMetaTopics();
+        GameManager.i.hqScript.ProcessMetaHq(playerSide);          //needs to be BEFORE MetaActors
+        GameManager.i.actorScript.ProcessMetaActors(playerSide);
+        GameManager.i.dataScript.ProcessMetaCures();
+        GameManager.i.orgScript.ProcessMetaOrgs();
+        GameManager.i.playerScript.ProcessMetaPlayer();
 
 
         //Player metaGame Options choice
         InitialiseMetaOptions();
         InitialiseMetaData();
-        GameManager.instance.metaUIScript.SetMetaUI(metaInfoData);
+        GameManager.i.metaUIScript.SetMetaUI(metaInfoData);
         
 
     }
@@ -251,7 +251,7 @@ public class MetaManager : MonoBehaviour
         // - - - Create MetaOptions
         //
 
-        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.instance.dataScript.GetDictOfMetaOptions();
+        Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
             int count, index;
@@ -276,7 +276,7 @@ public class MetaManager : MonoBehaviour
                         if (metaOption.Value.listOfCriteria.Count > 0)
                         {
                             data.listOfCriteria = metaOption.Value.listOfCriteria;
-                            result = GameManager.instance.effectScript.CheckCriteria(data);
+                            result = GameManager.i.effectScript.CheckCriteria(data);
                             if (string.IsNullOrEmpty(result) == false)
                             {
                                 isSuccess = false;
@@ -297,7 +297,7 @@ public class MetaManager : MonoBehaviour
                         if (metaOption.Value.listOfCriteria.Count > 0)
                         {
                             data.listOfCriteria = metaOption.Value.listOfCriteria;
-                            result = GameManager.instance.effectScript.CheckCriteria(data);
+                            result = GameManager.i.effectScript.CheckCriteria(data);
                             if (string.IsNullOrEmpty(result) == false)
                             { metaOption.Value.isActive = false; }
                             else { metaOption.Value.isActive = true; }
@@ -416,7 +416,7 @@ public class MetaManager : MonoBehaviour
             if (count > 0)
             {
                 //Convert MetaOptions to MetaData and place in a list
-                int level = GameManager.instance.sideScript.PlayerSide.level;
+                int level = GameManager.i.sideScript.PlayerSide.level;
                 List<MetaData> listOfMetaData = new List<MetaData>();
                 for (int index = 0; index < count; index++)
                 {
@@ -523,7 +523,7 @@ public class MetaManager : MonoBehaviour
                     //check if any tab 'page' is empty and, if so, add an explanatory metaData to page
                     if (tempList.Count == 0)
                     {
-                        leader = GameManager.instance.hqScript.GetHqTitle((ActorHQ)(index + 1));
+                        leader = GameManager.i.hqScript.GetHqTitle((ActorHQ)(index + 1));
                         //add default MetaData item
                         MetaData metaData = new MetaData()
                         {
@@ -532,7 +532,7 @@ public class MetaManager : MonoBehaviour
                             textSelect = "No Options",
                             bottomText = string.Format("Your {0}<br><br><b>Does Not</b><br><br>have anything for you currently", leader),
                             sideLevel = level,
-                            sprite = GameManager.instance.guiScript.infoSprite,
+                            sprite = GameManager.i.guiScript.infoSprite,
                             isActive = false,
                             isRecommended = false,
                             isSelected = false,
@@ -593,7 +593,7 @@ public class MetaManager : MonoBehaviour
                         textSelect = "No Ongoing Options ",
                         bottomText = "<b>There are no Conditions, Secrets, Investigations or contacts with Organisations that will carry over to the next city</b>",
                         sideLevel = level,
-                        sprite = GameManager.instance.guiScript.infoSprite,
+                        sprite = GameManager.i.guiScript.infoSprite,
                         isActive = false,
                         isRecommended = false,
                         isSelected = false,
@@ -613,7 +613,7 @@ public class MetaManager : MonoBehaviour
                     textSelect = "No Options Selected",
                     bottomText = "<b>Any options that you select will be shown here</b>",
                     sideLevel = level,
-                    sprite = GameManager.instance.guiScript.infoSprite,
+                    sprite = GameManager.i.guiScript.infoSprite,
                     isActive = false,
                     isRecommended = false,
                     isSelected = false,

@@ -66,7 +66,7 @@ public class ModalTeamPicker : MonoBehaviour
     public void Initialise(GameState state)
     {
         //Authority player only
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
         {
             switch (state)
             {
@@ -80,7 +80,7 @@ public class ModalTeamPicker : MonoBehaviour
                     //do nothing
                     break;
                 default:
-                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                    Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                     break;
             }
         }
@@ -93,7 +93,7 @@ public class ModalTeamPicker : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         //assign sprites to team Images
-        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.instance.dataScript.GetDictOfTeamArcs();
+        Dictionary<int, TeamArc> dictOfTeamArcs = GameManager.i.dataScript.GetDictOfTeamArcs();
         if (dictOfTeamArcs != null)
         {
             if (dictOfTeamArcs.Count != arrayOfTeamOptions.Length)
@@ -200,15 +200,15 @@ public class ModalTeamPicker : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourEffect = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourSide = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourTeam = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
 
@@ -221,7 +221,7 @@ public class ModalTeamPicker : MonoBehaviour
         CanvasGroup teamCanvasGroup;
         TeamInteraction teamInteract;
         string textTooltip;
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         modalTeamObject.SetActive(true);
         modalPanelObject.SetActive(true);
         //confirm button should be switched off at the start
@@ -229,13 +229,13 @@ public class ModalTeamPicker : MonoBehaviour
         canvasGroup.alpha = 100;
         //Set up texts
         topText.text = string.Format("{0}Select {1}{2}ANY{3}{4} Team{5}", colourDefault, colourEnd, colourEffect, colourEnd, colourDefault, colourEnd);
-        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
             //track core data needed to resolve Insert team action
             teamNode = node;
             teamActorSlotID = details.actorDataID;
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
+            Actor actor = GameManager.i.dataScript.GetCurrentActor(teamActorSlotID, GameManager.i.globalScript.sideAuthority);
             int numTeams = node.CheckNumOfTeams();
             builder.AppendFormat("{0}{1} \"{2}\", {3} Team{4} present{5}", colourNormal, node.Arc.name, node.nodeName, numTeams, 
                 numTeams != 1 ? "s" : "", colourEnd);
@@ -269,7 +269,7 @@ public class ModalTeamPicker : MonoBehaviour
                 if (actor.CheckNumOfTeams() == actor.GetDatapoint(ActorDatapoint.Ability2))
                 { colourNumbers = colourBad; }
                 builder.AppendFormat("{0}, {1} of {2}{3}{4} has deployed {5}{6}{7} of {8}{9}{10} teams",
-                    actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
+                    actor.actorName, GameManager.i.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
                     colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd);
             }
             else { Debug.LogError(string.Format("Invalid actor (Null) from ActorSlotID {0}", teamActorSlotID)); }
@@ -282,7 +282,7 @@ public class ModalTeamPicker : MonoBehaviour
         //Get list of team Arcs
         int teamID, numOfTeams;
         string teamType = "Unknown";
-        List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
+        List<int> listOfTeamArcIDs = GameManager.i.dataScript.GetTeamArcIDs();       //all lists are keyed off this one, index-wise
         List<int> listOfTeamIDs = new List<int>();                                          //place teamID of first available team in reserve pool of that type
         List<string> listOfTeamTooltipsMain = new List<string>();                           //holds tooltip for team options, one for each team Arc, main text
         List<string> listOfTeamTooltipsHeader = new List<string>();                         //tooltip header ("CORPORATE")
@@ -294,7 +294,7 @@ public class ModalTeamPicker : MonoBehaviour
                 for (int arcIndex = 0; arcIndex < listOfTeamArcIDs.Count; arcIndex++)
                 {
                     textTooltip = "Unknown";
-                    teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, arcIndex);
+                    teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, arcIndex);
                     if (teamID == -1)
                     { textTooltip = "No teams of this type are currently in the Reserve Pool"; }
                     //if a team of that type is available (teamID > -1) check if a duplicate team already exists at node
@@ -313,7 +313,7 @@ public class ModalTeamPicker : MonoBehaviour
                     if (teamID > -1)
                     {
                         //get team
-                        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                        Team team = GameManager.i.dataScript.GetTeam(teamID);
                         if (team != null)
                         {
                             textTooltip = string.Format("{0} {1} is available and awaiting deployment", team.arc.name, team.teamName);
@@ -324,25 +324,25 @@ public class ModalTeamPicker : MonoBehaviour
                     }
                     else
                     {
-                        teamType = GameManager.instance.dataScript.GetTeamArc(arcIndex).name;
+                        teamType = GameManager.i.dataScript.GetTeamArc(arcIndex).name;
                     }
                     //header tooltip text
                     listOfTeamTooltipsHeader.Add(string.Format("{0}{1}{2}", colourSide, teamType, colourEnd));
                     //main tooltip text
                     listOfTeamTooltipsMain.Add(textTooltip);
                     //details tooltip text
-                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Total);
+                    numOfTeams = GameManager.i.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Total);
                     StringBuilder builderDetails = new StringBuilder();
                     builderDetails.AppendFormat("{0}{1} {2} team{3}{4}", colourEffect, numOfTeams, teamType,
                         numOfTeams != 1 ? "s" : "", colourEnd);
                     builderDetails.AppendLine();
-                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Reserve);
+                    numOfTeams = GameManager.i.dataScript.CheckTeamInfo(arcIndex, TeamInfo.Reserve);
                     builderDetails.AppendFormat("{0}{1} in Reserve{2}", colourEffect, numOfTeams, colourEnd);
                     builderDetails.AppendLine();
-                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.OnMap);
+                    numOfTeams = GameManager.i.dataScript.CheckTeamInfo(arcIndex, TeamInfo.OnMap);
                     builderDetails.AppendFormat("{0}{1} Deployed{2}", colourEffect, numOfTeams, colourEnd);
                     builderDetails.AppendLine();
-                    numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(arcIndex, TeamInfo.InTransit);
+                    numOfTeams = GameManager.i.dataScript.CheckTeamInfo(arcIndex, TeamInfo.InTransit);
                     builderDetails.AppendFormat("{0}{1} in Transit{2}", colourEffect, numOfTeams, colourEnd);
                     listOfTeamTooltipsDetails.Add(builderDetails.ToString());
                 }
@@ -406,7 +406,7 @@ public class ModalTeamPicker : MonoBehaviour
         }
         //set states
         ModalStateData package = new ModalStateData() { mainState = ModalSubState.TeamPicker };
-        GameManager.instance.inputScript.SetModalState(package);
+        GameManager.i.inputScript.SetModalState(package);
         Debug.LogFormat("[UI] ModalTeamPicker.cs -> SetTeamPicker{0}", "\n");
     }
 
@@ -420,12 +420,12 @@ public class ModalTeamPicker : MonoBehaviour
     private void CloseTeamPicker()
     {
         modalTeamObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this, null, "ModalTeamPicker.cs -> CloseTeamPicker");
         SetConfirmButton(false);
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalTeamPicker.cs -> CloseTeamPicker{0}", "\n");
     }
 
@@ -443,7 +443,7 @@ public class ModalTeamPicker : MonoBehaviour
             if (teamID > -1)
             {
                 //change Top text to show which team is selected
-                Team team = GameManager.instance.dataScript.GetTeam(teamID);
+                Team team = GameManager.i.dataScript.GetTeam(teamID);
                 if (team != null)
                 {
                     text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, team.arc.name, colourEnd, colourDefault, colourEnd);
@@ -470,33 +470,33 @@ public class ModalTeamPicker : MonoBehaviour
     private void ProcessTeamChoice()
     {
         modalTeamObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //deselect all teams to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherTeams, this, null, "ModalTeamPicker.cs -> ProcessTeamChoice");
         //set game state
         /*GameManager.instance.inputScript.GameState = GameState.Normal;*/
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         /*Debug.LogFormat("[UI] ModalTeamPicker -> ModalTeamPicker" + "\n"));*/
         Debug.Log(string.Format("TeamPicker: Confirm teamID {0}{1}", teamIDSelected, "\n"));
         //insert team
         if (teamIDSelected > -1)
         {
-            GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamIDSelected, teamActorSlotID, teamNode);
+            GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamIDSelected, teamActorSlotID, teamNode);
         }
         else { Debug.LogError(string.Format("Invalid teamIDSelected \"{0}\" -> insert team operation cancelled", teamIDSelected)); }
         //outcome dialogue windows
         ModalOutcomeDetails details = new ModalOutcomeDetails();
-        details.side = GameManager.instance.globalScript.sideAuthority;
+        details.side = GameManager.i.globalScript.sideAuthority;
         
         bool successFlag = true;
         if (teamIDSelected > -1)
         {
-            details.textTop = GameManager.instance.effectScript.SetTopTeamText(teamIDSelected);
-            Actor actor = GameManager.instance.dataScript.GetCurrentActor(teamActorSlotID, GameManager.instance.globalScript.sideAuthority);
+            details.textTop = GameManager.i.effectScript.SetTopTeamText(teamIDSelected);
+            Actor actor = GameManager.i.dataScript.GetCurrentActor(teamActorSlotID, GameManager.i.globalScript.sideAuthority);
             if (actor != null)
-            { details.textBottom = GameManager.instance.effectScript.SetBottomTeamText(actor); }
+            { details.textBottom = GameManager.i.effectScript.SetBottomTeamText(actor); }
             else { successFlag = false; }
-            Team team = GameManager.instance.dataScript.GetTeam(teamIDSelected);
+            Team team = GameManager.i.dataScript.GetTeam(teamIDSelected);
             if (team != null)
             {
                 TeamInteraction teamInteract = arrayOfTeamOptions[team.arc.TeamArcID].GetComponent<TeamInteraction>();
@@ -511,7 +511,7 @@ public class ModalTeamPicker : MonoBehaviour
         {
             details.textTop = "There have been unexplained delays and no team has been inserted";
             details.textBottom = "As soon as you've identified who is at fault heads will roll";
-            details.sprite = GameManager.instance.guiScript.errorSprite;
+            details.sprite = GameManager.i.guiScript.errorSprite;
         }
         //action expended if successful
         if (successFlag == true)

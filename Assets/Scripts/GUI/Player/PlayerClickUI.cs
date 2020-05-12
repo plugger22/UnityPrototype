@@ -16,7 +16,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
 
     public void Start()
     {
-        menuHeaderRightClick = GameManager.instance.actionScript.GetPlayerActionMenuHeader();
+        menuHeaderRightClick = GameManager.i.actionScript.GetPlayerActionMenuHeader();
         Debug.Assert(string.IsNullOrEmpty(menuHeaderRightClick) == false, "Invalid menuHeaderRightClick (Null or empty)");
     }
 
@@ -25,7 +25,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         bool proceedFlag = true;
         AlertType alertType = AlertType.None;
 
@@ -34,12 +34,12 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
             case PointerEventData.InputButton.Left:
                 break;
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                if (GameManager.i.guiScript.CheckIsBlocked() == false)
                 {
                     //Action Menu -> not valid if AI is active for side
-                    if (GameManager.instance.sideScript.CheckInteraction() == false)
+                    if (GameManager.i.sideScript.CheckInteraction() == false)
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
-                    if (GameManager.instance.playerScript.status != ActorStatus.Active)
+                    if (GameManager.i.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }
                     /*//Action Menu -> not valid if  Player inactive
                     else if (GameManager.instance.playerScript.status != ActorStatus.Active)
@@ -56,22 +56,22 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                             ModalGenericMenuDetails details = new ModalGenericMenuDetails()
                             {
                                 itemID = 1,
-                                itemName = GameManager.instance.playerScript.PlayerName,
+                                itemName = GameManager.i.playerScript.PlayerName,
                                 itemDetails = menuHeaderRightClick,
                                 menuPos = position,
-                                listOfButtonDetails = GameManager.instance.actorScript.GetPlayerActions(),
+                                listOfButtonDetails = GameManager.i.actorScript.GetPlayerActions(),
                                 menuType = ActionMenuType.Player
                             };
                         //close Player tooltip
-                        GameManager.instance.tooltipPlayerScript.CloseTooltip();
+                        GameManager.i.tooltipPlayerScript.CloseTooltip();
                             //activate menu
-                            GameManager.instance.actionMenuScript.SetActionMenu(details);
+                            GameManager.i.actionMenuScript.SetActionMenu(details);
                     }
                     else
                     {
                         //explanatory message
                         if (alertType != AlertType.None)
-                        { GameManager.instance.guiScript.SetAlertMessage(alertType); }
+                        { GameManager.i.guiScript.SetAlertMessage(alertType); }
                     }
                 }
                 break;

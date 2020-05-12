@@ -33,8 +33,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.i.guiScript.tooltipFade;
         //halve fade in time as a canvas tool tip appears to be a lot slower than a scene one
         mouseOverFade /= 2;
     }
@@ -47,11 +47,11 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <param name="eventData"></param>
     public void OnPointerEnter (PointerEventData eventData)
     {
-        side = GameManager.instance.sideScript.PlayerSide;
+        side = GameManager.i.sideScript.PlayerSide;
         onMouseFlag = true;
-        if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.instance.sideScript.PlayerSide) == true)
+        if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, GameManager.i.sideScript.PlayerSide) == true)
         {
-            actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, GameManager.instance.sideScript.PlayerSide);
+            actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, GameManager.i.sideScript.PlayerSide);
             if (actor != null)
             {
                 //Don't want to clash with actor sprite tooltip
@@ -79,8 +79,8 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         onMouseFlag = false;
         if (myCoroutine != null)
         { StopCoroutine(myCoroutine); }
-        GameManager.instance.tooltipActorScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
+        GameManager.i.tooltipActorScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ActorTooltipUI.cs -> OnPointerExit");
     }
 
     /// <summary>
@@ -95,25 +95,25 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipActorScript.CheckTooltipActive() == false)
             {
-                GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                GlobalSide side = GameManager.i.sideScript.PlayerSide;
+                Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, side);
                 if (actor != null)
                 {
                     ActorTooltipData data = actor.GetTooltipData(parent.transform.position);
-                    GameManager.instance.tooltipActorScript.SetTooltip(data, actorSlotID);
+                    GameManager.i.tooltipActorScript.SetTooltip(data, actorSlotID);
                 }
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorSlotID {0}", actorSlotID); }
                 yield return null;
             }
             //fade in
             float alphaCurrent;
-            while (GameManager.instance.tooltipActorScript.GetOpacity() < 1.0)
+            while (GameManager.i.tooltipActorScript.GetOpacity() < 1.0)
             {
-                alphaCurrent = GameManager.instance.tooltipActorScript.GetOpacity();
+                alphaCurrent = GameManager.i.tooltipActorScript.GetOpacity();
                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipActorScript.SetOpacity(alphaCurrent);
+                GameManager.i.tooltipActorScript.SetOpacity(alphaCurrent);
                 yield return null;
             }
         }
@@ -132,24 +132,24 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.instance.actorScript.GetActorTooltip(actor, side);
+                data = GameManager.i.actorScript.GetActorTooltip(actor, side);
                 data.screenPos = transform.position;
                 data.screenPos = AdjustTooltipPosition(data.screenPos);
                 if (data != null)
-                { GameManager.instance.tooltipGenericScript.SetTooltip(data); }
+                { GameManager.i.tooltipGenericScript.SetTooltip(data); }
                 yield return null;
             }
             //fade in
             if (data != null)
             {
                 float alphaCurrent;
-                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                while (GameManager.i.tooltipGenericScript.GetOpacity() < 1.0)
                 {
-                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent = GameManager.i.tooltipGenericScript.GetOpacity();
                     alphaCurrent += Time.deltaTime / mouseOverFade;
-                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    GameManager.i.tooltipGenericScript.SetOpacity(alphaCurrent);
                     yield return null;
                 }
             }
@@ -169,14 +169,14 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.instance.actorScript.GetVacantActorTooltip();
+                data = GameManager.i.actorScript.GetVacantActorTooltip();
                 if (data != null)
                 {
                     data.screenPos = transform.position;
                     data.screenPos = AdjustTooltipPosition(data.screenPos);
-                    GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                    GameManager.i.tooltipGenericScript.SetTooltip(data);
                 }
                 yield return null;
             }
@@ -184,11 +184,11 @@ public class ActorTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (data != null)
             {
                 float alphaCurrent;
-                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                while (GameManager.i.tooltipGenericScript.GetOpacity() < 1.0)
                 {
-                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent = GameManager.i.tooltipGenericScript.GetOpacity();
                     alphaCurrent += Time.deltaTime / mouseOverFade;
-                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    GameManager.i.tooltipGenericScript.SetOpacity(alphaCurrent);
                     yield return null;
                 }
             }

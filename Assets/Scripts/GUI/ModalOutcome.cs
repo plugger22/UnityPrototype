@@ -123,15 +123,15 @@ public class ModalOutcome : MonoBehaviour
         if (details != null)
         {
             //ignore if autoRun true
-            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+            if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
                 //exit any generic or node tooltips
-                GameManager.instance.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
-                GameManager.instance.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
-                GameManager.instance.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 reason = details.reason;
                 //set help
-                List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+                List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
                 {
                     helpButton.gameObject.SetActive(true);
@@ -139,7 +139,7 @@ public class ModalOutcome : MonoBehaviour
                 }
                 else { helpButton.gameObject.SetActive(false); }
                 //set modal true
-                GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+                GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
                 //open panel at start, the modal window is already active on the panel
                 modalOutcomeWindow.SetActive(true);
                 //register action status
@@ -149,20 +149,20 @@ public class ModalOutcome : MonoBehaviour
                 {
                     case "Authority":
                         //set button sprites
-                        confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                        confirmButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
                         //set sprite transitions
                         SpriteState spriteStateAuthority = new SpriteState();
-                        spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                        spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                        spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
+                        spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
                         confirmButton.spriteState = spriteStateAuthority;
                         break;
                     case "Resistance":
                         //set button sprites
-                        confirmButton.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                        confirmButton.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
                         //set sprite transitions
                         SpriteState spriteStateRebel = new SpriteState();
-                        spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                        spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                        spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
+                        spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
                         confirmButton.spriteState = spriteStateRebel;
                         break;
                     default:
@@ -193,7 +193,7 @@ public class ModalOutcome : MonoBehaviour
                 modalOutcomeWindow.transform.position = screenPos;
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
-                GameManager.instance.inputScript.SetModalState(package);
+                GameManager.i.inputScript.SetModalState(package);
                 //pass through data for when the outcome window is closed
                 modalLevel = details.modalLevel;
                 modalState = details.modalState;
@@ -237,18 +237,18 @@ public class ModalOutcome : MonoBehaviour
         //modalOutcomeObject.SetActive(false);
         modalOutcomeWindow.SetActive(false);
         //close tooltip
-        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");
+        GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");
         //set modal false
-        GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
+        GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
-        GameManager.instance.inputScript.ResetStates(modalState);
+        GameManager.i.inputScript.ResetStates(modalState);
         //end of turn check
         if (isAction == true)
         { EventManager.instance.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
         //auto set haltExecution to false (in case execution halted at end of turn, waiting on Compromised Gear Outcome dialogue to be sorted)
-        GameManager.instance.turnScript.haltExecution = false;
+        GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)
-        GameManager.instance.guiScript.waitUntilDone = false;
+        GameManager.i.guiScript.waitUntilDone = false;
     }
 
 
@@ -272,11 +272,11 @@ public class ModalOutcome : MonoBehaviour
         {
             case 1:
                 //Authority
-                background.sprite = GameManager.instance.sideScript.outcome_backgroundAuthority;
+                background.sprite = GameManager.i.sideScript.outcome_backgroundAuthority;
                 break;
             case 2:
                 //Resistance
-                background.sprite = GameManager.instance.sideScript.outcome_backgroundRebel;
+                background.sprite = GameManager.i.sideScript.outcome_backgroundRebel;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));

@@ -23,11 +23,11 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private void Start()
     {
         //flash
-        flashNodeTime = GameManager.instance.guiScript.flashNodeTime;
+        flashNodeTime = GameManager.i.guiScript.flashNodeTime;
         Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
         //materials
-        materialNormal = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
-        materialPlayer = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Player);
+        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
+        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Player);
         Debug.Assert(materialNormal != null, "Invalid nodeNormal (Null)");
         Debug.Assert(materialPlayer != null, "Invalid nodePlayer (Null)");
     }
@@ -41,10 +41,10 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //Flasher
         Node node = null;
         //get correct node (captured node if captured)
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
         {
             //human resistance player
-            node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+            node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
 
             /*switch (GameManager.instance.playerScript.status)
             {
@@ -59,13 +59,13 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         else
         {
             //AI Resistance player
-            switch (GameManager.instance.aiRebelScript.status)
+            switch (GameManager.i.aiRebelScript.status)
             {
                 case ActorStatus.Captured:
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeCaptured);
                     break;
                 default:
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                     break;
             }
         }
@@ -73,10 +73,10 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             isFlashOn = false;
             //need to switch this off as otherwise a NodeRedraw will auto display player node all the time and nothing will flash
-            GameManager.instance.nodeScript.SetShowPlayerNode(false);
+            GameManager.i.nodeScript.SetShowPlayerNode(false);
             myFlashCoroutine = StartCoroutine("FlashingPlayerNode", node);
         }
-        else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }
+        else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.i.nodeScript.nodePlayer); }
     }
 
     /// <summary>
@@ -89,34 +89,34 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (myFlashCoroutine != null)
         {
             StopCoroutine(myFlashCoroutine);
-            GameManager.instance.nodeScript.SetShowPlayerNode(true);
+            GameManager.i.nodeScript.SetShowPlayerNode(true);
             //set player node back to correct material
             Node node = null;
             //get correct node (captured node if captured)
-            switch (GameManager.instance.playerScript.status)
+            switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Active:
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                     if (node != null)
                     {
                         node.SetPlayerNormal();
                         /*node.SetMaterial(materialPlayer);*/
-                        GameManager.instance.nodeScript.NodeRedraw = true;
+                        GameManager.i.nodeScript.NodeRedraw = true;
                     }
                     break;
                 case ActorStatus.Captured:
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeCaptured);
                     if (node != null)
                     {
                         node.SetNormal();
                         /*node.SetMaterial(materialNormal);*/
-                        GameManager.instance.nodeScript.NodeRedraw = true;
+                        GameManager.i.nodeScript.NodeRedraw = true;
                     }
                     break;
             }
 
             /*else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.instance.nodeScript.nodePlayer); }*/
-            GameManager.instance.tooltipGenericScript.CloseTooltip("PlayerSpriteTooltipUI.cs -> OnPointerExit");
+            GameManager.i.tooltipGenericScript.CloseTooltip("PlayerSpriteTooltipUI.cs -> OnPointerExit");
         }
     }
 
@@ -135,7 +135,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             {
                 node.SetPlayerFlash();
                 /*node.SetMaterial(materialPlayer);*/
-                GameManager.instance.nodeScript.NodeRedraw = true;
+                GameManager.i.nodeScript.NodeRedraw = true;
                 isFlashOn = true;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
             }
@@ -143,7 +143,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             {
                 node.SetNormal();
                 /*node.SetMaterial(materialNormal);*/
-                GameManager.instance.nodeScript.NodeRedraw = true;
+                GameManager.i.nodeScript.NodeRedraw = true;
                 isFlashOn = false;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
             }

@@ -32,8 +32,8 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
     private void Start()
     {
         //delays
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.i.guiScript.tooltipFade;
     }
 
     /// <summary>
@@ -46,9 +46,9 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         //
         // - - - Tooltip - - -
         //
-        side = GameManager.instance.sideScript.PlayerSide;
+        side = GameManager.i.sideScript.PlayerSide;
         //activate tooltip if there is a valid reason
-        if (GameManager.instance.playerScript.tooltipStatus > ActorTooltip.None)
+        if (GameManager.i.playerScript.tooltipStatus > ActorTooltip.None)
         { myTooltipCoroutine = StartCoroutine("ShowSpecialTooltip"); }
         else
         {
@@ -69,7 +69,7 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         {
             StopCoroutine(myTooltipCoroutine);
             //close regardless, even if special tooltip in play
-            GameManager.instance.tooltipPlayerScript.CloseTooltip("PlayerTooltipUI.cs -> OnPointerExit");
+            GameManager.i.tooltipPlayerScript.CloseTooltip("PlayerTooltipUI.cs -> OnPointerExit");
         }
     }
 
@@ -87,15 +87,15 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.instance.actorScript.GetPlayerTooltip(side);
+                data = GameManager.i.actorScript.GetPlayerTooltip(side);
                 if (data != null)
                 {
                     data.screenPos = transform.position;
                     data.screenPos.x += 100;
                     data.screenPos.y -= 100;
-                    GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                    GameManager.i.tooltipGenericScript.SetTooltip(data);
                 }
                 yield return null;
             }
@@ -103,11 +103,11 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
             if (data != null)
             {
                 float alphaCurrent;
-                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                while (GameManager.i.tooltipGenericScript.GetOpacity() < 1.0)
                 {
-                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                    alphaCurrent = GameManager.i.tooltipGenericScript.GetOpacity();
                     alphaCurrent += Time.deltaTime / mouseOverFade;
-                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                    GameManager.i.tooltipGenericScript.SetOpacity(alphaCurrent);
                     yield return null;
                 }
             }
@@ -126,18 +126,18 @@ public class PlayerSpriteTooltipUI : MonoBehaviour, IPointerEnterHandler, IPoint
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipPlayerScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipPlayerScript.CheckTooltipActive() == false)
             {
-                GameManager.instance.tooltipPlayerScript.SetTooltip(transform.position);
+                GameManager.i.tooltipPlayerScript.SetTooltip(transform.position);
                 yield return null;
             }
             //fade in
             float alphaCurrent;
-            while (GameManager.instance.tooltipPlayerScript.GetOpacity() < 1.0)
+            while (GameManager.i.tooltipPlayerScript.GetOpacity() < 1.0)
             {
-                alphaCurrent = GameManager.instance.tooltipPlayerScript.GetOpacity();
+                alphaCurrent = GameManager.i.tooltipPlayerScript.GetOpacity();
                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipPlayerScript.SetOpacity(alphaCurrent);
+                GameManager.i.tooltipPlayerScript.SetOpacity(alphaCurrent);
                 yield return null;
             }
         }

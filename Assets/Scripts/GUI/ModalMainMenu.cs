@@ -113,7 +113,7 @@ public class ModalMainMenu : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -171,10 +171,10 @@ public class ModalMainMenu : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourSide = GameManager.instance.colourScript.GetColour(ColourType.blueText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourSide = GameManager.i.colourScript.GetColour(ColourType.blueText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -184,7 +184,7 @@ public class ModalMainMenu : MonoBehaviour
     private void CreateDefaultMainMenu()
     {
         //menu only accessible if player is active
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.status == ActorStatus.Active)
         {
             ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
             {
@@ -199,7 +199,7 @@ public class ModalMainMenu : MonoBehaviour
         else
         {
             //display a pop-up info window
-            GameManager.instance.guiScript.SetAlertMessage(AlertType.MainMenuUnavailable);
+            GameManager.i.guiScript.SetAlertMessage(AlertType.MainMenuUnavailable);
         }
     }
 
@@ -210,10 +210,10 @@ public class ModalMainMenu : MonoBehaviour
     private void SetMainMenu(ModalGenericMenuDetails details)
     {
         //game state -> save current state first
-        gameState = GameManager.instance.inputScript.GameState;
-        GameManager.instance.inputScript.GameState = GameState.MainMenu;
+        gameState = GameManager.i.inputScript.GameState;
+        GameManager.i.inputScript.GameState = GameState.MainMenu;
         //turn off node tooltip if needs be
-        GameManager.instance.guiScript.SetTooltipsOff();
+        GameManager.i.guiScript.SetTooltipsOff();
         //activate main menu
         modalMenuObject.SetActive(true);
         //set all states to off
@@ -334,9 +334,9 @@ public class ModalMainMenu : MonoBehaviour
         modalMenuObject.transform.position = screenPos;
         //set states
         ModalStateData package = new ModalStateData() { mainState = ModalSubState.MainMenu };
-        GameManager.instance.inputScript.SetModalState(package);
+        GameManager.i.inputScript.SetModalState(package);
         //block raycasts to gameobjects
-        GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+        GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
         modalLevel = details.modalLevel;
         modalState = details.modalState;
         Debug.LogFormat("[UI] ModalMainMenu.cs -> SetMainMenu{0}", "\n");
@@ -349,7 +349,7 @@ public class ModalMainMenu : MonoBehaviour
     public void InitialiseMainMenu(ModalMainMenuDetails detailsMain)
     {
         //game state -> save current state first
-        gameState = GameManager.instance.inputScript.GameState;
+        gameState = GameManager.i.inputScript.GameState;
         //menu
         ModalGenericMenuDetails details = new ModalGenericMenuDetails();
         details.itemName = "Main Menu";
@@ -508,7 +508,7 @@ public class ModalMainMenu : MonoBehaviour
             details.listOfButtonDetails.Add(button9);
         }
         //display background (default is none)
-        GameManager.instance.modalGUIScript.SetBackground(detailsMain.background);
+        GameManager.i.modalGUIScript.SetBackground(detailsMain.background);
         //activate menu
         SetMainMenu(details);
     }
@@ -520,14 +520,14 @@ public class ModalMainMenu : MonoBehaviour
     public void CloseMainMenu()
     {
         modalMenuObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
+        GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //close Generic toolip (eg. from button)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
         //set modal state
-        GameManager.instance.inputScript.ResetStates(modalState);
+        GameManager.i.inputScript.ResetStates(modalState);
         //revert to previous game state if necessary (menu option may have triggered a new game state already)
-        if (GameManager.instance.inputScript.GameState == GameState.MainMenu)
-        { GameManager.instance.inputScript.GameState = gameState; }
+        if (GameManager.i.inputScript.GameState == GameState.MainMenu)
+        { GameManager.i.inputScript.GameState = gameState; }
 /*        //close background (do so regardless as not a big overhead)
         GameManager.instance.modalGUIScript.DisableBackground(Background.Start);*/
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");

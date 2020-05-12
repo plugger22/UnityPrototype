@@ -97,7 +97,7 @@ public class CityInfoUI : MonoBehaviour
                 SubInitialiseLevelStart();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
 
@@ -112,7 +112,7 @@ public class CityInfoUI : MonoBehaviour
         int counter = 0;
         //cache list of District names
         listOfDistrictNames = new List<string>();
-        Dictionary<string, int> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfLookUpNodeArcs();
+        Dictionary<string, int> dictOfNodeArcs = GameManager.i.dataScript.GetDictOfLookUpNodeArcs();
         if (dictOfNodeArcs != null)
         {
             foreach (var record in dictOfNodeArcs)
@@ -130,7 +130,7 @@ public class CityInfoUI : MonoBehaviour
     #region SubInitialiseEvents
     private void SubInitialiseFastAccess()
     {
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
     }
     #endregion
@@ -185,21 +185,21 @@ public class CityInfoUI : MonoBehaviour
         switch (side.level)
         {
             case 1:
-                backgroundPanel.sprite = GameManager.instance.sideScript.info_background_Authority;
-                buttonClose.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                backgroundPanel.sprite = GameManager.i.sideScript.info_background_Authority;
+                buttonClose.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
                 //set sprite transitions
                 SpriteState spriteStateAuthority = new SpriteState();
-                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonClose.spriteState = spriteStateAuthority;
                 break;
             case 2:
-                backgroundPanel.sprite = GameManager.instance.sideScript.info_background_Resistance;
-                buttonClose.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                backgroundPanel.sprite = GameManager.i.sideScript.info_background_Resistance;
+                buttonClose.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
                 //set sprite transitions
                 SpriteState spriteStateRebel = new SpriteState();
-                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
+                spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonClose.spriteState = spriteStateRebel;
                 break;
         }
@@ -229,8 +229,8 @@ public class CityInfoUI : MonoBehaviour
     private void SetOpacities()
     {
         //subPanel opacities (same for all three)
-        float opacitySub = GameManager.instance.cityScript.subPanelOpacity;
-        float opacityMini = GameManager.instance.cityScript.miniPanelOpacity;
+        float opacitySub = GameManager.i.cityScript.subPanelOpacity;
+        float opacityMini = GameManager.i.cityScript.miniPanelOpacity;
         Debug.Assert(opacitySub >= 0 && opacitySub <= 100.0f, string.Format("Invalid subPanel opacity \"{0}\"", opacitySub));
         //left and right panels faintly visible
         Color panelColor = subPanelLeft.color;
@@ -268,10 +268,10 @@ public class CityInfoUI : MonoBehaviour
         if (city != null)
         {
             //exit any generic or node tooltips
-            GameManager.instance.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
-            GameManager.instance.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+            GameManager.i.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+            GameManager.i.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
             //close any Alert Message
-            GameManager.instance.alertScript.CloseAlertUI(true);
+            GameManager.i.alertScript.CloseAlertUI(true);
             //populate data
             cityName.text = city.tag;
             cityArc.text = city.Arc.name;
@@ -288,35 +288,35 @@ public class CityInfoUI : MonoBehaviour
                 else { mayorTrait.text = "Unknown"; }
             }
             else { mayorName.text = "Unknown"; }
-            factionName.text = GameManager.instance.hqScript.GetHqName(globalAuthority, false);
-            factionTrait.text = GameManager.instance.hqScript.GetHqDescription(globalAuthority);
-            organisations.text = GameManager.instance.cityScript.GetNumOfOrganisations();
+            factionName.text = GameManager.i.hqScript.GetHqName(globalAuthority, false);
+            factionTrait.text = GameManager.i.hqScript.GetHqDescription(globalAuthority);
+            organisations.text = GameManager.i.cityScript.GetNumOfOrganisations();
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)
             { cityImage.sprite = city.Arc.sprite; }
-            else { cityImage.sprite = GameManager.instance.guiScript.cityArcDefaultSprite; }
+            else { cityImage.sprite = GameManager.i.guiScript.cityArcDefaultSprite; }
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //Organisation tooltip
-            mayorTooltip.tooltipHeader = GameManager.instance.cityScript.GetMayorNameFormatted();
-            mayorTooltip.tooltipMain = GameManager.instance.cityScript.GetMayorTraitFormatted();
-            mayorTooltip.tooltipDetails = GameManager.instance.cityScript.GetMayorFactionFormatted();
+            mayorTooltip.tooltipHeader = GameManager.i.cityScript.GetMayorNameFormatted();
+            mayorTooltip.tooltipMain = GameManager.i.cityScript.GetMayorTraitFormatted();
+            mayorTooltip.tooltipDetails = GameManager.i.cityScript.GetMayorFactionFormatted();
             mayorTooltip.x_offset = 25;
-            factionTooltip.tooltipHeader = GameManager.instance.hqScript.GetHqName(globalAuthority);
-            factionTooltip.tooltipMain = GameManager.instance.hqScript.GetHqDescription(globalAuthority);
-            factionTooltip.tooltipDetails = GameManager.instance.hqScript.GetHqDetails(globalAuthority);
+            factionTooltip.tooltipHeader = GameManager.i.hqScript.GetHqName(globalAuthority);
+            factionTooltip.tooltipMain = GameManager.i.hqScript.GetHqDescription(globalAuthority);
+            factionTooltip.tooltipDetails = GameManager.i.hqScript.GetHqDetails(globalAuthority);
             factionTooltip.x_offset = 25;
-            organisationTooltip.tooltipHeader = GameManager.instance.cityScript.GetCityNameFormatted();
-            organisationTooltip.tooltipDetails = GameManager.instance.cityScript.GetOrganisationsTooltip();
+            organisationTooltip.tooltipHeader = GameManager.i.cityScript.GetCityNameFormatted();
+            organisationTooltip.tooltipDetails = GameManager.i.cityScript.GetOrganisationsTooltip();
             organisationTooltip.x_offset = 25;
             //activate main panel
             cityInfoObject.SetActive(true);
             //set modal status
-            GameManager.instance.guiScript.SetIsBlocked(true);
+            GameManager.i.guiScript.SetIsBlocked(true);
             //set game state
             ModalStateData package = new ModalStateData();
             package.mainState = ModalSubState.InfoDisplay;
             package.infoState = ModalInfoSubState.CityInfo;
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] CityInfoUI.cs -> SetCityInfo{0}", "\n");
         }
         else { Debug.LogWarning("Invalid city (Null) -> tooltip cancelled"); }
@@ -327,11 +327,11 @@ public class CityInfoUI : MonoBehaviour
     /// </summary>
     private void CloseCityInfo()
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> CloseCityInfo");
+        GameManager.i.tooltipGenericScript.CloseTooltip("CityInfoUI.cs -> CloseCityInfo");
         cityInfoObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] CityInfoUI.cs -> CloseCityInfo{0}", "\n");
     }
 

@@ -378,7 +378,7 @@ public class AIManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -390,14 +390,14 @@ public class AIManager : MonoBehaviour
     {
         //collections
         arrayOfAITaskTypes = new int[(int)AITaskType.Count];
-        playerID = GameManager.instance.preloadScript.playerActorID;
+        playerID = GameManager.i.preloadScript.playerActorID;
         Debug.Assert(playerID > -1, "Invalid playerID (-1)");
         //autoRun test
-        if (GameManager.instance.testScript.condtionAuthority != null && GameManager.instance.testScript.conditionTurnAuthority > -1)
+        if (GameManager.i.testScript.condtionAuthority != null && GameManager.i.testScript.conditionTurnAuthority > -1)
         {
             isAutoRunTest = true;
-            turnForCondition = GameManager.instance.testScript.conditionTurnAuthority;
-            conditionAutoRunTest = GameManager.instance.testScript.condtionAuthority;
+            turnForCondition = GameManager.i.testScript.conditionTurnAuthority;
+            conditionAutoRunTest = GameManager.i.testScript.condtionAuthority;
         }
         else { isAutoRunTest = false; }
     }
@@ -418,29 +418,29 @@ public class AIManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //decision ID's
-        decisionAPB = GameManager.instance.dataScript.GetAIDecision("APB");
-        decisionConnSec = GameManager.instance.dataScript.GetAIDecision("ConnSec");
-        decisionRequestTeam = GameManager.instance.dataScript.GetAIDecision("RqstTeam");
-        decisionSecAlert = GameManager.instance.dataScript.GetAIDecision("SecAlert");
-        decisionCrackdown = GameManager.instance.dataScript.GetAIDecision("SurvCrackdwn");
-        decisionResources = GameManager.instance.dataScript.GetAIDecision("RqstResources");
-        decisionTraceBack = GameManager.instance.dataScript.GetAIDecision("TraceBack");
-        decisionScreamer = GameManager.instance.dataScript.GetAIDecision("Screamer");
-        decisionOffline = GameManager.instance.dataScript.GetAIDecision("Offline");
-        decisionProtocol = GameManager.instance.dataScript.GetAIDecision("SecProtocol");
-        decisionCensorship = GameManager.instance.dataScript.GetAIDecision("Censorship");
-        decisionBanProtests = GameManager.instance.dataScript.GetAIDecision("BanProtests");
-        decisionMartialLaw = GameManager.instance.dataScript.GetAIDecision("MartialLaw");
-        decisionCurfew = GameManager.instance.dataScript.GetAIDecision("Curfew");
-        decisionRoboCop = GameManager.instance.dataScript.GetAIDecision("RoboCops");
-        decisionDrones = GameManager.instance.dataScript.GetAIDecision("DroneWarfare");
-        decisionHamper = GameManager.instance.dataScript.GetAIDecision("XmasHampers");
-        decisionAusterity = GameManager.instance.dataScript.GetAIDecision("AusterityPymnt");
-        decisionMedical = GameManager.instance.dataScript.GetAIDecision("MedicalCare");
-        decisionBlindEye = GameManager.instance.dataScript.GetAIDecision("BlindEye");
-        decisionHoliday = GameManager.instance.dataScript.GetAIDecision("Holiday");
-        decisionStressLeave = GameManager.instance.dataScript.GetAIDecision("StressLve");
-        decisionLobbyHQ = GameManager.instance.dataScript.GetAIDecision("LobbyHQ");
+        decisionAPB = GameManager.i.dataScript.GetAIDecision("APB");
+        decisionConnSec = GameManager.i.dataScript.GetAIDecision("ConnSec");
+        decisionRequestTeam = GameManager.i.dataScript.GetAIDecision("RqstTeam");
+        decisionSecAlert = GameManager.i.dataScript.GetAIDecision("SecAlert");
+        decisionCrackdown = GameManager.i.dataScript.GetAIDecision("SurvCrackdwn");
+        decisionResources = GameManager.i.dataScript.GetAIDecision("RqstResources");
+        decisionTraceBack = GameManager.i.dataScript.GetAIDecision("TraceBack");
+        decisionScreamer = GameManager.i.dataScript.GetAIDecision("Screamer");
+        decisionOffline = GameManager.i.dataScript.GetAIDecision("Offline");
+        decisionProtocol = GameManager.i.dataScript.GetAIDecision("SecProtocol");
+        decisionCensorship = GameManager.i.dataScript.GetAIDecision("Censorship");
+        decisionBanProtests = GameManager.i.dataScript.GetAIDecision("BanProtests");
+        decisionMartialLaw = GameManager.i.dataScript.GetAIDecision("MartialLaw");
+        decisionCurfew = GameManager.i.dataScript.GetAIDecision("Curfew");
+        decisionRoboCop = GameManager.i.dataScript.GetAIDecision("RoboCops");
+        decisionDrones = GameManager.i.dataScript.GetAIDecision("DroneWarfare");
+        decisionHamper = GameManager.i.dataScript.GetAIDecision("XmasHampers");
+        decisionAusterity = GameManager.i.dataScript.GetAIDecision("AusterityPymnt");
+        decisionMedical = GameManager.i.dataScript.GetAIDecision("MedicalCare");
+        decisionBlindEye = GameManager.i.dataScript.GetAIDecision("BlindEye");
+        decisionHoliday = GameManager.i.dataScript.GetAIDecision("Holiday");
+        decisionStressLeave = GameManager.i.dataScript.GetAIDecision("StressLve");
+        decisionLobbyHQ = GameManager.i.dataScript.GetAIDecision("LobbyHQ");
         Debug.Assert(decisionAPB != null, "Invalid decisionAPB (Null)");
         Debug.Assert(decisionConnSec != null, "Invalid decisionConnSec (Null)");
         Debug.Assert(decisionRequestTeam != null, "Invalid decisionRequestTeam (Null)");
@@ -465,9 +465,9 @@ public class AIManager : MonoBehaviour
         Debug.Assert(decisionStressLeave != null, "Invalid decisionStressLeave (Null)");
         Debug.Assert(decisionLobbyHQ != null, "Invalid decisionLobbyHQ (Null)");
         //sides
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        conditionStressed = GameManager.i.dataScript.GetCondition("STRESSED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
@@ -482,14 +482,14 @@ public class AIManager : MonoBehaviour
         aiHandoutCostLower = "AIHandoutCostLower";
         aiHandoutCostHigher = "AIHandoutCostHigher";
         //fast access
-        teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
-        teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
-        teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-        teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
-        teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
-        teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
-        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        maxTeamsAtNode = GameManager.instance.teamScript.maxTeamsAtNode;
+        teamArcCivil = GameManager.i.dataScript.GetTeamArcID("CIVIL");
+        teamArcControl = GameManager.i.dataScript.GetTeamArcID("CONTROL");
+        teamArcMedia = GameManager.i.dataScript.GetTeamArcID("MEDIA");
+        teamArcProbe = GameManager.i.dataScript.GetTeamArcID("PROBE");
+        teamArcSpider = GameManager.i.dataScript.GetTeamArcID("SPIDER");
+        teamArcDamage = GameManager.i.dataScript.GetTeamArcID("DAMAGE");
+        teamArcErasure = GameManager.i.dataScript.GetTeamArcID("ERASURE");
+        maxTeamsAtNode = GameManager.i.teamScript.maxTeamsAtNode;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia");
@@ -554,8 +554,8 @@ public class AIManager : MonoBehaviour
         //clear collections (not required but do so regardless for safety)
         ClearAICollections();
         //decision data
-        totalNodes = GameManager.instance.dataScript.CheckNumOfNodes();
-        totalConnections = GameManager.instance.dataScript.CheckNumOfConnections();
+        totalNodes = GameManager.i.dataScript.CheckNumOfNodes();
+        totalConnections = GameManager.i.dataScript.CheckNumOfConnections();
         //reset decision metrics
         connSecRatio = 0;
         teamRatio = 0;
@@ -564,11 +564,11 @@ public class AIManager : MonoBehaviour
         numOfUnsuccessfulResourceRequests = 0;
         numOfSuccessfulResourceRequests = 0;
         //city
-        city = GameManager.instance.cityScript.GetCity();
+        city = GameManager.i.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid City (Null)");
         //set AI resource levels
-        int resources = GameManager.instance.campaignScript.scenario.leaderAuthority.resourcesStarting;
-        GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+        int resources = GameManager.i.campaignScript.scenario.leaderAuthority.resourcesStarting;
+        GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
         //get names of node arcs (name or null, if none)
         if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }
         actionsPerTurn = city.mayor.actionsPerTurn;
@@ -612,13 +612,13 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -627,9 +627,9 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideResistance()
     {
-        Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
+        Debug.Log(string.Format("[Aim] -> ProcessAISideResistance -> turn {0}{1}", GameManager.i.turnScript.Turn, "\n"));
         //run AI
-        GameManager.instance.aiRebelScript.ProcessAI();
+        GameManager.i.aiRebelScript.ProcessAI();
         //reset flags
         immediateFlagAuthority = false;
     }
@@ -640,7 +640,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessAISideAuthority()
     {
-        Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"));
+        Debug.Log(string.Format("[Aim] -> ProcessAISideAuthority -> turn {0}{1}", GameManager.i.turnScript.Turn, "\n"));
         //debugging
         if (isAutoRunTest == true)
         { DebugTest(); }
@@ -659,7 +659,7 @@ public class AIManager : MonoBehaviour
             ProcessErasureData();
             ProcessDecisionData();
             //AI Rulesets
-            if (GameManager.instance.dataScript.CheckNumOfActiveActors(globalAuthority) > 0)
+            if (GameManager.i.dataScript.CheckNumOfActiveActors(globalAuthority) > 0)
             {
                 ProcessNodeTasks();
                 ProcessProbeTask();
@@ -684,10 +684,10 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void ProcessNemesis()
     {
-        if (GameManager.instance.nemesisScript.nemesis != null)
+        if (GameManager.i.nemesisScript.nemesis != null)
         {
             AITracker tracker = ProcessNemesisTarget();
-            GameManager.instance.nemesisScript.ProcessNemesis(tracker, immediateFlagResistance);
+            GameManager.i.nemesisScript.ProcessNemesis(tracker, immediateFlagResistance);
         }
     }
 
@@ -728,10 +728,10 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
-        if (GameManager.instance.turnScript.Turn > 0)
+        if (GameManager.i.turnScript.Turn > 0)
         {
             //only if resistance player is human
-            if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+            if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
             {
                 //update lists for gear hacking effects
                 UpdatePlayerHackingLists();
@@ -787,7 +787,7 @@ public class AIManager : MonoBehaviour
         int numOfConnections, numNodesHalf, counter, limit;
         //temp dictionary, key -> nodeID, value -> # of connections
         Dictionary<int, int> dictOfConnected = new Dictionary<int, int>();
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         List<Node> listOfMostConnectedNodes = new List<Node>();
         if (listOfNodes != null)
         {
@@ -855,7 +855,7 @@ public class AIManager : MonoBehaviour
                     //select all nodes with 'x' connections
                     foreach (var record in sorted)
                     {
-                        Node nodeConnected = GameManager.instance.dataScript.GetNode(record);
+                        Node nodeConnected = GameManager.i.dataScript.GetNode(record);
                         if (nodeConnected != null)
                         {
                             listOfMostConnectedNodes.Add(nodeConnected);
@@ -869,7 +869,7 @@ public class AIManager : MonoBehaviour
                         else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", record)); }
                     }
                     //Pass data to the main reference list
-                    GameManager.instance.dataScript.SetConnectedNodes(listOfMostConnectedNodes);
+                    GameManager.i.dataScript.SetConnectedNodes(listOfMostConnectedNodes);
                     Debug.Log(string.Format("[Aim] -> SetConnectedNodes: {0} nodes have been added to the listOfMostConnectedNodes{1}", counter, "\n"));
                 }
                 else { Debug.LogWarning("Insufficient number of records ( < 3) for SetConnectedNodes"); }
@@ -884,7 +884,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void SetPreferredNodes()
     {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             //isPreferred
@@ -924,7 +924,7 @@ public class AIManager : MonoBehaviour
         float limit = centreNum / 2f;
         float upper = limit;
         float lower = limit * -1;
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             foreach (Node node in listOfNodes)
@@ -948,7 +948,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void SetDecisionNodes()
     {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         List<Node> listOfDecisionNodes = new List<Node>();
         Node nodeFar;
         bool isSuccessful;
@@ -1000,7 +1000,7 @@ public class AIManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfNodes (Null)"); }
         //initialise list (overwrites any existing data)
         Debug.LogFormat("[Aim] -> SetDecisionNodes: {0} nodes have been added to listOfDecisionNodes{1}", listOfDecisionNodes.Count, "\n");
-        GameManager.instance.dataScript.SetDecisionNodes(listOfDecisionNodes);
+        GameManager.i.dataScript.SetDecisionNodes(listOfDecisionNodes);
     }
 
     /// <summary>
@@ -1010,7 +1010,7 @@ public class AIManager : MonoBehaviour
     {
         List<Node> listOfNearNeighbours = new List<Node>();
         List<int> listLookup = new List<int>();
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             foreach(Node node in listOfNodes)
@@ -1080,12 +1080,12 @@ public class AIManager : MonoBehaviour
                 {
                     case MessageSubType.AI_Connection:
                         //Get Connection and add Activity data
-                        Connection connection = GameManager.instance.dataScript.GetConnection(message.data1);
+                        Connection connection = GameManager.i.dataScript.GetConnection(message.data1);
                         if (connection != null)
                         {
                             connection.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> destination nodeID and turn created
-                            GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
+                            GameManager.i.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
 
                             /*//add to Nemesis list -> don't double up on AI_Immediate messages -> NOTE: Not necessary as PlayerMove msg's don't double up anymore
                             if (message.turnCreated != GameManager.instance.turnScript.Turn)
@@ -1099,12 +1099,12 @@ public class AIManager : MonoBehaviour
                     case MessageSubType.AI_Node:
                     case MessageSubType.AI_Detected:
                         //Player Detected Hacking with Traceback ON -> Get Node and add Activity data
-                        Node node = GameManager.instance.dataScript.GetNode(message.data0);
+                        Node node = GameManager.i.dataScript.GetNode(message.data0);
                         if (node != null)
                         {
                             node.AddActivityData(message.turnCreated);
                             //add to queue of most recent activity -> nodeID and turn created
-                            GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated));
+                            GameManager.i.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated));
                             //add to Nemesis list
                             listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                         }
@@ -1117,7 +1117,7 @@ public class AIManager : MonoBehaviour
                             //player move, add to connections queue -> destination nodeID and turn created
                             if (message.data0 > -1)
                             {
-                                GameManager.instance.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
+                                GameManager.i.dataScript.AddToRecentConnectionQueue(new AITracker(message.data0, message.turnCreated));
                                 //add to Nemesis list
                                 listOfPlayerActivity.Add(new AITracker(message.data0, message.turnCreated));
                             }
@@ -1127,7 +1127,7 @@ public class AIManager : MonoBehaviour
                         {
                             //node activity, add to node queue -> destination nodeID and turn created
                             if (message.data0 > -1)
-                            { GameManager.instance.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated)); }
+                            { GameManager.i.dataScript.AddToRecentNodeQueue(new AITracker(message.data0, message.turnCreated)); }
                             else { Debug.LogWarning("Invalid message.data0 (-1) for 'AI_Immediate' type message"); }
                         }
                         break;
@@ -1162,7 +1162,7 @@ public class AIManager : MonoBehaviour
     {
         int data;
         AINodeData dataPackage;
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
             foreach (Node node in listOfNodes)
@@ -1251,7 +1251,7 @@ public class AIManager : MonoBehaviour
                     //
                     if (node.isTargetKnown == true)
                     {
-                        Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+                        Target target = GameManager.i.dataScript.GetTarget(node.targetName);
                         if (target != null)
                         {
                             switch (target.targetStatus)
@@ -1332,13 +1332,13 @@ public class AIManager : MonoBehaviour
     private void ProcessSpiderData()
     {
         //only bother proceeding if there are spider teams available to deploy
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
+        if (GameManager.i.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
         {
-            List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
+            List<Node> listOfMostConnected = GameManager.i.dataScript.GetListOfMostConnectedNodes();
             if (listOfMostConnected != null)
             {
                 int score, tally;
-                int currentTurn = GameManager.instance.turnScript.Turn;
+                int currentTurn = GameManager.i.turnScript.Turn;
                 foreach (Node node in listOfMostConnected)
                 {
                     //ignore nodes with existing spider teams & spiders
@@ -1415,11 +1415,11 @@ public class AIManager : MonoBehaviour
     private int ProcessErasureTarget()
     {
         int nodeReturnID = -1;
-        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
-        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Queue<AITracker> queueRecentConnections = GameManager.i.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueRecentNodes = GameManager.i.dataScript.GetRecentNodesQueue();
         if (queueRecentConnections != null && queueRecentNodes != null)
         {
-            int currentTurn = GameManager.instance.turnScript.Turn;
+            int currentTurn = GameManager.i.turnScript.Turn;
             int connID = -1;
             int turnConn = 0;
             //if there isn't any confirmed player activity within the specified time frame then there is no target node
@@ -1519,8 +1519,8 @@ public class AIManager : MonoBehaviour
     private void ProcessErasureData()
     {
         int score, tally;
-        int numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve);
-        int currentTurn = GameManager.instance.turnScript.Turn;
+        int numOfTeams = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve);
+        int currentTurn = GameManager.i.turnScript.Turn;
         //only bother proceeding if there are spider teams available to deploy
         if (numOfTeams > 0)
         {
@@ -1529,7 +1529,7 @@ public class AIManager : MonoBehaviour
             if (playerTargetNodeID > -1)
             {
                 //get near neighbours as potential node targets
-                Node node = GameManager.instance.dataScript.GetNode(playerTargetNodeID);
+                Node node = GameManager.i.dataScript.GetNode(playerTargetNodeID);
                 if (node != null)
                 {
                     List<Node> listOfNearNeighbours = node.GetNearNeighbours();
@@ -1573,7 +1573,7 @@ public class AIManager : MonoBehaviour
                                     //target
                                     if (string.IsNullOrEmpty(nodeNear.targetName) == false)
                                     {
-                                        Target target = GameManager.instance.dataScript.GetTarget(nodeNear.targetName);
+                                        Target target = GameManager.i.dataScript.GetTarget(nodeNear.targetName);
                                         {
                                             //positive effect if target known by AI and uncompleted, reversed negative effect otherwise
                                             if (target != null)
@@ -1618,7 +1618,7 @@ public class AIManager : MonoBehaviour
                 //if a minimum number of erasure teams in reserve then place one at a likely place
                 if (numOfTeams > 1)
                 {
-                    List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
+                    List<Node> listOfMostConnected = GameManager.i.dataScript.GetListOfMostConnectedNodes();
                     if (listOfMostConnected != null)
                     {
                         foreach (Node nodeConnected in listOfMostConnected)
@@ -1663,7 +1663,7 @@ public class AIManager : MonoBehaviour
         isLowHQApproval = false;
         stressedActorID = -1;
         //authority ai player stressed?
-        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
+        if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, globalAuthority) == true)
         {
             isStressed = true;
             stressedActorID = playerID;
@@ -1671,13 +1671,13 @@ public class AIManager : MonoBehaviour
         else
         {
             //check for Authority actors being stressed
-            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
             if (arrayOfActors != null)
             {
                 for (int i = 0; i < arrayOfActors.Length; i++)
                 {
                     //check actor is present in slot (not vacant)
-                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                    if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                     {
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
@@ -1697,10 +1697,10 @@ public class AIManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         }
         //authority faction approval level low
-        if (GameManager.instance.hqScript.ApprovalAuthority <= thresholdLowHQApproval)
+        if (GameManager.i.hqScript.ApprovalAuthority <= thresholdLowHQApproval)
         { isLowHQApproval = true; }
         //work out connection security ratio (cumulate tally of connection security levels / number of connections)
-        List<Connection> listOfConnections = GameManager.instance.dataScript.GetListOfConnections();
+        List<Connection> listOfConnections = GameManager.i.dataScript.GetListOfConnections();
         if (listOfConnections != null)
         {
             tally = 0;
@@ -1723,9 +1723,9 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfConnections (Null)"); }
         //work out team ratio (total teams / total nodes)
-        teamRatio = GameManager.instance.dataScript.CheckNumOfTeams() / (float)totalNodes;
+        teamRatio = GameManager.i.dataScript.CheckNumOfTeams() / (float)totalNodes;
         //number of erasure teams onMap
-        erasureTeamsOnMap = GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
+        erasureTeamsOnMap = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         //log output
         Debug.LogFormat("[Aim] -> ProcessDecisionData: connection Security Ratio {0:f1} {1}{2}", connSecRatio, 
             connSecRatio >= connectionRatioThreshold ? "THRESHOLD EXCEEDED" : "", "\n");
@@ -1744,7 +1744,7 @@ public class AIManager : MonoBehaviour
     {
         int numOfTeams;
         //Stability
-        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcCivil, TeamInfo.Reserve);
+        numOfTeams = GameManager.i.dataScript.CheckTeamInfo(teamArcCivil, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
             AITask taskStability = SelectNodeTask(listStabilityCritical, listStabilityNonCritical, "CIVIL", teamArcCivil);
@@ -1753,7 +1753,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Civil teams available in reserves{0}", "\n")); }
         //Security
-        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcControl, TeamInfo.Reserve);
+        numOfTeams = GameManager.i.dataScript.CheckTeamInfo(teamArcControl, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
             AITask taskSecurity = SelectNodeTask(listSecurityCritical, listSecurityNonCritical, "CONTROL", teamArcControl);
@@ -1762,7 +1762,7 @@ public class AIManager : MonoBehaviour
         }
         else { Debug.Log(string.Format("[Aim]  -> ProcessNodeTasks: No Security teams available in reserves{0}", "\n")); }
         //Support
-        numOfTeams = GameManager.instance.dataScript.CheckTeamInfo(teamArcMedia, TeamInfo.Reserve);
+        numOfTeams = GameManager.i.dataScript.CheckTeamInfo(teamArcMedia, TeamInfo.Reserve);
         if (numOfTeams > 0)
         {
             AITask taskSupport = SelectNodeTask(listSupportCritical, listSupportNonCritical, "MEDIA", teamArcMedia);
@@ -1781,7 +1781,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     private void ProcessProbeTask()
     {
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcProbe, TeamInfo.Reserve) > 0)
+        if (GameManager.i.dataScript.CheckTeamInfo(teamArcProbe, TeamInfo.Reserve) > 0)
         {
             int numOfRecords = listOfProbeNodes.Count;
             if (numOfRecords > 0)
@@ -1816,7 +1816,7 @@ public class AIManager : MonoBehaviour
     private void ProcessSpiderTask()
     {
         //only bother proceeding if there are spider teams available to deploy
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
+        if (GameManager.i.dataScript.CheckTeamInfo(teamArcSpider, TeamInfo.Reserve) > 0)
         {
             if (listOfSpiderNodes.Count > 0)
             {
@@ -1912,7 +1912,7 @@ public class AIManager : MonoBehaviour
     private void ProcessErasureTask()
     {
         //only bother proceeding if there are erasure teams available to deploy
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
+        if (GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.Reserve) > 0)
         {
             if (listOfErasureNodes.Count > 0)
             {
@@ -1976,7 +1976,7 @@ public class AIManager : MonoBehaviour
     private void ProcessDamageTask()
     {
         //Damage teams available to deploy?
-        if (GameManager.instance.dataScript.CheckTeamInfo(teamArcDamage, TeamInfo.Reserve) > 0)
+        if (GameManager.i.dataScript.CheckTeamInfo(teamArcDamage, TeamInfo.Reserve) > 0)
         {
             if (listOfTargetsDamaged.Count > 0)
             {
@@ -1984,7 +1984,7 @@ public class AIManager : MonoBehaviour
                 {
                     if (data != null)
                     {
-                        Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                        Node node = GameManager.i.dataScript.GetNode(data.nodeID);
                         if (node != null)
                         {
                             //room for another team?
@@ -2029,8 +2029,8 @@ public class AIManager : MonoBehaviour
         Debug.Assert(listOfDecisionTasksNonCritical != null, "Invalid listOfDecisionTasksNonCritical (Null)");
         Debug.Assert(listOfDecisionTasksCritical != null, "Invalid listOfDecisionTasksCritical (Null)");
         //generate a security decision, choose which one (random choice but exclude ones where the cost can't be covered by the resource pool)
-        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
-        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
+        int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
         //
         // - - - Security -> Critical priority - - -
         //
@@ -2536,7 +2536,7 @@ public class AIManager : MonoBehaviour
         int connID = -1;
         int index;
         //add by value as will be deleting from list and don't want to affect master list of decision nodes
-        List<Node> listOfDecisionNodes = new List<Node>(GameManager.instance.dataScript.GetListOfDecisionNodes());
+        List<Node> listOfDecisionNodes = new List<Node>(GameManager.i.dataScript.GetListOfDecisionNodes());
         List<Node> tempList = new List<Node>();
         if (listOfDecisionNodes != null)
         {
@@ -2598,7 +2598,7 @@ public class AIManager : MonoBehaviour
         if (isDone == true)
         { 
             //update listOfDecisionNodes
-            GameManager.instance.aiScript.SetDecisionNodes();
+            GameManager.i.aiScript.SetDecisionNodes();
         }
         return connID;
     }
@@ -2901,7 +2901,7 @@ public class AIManager : MonoBehaviour
                             break;
                     }
                     //other data
-                    data.aiDetails = string.Format("{0}{1}Authority AI", GameManager.instance.globalScript.tagGlobalAIName, "\n");
+                    data.aiDetails = string.Format("{0}{1}Authority AI", GameManager.i.globalScript.tagGlobalAIName, "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }
@@ -2944,7 +2944,7 @@ public class AIManager : MonoBehaviour
             {
                 case AITaskType.Team:
                     textUpper = string.Format("Deploy {0} Team", task.name1);
-                    Node node = GameManager.instance.dataScript.GetNode(task.data0);
+                    Node node = GameManager.i.dataScript.GetNode(task.data0);
                     if (node != null)
                     {
                         textLower = string.Format("Deploy to {0}, {1} district", node.nodeName, node.Arc.name);
@@ -2959,13 +2959,13 @@ public class AIManager : MonoBehaviour
                     break;
                 case AITaskType.Decision:
                     textUpper = string.Format("{0} DECISION", task.name0);
-                    DecisionAI decisionAI = GameManager.instance.dataScript.GetAIDecision(task.dataName);
+                    DecisionAI decisionAI = GameManager.i.dataScript.GetAIDecision(task.dataName);
                     if (decisionAI != null)
                     {
                         //Connection decision
                         if (decisionAI.name.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
                         {
-                            Connection connection = GameManager.instance.dataScript.GetConnection(task.data0);
+                            Connection connection = GameManager.i.dataScript.GetConnection(task.data0);
                             if (connection != null)
                             {
                                 textLower = string.Format("Between {0} and {1}", connection.node1.nodeName, connection.node2.nodeName);
@@ -3270,12 +3270,12 @@ public class AIManager : MonoBehaviour
     private void ExecuteTeamTask(AITask task)
     {
         bool isSuccess = false;
-        int teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
+        int teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, task.data1);
         if (teamID > -1)
         {
-            Node node = GameManager.instance.dataScript.GetNode(task.data0);
+            Node node = GameManager.i.dataScript.GetNode(task.data0);
             if (node != null)
-            { isSuccess = GameManager.instance.teamScript.MoveTeamAI(TeamPool.OnMap, teamID, node); }
+            { isSuccess = GameManager.i.teamScript.MoveTeamAI(TeamPool.OnMap, teamID, node); }
             else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", task.data0)); }
 
         }
@@ -3294,33 +3294,33 @@ public class AIManager : MonoBehaviour
     private void ExecuteDecisionTask(AITask task)
     {
         //check enough resources in pool to carry out task
-        int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+        int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
         int decisionCost = task.data1;
         bool isSuccess = false;
         if (decisionCost <= resources)
         {
             //deduct cost
             resources -= decisionCost;
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Aim] -> ExecuteDecisionTask: \"{0}\" decision, cost {1}, resources now {2}{3}", task.name0, decisionCost, resources, "\n");
             //Security Measures
             if (task.dataName.Equals(decisionAPB.name, StringComparison.Ordinal) == true)
             {
-                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, decisionAPB.warning, AuthoritySecurityState.APB);
+                isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, decisionAPB.warning, AuthoritySecurityState.APB);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionSecAlert.name, StringComparison.Ordinal) == true)
             {
-                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, decisionSecAlert.warning, AuthoritySecurityState.SecurityAlert);
+                isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, decisionSecAlert.warning, AuthoritySecurityState.SecurityAlert);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionCrackdown.name, StringComparison.Ordinal) == true)
             {
-                isSuccess = GameManager.instance.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, decisionCrackdown.warning, AuthoritySecurityState.SurveillanceCrackdown);
+                isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, decisionCrackdown.warning, AuthoritySecurityState.SurveillanceCrackdown);
                 EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
-            { isSuccess = GameManager.instance.connScript.ProcessConnectionSecurityDecision(task.data0); }
+            { isSuccess = GameManager.i.connScript.ProcessConnectionSecurityDecision(task.data0); }
             //logistics
             else if (task.dataName.Equals(decisionRequestTeam.name, StringComparison.Ordinal) == true)
             { isSuccess = ProcessAITeamRequest(); }
@@ -3386,7 +3386,7 @@ public class AIManager : MonoBehaviour
     private bool ProcessAIPolicy(AITask task)
     {
         //deduct city Loyalty & update node crisis modifier
-        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
         int loyaltyChange = 0;
         int nodeCrisisModifier = 0;
         //task priority determines impact category
@@ -3411,8 +3411,8 @@ public class AIManager : MonoBehaviour
         //update
         cityLoyalty -= loyaltyChange;
         cityLoyalty = Mathf.Max(0, cityLoyalty);
-        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
-        GameManager.instance.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
+        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
+        GameManager.i.nodeScript.crisisPolicyModifier = nodeCrisisModifier;
         //set vars
         isPolicy = true;
         timerPolicy = aiPolicyTimer;
@@ -3430,32 +3430,32 @@ public class AIManager : MonoBehaviour
         else if (city.mayor.CheckTraitEffect(aiPolicyCostLower) == true)
         {
             //add an extra resource back to the pool (policy costs less)
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
             resources += 1;
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.mayorName, city.mayor.GetTrait().tag, resources, "\n");
         }
         //trait -> Sloppy
         else if (city.mayor.CheckTraitEffect(aiPolicyCostHigher) == true)
         {
             //deduct an extra resource (policy costs more)
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
             resources -= 1;
             resources = Mathf.Max(0, resources);
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.mayorName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string policyDescription = "Unknown";
-        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.dataName);
+        DecisionAI decision = GameManager.i.dataScript.GetAIDecision(task.dataName);
         if (decision != null)
         { policyDescription = decision.descriptor; }
         else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.dataName); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", policyTag);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.dataName, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
+        GameManager.i.messageScript.DecisionGlobal(msgText, msgText, policyDescription, task.dataName, timerPolicy - 1, loyaltyChange, nodeCrisisModifier);
         msgText = string.Format("{0} loyalty has decreased by -{1} ({2} policy)", city.tag, loyaltyChange, policyTag);
         string reasonText = string.Format("{0} policy", policyTag);
-        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
+        GameManager.i.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -3469,7 +3469,7 @@ public class AIManager : MonoBehaviour
     private bool ProcessAIHandout(AITask task)
     {
         //deduct city Loyalty
-        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
         int loyaltyChange = 0;
         //task priority determines impact category
         switch (task.priority)
@@ -3490,39 +3490,39 @@ public class AIManager : MonoBehaviour
         //update
         cityLoyalty += loyaltyChange;
         cityLoyalty = Mathf.Max(0, cityLoyalty);
-        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
         //set cooldown timer
         timerHandout = handoutCooldownTimer;
         //trait -> Liberal
         if (city.mayor.CheckTraitEffect(aiHandoutCostLower) == true)
         {
             //add an extra resource back to the pool (handout costs less)
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
             resources += 1;
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Trt] {0} uses {1} trait, +1 resource now {2}{3}", city.mayor.mayorName, city.mayor.GetTrait().tag, resources, "\n");
         }
         //trait -> Penny Pincher
         else if (city.mayor.CheckTraitEffect(aiHandoutCostHigher) == true)
         {
             //deduct an extra resource (handout costs more)
-            int resources = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority);
+            int resources = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
             resources -= 1;
             resources = Mathf.Max(0, resources);
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resources);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
             Debug.LogFormat("[Trt] {0} uses {1} trait, -1 resource now {2}{3}", city.mayor.mayorName, city.mayor.GetTrait().tag, resources, "\n");
         }
         string handoutDescription = "Unknown";
-        DecisionAI decision = GameManager.instance.dataScript.GetAIDecision(task.dataName);
+        DecisionAI decision = GameManager.i.dataScript.GetAIDecision(task.dataName);
         if (decision != null)
         { handoutDescription = string.Format("<b>{0}</b>", decision.descriptor); }
         else { Debug.LogWarningFormat("Invalid decision (Null) for decID {0}", task.dataName); }
         //admin
         string msgText = string.Format("Authority implements {0} policy", task.name0);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.dataName, 0, loyaltyChange);
+        GameManager.i.messageScript.DecisionGlobal(msgText, msgText, handoutDescription, task.dataName, 0, loyaltyChange);
         msgText = string.Format("{0} loyalty has increased by +{1} ({2} policy)", city.tag, loyaltyChange, task.name0);
         string reasonText = string.Format("{0} policy", task.name0);
-        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
+        GameManager.i.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, loyaltyChange);
         return true;
     }
 
@@ -3541,9 +3541,9 @@ public class AIManager : MonoBehaviour
         {
             amount = city.mayor.resourcesStarting + numOfSuccessfulResourceRequests;
             numOfSuccessfulResourceRequests++;
-            int resourcePool = GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority) + amount;
+            int resourcePool = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority) + amount;
             //add faction starting resources amount to their resource pool + 1 for each successful request
-            GameManager.instance.dataScript.SetAIResources(globalAuthority, resourcePool);
+            GameManager.i.dataScript.SetAIResources(globalAuthority, resourcePool);
             isSuccess = true;
             Debug.LogFormat("[Rnd] AIManager.cs -> ProcessAIResourceRequest: APPROVED need < {0}, rolled {1}{2}", adjustedChance, rnd, "\n");
         }
@@ -3566,7 +3566,7 @@ public class AIManager : MonoBehaviour
             numOfUnsuccessfulResourceRequests++;
             amount = 0;
         }
-        GameManager.instance.messageScript.DecisionRequestResources(text, description, globalAuthority, amount);
+        GameManager.i.messageScript.DecisionRequestResources(text, description, globalAuthority, amount);
         return isSuccess;
     }
 
@@ -3583,8 +3583,8 @@ public class AIManager : MonoBehaviour
         int teamCap = 2;
         int teamID = -1;
         string msgText = "";
-        List<TeamArc> listOfTeamPrioritiesHigh = GameManager.instance.teamScript.GetListOfTeamPrioritiesHigh();
-        List<TeamArc> listOfTeamPrioritiesMedium = GameManager.instance.teamScript.GetListOfTeamPrioritiesMed();
+        List<TeamArc> listOfTeamPrioritiesHigh = GameManager.i.teamScript.GetListOfTeamPrioritiesHigh();
+        List<TeamArc> listOfTeamPrioritiesMedium = GameManager.i.teamScript.GetListOfTeamPrioritiesMed();
         if (listOfTeamPrioritiesHigh != null)
         {
             if (listOfTeamPrioritiesMedium != null)
@@ -3601,7 +3601,7 @@ public class AIManager : MonoBehaviour
                             tempList.Clear();
                             foreach (TeamArc arc in listOfTeamPrioritiesHigh)
                             {
-                                if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
+                                if (GameManager.i.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
                                 { tempList.Add(arc); }
                             }
                             if (tempList.Count > 0)
@@ -3619,7 +3619,7 @@ public class AIManager : MonoBehaviour
                                 tempList.Clear();
                                 foreach (TeamArc arc in listOfTeamPrioritiesMedium)
                                 {
-                                    if (GameManager.instance.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
+                                    if (GameManager.i.dataScript.CheckTeamInfo(arc.TeamArcID, TeamInfo.Total) < teamCap)
                                     { tempList.Add(arc); }
                                 }
                                 if (tempList.Count > 0)
@@ -3643,15 +3643,15 @@ public class AIManager : MonoBehaviour
         {
             Team team = new Team(teamArc, teamCap - 1);
             //update team info
-            GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Reserve, +1);
-            GameManager.instance.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Total, +1);
+            GameManager.i.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Reserve, +1);
+            GameManager.i.dataScript.AdjustTeamInfo(teamArc, TeamInfo.Total, +1);
             msgText = string.Format("Request for Team: {0} {1} added to Reserves", team.arc.name, team.teamName);
             teamID = team.teamID;
         }
         else
         { msgText = "Request for Team DENIED"; }
         //message
-        GameManager.instance.messageScript.DecisionRequestTeam(msgText, teamID);
+        GameManager.i.messageScript.DecisionRequestTeam(msgText, teamID);
         return isDone;
     }
 
@@ -3670,7 +3670,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI activates TRACEBACK Countermeasure ({0} turn duration)", timerTraceBack);
         string itemText = "AI TRACEBACK countermeasures implemented";
         string warning = "Hacker's Location revealed if detected";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerTraceBack - 1);
+        GameManager.i.messageScript.AICounterMeasure(msgText, itemText, warning, timerTraceBack - 1);
         return isTraceBack;
     }
 
@@ -3689,7 +3689,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI activates SCREAMER Countermeasure ({0} turn duration)", timerScreamer);
         string itemText = "AI SCREAMER countermeasures implemented";
         string warning = "Hacker, if detected, becomes <b>STRESSED</b>";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer - 1);
+        GameManager.i.messageScript.AICounterMeasure(msgText, itemText, warning, timerScreamer - 1);
         return isScreamer;
     }
 
@@ -3708,7 +3708,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI activates OFFLINE Countermeasure ({0} turn duration)", timerOffline - 1);
         string itemText = "AI OFFLINE countermeasures implemented";
         string warning = "AI cannot be hacked";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, timerOffline);
+        GameManager.i.messageScript.AICounterMeasure(msgText, itemText, warning, timerOffline);
         return isOffline;
     }
 
@@ -3724,7 +3724,7 @@ public class AIManager : MonoBehaviour
         string msgText = string.Format("AI increases SECURITY PROTOCOL to level {0}", aiSecurityProtocolLevel);
         string itemText = "AI increases SECURITY PROTOCOL";
         string warning = "Increased chance of hacking being detected";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, itemText, warning, -1, aiSecurityProtocolLevel);
+        GameManager.i.messageScript.AICounterMeasure(msgText, itemText, warning, -1, aiSecurityProtocolLevel);
         return true;
     }
 
@@ -3740,12 +3740,12 @@ public class AIManager : MonoBehaviour
         //remove condition
         if (actorID == playerID)
         {
-            isSuccess = GameManager.instance.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
-            text = string.Format("{0}, Mayor, takes Stress Leave", GameManager.instance.playerScript.GetPlayerNameAuthority());
+            isSuccess = GameManager.i.playerScript.RemoveCondition(conditionStressed, globalAuthority, "Stress Leave");
+            text = string.Format("{0}, Mayor, takes Stress Leave", GameManager.i.playerScript.GetPlayerNameAuthority());
         }
         else
         {
-            Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+            Actor actor = GameManager.i.dataScript.GetActor(actorID);
             if (actor != null)
             {
                 isSuccess = actor.RemoveCondition(conditionStressed, "due to Stress Leave");
@@ -3757,9 +3757,9 @@ public class AIManager : MonoBehaviour
         if (isSuccess == true)
         {
             //statistic
-            GameManager.instance.dataScript.StatisticIncrement(StatType.StressLeaveAuthority);
+            GameManager.i.dataScript.StatisticIncrement(StatType.StressLeaveAuthority);
             //message
-            GameManager.instance.messageScript.ActorStressLeave(text, actorID, globalAuthority);
+            GameManager.i.messageScript.ActorStressLeave(text, actorID, globalAuthority);
         }
         return isSuccess;
     }
@@ -3770,7 +3770,7 @@ public class AIManager : MonoBehaviour
     /// <returns></returns>
     private bool ProcessLobbyHQ()
     {
-        GameManager.instance.hqScript.ChangeHqApproval(increaseHQApproval, globalAuthority, "<b>Mayor lobbies HQ</b>");
+        GameManager.i.hqScript.ChangeHqApproval(increaseHQApproval, globalAuthority, "<b>Mayor lobbies HQ</b>");
         return true;
     }
 
@@ -3788,19 +3788,19 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdateSideTabData(int renown = 0)
     {
-        if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+        if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
         {
             AISideTabData data = new AISideTabData();
             //ai gear effects?
             Tuple<int, string> results = GetHackingCost();
             hackingModifiedCost = results.Item1;
             string gearEffect = results.Item2;
-            switch (GameManager.instance.playerScript.status)
+            switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Active:
                     int playerRenown = renown;
                     if (playerRenown == 0)
-                    { playerRenown = GameManager.instance.playerScript.Renown; }
+                    { playerRenown = GameManager.i.playerScript.Renown; }
                     if (isRebooting == true)
                     {
                         //AI Security System rebooting, Hacking is unavailable
@@ -3848,7 +3848,7 @@ public class AIManager : MonoBehaviour
                                     {
                                         //show as grey if masked and indicate why
                                         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, traceBackFormattedText, colourEnd);
-                                        Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
+                                        Gear gear = GameManager.i.playerScript.GetAIGear(traceBackEffectText);
                                         if (gear != null)
                                         { builder.AppendFormat("{0}{1}{2}{3}{4} defeats TraceBack{5}", "\n", colourNeutral, gear.tag, colourEnd, colourGood, colourEnd); }
                                         else { Debug.LogWarning("Invalid gear (Null) for TraceBack"); }
@@ -3862,7 +3862,7 @@ public class AIManager : MonoBehaviour
                                     {
                                         //show as grey if masked and indicate why
                                         builder.AppendFormat("{0}{1}{2}{3}", "\n", colourGrey, screamerFormattedText, colourEnd);
-                                        Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
+                                        Gear gear = GameManager.i.playerScript.GetAIGear(screamerEffectText);
                                         if (gear != null)
                                         { builder.AppendFormat("{0}{1}{2}{3}{4} defeats Screamer{5}", "\n", colourNeutral, gear.tag, colourEnd, colourGood, colourEnd); }
                                         else { Debug.LogWarning("Invalid gear (Null) for Screamer"); }
@@ -3915,7 +3915,7 @@ public class AIManager : MonoBehaviour
         UpdateSideTabData();
         //message
         Debug.LogFormat("[Aim] AIManager.cs -> RebootCommence: rebootTimer set to {0}{1}", rebootTimer, "\n");
-        GameManager.instance.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer - 1);
+        GameManager.i.messageScript.AIReboot("AI commences Rebooting Security Systems", hackingCurrentCost, rebootTimer - 1);
         //reset any active ai countermeasures
         if (isTraceBack == true)
         { CancelTraceBack(); }
@@ -3939,7 +3939,7 @@ public class AIManager : MonoBehaviour
         //reset Alert status to low
         aiAlertStatus = Priority.Low;
         //message
-        GameManager.instance.messageScript.AIReboot("AI completes Rebooting Security Systems", hackingCurrentCost, rebootTimer);
+        GameManager.i.messageScript.AIReboot("AI completes Rebooting Security Systems", hackingCurrentCost, rebootTimer);
     }
 
     /// <summary>
@@ -3996,7 +3996,7 @@ public class AIManager : MonoBehaviour
             {
                 if (string.IsNullOrEmpty(policyName) == false)
                 {
-                    DecisionAI policy = GameManager.instance.dataScript.GetAIDecision(policyName);
+                    DecisionAI policy = GameManager.i.dataScript.GetAIDecision(policyName);
                     if (policy != null)
                     {
                         //ongoing effect message
@@ -4007,7 +4007,7 @@ public class AIManager : MonoBehaviour
                             policyEffectLoyalty, colourEnd, "\n", colourAlert, colourEnd);
 
                         string bottomText = string.Format("<b>Duration {0}{1} turn{2}</b>{3}", colourNeutral, timerPolicy, timerPolicy != 1 ? "s" : "", colourEnd);
-                        GameManager.instance.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, policy.name);
+                        GameManager.i.messageScript.DecisionOngoingEffect(msgText, itemText, topText, middleText, bottomText, policy.name);
                     }
                     else { Debug.LogErrorFormat("Invalid policy (Null) for aiDec {0}", policyTag); }
                 }
@@ -4058,7 +4058,7 @@ public class AIManager : MonoBehaviour
                     //AI DETECTS hacking attempt
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is DETECTED{0}", "\n");
-                    GameManager.instance.messageScript.GeneralRandom("Hacking attempt DETECTED", "Detection", chance, rnd, true);
+                    GameManager.i.messageScript.GeneralRandom("Hacking attempt DETECTED", "Detection", chance, rnd, true);
                     isDetected = true;
                     hackingAttemptsDetected++;
                     //increase alert status
@@ -4070,7 +4070,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 2;
                             //Message
                             string textLow = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            GameManager.instance.messageScript.AIAlertStatus(textLow, chance, rnd);
+                            GameManager.i.messageScript.AIAlertStatus(textLow, chance, rnd);
                             break;
                         case Priority.Medium:
                             aiAlertStatus = Priority.High;
@@ -4078,7 +4078,7 @@ public class AIManager : MonoBehaviour
                             traceBackDelay = 1;
                             //Message
                             string textMedium = string.Format("AI detects hacking activity. AlertStatus now {0}", aiAlertStatus);
-                            GameManager.instance.messageScript.AIAlertStatus(textMedium, chance, rnd);
+                            GameManager.i.messageScript.AIAlertStatus(textMedium, chance, rnd);
                             break;
                         case Priority.High:
                             //stays High (auto reset to Low by RebootComplete) -> Trigger Reboot 
@@ -4087,7 +4087,7 @@ public class AIManager : MonoBehaviour
                             aiAlertStatus = Priority.Critical;
                             //Message
                             string textHigh = "AI detects hacking activity. AlertStatus now CRITICAL";
-                            GameManager.instance.messageScript.AIAlertStatus(textHigh, chance, rnd);
+                            GameManager.i.messageScript.AIAlertStatus(textHigh, chance, rnd);
                             RebootCommence();
                             break;
                         default:
@@ -4104,7 +4104,7 @@ public class AIManager : MonoBehaviour
                         if (CheckAIGearEffectPresent(traceBackEffectText) == false)
                         {
                             //Player loses a level of invisiblity
-                            int invisibility = GameManager.instance.playerScript.Invisibility;
+                            int invisibility = GameManager.i.playerScript.Invisibility;
                             invisibility -= 1;
 
                             /*if (invisibility < 0)
@@ -4114,7 +4114,7 @@ public class AIManager : MonoBehaviour
                                 invisibility = 0;
                             }*/
 
-                            GameManager.instance.playerScript.Invisibility = invisibility;
+                            GameManager.i.playerScript.Invisibility = invisibility;
                             //immediate flag activity
 
                             /*if (traceBackDelay == 0)
@@ -4130,7 +4130,7 @@ public class AIManager : MonoBehaviour
                             //Detected by AITrackback results in immediate notification regardless of circumstances (unless detection negated by Gear)
                             immediateFlagResistance = true;
                             text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, 0);
+                            GameManager.i.messageScript.AIDetected(text, GameManager.i.nodeScript.nodePlayer, 0);
                         }
                         else
                         {
@@ -4147,13 +4147,13 @@ public class AIManager : MonoBehaviour
                         //gear can negate Screamer
                         if (CheckAIGearEffectPresent(screamerEffectText) == false)
                         {
-                            GameManager.instance.playerScript.AddCondition(conditionStressed, globalResistance, "Acquired due to Screamer countermeasures");
+                            GameManager.i.playerScript.AddCondition(conditionStressed, globalResistance, "Acquired due to Screamer countermeasures");
                         }
                         else
                         {
                             //screamer masker present
                             isScreamerMasker = true;
-                            Gear gear = GameManager.instance.playerScript.GetAIGear(screamerEffectText);
+                            Gear gear = GameManager.i.playerScript.GetAIGear(screamerEffectText);
                             if (gear == null)
                             {
                                 screamerGearName = "Screamer Gear";
@@ -4163,7 +4163,7 @@ public class AIManager : MonoBehaviour
                             {
                                 screamerGearName = gear.tag;
                                 Debug.Log("[Aim] -> UpdateHackingStatus: AI Screamer defeated by Hacking Gear (Screamer Mask)");
-                                GameManager.instance.gearScript.SetGearUsed(gear, "defeat AI Screamer hacking countermeasure");
+                                GameManager.i.gearScript.SetGearUsed(gear, "defeat AI Screamer hacking countermeasure");
                             }
                             
                         }
@@ -4174,7 +4174,7 @@ public class AIManager : MonoBehaviour
                 {
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt Undetected, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is NOT Detected{0}", "\n");
-                    GameManager.instance.messageScript.GeneralRandom("Hacking attempt Undetected", "Detection", chance, rnd, true);
+                    GameManager.i.messageScript.GeneralRandom("Hacking attempt Undetected", "Detection", chance, rnd, true);
                     //no change to status
                     switch (aiAlertStatus)
                     {
@@ -4190,7 +4190,7 @@ public class AIManager : MonoBehaviour
             else
             {
                 //Invisible Hacking gear present -> Player can't be detected -> no change to status
-                Gear gear = GameManager.instance.playerScript.GetAIGear(invisibileHackingEffectText);
+                Gear gear = GameManager.i.playerScript.GetAIGear(invisibileHackingEffectText);
                 if (gear != null)
                 {
                     data.tooltipHeader = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd,
@@ -4265,7 +4265,7 @@ public class AIManager : MonoBehaviour
                     else
                     {
                         //TraceBack Mask
-                        Gear gear = GameManager.instance.playerScript.GetAIGear(traceBackEffectText);
+                        Gear gear = GameManager.i.playerScript.GetAIGear(traceBackEffectText);
                         if (gear == null)
                         {
                             traceBackGearName = "Hacking Gear";
@@ -4275,7 +4275,7 @@ public class AIManager : MonoBehaviour
                         {
                             //traceback masker present and used
                             traceBackGearName = gear.tag;
-                            GameManager.instance.gearScript.SetGearUsed(gear, "defeat AI TraceBack countermeasure");
+                            GameManager.i.gearScript.SetGearUsed(gear, "defeat AI TraceBack countermeasure");
                         }
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}<size=110%>DETECTED</size>{1}{2}{3}{4}{5}{6}", colourBad, colourEnd, "\n", colourBad, traceBackFormattedText, colourEnd, "\n");
@@ -4388,7 +4388,7 @@ public class AIManager : MonoBehaviour
     public void UpdateHackingCost(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         //deduct cost
-        int renown = GameManager.instance.playerScript.Renown;
+        int renown = GameManager.i.playerScript.Renown;
         //ai gear effects?
         Tuple <int, string> results = GetHackingCost(true);
         hackingModifiedCost = results.Item1;
@@ -4396,9 +4396,9 @@ public class AIManager : MonoBehaviour
         //update Player renown
         renown -= hackingModifiedCost;
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
-        GameManager.instance.playerScript.Renown = renown;
+        GameManager.i.playerScript.Renown = renown;
         //message
-        GameManager.instance.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, isDetected, attemptsDetected, attemptsTotal);
+        GameManager.i.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, isDetected, attemptsDetected, attemptsTotal);
     }
 
 
@@ -4409,7 +4409,7 @@ public class AIManager : MonoBehaviour
     public void UpdateAIGearStatus()
     {
         //no update during first turn (player shouldn't be able to open side tab yet).
-        if (GameManager.instance.turnScript.Turn > 0)
+        if (GameManager.i.turnScript.Turn > 0)
         {
             UpdatePlayerHackingLists();
             UpdateSideTabData();
@@ -4423,7 +4423,7 @@ public class AIManager : MonoBehaviour
     /// </summary>
     public void UpdatePlayerHackingLists()
     {
-        List<string> tempList = GameManager.instance.playerScript.CheckAIGearPresent();
+        List<string> tempList = GameManager.i.playerScript.CheckAIGearPresent();
         listOfPlayerEffects.Clear();
         listOfPlayerEffectDescriptors.Clear();
         if (tempList != null)
@@ -4432,7 +4432,7 @@ public class AIManager : MonoBehaviour
             for (int i = 0; i < tempList.Count; i++)
             {
                 //gear is already checked to be hacking and have AI effects by playerManager.cs -> CheckAIGearPresent
-                Gear gear = GameManager.instance.dataScript.GetGear(tempList[i]);
+                Gear gear = GameManager.i.dataScript.GetGear(tempList[i]);
                 if (gear != null)
                 {
                     if (gear.aiHackingEffect != null)
@@ -4493,17 +4493,17 @@ public class AIManager : MonoBehaviour
         int tempCost = 0;
         string gearEffect = "";
         //deduct cost
-        int renown = GameManager.instance.playerScript.Renown;
+        int renown = GameManager.i.playerScript.Renown;
         string textGear;
         //ai gear effects?
         if (CheckAIGearEffectPresent(cheapHackingEffectText) == true && CheckAIGearEffectPresent(freeHackingEffectText) == false)
         {
-            Gear gear = GameManager.instance.playerScript.GetAIGear(cheapHackingEffectText);
+            Gear gear = GameManager.i.playerScript.GetAIGear(cheapHackingEffectText);
             if (gear != null)
             {
                 textGear = gear.tag;
                 if (logGearUse == true)
-                { GameManager.instance.gearScript.SetGearUsed(gear, "provide half cost AI Hacking"); }
+                { GameManager.i.gearScript.SetGearUsed(gear, "provide half cost AI Hacking"); }
             }
             else
             {
@@ -4517,12 +4517,12 @@ public class AIManager : MonoBehaviour
         //Free Hacking will override Cheap Hacking if both are present
         if (CheckAIGearEffectPresent(freeHackingEffectText) == true)
         {
-            Gear gear = GameManager.instance.playerScript.GetAIGear(freeHackingEffectText);
+            Gear gear = GameManager.i.playerScript.GetAIGear(freeHackingEffectText);
             if (gear != null)
             {
                 textGear = gear.tag;
                 if (logGearUse == true)
-                { GameManager.instance.gearScript.SetGearUsed(gear, "provide free AI Hacking"); }
+                { GameManager.i.gearScript.SetGearUsed(gear, "provide free AI Hacking"); }
             }
             else
             {
@@ -4548,7 +4548,7 @@ public class AIManager : MonoBehaviour
         int chance = hackingDetectBaseChance;
         string detectText = "";
         string gearName;
-        Gear gear = GameManager.instance.playerScript.GetAIGear(invisibileHackingEffectText);
+        Gear gear = GameManager.i.playerScript.GetAIGear(invisibileHackingEffectText);
         if (gear == null)
         {
             StringBuilder builder = new StringBuilder();
@@ -4574,17 +4574,17 @@ public class AIManager : MonoBehaviour
             }
             //Gear modifiers
             string textGear = "";
-            Gear gearDetect = GameManager.instance.playerScript.GetAIGear(lowerDetectionEffectText);
+            Gear gearDetect = GameManager.i.playerScript.GetAIGear(lowerDetectionEffectText);
             if (gearDetect != null)
             {
                 chance -= hackingLowDetectionEffect;
                 textGear = string.Format("{0}<size=95%>{1}Gear -{2}{3}</size>", "\n", colourGood, hackingLowDetectionEffect * 0.1, colourEnd);
                 if (logGearUse == true)
-                { GameManager.instance.gearScript.SetGearUsed(gearDetect, "lower the chance of being Detected while Hacking"); }
+                { GameManager.i.gearScript.SetGearUsed(gearDetect, "lower the chance of being Detected while Hacking"); }
             }
             //Player Stressed
             string textStressed = "";
-            if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
+            if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
             {
                 chance += hackingStressedDetectionEffect;
                 textStressed = string.Format("{0}<size=95%>{1}STRESSED +{2}{3}</size>", "\n", colourBad, hackingStressedDetectionEffect, colourEnd);
@@ -4606,7 +4606,7 @@ public class AIManager : MonoBehaviour
         {
             gearName = gear.tag;
             if (logGearUse == true)
-            { GameManager.instance.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking"); }
+            { GameManager.i.gearScript.SetGearUsed(gear, "provide Invisibile AI Hacking"); }
             //Invisible Hacking gear present -> Player can't be detected -> no change to status
             detectText = string.Format("There is {0}NO{1} chance of being {2}Detected{3} due to {4}{5}{6} gear", colourGood, colourEnd, colourBad, colourEnd, 
                 colourNeutral, gearName, colourEnd);
@@ -4649,7 +4649,7 @@ public class AIManager : MonoBehaviour
         timerTraceBack = -1;
         //message
         string msgText = "AI TRACEBACK countermeasure expired";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
+        GameManager.i.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
@@ -4662,7 +4662,7 @@ public class AIManager : MonoBehaviour
         timerScreamer = -1;
         //message
         string msgText = "AI SCREAMER countermeasure expired";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
+        GameManager.i.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
@@ -4675,7 +4675,7 @@ public class AIManager : MonoBehaviour
         timerOffline = -1;
         //message
         string msgText = "AI OFFLINE countermeasure expired";
-        GameManager.instance.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
+        GameManager.i.messageScript.AICounterMeasure(msgText, msgText, "<b>Countermeasure expired</b>");
     }
 
     /// <summary>
@@ -4684,19 +4684,19 @@ public class AIManager : MonoBehaviour
     private void CancelPolicy()
     {
         //update node crisis modifer
-        GameManager.instance.nodeScript.crisisPolicyModifier = 0;
+        GameManager.i.nodeScript.crisisPolicyModifier = 0;
         //update loyalty
-        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+        int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
         cityLoyalty += policyEffectLoyalty;
-        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+        cityLoyalty = Mathf.Min(GameManager.i.cityScript.maxCityLoyalty, cityLoyalty);
+        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
         //admin
         string msgText = string.Format("{0} policy is no longer in effect", policyTag);
         string cancelText = string.Format("{0} policy has been cancelled", policyTag);
-        GameManager.instance.messageScript.DecisionGlobal(msgText, msgText, cancelText, policyName, 0, policyEffectLoyalty);
+        GameManager.i.messageScript.DecisionGlobal(msgText, msgText, cancelText, policyName, 0, policyEffectLoyalty);
         msgText = string.Format("{0} Loyalty has increased by +{1} ({2} policy lifted)", city.tag, policyEffectLoyalty, policyTag);
         string reasonText = string.Format("{0} policy being cancelled", policyTag);
-        GameManager.instance.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, policyEffectLoyalty);
+        GameManager.i.messageScript.CityLoyalty(msgText, reasonText, cityLoyalty, policyEffectLoyalty);
         //reset vars
         isPolicy = false;
         timerPolicy = -1;
@@ -4846,8 +4846,8 @@ public class AIManager : MonoBehaviour
         builder.AppendFormat("- Task Allowances{0}", "\n");
         builder.AppendFormat(" {0} Authority Actions per turn ({1}){2}{3}", actionsPerTurn, city.mayor.mayorName, "\n", "\n");
         builder.AppendFormat("- Resource Pools{0}", "\n");
-        builder.AppendFormat(" {0} Authority resources{1}", GameManager.instance.dataScript.CheckAIResourcePool(globalAuthority), "\n");
-        builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.instance.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
+        builder.AppendFormat(" {0} Authority resources{1}", GameManager.i.dataScript.CheckAIResourcePool(globalAuthority), "\n");
+        builder.AppendFormat(" {0} Resistance resources{1}{2}", GameManager.i.dataScript.CheckAIResourcePool(globalResistance), "\n", "\n");
         builder.AppendFormat("- AI Player{0}", "\n");
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
         builder.AppendFormat(" isBreakdown: {0}{1}{2}", isBreakdown, "\n", "\n");
@@ -4947,7 +4947,7 @@ public class AIManager : MonoBehaviour
             { builder.AppendFormat(" ID {0}, {1}, isPreferred: {2}, Score: {3}{4}", data.nodeID, data.arc.name, data.isPreferred, data.score, "\n"); }
         }
         else { builder.AppendFormat(" No records{0}", "\n"); }
-        Queue<AITracker> queueRecentNodes = GameManager.instance.dataScript.GetRecentNodesQueue();
+        Queue<AITracker> queueRecentNodes = GameManager.i.dataScript.GetRecentNodesQueue();
         if (queueRecentNodes != null)
         {
             builder.AppendFormat("{0}- queueRecentNodes{1}", "\n", "\n");
@@ -4960,7 +4960,7 @@ public class AIManager : MonoBehaviour
             else { builder.AppendFormat(" No records{0}", "\n"); }
         }
         else { Debug.LogWarning("Invalid queueRecentNodes (Null)"); }
-        Queue<AITracker> queueRecentConnections = GameManager.instance.dataScript.GetRecentConnectionsQueue();
+        Queue<AITracker> queueRecentConnections = GameManager.i.dataScript.GetRecentConnectionsQueue();
         if (queueRecentConnections != null)
         {
             builder.AppendFormat("{0}- queueRecentConnections{1}", "\n", "\n");
@@ -5079,20 +5079,20 @@ public class AIManager : MonoBehaviour
         //Add condition to a set actor/player at a set turn
         if (conditionAutoRunTest != null)
         {
-            int turn = GameManager.instance.turnScript.Turn;
+            int turn = GameManager.i.turnScript.Turn;
             //Add Condition
             if (turn == turnForCondition)
             {
-                int slotID = GameManager.instance.testScript.conditionWhoAuthority;
+                int slotID = GameManager.i.testScript.conditionWhoAuthority;
                 //Authority player stressed
                 if (slotID == 999)
-                { GameManager.instance.playerScript.AddCondition(conditionAutoRunTest, globalAuthority, "for Debugging"); }
+                { GameManager.i.playerScript.AddCondition(conditionAutoRunTest, globalAuthority, "for Debugging"); }
                 else if (slotID > -1 && slotID < 4)
                 {
                     //Authority actor given condition -> check present
-                    if (GameManager.instance.dataScript.CheckActorSlotStatus(slotID, globalAuthority) == true)
+                    if (GameManager.i.dataScript.CheckActorSlotStatus(slotID, globalAuthority) == true)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, globalAuthority);
                         if (actor != null)
                         { actor.AddCondition(conditionAutoRunTest, "Debug Test Action"); }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); }
@@ -5159,7 +5159,7 @@ public class AIManager : MonoBehaviour
             detailsTop = decisionScreamer.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionScreamer.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerScreamer, timerScreamer != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionScreamer.name);
+            GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionScreamer.name);
         }
         //Traceback
         if (isTraceBack == true)
@@ -5169,7 +5169,7 @@ public class AIManager : MonoBehaviour
             detailsTop = decisionTraceBack.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionTraceBack.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerTraceBack, timerTraceBack != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionTraceBack.name);
+            GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionTraceBack.name);
         }
         //Offline
         if (isOffline == true)
@@ -5179,12 +5179,12 @@ public class AIManager : MonoBehaviour
             detailsTop = decisionOffline.descriptor;
             detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionOffline.tooltipDescriptor, colourEnd);
             detailsBottom = string.Format("Duration {0}{1} turn{2}{3}", colourNeutral, timerOffline, timerOffline != 1 ? "s" : "", colourEnd);
-            GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionOffline.name);
+            GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionOffline.name);
         }
         //
         // - - - Security decisions - - -
         //
-        switch (GameManager.instance.turnScript.authoritySecurityState)
+        switch (GameManager.i.turnScript.authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
                 text = string.Format("AI Security countermeasure {0} in place", decisionAPB.tag.ToUpper());
@@ -5192,7 +5192,7 @@ public class AIManager : MonoBehaviour
                 detailsTop = decisionAPB.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionAPB.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionAPB.name);
+                GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionAPB.name);
                 break;
             case AuthoritySecurityState.SecurityAlert:
                 text = string.Format("AI Security countermeasure {0} in place", decisionSecAlert.tag.ToUpper());
@@ -5200,7 +5200,7 @@ public class AIManager : MonoBehaviour
                 detailsTop = decisionSecAlert.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionSecAlert.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionSecAlert.name);
+                GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionSecAlert.name);
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
                 text = string.Format("AI Security countermeasure {0} in place", decisionCrackdown.tag.ToUpper());
@@ -5208,7 +5208,7 @@ public class AIManager : MonoBehaviour
                 detailsTop = decisionCrackdown.descriptor;
                 detailsMiddle = string.Format("{0}{1}{2}", colourAlert, decisionCrackdown.tooltipDescriptor, colourEnd);
                 detailsBottom = string.Format("Duration {0}Unknown{1}", colourNeutral, colourEnd);
-                GameManager.instance.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionCrackdown.name);
+                GameManager.i.messageScript.DecisionOngoingEffect(text, itemText, detailsTop, detailsMiddle, detailsBottom, decisionCrackdown.name);
                 break;
             case AuthoritySecurityState.Normal:
                 //Nothing happens here but needed to avoid triggering default statement -> Erasure team message
@@ -5217,12 +5217,12 @@ public class AIManager : MonoBehaviour
                 detailsTop = string.Format("You can be <b>{0}Captured{1}</b> provided", colourNeutral, colourEnd);
                 detailsBottom = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
                     colourAlert, "\n", "\n", colourEnd, colourBad, colourEnd);
-                Sprite sprite = GameManager.instance.guiScript.capturedSprite;
-                if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
-                { GameManager.instance.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, sprite, 999); }
+                Sprite sprite = GameManager.i.guiScript.capturedSprite;
+                if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
+                { GameManager.i.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, sprite, 999); }
                 break;
             default:
-                Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);
                 break;
             
         }

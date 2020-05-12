@@ -76,7 +76,7 @@ public class TeamManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -88,11 +88,11 @@ public class TeamManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access fields -> BEFORE SubInitialiseSessionStart
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        spotTeamChance = GameManager.instance.contactScript.spotTeamChance;
-        maxSpotTeam = GameManager.instance.contactScript.maxSpotTeam;
-        maxGenericOptions = GameManager.instance.genericPickerScript.maxOptions;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        spotTeamChance = GameManager.i.contactScript.spotTeamChance;
+        maxSpotTeam = GameManager.i.contactScript.maxSpotTeam;
+        maxGenericOptions = GameManager.i.genericPickerScript.maxOptions;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(spotTeamChance > -1, "Invalid spotTeamChance (less than Zero)");
@@ -113,7 +113,7 @@ public class TeamManager : MonoBehaviour
         Debug.Assert(listOfTeamPrioritiesLow != null, "Invalid listOfTeamPrioritiesLow (Null)");
         Debug.Assert(listOfTeamPrioritiesLow.Count > 0, "listOfTeamPrioritiesLow has no records");
         teamArcCount += listOfTeamPrioritiesHigh.Count + listOfTeamPrioritiesMedium.Count + listOfTeamPrioritiesLow.Count;
-        Debug.Assert(teamArcCount == GameManager.instance.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
+        Debug.Assert(teamArcCount == GameManager.i.dataScript.CheckNumOfTeamArcs(), "Mismatched count of team Priority Arcs (should be same # as num of unique Team Arcs");
     }
     #endregion
 
@@ -188,14 +188,14 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourTeam = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourEffect = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourTeam = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourActor = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -210,12 +210,12 @@ public class TeamManager : MonoBehaviour
     private void EndTurn()
     {
         //decrement all timers in OnMap pool
-        List<int> teamPool = GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap);
+        List<int> teamPool = GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap);
         if (teamPool != null)
         {
             for (int i = 0; i < teamPool.Count; i++)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
+                Team team = GameManager.i.dataScript.GetTeam(teamPool[i]);
                 if (team != null)
                 {
                     if (team.pool != TeamPool.OnMap)
@@ -238,18 +238,18 @@ public class TeamManager : MonoBehaviour
     {
         List<int> teamPool = new List<int>();
         //check InTransit pool -> move any teams here to the Reserve pool -> Note: do this BEFORE checking OnMap pool below
-        teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
+        teamPool.AddRange(GameManager.i.dataScript.GetTeamPool(TeamPool.InTransit));
         if (teamPool != null)
         {
             for (int i = 0; i < teamPool.Count; i++)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
+                Team team = GameManager.i.dataScript.GetTeam(teamPool[i]);
                 if (team != null)
                 {
                     if (team.pool != TeamPool.InTransit)
                     { Debug.LogWarningFormat("Team data shows it to be in {0} pool, not InTransit", team.pool); }
                     //Automatically move any teams to reserve (they spend in turn in transit and are unavailable for deployment)
-                    if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                    if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                     { MoveTeamAI(TeamPool.Reserve, team.teamID); }
                     else { MoveTeam(TeamPool.Reserve, team.teamID, team.actorSlotID); }
                 }
@@ -259,18 +259,18 @@ public class TeamManager : MonoBehaviour
         else { Debug.LogError("Invalid teamPool (Null) -> no teams moved from InTransit"); }
         //check all timers in OnMap pool -> need a value list, not reference, here as MoveTeam changes the pool while I'm looping it below
         teamPool.Clear();
-        teamPool.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap));
+        teamPool.AddRange(GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap));
         if (teamPool != null)
         {
 
             for (int i = 0; i < teamPool.Count; i++)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(teamPool[i]);
+                Team team = GameManager.i.dataScript.GetTeam(teamPool[i]);
                 if (team != null)
                 {
                     if (team.pool != TeamPool.OnMap)
                     { Debug.LogWarningFormat("Team data shows it to be in {0} pool, not OnMap", team.pool); }
-                    Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                    Node node = GameManager.i.dataScript.GetNode(team.nodeID);
                     if (node != null)
                     {
                         //check timer 
@@ -278,10 +278,10 @@ public class TeamManager : MonoBehaviour
                         {
                             //Timer expired, team automatically recalled to InTransit pool
 
-                            if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                            if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                             {
                                 //Human Authority Player
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                                 MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node);
                                 if (actor != null)
                                 {
@@ -291,7 +291,7 @@ public class TeamManager : MonoBehaviour
                                     TeamActionData data = new TeamActionData()
                                     {
                                         teamAction = GetTeamAction(team.arc.name),
-                                        turn = GameManager.instance.turnScript.Turn,
+                                        turn = GameManager.i.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         teamID = team.teamID,
@@ -300,12 +300,12 @@ public class TeamManager : MonoBehaviour
                                     actor.AddTeamAction(data);
                                     //message
                                     string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
-                                    GameManager.instance.messageScript.TeamAutoRecall(text, node, team, actor);
+                                    GameManager.i.messageScript.TeamAutoRecall(text, node, team, actor);
                                 }
                                 else
                                 {
                                     //error if there should be an actor in the slot
-                                    if (GameManager.instance.dataScript.CheckActorSlotStatus(team.actorSlotID, globalAuthority) == true)
+                                    if (GameManager.i.dataScript.CheckActorSlotStatus(team.actorSlotID, globalAuthority) == true)
                                     { Debug.LogError(string.Format("Invalid actor (null) for actorSlotID {0}", team.actorSlotID)); }
                                 }
                             }
@@ -315,11 +315,11 @@ public class TeamManager : MonoBehaviour
                                 Actor actor = null;
                                 //actor previously assigned by MoveTeamAI
                                 if (team.actorSlotID > -1)
-                                { actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, GameManager.instance.sideScript.PlayerSide); }
+                                { actor = GameManager.i.dataScript.GetCurrentActor(team.actorSlotID, GameManager.i.sideScript.PlayerSide); }
                                 else
                                 {
                                     //need a random actor
-                                    List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(globalAuthority);
+                                    List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(globalAuthority);
                                     if (listOfActors != null)
                                     {
                                         if (listOfActors.Count > 0)
@@ -336,7 +336,7 @@ public class TeamManager : MonoBehaviour
                                     TeamActionData data = new TeamActionData()
                                     {
                                         teamAction = GetTeamAction(team.arc.name),
-                                        turn = GameManager.instance.turnScript.Turn,
+                                        turn = GameManager.i.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         teamID = team.teamID,
@@ -352,7 +352,7 @@ public class TeamManager : MonoBehaviour
                                 ProcessTeamEffect(team, node, null);
                                 //message
                                 string text = string.Format("{0} {1}, ID {2}, recalled from {3}, ID {4}", team.arc.name, team.teamName, team.teamID, node.nodeName, node.nodeID);
-                                GameManager.instance.messageScript.TeamAutoRecall(text, node, team);
+                                GameManager.i.messageScript.TeamAutoRecall(text, node, team);
                             }
                         }
                         else
@@ -361,19 +361,19 @@ public class TeamManager : MonoBehaviour
                             Debug.LogFormat("[Tea] TeamManager.cs -> StartTurnLate: {0} team, id {1} currently at {2}, {3}, id {4}{5}", team.arc.name, team.teamID,
                                 node.nodeName, node.Arc.name, node.nodeID, "\n");
                             //Check for erasure team sightings by contacts or tracers -> Resistance Player only
-                            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                             {
                                 if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
                                 {
                                     //orgInfo not involved
-                                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.ErasureTeams) == false)
+                                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.ErasureTeams) == false)
                                     { ProcessErasureTeamSighting(team, node); }
                                     else
                                     {
                                         //OrgInfo sighting (automatic)
-                                        string text = string.Format("{0} tracks {1} {2} at {3}, {4}, ID {5}", GameManager.instance.campaignScript.campaign.orgInfo.tag, team.arc.name, team.teamName,
+                                        string text = string.Format("{0} tracks {1} {2} at {3}, {4}, ID {5}", GameManager.i.campaignScript.campaign.orgInfo.tag, team.arc.name, team.teamName,
                                             node.nodeName, node.Arc.name, node.nodeID);
-                                        GameManager.instance.messageScript.OrganisationErasureTeam(text, node, team);
+                                        GameManager.i.messageScript.OrganisationErasureTeam(text, node, team);
                                     }
                                 }
                             }
@@ -428,7 +428,7 @@ public class TeamManager : MonoBehaviour
         //
         if (node.isContactResistance == true)
         {
-            List<int> listOfActors = GameManager.instance.dataScript.CheckContactResistanceAtNode(node.nodeID);
+            List<int> listOfActors = GameManager.i.dataScript.CheckContactResistanceAtNode(node.nodeID);
             if (listOfActors != null)
             {
                 //loop actors and check all relevant contacts
@@ -437,7 +437,7 @@ public class TeamManager : MonoBehaviour
                 {
                     for (int index = 0; index < count; index++)
                     {
-                        Actor actor = GameManager.instance.dataScript.GetActor(listOfActors[index]);
+                        Actor actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
                         if (actor != null)
                         {
                             //actor must active
@@ -453,7 +453,7 @@ public class TeamManager : MonoBehaviour
                                             contact.nameLast, contact.job, team.arc.name, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                         text = string.Format("{0} team, id {1}, has been spotted by Contact {2} {3}, {4}, at district {5}, id {6}", team.teamName, team.teamID,
                                             contact.nameFirst, contact.nameLast, contact.job, node.nodeName, node.nodeID);
-                                        GameManager.instance.messageScript.ContactTeamSpotted(text, actor, node, contact, team);
+                                        GameManager.i.messageScript.ContactTeamSpotted(text, actor, node, contact, team);
                                         //update contact stats
                                         contact.statsTeams++;
                                     }
@@ -480,7 +480,7 @@ public class TeamManager : MonoBehaviour
         else if (node.isTracer == true)
         {
             text = string.Format("Tracer detects an {0} team and {1}, {2}, district, id {3}", team.arc.name, node.nodeName, node.Arc.name, node.nodeID);
-            GameManager.instance.messageScript.TracerTeamSpotted(text, node, team);
+            GameManager.i.messageScript.TracerTeamSpotted(text, node, team);
         }
         //NO sighting
         else
@@ -495,24 +495,24 @@ public class TeamManager : MonoBehaviour
     public void InitialiseTeams()
     {
         //Place one team of every type in the reserve
-        List<int> listOfTeamArcIDs = GameManager.instance.dataScript.GetTeamArcIDs();
+        List<int> listOfTeamArcIDs = GameManager.i.dataScript.GetTeamArcIDs();
         if (listOfTeamArcIDs != null && listOfTeamArcIDs.Count > 0)
         {
             //loop list and add one team of each type to teamReserve pool
             foreach (int arcID in listOfTeamArcIDs)
             {
-                GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
-                GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
             }
         }
         else { Debug.LogError("Invalid listOfTeamArcIDs (Null or Empty) -> initial team setup cancelled"); }
 
         //add teams depending on who is in charge of the authority side
-        switch (GameManager.instance.sideScript.authorityOverall)
+        switch (GameManager.i.sideScript.authorityOverall)
         {
             case SideState.Human:
                 //Add extra teams ([edit] No, see below [/edit] 
-                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors.Length > 0)
                 {
                     int numToDeploy, arcID;
@@ -523,8 +523,8 @@ public class TeamManager : MonoBehaviour
                         //get preferred team
                         arcID = actor.arc.preferredTeam.TeamArcID;
                         //add the ability number of teams to the reserve
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, numToDeploy);
-                        GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, numToDeploy);
+                        GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, numToDeploy);
+                        GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, numToDeploy);
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfActors (Empty)"); }
@@ -536,7 +536,7 @@ public class TeamManager : MonoBehaviour
                     int arcID, index;
                     //map size scaling
                     int numOfTeams = 2;
-                    if (GameManager.instance.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
+                    if (GameManager.i.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
                     //copy of list to prevent duplicate selections
                     List<TeamArc> tempList = new List<TeamArc>(listOfTeamPrioritiesHigh);
                     //High priority teams (random choice)
@@ -547,8 +547,8 @@ public class TeamManager : MonoBehaviour
                         arcID = tempList[index].TeamArcID;
                         if (arcID >= 0)
                         {
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
                             tempList.RemoveAt(index);
                         }
                         else { Debug.LogWarningFormat("Invalid High priority teamArcID \"{0}\"", arcID); }
@@ -558,7 +558,7 @@ public class TeamManager : MonoBehaviour
                     tempList = new List<TeamArc>(listOfTeamPrioritiesMedium);
                     //map size scaling
                     numOfTeams = 2;
-                    if (GameManager.instance.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
+                    if (GameManager.i.dataScript.CheckNumOfNodes() < 20) { numOfTeams = 1; }
                     numOfTeams = Mathf.Min(numOfTeams, tempList.Count);
                     for (int i = 0; i < numOfTeams; i++)
                     {
@@ -566,8 +566,8 @@ public class TeamManager : MonoBehaviour
                         arcID = tempList[index].TeamArcID;
                         if (arcID >= 0)
                         {
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
-                            GameManager.instance.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Reserve, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(arcID, TeamInfo.Total, +1);
                             tempList.RemoveAt(index);
                         }
                         else { Debug.LogWarningFormat("Invalid Medium priority teamArcID \"{0}\"", arcID); }
@@ -583,10 +583,10 @@ public class TeamManager : MonoBehaviour
         foreach (int teamArcID in listOfTeamArcIDs)
         {
             //how many present? (only check reserve as at start of game that's where all teams are)
-            numToCreate = GameManager.instance.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve);
+            numToCreate = GameManager.i.dataScript.CheckTeamInfo(teamArcID, TeamInfo.Reserve);
             //should never be more than 2
-            Debug.Assert(numToCreate < 3, string.Format("Excessive number ({0}) of {1} teams", numToCreate, GameManager.instance.dataScript.GetTeamArc(teamArcID).name));
-            Debug.LogFormat("TeamManager.cs -> InitialiseTeams: {0} {1} team{2} created{3}", numToCreate, GameManager.instance.dataScript.GetTeamArc(teamArcID).name,
+            Debug.Assert(numToCreate < 3, string.Format("Excessive number ({0}) of {1} teams", numToCreate, GameManager.i.dataScript.GetTeamArc(teamArcID).name));
+            Debug.LogFormat("TeamManager.cs -> InitialiseTeams: {0} {1} team{2} created{3}", numToCreate, GameManager.i.dataScript.GetTeamArc(teamArcID).name,
                 numToCreate != 1 ? "s" : "", "\n");
             //create teams
             for (int i = 0; i < numToCreate; i++)
@@ -603,8 +603,8 @@ public class TeamManager : MonoBehaviour
     /// </summary>
     public void SeedTeamsOnMap()
     {
-        List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
-        Dictionary<int, Team> dictOfTeams = GameManager.instance.dataScript.GetDictOfTeams();
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        Dictionary<int, Team> dictOfTeams = GameManager.i.dataScript.GetDictOfTeams();
         if (listOfNodes != null)
         {
             if (dictOfTeams != null)
@@ -621,9 +621,9 @@ public class TeamManager : MonoBehaviour
                         if (node != null)
                         {
                             //get a random Actor
-                            actorSlotID = Random.Range(0, GameManager.instance.actorScript.maxNumOfOnMapActors);
+                            actorSlotID = Random.Range(0, GameManager.i.actorScript.maxNumOfOnMapActors);
                             //only do so if Actor is present in slot (player might start level with less than full complement of actors)
-                            if (GameManager.instance.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
+                            if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, globalAuthority) == true)
                             { MoveTeam(TeamPool.OnMap, teamData.Key, actorSlotID, node); }
                         }
                         else { Debug.LogError("Invalid node (Null)"); }
@@ -648,8 +648,8 @@ public class TeamManager : MonoBehaviour
     /// <returns></returns>
     public bool MoveTeam(TeamPool destinationPool, int teamID, int actorSlotID = -1, Node node = null)
     {
-        Debug.Assert(teamID > -1 && teamID < GameManager.instance.dataScript.CheckNumOfTeams(), "Invalid teamID");
-        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        Debug.Assert(teamID > -1 && teamID < GameManager.i.dataScript.CheckNumOfTeams(), "Invalid teamID");
+        Team team = GameManager.i.dataScript.GetTeam(teamID);
         bool successFlag = true;
         if (team != null)
         {
@@ -660,12 +660,12 @@ public class TeamManager : MonoBehaviour
             {
                 case TeamPool.Reserve:
                     //pools
-                    if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, teamID) == true)
+                    if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.InTransit, teamID) == true)
                     {
-                        GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, teamID);
+                        GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, teamID);
                         //adjust tallies
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
                         //update team status
                         team.ResetTeamData(TeamPool.Reserve);
                         //confirmation
@@ -674,10 +674,10 @@ public class TeamManager : MonoBehaviour
                     else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
                     break;
                 case TeamPool.OnMap:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors)
                     {
                         //Get Actor
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             if (actor.Status == ActorStatus.Active)
@@ -685,7 +685,7 @@ public class TeamManager : MonoBehaviour
                                 if (node != null)
                                 {
                                     //a team available in the reserve pool?
-                                    if (GameManager.instance.dataScript.CheckTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
+                                    if (GameManager.i.dataScript.CheckTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
                                     {
                                         //check if actor has capacity to deploy another team
                                         if (actor.CheckCanDeployTeam() == true)
@@ -693,29 +693,29 @@ public class TeamManager : MonoBehaviour
                                             if (node.AddTeam(team, actorSlotID) == true)
                                             {
                                                 //pools
-                                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID) == true)
+                                                if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID) == true)
                                                 {
-                                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
+                                                    GameManager.i.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
                                                     //adjust tallies for onMap
-                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
-                                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
+                                                    GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
+                                                    GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
                                                     //add team to Actor list
                                                     actor.AddTeam(team.teamID);
                                                     //update team stats
                                                     team.nodeID = node.nodeID;
                                                     team.actorSlotID = actor.slotID;
                                                     team.timer = deployTime;
-                                                    team.turnDeployed = GameManager.instance.turnScript.Turn;
+                                                    team.turnDeployed = GameManager.i.turnScript.Turn;
                                                     //confirmation
                                                     string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                                         destinationPool, node.nodeID);
                                                     Debug.LogFormat("[Tea] TeamManager.cs -> MoveTeam: {0}{1}", text, "\n");
                                                     //message
-                                                    GameManager.instance.messageScript.TeamDeploy(text, node, team, actor);
+                                                    GameManager.i.messageScript.TeamDeploy(text, node, team, actor);
                                                     //NodeActionData
                                                     NodeActionData nodeActionData = new NodeActionData()
                                                     {
-                                                        turn = GameManager.instance.turnScript.Turn,
+                                                        turn = GameManager.i.turnScript.Turn,
                                                         actorID = actor.actorID,
                                                         nodeID = node.nodeID,
                                                         teamID = team.teamID,
@@ -774,7 +774,7 @@ public class TeamManager : MonoBehaviour
                     }
                     break;
                 case TeamPool.InTransit:
-                    if (actorSlotID > -1 && actorSlotID < GameManager.instance.actorScript.maxNumOfOnMapActors)
+                    if (actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors)
                     {
                         /*//Get Actor
                         Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
@@ -785,18 +785,18 @@ public class TeamManager : MonoBehaviour
                         if (node != null)
                         {
                             //pools
-                            if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
+                            if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
                             {
-                                GameManager.instance.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
+                                GameManager.i.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
                                 //adjust tallies
-                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
-                                GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
+                                GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                                GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
                                 //remove from node list
                                 node.RemoveTeam(team.teamID);
                                 //update team status
                                 team.ResetTeamData(TeamPool.InTransit);
                                 //Get Actor
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, globalAuthority);
                                 if (actor != null)
                                 {
                                     //remove team from actor list (if actor not present O.K as actor could have just been sent OffMap)
@@ -862,8 +862,8 @@ public class TeamManager : MonoBehaviour
     /// <returns></returns>
     public bool MoveTeamAI(TeamPool destinationPool, int teamID, Node node = null)
     {
-        Debug.Assert(teamID > -1 && teamID < GameManager.instance.dataScript.CheckNumOfTeams(), "Invalid teamID");
-        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        Debug.Assert(teamID > -1 && teamID < GameManager.i.dataScript.CheckNumOfTeams(), "Invalid teamID");
+        Team team = GameManager.i.dataScript.GetTeam(teamID);
         bool successFlag = true;
         int actorID = -1;
         if (team != null)
@@ -875,12 +875,12 @@ public class TeamManager : MonoBehaviour
             {
                 case TeamPool.Reserve:
                     //pools
-                    if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, teamID) == true)
+                    if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.InTransit, teamID) == true)
                     {
-                        GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, teamID);
+                        GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, teamID);
                         //adjust tallies
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
                         //update team status
                         team.ResetTeamData(TeamPool.Reserve);
                         //confirmation
@@ -892,30 +892,30 @@ public class TeamManager : MonoBehaviour
                     if (node != null)
                     {
                         //a team available in the reserve pool?
-                        if (GameManager.instance.dataScript.CheckTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
+                        if (GameManager.i.dataScript.CheckTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve) > 0)
                         {
                             if (node.AddTeam(team, actorID) == true)
                             {
                                 //pools
-                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID) == true)
+                                if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.Reserve, teamID) == true)
                                 {
-                                    GameManager.instance.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
+                                    GameManager.i.dataScript.AddTeamToPool(TeamPool.OnMap, teamID);
                                     //adjust tallies for onMap
-                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
-                                    GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
+                                    GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, +1);
+                                    GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, -1);
                                     //update team stats
                                     team.nodeID = node.nodeID;
                                     team.actorSlotID = -1;
                                     team.timer = deployTime;
-                                    team.turnDeployed = GameManager.instance.turnScript.Turn;
+                                    team.turnDeployed = GameManager.i.turnScript.Turn;
                                     //confirmation
                                     string text = string.Format("{0} {1}, ID {2}, deployed to {3}, Node ID {4}", team.arc.name, team.teamName, team.teamID,
                                         destinationPool, node.nodeID);
                                     //NodeActionData -> Debug purposes only (can be left in)
-                                    if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                                    if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                                     {
                                         //normally team actions aren't assigned to an actor but done so here for debugging purposes (to generate nodeActionData records and to test topics)
-                                        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(globalAuthority);
+                                        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(globalAuthority);
                                         if (listOfActors != null)
                                         {
                                             if (listOfActors.Count > 0)
@@ -938,7 +938,7 @@ public class TeamManager : MonoBehaviour
                                                     //actor action
                                                     NodeActionData nodeActionData = new NodeActionData()
                                                     {
-                                                        turn = GameManager.instance.turnScript.Turn,
+                                                        turn = GameManager.i.turnScript.Turn,
                                                         actorID = actor.actorID,
                                                         nodeID = node.nodeID,
                                                         teamID = team.teamID,
@@ -957,7 +957,7 @@ public class TeamManager : MonoBehaviour
                                     }
 
                                     //message (internal only)
-                                    GameManager.instance.messageScript.TeamDeploy(text, node, team);
+                                    GameManager.i.messageScript.TeamDeploy(text, node, team);
                                 }
                                 else { Debug.LogWarningFormat("{0} Team, id {1}, NOT Removed from Reserve pool", team.arc.name, team.teamID); successFlag = false; }
                             }
@@ -979,12 +979,12 @@ public class TeamManager : MonoBehaviour
                     if (node != null)
                     {
                         //pools
-                        if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
+                        if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.OnMap, teamID) == true)
                         {
                             //adjust tallies
-                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
-                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
-                            GameManager.instance.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
+                            GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                            GameManager.i.dataScript.AddTeamToPool(TeamPool.InTransit, teamID);
                             //remove from node list
                             node.RemoveTeam(team.teamID);
                             //update team status
@@ -1023,7 +1023,7 @@ public class TeamManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs
-        Dictionary<int, TeamArc> tempDict = GameManager.instance.dataScript.GetDictOfTeamArcs();
+        Dictionary<int, TeamArc> tempDict = GameManager.i.dataScript.GetDictOfTeamArcs();
         if (tempDict != null)
         {
             int reserve, onMap, inTransit, Total;
@@ -1035,10 +1035,10 @@ public class TeamManager : MonoBehaviour
             foreach (var teamData in tempDict)
             {
                 //get data
-                reserve = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Reserve);
-                onMap = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.OnMap);
-                inTransit = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.InTransit);
-                Total = GameManager.instance.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Total);
+                reserve = GameManager.i.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Reserve);
+                onMap = GameManager.i.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.OnMap);
+                inTransit = GameManager.i.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.InTransit);
+                Total = GameManager.i.dataScript.CheckTeamInfo(teamData.Key, TeamInfo.Total);
                 data = string.Format("r:{0,2}  m:{1,2}  t:{2,2}  T:{3,2}", reserve, onMap, inTransit, Total);
                 //display data
                 builder.Append(string.Format(" {0,-12}{1,-12}", teamData.Value.name, data));
@@ -1046,15 +1046,15 @@ public class TeamManager : MonoBehaviour
             }
             //add team pool totals
             builder.AppendLine();
-            builder.Append(string.Format(" {0, -20}{1,2} teams", "Reserve Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "Reserve Pool", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.Reserve)));
             builder.AppendLine();
-            builder.Append(string.Format(" {0, -20}{1,2} teams", "OnMap Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.OnMap)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "OnMap Pool", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.OnMap)));
             builder.AppendLine();
-            builder.Append(string.Format(" {0, -20}{1,2} teams", "InTransit Pool", GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.InTransit)));
+            builder.Append(string.Format(" {0, -20}{1,2} teams", "InTransit Pool", GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.InTransit)));
             //total teams
             builder.AppendLine();
             builder.AppendLine();
-            builder.Append(string.Format(" Teams in dictOfTeams   {0}", GameManager.instance.dataScript.CheckNumOfTeams()));
+            builder.Append(string.Format(" Teams in dictOfTeams   {0}", GameManager.i.dataScript.CheckNumOfTeams()));
         }
         return builder.ToString();
     }
@@ -1069,7 +1069,7 @@ public class TeamManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
         foreach (Actor actor in arrayOfActors)
         {
             if (actor != null)
@@ -1084,7 +1084,7 @@ public class TeamManager : MonoBehaviour
                     //loop teams
                     for (int i = 0; i < listOfTeams.Count; i++)
                     {
-                        Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                        Team team = GameManager.i.dataScript.GetTeam(listOfTeams[i]);
                         if (team != null)
                         {
                             if (i > 0) { builder.AppendLine(); }
@@ -1109,7 +1109,7 @@ public class TeamManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         //get dictionary of team arcs
-        Dictionary<int, Team> teamDict = GameManager.instance.dataScript.GetDictOfTeams();
+        Dictionary<int, Team> teamDict = GameManager.i.dataScript.GetDictOfTeams();
         if (teamDict != null)
         {
             //header
@@ -1137,7 +1137,7 @@ public class TeamManager : MonoBehaviour
         bool errorFlag = false;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         //does the node have any teams that can be recalled?
-        Node node = GameManager.instance.dataScript.GetNode(nodeID);
+        Node node = GameManager.i.dataScript.GetNode(nodeID);
         if (node != null)
         {
             //double check to see if there are teams present at the node
@@ -1170,17 +1170,17 @@ public class TeamManager : MonoBehaviour
                         //tooltip -> TO DO
                         GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                         tooltipDetails.textHeader = string.Format("{0}{1}{2} {3}{4}{5}", colourTeam, team.arc.name, colourEnd, colourNormal, team.teamName, colourEnd);
-                        turnsAgo = GameManager.instance.turnScript.Turn - team.turnDeployed;
+                        turnsAgo = GameManager.i.turnScript.Turn - team.turnDeployed;
                         if (team.timer > 0) { dataColour = colourGood; } else { dataColour = colourBad; }
                         tooltipDetails.textMain = string.Format("Deployed {0}{1}{2} turn{3} ago and will be auto-recalled in {4}{5}{6} turn{7}",
                             dataColour, turnsAgo, colourEnd, turnsAgo != 1 ? "s" : "", dataColour, team.timer, colourEnd, team.timer != 1 ? "s" : "");
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                         if (actor != null)
                         {
                             deployedTeams = actor.CheckNumOfTeams();
                             if (deployedTeams < actor.GetDatapoint(ActorDatapoint.Ability2)) { dataColour = colourGood; } else { dataColour = colourBad; }
                             tooltipDetails.textDetails = string.Format("{0}Inserted by {1} of {2}{3}{4}{5}{6}. They have deployed {7}{8}{9}{10}{11} of {12}{13}{14}{15}{16} possible teams{17}",
-                                colourNormal, GameManager.instance.metaScript.GetAuthorityTitle(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal,
+                                colourNormal, GameManager.i.metaScript.GetAuthorityTitle(), colourEnd, colourActor, actor.arc.name, colourEnd, colourNormal,
                                 colourEnd, dataColour, deployedTeams, colourEnd, colourNormal, colourEnd,
                                 dataColour, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd, colourNormal, colourEnd);
                         }
@@ -1222,7 +1222,7 @@ public class TeamManager : MonoBehaviour
         else
         {
             //deactivate back button
-            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
+            GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
         }
@@ -1238,7 +1238,7 @@ public class TeamManager : MonoBehaviour
         bool errorFlag = false;
         GenericPickerDetails genericDetails = new GenericPickerDetails();
         //does the node have any teams that can be neutralised?
-        Node node = GameManager.instance.dataScript.GetNode(details.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(details.nodeID);
         if (node != null)
         {
             //double check to see if there are teams present at the node
@@ -1303,13 +1303,13 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
-            outcomeDetails.sprite = GameManager.instance.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
         else
         {
             //deactivate back button
-            GameManager.instance.genericPickerScript.SetBackButton(EventType.None);
+            GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
             EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
@@ -1329,17 +1329,17 @@ public class TeamManager : MonoBehaviour
             string textBottom = "Unknown";
             if (data.nodeID != -1)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
+                Team team = GameManager.i.dataScript.GetTeam(data.optionID);
                 if (team != null)
                 {
                     Sprite sprite = team.arc.sprite;
-                    Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                    Node node = GameManager.i.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
                         //need to do prior to move team as data will be reset
-                        textTop = GameManager.instance.effectScript.SetTopTeamText(team.teamID, false);
+                        textTop = GameManager.i.effectScript.SetTopTeamText(team.teamID, false);
                         textBottom = "The team will spend one turn in Transit and be available thereafter";
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                         if (actor == null)
                         { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", team.actorSlotID)); }
                         if (MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node) == true)
@@ -1347,7 +1347,7 @@ public class TeamManager : MonoBehaviour
                             //NodeActionData
                             NodeActionData nodeActionData = new NodeActionData()
                             {
-                                turn = GameManager.instance.turnScript.Turn,
+                                turn = GameManager.i.turnScript.Turn,
                                 actorID = actor.actorID,
                                 nodeID = node.nodeID,
                                 teamID = team.teamID,
@@ -1361,7 +1361,7 @@ public class TeamManager : MonoBehaviour
                             string text = string.Format("{0} {1}, ID {2}, RECALLED from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
                             string reason = string.Format("{0} has done so on your orders", actor.actorName);
-                            GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
+                            GameManager.i.messageScript.TeamWithdraw(text, reason, node, team, actor);
                             Debug.LogFormat("[Tea] TeamManager.cs -> ProcessRecallTeam: {0}{1}", text, "\n");
                         }
                         else
@@ -1407,22 +1407,22 @@ public class TeamManager : MonoBehaviour
             //get currently selected node
             if (data.nodeID != -1)
             {
-                Team team = GameManager.instance.dataScript.GetTeam(data.optionID);
+                Team team = GameManager.i.dataScript.GetTeam(data.optionID);
                 if (team != null)
                 {
                     Sprite sprite = team.arc.sprite;
-                    Node node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                    Node node = GameManager.i.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (node.nodeID == GameManager.instance.nodeScript.nodePlayer) { isPlayer = true; }
-                        Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, globalResistance);
+                        if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { isPlayer = true; }
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, globalResistance);
                         if (actor != null)
                         {
                             StringBuilder builderTop = new StringBuilder();
                             StringBuilder builderBottom = new StringBuilder();
                             bool proceedFlag = false;
                             //move team
-                            if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                            if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                             { proceedFlag = MoveTeamAI(TeamPool.InTransit, team.teamID, node); }
                             else
                             { proceedFlag = MoveTeam(TeamPool.InTransit, team.teamID, team.actorSlotID, node); }
@@ -1432,7 +1432,7 @@ public class TeamManager : MonoBehaviour
                                 //message (notification to Authority Side)
                                 string text = string.Format("{0} {1}, ID {2}, NEUTRALISED at {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                     node.nodeName, node.nodeID);
-                                GameManager.instance.messageScript.TeamNeutralise(text, node, team, actor);
+                                GameManager.i.messageScript.TeamNeutralise(text, node, team, actor);
                                 Debug.LogFormat("[Tea] TeamManager.cs -> ProcessNeutraliseTeam: {0}{1}", text, "\n");
                                 //team successfully removed
                                 builderTop.Append(string.Format("{0}Operatives have succeeded!{1}", colourNormal, colourEnd));
@@ -1450,7 +1450,7 @@ public class TeamManager : MonoBehaviour
                                     {
                                         if (effect.ignoreEffect == false)
                                         {
-                                            EffectDataReturn effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                                            EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
                                             if (effectReturn != null)
                                             {
                                                 builderTop.AppendLine();
@@ -1468,7 +1468,7 @@ public class TeamManager : MonoBehaviour
                                     //actor
                                     NodeActionData nodeActionData = new NodeActionData()
                                     {
-                                        turn = GameManager.instance.turnScript.Turn,
+                                        turn = GameManager.i.turnScript.Turn,
                                         actorID = actor.actorID,
                                         nodeID = node.nodeID,
                                         dataName = string.Format("{0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID),
@@ -1483,20 +1483,20 @@ public class TeamManager : MonoBehaviour
                                     //player action
                                     NodeActionData nodeActionData = new NodeActionData()
                                     {
-                                        turn = GameManager.instance.turnScript.Turn,
+                                        turn = GameManager.i.turnScript.Turn,
                                         actorID = 999,
                                         nodeID = node.nodeID,
                                         dataName = string.Format("{0} {1}", team.arc.name, team.teamName),
                                         nodeAction = NodeAction.PlayerNeutraliseTeam
                                     };
                                     //add to player's personal list
-                                    GameManager.instance.playerScript.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.instance.playerScript.PlayerName, "Player", "\n");
+                                    GameManager.i.playerScript.AddNodeAction(nodeActionData);
+                                    Debug.LogFormat("[Tst] TeamManager.cs -> ProcessNeutraliseTeam: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
                                     //statistics
-                                    GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
                                 //statistics
-                                GameManager.instance.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
+                                GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                             }
                             else
                             {
@@ -1551,7 +1551,7 @@ public class TeamManager : MonoBehaviour
                 {
                     EffectDataInput dataInput = new EffectDataInput();
                     dataInput.originText = team.arc.name;
-                    effectReturn = GameManager.instance.effectScript.ProcessEffect(teamEffect, node, dataInput, actor);
+                    effectReturn = GameManager.i.effectScript.ProcessEffect(teamEffect, node, dataInput, actor);
                     isError = effectReturn.errorFlag;
                     if (isError == false)
                     {
@@ -1559,7 +1559,7 @@ public class TeamManager : MonoBehaviour
                         itemText = string.Format("{0} Team completes TASK at {1}", team.arc.name, node.nodeName);
                         effectText = string.Format("{0}{1}{2}", colourGood, teamEffect.description, colourEnd);
                         //both sides get a message for these teams
-                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team, true);
+                        GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team, true);
                     }
                     else { Debug.LogWarningFormat("{0} effectReturn.errorFlag TRUE", team.arc.name); }
                 }
@@ -1573,7 +1573,7 @@ public class TeamManager : MonoBehaviour
                     text = string.Format("{0} {1}: Tracer destroyed at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team DESTROYS Tracer", team.arc.name);
                     effectText = string.Format("{0}Resistance TRACER neutralised{1}", colourGood, colourEnd);
-                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 else
                 {
@@ -1581,7 +1581,7 @@ public class TeamManager : MonoBehaviour
                     text = string.Format("{0} {1}: Tracer not found at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team doesn't find Tracer", team.arc.name);
                     effectText = string.Format("{0}No Resistance TRACER present{1}", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
             case "SPIDER":
@@ -1589,7 +1589,7 @@ public class TeamManager : MonoBehaviour
                 {
                     //add spider
                     node.isSpider = true;
-                    node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
+                    node.spiderTimer = GameManager.i.nodeScript.observerTimer;
                     //check if same node as a Tracer
                     if (node.isTracer == true)
                     { node.isSpiderKnown = true; }
@@ -1598,17 +1598,17 @@ public class TeamManager : MonoBehaviour
                     text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                     effectText = string.Format("{0}Spider installed to monitor Resistance activity{1}", colourGood, colourEnd);
-                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 else
                 {
                     //spider already present -> reset timer
-                    node.spiderTimer = GameManager.instance.nodeScript.observerTimer;
+                    node.spiderTimer = GameManager.i.nodeScript.observerTimer;
                     //message
                     text = string.Format("{0} {1}: Spider NOT inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                     effectText = string.Format("{0}Spider already present in District, timer updated{1}", colourGood, colourEnd);
-                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
             case "ERASURE":
@@ -1617,14 +1617,14 @@ public class TeamManager : MonoBehaviour
                 {
                     if (node.isContactResistance == true)
                     {
-                        int numRemoved = GameManager.instance.dataScript.RemoveContactsNode(node.nodeID, "due to an ERASURE Team", false, globalResistance);
+                        int numRemoved = GameManager.i.dataScript.RemoveContactsNode(node.nodeID, "due to an ERASURE Team", false, globalResistance);
                         if (numRemoved > 0)
                         {
                             //message
                             text = string.Format("{0} {1}: {2} known Contact{3} ERASED at {4}, {5}", team.arc.name, team.teamName, numRemoved, numRemoved != 1 ? "s" : "", node.nodeName, node.Arc.name);
                             itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                             effectText = string.Format("{0}{1} Resistance Contact{2} ERASED{3}", colourGood, numRemoved, numRemoved != 1 ? "s" : "", colourEnd);
-                            GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                            GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                         }
                     }
                     else
@@ -1633,7 +1633,7 @@ public class TeamManager : MonoBehaviour
                         text = string.Format("{0} {1}: Zero known Contacts ERASED at {2}, {3}", team.arc.name, team.teamName, node.nodeName, node.Arc.name);
                         itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                         effectText = string.Format("{0}Zero KNOWN Resistance Contacts ERASED{1}", colourNeutral, colourEnd);
-                        GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                        GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                         /*//error condition -> shouldn't happen
                         Debug.LogWarningFormat("Zero Known contacts at nodeID {0} Erased by teamID {1}{2}", node.nodeID, team.teamID, "\n");*/
                     }
@@ -1646,23 +1646,23 @@ public class TeamManager : MonoBehaviour
                     text = string.Format("{0} {1}: No Resistance Contacts Known at {2}, {3}", team.arc.name, team.teamName, node.nodeName, node.Arc.name);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                     effectText = string.Format("{0}No KNOWN Resistance Contacts present at District{1}", colourNeutral, colourEnd);
-                    GameManager.instance.messageScript.TeamEffect(text, itemText, effectText, node, team);
+                    GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
                 break;
             case "DAMAGE":
                 //at node with a completed, but uncontained, target?
                 if (string.IsNullOrEmpty(node.targetName) == false)
                 {
-                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+                    Target target = GameManager.i.dataScript.GetTarget(node.targetName);
                     if (target != null)
                     {
                         if (target.targetStatus == Status.Outstanding && target.ongoingID > -1)
                         {
                             //contain target and shut down all ongoing node effects
-                            GameManager.instance.targetScript.ContainTarget(target);
+                            GameManager.i.targetScript.ContainTarget(target);
                             //message
                             text = string.Format("Target \"{0}\" Contained by {1} {2}", target.targetName, team.arc.name, team.teamName);
-                            GameManager.instance.messageScript.TargetContained(text, node, team, target);
+                            GameManager.i.messageScript.TargetContained(text, node, team, target);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid Target (Null) for targetID {0}", node.targetName)); }
@@ -1696,17 +1696,17 @@ public class TeamManager : MonoBehaviour
                 //loop teams and remove all active traces
                 for (int i = 0; i < listOfTeams.Count; i++)
                 {
-                    Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                    Team team = GameManager.i.dataScript.GetTeam(listOfTeams[i]);
                     if (team != null)
                     {
                         counter++;
                         //update tallies & remove team from their pool
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
                         switch (team.pool)
                         {
                             case TeamPool.OnMap:
-                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
-                                { GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1); }
+                                if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
+                                { GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1); }
                                 else
                                 {
                                     isProceed = false;
@@ -1714,8 +1714,8 @@ public class TeamManager : MonoBehaviour
                                 }
                                 break;
                             case TeamPool.InTransit:
-                                if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
-                                { GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1); }
+                                if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
+                                { GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1); }
                                 else
                                 {
                                     isProceed = false;
@@ -1729,12 +1729,12 @@ public class TeamManager : MonoBehaviour
                         if (isProceed == true)
                         {
                             //remove from node list
-                            Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                            Node node = GameManager.i.dataScript.GetNode(team.nodeID);
                             if (node != null)
                             { node.RemoveTeam(team.teamID); }
                             else { Debug.LogError(string.Format("Invalid node (Null) for team.nodeID {0}, team {1}, ID {2}", team.nodeID, team.arc.name, team.teamID)); }
                             //add to reserve pool
-                            GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                            GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
                             //update team status
                             team.ResetTeamData(TeamPool.Reserve);
                             //confirmation
@@ -1743,7 +1743,7 @@ public class TeamManager : MonoBehaviour
                             string text = string.Format("{0} {1}, ID {2}, withdrawn early from {3}, ID {4}", team.arc.name, team.teamName, team.teamID,
                                 node.nodeName, node.nodeID);
                             string reason = string.Format("{0} had to do so due to them leaving ACTIVE duty", actor.actorName);
-                            GameManager.instance.messageScript.TeamWithdraw(text, reason, node, team, actor);
+                            GameManager.i.messageScript.TeamWithdraw(text, reason, node, team, actor);
                         }
                     }
                     else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}, actor {1}, ID {2}", listOfTeams[i], actor.arc.name, actor.actorID)); }
@@ -1765,8 +1765,8 @@ public class TeamManager : MonoBehaviour
     public void AutoRunAssignActors()
     {
         List<int> listOfTeams = new List<int>();
-        listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.OnMap));
-        listOfTeams.AddRange(GameManager.instance.dataScript.GetTeamPool(TeamPool.InTransit));
+        listOfTeams.AddRange(GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap));
+        listOfTeams.AddRange(GameManager.i.dataScript.GetTeamPool(TeamPool.InTransit));
         //assign actors to teams
         if (listOfTeams != null)
         {
@@ -1778,13 +1778,13 @@ public class TeamManager : MonoBehaviour
                 //make a list of actors (slotID) with spare slots for teams (each actor can only have one team per ability level)
                 List<int> listOfActorSlots = new List<int>();
                 //loop actors
-                Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
                     {
                         //check actor is present in slot (not vacant)
-                        if (GameManager.instance.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                        if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
                         {
                             Actor actor = arrayOfActors[i];
                             if (actor != null)
@@ -1807,7 +1807,7 @@ public class TeamManager : MonoBehaviour
                 int listCount;
                 for (int i = 0; i < count; i++)
                 {
-                    Team team = GameManager.instance.dataScript.GetTeam(listOfTeams[i]);
+                    Team team = GameManager.i.dataScript.GetTeam(listOfTeams[i]);
                     if (team != null)
                     {
                         //most teams should have a valid actorSlot
@@ -1816,7 +1816,7 @@ public class TeamManager : MonoBehaviour
                             if (team.pool == TeamPool.OnMap)
                             {
                                 //need to assign team to their assigned actor 
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(team.actorSlotID, globalAuthority);
                                 if (actor != null)
                                 {
                                     actor.AddTeam(team.teamID);
@@ -1844,7 +1844,7 @@ public class TeamManager : MonoBehaviour
                                     index = Random.Range(0, listCount);
                                     slotID = listOfActorSlots[index];
                                     team.actorSlotID = slotID;
-                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, globalAuthority);
+                                    Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, globalAuthority);
                                     if (actor != null)
                                     {
                                         //Add team to actor's list of Teams
@@ -1852,7 +1852,7 @@ public class TeamManager : MonoBehaviour
                                         Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActors: {0} {1}, id {2} assigned (random) to {3}, {4}, ID{5}{6}",
                                             team.arc.name, team.teamName, team.teamID, actor.actorName, actor.arc.name, actor.actorID, "\n");
                                         //NodeActionData record only if authority player, ignore otherwise
-                                        if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                                        if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                                         {
                                             //add a new record to match team 
                                             NodeActionData nodeActionData = new NodeActionData()
@@ -1906,12 +1906,12 @@ public class TeamManager : MonoBehaviour
             switch (team.pool)
             {
                 case TeamPool.InTransit:
-                    if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
+                    if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.InTransit, team.teamID) == true)
                     {
-                        GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                        GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
                         //adjust tallies
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                        GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                        GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.InTransit, -1);
                         //update team status
                         team.ResetTeamData(TeamPool.Reserve);
                         Debug.LogFormat("[Tea] TeamManager.cs -> AutoRunAssignActor: {0}, {1}, ID {2}, moved to Reserve (NO ACTOR available){3}",
@@ -1920,16 +1920,16 @@ public class TeamManager : MonoBehaviour
                     else { Debug.LogErrorFormat("{0} Team, id {1}, NOT Removed from InTransit pool", team.arc.name, team.teamID); }
                     break;
                 case TeamPool.OnMap:
-                    Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+                    Node node = GameManager.i.dataScript.GetNode(team.nodeID);
                     if (node != null)
                     {
-                        if (GameManager.instance.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
+                        if (GameManager.i.dataScript.RemoveTeamFromPool(TeamPool.OnMap, team.teamID) == true)
                         {
 
                             //adjust tallies
-                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
-                            GameManager.instance.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
-                            GameManager.instance.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
+                            GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.Reserve, +1);
+                            GameManager.i.dataScript.AdjustTeamInfo(team.arc.TeamArcID, TeamInfo.OnMap, -1);
+                            GameManager.i.dataScript.AddTeamToPool(TeamPool.Reserve, team.teamID);
                             //remove from node list
                             node.RemoveTeam(team.teamID);
                             //update team status

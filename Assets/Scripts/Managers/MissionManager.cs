@@ -38,7 +38,7 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
@@ -50,7 +50,7 @@ public class MissionManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -66,13 +66,13 @@ public class MissionManager : MonoBehaviour
         List<Objective> listOfObjectives = new List<Objective>();
         if (mission.listOfObjectives.Count > 0)
         { listOfObjectives.AddRange(mission.listOfObjectives); }
-        else { listOfObjectives.AddRange(GameManager.instance.dataScript.GetRandomObjectives(GameManager.instance.objectiveScript.maxNumOfObjectives)); }
-        GameManager.instance.objectiveScript.SetObjectives(listOfObjectives);
+        else { listOfObjectives.AddRange(GameManager.i.dataScript.GetRandomObjectives(GameManager.i.objectiveScript.maxNumOfObjectives)); }
+        GameManager.i.objectiveScript.SetObjectives(listOfObjectives);
         //initialise and assign targets
-        GameManager.instance.targetScript.Initialise();
-        GameManager.instance.targetScript.AssignTargets(mission);
+        GameManager.i.targetScript.Initialise();
+        GameManager.i.targetScript.AssignTargets(mission);
         //Human Resistance Player
-        if (GameManager.instance.campaignScript.campaign.side.level == 2)
+        if (GameManager.i.campaignScript.campaign.side.level == 2)
         { InitialiseNpc(); }
     }
     #endregion
@@ -120,15 +120,15 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         /*colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);*/
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         /*colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);*/
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
     #endregion
 
@@ -143,7 +143,7 @@ public class MissionManager : MonoBehaviour
             if (mission.npc.status == NpcStatus.Active)
             {
                 //orgInfo not involved
-                if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
                 { ProcessContactInteraction(mission.npc); }
                 else
                 {
@@ -151,9 +151,9 @@ public class MissionManager : MonoBehaviour
                     Node node = mission.npc.currentNode;
                     if (node != null)
                     {
-                        string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.instance.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
+                        string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.i.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
                             node.nodeID);
-                        GameManager.instance.messageScript.OrganisationNpc(text, node, mission.npc);
+                        GameManager.i.messageScript.OrganisationNpc(text, node, mission.npc);
                     }
                     else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
                 }
@@ -173,7 +173,7 @@ public class MissionManager : MonoBehaviour
             //if either start or end NpcNodes are null assign random values
             if (mission.npc.nodeStart == null)
             {
-                startNode = GameManager.instance.dataScript.GetRandomNode();
+                startNode = GameManager.i.dataScript.GetRandomNode();
                 if (startNode == null) { Debug.LogError("Invalid random start node (Null)"); }
             }
             else
@@ -182,7 +182,7 @@ public class MissionManager : MonoBehaviour
                 startNode = GetNpcNode(mission.npc.nodeStart);
                 //catch all
                 if (startNode == null)
-                { startNode = GameManager.instance.dataScript.GetRandomNode(); }
+                { startNode = GameManager.i.dataScript.GetRandomNode(); }
             }
             //End node
             endNode = GetEndNode(startNode);
@@ -206,20 +206,20 @@ public class MissionManager : MonoBehaviour
     {
         Node endNode = null;
         if (mission.npc.nodeEnd == null)
-        { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
+        { endNode = GameManager.i.dataScript.GetRandomNodeExclude(startNode); }
         else
         {
             //assign end node
             endNode = GetNpcNode(mission.npc.nodeEnd, startNode);
             //catch all
             if (endNode == null)
-            { endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode); }
+            { endNode = GameManager.i.dataScript.GetRandomNodeExclude(startNode); }
         }
         //fail safe
         if (endNode.nodeID == startNode.nodeID)
         {
             Debug.LogWarningFormat("Invalid Matching Npc nodes (start ID {0}, end ID {1}) for GetEndNode", endNode.nodeID, startNode.nodeID);
-            endNode = GameManager.instance.dataScript.GetRandomNodeExclude(startNode);
+            endNode = GameManager.i.dataScript.GetRandomNodeExclude(startNode);
         }
         return endNode;
     }
@@ -237,38 +237,38 @@ public class MissionManager : MonoBehaviour
         switch (npcNode.name)
         {
             case "Airport":
-                nodeID = GameManager.instance.cityScript.airportDistrictID;
-                node = GameManager.instance.dataScript.GetNode(nodeID);
+                nodeID = GameManager.i.cityScript.airportDistrictID;
+                node = GameManager.i.dataScript.GetNode(nodeID);
                 if (node == null) { Debug.LogWarningFormat("Invalid Airport node (Null) for nodeID {0}", nodeID); }
                 break;
             case "Harbour":
-                nodeID = GameManager.instance.cityScript.harbourDistrictID;
+                nodeID = GameManager.i.cityScript.harbourDistrictID;
                 if (nodeID > -1)
-                { node = GameManager.instance.dataScript.GetNode(nodeID); }
+                { node = GameManager.i.dataScript.GetNode(nodeID); }
                 else
                 {
                     Debug.LogWarning("No Harbour district present (nodeID -1)");
                     if (sourceNode != null)
-                    { node = GameManager.instance.dataScript.GetRandomNodeExclude(sourceNode); }
-                    else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                    { node = GameManager.i.dataScript.GetRandomNodeExclude(sourceNode); }
+                    else { node = GameManager.i.dataScript.GetRandomNode(); }
                 }
                 if (node == null) { Debug.LogWarningFormat("Invalid Harbour node (Null) for nodeID {0}", nodeID); }
                 break;
             case "CityHall":
-                nodeID = GameManager.instance.cityScript.cityHallDistrictID;
-                node = GameManager.instance.dataScript.GetNode(nodeID);
+                nodeID = GameManager.i.cityScript.cityHallDistrictID;
+                node = GameManager.i.dataScript.GetNode(nodeID);
                 if (node == null) { Debug.LogWarningFormat("Invalid City Hall node (Null) for nodeID {0}", nodeID); }
                 break;
             case "Icon":
-                nodeID = GameManager.instance.cityScript.iconDistrictID;
+                nodeID = GameManager.i.cityScript.iconDistrictID;
                 if (nodeID > -1)
-                { node = GameManager.instance.dataScript.GetNode(nodeID); }
+                { node = GameManager.i.dataScript.GetNode(nodeID); }
                 else
                 {
                     Debug.LogWarning("No Icon district present (nodeID -1)");
                     if (sourceNode != null)
-                    { node = GameManager.instance.dataScript.GetRandomNodeExclude(sourceNode); }
-                    else { node = GameManager.instance.dataScript.GetRandomNode(); }
+                    { node = GameManager.i.dataScript.GetRandomNodeExclude(sourceNode); }
+                    else { node = GameManager.i.dataScript.GetRandomNode(); }
                 }
                 if (node == null) { Debug.LogWarningFormat("Invalid Icon node (Null) for nodeID {0}", nodeID); }
                 break;
@@ -282,7 +282,7 @@ public class MissionManager : MonoBehaviour
                 NodeArc arc = npcNode.nodeArc;
                 if (arc != null)
                 {
-                    node = GameManager.instance.dataScript.GetRandomNode(arc.nodeArcID);
+                    node = GameManager.i.dataScript.GetRandomNode(arc.nodeArcID);
                     if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for \"{0}\"", npcNode.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid nodeArc (Null) for \"{0}\"", npcNode.name); }
@@ -291,7 +291,7 @@ public class MissionManager : MonoBehaviour
             case "RandomMedium":
             case "RandomLong":
                 if (sourceNode == null)
-                { sourceNode = GameManager.instance.dataScript.GetRandomNode(); }
+                { sourceNode = GameManager.i.dataScript.GetRandomNode(); }
                 else
                 {
                     int distance = 0;
@@ -302,7 +302,7 @@ public class MissionManager : MonoBehaviour
                         case "RandomLong": distance = randomLong; break;
                     }
                     //valid source node, get path data
-                    node = GameManager.instance.dijkstraScript.GetRandomNodeAtDistance(sourceNode, distance);
+                    node = GameManager.i.dijkstraScript.GetRandomNodeAtDistance(sourceNode, distance);
                     if (node == null) { Debug.LogWarningFormat("Invalid Random node (Null) for SourceNodeID {0}, distance {1}", sourceNode.nodeID, distance); }
                 }
                 break;
@@ -341,7 +341,7 @@ public class MissionManager : MonoBehaviour
     private void CheckNpcActive(Npc npc)
     {
         //check start turn
-        if (GameManager.instance.turnScript.Turn >= npc.startTurn)
+        if (GameManager.i.turnScript.Turn >= npc.startTurn)
         {
             int rnd = Random.Range(0, 100);
             if (rnd < npc.startChance)
@@ -353,11 +353,11 @@ public class MissionManager : MonoBehaviour
                     npc.currentNode = npc.currentStartNode;
                     npc.timerTurns = npc.maxTurns;
                     npc.daysActive = 1;
-                    GameManager.instance.nodeScript.nodeNpc = npc.currentStartNode.nodeID;
+                    GameManager.i.nodeScript.nodeNpc = npc.currentStartNode.nodeID;
                     Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" OnMap (rnd {1}, needed < {2}) at {3}, {4}, ID {5}, timer {6}{7}", npc.tag, rnd, npc.startChance,
                         npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, npc.timerTurns, "\n");
                     string text = string.Format("{0} has arrived in City at {1}, {2}, ID {3}", npc.tag, npc.currentStartNode.nodeName, npc.currentStartNode.Arc.name, npc.currentStartNode.nodeID);
-                    GameManager.instance.messageScript.NpcArrival(text, npc);
+                    GameManager.i.messageScript.NpcArrival(text, npc);
                     //tracker
                     AddTrackerRecord(npc);
                     //outcome msg (infoPipeline)
@@ -372,21 +372,21 @@ public class MissionManager : MonoBehaviour
                         textBottom = textBottomString,
                         sprite = npc.sprite,
                         isAction = false,
-                        side = GameManager.instance.globalScript.sideResistance,
+                        side = GameManager.i.globalScript.sideResistance,
                         type = MsgPipelineType.Npc,
                         help0 = "npc_0",
                         help1 = "npc_1"
                     };
-                    if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Npc arrives InfoPipeline message FAILED to be added to dictOfPipeline"); }
                     //msg
-                    GameManager.instance.messageScript.NpcOngoing("Npc arrives onMap", npc);
+                    GameManager.i.messageScript.NpcOngoing("Npc arrives onMap", npc);
                     //tracer
                     if (npc.currentNode.isTracer == true)
                     {
                         //OrgInfo not involved
-                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                        { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                        { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                     }
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
@@ -467,7 +467,7 @@ public class MissionManager : MonoBehaviour
         //update day tally regardless
         npc.daysActive++;
         //check if in same district as Player
-        if (npc.currentNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+        if (npc.currentNode.nodeID == GameManager.i.nodeScript.nodePlayer)
         {
             //Player Interacts with Npc
             if (ProcessNpcInteract(npc) == true)
@@ -488,7 +488,7 @@ public class MissionManager : MonoBehaviour
                     //no repeat
                     if (npc.isRepeat == false)
                     {
-                        GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
+                        GameManager.i.messageScript.NpcDepart("Npc Departs", npc);
                         ProcessNpcDepart(npc);
                     }
                     //repeat but timer has expired
@@ -496,7 +496,7 @@ public class MissionManager : MonoBehaviour
                     {
                         if (npc.timerTurns <= 0)
                         {
-                            GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
+                            GameManager.i.messageScript.NpcDepart("Npc Departs", npc);
                             ProcessNpcDepart(npc);
                         }
                         else
@@ -509,19 +509,19 @@ public class MissionManager : MonoBehaviour
                                 Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: New path from {0}, {1}, ID {2} to {3}, {4}, ID {5}{6}", npc.currentStartNode.nodeName, npc.currentStartNode.Arc.name,
                                     npc.currentStartNode.nodeID, npc.currentEndNode.nodeName, npc.currentEndNode.Arc.name, npc.currentEndNode.nodeID, "\n");
                                 //msg
-                                GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                                GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                                 //tracer
                                 if (npc.currentNode.isTracer == true)
                                 {
                                     //OrgInfo not involved
-                                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                                    { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                                 }
                             }
                             else
                             {
                                 Debug.LogWarning("Invalid currentEndNode (Null) for Npc when calculating new path");
-                                GameManager.instance.messageScript.NpcDepart("Npc Departs", npc);
+                                GameManager.i.messageScript.NpcDepart("Npc Departs", npc);
                                 ProcessNpcDepart(npc);
                             }
                         }
@@ -530,7 +530,7 @@ public class MissionManager : MonoBehaviour
                 else
                 {
                     //Npc moves towards destination -> Get Path
-                    List<Connection> listOfConnections = GameManager.instance.dijkstraScript.GetPath(npc.currentNode.nodeID, npc.currentEndNode.nodeID, false);
+                    List<Connection> listOfConnections = GameManager.i.dijkstraScript.GetPath(npc.currentNode.nodeID, npc.currentEndNode.nodeID, false);
                     if (listOfConnections != null)
                     {
                         int numOfLinks = listOfConnections.Count;
@@ -546,21 +546,21 @@ public class MissionManager : MonoBehaviour
                                 if (nextNodeID == npc.currentNode.nodeID)
                                 { nextNodeID = connection.GetNode2(); }
                                 //move forward one link
-                                Node node = GameManager.instance.dataScript.GetNode(nextNodeID);
+                                Node node = GameManager.i.dataScript.GetNode(nextNodeID);
                                 if (node != null)
                                 {
                                     npc.currentNode = node;
-                                    GameManager.instance.nodeScript.nodeNpc = nextNodeID;
+                                    GameManager.i.nodeScript.nodeNpc = nextNodeID;
                                     Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Npc \"{0}\" moved to {1}, {2}, nodeID {3}, timer {4}{5}",
                                         npc.tag, node.nodeName, node.Arc.name, node.nodeID, npc.timerTurns, "\n");
                                     //msg
-                                    GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                                    GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                                     //tracer
                                     if (npc.currentNode.isTracer == true)
                                     {
                                         //OrgInfo not involved
-                                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                                        { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                                        { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
@@ -576,13 +576,13 @@ public class MissionManager : MonoBehaviour
             {
                 Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc \"{0}\" didn't move (rnd {1}, needed < {2}), timer {3}{4}", npc.tag, rnd, npc.moveChance, npc.timerTurns, "\n");
                 //msg
-                GameManager.instance.messageScript.NpcOngoing("Npc still onMap", npc);
+                GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                 //tracer
                 if (npc.currentNode.isTracer == true)
                 {
                     //OrgInfo not involved
-                    if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                    { GameManager.instance.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                    { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                 }
             }
             //tracker
@@ -601,7 +601,7 @@ public class MissionManager : MonoBehaviour
             //bad effects
             string effectText = ProcessEffects(npc, false);
             string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of {3}. You failed to {4}{5}{6}", colourNeutral, npc.tag, colourEnd,
-                GameManager.instance.cityScript.GetCity().tag, colourBad, npc.action.activity, colourEnd);
+                GameManager.i.cityScript.GetCity().tag, colourBad, npc.action.activity, colourEnd);
             string textBottomString = effectText;
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
@@ -610,19 +610,19 @@ public class MissionManager : MonoBehaviour
                 textBottom = textBottomString,
                 sprite = npc.sprite,
                 isAction = false,
-                side = GameManager.instance.globalScript.sideResistance,
+                side = GameManager.i.globalScript.sideResistance,
                 type = MsgPipelineType.Npc
             };
-            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
             { Debug.LogWarningFormat("Npc departs with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
         }
         npc.status = NpcStatus.Departed;
         npc.currentNode = null;
-        GameManager.instance.nodeScript.nodeNpc = -1;
+        GameManager.i.nodeScript.nodeNpc = -1;
         Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcDepart: Npc \"{0}\" Departed{1}", npc.tag, "\n");
         //infoOrg reset
-        if (GameManager.instance.campaignScript.campaign.orgInfo != null)
-        { GameManager.instance.orgScript.CancelOrgInfoTracking(OrgInfoType.Npc); }
+        if (GameManager.i.campaignScript.campaign.orgInfo != null)
+        { GameManager.i.orgScript.CancelOrgInfoTracking(OrgInfoType.Npc); }
     }
 
     /// <summary>
@@ -633,7 +633,7 @@ public class MissionManager : MonoBehaviour
     {
         bool isSuccess = false;
         //Player interacts with Npc
-        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+        if (GameManager.i.playerScript.status == ActorStatus.Active)
         {
             //good effects
             string effectText = ProcessEffects(npc, true);
@@ -646,15 +646,15 @@ public class MissionManager : MonoBehaviour
                 textBottom = textBottomString,
                 sprite = npc.sprite,
                 isAction = false,
-                side = GameManager.instance.globalScript.sideResistance,
+                side = GameManager.i.globalScript.sideResistance,
                 type = MsgPipelineType.Npc
             };
-            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
             { Debug.LogWarningFormat("Npc interacts with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
             //messages (need to be BEFORE depart)
             Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
                                 npc.currentNode.nodeID, "\n");
-            GameManager.instance.messageScript.NpcInteract("Npc interacted with", npc);
+            GameManager.i.messageScript.NpcInteract("Npc interacted with", npc);
             //Npc departs map
             ProcessNpcDepart(npc, true);
             isSuccess = true;
@@ -677,13 +677,13 @@ public class MissionManager : MonoBehaviour
         //create record
         HistoryNpcMove data = new HistoryNpcMove()
         {
-            turn = GameManager.instance.turnScript.Turn,
+            turn = GameManager.i.turnScript.Turn,
             currentNodeID = npcCurrentNodeID,
             endNodeID = npcEndNodeID,
             timer = npc.timerTurns,
         };
         //add record
-        GameManager.instance.dataScript.AddHistoryNpcMove(data);
+        GameManager.i.dataScript.AddHistoryNpcMove(data);
     }
 
     /// <summary>
@@ -693,7 +693,7 @@ public class MissionManager : MonoBehaviour
     {
         Actor actor;
         Contact contact;
-        List<int> listOfActorsWithContactsAtNode = GameManager.instance.dataScript.CheckContactResistanceAtNode(npc.currentNode.nodeID);
+        List<int> listOfActorsWithContactsAtNode = GameManager.i.dataScript.CheckContactResistanceAtNode(npc.currentNode.nodeID);
         if (listOfActorsWithContactsAtNode != null)
         {
             int numOfActors = listOfActorsWithContactsAtNode.Count;
@@ -704,7 +704,7 @@ public class MissionManager : MonoBehaviour
                 //loop actors with contacts
                 for (int i = 0; i < numOfActors; i++)
                 {
-                    actor = GameManager.instance.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
+                    actor = GameManager.i.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
                     if (actor != null)
                     {
                         //only active actors can work their contact network
@@ -725,7 +725,7 @@ public class MissionManager : MonoBehaviour
                                             contact.job, node.nodeName, node.nodeID);
                                         Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Npc {2}, StealthRating {3} at node {4}, id {5}{6}",
                                             contact.nameFirst, contact.effectiveness, npc.tag, stealthRating, node.nodeName, node.nodeID, "\n");
-                                        GameManager.instance.messageScript.ContactNpcSpotted(text, actor, node, contact, npc);
+                                        GameManager.i.messageScript.ContactNpcSpotted(text, actor, node, contact, npc);
                                         //contact stats
                                         contact.statsNpc++;
                                         //no need to check anymore as one sighting is enough
@@ -785,7 +785,7 @@ public class MissionManager : MonoBehaviour
                 //loop effects
                 foreach (Effect effect in listOfEffects)
                 {
-                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                    effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                     if (string.IsNullOrEmpty(effectReturn.topText) == false)
                     { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
@@ -812,14 +812,14 @@ public class MissionManager : MonoBehaviour
                 mission.npc.daysActive = npc.daysActive;
                 //Nodes -> if '-1' then values are null
                 if (npc.startNodeID > -1)
-                { mission.npc.currentStartNode = GameManager.instance.dataScript.GetNode(npc.startNodeID); }
+                { mission.npc.currentStartNode = GameManager.i.dataScript.GetNode(npc.startNodeID); }
                 else
                 {
                     mission.npc.currentStartNode = null;
                     Debug.LogWarning("Invalid Npc currentStartNode (Null)");
                 }
                 if (npc.endNodeID > -1)
-                { mission.npc.currentEndNode = GameManager.instance.dataScript.GetNode(npc.endNodeID); }
+                { mission.npc.currentEndNode = GameManager.i.dataScript.GetNode(npc.endNodeID); }
                 else
                 {
                     mission.npc.currentEndNode = null;
@@ -827,7 +827,7 @@ public class MissionManager : MonoBehaviour
                 }
                 //O.K for currentNode to be Null
                 if (npc.currentNodeID > -1)
-                { mission.npc.currentNode = GameManager.instance.dataScript.GetNode(npc.currentNodeID); }
+                { mission.npc.currentNode = GameManager.i.dataScript.GetNode(npc.currentNodeID); }
                 else { mission.npc.currentNode = null; }
             }
             else { Debug.LogError("Invalid npcSave (Null)"); }

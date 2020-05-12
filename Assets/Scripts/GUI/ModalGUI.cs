@@ -41,7 +41,6 @@ public class ModalGUI : MonoBehaviour
     [Tooltip("Save Game")]
     public Image backgroundSaveGame;
 
-    
     private int modalLevel;                                                 //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
     private static ModalGUI modalGUI;

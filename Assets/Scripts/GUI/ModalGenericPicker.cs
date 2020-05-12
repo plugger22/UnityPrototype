@@ -168,12 +168,12 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourEffect = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourEffect = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -201,13 +201,13 @@ public class ModalGenericPicker : MonoBehaviour
     private void SetGenericPicker(GenericPickerDetails details)
     {
         //close Node tooltip safety check
-        GameManager.instance.tooltipNodeScript.CloseTooltip("ModalGenericPicker.cs -> SetGenericPicker");
+        GameManager.i.tooltipNodeScript.CloseTooltip("ModalGenericPicker.cs -> SetGenericPicker");
         //open Generic picker
         bool errorFlag = false;
         CanvasGroup genericCanvasGroup;
         GenericInteraction genericData;
         //set modal status
-        GameManager.instance.guiScript.SetIsBlocked(true);
+        GameManager.i.guiScript.SetIsBlocked(true);
         //activate main panel
         modalPanelObject.SetActive(true);
         //header activated only if text provided
@@ -228,7 +228,7 @@ public class ModalGenericPicker : MonoBehaviour
         else { buttonBack.gameObject.SetActive(true); }
         //halt execution, until picker is processed, if indicated
         if (details.isHaltExecution == true)
-        { GameManager.instance.turnScript.haltExecution = true; }
+        { GameManager.i.turnScript.haltExecution = true; }
         //canvasGroup.alpha = 100;
 
         //populate dialogue
@@ -243,7 +243,7 @@ public class ModalGenericPicker : MonoBehaviour
                 optionIDSelected = -1;
                 optionNameSelected = "";
                 //set help
-                List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+                List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
                 {
                     buttonHelp.gameObject.SetActive(true);
@@ -360,7 +360,7 @@ public class ModalGenericPicker : MonoBehaviour
             ModalStateData package = new ModalStateData();
             package.mainState = ModalSubState.GenericPicker;
             package.pickerState = details.subState;
-            GameManager.instance.inputScript.SetModalState(package);
+            GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] ModalGenericPicker.cs -> SetGenericPicker{0}", "\n");
         }
     }
@@ -373,11 +373,11 @@ public class ModalGenericPicker : MonoBehaviour
     private void CloseGenericPicker()
     {
         modalGenericObject.SetActive(false);
-        GameManager.instance.guiScript.SetIsBlocked(false);
+        GameManager.i.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
-        GameManager.instance.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
+        GameManager.i.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
         //close help tooltip
-        GameManager.instance.tooltipHelpScript.CloseTooltip("ModalGenericPickerUI.cs -> CloseGenericPicker");
+        GameManager.i.tooltipHelpScript.CloseTooltip("ModalGenericPickerUI.cs -> CloseGenericPicker");
         //deselect all generic options to prevent picker opening next time with a preselected team
         EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
         //reset GUI elements to default
@@ -387,7 +387,7 @@ public class ModalGenericPicker : MonoBehaviour
         nestedDetails = null;*/
 
         //set game state
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] ModalGenericPicker.cs -> CloseGenericPicker", "\n");
     }
 
@@ -426,7 +426,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericTeamRecall:
                         if (data.optionID > -1)
                         {
-                            Team teamRecall = GameManager.instance.dataScript.GetTeam(data.optionID);
+                            Team teamRecall = GameManager.i.dataScript.GetTeam(data.optionID);
                             if (teamRecall != null)
                             {
                                 text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamRecall.arc.name, colourEnd, colourDefault, colourEnd);
@@ -439,7 +439,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericNeutraliseTeam:
                         if (data.optionID > -1)
                         {
-                            Team teamNeutralise = GameManager.instance.dataScript.GetTeam(data.optionID);
+                            Team teamNeutralise = GameManager.i.dataScript.GetTeam(data.optionID);
                             if (teamNeutralise != null)
                             {
                                 text = string.Format("{0}{1} Team {2}{3}selected{4}", colourEffect, teamNeutralise.arc.name, colourEnd, colourDefault, colourEnd);
@@ -452,7 +452,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericGearChoice:
                         if (string.IsNullOrEmpty(data.optionName) == false)
                         {
-                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
+                            Gear gear = GameManager.i.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, gear.tag.ToUpper(), colourEnd, colourDefault, colourEnd);
@@ -465,7 +465,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericTargetInfo:
                         if (string.IsNullOrEmpty(data.optionName) == false)
                         {
-                            Target target = GameManager.instance.dataScript.GetTarget(data.optionName);
+                            Target target = GameManager.i.dataScript.GetTarget(data.optionName);
                             if (target != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, target.targetName.ToUpper(), colourEnd, colourDefault, colourEnd);
@@ -478,11 +478,11 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericCompromisedGear:
                         if (string.IsNullOrEmpty(data.optionName) == false)
                         {
-                            Gear gear = GameManager.instance.dataScript.GetGear(data.optionName);
+                            Gear gear = GameManager.i.dataScript.GetGear(data.optionName);
                             if (gear != null)
                             {
                                 text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 
-                                    colourNeutral, datapoint, colourEnd, colourGood, GameManager.instance.playerScript.Renown, colourEnd);
+                                    colourNeutral, datapoint, colourEnd, colourGood, GameManager.i.playerScript.Renown, colourEnd);
                                 Debug.LogFormat("[UI] -> ModalGenericPicker: gear {0} selected{1}", data.optionName, "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", data.optionName); }
@@ -493,7 +493,7 @@ public class ModalGenericPicker : MonoBehaviour
                     case EventType.GenericRecruitActorAuthority:
                         if (data.optionID > -1)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetActor(data.optionID);
+                            Actor actor = GameManager.i.dataScript.GetActor(data.optionID);
                             if (actor != null)
                             {
                                 text = string.Format("{0}{1}{2} {3}selected{4}", colourEffect, actor.arc.name, colourEnd, colourDefault, colourEnd);
@@ -508,7 +508,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, GameManager.i.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionNested)
@@ -542,7 +542,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, GameManager.i.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionNested)
@@ -576,7 +576,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, GameManager.i.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionNested)
@@ -610,7 +610,7 @@ public class ModalGenericPicker : MonoBehaviour
                         {
                             if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, GameManager.instance.sideScript.PlayerSide);
+                                Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, GameManager.i.sideScript.PlayerSide);
                                 if (actor != null)
                                 {
                                     switch (data.optionNested)
@@ -751,42 +751,42 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     private void SetSide()
     {
-        switch(GameManager.instance.sideScript.PlayerSide.level)
+        switch(GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 //Authority
-                modalPanel.sprite = GameManager.instance.sideScript.picker_background_Authority;
-                modalHeader.sprite = GameManager.instance.sideScript.header_background_Authority;
+                modalPanel.sprite = GameManager.i.sideScript.picker_background_Authority;
+                modalHeader.sprite = GameManager.i.sideScript.header_background_Authority;
                 //set button sprites
-                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
-                buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Authority;
+                buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
+                buttonConfirm.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
+                buttonBack.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
                 //set sprite transitions
                 SpriteState spriteStateAuthority = new SpriteState();
-                spriteStateAuthority.highlightedSprite = GameManager.instance.sideScript.button_highlight_Authority;
-                spriteStateAuthority.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
+                spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonCancel.spriteState = spriteStateAuthority;
                 buttonConfirm.spriteState = spriteStateAuthority;
                 buttonBack.spriteState = spriteStateAuthority;
                 break;
             case 2:
                 //Resistance
-                modalPanel.sprite = GameManager.instance.sideScript.picker_background_Rebel;
-                modalHeader.sprite = GameManager.instance.sideScript.header_background_Resistance;
+                modalPanel.sprite = GameManager.i.sideScript.picker_background_Rebel;
+                modalHeader.sprite = GameManager.i.sideScript.header_background_Resistance;
                 //set button sprites
-                buttonCancel.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                buttonConfirm.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
-                buttonBack.GetComponent<Image>().sprite = GameManager.instance.sideScript.button_Resistance;
+                buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
+                buttonConfirm.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
+                buttonBack.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
                 //set sprite transitions
                 SpriteState spriteStateRebel = new SpriteState();
-                spriteStateRebel.highlightedSprite = GameManager.instance.sideScript.button_highlight_Resistance;
-                spriteStateRebel.pressedSprite = GameManager.instance.sideScript.button_Click;
+                spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
+                spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
                 buttonCancel.spriteState = spriteStateRebel;
                 buttonConfirm.spriteState = spriteStateRebel;
                 buttonBack.spriteState = spriteStateRebel;
                 break;
             default:
-                Debug.LogErrorFormat("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                Debug.LogErrorFormat("Invalid side \"{0}\"", GameManager.i.sideScript.PlayerSide.name);
                 break;
         }
     }

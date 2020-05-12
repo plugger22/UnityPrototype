@@ -282,7 +282,7 @@ public class DataManager : MonoBehaviour
                 SubInitialiseStartUp();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -298,23 +298,23 @@ public class DataManager : MonoBehaviour
                 SubInitialiseNewGame();
                 SubInitialiseReset();
                 SubInitialiseAll();
-                if (GameManager.instance.isSession == false)
+                if (GameManager.i.isSession == false)
                 { SubInitialiseStartSession(); }
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseReset();
                 SubInitialiseAll();
-                if (GameManager.instance.isSession == false)
+                if (GameManager.i.isSession == false)
                 { SubInitialiseStartSession(); }
                 break;
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseAll();
-                if (GameManager.instance.isSession == false)
+                if (GameManager.i.isSession == false)
                 { SubInitialiseStartSession(); }
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -329,7 +329,7 @@ public class DataManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //TextLists -> assign all an index (whether needed or not)
-        TextList[] arrayOfTextLists = GameManager.instance.loadScript.arrayOfTextLists;
+        TextList[] arrayOfTextLists = GameManager.i.loadScript.arrayOfTextLists;
         if (arrayOfTextLists != null)
         {
             foreach (TextList textList in arrayOfTextLists)
@@ -372,9 +372,9 @@ public class DataManager : MonoBehaviour
         Debug.Assert(listOfFourConnArcsPreferred != null, "Invalid listOfFourConnArcsPreferred (Null)");
         Debug.Assert(listOfFiveConnArcsPreferred != null, "Invalid listOfFiveConnArcsPreferred (Null)");
         //graph
-        graph = GameManager.instance.levelScript.GetGraph();
+        graph = GameManager.i.levelScript.GetGraph();
         //nodeArcTotals
-        arrayOfNodeArcTotals = GameManager.instance.levelScript.GetNodeArcTotals();
+        arrayOfNodeArcTotals = GameManager.i.levelScript.GetNodeArcTotals();
         //arrayOfNodes -> contains all relevant info on nodes by type
         int[] tempArray = GetNodeTypeTotals();
         arrayOfNodes = new int[tempArray.Length, (int)NodeInfo.Count];
@@ -391,21 +391,21 @@ public class DataManager : MonoBehaviour
         foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
         //HQ Positions
-        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+        if (GameManager.i.sideScript.PlayerSide.level == 1)
         {
             //Authority
-            hqBoss = GameManager.instance.hqScript.bossAut;
-            subBoss1 = GameManager.instance.hqScript.subBoss1Aut;
-            subBoss2 = GameManager.instance.hqScript.subBoss2Aut;
-            subBoss3 = GameManager.instance.hqScript.subBoss3Aut;
+            hqBoss = GameManager.i.hqScript.bossAut;
+            subBoss1 = GameManager.i.hqScript.subBoss1Aut;
+            subBoss2 = GameManager.i.hqScript.subBoss2Aut;
+            subBoss3 = GameManager.i.hqScript.subBoss3Aut;
         }
         else
         {
             //Resistance
-            hqBoss = GameManager.instance.hqScript.bossRes;
-            subBoss1 = GameManager.instance.hqScript.subBoss1Res;
-            subBoss2 = GameManager.instance.hqScript.subBoss2Res;
-            subBoss3 = GameManager.instance.hqScript.subBoss3Res;
+            hqBoss = GameManager.i.hqScript.bossRes;
+            subBoss1 = GameManager.i.hqScript.subBoss1Res;
+            subBoss2 = GameManager.i.hqScript.subBoss2Res;
+            subBoss3 = GameManager.i.hqScript.subBoss3Res;
         }
         Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
         Debug.Assert(subBoss1 != null, "Invalid subBoss1 (Null)");
@@ -442,7 +442,7 @@ public class DataManager : MonoBehaviour
     private void SubInitialiseReset()
     {
         //dictOfRelations
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             //create a default entry for every slot position
             try { dictOfRelations.Add(i, new RelationshipData()); }
@@ -614,7 +614,7 @@ public class DataManager : MonoBehaviour
         if (data != null)
         {
             //check side
-            if (data.sideLevel == GameManager.instance.sideScript.PlayerSide.level || data.sideLevel == GameManager.instance.globalScript.sideBoth.level)
+            if (data.sideLevel == GameManager.i.sideScript.PlayerSide.level || data.sideLevel == GameManager.i.globalScript.sideBoth.level)
             {
                 //check if Player wants category displayed
                 if (data.isDisplay == true)
@@ -654,11 +654,11 @@ public class DataManager : MonoBehaviour
         //empty out data package prior to updating
         currentInfoData.Reset();
         //news
-        if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+        if (GameManager.i.turnScript.CheckIsAutoRun() == false)
         {
-            tickerText = GameManager.instance.newsScript.GetNews();
-            listOfNews = GameManager.instance.newsScript.GetListOfCurrentNews();
-            listOfAdverts = GameManager.instance.newsScript.GetListOfCurrentAdverts();
+            tickerText = GameManager.i.newsScript.GetNews();
+            listOfNews = GameManager.i.newsScript.GetListOfCurrentNews();
+            listOfAdverts = GameManager.i.newsScript.GetListOfCurrentAdverts();
         }
         //package up all three priorities for each tab into a single list and add to currentInfoData
         for (int outer = 0; outer < (int)ItemTab.Count; outer++)
@@ -686,7 +686,7 @@ public class DataManager : MonoBehaviour
         {
             //pass by value, not reference (otherwise duplicate data for each turn)
             MainInfoData historyData = new MainInfoData(currentInfoData);
-            int turn = GameManager.instance.turnScript.Turn;
+            int turn = GameManager.i.turnScript.Turn;
             historyData.tickerText = tickerText;
             historyData.listOfNews = listOfNews;
             historyData.listOfAdverts = listOfAdverts;
@@ -717,7 +717,7 @@ public class DataManager : MonoBehaviour
     {
         MainInfoData data = null;
         //if no turn number provided, or turn number 0, use current turn
-        if (turnNumber < 1) { turnNumber = GameManager.instance.turnScript.Turn; }
+        if (turnNumber < 1) { turnNumber = GameManager.i.turnScript.Turn; }
         //get data set
         if (dictOfHistory.ContainsKey(turnNumber))
         { data = dictOfHistory[turnNumber]; }
@@ -888,8 +888,8 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         //filter for the required side
         List<ActorArc> tempMaster = new List<ActorArc>();
-        if (side.level == GameManager.instance.globalScript.sideAuthority.level) { tempMaster.AddRange(authorityActorArcs); }
-        else if (side.level == GameManager.instance.globalScript.sideResistance.level) { tempMaster.AddRange(resistanceActorArcs); }
+        if (side.level == GameManager.i.globalScript.sideAuthority.level) { tempMaster.AddRange(authorityActorArcs); }
+        else if (side.level == GameManager.i.globalScript.sideResistance.level) { tempMaster.AddRange(resistanceActorArcs); }
 
         if (tempMaster.Count > 0)
         {
@@ -920,8 +920,8 @@ public class DataManager : MonoBehaviour
     public List<ActorArc> GetActorArcs(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        if (side.level == GameManager.instance.globalScript.sideAuthority.level) { return authorityActorArcs; }
-        else if (side.level == GameManager.instance.globalScript.sideResistance.level) { return resistanceActorArcs; }
+        if (side.level == GameManager.i.globalScript.sideAuthority.level) { return authorityActorArcs; }
+        else if (side.level == GameManager.i.globalScript.sideResistance.level) { return resistanceActorArcs; }
         else { Debug.LogWarning(string.Format("Invalid side \"{0}\"", side.name)); }
         return null;
     }
@@ -1172,14 +1172,14 @@ public class DataManager : MonoBehaviour
         if (isCurrentSide == true)
         {
             //Current side
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
             { return dictOfNodeContactsAuthority; }
             else { return dictOfNodeContactsResistance; }
         }
         else
         {
             //Non current side
-            if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+            if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
             { return dictOfNodeContactsResistance; }
             else { return dictOfNodeContactsAuthority; }
         }
@@ -1215,10 +1215,10 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<Node> GetListOfActorContactNodes(int slotID)
     {
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID");
         List<Node> listOfActorContactNodes = new List<Node>();
         //get actor
-        Actor actor = GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+        Actor actor = GetCurrentActor(slotID, GameManager.i.sideScript.PlayerSide);
         if (actor != null)
         {
             if (dictOfActorContacts.ContainsKey(actor.actorID) == true)
@@ -1483,7 +1483,7 @@ public class DataManager : MonoBehaviour
                 {
                     //Add node contacts to correct dict depending on current / non-current actor side
                     Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
-                    if (actor.side.level == GameManager.instance.sideScript.PlayerSide.level)
+                    if (actor.side.level == GameManager.i.sideScript.PlayerSide.level)
                     { dictOfNodeContacts = GetDictOfNodeContacts(); }
                     else { dictOfNodeContacts = GetDictOfNodeContacts(false); }
                     for (int i = 0; i < numOfContacts; i++)
@@ -1523,7 +1523,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfContactNodes (Null)"); successFlag = false; }
         //update node contacts -> NOTE: CreateNodeContacts isn't added here but in the calling method, ContactManager.cs -> SetActorContacts
         if (successFlag == true)
-        { GameManager.instance.contactScript.UpdateNodeContacts(); }
+        { GameManager.i.contactScript.UpdateNodeContacts(); }
         return successFlag;
     }
 
@@ -1593,12 +1593,12 @@ public class DataManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("ActorID {0} not found in dictOfActorContacts", actorID); successFlag = false; }
             //update node contacts
-            GameManager.instance.contactScript.UpdateNodeContacts();
+            GameManager.i.contactScript.UpdateNodeContacts();
             //set all actor.cs contacts to status 'inactive'
             if (successFlag == true)
             {
                 //resistance only
-                if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+                if (actor.side.level == GameManager.i.globalScript.sideResistance.level)
                 {
                     Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
                     if (dictOfContacts != null)
@@ -1614,7 +1614,7 @@ public class DataManager : MonoBehaviour
         //update node contacts
         if (successFlag == true)
         {
-            GameManager.instance.contactScript.UpdateNodeContacts();
+            GameManager.i.contactScript.UpdateNodeContacts();
             CreateNodeContacts();
         }
         return successFlag;
@@ -1666,7 +1666,7 @@ public class DataManager : MonoBehaviour
                                     {
                                         Debug.LogFormat("DataManager.cs -> RemoveContactsNode: nodeID {0} removed from dictOfActorContacts[{1}]{2}", nodeID, actorID, "\n");
                                         //resistance actor, remove contact from dict
-                                        if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+                                        if (actor.side.level == GameManager.i.globalScript.sideResistance.level)
                                         {
                                             Contact contact = actor.GetContact(nodeID);
                                             if (contact != null)
@@ -1681,7 +1681,7 @@ public class DataManager : MonoBehaviour
                                                     if (node != null)
                                                     {
                                                         string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                                                        GameManager.instance.messageScript.ContactChange(text, actor, node, contact, false, reason);
+                                                        GameManager.i.messageScript.ContactChange(text, actor, node, contact, false, reason);
                                                     }
                                                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                                                 }
@@ -1713,7 +1713,7 @@ public class DataManager : MonoBehaviour
         //update node contacts
         if (numContacts > 0)
         {
-            GameManager.instance.contactScript.UpdateNodeContacts();
+            GameManager.i.contactScript.UpdateNodeContacts();
             CreateNodeContacts();
         }
         return numContacts;
@@ -1728,7 +1728,7 @@ public class DataManager : MonoBehaviour
         Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
         bool isSuccess = true;
         bool isCurrentSide = true;
-        if (GameManager.instance.sideScript.PlayerSide.level != GameManager.instance.turnScript.currentSide.level)
+        if (GameManager.i.sideScript.PlayerSide.level != GameManager.i.turnScript.currentSide.level)
         { isCurrentSide = false; }
         Actor actor = GetActor(actorID);
         if (actor != null)
@@ -1786,9 +1786,9 @@ public class DataManager : MonoBehaviour
         if (isSuccess == true)
         {
             //assign a new contact if a Resistance actor
-            if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+            if (actor.side.level == GameManager.i.globalScript.sideResistance.level)
             {
-                Contact contact = GameManager.instance.contactScript.AssignContact(actor.actorID, nodeID);
+                Contact contact = GameManager.i.contactScript.AssignContact(actor.actorID, nodeID);
                 if (contact != null)
                 {
                     actor.AddContact(contact);
@@ -1799,7 +1799,7 @@ public class DataManager : MonoBehaviour
                     if (node != null)
                     {
                         string text = string.Format("{0} Aquires {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                        GameManager.instance.messageScript.ContactChange(text, actor, node, contact);
+                        GameManager.i.messageScript.ContactChange(text, actor, node, contact);
                     }
                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                 }
@@ -1812,7 +1812,7 @@ public class DataManager : MonoBehaviour
         //update node contact flags
         if (isSuccess == true)
         {
-            GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+            GameManager.i.contactScript.UpdateNodeContacts(isCurrentSide);
             CreateNodeContacts();
         }
         return isSuccess;
@@ -1830,7 +1830,7 @@ public class DataManager : MonoBehaviour
         Debug.Assert(nodeID > -1, "Invalid nodeID (-1)");
         bool isSuccess = true;
         bool isCurrentSide = true;
-        if (GameManager.instance.sideScript.PlayerSide.level != GameManager.instance.turnScript.currentSide.level)
+        if (GameManager.i.sideScript.PlayerSide.level != GameManager.i.turnScript.currentSide.level)
         { isCurrentSide = false; }
         Actor actor = GetActor(actorID);
         if (actor != null)
@@ -1885,7 +1885,7 @@ public class DataManager : MonoBehaviour
         if (isSuccess == true)
         {
             //remove contact record from actor
-            if (actor.side.level == GameManager.instance.globalScript.sideResistance.level)
+            if (actor.side.level == GameManager.i.globalScript.sideResistance.level)
             {
                 Contact contact = actor.GetContact(nodeID);
                 if (contact != null)
@@ -1899,7 +1899,7 @@ public class DataManager : MonoBehaviour
                         if (node != null)
                         {
                             string text = string.Format("{0} Loses {1} Contact at {2}, {3}", actor.arc.name, contact.job, node.nodeName, node.Arc.name);
-                            GameManager.instance.messageScript.ContactChange(text, actor, node, contact, false);
+                            GameManager.i.messageScript.ContactChange(text, actor, node, contact, false);
                         }
                         else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                     }
@@ -1918,7 +1918,7 @@ public class DataManager : MonoBehaviour
         //update node contact flags
         if (isSuccess == true)
         {
-            GameManager.instance.contactScript.UpdateNodeContacts(isCurrentSide);
+            GameManager.i.contactScript.UpdateNodeContacts(isCurrentSide);
             CreateNodeContacts();
         }
         return isSuccess;
@@ -1937,7 +1937,7 @@ public class DataManager : MonoBehaviour
         string contactResult = "Unknown";
         int nodeID = Convert.ToInt32(nodeIDString);
         int actorSlotID = Convert.ToInt32(actorSlotIDString);
-        Actor actor = GetCurrentActor(actorSlotID, GameManager.instance.turnScript.currentSide);
+        Actor actor = GetCurrentActor(actorSlotID, GameManager.i.turnScript.currentSide);
         if (actor != null)
         {
             if (AddContactSingle(actor.actorID, nodeID) == true)
@@ -1969,7 +1969,7 @@ public class DataManager : MonoBehaviour
         string contactResult = "Unknown";
         int nodeID = Convert.ToInt32(nodeIDString);
         int actorSlotID = Convert.ToInt32(actorSlotIDString);
-        Actor actor = GetCurrentActor(actorSlotID, GameManager.instance.turnScript.currentSide);
+        Actor actor = GetCurrentActor(actorSlotID, GameManager.i.turnScript.currentSide);
         if (actor != null)
         {
             if (RemoveContactSingle(actor.actorID, nodeID) == true)
@@ -2084,7 +2084,7 @@ public class DataManager : MonoBehaviour
     {
         List<string> listOfNodeContacts = new List<string>();
         //find node in dict
-        GlobalSide side = GameManager.instance.globalScript.sideAuthority;
+        GlobalSide side = GameManager.i.globalScript.sideAuthority;
         Dictionary<int, List<int>> dictOfNodeContacts = new Dictionary<int, List<int>>();
         dictOfNodeContacts = GetDictOfNodeContacts(side);
         if (dictOfNodeContacts.ContainsKey(nodeID) == true)
@@ -2127,7 +2127,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public List<string> GetActiveContactsAtNodeResistance(int nodeID)
     {
-        bool isShowContacts = GameManager.instance.optionScript.showContacts;
+        bool isShowContacts = GameManager.i.optionScript.showContacts;
         List<string> listOfNodeContacts = new List<string>();
         //get list of contacts at node
         List<Contact> listOfContacts = GetListOfNodeContacts(nodeID);
@@ -2704,7 +2704,7 @@ public class DataManager : MonoBehaviour
                 Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} activated at {1}, {2}, ID {3}, orgCure: {4}{5}", cure.condition.tag, node.nodeName, node.Arc.name,
                     node.nodeID, isOrgCure, "\n");
                 string text = string.Format("[Msg] Cure available for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
+                GameManager.i.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
                 //effect tab
                 Condition condition = cure.condition;
                 if (condition != null)
@@ -2716,14 +2716,14 @@ public class DataManager : MonoBehaviour
                         topText = string.Format("{0} Cure", condition.tag),
                         detailsTop = GameManager.GetFormattedString(node.cure.name, ColourType.neutralText),
                         detailsBottom = GameManager.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
-                        sprite = GameManager.instance.guiScript.infoSprite,
+                        sprite = GameManager.i.guiScript.infoSprite,
                         node = node,
                         help0 = "cure_0",
                         help1 = "cure_1",
                         help2 = "cure_2",
                         help3 = "cure_3"
                     };
-                    GameManager.instance.messageScript.ActiveEffect(data);
+                    GameManager.i.messageScript.ActiveEffect(data);
                 }
                 else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 return true;
@@ -2736,7 +2736,7 @@ public class DataManager : MonoBehaviour
                 //message
                 Debug.LogFormat("[Cnd] DataManager.cs -> SetCureNodeStatus: Cure for {0} Deactivated at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
                 string text = string.Format("[Msg] Cure Deactivated for {0} condition at {1}, {2}, ID {3}{4}", cure.condition.tag, node.nodeName, node.Arc.name, node.nodeID, "\n");
-                GameManager.instance.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
+                GameManager.i.messageScript.PlayerCureStatus(text, node, cure.condition, isActivateCure);
                 return true;
             }
         }
@@ -2765,14 +2765,14 @@ public class DataManager : MonoBehaviour
                             topText = string.Format("{0} Cure", condition.tag),
                             detailsTop = GameManager.GetFormattedString(node.cure.name, ColourType.neutralText),
                             detailsBottom = GameManager.GetFormattedString(node.cure.tooltipText, ColourType.salmonText),
-                            sprite = GameManager.instance.guiScript.infoSprite,
+                            sprite = GameManager.i.guiScript.infoSprite,
                             node = node,
                             help0 = "cure_0",
                             help1 = "cure_1",
                             help2 = "cure_2",
                             help3 = "cure_3"
                         };
-                        GameManager.instance.messageScript.ActiveEffect(data);
+                        GameManager.i.messageScript.ActiveEffect(data);
                     }
                     else { Debug.LogWarningFormat("Invalid condition (Null) for cure {0}, node {1}, {2}, ID {3}", node.cure.name, node.nodeName, node.Arc.name, node.nodeID, "\n"); }
                 }
@@ -2786,7 +2786,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void DebugActivateAllCures()
     {
-        List<Condition> listOfConditions = GameManager.instance.playerScript.GetListOfConditions(GameManager.instance.sideScript.PlayerSide);
+        List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(GameManager.i.sideScript.PlayerSide);
         if (listOfConditions != null)
         {
             foreach (Condition condition in listOfConditions)
@@ -3871,7 +3871,7 @@ public class DataManager : MonoBehaviour
         int count = 0;
         for (int i = 0; i < actorHQPool.Count; i++)
         {
-            actor = GameManager.instance.dataScript.GetHqActor(actorHQPool[i]);
+            actor = GameManager.i.dataScript.GetHqActor(actorHQPool[i]);
             if (actor != null)
             {
                 if (actor.statusHQ == ActorHQ.Worker)
@@ -3934,7 +3934,7 @@ public class DataManager : MonoBehaviour
                     else
                     {
                         //new addition
-                        GameManager.instance.actorScript.AddActorToHQ(actor, "Promoted");
+                        GameManager.i.actorScript.AddActorToHQ(actor, "Promoted");
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }
@@ -4044,7 +4044,7 @@ public class DataManager : MonoBehaviour
     public void AddCurrentActor(GlobalSide side, Actor actor, int slotID)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         if (actor != null)
         {
             arrayOfActors[side.level, slotID] = actor;
@@ -4055,10 +4055,10 @@ public class DataManager : MonoBehaviour
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
             //update contacts (not for game or level start -> sequencing issues)
-            if (GameManager.instance.turnScript.Turn > 0 && GameManager.instance.inputScript.GameState == GameState.PlayGame)
-            { GameManager.instance.contactScript.SetActorContacts(actor); }
+            if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.GameState == GameState.PlayGame)
+            { GameManager.i.contactScript.SetActorContacts(actor); }
             //update actor GUI display
-            GameManager.instance.actorPanelScript.UpdateActorPanel();
+            GameManager.i.actorPanelScript.UpdateActorPanel();
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }
@@ -4072,7 +4072,7 @@ public class DataManager : MonoBehaviour
     public void AddMetaGameCurrentActor(GlobalSide side, Actor actor, int slotID)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         if (actor != null)
         {
             arrayOfActors[side.level, slotID] = actor;
@@ -4170,7 +4170,7 @@ public class DataManager : MonoBehaviour
         {
             UpdateRelations(actor.slotID);
             //update actorPanelUI
-            GameManager.instance.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, 0);
+            GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, 0);
             //update actor arrays
             arrayOfActors[side.level, actor.slotID] = null;
             arrayOfActorsPresent[side.level, actor.slotID] = false;
@@ -4185,13 +4185,13 @@ public class DataManager : MonoBehaviour
         {
             case ActorStatus.Resigned:
                 //if actor resigned, loose -1 faction support
-                int approvalChange = GameManager.instance.hqScript.hQApprovalActorResigns * -1;
-                GameManager.instance.hqScript.ChangeHqApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
+                int approvalChange = GameManager.i.hqScript.hQApprovalActorResigns * -1;
+                GameManager.i.hqScript.ChangeHqApproval(approvalChange, side, string.Format("{0}, {1} has Resigned", actor.actorName, actor.arc.name));
                 //lose secrets
-                GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+                GameManager.i.secretScript.RemoveAllSecretsFromActor(actor);
                 //teams -> remove any onMap teams (for cases other than resigned this is handled locally)
-                if (side.level == GameManager.instance.globalScript.sideAuthority.level)
-                { GameManager.instance.teamScript.TeamCleanUp(actor); }
+                if (side.level == GameManager.i.globalScript.sideAuthority.level)
+                { GameManager.i.teamScript.TeamCleanUp(actor); }
                 break;
             case ActorStatus.Dismissed:
             case ActorStatus.Promoted:
@@ -4199,16 +4199,16 @@ public class DataManager : MonoBehaviour
             case ActorStatus.RecruitPool:
                 //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
                 actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
-                GameManager.instance.secretScript.RemoveAllSecretsFromActor(actor);
+                GameManager.i.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
         }
         if (isDebugAtStart == false)
         {
             //update actor compatibility
-            GameManager.instance.personScript.SetAllActorsCompatibility();
+            GameManager.i.personScript.SetAllActorsCompatibility();
         }
         //update actor GUI display
-        GameManager.instance.actorPanelScript.UpdateActorPanel();
+        GameManager.i.actorPanelScript.UpdateActorPanel();
     }
 
 
@@ -4440,13 +4440,13 @@ public class DataManager : MonoBehaviour
         {
             case "Authority":
                 //check space in Authority reserve pool
-                if (authorityActorReserve.Count < GameManager.instance.actorScript.maxNumOfReserveActors)
+                if (authorityActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
                 { authorityActorReserve.Add(actorID); }
                 else { successFlag = false; }
                 break;
             case "Resistance":
                 //check space in Resistance reserve pool
-                if (resistanceActorReserve.Count < GameManager.instance.actorScript.maxNumOfReserveActors)
+                if (resistanceActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
                 { resistanceActorReserve.Add(actorID); }
                 else { successFlag = false; }
                 break;
@@ -4569,13 +4569,13 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public int CheckNumOfActorsInReserve()
     {
-        if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
         { return authorityActorReserve.Count; }
-        else if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+        else if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
         { return resistanceActorReserve.Count; }
         else
         {
-            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+            Debug.LogWarning(string.Format("Invalid Side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
             return 0;
         }
     }
@@ -4630,13 +4630,13 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         Debug.Assert(level > 0 && level < 4, "Invalid actor level");
-        if (side.level == GameManager.instance.globalScript.sideAuthority.level)
+        if (side.level == GameManager.i.globalScript.sideAuthority.level)
         {
             if (level == 1) { return authorityActorPoolLevelOne; }
             else if (level == 2) { return authorityActorPoolLevelTwo; }
             else { return authorityActorPoolLevelThree; }
         }
-        else if (side.level == GameManager.instance.globalScript.sideResistance.level)
+        else if (side.level == GameManager.i.globalScript.sideResistance.level)
         {
             if (level == 1) { return resistanceActorPoolLevelOne; }
             else if (level == 2) { return resistanceActorPoolLevelTwo; }
@@ -4692,7 +4692,7 @@ public class DataManager : MonoBehaviour
     public Actor[] GetCurrentActors(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        int total = GameManager.instance.actorScript.maxNumOfOnMapActors;
+        int total = GameManager.i.actorScript.maxNumOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
         { tempArray[i] = arrayOfActors[side.level, i]; }
@@ -4709,7 +4709,7 @@ public class DataManager : MonoBehaviour
         List<Actor> listOfActors = new List<Actor>();
         if (side != null)
         {
-            for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+            for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
             {
                 if (CheckActorSlotStatus(i, side) == true)
                 {
@@ -4750,7 +4750,7 @@ public class DataManager : MonoBehaviour
     public Actor GetCurrentActor(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, string.Format("Invalid slotID {0}", slotID));
         return arrayOfActors[side.level, slotID];
     }
 
@@ -4762,7 +4762,7 @@ public class DataManager : MonoBehaviour
     public string GetCurrentActorType(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[side.level, slotID].arc.name;
     }
 
@@ -4775,7 +4775,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         List<string> tempList = new List<string>();
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (CheckActorSlotStatus(i, side) == true)
             { tempList.Add(arrayOfActors[side.level, i].arc.name); }
@@ -4794,7 +4794,7 @@ public class DataManager : MonoBehaviour
     {
         Actor actor = null;
         List<Actor> listOfActors = new List<Actor>();
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (CheckActorSlotStatus(i, side) == true)
             { listOfActors.Add(arrayOfActors[side.level, i]); }
@@ -4813,7 +4813,7 @@ public class DataManager : MonoBehaviour
     {
         Actor actor = null;
         List<Actor> listOfActors = new List<Actor>();
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             Actor actorTemp = arrayOfActors[side.level, i];
             if (actorTemp != null)
@@ -4853,7 +4853,7 @@ public class DataManager : MonoBehaviour
     public int[] GetActorStats(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         int[] arrayOfStats = new int[]{
             arrayOfActors[side.level, slotID].GetDatapoint(ActorDatapoint.Datapoint0),
             arrayOfActors[side.level, slotID].GetDatapoint(ActorDatapoint.Datapoint1),
@@ -4870,7 +4870,7 @@ public class DataManager : MonoBehaviour
     public Action GetActorAction(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
+        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
         return arrayOfActors[side.level, slotID].arc.nodeAction;
     }
 
@@ -4886,7 +4886,7 @@ public class DataManager : MonoBehaviour
         if (string.IsNullOrEmpty(arcName) == false)
         {
 
-            int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+            int numOfActors = GameManager.i.actorScript.maxNumOfOnMapActors;
             for (int i = 0; i < numOfActors; i++)
             {
                 //check if there is an actor in the slot (not vacant)
@@ -4937,7 +4937,7 @@ public class DataManager : MonoBehaviour
         Debug.Assert(side != null, "Invalid side (Null)");
         if (arc != null)
         {
-            int numOfActors = GameManager.instance.actorScript.maxNumOfOnMapActors;
+            int numOfActors = GameManager.i.actorScript.maxNumOfOnMapActors;
             for (int i = 0; i < numOfActors; i++)
             {
                 //check if there is an actor in the slot (not vacant)
@@ -4975,7 +4975,7 @@ public class DataManager : MonoBehaviour
     public bool CheckActorSlotStatus(int slotID, GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.AssertFormat(slotID > -1 && slotID < GameManager.instance.actorScript.maxNumOfOnMapActors, "Invalid slotID input, \"{0}\"", slotID);
+        Debug.AssertFormat(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input, \"{0}\"", slotID);
         return arrayOfActorsPresent[side.level, slotID];
     }
 
@@ -4988,7 +4988,7 @@ public class DataManager : MonoBehaviour
     public int CheckForSpareActorSlot(GlobalSide side)
     {
         int slotID = -1;
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == false)
             {
@@ -5005,11 +5005,11 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseActorArrays()
     {
-        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
-        Debug.AssertFormat(GameManager.instance.hqScript.numOfActorsHQ + 3 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
-            GameManager.instance.hqScript.numOfActorsHQ + 3, (int)ActorHQ.Count);
+        arrayOfActors = new Actor[GetNumOfGlobalSide(), GameManager.i.actorScript.maxNumOfOnMapActors];
+        Debug.AssertFormat(GameManager.i.hqScript.numOfActorsHQ + 3 == (int)ActorHQ.Count, "Mismatch on hierarchy actors count (numOfActorsHQ + 2 is {0}, enum.ActorHQ.Count is {1})",
+            GameManager.i.hqScript.numOfActorsHQ + 3, (int)ActorHQ.Count);
         arrayOfActorsHQ = new Actor[(int)ActorHQ.Count];
-        arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.instance.actorScript.maxNumOfOnMapActors];
+        arrayOfActorsPresent = new bool[GetNumOfGlobalSide(), GameManager.i.actorScript.maxNumOfOnMapActors];
     }
 
     public Actor[,] GetArrayOfActors()
@@ -5025,7 +5025,7 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfActiveActors(GlobalSide side)
     {
         int numOfActors = 0;
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == true)
             {
@@ -5049,7 +5049,7 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfActiveActorsSpecial(ActorCheck check, GlobalSide side)
     {
         int numOfActors = 0;
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == true)
             {
@@ -5078,7 +5078,7 @@ public class DataManager : MonoBehaviour
                                     if (data != null)
                                     {
                                         //get relevant subType topic list
-                                        TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
+                                        TopicSubSubType subSubType = GameManager.i.topicScript.GetTopicSubSubType(data.nodeAction);
                                         if (subSubType != null)
                                         {
                                             List<Topic> listOfTopics = GetListOfTopics(subSubType.subType);
@@ -5103,7 +5103,7 @@ public class DataManager : MonoBehaviour
                                     if (data != null)
                                     {
                                         //get relevant subType topic list
-                                        TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.teamAction);
+                                        TopicSubSubType subSubType = GameManager.i.topicScript.GetTopicSubSubType(data.teamAction);
                                         if (subSubType != null)
                                         {
                                             List<Topic> listOfTopics = GetListOfTopics(subSubType.subType);
@@ -5138,11 +5138,11 @@ public class DataManager : MonoBehaviour
                                 break;
                             case ActorCheck.RenownMore:
                                 //At least one active actor with MORE renown than Player
-                                if (actor.Renown > GameManager.instance.playerScript.Renown) { numOfActors++; }
+                                if (actor.Renown > GameManager.i.playerScript.Renown) { numOfActors++; }
                                 break;
                             case ActorCheck.RenownLess:
                                 //At least one active actor with LESS renown than Player
-                                if (actor.Renown < GameManager.instance.playerScript.Renown) { numOfActors++; }
+                                if (actor.Renown < GameManager.i.playerScript.Renown) { numOfActors++; }
                                 break;
                             case ActorCheck.KnowsSecret:
                                 //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
@@ -5171,7 +5171,7 @@ public class DataManager : MonoBehaviour
     public List<Actor> GetActiveActorsSpecial(ActorCheck check, GlobalSide side)
     {
         List<Actor> listOfActors = new List<Actor>();
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == true)
             {
@@ -5204,11 +5204,11 @@ public class DataManager : MonoBehaviour
                                 break;
                             case ActorCheck.RenownMore:
                                 //At least one active actor with MORE renown than Player
-                                if (actor.Renown > GameManager.instance.playerScript.Renown) { listOfActors.Add(actor); }
+                                if (actor.Renown > GameManager.i.playerScript.Renown) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.RenownLess:
                                 //At least one active actor with LESS renown than Player
-                                if (actor.Renown < GameManager.instance.playerScript.Renown) { listOfActors.Add(actor); }
+                                if (actor.Renown < GameManager.i.playerScript.Renown) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.KnowsSecret:
                                 //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
@@ -5240,7 +5240,7 @@ public class DataManager : MonoBehaviour
     public int CheckNumOfOnMapActors(GlobalSide side)
     {
         int numOfActors = 0;
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             if (arrayOfActorsPresent[side.level, i] == true)
             { numOfActors++; }
@@ -5326,17 +5326,17 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorNodeActionData()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor NodeActionData{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -5369,17 +5369,17 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorTeamActionData()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor TeamActionData{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -5412,17 +5412,17 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorDetails()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor Details{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -5476,7 +5476,7 @@ public class DataManager : MonoBehaviour
                     }
                     else
                     {
-                        builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8} {9}{10}", actor.hqID, GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), actor.level,
+                        builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8} {9}{10}", actor.hqID, GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.level,
                             actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2),
                             actor.unhappyTimer, actor.Renown, actor.Status, actor.sex, "\n"));
                     }
@@ -5506,7 +5506,7 @@ public class DataManager : MonoBehaviour
     public string[] GetQualities(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
+        int numOfQualities = GameManager.i.actorScript.numOfQualities;
         string[] tempArray = new string[numOfQualities];
         for (int i = 0; i < numOfQualities; i++)
         {
@@ -5524,7 +5524,7 @@ public class DataManager : MonoBehaviour
     public string GetQuality(GlobalSide side, int qualityNum)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(qualityNum > -1 && qualityNum < GameManager.instance.actorScript.numOfQualities, "Invalid qualityNum");
+        Debug.Assert(qualityNum > -1 && qualityNum < GameManager.i.actorScript.numOfQualities, "Invalid qualityNum");
         return arrayOfStatTags[side.level, qualityNum];
     }
 
@@ -5561,8 +5561,8 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseArrayOfStatTags()
     {
-        int numOfQualities = GameManager.instance.actorScript.numOfQualities;
-        int numOfGlobalSides = GameManager.instance.dataScript.GetNumOfGlobalSide();
+        int numOfQualities = GameManager.i.actorScript.numOfQualities;
+        int numOfGlobalSides = GameManager.i.dataScript.GetNumOfGlobalSide();
         arrayOfStatTags = new string[numOfGlobalSides, numOfQualities];
     }
 
@@ -5699,7 +5699,7 @@ public class DataManager : MonoBehaviour
             else
             {
                 Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen t {2} at {3}", secret.tag, secret.name, secret.revealedWhen.turn,
-             GameManager.instance.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag);
+             GameManager.i.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag);
             }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
@@ -6040,10 +6040,10 @@ public class DataManager : MonoBehaviour
     {
         int count, index;
         string gearName;
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         Gear gear;
         bool isSuccess;
-        int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
+        int chanceOfRareGear = GameManager.i.gearScript.chanceOfRareGear;
         for (int i = 0; i < gearUsed; i++)
         {
             isSuccess = false;
@@ -6125,12 +6125,12 @@ public class DataManager : MonoBehaviour
     {
         int count, index;
         string gearName;
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         Gear gear;
         bool isSuccess;
-        int chanceOfRareGear = GameManager.instance.gearScript.chanceOfRareGear;
+        int chanceOfRareGear = GameManager.i.gearScript.chanceOfRareGear;
         //put an upper limit on gear points (max. amount of gear)
-        gearPoints = Mathf.Min(GameManager.instance.gearScript.maxNumOfGear, gearPoints);
+        gearPoints = Mathf.Min(GameManager.i.gearScript.maxNumOfGear, gearPoints);
         for (int i = 0; i < gearPoints; i++)
         {
             isSuccess = false;
@@ -6150,7 +6150,7 @@ public class DataManager : MonoBehaviour
                         //add to Current gear pool
                         listOfCurrentGear.Add(gearName);
                         //add to player's inventory
-                        GameManager.instance.playerScript.AddGear(gearName);
+                        GameManager.i.playerScript.AddGear(gearName);
                         //message
                         gear = GetGear(gearName);
                         if (gear != null)
@@ -6181,7 +6181,7 @@ public class DataManager : MonoBehaviour
                         //add to Current gear pool
                         listOfCurrentGear.Add(gearName);
                         //add to player's inventory
-                        GameManager.instance.playerScript.AddGear(gearName);
+                        GameManager.i.playerScript.AddGear(gearName);
                         //message
                         gear = GetGear(gearName);
                         if (gear != null)
@@ -6225,7 +6225,7 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("{0}- Unique Gear{1}", "\n", "\n");
         builder.Append(DebugDisplayGearList(listOfUniqueGear));
         builder.AppendFormat("{0}- Compromised Gear{1}", "\n", "\n");
-        List<string> tempList = GameManager.instance.gearScript.GetListOfCompromisedGear();
+        List<string> tempList = GameManager.i.gearScript.GetListOfCompromisedGear();
         if (tempList != null)
         {
             int count = tempList.Count;
@@ -6312,7 +6312,7 @@ public class DataManager : MonoBehaviour
                     case MessageSubType.Contact_Nemesis_Spotted:
                     case MessageSubType.Tracer_Nemesis_Spotted:
                         //Extract Nemesis sighting data
-                        GameManager.instance.aiRebelScript.GetAIRebelMessageData(message);
+                        GameManager.i.aiRebelScript.GetAIRebelMessageData(message);
                         break;
                     case MessageSubType.Contact_Team_Spotted:
                         Team team = GetTeam(message.data3);
@@ -6320,7 +6320,7 @@ public class DataManager : MonoBehaviour
                         {
                             //f an erasure team then extract sighting data
                             if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
-                            { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
+                            { GameManager.i.aiRebelScript.GetAIRebelMessageData(message); }
                         }
                         else { Debug.LogErrorFormat("Invalid Contact team (Null) for teamID {0}", message.data3); }
                         break;
@@ -6330,7 +6330,7 @@ public class DataManager : MonoBehaviour
                         {
                             //f an erasure team then extract sighting data
                             if (team.arc.name.Equals("ERASURE", StringComparison.Ordinal) == true)
-                            { GameManager.instance.aiRebelScript.GetAIRebelMessageData(message); }
+                            { GameManager.i.aiRebelScript.GetAIRebelMessageData(message); }
                         }
                         else { Debug.LogErrorFormat("Invalid Tracer team (Null) for teamID {0}", message.data3); }
                         break;
@@ -6350,7 +6350,7 @@ public class DataManager : MonoBehaviour
         //Add a copy of the message to AI Message dictionary 
         AddMessageExisting(message, MessageCategory.AI);
         //Extract AI data
-        GameManager.instance.aiScript.GetAIMessageData(message);
+        GameManager.i.aiScript.GetAIMessageData(message);
     }
 
     /// <summary>
@@ -6716,7 +6716,7 @@ public class DataManager : MonoBehaviour
                     //generate message (node effect only)
                     if (nodeID > -1)
                     {
-                        GameManager.instance.messageScript.OngoingEffectCreated(ongoing.text, nodeID);
+                        GameManager.i.messageScript.OngoingEffectCreated(ongoing.text, nodeID);
                         Debug.LogFormat("[Nod] DataManager.cs -> AddOngoingEffectToDict: ADDED Ongoing effect {0} to nodeID {1}{2}", ongoing.description, ongoing.nodeID, "\n");
                     }
                 }
@@ -6752,7 +6752,7 @@ public class DataManager : MonoBehaviour
         {
             if (ongoing.Value.nodeID > -1)
             {
-                Node node = GameManager.instance.dataScript.GetNode(ongoing.Value.nodeID);
+                Node node = GameManager.i.dataScript.GetNode(ongoing.Value.nodeID);
                 if (node != null)
                 { builder.Append(string.Format("{0} NodeID {1}, {2}, {3} turn{4} remaining", "\n", node.nodeID, ongoing.Value.description, ongoing.Value.timer, ongoing.Value.timer != 1 ? "s" : "")); }
                 else
@@ -6782,7 +6782,7 @@ public class DataManager : MonoBehaviour
                 dictOfOngoingID.Remove(ongoing.ongoingID);
                 //generate message
                 string text = string.Format("id {0}, {1}", ongoing.ongoingID, ongoing.description);
-                GameManager.instance.messageScript.OngoingEffectExpired(text);
+                GameManager.i.messageScript.OngoingEffectExpired(text);
             }
         }
         else { Debug.LogError("Invalid EffectDataOngoing (Null)"); }
@@ -6817,8 +6817,8 @@ public class DataManager : MonoBehaviour
         {
             foreach (var register in dictOfOngoingID)
             {
-                GameManager.instance.connScript.RemoveOngoingEffect(register.Key);
-                GameManager.instance.nodeScript.RemoveOngoingEffect(register.Key);
+                GameManager.i.connScript.RemoveOngoingEffect(register.Key);
+                GameManager.i.nodeScript.RemoveOngoingEffect(register.Key);
             }
         }
     }
@@ -6840,7 +6840,7 @@ public class DataManager : MonoBehaviour
         {
             queueRecentNodes.Enqueue(tracker);
             //keep queue within defined size
-            if (queueRecentNodes.Count > GameManager.instance.aiScript.numOfActivitiesTracked)
+            if (queueRecentNodes.Count > GameManager.i.aiScript.numOfActivitiesTracked)
             { queueRecentNodes.Dequeue(); }
         }
         else { Debug.LogWarning("Invalid tracker (Null)"); }
@@ -6856,7 +6856,7 @@ public class DataManager : MonoBehaviour
         {
             queueRecentConnections.Enqueue(tracker);
             //keep queue within defined size
-            if (queueRecentConnections.Count > GameManager.instance.aiScript.numOfActivitiesTracked)
+            if (queueRecentConnections.Count > GameManager.i.aiScript.numOfActivitiesTracked)
             { queueRecentConnections.Dequeue(); }
         }
         else { Debug.LogWarning("Invalid tracker (Null)"); }
@@ -7161,7 +7161,7 @@ public class DataManager : MonoBehaviour
     public string DebugLevelAnalysis()
     {
         StringBuilder builder = new StringBuilder();
-        City city = GameManager.instance.cityScript.GetCity();
+        City city = GameManager.i.cityScript.GetCity();
         if (city != null)
         {
             //City data
@@ -7177,7 +7177,7 @@ public class DataManager : MonoBehaviour
             builder.AppendFormat("{0} Node Analysis{1}{2}", "\n", "\n", "\n");
             for (int i = 0; i < CheckNumOfNodeArcs(); i++)
             {
-                NodeArc arc = GameManager.instance.dataScript.GetNodeArc(i);
+                NodeArc arc = GameManager.i.dataScript.GetNodeArc(i);
                 builder.Append(string.Format(" {0}  {1}{2}", arc.name, arrayOfNodeArcTotals[(int)NodeArcTally.Current, i], "\n"));
             }
             //graph analysis
@@ -7422,7 +7422,7 @@ public class DataManager : MonoBehaviour
     {
         if (orgInfoType != OrgInfoType.Count)
         {
-            Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+            Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             {
                 arrayOfOrgInfo[(int)orgInfoType] = value;
@@ -7430,9 +7430,9 @@ public class DataManager : MonoBehaviour
                 //timer
                 if (value == true)
                 {
-                    org.timer = GameManager.instance.orgScript.timerOrgInfoMax;
+                    org.timer = GameManager.i.orgScript.timerOrgInfoMax;
                     //message (effect tab)
-                    GameManager.instance.orgScript.ProcessOrgInfoEffectMessage(org, orgInfoType);
+                    GameManager.i.orgScript.ProcessOrgInfoEffectMessage(org, orgInfoType);
                 }
                 else { org.timer = 0; }
             }
@@ -7546,7 +7546,7 @@ public class DataManager : MonoBehaviour
     private string DebugDisplayOrgData(OrganisationType orgType)
     {
         StringBuilder builder = new StringBuilder();
-        List<OrgData> listOfOrgData = GameManager.instance.dataScript.GetListOfOrgData(orgType);
+        List<OrgData> listOfOrgData = GameManager.i.dataScript.GetListOfOrgData(orgType);
         builder.AppendFormat("-listOfOrg{0}Services{1}", orgType, "\n");
         if (listOfOrgData != null)
         {
@@ -7608,7 +7608,7 @@ public class DataManager : MonoBehaviour
         if (adjustment != null)
         {
             //set start to following turn
-            adjustment.turnStart = GameManager.instance.turnScript.Turn + 1;
+            adjustment.turnStart = GameManager.i.turnScript.Turn + 1;
             listOfActionAdjustments.Add(adjustment);
         }
         else
@@ -7896,7 +7896,7 @@ public class DataManager : MonoBehaviour
     public void AddHistoryAutoRun(string text)
     {
         if (string.IsNullOrEmpty(text) == false)
-        { listOfHistoryAutoRun.Add(string.Format("D{0}: {1}", GameManager.instance.turnScript.Turn, text)); }
+        { listOfHistoryAutoRun.Add(string.Format("D{0}: {1}", GameManager.i.turnScript.Turn, text)); }
         else { Debug.LogWarning("Invalid listOfHistoryAutoRun text (Null or Empty)"); }
     }
 
@@ -7912,7 +7912,7 @@ public class DataManager : MonoBehaviour
     public string DebugShowRebelMoves()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("-Resistance Move History (start  nodeID {0}){1}{2}", GameManager.instance.aiRebelScript.GetStartPlayerNode(), "\n", "\n");
+        builder.AppendFormat("-Resistance Move History (start  nodeID {0}){1}{2}", GameManager.i.aiRebelScript.GetStartPlayerNode(), "\n", "\n");
         int count = listOfHistoryRebelMove.Count;
         if (count > 0)
         {
@@ -7938,7 +7938,7 @@ public class DataManager : MonoBehaviour
     public string DebugShowNemesisMoves()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("-Nemesis Move History (start  nodeID {0}){1}{2}", GameManager.instance.cityScript.cityHallDistrictID, "\n", "\n");
+        builder.AppendFormat("-Nemesis Move History (start  nodeID {0}){1}{2}", GameManager.i.cityScript.cityHallDistrictID, "\n", "\n");
         int count = listOfHistoryNemesisMove.Count;
         if (count > 0)
         {
@@ -7964,7 +7964,7 @@ public class DataManager : MonoBehaviour
     public string DebugShowNpcMoves()
     {
         StringBuilder builder = new StringBuilder();
-        Npc npc = GameManager.instance.campaignScript.scenario.missionResistance.npc;
+        Npc npc = GameManager.i.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
         {
             builder.AppendFormat("-Npc Move History (start  nodeID {0}){1}{2}", npc.currentStartNode.nodeID, "\n", "\n");
@@ -7993,7 +7993,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayActorsHistory()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         //loop OnMap actors
         Actor[] arrayOfActors = GetCurrentActors(playerSide);
@@ -8043,7 +8043,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayHqHierarchyHistory()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         //loop actors
         if (arrayOfActorsHQ != null)
@@ -8157,7 +8157,7 @@ public class DataManager : MonoBehaviour
             else { Debug.LogErrorFormat("statType \"{0}\" not found in dictOfStatistics", statType); }
         }
         //reset all ratios by recalculating
-        GameManager.instance.statScript.UpdateRatios();
+        GameManager.i.statScript.UpdateRatios();
     }
 
 
@@ -8226,7 +8226,7 @@ public class DataManager : MonoBehaviour
     //
 
     public int GetNumOfGlobalSide()
-    { return GameManager.instance.loadScript.arrayOfGlobalSide.Length; }
+    { return GameManager.i.loadScript.arrayOfGlobalSide.Length; }
 
     /// <summary>
     /// Returns condition SO, Null if not found in dictionary
@@ -8370,7 +8370,7 @@ public class DataManager : MonoBehaviour
     {
         if (listOfFactors != null)
         {
-            int numOfFactors = GameManager.instance.personScript.numOfFactors;
+            int numOfFactors = GameManager.i.personScript.numOfFactors;
             //initialise arrays
             arrayOfFactors = new Factor[numOfFactors];
             arrayOfFactorTags = new string[numOfFactors];
@@ -8668,7 +8668,7 @@ public class DataManager : MonoBehaviour
     public void InitialiseAdvertList()
     {
         listOfAdverts.Clear();
-        TextList[] arrayOfAdverts = GameManager.instance.loadScript.arrayOfAdvertTextLists;
+        TextList[] arrayOfAdverts = GameManager.i.loadScript.arrayOfAdvertTextLists;
         if (arrayOfAdverts != null)
         {
             for (int i = 0; i < arrayOfAdverts.Length; i++)
@@ -8951,7 +8951,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckIfRelationPossible()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         int counter = 0;
         if (CheckNumOfActiveActors(playerSide) > 1)
         {
@@ -8992,8 +8992,8 @@ public class DataManager : MonoBehaviour
         int compatibility;
         RelationSelectData dataReturn = null;
         List<RelationSelectData> tempList = new List<RelationSelectData>();   //list to hold weighted pool (by compatibility) of actor pairs
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
-        int searchLength = GameManager.instance.actorScript.maxNumOfOnMapActors - 1;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        int searchLength = GameManager.i.actorScript.maxNumOfOnMapActors - 1;
         //shortened loop of all onMap slots (last excluded)
         for (int i = 0; i < searchLength; i++)
         {
@@ -9111,7 +9111,7 @@ public class DataManager : MonoBehaviour
                             //reset to default (remove relationship)
                             dataOther.slotID = -1;
                             dataOther.actorID = -1;
-                            dataOther.timer = GameManager.instance.actorScript.timerRelations;
+                            dataOther.timer = GameManager.i.actorScript.timerRelations;
                             dataOther.relationship = ActorRelationship.None;
                             dictOfRelations[data.slotID] = dataOther;
                         }
@@ -9121,7 +9121,7 @@ public class DataManager : MonoBehaviour
                     //need to reset relationship data to default
                     data.slotID = -1;
                     data.actorID = -1;
-                    data.timer = GameManager.instance.actorScript.timerRelations;
+                    data.timer = GameManager.i.actorScript.timerRelations;
                     data.relationship = ActorRelationship.None;
                     dictOfRelations[slotID] = data;
                 }
@@ -9139,7 +9139,7 @@ public class DataManager : MonoBehaviour
     public string DebugDisplayActorRelations()
     {
         StringBuilder builder = new StringBuilder();
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         builder.AppendFormat("-Actor Relationships{0}", "\n");
         foreach (var relation in dictOfRelations)
         {
@@ -9167,7 +9167,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugSetFriend(string input_0, string input_1)
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         string reply = "";
         int firstSlotID = -1;
         int secondSlotID = -1;
@@ -9217,7 +9217,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public string DebugSetEnemy(string input_0, string input_1)
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         string reply = "";
         int firstSlotID = -1;
         int secondSlotID = -1;
@@ -9276,7 +9276,7 @@ public class DataManager : MonoBehaviour
     public void AddCommendation(string reasonForAward)
     {
         if (string.IsNullOrEmpty(reasonForAward) == false)
-        { listOfCommendations.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward }); }
+        { listOfCommendations.Add(new AwardData() { turn = GameManager.i.turnScript.Turn, reason = reasonForAward }); }
         else { Debug.LogError("Invalid reasonForAward (Null or Empty)"); }
     }
 
@@ -9287,7 +9287,7 @@ public class DataManager : MonoBehaviour
     public void AddBlackmark(string reasonForAward)
     {
         if (string.IsNullOrEmpty(reasonForAward) == false)
-        { listOfBlackmarks.Add(new AwardData() { turn = GameManager.instance.turnScript.Turn, reason = reasonForAward }); }
+        { listOfBlackmarks.Add(new AwardData() { turn = GameManager.i.turnScript.Turn, reason = reasonForAward }); }
         else { Debug.LogError("Invalid reasonForAward (Null or Empty)"); }
     }
 

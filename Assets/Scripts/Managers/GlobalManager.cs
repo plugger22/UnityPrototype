@@ -51,7 +51,7 @@ public class GlobalManager : MonoBehaviour
         Debug.Assert(string.IsNullOrEmpty(tagGlobalDrug) == false, "Invalid tagGlobalDrug (Null or Empty)");
         //main
         int num;
-        GlobalMeta[] arrayOfGlobalMeta = GameManager.instance.loadScript.arrayOfGlobalMeta;
+        GlobalMeta[] arrayOfGlobalMeta = GameManager.i.loadScript.arrayOfGlobalMeta;
         num = arrayOfGlobalMeta.Length;
         if (num > 0)
         {
@@ -87,7 +87,7 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalChance - - -
         //
-        GlobalChance[] arrayOfGlobalChance = GameManager.instance.loadScript.arrayOfGlobalChance;
+        GlobalChance[] arrayOfGlobalChance = GameManager.i.loadScript.arrayOfGlobalChance;
         num = arrayOfGlobalChance.Length;
         if (num > 0)
         {
@@ -128,7 +128,7 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalWho - - -
         //
-        GlobalWho[] arrayOfGlobalWho = GameManager.instance.loadScript.arrayOfGlobalWho;
+        GlobalWho[] arrayOfGlobalWho = GameManager.i.loadScript.arrayOfGlobalWho;
         num = arrayOfGlobalWho.Length;
         if (num > 0)
         {
@@ -159,7 +159,7 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalType - - -
         //
-        GlobalType[] arrayOfGlobalType = GameManager.instance.loadScript.arrayOfGlobalType;
+        GlobalType[] arrayOfGlobalType = GameManager.i.loadScript.arrayOfGlobalType;
         num = arrayOfGlobalType.Length;
         if (num > 0)
         {
@@ -195,7 +195,7 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - GlobalSide - - -
         //
-        GlobalSide[] arrayOfGlobalSide = GameManager.instance.loadScript.arrayOfGlobalSide;
+        GlobalSide[] arrayOfGlobalSide = GameManager.i.loadScript.arrayOfGlobalSide;
         num = arrayOfGlobalSide.Length;
         if (num > 0)
         {
@@ -233,7 +233,7 @@ public class GlobalManager : MonoBehaviour
             Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
             Debug.Assert(sideBoth != null, "Invalid sideBoth (Null)");
         }
-        NodeDatapoint[] arrayOfNodeDatapoints = GameManager.instance.loadScript.arrayOfNodeDatapoints;
+        NodeDatapoint[] arrayOfNodeDatapoints = GameManager.i.loadScript.arrayOfNodeDatapoints;
         num = arrayOfNodeDatapoints.Length;
         if (num > 0)
         {
@@ -269,8 +269,8 @@ public class GlobalManager : MonoBehaviour
         //
         // - - - Trait Categories - - -
         //
-        categoryActor = GameManager.instance.dataScript.GetTraitCategory("Actor");
-        categoryMayor = GameManager.instance.dataScript.GetTraitCategory("Mayor");
+        categoryActor = GameManager.i.dataScript.GetTraitCategory("Actor");
+        categoryMayor = GameManager.i.dataScript.GetTraitCategory("Mayor");
         Debug.Assert(categoryActor != null, "Invalid categoryActor");
         Debug.Assert(categoryMayor != null, "Invalid categoryMayor");
     }

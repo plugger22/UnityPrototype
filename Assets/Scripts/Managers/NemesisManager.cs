@@ -118,7 +118,7 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        switch (GameManager.instance.inputScript.GameState)
+        switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
                 SubInitialisePlayerData();
@@ -144,7 +144,7 @@ public class NemesisManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -161,18 +161,18 @@ public class NemesisManager : MonoBehaviour
         //assign nemesis to a starting node
         int nemesisNodeID = -1;
         //Nemesis always starts at city Centre
-        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.cityScript.cityHallDistrictID);
+        Node node = GameManager.i.dataScript.GetNode(GameManager.i.cityScript.cityHallDistrictID);
         if (node != null)
         {
             nemesisNodeID = node.nodeID;
             nemesisNode = node;
             Debug.LogFormat("[Nem] NemesisManager.cs -> Initialise: Nemesis starts at node {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n");
             //assign node
-            GameManager.instance.nodeScript.nodeNemesis = nemesisNodeID;
+            GameManager.i.nodeScript.nodeNemesis = nemesisNodeID;
         }
         else { Debug.LogError("Invalid node (Null)"); }
         //Nemesis AI -> nemesis does nothing for 'x' turns at game start
-        durationDelay = GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodFirst;
+        durationDelay = GameManager.i.campaignScript.scenario.challengeResistance.gracePeriodFirst;
         if (durationDelay > 0)
         {
             //grace period, start inactive
@@ -188,15 +188,15 @@ public class NemesisManager : MonoBehaviour
 
     #region SubInitialisePlayerData
     private void SubInitialisePlayerData()
-    { resistancePlayer = GameManager.instance.sideScript.resistanceOverall; }
+    { resistancePlayer = GameManager.i.sideScript.resistanceOverall; }
     #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
         //fast access
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
     }
@@ -246,10 +246,10 @@ public class NemesisManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
         /*colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
         colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
         colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);*/
@@ -279,7 +279,7 @@ public class NemesisManager : MonoBehaviour
             else
             {
                 //authority player control
-                if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+                if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                 {
                     //Authority controlled cooldown period
                     if (controlCooldownTimer > 0)
@@ -316,16 +316,16 @@ public class NemesisManager : MonoBehaviour
         //Ongoing effect messages
         if (nemesis != null)
         {
-            Node currentNode = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeNemesis);
+            Node currentNode = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNemesis);
             if (currentNode != null)
             {
                 //resistance player
                 text = string.Format("{0} at {1}, {2}, district in {3} mode", nemesis.name, currentNode.nodeName, currentNode.Arc.name, mode);
-                GameManager.instance.messageScript.NemesisOngoingEffect(text, currentNode.nodeID, nemesis);
+                GameManager.i.messageScript.NemesisOngoingEffect(text, currentNode.nodeID, nemesis);
             }
             else { Debug.LogError("Invalid node (Null) for Nemesis"); }
             //authority player
-            if (globalAuthority.level == GameManager.instance.sideScript.PlayerSide.level)
+            if (globalAuthority.level == GameManager.i.sideScript.PlayerSide.level)
             {
                 if (mode != NemesisMode.Inactive)
                 {
@@ -342,8 +342,8 @@ public class NemesisManager : MonoBehaviour
                 //destination node for Player control, if applicable (passed Null if not)
                 Node controlNode = null;
                 if (isPlayerControl == true)
-                { controlNode = GameManager.instance.dataScript.GetNode(controlNodeID); }
-                GameManager.instance.messageScript.NemesisPlayerOngoing(text, nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode);
+                { controlNode = GameManager.i.dataScript.GetNode(controlNodeID); }
+                GameManager.i.messageScript.NemesisPlayerOngoing(text, nemesis, isPlayerControl, controlCooldownTimer, controlTimer, controlNode, currentNode);
             }
         }
     }
@@ -356,8 +356,8 @@ public class NemesisManager : MonoBehaviour
     {
         int playerTargetNodeID = -1;
         int turnDifference = 0;
-        int nodeID = GameManager.instance.nodeScript.nodeNemesis;
-        nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
+        int nodeID = GameManager.i.nodeScript.nodeNemesis;
+        nemesisNode = GameManager.i.dataScript.GetNode(nodeID);
         isImmediate = immediateFlag;
         trackerDebug = tracker;
         bool isPossibleNewGoal = false;
@@ -366,7 +366,7 @@ public class NemesisManager : MonoBehaviour
         {
             playerTargetNodeID = tracker.data0;
             //acts as a DM for hunt duration, the older the information is, the bigger the modifier
-            turnDifference = GameManager.instance.turnScript.Turn - tracker.turn;
+            turnDifference = GameManager.i.turnScript.Turn - tracker.turn;
             if (mode != NemesisMode.Inactive)
             { Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: AITracker Data, turn {0}, nodeID {1}, turnDifference {2}{3}", tracker.turn, tracker.data0, turnDifference, "\n"); }
         }
@@ -420,14 +420,14 @@ public class NemesisManager : MonoBehaviour
                     {
                         isPossibleNewGoal = false;
                         //message - warning, Resistance player only
-                        if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+                        if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                         {
                             string text = string.Format("Reports of a {0} about to come online", nemesis.name);
                             string itemText = "Reports of forthcoming NEMESIS Activity";
                             string topText = "Nemesis Heads Up";
                             string reason = string.Format("{0}<b>Rebel HQ indicate there are signs of your Nemesis stirring</b>", "\n");
                             string warning = "Nemesis activity can be expected shortly";
-                            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                            GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                         }
                     }
                     else if (durationDelay == 0)
@@ -438,7 +438,7 @@ public class NemesisManager : MonoBehaviour
                         string topText = "Nemesis goes ACTIVE";
                         string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                         string warning = string.Format("{0}", nemesis.descriptor);
-                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                        GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                         //No action, change mode to Normal, goal to Loiter
                         if (targetNodeID < 0)
                         {
@@ -461,7 +461,7 @@ public class NemesisManager : MonoBehaviour
                             Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessNemesisActivity: HUNT mode, TIMER Run out, switch to NORMAL{0}", "\n");
                             SetNemesisMode(NemesisMode.NORMAL);
                             string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
-                            GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                            GameManager.i.messageScript.NemesisNewMode(text, nodeID, nemesis);
                             isPossibleNewGoal = false;
                         }
                         else
@@ -526,7 +526,7 @@ public class NemesisManager : MonoBehaviour
                             if (mode != NemesisMode.Inactive)
                             {
                                 string text = string.Format("{0} changes to {1} mode at {2}, {3} district", nemesis.name, mode, nemesisNode.name, nemesisNode.Arc.name);
-                                GameManager.instance.messageScript.NemesisNewMode(text, nodeID, nemesis);
+                                GameManager.i.messageScript.NemesisNewMode(text, nodeID, nemesis);
                             }
                         }
 
@@ -561,7 +561,7 @@ public class NemesisManager : MonoBehaviour
             //Player control
             controlTimer--;
             //is Nemesis at required Node?
-            int nemesisNodeID = GameManager.instance.nodeScript.nodeNemesis;
+            int nemesisNodeID = GameManager.i.nodeScript.nodeNemesis;
             if (nemesisNodeID == controlNodeID)
             {
                 //switch to goal
@@ -624,15 +624,15 @@ public class NemesisManager : MonoBehaviour
         //cooldown period has ended
         if (controlCooldownTimer == 0)
         {
-            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+            Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
                 //deduct renown cost for control
-                int renown = GameManager.instance.playerScript.Renown;
+                int renown = GameManager.i.playerScript.Renown;
                 renown -= controlRenownCost;
                 if (renown > -1)
                 {
-                    GameManager.instance.playerScript.Renown = renown;
+                    GameManager.i.playerScript.Renown = renown;
                     //change relevant fields
                     isPlayerControl = true;
                     controlNodeID = nodeID;
@@ -773,7 +773,7 @@ public class NemesisManager : MonoBehaviour
         if (targetNodeID > -1)
         {
             //get distance between nemesis and target (player activity) node
-            targetDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
+            targetDistance = GameManager.i.dijkstraScript.GetDistanceUnweighted(nemesisNode.nodeID, targetNodeID);
 
             //immediate flag (confirmed Player activity) -> overrides current goal
             if (isImmediate == true)
@@ -955,7 +955,7 @@ public class NemesisManager : MonoBehaviour
             if (moveToNodeID > -1)
             {
                 //Get path to 
-                List<Connection> listOfConnections = GameManager.instance.dijkstraScript.GetPath(nemesisNode.nodeID, moveToNodeID, false);
+                List<Connection> listOfConnections = GameManager.i.dijkstraScript.GetPath(nemesisNode.nodeID, moveToNodeID, false);
                 if (listOfConnections != null)
                 {
                     int numOfLinks = listOfConnections.Count;
@@ -1026,25 +1026,25 @@ public class NemesisManager : MonoBehaviour
         if (nemesisNode.CheckNeighbourNodeID(nodeID) == true)
         {
             //update nemesisManager
-            nemesisNode = GameManager.instance.dataScript.GetNode(nodeID);
+            nemesisNode = GameManager.i.dataScript.GetNode(nodeID);
             if (nemesisNode != null)
             {
                 //update nodeManager
-                GameManager.instance.nodeScript.nodeNemesis = nodeID;
-                GameManager.instance.nodeScript.NodeRedraw = true;
+                GameManager.i.nodeScript.nodeNemesis = nodeID;
+                GameManager.i.nodeScript.NodeRedraw = true;
                 hasMoved = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis MOVES to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-                int playerNodeID = GameManager.instance.nodeScript.nodePlayer;
+                int playerNodeID = GameManager.i.nodeScript.nodePlayer;
                 //tracker
                 HistoryNemesisMove history = new HistoryNemesisMove();
-                history.turn = GameManager.instance.turnScript.Turn;
+                history.turn = GameManager.i.turnScript.Turn;
                 history.nemesisNodeID = nodeID;
                 history.mode = mode;
                 history.goal = goal;
                 history.targetNodeID = targetNodeID;
                 history.searchRating = GetSearchRatingAdjusted();
                 history.playerNodeID = playerNodeID;
-                GameManager.instance.dataScript.AddHistoryNemesisMove(history);
+                GameManager.i.dataScript.AddHistoryNemesisMove(history);
                 //check for player at same node
                 if (nemesisNode.nodeID == playerNodeID)
                 { isSpotted = ProcessPlayerInteraction(false); }
@@ -1054,10 +1054,10 @@ public class NemesisManager : MonoBehaviour
                     if (mode != NemesisMode.Inactive)
                     {
                         //OrgInfo NOT Involved
-                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
+                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
                         {
                             //check for Resistance contact at same node
-                            List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                            List<int> tempList = GameManager.i.dataScript.CheckContactResistanceAtNode(nodeID);
                             if (tempList != null)
                             { ProcessContactInteraction(tempList, moveNumber); }
                             //check for Tracer Sighting
@@ -1066,11 +1066,11 @@ public class NemesisManager : MonoBehaviour
                         else
                         {
                             //OrgInfo provides a direct feed of Nemesis position to Player
-                            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                            Node node = GameManager.i.dataScript.GetNode(nodeID);
                             if (node != null)
                             {
                                 string text = string.Format("OrgInfo tracks {0} Nemesis at {1}, {2}, ID {3}", nemesis.name, node.nodeName, node.Arc.name, node.nodeID);
-                                GameManager.instance.messageScript.OrganisationNemesis(text, node, nemesis);
+                                GameManager.i.messageScript.OrganisationNemesis(text, node, nemesis);
                             }
                             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                         }
@@ -1096,10 +1096,10 @@ public class NemesisManager : MonoBehaviour
     {
         bool isSpotted = false;
         bool isResistancePlayer = true;
-        if (GameManager.instance.sideScript.PlayerSide.level == 1) { isResistancePlayer = false; }
+        if (GameManager.i.sideScript.PlayerSide.level == 1) { isResistancePlayer = false; }
         //player spotted if nemesis search rating >= player invisibility
         int searchRating = GetSearchRatingAdjusted();
-        if (searchRating >= GameManager.instance.playerScript.Invisibility)
+        if (searchRating >= GameManager.i.playerScript.Invisibility)
         {
 
             bool isValidPlayer = true;
@@ -1107,11 +1107,11 @@ public class NemesisManager : MonoBehaviour
             switch (resistancePlayer)
             {
                 case SideState.AI:
-                    if (GameManager.instance.aiRebelScript.status == ActorStatus.Inactive && GameManager.instance.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
+                    if (GameManager.i.aiRebelScript.status == ActorStatus.Inactive && GameManager.i.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
                     { isValidPlayer = false; }
                     break;
                 case SideState.Human:
-                    if (GameManager.instance.playerScript.status == ActorStatus.Inactive && GameManager.instance.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                    if (GameManager.i.playerScript.status == ActorStatus.Inactive && GameManager.i.playerScript.inactiveStatus != ActorInactive.Breakdown)
                     { isValidPlayer = false; }
                     break;
                 default:
@@ -1133,19 +1133,19 @@ public class NemesisManager : MonoBehaviour
                 ProcessPlayerDamage();
                 hasActed = true;
                 //orgInfo reset?
-                if (GameManager.instance.campaignScript.campaign.orgInfo != null)
-                { GameManager.instance.orgScript.CancelOrgInfoTracking(OrgInfoType.Nemesis); }
+                if (GameManager.i.campaignScript.campaign.orgInfo != null)
+                { GameManager.i.orgScript.CancelOrgInfoTracking(OrgInfoType.Nemesis); }
                 //Nemesis has done their job, new nemesis arrives?
                 if (isFirstNemesis == true)
                 {
                     //get second nemesis
                     isFirstNemesis = false;
-                    nemesis = GameManager.instance.campaignScript.scenario.challengeResistance.nemesisSecond;
+                    nemesis = GameManager.i.campaignScript.scenario.challengeResistance.nemesisSecond;
                     if (nemesis != null)
                     {
                         //place Nemesis OFFLINE for a period (standard damage wait plus any new nemesis grace period)
                         SetNemesisMode(NemesisMode.Inactive);
-                        durationDelay = durationDamageOffLine + GameManager.instance.campaignScript.scenario.challengeResistance.gracePeriodSecond;
+                        durationDelay = durationDamageOffLine + GameManager.i.campaignScript.scenario.challengeResistance.gracePeriodSecond;
                         string.Format("[Nem] NemesisManager.cs -> ProcessPlayerInteraction: NEW Nemesis arrives, {0}, offline for {1} turns{2}", nemesis.name, durationDelay, "\n");
                         if (durationDelay > 0)
                         {
@@ -1156,7 +1156,7 @@ public class NemesisManager : MonoBehaviour
                                 string topText = "Nemesis OFFLINE";
                                 string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                                 string warning = string.Format("It's a new Nemesis!{0}Rebel HQ STRONGLY ADVISE that you get the heck out of there", "\n");
-                                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                                GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                             }
                             else
                             {
@@ -1166,7 +1166,7 @@ public class NemesisManager : MonoBehaviour
                                 string topText = "Nemesis OFFLINE";
                                 string reason = string.Format("{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourAlert, nemesis.name, colourEnd);
                                 string warning = string.Format("There will be a delay ({0} turn{1}) before the Nemesis arrives", durationDelay, durationDelay != 1 ? "s" : "");
-                                GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
+                                GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning, false);
                             }
                         }
                     }
@@ -1180,7 +1180,7 @@ public class NemesisManager : MonoBehaviour
                             string topText = "Nemesis M.I.A";
                             string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
                             string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
-                            GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                            GameManager.i.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                         }
                         else
                         {
@@ -1190,7 +1190,7 @@ public class NemesisManager : MonoBehaviour
                             string topText = "Nemesis Recalled";
                             string reason = string.Format("{0}<b>HQ have decided to recall the Nemesis from the City as it has done it's job</b>", "\n");
                             string explanation = "<b>There will be no further Nemesis</b>";
-                            GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                            GameManager.i.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                         }
                     }
                 }
@@ -1207,7 +1207,7 @@ public class NemesisManager : MonoBehaviour
                         string topText = "Nemesis M.I.A";
                         string reason = string.Format("{0}<b>It appears that there is no longer a Nemesis in the City</b>", "\n");
                         string explanation = "<b>Rebel HQ can provide no further information on the situation</b>";
-                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                        GameManager.i.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                     }
                     else
                     {
@@ -1217,7 +1217,7 @@ public class NemesisManager : MonoBehaviour
                         string topText = "Nemesis Recalled";
                         string reason = string.Format("{0}<b>HQ have decided to recall the second Nemesis from the City as it has done it's job</b>", "\n");
                         string explanation = "<b>This decision is final and cannot be appealed</b>";
-                        GameManager.instance.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
+                        GameManager.i.messageScript.GeneralInfo(text, itemText, topText, reason, explanation);
                     }
                 }
             }
@@ -1237,7 +1237,7 @@ public class NemesisManager : MonoBehaviour
                 //prevent a double warning if player moves into a node with nemesis and nemesis is stationary
                 if (hasWarning == false)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                     if (node != null)
                     {
                         hasWarning = true;
@@ -1246,7 +1246,7 @@ public class NemesisManager : MonoBehaviour
                         string topText = "Something is WRONG";
                         string reason = string.Format("{0}Could it be that your <b>NEMESIS</b> is nearby?", "\n");
                         string warning = "Your instincts urge you to move, NOW";
-                        GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
+                        GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning, true, true);
                     }
                     else { Debug.LogWarning("Invalid nodePlayer (Null)"); }
                 }
@@ -1303,7 +1303,7 @@ public class NemesisManager : MonoBehaviour
                 //loop actors with contacts
                 for (int i = 0; i < numOfActors; i++)
                 {
-                    actor = GameManager.instance.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
+                    actor = GameManager.i.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
                     if (actor != null)
                     {
                         //only active actors can work their contact network
@@ -1324,7 +1324,7 @@ public class NemesisManager : MonoBehaviour
                                             contact.job, node.nodeName, node.nodeID);
                                         Debug.LogFormat("[Cnt] NemesisManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Nemesis {2}, adj StealthRating {3} at node {4}, id {5}{6}",
                                             contact.nameFirst, contact.effectiveness, nemesis.name, stealthRating, node.nodeName, node.nodeID, "\n");
-                                        GameManager.instance.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis, moveNumber);
+                                        GameManager.i.messageScript.ContactNemesisSpotted(text, actor, node, contact, nemesis, moveNumber);
                                         //contact stats
                                         contact.statsNemesis++;
                                         //no need to check anymore as one sighting is enough
@@ -1370,25 +1370,25 @@ public class NemesisManager : MonoBehaviour
             {
                 if (hasMoved == false)
                 {
-                    int nodeID = GameManager.instance.nodeScript.nodeNemesis;
+                    int nodeID = GameManager.i.nodeScript.nodeNemesis;
                     if (nodeID > -1)
                     {
                         //OrgInfo not involved
-                        if (GameManager.instance.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
+                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Nemesis) == false)
                         {
                             //check for Resistance contact at same node
-                            List<int> tempList = GameManager.instance.dataScript.CheckContactResistanceAtNode(nodeID);
+                            List<int> tempList = GameManager.i.dataScript.CheckContactResistanceAtNode(nodeID);
                             if (tempList != null)
                             { ProcessContactInteraction(tempList); }
                         }
                         else
                         {
                             //OrgInfo IS involved and provides info directly to player in lieu of contact report
-                            Node node = GameManager.instance.dataScript.GetNode(nodeID);
+                            Node node = GameManager.i.dataScript.GetNode(nodeID);
                             if (node != null)
                             {
                                 string text = string.Format("OrgInfo tracks {0} Nemesis at {1}, {2}, ID {3}", nemesis.name, node.nodeName, node.Arc.name, node.nodeID);
-                                GameManager.instance.messageScript.OrganisationNemesis(text, node, nemesis);
+                                GameManager.i.messageScript.OrganisationNemesis(text, node, nemesis);
                             }
                             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
                         }
@@ -1408,7 +1408,7 @@ public class NemesisManager : MonoBehaviour
         {
             //automatically SPOTTED -> node is always correct
             string text = string.Format("Tracer picks up an Anomalous reading at {0}, {1} district", nemesisNode.nodeName, nemesisNode.Arc.name);
-            GameManager.instance.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
+            GameManager.i.messageScript.TracerNemesisSpotted(text, nemesisNode, nemesis, moveNumber);
         }
     }
 
@@ -1429,11 +1429,11 @@ public class NemesisManager : MonoBehaviour
                 switch (resistancePlayer)
                 {
                     case SideState.AI:
-                        if (GameManager.instance.aiRebelScript.status == ActorStatus.Inactive && GameManager.instance.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
+                        if (GameManager.i.aiRebelScript.status == ActorStatus.Inactive && GameManager.i.aiRebelScript.inactiveStatus != ActorInactive.Breakdown)
                         { isValidPlayer = false; }
                         break;
                     case SideState.Human:
-                        if (GameManager.instance.playerScript.status == ActorStatus.Inactive && GameManager.instance.playerScript.inactiveStatus != ActorInactive.Breakdown)
+                        if (GameManager.i.playerScript.status == ActorStatus.Inactive && GameManager.i.playerScript.inactiveStatus != ActorInactive.Breakdown)
                         { isValidPlayer = false; }
                         break;
                     default:
@@ -1460,7 +1460,7 @@ public class NemesisManager : MonoBehaviour
                     if (isCheckNeeded == true)
                     {
                         //both at same node
-                        if (nemesisNode.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                        if (nemesisNode.nodeID == GameManager.i.nodeScript.nodePlayer)
                         { ProcessPlayerInteraction(isPlayerMove); }
                     }
                 }
@@ -1481,36 +1481,36 @@ public class NemesisManager : MonoBehaviour
             switch (damage.name)
             {
                 case "Ransom":
-                    GameManager.instance.playerScript.RansomPlayer();
+                    GameManager.i.playerScript.RansomPlayer();
                     break;
                 case "Discredit":
-                    condition = GameManager.instance.dataScript.GetCondition("CORRUPT");
+                    condition = GameManager.i.dataScript.GetCondition("CORRUPT");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to ScumBot Nemesis"); }
+                    { GameManager.i.playerScript.AddCondition(condition, globalResistance, "due to ScumBot Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition CORRUPT (Null)"); }
                     break;
                 case "Image":
-                    condition = GameManager.instance.dataScript.GetCondition("IMAGED");
+                    condition = GameManager.i.dataScript.GetCondition("IMAGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Paparrazi Nemesis"); }
+                    { GameManager.i.playerScript.AddCondition(condition, globalResistance, "due to Paparrazi Nemesis"); }
                     else { Debug.LogWarningFormat("Invalid condition IMAGED (Null)"); }
                     break;
                 case "Inject":
-                    condition = GameManager.instance.dataScript.GetCondition("DOOMED");
+                    condition = GameManager.i.dataScript.GetCondition("DOOMED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Assassin Droid"); }
+                    { GameManager.i.playerScript.AddCondition(condition, globalResistance, "due to Assassin Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition DOOMED (Null)"); }
                     break;
                 case "Tag":
-                    condition = GameManager.instance.dataScript.GetCondition("TAGGED");
+                    condition = GameManager.i.dataScript.GetCondition("TAGGED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Cyber Hound"); }
+                    { GameManager.i.playerScript.AddCondition(condition, globalResistance, "due to Cyber Hound"); }
                     else { Debug.LogWarningFormat("Invalid condition TAGGED (Null)"); }
                     break;
                 case "Wound":
-                    condition = GameManager.instance.dataScript.GetCondition("WOUNDED");
+                    condition = GameManager.i.dataScript.GetCondition("WOUNDED");
                     if (condition != null)
-                    { GameManager.instance.playerScript.AddCondition(condition, globalResistance, "due to Security Droid"); }
+                    { GameManager.i.playerScript.AddCondition(condition, globalResistance, "due to Security Droid"); }
                     else { Debug.LogWarningFormat("Invalid condition WOUNDED (Null)"); }
                     break;
                 default:
@@ -1523,8 +1523,8 @@ public class NemesisManager : MonoBehaviour
             string text, textAutoRun;
             GlobalSide sideWho;
             //Message
-            string msgText = string.Format("{0} has been {1} by their {2} Nemesis", GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, nemesis.name);
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+            string msgText = string.Format("{0} has been {1} by their {2} Nemesis", GameManager.i.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, nemesis.name);
+            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
             {
                 //resistance human player
                 text = string.Format("Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
@@ -1532,23 +1532,23 @@ public class NemesisManager : MonoBehaviour
                 builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
                 builder.AppendFormat("{0}<b>Resistance Player {1}</b>{2}", colourBad, nemesis.damage.tag, colourEnd);
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectResistance, colourEnd);
-                GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectResistance, nemesisNode.nodeID);
-                sideWho = GameManager.instance.globalScript.sideResistance;
+                GameManager.i.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectResistance, nemesisNode.nodeID);
+                sideWho = GameManager.i.globalScript.sideResistance;
             }
             else
             {
                 //authority human player
                 text = string.Format("Resistance Player has been found and targeted by their{0}{1}<b>{2} Nemesis</b>{3}", "\n", colourNeutral, nemesis.name, colourEnd);
-                textAutoRun = string.Format("{0} {1}{2}{3}", GameManager.instance.playerScript.GetPlayerNameResistance(), colourBad, nemesis.damage.tag, colourEnd);
+                textAutoRun = string.Format("{0} {1}{2}{3}", GameManager.i.playerScript.GetPlayerNameResistance(), colourBad, nemesis.damage.tag, colourEnd);
                 builder.AppendFormat("{0}, {1} district{2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, "\n", "\n");
-                builder.AppendFormat("{0}<b>{1} {2}</b>{3}", colourBad, GameManager.instance.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, colourEnd);
+                builder.AppendFormat("{0}<b>{1} {2}</b>{3}", colourBad, GameManager.i.playerScript.GetPlayerNameResistance(), nemesis.damage.tag, colourEnd);
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectAuthority, colourEnd);
-                GameManager.instance.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectAuthority, nemesisNode.nodeID);
-                sideWho = GameManager.instance.globalScript.sideAuthority;
+                GameManager.i.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectAuthority, nemesisNode.nodeID);
+                sideWho = GameManager.i.globalScript.sideAuthority;
             }
             //AutoRun Event
-            if (GameManager.instance.turnScript.CheckIsAutoRun() == true)
-            { GameManager.instance.dataScript.AddHistoryAutoRun(textAutoRun); }
+            if (GameManager.i.turnScript.CheckIsAutoRun() == true)
+            { GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun); }
             else
             {
                 //player damaged outcome window
@@ -1556,13 +1556,13 @@ public class NemesisManager : MonoBehaviour
                 {
                     textTop = text,
                     textBottom = builder.ToString(),
-                    sprite = GameManager.instance.guiScript.aiAlertSprite,
+                    sprite = GameManager.i.guiScript.aiAlertSprite,
                     isAction = false,
                     side = sideWho,
                     type = MsgPipelineType.Nemesis
                 };
                 //end of turn outcome window which needs to overlay ontop of InfoAPP and requires a different than normal modal setting
-                if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                 { Debug.LogWarningFormat("Nemesis Damage infoPipeline message FAILED to be added to dictOfPipeline"); }
             }
         }
@@ -1579,8 +1579,8 @@ public class NemesisManager : MonoBehaviour
     private void SetLoiterNodes()
     {
         int numOfNodes, counter, distance;
-        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
-        List<Node> listOfMostConnected = GameManager.instance.dataScript.GetListOfMostConnectedNodes();
+        List<Node> listOfLoiterNodes = GameManager.i.dataScript.GetListOfLoiterNodes();
+        List<Node> listOfMostConnected = GameManager.i.dataScript.GetListOfMostConnectedNodes();
         Node centreNode = null;
         if (listOfMostConnected != null)
         {
@@ -1639,7 +1639,7 @@ public class NemesisManager : MonoBehaviour
                     //check against centre node, if any
                     if (centreNode != null)
                     {
-                        distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
+                        distance = GameManager.i.dijkstraScript.GetDistanceUnweighted(centreNode.nodeID, node.nodeID);
                         if (distance > -1)
                         {
                             if (distance <= loiterDistanceCheck)
@@ -1667,7 +1667,7 @@ public class NemesisManager : MonoBehaviour
                         if (nodeTemp.nodeID != node.nodeID)
                         {
                             //check distance
-                            distance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
+                            distance = GameManager.i.dijkstraScript.GetDistanceUnweighted(nodeTemp.nodeID, node.nodeID);
                             if (distance > -1)
                             {
                                 if (distance <= loiterDistanceCheck)
@@ -1712,8 +1712,8 @@ public class NemesisManager : MonoBehaviour
     {
         int tempNodeID, shortestNodeID, tempDistance, shortestDistance, numOfLoiterNodes, v1, v2;
         int counter = 0;
-        List<Node> listOfLoiterNodes = GameManager.instance.dataScript.GetListOfLoiterNodes();
-        List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+        List<Node> listOfLoiterNodes = GameManager.i.dataScript.GetListOfLoiterNodes();
+        List<Node> listOfAllNodes = GameManager.i.dataScript.GetListOfAllNodes();
         List<Connection> listOfConnections = new List<Connection>();
         Connection connection;
         if (listOfLoiterNodes != null)
@@ -1747,7 +1747,7 @@ public class NemesisManager : MonoBehaviour
                                 for (int i = 0; i < numOfLoiterNodes; i++)
                                 {
                                     tempNodeID = listOfLoiterNodes[i].nodeID;
-                                    tempDistance = GameManager.instance.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
+                                    tempDistance = GameManager.i.dijkstraScript.GetDistanceUnweighted(node.nodeID, tempNodeID);
                                     if (tempDistance > -1)
                                     {
                                         if (tempDistance < shortestDistance)
@@ -1763,7 +1763,7 @@ public class NemesisManager : MonoBehaviour
                                 //get path to nearest loiter node
                                 if (shortestNodeID > -1)
                                 {
-                                    listOfConnections = GameManager.instance.dijkstraScript.GetPath(node.nodeID, shortestNodeID, false);
+                                    listOfConnections = GameManager.i.dijkstraScript.GetPath(node.nodeID, shortestNodeID, false);
                                     if (listOfConnections != null)
                                     {
                                         //get first connection (from source node)
@@ -1831,7 +1831,7 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" targetNodeID: {0}{1}", targetNodeID, "\n");
         if (targetNodeID > -1)
         {
-            Node node = GameManager.instance.dataScript.GetNode(targetNodeID);
+            Node node = GameManager.i.dataScript.GetNode(targetNodeID);
             if (node != null)
             { builder.AppendFormat(" target node: {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { Debug.LogWarningFormat("Invalid target node (Null) for targetNodeID {0}", targetNodeID); }
@@ -1839,7 +1839,7 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat(" moveToNodeID: {0}{1}", moveToNodeID, "\n");
         if (moveToNodeID > -1)
         {
-            Node node = GameManager.instance.dataScript.GetNode(moveToNodeID);
+            Node node = GameManager.i.dataScript.GetNode(moveToNodeID);
             if (node != null)
             { builder.AppendFormat(" moveTo node: {0}, {1}, id {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
             else { Debug.LogWarningFormat("Invalid moveTo node (Null) for moveToNodeID {0}", moveToNodeID); }
@@ -1882,7 +1882,7 @@ public class NemesisManager : MonoBehaviour
         builder.AppendFormat("{0} -Player Control{1}", "\n", "\n");
         builder.AppendFormat(" isPlayerControl: {0}{1}", isPlayerControl, "\n");
         builder.AppendFormat(" controlNodeID: {0}{1}", controlNodeID, "\n");
-        Node nodeControl = GameManager.instance.dataScript.GetNode(controlNodeID);
+        Node nodeControl = GameManager.i.dataScript.GetNode(controlNodeID);
         if (nodeControl != null) { builder.AppendFormat(" controlNode: {0}, {1}, id {2}{3}", nodeControl.nodeName, nodeControl.Arc.name, nodeControl.nodeID, "\n"); }
         builder.AppendFormat(" controlTimer: {0}{1}", controlTimer, "\n");
         builder.AppendFormat(" coolDownTimer: {0}{1}", controlCooldownTimer, "\n");
@@ -1993,7 +1993,7 @@ public class NemesisManager : MonoBehaviour
             goal = readData.goal;
             durationGoal = readData.durationGoal;
             durationDelay = readData.durationDelay;
-            nemesisNode = GameManager.instance.dataScript.GetNode(readData.nemesisNodeID);
+            nemesisNode = GameManager.i.dataScript.GetNode(readData.nemesisNodeID);
             Debug.Assert(nemesisNode != null, "Invalid nemesisNode (Null)");
             trackerDebug = readData.trackerDebug;
             targetNodeID = readData.targetNodeID;

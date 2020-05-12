@@ -107,8 +107,8 @@ public class Connection : MonoBehaviour
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.i.guiScript.tooltipFade;
     }
 
     public void InitialiseConnection(int v1, int v2)
@@ -255,7 +255,7 @@ public class Connection : MonoBehaviour
     /// <param name="secLvl"></param>
     public void SetMaterial(ConnectionType secLvl)
     {
-        GetComponent<Renderer>().material = GameManager.instance.connScript.GetConnectionMaterial(secLvl);
+        GetComponent<Renderer>().material = GameManager.i.connScript.GetConnectionMaterial(secLvl);
     }
 
     public int GetNode1()
@@ -346,7 +346,7 @@ public class Connection : MonoBehaviour
                 {
                     listOfOngoingEffects.Add(ongoing);
                     //add to register & create message
-                    GameManager.instance.dataScript.AddOngoingEffectToDict(ongoing, connID);
+                    GameManager.i.dataScript.AddOngoingEffectToDict(ongoing, connID);
                 }
             }
         }
@@ -372,7 +372,7 @@ public class Connection : MonoBehaviour
                     //amount to reverse security level
                     Debug.LogFormat("Connection, ID {0}, Ongoing Effect ID {1}, \"{2}\", REMOVED{3}", connID, ongoing.ongoingID, ongoing.description, "\n");
                     //remove from register & create message
-                    GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);
+                    GameManager.i.dataScript.RemoveOngoingEffectFromDict(ongoing);
                     //remove from list
                     listOfOngoingEffects.RemoveAt(i);
                     //reset material of connection. Note that you are simply redoing the same security level without the additional ongoing effect (which will be at a lower level)
@@ -389,7 +389,7 @@ public class Connection : MonoBehaviour
     private void OnMouseOver()
     {
         //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             //Right click connection
             if (Input.GetMouseButtonDown(1) == true)
@@ -399,10 +399,10 @@ public class Connection : MonoBehaviour
             else
             {
                 onMouseFlag = true;
-                if (GameManager.instance.optionScript.connectorTooltips == true)
+                if (GameManager.i.optionScript.connectorTooltips == true)
                 {
                     //exit any node tooltip that might be open
-                    GameManager.instance.tooltipNodeScript.CloseTooltip("Connection.cs -> OnMouseOver");
+                    GameManager.i.tooltipNodeScript.CloseTooltip("Connection.cs -> OnMouseOver");
                     //start tooltip routine
                     myCoroutine = StartCoroutine("ShowTooltip");
                 }
@@ -415,13 +415,13 @@ public class Connection : MonoBehaviour
     /// </summary>
     private void OnMouseExit()
     {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
             //tooltips for Connections may not be switched on
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipConnScript.CloseTooltip("Connection.cs -> OnMouseExit");
+            GameManager.i.tooltipConnScript.CloseTooltip("Connection.cs -> OnMouseExit");
         }
     }
 
@@ -437,11 +437,11 @@ public class Connection : MonoBehaviour
         if (onMouseFlag == true)
         {
             //do once
-            while (GameManager.instance.tooltipConnScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipConnScript.CheckTooltipActive() == false)
             {
                 //debug activity data
                 StringBuilder builder = new StringBuilder();
-                if (GameManager.instance.optionScript.debugData == true)
+                if (GameManager.i.optionScript.debugData == true)
                 {
                     builder.AppendFormat("activityTimeKnown      {0}{1}{2}", activityTime > 0 ? "T" : "", activityTime, "\n");
                     builder.AppendFormat("activityCountKnown     {0}{1}{2}", activityCount > 0 ? "+" : "", activityCount, "\n");
@@ -449,7 +449,7 @@ public class Connection : MonoBehaviour
                 else
                 {
                     //Activity info details
-                    switch(GameManager.instance.nodeScript.activityState)
+                    switch(GameManager.i.nodeScript.activityState)
                     {
                         case ActivityUI.None:
                             switch(SecurityLevel)
@@ -457,7 +457,7 @@ public class Connection : MonoBehaviour
                                 case ConnectionType.HIGH:
                                 case ConnectionType.MEDIUM:
                                 case ConnectionType.LOW:
-                                    int delay = GameManager.instance.nodeScript.GetAIDelayForMove(SecurityLevel);
+                                    int delay = GameManager.i.nodeScript.GetAIDelayForMove(SecurityLevel);
                                     builder.AppendFormat("If used Authority will know in{0}<font=\"Roboto-Bold SDF\">{1} turn{2}</font>", "\n", delay,
                                         delay != 1 ? "s" : "");
                                     break;
@@ -467,8 +467,8 @@ public class Connection : MonoBehaviour
                             }
                             break;
                         case ActivityUI.Time:
-                            int limit = GameManager.instance.aiScript.activityTimeLimit;
-                            int turnCurrent = GameManager.instance.turnScript.Turn;
+                            int limit = GameManager.i.aiScript.activityTimeLimit;
+                            int turnCurrent = GameManager.i.turnScript.Turn;
                             int elapsedTime = -1;
 
                             if (activityTime > -1)
@@ -489,16 +489,16 @@ public class Connection : MonoBehaviour
                             break;
                     }
                 }
-                GameManager.instance.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builder.ToString());
+                GameManager.i.tooltipConnScript.SetTooltip(transform.position, connID, SecurityLevel, listOfOngoingEffects, builder.ToString());
                 yield return null;
             }
             //fade in
             float alphaCurrent;
-            while (GameManager.instance.tooltipConnScript.GetOpacity() < 1.0)
+            while (GameManager.i.tooltipConnScript.GetOpacity() < 1.0)
             {
-                alphaCurrent = GameManager.instance.tooltipConnScript.GetOpacity();
+                alphaCurrent = GameManager.i.tooltipConnScript.GetOpacity();
                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                GameManager.instance.tooltipConnScript.SetOpacity(alphaCurrent);
+                GameManager.i.tooltipConnScript.SetOpacity(alphaCurrent);
                 yield return null;
             }
         }

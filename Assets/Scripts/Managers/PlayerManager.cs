@@ -105,9 +105,9 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
             { return _playerNameResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
             { return _playerNameAuthority; }
             else
             {
@@ -121,30 +121,30 @@ public class PlayerManager : MonoBehaviour
     {
         get
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level) { return _renownResistance; }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level) { return _renownAuthority; }
+            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level) { return _renownResistance; }
+            else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level) { return _renownAuthority; }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level)
+                if (GameManager.i.turnScript.currentSide.level == globalResistance.level)
                 { return _renownResistance; }
                 else { return _renownAuthority; }
             }
         }
         set
         {
-            if (GameManager.instance.sideScript.PlayerSide.level == globalResistance.level)
+            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
             {
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
                 _renownResistance = value;
 
                 //update AI side tab (not using an Event here) -> no updates for the first turn
-                if (GameManager.instance.turnScript.Turn > 0 && GameManager.instance.sideScript.resistanceOverall == SideState.Human)
-                { GameManager.instance.aiScript.UpdateSideTabData(_renownResistance); }
+                if (GameManager.i.turnScript.Turn > 0 && GameManager.i.sideScript.resistanceOverall == SideState.Human)
+                { GameManager.i.aiScript.UpdateSideTabData(_renownResistance); }
                 //update renown UI (regardless of whether on or off
-                GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(_renownResistance);
+                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_renownResistance);
             }
-            else if (GameManager.instance.sideScript.PlayerSide.level == globalAuthority.level)
+            else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
             {
 
                 /*value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);*/
@@ -152,12 +152,12 @@ public class PlayerManager : MonoBehaviour
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
                 _renownAuthority = value;
                 //update renown UI (regardless of whether on or off
-                GameManager.instance.actorPanelScript.UpdatePlayerRenownUI(_renownAuthority);
+                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_renownAuthority);
             }
             else
             {
                 //AI control of both side
-                if (GameManager.instance.turnScript.currentSide.level == globalResistance.level) { _renownResistance = value; }
+                if (GameManager.i.turnScript.currentSide.level == globalResistance.level) { _renownResistance = value; }
                 else { _renownAuthority = value; }
             }
         }
@@ -168,7 +168,7 @@ public class PlayerManager : MonoBehaviour
         get { return _invisibility; }
         set
         {
-            value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+            value = Mathf.Clamp(value, 0, GameManager.i.actorScript.maxStatValue);
             Debug.LogFormat("[Sta] -> PlayerManager.cs:  Player (Resistance) Invisibility changed from {0} to {1}{2}", _invisibility, value, "\n");
             _invisibility = value;
         }
@@ -186,22 +186,22 @@ public class PlayerManager : MonoBehaviour
             {
                 //fail state for campaign
                 string text = "Unknown";
-                switch (GameManager.instance.sideScript.PlayerSide.level)
+                switch (GameManager.i.sideScript.PlayerSide.level)
                 {
                     case 1: text = GameManager.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
                     case 2: text = GameManager.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
-                    default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+                    default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.i.sideScript.PlayerSide.name); break;
                 }
-                GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
+                GameManager.i.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
             }
-            value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);
+            value = Mathf.Clamp(value, 0, GameManager.i.actorScript.maxStatValue);
 
             Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Innocence changed from {0} to {1}{2}", _innocence, value, "\n");
             _innocence = value;
-            if (GameManager.instance.inputScript.GameState == GameState.PlayGame)
+            if (GameManager.i.inputScript.GameState == GameState.PlayGame)
             {
                 //update topBar
-                GameManager.instance.topBarScript.UpdateInnocence(_innocence);
+                GameManager.i.topBarScript.UpdateInnocence(_innocence);
             }
         }
     }
@@ -230,7 +230,7 @@ public class PlayerManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -254,15 +254,15 @@ public class PlayerManager : MonoBehaviour
     private void SubInitialiseSessionStartEarly()
     {
         int[] arrayOfFactors = new int[5];
-        if (GameManager.instance.testScript.testPersonality == null)
+        if (GameManager.i.testScript.testPersonality == null)
         {
             //Debug assign random personality
-            arrayOfFactors = GameManager.instance.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 });
+            arrayOfFactors = GameManager.i.personScript.SetPersonalityFactors(new int[] { 99, 99, 99, 99, 99 });
         }
         else
         {
             //use a test personality
-            arrayOfFactors = GameManager.instance.testScript.testPersonality.GetFactors();
+            arrayOfFactors = GameManager.i.testScript.testPersonality.GetFactors();
         }
         //set personality factors
         personality.SetFactors(arrayOfFactors);
@@ -271,15 +271,15 @@ public class PlayerManager : MonoBehaviour
         //maximum innocence at start of campaign
         Innocence = 3;
         //set initial default value for drug stress immunity
-        stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
+        stressImmunityStart = GameManager.i.actorScript.playerAddictedImmuneStart;
     }
     #endregion
 
     #region SubInitialiseSessionStartLate
     private void SubInitialiseSessionStartLate()
     {
-        GameManager.instance.personScript.SetDescriptors(personality);
-        GameManager.instance.personScript.CheckPersonalityProfile(GameManager.instance.dataScript.GetDictOfProfiles(), personality);
+        GameManager.i.personScript.SetDescriptors(personality);
+        GameManager.i.personScript.CheckPersonalityProfile(GameManager.i.dataScript.GetDictOfProfiles(), personality);
         //Debug -> testing purposes only
         /*Investigation invest = new Investigation()
         {
@@ -299,19 +299,19 @@ public class PlayerManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access fields (BEFORE set stats below)
-        globalAuthority = GameManager.instance.globalScript.sideAuthority;
-        globalResistance = GameManager.instance.globalScript.sideResistance;
-        hackingGear = GameManager.instance.gearScript.typeHacking.name;
-        maxNumOfSecrets = GameManager.instance.secretScript.secretMaxNum;
-        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
-        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
-        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
+        globalAuthority = GameManager.i.globalScript.sideAuthority;
+        globalResistance = GameManager.i.globalScript.sideResistance;
+        hackingGear = GameManager.i.gearScript.typeHacking.name;
+        maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
+        conditionCorrupt = GameManager.i.dataScript.GetCondition("CORRUPT");
+        conditionIncompetent = GameManager.i.dataScript.GetCondition("INCOMPETENT");
+        conditionQuestionable = GameManager.i.dataScript.GetCondition("QUESTIONABLE");
+        conditionDoomed = GameManager.i.dataScript.GetCondition("DOOMED");
+        conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
+        conditionTagged = GameManager.i.dataScript.GetCondition("TAGGED");
+        conditionImaged = GameManager.i.dataScript.GetCondition("IMAGED");
+        conditionStressed = GameManager.i.dataScript.GetCondition("STRESSED");
+        conditionAddicted = GameManager.i.dataScript.GetCondition("ADDICTED");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(hackingGear != null, "Invalid hackingGear (Null)");
@@ -331,14 +331,14 @@ public class PlayerManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        actorID = GameManager.instance.preloadScript.playerActorID;
+        actorID = GameManager.i.preloadScript.playerActorID;
         //gear check
         isEndOfTurnGearCheck = false;
         //set stats      
         Invisibility = 3;
         mood = moodStart;
         //Update player mood
-        GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
+        GameManager.i.actorPanelScript.SetPlayerMoodUI(mood);
     }
     #endregion
 
@@ -370,7 +370,7 @@ public class PlayerManager : MonoBehaviour
         //place Player in a random start location (Sprawl node) -> AFTER Level and Session Initialisation
         InitialisePlayerStartNode();
         //set player alpha to active (may have been lying low at end of previous level)
-        GameManager.instance.actorPanelScript.UpdatePlayerAlpha(GameManager.instance.guiScript.alphaActive);
+        GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
         //set default status
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
@@ -403,28 +403,28 @@ public class PlayerManager : MonoBehaviour
     {
         //assign player to a starting node (Sprawl)
         int nodeID = 0;
-        int nodeArcID = GameManager.instance.dataScript.GetNodeArcID("SPRAWL");
+        int nodeArcID = GameManager.i.dataScript.GetNodeArcID("SPRAWL");
         if (nodeArcID > -1)
         {
-            Node node = GameManager.instance.dataScript.GetRandomNode(nodeArcID);
+            Node node = GameManager.i.dataScript.GetRandomNode(nodeArcID);
             if (node != null)
             { nodeID = node.nodeID; }
             else
             { Debug.LogWarning("PlayerManager: Invalid Player starting node (Null). Player placed in node '0' by default"); }
             //can't be at City Hall (Nemesis starting location) -> not possible as not a SPRAWL district but check anyway
-            if (nodeID != GameManager.instance.cityScript.cityHallDistrictID)
+            if (nodeID != GameManager.i.cityScript.cityHallDistrictID)
             {
-                Node nodeTemp = GameManager.instance.dataScript.GetNode(nodeID);
+                Node nodeTemp = GameManager.i.dataScript.GetNode(nodeID);
                 if (nodeTemp != null)
                 {
                     //initialise move list
                     nodeTemp.SetPlayerMoveNodes();
                     //set player node
-                    GameManager.instance.nodeScript.nodePlayer = nodeID;
+                    GameManager.i.nodeScript.nodePlayer = nodeID;
                     Debug.LogFormat("[Ply] PlayerManager.cs -> Initialise: Player starts at node {0}, {1}, id {2}{3}", nodeTemp.nodeName, nodeTemp.Arc.name, nodeTemp.nodeID, "\n");
                     //message
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
-                    GameManager.instance.messageScript.PlayerMove(text, node, 0, 0, true);
+                    GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }
@@ -493,7 +493,7 @@ public class PlayerManager : MonoBehaviour
             //loop through looking for best piece of gear that matches the type
             for (int i = 0; i < listOfGear.Count; i++)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
                     if (gear.type.name.Equals(gearType.name, System.StringComparison.Ordinal) == true)
@@ -524,7 +524,7 @@ public class PlayerManager : MonoBehaviour
         //loop through looking for all AI hacking capable gear
         for (int i = 0; i < listOfGear.Count; i++)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+            Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
             if (gear != null)
             {
                 //hacking gear
@@ -551,7 +551,7 @@ public class PlayerManager : MonoBehaviour
         //loop through looking for ai Hacking gear
         for (int i = 0; i < listOfGear.Count; i++)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+            Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
             if (gear != null)
             {
                 //hacking gear
@@ -610,7 +610,7 @@ public class PlayerManager : MonoBehaviour
             //loop through looking for best piece of gear that matches the type
             for (int i = 0; i < listOfGear.Count; i++)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
                     if (gear.type.name.Equals(gearType.name, System.StringComparison.Ordinal) == true)
@@ -634,8 +634,8 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public bool AddGear(string gearName)
     {
-        Gear gear = GameManager.instance.dataScript.GetGear(gearName);
-        if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
+        Gear gear = GameManager.i.dataScript.GetGear(gearName);
+        if (listOfGear.Count < GameManager.i.gearScript.maxNumOfGear)
         {
             if (gear != null)
             {
@@ -647,9 +647,9 @@ public class PlayerManager : MonoBehaviour
                     Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, added to Player inventory{1}", gear.tag, "\n");
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
-                    GameManager.instance.dataScript.AddGearNew(gear);
+                    GameManager.i.dataScript.AddGearNew(gear);
                     //statistics
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.GearTotal);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.GearTotal);
                     return true;
                 }
                 else
@@ -671,7 +671,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(gearName) == false)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+            Gear gear = GameManager.i.dataScript.GetGear(gearName);
             if (gear != null)
             {
                 //check gear not already in inventory
@@ -710,9 +710,9 @@ public class PlayerManager : MonoBehaviour
         //lost gear
         if (isLost == true)
         {
-            if (GameManager.instance.dataScript.RemoveGearLost(gear) == false)
+            if (GameManager.i.dataScript.RemoveGearLost(gear) == false)
             {
-                gear.statTurnLost = GameManager.instance.turnScript.Turn;
+                gear.statTurnLost = GameManager.i.turnScript.Turn;
                 Debug.LogWarningFormat("Invalid gear Remove Lost for \"{0}\"", gear.tag);
             }
         }
@@ -730,7 +730,7 @@ public class PlayerManager : MonoBehaviour
                 //loop through looking for best piece of gear that matches the type
                 for (int i = 0; i < listOfGear.Count; i++)
                 {
-                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
                     { ResetGearItem(gear); }
                 }
@@ -770,7 +770,7 @@ public class PlayerManager : MonoBehaviour
             if (gear.aiHackingEffect != null)
             {
                 //update AI to reflect this
-                GameManager.instance.aiScript.UpdateAIGearStatus();
+                GameManager.i.aiScript.UpdateAIGearStatus();
             }
         }
     }
@@ -786,7 +786,7 @@ public class PlayerManager : MonoBehaviour
             //reverse loop through looking for compromised gear
             for (int i = listOfGear.Count - 1; i >= 0; i--)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
                 if (gear != null)
                 {
                     if (gear.isCompromised == true)
@@ -798,7 +798,7 @@ public class PlayerManager : MonoBehaviour
                             {
                                 //gear lost
                                 string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
-                                GameManager.instance.messageScript.GearCompromised(msgText, gear, -1);
+                                GameManager.i.messageScript.GearCompromised(msgText, gear, -1);
                                 RemoveGearItem(gear, true);
                             }
                             else
@@ -806,14 +806,14 @@ public class PlayerManager : MonoBehaviour
                                 //gear saved
                                 ResetGearItem(gear);
                                 string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.tag, gear.type.name);
-                                GameManager.instance.messageScript.GearCompromised(msgText, gear, renownUsed);
+                                GameManager.i.messageScript.GearCompromised(msgText, gear, renownUsed);
                             }
                         }
                         else
                         {
                             //gear lost
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and LOST", gear.tag, gear.type.name);
-                            GameManager.instance.messageScript.GearCompromised(msgText, gear, -1);
+                            GameManager.i.messageScript.GearCompromised(msgText, gear, -1);
                             RemoveGearItem(gear, true);
                         }
                     }
@@ -942,41 +942,41 @@ public class PlayerManager : MonoBehaviour
                         switch (condition.tag)
                         {
                             case "DOOMED":
-                                GameManager.instance.actorScript.SetDoomTimer();
-                                GameManager.instance.nodeScript.AddCureNode(conditionDoomed.cure);
+                                GameManager.i.actorScript.SetDoomTimer();
+                                GameManager.i.nodeScript.AddCureNode(conditionDoomed.cure);
                                 break;
                             case "TAGGED":
-                                GameManager.instance.nodeScript.AddCureNode(conditionTagged.cure);
+                                GameManager.i.nodeScript.AddCureNode(conditionTagged.cure);
                                 break;
                             case "WOUNDED":
-                                GameManager.instance.nodeScript.AddCureNode(conditionWounded.cure);
+                                GameManager.i.nodeScript.AddCureNode(conditionWounded.cure);
                                 break;
                             case "IMAGED":
-                                GameManager.instance.nodeScript.AddCureNode(conditionImaged.cure);
+                                GameManager.i.nodeScript.AddCureNode(conditionImaged.cure);
                                 break;
                             case "QUESTIONABLE":
-                                GameManager.instance.nodeScript.AddCureNode(conditionQuestionable.cure);
+                                GameManager.i.nodeScript.AddCureNode(conditionQuestionable.cure);
                                 break;
                             case "ADDICTED":
                                 isAddicted = true;
                                 addictedTally = 0;
-                                GameManager.instance.nodeScript.AddCureNode(conditionAddicted.cure);
+                                GameManager.i.nodeScript.AddCureNode(conditionAddicted.cure);
                                 break;
                             case "STRESSED":
                                 mood = 0;
                                 isStressed = true;
                                 //update UI
-                                GameManager.instance.actorPanelScript.SetPlayerMoodUI(0, isStressed);
+                                GameManager.i.actorPanelScript.SetPlayerMoodUI(0, isStressed);
                                 //stats
-                                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
+                                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerTimesStressed);
                                 break;
                         }
                         Debug.LogFormat("[Cnd] PlayerManager.cs -> AddCondition: {0} Player, gains {1} condition{2}", side.name, condition.tag, "\n");
-                        if (GameManager.instance.sideScript.PlayerSide.level == side.level)
+                        if (GameManager.i.sideScript.PlayerSide.level == side.level)
                         {
                             //message
                             string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.tag);
-                            GameManager.instance.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
+                            GameManager.i.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
                         }
                     }
                 }
@@ -986,7 +986,7 @@ public class PlayerManager : MonoBehaviour
                     {
                         case "STRESSED":
                             //stats
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
                             //used to force a breakdown at the next opportunity
                             numOfSuperStress++;
                             break;
@@ -1059,45 +1059,45 @@ public class PlayerManager : MonoBehaviour
                         {
                             listOfConditions.RemoveAt(i);
                             Debug.LogFormat("[Cnd] PlayerManager.cs -> RemoveCondition: {0} Player, lost {1} condition{2}", side.name, condition.tag, "\n");
-                            if (GameManager.instance.sideScript.PlayerSide.level == side.level)
+                            if (GameManager.i.sideScript.PlayerSide.level == side.level)
                             {
                                 //message
                                 string msgText = string.Format("{0} Player, {1}, condition \"{2}\" removed", side.name, GetPlayerName(side), condition.tag);
-                                GameManager.instance.messageScript.ActorCondition(msgText, actorID, false, condition, reason, isResistance);
+                                GameManager.i.messageScript.ActorCondition(msgText, actorID, false, condition, reason, isResistance);
                             }
                             //special conditions
                             switch (condition.tag)
                             {
                                 case "DOOMED":
-                                    GameManager.instance.actorScript.StopDoomTimer();
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionDoomed.cure);
+                                    GameManager.i.actorScript.StopDoomTimer();
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionDoomed.cure);
                                     break;
                                 case "TAGGED":
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionTagged.cure);
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionTagged.cure);
                                     break;
                                 case "WOUNDED":
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionWounded.cure);
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionWounded.cure);
                                     break;
                                 case "IMAGED":
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionImaged.cure);
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionImaged.cure);
                                     break;
                                 case "QUESTIONABLE":
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionQuestionable.cure);
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionQuestionable.cure);
                                     break;
                                 case "STRESSED":
                                     ChangeMood(moodReset, reason, "n.a");
                                     isStressed = false;
                                     numOfSuperStress = 0;
                                     //change UI mood sprite
-                                    GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood);
+                                    GameManager.i.actorPanelScript.SetPlayerMoodUI(mood);
                                     break;
                                 case "ADDICTED":
                                     //reset drug immunity period back to default value
-                                    stressImmunityStart = GameManager.instance.actorScript.playerAddictedImmuneStart;
+                                    stressImmunityStart = GameManager.i.actorScript.playerAddictedImmuneStart;
                                     stressImmunityCurrent = 0;
                                     isAddicted = false;
                                     addictedTally = 0;
-                                    GameManager.instance.nodeScript.RemoveCureNode(conditionAddicted.cure);
+                                    GameManager.i.nodeScript.RemoveCureNode(conditionAddicted.cure);
                                     break;
                             }
                             return true;
@@ -1122,8 +1122,8 @@ public class PlayerManager : MonoBehaviour
         //message (only if not Addicted)
         if (isAddicted == false)
         {
-            GameManager.instance.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
-            GameManager.instance.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+            GameManager.i.messageScript.PlayerImmuneStart(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+            GameManager.i.messageScript.PlayerImmuneEffect(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
         }
 
         /*//effect tab only if right at start of addiction period (messages double up otherwise) -> not possible as there is now an exempt period
@@ -1133,9 +1133,9 @@ public class PlayerManager : MonoBehaviour
         //decrease immunity period after every addiction episode
         stressImmunityStart--;
         //minCap
-        stressImmunityStart = Mathf.Max(GameManager.instance.actorScript.playerAddictedImmuneMin, stressImmunityStart);
+        stressImmunityStart = Mathf.Max(GameManager.i.actorScript.playerAddictedImmuneMin, stressImmunityStart);
         //remove stress if present
-        RemoveCondition(conditionStressed, GameManager.instance.sideScript.PlayerSide, "Took Drugs");
+        RemoveCondition(conditionStressed, GameManager.i.sideScript.PlayerSide, "Took Drugs");
     }
 
     /// <summary>
@@ -1262,7 +1262,7 @@ public class PlayerManager : MonoBehaviour
     private void SetCures()
     {
         //if player has any conditions that require a cure you need to set up nodes for the cures
-        List<Condition> listOfConditions = GetListOfConditions(GameManager.instance.sideScript.PlayerSide);
+        List<Condition> listOfConditions = GetListOfConditions(GameManager.i.sideScript.PlayerSide);
         if (listOfConditions != null)
         {
             if (listOfConditions.Count > 0)
@@ -1273,9 +1273,9 @@ public class PlayerManager : MonoBehaviour
                     {
                         //reset doom timer to starting value, if required
                         if (condition.tag.Equals("DOOMED", StringComparison.Ordinal) == true)
-                        { GameManager.instance.actorScript.SetDoomTimer(); }
+                        { GameManager.i.actorScript.SetDoomTimer(); }
                         //add cure to a node (cure isn't activated yet)
-                        GameManager.instance.nodeScript.AddCureNode(condition.cure);
+                        GameManager.i.nodeScript.AddCureNode(condition.cure);
                     }
                 }
             }
@@ -1343,7 +1343,7 @@ public class PlayerManager : MonoBehaviour
                     secret.status = SecretStatus.Active;
                     secret.gainedWhen = GameManager.SetTimeStamp();
                     //Msg
-                    GameManager.instance.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
+                    GameManager.i.messageScript.PlayerSecret(string.Format("Player gains new secret ({0})", secret.tag), secret);
                     Debug.LogFormat("[Sec] PlayerManager.cs -> AddSecret: Player learns {0} secret, ID {1}{2}", secret.tag, secret.name, "\n");
                     return true;
                 }
@@ -1377,12 +1377,12 @@ public class PlayerManager : MonoBehaviour
                     {
                         case SecretStatus.Revealed:
                             //revealed secret
-                            GameManager.instance.dataScript.AddRevealedSecret(secret);
+                            GameManager.i.dataScript.AddRevealedSecret(secret);
                             break;
                         case SecretStatus.Deleted:
                             //deleted secret
                             secret.deletedWhen = GameManager.SetTimeStamp();
-                            GameManager.instance.dataScript.AddDeletedSecret(secret);
+                            GameManager.i.dataScript.AddDeletedSecret(secret);
                             break;
                     }
                     //remove secret
@@ -1402,7 +1402,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void GetRandomStartSecret()
     {
-        List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfPlayerSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
         if (listOfPlayerSecrets != null)
         {
             //copy all Inactive secrets across to another list
@@ -1461,7 +1461,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.LogFormat("[Inv] PlayerManager.cs -> AddInvestigation: Investigation \"{0}\" commenced, lead {1}, evidence {2}, ref \"{3}\"{4}", invest.tag, invest.lead, invest.evidence,
                     invest.reference, "\n");
                 //update topBar
-                GameManager.instance.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
+                GameManager.i.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
                 return true;
             }
             else { Debug.LogWarning("ListOfInvestigations is Full (Maxxed out). Record not added"); }
@@ -1485,7 +1485,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.LogFormat("[Inv] PlayerManager.cs -> RemoveInvestigation: Investigation \"{0}\", removed{1}", reference, "\n");
                 listOfInvestigations.RemoveAt(index);
                 //update topBar
-                GameManager.instance.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
+                GameManager.i.topBarScript.UpdateInvestigations(listOfInvestigations.Count);
                 return true;
             }
             else { Debug.LogWarningFormat("Investigation reference \"{0}\" not found in listOfInvestigations", reference); }
@@ -1533,18 +1533,18 @@ public class PlayerManager : MonoBehaviour
         {
             invest.status = InvestStatus.Completed;
             invest.outcome = InvestOutcome.Dropped;
-            invest.turnFinish = GameManager.instance.turnScript.Turn;
-            GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
-            GameManager.instance.dataScript.StatisticIncrement(StatType.OrgHQDropped);
+            invest.turnFinish = GameManager.i.turnScript.Turn;
+            GameManager.i.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
+            GameManager.i.dataScript.StatisticIncrement(StatType.OrgHQDropped);
             //msg
-            string text = string.Format("{0} investigation Dropped due to intervention by {1}{2}", invest.tag, GameManager.instance.campaignScript.campaign.orgHQ.tag, "\n");
-            GameManager.instance.messageScript.InvestigationDropped(text, invest);
+            string text = string.Format("{0} investigation Dropped due to intervention by {1}{2}", invest.tag, GameManager.i.campaignScript.campaign.orgHQ.tag, "\n");
+            GameManager.i.messageScript.InvestigationDropped(text, invest);
             //remove from player
             RemoveInvestigation(invest.reference);
             //add to listOfCompleted
-            GameManager.instance.dataScript.AddInvestigationCompleted(invest);
+            GameManager.i.dataScript.AddInvestigationCompleted(invest);
             //Add to list of services provided by orgHQ
-            GameManager.instance.dataScript.AddOrgData(new OrgData() { text = invest.tag, turn = GameManager.instance.turnScript.Turn }, OrganisationType.HQ);
+            GameManager.i.dataScript.AddOrgData(new OrgData() { text = invest.tag, turn = GameManager.i.turnScript.Turn }, OrganisationType.HQ);
             //return
             return GameManager.GetFormattedString(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
         }
@@ -1583,7 +1583,7 @@ public class PlayerManager : MonoBehaviour
                         if (invest.timer <= 0)
                         {
                             invest.status = InvestStatus.Completed;
-                            GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
+                            GameManager.i.dataScript.StatisticIncrement(StatType.InvestigationsCompleted);
                             string bottomText = "Unknown";
                             switch (invest.evidence)
                             {
@@ -1591,8 +1591,8 @@ public class PlayerManager : MonoBehaviour
                                     //player found innocent
                                     invest.outcome = InvestOutcome.Innocent;
                                     //gain HQ approval
-                                    int approvalGain = GameManager.instance.playerScript.investHQApproval;
-                                    GameManager.instance.hqScript.ChangeHqApproval(approvalGain, GameManager.instance.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
+                                    int approvalGain = GameManager.i.playerScript.investHQApproval;
+                                    GameManager.i.hqScript.ChangeHqApproval(approvalGain, GameManager.i.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found INNOCENT{1}", invest.tag, "\n");
                                     bottomText = string.Format("You are{0}<size=120%>{1}</size>{2}of all charges", "\n", GameManager.GetFormattedString("INNOCENT", ColourType.goodText), "\n");
                                     break;
@@ -1601,15 +1601,15 @@ public class PlayerManager : MonoBehaviour
                                     invest.outcome = InvestOutcome.Guilty;
                                     Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\" completed. Player found GUILTY{1}", invest.tag, "\n");
                                     WinStateLevel winner = WinStateLevel.None;
-                                    switch (GameManager.instance.sideScript.PlayerSide.level)
+                                    switch (GameManager.i.sideScript.PlayerSide.level)
                                     {
                                         case 1: winner = WinStateLevel.Resistance; break;
                                         case 2: winner = WinStateLevel.Authority; break;
-                                        default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+                                        default: Debug.LogWarningFormat("Unrecognised Player side {0}", GameManager.i.sideScript.PlayerSide.name); break;
                                     }
-                                    GameManager.instance.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
+                                    GameManager.i.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     //black marks
-                                    GameManager.instance.campaignScript.ChangeBlackmarks(GameManager.instance.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
+                                    GameManager.i.campaignScript.ChangeBlackmarks(GameManager.i.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
 
                                     /*//increase cost in blackMarks for future investigations EDIT -> fixed cost of 1 blackmark per investigation
                                     GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();*/
@@ -1625,34 +1625,34 @@ public class PlayerManager : MonoBehaviour
                             {
                                 textTop = text,
                                 textBottom = bottomText,
-                                sprite = GameManager.instance.guiScript.investigationSprite,
+                                sprite = GameManager.i.guiScript.investigationSprite,
                                 isAction = false,
-                                side = GameManager.instance.sideScript.PlayerSide,
+                                side = GameManager.i.sideScript.PlayerSide,
                                 type = MsgPipelineType.InvestigationCompleted,
                                 help0 = "invest_8",
                                 help1 = "invest_9"
                             };
-                            if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                             { Debug.LogWarningFormat("Investigation Completed InfoPipeline message FAILED to be added to dictOfPipeline"); }
 
                             //end investigation
-                            invest.turnFinish = GameManager.instance.turnScript.Turn;
+                            invest.turnFinish = GameManager.i.turnScript.Turn;
                             RemoveInvestigation(invest.reference);
 
                             //msg
                             text = string.Format("{0} Investigation completed. {1} Verdict", invest.tag, invest.evidence == 3 ? "Innocent" : "Guilty");
-                            GameManager.instance.messageScript.InvestigationCompleted(text, invest);
+                            GameManager.i.messageScript.InvestigationCompleted(text, invest);
                             //add to listOfCompleted
-                            GameManager.instance.dataScript.AddInvestigationCompleted(invest);
+                            GameManager.i.dataScript.AddInvestigationCompleted(invest);
                         }
                         else
                         {
                             Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigations: Investigation \"{0}\" is {1} day{2} away from a Player {3} conclusion (evidence {4}){5}", invest.tag, invest.timer,
                                 invest.timer != 1 ? "s" : "", invest.evidence == 3 ? "INNOCENT" : "GUILTY", invest.evidence, "\n");
                             text = string.Format("{0} Investigation counting down to a Resolution", invest.tag);
-                            GameManager.instance.messageScript.InvestigationResolution(text, invest);
+                            GameManager.i.messageScript.InvestigationResolution(text, invest);
                             //update topBarUI tooltip
-                            GameManager.instance.topBarScript.UpdateInvestigations(count);
+                            GameManager.i.topBarScript.UpdateInvestigations(count);
                         }
                     }
                     else
@@ -1660,7 +1660,7 @@ public class PlayerManager : MonoBehaviour
                         //
                         // - - - No timer -> check for new evidence (not when investigation first launched)
                         //
-                        if (invest.turnStart + 1 < GameManager.instance.turnScript.Turn)
+                        if (invest.turnStart + 1 < GameManager.i.turnScript.Turn)
                         {
                             rnd = Random.Range(0, 100);
                             isGood = false;
@@ -1670,7 +1670,7 @@ public class PlayerManager : MonoBehaviour
                                 //previous
                                 invest.previousEvidence = invest.evidence;
                                 //good or bad evidence -> depends on HQ actor opinion of you
-                                Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
+                                Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(invest.lead);
                                 if (actor != null)
                                 {
                                     rnd = Random.Range(0, 100);
@@ -1695,7 +1695,7 @@ public class PlayerManager : MonoBehaviour
                                             invest.tag, chance, rnd, invest.lead, motivation, invest.evidence, "\n");
                                     }
                                     text = string.Format("{0} Evidence Uncovered", invest.tag);
-                                    GameManager.instance.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");
+                                    GameManager.i.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");
                                 }
                                 else
                                 { Debug.LogWarningFormat("Invalid HQ Actor (Null) for investigation.lead {0}", invest.lead); }
@@ -1732,14 +1732,14 @@ public class PlayerManager : MonoBehaviour
                                 invest.evidence = Mathf.Clamp(invest.evidence, 0, 3);
                                 //evidence message
                                 text = string.Format("{0} Investigation uncovers new Evidence (was {1}, now {2})", invest.tag, invest.previousEvidence, invest.evidence);
-                                GameManager.instance.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
+                                GameManager.i.messageScript.InvestigationEvidence(text, invest, "your Lead Investigator");
                                 //update topBarUI (tooltip needs to change to reflect new evidence)
-                                GameManager.instance.topBarScript.UpdateInvestigations(count);
+                                GameManager.i.topBarScript.UpdateInvestigations(count);
                             }
                         }
                         //effects tab msg
                         text = string.Format("Ongoing investigation into your {0}", invest.tag);
-                        GameManager.instance.messageScript.InvestigationOngoing(text, invest);
+                        GameManager.i.messageScript.InvestigationOngoing(text, invest);
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
@@ -1907,8 +1907,8 @@ public class PlayerManager : MonoBehaviour
                 {
                     if (builder.Length > 0) { builder.AppendLine(); }
                     builder.AppendFormat("{0}{1}", GameManager.GetFormattedString(investigation.tag, ColourType.neutralText), "\n");
-                    builder.AppendFormat("Evidence  {0}{1}", GameManager.instance.guiScript.GetDatapointStars(investigation.evidence), "\n");
-                    builder.AppendFormat("{0} is lead", GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
+                    builder.AppendFormat("Evidence  {0}{1}", GameManager.i.guiScript.GetDatapointStars(investigation.evidence), "\n");
+                    builder.AppendFormat("{0} is lead", GameManager.GetFormattedString(GameManager.i.hqScript.GetHqTitle(investigation.lead).ToUpper(), ColourType.salmonText));
                     if (investigation.timer > 0)
                     {
                         string textVerdict = string.Format("{0}Verdict in {1} day{2}", "\n", investigation.timer, investigation.timer != 1 ? "s" : "");
@@ -1932,11 +1932,11 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void DebugAddInvestigation()
     {
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         Investigation investigation = new Investigation()
         {
             reference = $"{turn}Debug",
-            city = GameManager.instance.campaignScript.scenario.city.tag,
+            city = GameManager.i.campaignScript.scenario.city.tag,
             tag = "Debug",
             turnStart = turn,
             lead = ActorHQ.SubBoss1,
@@ -1956,7 +1956,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendLine();
         foreach (string gearName in listOfGear)
         {
-            Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+            Gear gear = GameManager.i.dataScript.GetGear(gearName);
             if (gear != null)
             {
                 builder.AppendLine();
@@ -1981,28 +1981,28 @@ public class PlayerManager : MonoBehaviour
     public string DebugAddGear(string gearName)
     {
         string text = string.Format("{0} has NOT been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
-        if (listOfGear.Count < GameManager.instance.gearScript.maxNumOfGear)
+        if (listOfGear.Count < GameManager.i.gearScript.maxNumOfGear)
         {
             if (string.IsNullOrEmpty(gearName) == false)
             {
                 //find gear in dictionary
-                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                Gear gear = GameManager.i.dataScript.GetGear(gearName);
                 if (gear != null)
                 {
                     //check you aren't adding gear that has already been lost
-                    List<string> listOfLostGear = GameManager.instance.dataScript.GetListOfLostGear();
+                    List<string> listOfLostGear = GameManager.i.dataScript.GetListOfLostGear();
                     if (listOfLostGear.Exists(x => x == gear.name) == false)
                     {
                         //add gear to player's inventory
                         if (AddGear(gearName) == true)
                         {
                             //remove from pool
-                            if (GameManager.instance.dataScript.RemoveGearFromPool(gear) == false)
+                            if (GameManager.i.dataScript.RemoveGearFromPool(gear) == false)
                             { Debug.LogWarning("Gear not removed from Pool (Null or other problem)"); }
                             text = string.Format("{0} has been added to the Player's inventory{1}Press ESC to exit", gearName, "\n");
                             //message
-                            Node nodePlayer = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
-                            GameManager.instance.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
+                            Node nodePlayer = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                            GameManager.i.messageScript.GearObtained(string.Format("{0} added (DEBUG)", gearName), nodePlayer, gear);
                         }
                     }
                     else
@@ -2025,7 +2025,7 @@ public class PlayerManager : MonoBehaviour
     public void DebugAddRandomSecret()
     {
         //give the player a random secret
-        List<Secret> listOfSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
         if (listOfSecrets != null)
         {
             List<Secret> tempList = new List<Secret>();
@@ -2063,7 +2063,7 @@ public class PlayerManager : MonoBehaviour
             {
                 secret.status = SecretStatus.Deleted;
                 secret.deletedWhen = GameManager.SetTimeStamp();
-                GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
+                GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
             }
             else { Debug.LogError("Invalid secret (Null)"); }
         }
@@ -2080,11 +2080,11 @@ public class PlayerManager : MonoBehaviour
         builder.Append(DebugDisplayInvestigationList(listOfInvestigations));
         //completed investigations
         builder.AppendFormat("{0}{1}-ListOfCompletedInvestigations{2}", "\n", "\n", "\n");
-        List<Investigation> listOfCompletedInvestigations = GameManager.instance.dataScript.GetListOfCompletedInvestigations();
+        List<Investigation> listOfCompletedInvestigations = GameManager.i.dataScript.GetListOfCompletedInvestigations();
         if (listOfCompletedInvestigations != null)
         { builder.Append(DebugDisplayInvestigationList(listOfCompletedInvestigations)); }
         //Commendations
-        List<AwardData> listOfCommendations = GameManager.instance.dataScript.GetListOfCommendations();
+        List<AwardData> listOfCommendations = GameManager.i.dataScript.GetListOfCommendations();
         if (listOfCommendations != null)
         {
             builder.AppendFormat("{0}{1}-ListOfCommendations{2}", "\n", "\n", "\n");
@@ -2100,7 +2100,7 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfCommendations (Null)"); }
         //Blackmarks
-        List<AwardData> listOfBlackmarks = GameManager.instance.dataScript.GetListOfBlackmarks();
+        List<AwardData> listOfBlackmarks = GameManager.i.dataScript.GetListOfBlackmarks();
         if (listOfBlackmarks != null)
         {
             builder.AppendFormat("{0}-ListOfBlackmarks{1}", "\n", "\n");
@@ -2233,7 +2233,7 @@ public class PlayerManager : MonoBehaviour
     public void ChangeMood(int change, string reason, string factor)
     {
         string text = "Unknown";
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //check player isn't currently stressed
         if (isStressed == false)
         {
@@ -2261,16 +2261,16 @@ public class PlayerManager : MonoBehaviour
                     isStressed = true;
                 }
                 text = string.Format("[Msg] Player did NOT become STRESSED due to drugs, currentImmunity {0}, startImmunity {1}, isAddicted {2}{3}", stressImmunityCurrent, stressImmunityStart, isAddicted, "\n");
-                GameManager.instance.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
+                GameManager.i.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
             //change sprite
-            GameManager.instance.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
+            GameManager.i.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
             //add a record
             HistoryMood record = new HistoryMood()
             {
                 change = change,
-                turn = GameManager.instance.turnScript.Turn,
+                turn = GameManager.i.turnScript.Turn,
                 mood = mood,
                 factor = factor,
                 isStressed = isStressed
@@ -2285,14 +2285,14 @@ public class PlayerManager : MonoBehaviour
             //add to list
             listOfMoodHistory.Add(record);
             //message
-            GameManager.instance.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
+            GameManager.i.messageScript.PlayerMoodChange(reason, change, mood, isStressed);
         }
         else
         {
             //player already stressed
             if ((mood + change) < 0)
             {
-                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
                 //used to force a breakdown at the next opportunity
                 numOfSuperStress++;
             }
@@ -2338,7 +2338,7 @@ public class PlayerManager : MonoBehaviour
             if (status == ActorStatus.Active)
             {
                 //stats
-                GameManager.instance.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
                 //only improve mood if there is room for improvement
                 if (mood < moodMax && isStressed == false)
                 { ChangeMood(unusedActions, "Watching SerialFlix", "n.a"); }
@@ -2354,7 +2354,7 @@ public class PlayerManager : MonoBehaviour
     {
         int numOfGear;
         string gearName;
-        switch (GameManager.instance.sideScript.resistanceOverall)
+        switch (GameManager.i.sideScript.resistanceOverall)
         {
             case SideState.Human:
                 //gear -> remove all, reverse loop
@@ -2374,11 +2374,11 @@ public class PlayerManager : MonoBehaviour
                 break;
             case SideState.AI:
                 //renown
-                GameManager.instance.dataScript.SetAIResources(GameManager.instance.globalScript.sideResistance, 0);
+                GameManager.i.dataScript.SetAIResources(GameManager.i.globalScript.sideResistance, 0);
                 //gear
-                GameManager.instance.aiRebelScript.ResetGearPool();
+                GameManager.i.aiRebelScript.ResetGearPool();
                 break;
-            default: Debug.LogWarningFormat("Unrecognised resistanceOverall sideState \"{0}\"", GameManager.instance.sideScript.resistanceOverall); break;
+            default: Debug.LogWarningFormat("Unrecognised resistanceOverall sideState \"{0}\"", GameManager.i.sideScript.resistanceOverall); break;
         }
     }
 
@@ -2409,7 +2409,7 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayPlayerStats()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //use correct list for the player side
         List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
         StringBuilder builder = new StringBuilder();
@@ -2420,7 +2420,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
         builder.AppendFormat(" Mood {0}{1}", mood, "\n");
         builder.AppendFormat(" Innocence {0}{1}", Innocence, "\n");
-        if (GameManager.instance.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.instance.actorScript.doomTimer, "\n"); }
+        if (GameManager.i.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.i.actorScript.doomTimer, "\n"); }
         //Conditions
         if (listOfConditions != null)
         {
@@ -2434,7 +2434,7 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfConditions (Null)"); }
         //Cures
-        List<Node> listOfCures = GameManager.instance.dataScript.GetListOfCureNodes();
+        List<Node> listOfCures = GameManager.i.dataScript.GetListOfCureNodes();
         if (listOfCures != null)
         {
             builder.AppendFormat("{0}- Cures{1}", "\n", "\n");
@@ -2452,7 +2452,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat("{0}- States{1}", "\n", "\n");
         builder.AppendFormat(" Status {0}{1}", status, "\n");
         builder.AppendFormat(" InactiveStatus {0}{1}", inactiveStatus, "\n");
-        builder.AppendFormat(" showPlayerNode {0}{1}", GameManager.instance.nodeScript.GetShowPlayerNode(), "\n");
+        builder.AppendFormat(" showPlayerNode {0}{1}", GameManager.i.nodeScript.GetShowPlayerNode(), "\n");
         builder.AppendFormat(" TooltipStatus {0}{1}", tooltipStatus, "\n");
         builder.AppendFormat(" isBreakdown {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" isEndOfTurnGearCheck {0}{1}", isEndOfTurnGearCheck, "\n");
@@ -2465,9 +2465,9 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" addictedTally {0}{1}", addictedTally, "\n");
         builder.AppendFormat(" Sex {0}{1}", sex, "\n");
         builder.AppendFormat("{0} -Global{1}", "\n", "\n");
-        builder.AppendFormat(" authorityState {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
+        builder.AppendFormat(" authorityState {0}{1}", GameManager.i.turnScript.authoritySecurityState, "\n");
         builder.AppendFormat("{0} -Reserve Pool{1}", "\n", "\n");
-        builder.AppendFormat(" NumOfRecruits {0} + {1}{2}", GameManager.instance.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.instance.dataScript.CheckNumOfActorsInReserve(), "\n");
+        builder.AppendFormat(" NumOfRecruits {0} + {1}{2}", GameManager.i.dataScript.CheckNumOfOnMapActors(playerSide), GameManager.i.dataScript.CheckNumOfActorsInReserve(), "\n");
         if (playerSide.level == globalResistance.level)
         {
             //gear
@@ -2476,7 +2476,7 @@ public class PlayerManager : MonoBehaviour
             {
                 for (int i = 0; i < listOfGear.Count; i++)
                 {
-                    Gear gear = GameManager.instance.dataScript.GetGear(listOfGear[i]);
+                    Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
                     if (gear != null)
                     { builder.AppendFormat(" {0}, {1}{2}", gear.tag, gear.type.name, "\n"); }
                 }
@@ -2485,8 +2485,8 @@ public class PlayerManager : MonoBehaviour
         }
         //stats
         builder.AppendFormat("{0}{1} -Stats{2}", "\n", "\n", "\n");
-        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
-        builder.AppendFormat(" lie low: {0}{1}", GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowTimes), "\n");
+        builder.AppendFormat(" breakdowns: {0}{1}", GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerBreakdown), "\n");
+        builder.AppendFormat(" lie low: {0}{1}", GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowTimes), "\n");
         //Capture Tools
         builder.AppendFormat("{0}-Capture Tools{1}", "\n", "\n");
         int count = 0;
@@ -2494,7 +2494,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (arrayOfCaptureTools[index] == true)
             {
-                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(index);
+                CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(index);
                 if (tool != null)
                 { builder.AppendFormat(" {0}, level {1}{2}", tool.tag, tool.innocenceLevel, "\n"); }
                 else { builder.AppendFormat(" Invalid captureTool (NULL){0}", "\n"); }
@@ -2533,8 +2533,8 @@ public class PlayerManager : MonoBehaviour
             change = -1;
             reason = "Dismiss ";
         }
-        reason = reason + GameManager.instance.dataScript.GetRandomActorArcs(1, GameManager.instance.sideScript.PlayerSide)[0].name;
-        factor = GameManager.instance.dataScript.DebugGetRandomFactor();
+        reason = reason + GameManager.i.dataScript.GetRandomActorArcs(1, GameManager.i.sideScript.PlayerSide)[0].name;
+        factor = GameManager.i.dataScript.DebugGetRandomFactor();
         ChangeMood(change, reason, factor);
     }
 
@@ -2556,7 +2556,7 @@ public class PlayerManager : MonoBehaviour
             //add Capture tool (called method will handle invalid innocentLevel)
             if (AddCaptureTool(innocenceLevel) == true)
             {
-                CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(innocenceLevel);
+                CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(innocenceLevel);
                 if (tool != null)
                 { reply = $"{tool.tag} added"; }
                 else { Debug.LogErrorFormat("Invalid CaptureTool (Null) for innocenceLevel \"{0}\"", innocenceLevel); }
@@ -2630,11 +2630,11 @@ public class PlayerManager : MonoBehaviour
         if (data != null)
         {
             //validate data
-            if (data.turn < 0 || data.turn > GameManager.instance.turnScript.Turn)
+            if (data.turn < 0 || data.turn > GameManager.i.turnScript.Turn)
             { Debug.LogWarningFormat("Invalid NodeActionData turn \"{0}\" for {1}, {2}", data.turn, PlayerName, "Player"); }
             if (data.actorID != 999)
             { Debug.LogWarningFormat("Invalid NodeActionData actorID \"{0}\" (should be 999) for {1}, {2}", data.actorID, PlayerName, "Player"); }
-            if (data.nodeID < 0 || data.nodeID > GameManager.instance.nodeScript.nodeIDCounter)
+            if (data.nodeID < 0 || data.nodeID > GameManager.i.nodeScript.nodeIDCounter)
             { Debug.LogWarningFormat("Invalid NodeActionData nodeID \"{0}\" for {1}, {2}", data.nodeID, PlayerName, "Player"); }
             if (data.nodeAction == NodeAction.None)
             { Debug.LogWarningFormat("Invalid NodeActionData nodeAction \"{0}\" for {1}, {2}", data.nodeAction, PlayerName, "Player"); }
@@ -2742,10 +2742,10 @@ public class PlayerManager : MonoBehaviour
                         if (data != null)
                         {
                             //get relevant subType topic list
-                            TopicSubSubType subSubType = GameManager.instance.topicScript.GetTopicSubSubType(data.nodeAction);
+                            TopicSubSubType subSubType = GameManager.i.topicScript.GetTopicSubSubType(data.nodeAction);
                             if (subSubType != null)
                             {
-                                List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subSubType.subType);
+                                List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(subSubType.subType);
                                 //check that Players most recent node Action has at least one Live topic of correct subSubType on the list
                                 if (listOfTopics.Exists(x => x.subSubType.name.Equals(subSubType.name, StringComparison.Ordinal) && x.status == Status.Live))
                                 { isResult = true; }
@@ -2792,7 +2792,7 @@ public class PlayerManager : MonoBehaviour
     public bool AddCaptureTool(int innocenceLevel)
     {
         Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
-        if (GameManager.instance.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
+        if (GameManager.i.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
         {
             arrayOfCaptureTools[innocenceLevel] = true;
             return true;
@@ -2834,9 +2834,9 @@ public class PlayerManager : MonoBehaviour
     {
         //Send lists to MetaGame
         if (listOfSecrets.Count > 0)
-        { GameManager.instance.metaScript.SetMetaSecrets(listOfSecrets); }
+        { GameManager.i.metaScript.SetMetaSecrets(listOfSecrets); }
         if (listOfInvestigations.Count > 0)
-        { GameManager.instance.metaScript.SetMetaInvestigations(listOfInvestigations); }
+        { GameManager.i.metaScript.SetMetaInvestigations(listOfInvestigations); }
     }
 
 

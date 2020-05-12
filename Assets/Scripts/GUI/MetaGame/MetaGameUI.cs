@@ -246,7 +246,7 @@ public class MetaGameUI : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -427,7 +427,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(backgroundCentre != null, "Invalid backgroundCentre (Null)");
         Debug.Assert(backgroundRight != null, "Invalid backgroundRight (Null)");
         //assign backgrounds and active tab colours
-        Color colour = GameManager.instance.guiScript.colourMainBackground;
+        Color colour = GameManager.i.guiScript.colourMainBackground;
         backgroundCentre.color = new Color(colour.r, colour.g, colour.b);
         backgroundRight.color = new Color(colour.r, colour.g, colour.b);
         //items
@@ -594,26 +594,26 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //priority icons
-        priorityHigh = GameManager.instance.guiScript.priorityHighSprite;
-        priorityMedium = GameManager.instance.guiScript.priorityMediumSprite;
-        priorityLow = GameManager.instance.guiScript.priorityLowSprite;
-        priorityInactive = GameManager.instance.guiScript.priorityInactiveSprite;
+        priorityHigh = GameManager.i.guiScript.priorityHighSprite;
+        priorityMedium = GameManager.i.guiScript.priorityMediumSprite;
+        priorityLow = GameManager.i.guiScript.priorityLowSprite;
+        priorityInactive = GameManager.i.guiScript.priorityInactiveSprite;
         Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
         Debug.Assert(priorityInactive != null, "Invalid priorityInactive (Null)");
         //cost levels for metaOptions
-        costLow = GameManager.instance.metaScript.costLowPriority;
-        costMedium = GameManager.instance.metaScript.costMediumPriority;
-        costHigh = GameManager.instance.metaScript.costHighPriority;
-        costExtreme = GameManager.instance.metaScript.costExtremePriority;
+        costLow = GameManager.i.metaScript.costLowPriority;
+        costMedium = GameManager.i.metaScript.costMediumPriority;
+        costHigh = GameManager.i.metaScript.costHighPriority;
+        costExtreme = GameManager.i.metaScript.costExtremePriority;
         Debug.Assert(costLow > -1, "Invalid costLow (-1)");
         Debug.Assert(costMedium > -1, "Invalid costMedium (-1)");
         Debug.Assert(costHigh > -1, "Invalid costHigh (-1)");
         Debug.Assert(costExtreme > -1, "Invalid costExtreme (-1)");
-        numOfChoicesMax = GameManager.instance.metaScript.numOfChoices;
+        numOfChoicesMax = GameManager.i.metaScript.numOfChoices;
         Debug.Assert(numOfChoicesMax > -1, "Invalid numOfChoicesMax (-1)");
-        renownRecommendMin = GameManager.instance.metaScript.renownRecommendMin;
+        renownRecommendMin = GameManager.i.metaScript.renownRecommendMin;
         Debug.Assert(renownRecommendMin > -1, "Invalid renownRecommendMin (-1)");
     }
     #endregion
@@ -724,18 +724,18 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         /*colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
     /// <summary>
@@ -745,7 +745,7 @@ public class MetaGameUI : MonoBehaviour
     {
         int count;
         //player renown
-        int playerRenown = GameManager.instance.playerScript.Renown;
+        int playerRenown = GameManager.i.playerScript.Renown;
         renownCurrent = playerRenown;
         UpdateRenown();
         Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
@@ -762,18 +762,18 @@ public class MetaGameUI : MonoBehaviour
             if (arrayOfSideTabItems[index] != null)
             {
                 //sprite
-                Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
+                Actor actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
                 if (actor != null)
                 { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
                 else
                 {
                     //default error sprite if a problem
                     Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                    arrayOfSideTabItems[index].portrait.sprite = GameManager.instance.guiScript.errorSprite;
+                    arrayOfSideTabItems[index].portrait.sprite = GameManager.i.guiScript.errorSprite;
                 }
                 portraitColor = arrayOfSideTabItems[index].portrait.color;
                 //title
-                arrayOfSideTabItems[index].title.text = GameManager.instance.hqScript.GetHqTitle(actor.statusHQ);
+                arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
                 //first tab (Boss) should be active on opening, rest passive
                 if (index == 0)
                 { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
@@ -824,22 +824,22 @@ public class MetaGameUI : MonoBehaviour
         // - - - dynamic tooltip help
         //
         //Boss tab
-        List<HelpData> listOfHelp = GameManager.instance.actorScript.GetHqTooltip(ActorHQ.Boss);
+        List<HelpData> listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.Boss);
         if (listOfHelp != null)
         { helpTabBoss.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabBoss (Null)"); }
         //subBoss1 tab
-        listOfHelp = GameManager.instance.actorScript.GetHqTooltip(ActorHQ.SubBoss1);
+        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss1);
         if (listOfHelp != null)
         { helpTabSubBoss1.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss1 (Null)"); }
         //subBoss2 tab
-        listOfHelp = GameManager.instance.actorScript.GetHqTooltip(ActorHQ.SubBoss2);
+        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss2);
         if (listOfHelp != null)
         { helpTabSubBoss2.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss2 (Null)"); }
         //subBoss1 tab
-        listOfHelp = GameManager.instance.actorScript.GetHqTooltip(ActorHQ.SubBoss3);
+        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss3);
         if (listOfHelp != null)
         { helpTabSubBoss3.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss3 (Null)"); }
@@ -881,37 +881,37 @@ public class MetaGameUI : MonoBehaviour
     {
         List<HelpData> listOfHelp;
         //main help button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
         if (listOfHelp != null)
         { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
         //reset button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_4", "metaGameUI_5");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_4", "metaGameUI_5");
         if (listOfHelp != null)
         { helpReset.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpReset (Null)"); }
         //confirm button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_6", "metaGameUI_7");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_6", "metaGameUI_7");
         if (listOfHelp != null)
         { helpConfirm.SetHelpTooltip(listOfHelp, x_offset + 25, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpConfirm (Null)"); }
         //recommended button
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_8", "metaGameUI_9");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_8", "metaGameUI_9");
         if (listOfHelp != null)
         { helpRecommended.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpRec0mmended (Null)"); }
         //Status tab
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_10", "metaGameUI_11", "metaGameUI_12");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_10", "metaGameUI_11", "metaGameUI_12");
         if (listOfHelp != null)
         { helpTabStatus.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabStatus (Null)"); }
         //Selected tab
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_13", "metaGameUI_14");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_13", "metaGameUI_14");
         if (listOfHelp != null)
         { helpTabSelected.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabSelected (Null)"); }
         //Renown
-        listOfHelp = GameManager.instance.helpScript.GetHelpData("metaGameUI_15", "metaGameUI_16");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_15", "metaGameUI_16");
         if (listOfHelp != null)
         { helpRenown.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpRenown (Null)"); }
@@ -938,7 +938,7 @@ public class MetaGameUI : MonoBehaviour
             helpMain.gameObject.SetActive(true);
             //set game state
             isRunning = true;
-            GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
             Debug.LogFormat("[UI] MetaGameUI.cs -> SetMetaUI{0}", "\n");
         }
         else { Debug.LogWarning("Invalid MetaInfoData (Null)"); }
@@ -950,16 +950,16 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     private void CloseMetaUI()
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
-        GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         canvasMeta.gameObject.SetActive(false);
         //set game state
         isRunning = false;
-        GameManager.instance.guiScript.SetIsBlocked(false);
-        GameManager.instance.inputScript.ResetStates();
+        GameManager.i.guiScript.SetIsBlocked(false);
+        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
         //update player renown
-        GameManager.instance.playerScript.Renown = renownCurrent;
+        GameManager.i.playerScript.Renown = renownCurrent;
         Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
         //show top bar UI at completion of meta game
         EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
@@ -1491,7 +1491,7 @@ public class MetaGameUI : MonoBehaviour
             tag2 = data.tag2;
             tag3 = data.tag3;
         }
-        return GameManager.instance.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
+        return GameManager.i.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }
 
     /// <summary>
@@ -1696,7 +1696,7 @@ public class MetaGameUI : MonoBehaviour
             //process metaData
             if (metaData != null)
             {
-                MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
+                MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
                 if (metaOption != null)
                 {
                     //add to dictOfSelected
@@ -1715,6 +1715,8 @@ public class MetaGameUI : MonoBehaviour
                     arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(true);
                     //switch top texts
                     rightTextTop.text = metaData.textDeselect;
+                    //popUp floating text -> test
+                    GameManager.i.popUiScript.Create(renownBackground.transform.position, 2);
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
             }
@@ -1725,11 +1727,11 @@ public class MetaGameUI : MonoBehaviour
             //maxxed out your available choices
             ModalOutcomeDetails details = new ModalOutcomeDetails()
             {
-                side = GameManager.instance.sideScript.PlayerSide,
+                side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}LIMIT EXCEEDED{1}", colourAlert, colourEnd),
                 textBottom = string.Format("You have selected {0}{1}{2} option{3}<br><br>You have reached the {4}allowable limit{5} (max {6}{7}{8})<br><br>{9}Deselect{10} to free up more choices", 
                     colourNeutral, numOfChoicesCurrent, colourEnd, numOfChoicesCurrent != 1 ? "s" : "", colourNeutral, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
-                sprite = GameManager.instance.guiScript.alertInformationSprite,
+                sprite = GameManager.i.guiScript.alertInformationSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
@@ -1757,7 +1759,7 @@ public class MetaGameUI : MonoBehaviour
         //process metaData
         if (metaData != null)
         {
-            MetaOption metaOption = GameManager.instance.dataScript.GetMetaOption(metaData.metaName);
+            MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
                 //remove from dictOfSelected
@@ -1850,10 +1852,10 @@ public class MetaGameUI : MonoBehaviour
             //confirmation outcome popup
             ModalOutcomeDetails details = new ModalOutcomeDetails()
             {
-                side = GameManager.instance.sideScript.PlayerSide,
+                side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}RESET{1}", colourNeutral, colourEnd),
                 textBottom = "All available options are now ready for selection again",
-                sprite = GameManager.instance.guiScript.infoSprite,
+                sprite = GameManager.i.guiScript.infoSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Reset pressed"
@@ -1874,7 +1876,7 @@ public class MetaGameUI : MonoBehaviour
         int numSelected = 0;
         int totalCost = 0;
         //availableRenown could include bonus renown from taking negative options
-        int availableRenown = Mathf.Max(GameManager.instance.playerScript.Renown, renownCurrent);
+        int availableRenown = Mathf.Max(GameManager.i.playerScript.Renown, renownCurrent);
         ModalOutcomeDetails details = null;
         //must be items on recommended list
         if (count > 0)
@@ -1918,11 +1920,11 @@ public class MetaGameUI : MonoBehaviour
                     //'x' recommendations selected
                     details = new ModalOutcomeDetails()
                     {
-                        side = GameManager.instance.sideScript.PlayerSide,
+                        side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                         textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Renown<br><br>There is a {7}{8}{9} option {10}limit{11}", 
                         colourNeutral, numSelected, colourEnd, numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
-                        sprite = GameManager.instance.guiScript.alertInformationSprite,
+                        sprite = GameManager.i.guiScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
                         reason = "Recommended pressed"
@@ -1933,10 +1935,10 @@ public class MetaGameUI : MonoBehaviour
                     //couldn't afford any recommendations
                     details = new ModalOutcomeDetails()
                     {
-                        side = GameManager.instance.sideScript.PlayerSide,
+                        side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                         textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
-                        sprite = GameManager.instance.guiScript.alertInformationSprite,
+                        sprite = GameManager.i.guiScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
                         reason = "Recommended pressed"
@@ -1948,10 +1950,10 @@ public class MetaGameUI : MonoBehaviour
                 //Insufficient renown
                 details = new ModalOutcomeDetails()
                 {
-                    side = GameManager.instance.sideScript.PlayerSide,
+                    side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                     textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
-                    sprite = GameManager.instance.guiScript.alertInformationSprite,
+                    sprite = GameManager.i.guiScript.alertInformationSprite,
                     modalLevel = 2,
                     modalState = ModalSubState.MetaGame,
                     reason = "Recommended pressed"
@@ -1963,10 +1965,10 @@ public class MetaGameUI : MonoBehaviour
             //No Recommendation present
             details = new ModalOutcomeDetails()
             {
-                side = GameManager.instance.sideScript.PlayerSide,
+                side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                 textBottom = string.Format("No recommendations have been selected as there are {0}no critical issues{1} that need your attention", colourCancel, colourEnd),
-                sprite = GameManager.instance.guiScript.alertInformationSprite,
+                sprite = GameManager.i.guiScript.alertInformationSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
@@ -1993,7 +1995,7 @@ public class MetaGameUI : MonoBehaviour
             // - - - Process Effects
             //
             //use Player node (still viable as new level not yet created)
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
             if (node != null)
             {
                 //loop dict and add all to effects
@@ -2011,7 +2013,7 @@ public class MetaGameUI : MonoBehaviour
                                 Effect effect = data.Value.listOfEffects[i];
                                 if (effect != null)
                                 {
-                                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                    effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
                                     if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
                                     if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                     { builder.AppendFormat("{0}{1}{2}", effectReturn.topText, "\n", effectReturn.bottomText); }
@@ -2034,7 +2036,7 @@ public class MetaGameUI : MonoBehaviour
                 mainState = ModalSubState.MetaGame,
                 metaState = ModalMetaSubState.OptionsConfirm
             };
-            GameManager.instance.inputScript.SetModalState(modalData);
+            GameManager.i.inputScript.SetModalState(modalData);
             //check options have been selected
             if (builder.Length > 0)
             {
@@ -2043,10 +2045,10 @@ public class MetaGameUI : MonoBehaviour
                 //confirmation outcome popup
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {
-                    side = GameManager.instance.sideScript.PlayerSide,
+                    side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}HQ Outcomes{1}", colourCancel, colourEnd),
                     textBottom = builder.ToString(),
-                    sprite = GameManager.instance.guiScript.infoSprite,
+                    sprite = GameManager.i.guiScript.infoSprite,
                     modalLevel = 2,
                     modalState = ModalSubState.MetaGame,
                     reason = "Effect Outcomes"
@@ -2080,7 +2082,7 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseMetaGameOutcome(ModalOutcomeDetails details)
     {
-        GameManager.instance.guiScript.waitUntilDone = true;
+        GameManager.i.guiScript.waitUntilDone = true;
         //wait for outcome window to be closed
         yield return CloseOutcome(details);
         //close metaGameUI
@@ -2096,7 +2098,7 @@ public class MetaGameUI : MonoBehaviour
     {
         EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
         //will wait until ModalOutcome -> CloseModalOutcome resets flag
-        yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
+        yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }
 
     /// <summary>
@@ -2106,11 +2108,11 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseMetaGameConfirm(ModalConfirmDetails details)
     {
-        GameManager.instance.guiScript.waitUntilDone = true;
+        GameManager.i.guiScript.waitUntilDone = true;
         //wait for confirm window to be closed
         yield return CloseConfirm(details);
         //check result -> close and continue or close and revert back to MetaGameUI
-        if (GameManager.instance.confirmScript.CheckResult() == true)
+        if (GameManager.i.confirmScript.CheckResult() == true)
         {
             //True button pressed - > close metaGameUI
             CloseMetaUI();
@@ -2127,7 +2129,7 @@ public class MetaGameUI : MonoBehaviour
     {
         EventManager.instance.PostNotification(EventType.OpenConfirmWindow, this, details);
         //will wait until ModalConfirm -> True or False button pressed which resets flag
-        yield return new WaitUntil(() => GameManager.instance.guiScript.waitUntilDone == false);
+        yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }
 
     //
@@ -2186,9 +2188,9 @@ public class MetaGameUI : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- MetaGameUI.cs -> dictOfSelected{0}{1}", "\n", "\n");
-        if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
+        if (GameManager.i.inputScript.GameState == GameState.MetaGame)
         {
-            if (GameManager.instance.inputScript.ModalMetaState == ModalMetaSubState.PlayerOptions)
+            if (GameManager.i.inputScript.ModalMetaState == ModalMetaSubState.PlayerOptions)
             {
                 if (dictOfSelected.Count > 0)
                 {

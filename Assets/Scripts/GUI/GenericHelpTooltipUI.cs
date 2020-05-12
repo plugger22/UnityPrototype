@@ -20,7 +20,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         {
             Debug.LogWarning("Invalid listOfHelpData (Null or Empty)");
             //default data
-            List<HelpData> tempList = GameManager.instance.helpScript.GetHelpData("test0");
+            List<HelpData> tempList = GameManager.i.helpScript.GetHelpData("test0");
             if (tempList != null)
             { listOfHelp.AddRange(tempList); }
         }
@@ -53,7 +53,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     public void OnPointerEnter(PointerEventData eventData)
     {
         //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
+        if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
         {
             //Tool tip
             onMouseFlag = true;
@@ -68,12 +68,12 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.instance.guiScript.CheckIsBlocked(2) == false)
+        if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
         {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipHelpScript.CloseTooltip("GenericHelpTooltipUI.cs -> OnPointerExit");
+            GameManager.i.tooltipHelpScript.CloseTooltip("GenericHelpTooltipUI.cs -> OnPointerExit");
         }
     }
 
@@ -86,7 +86,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.ModalUI)
+        if (onMouseFlag == true && GameManager.i.inputScript.ModalState == ModalState.ModalUI)
         {
             if (listOfHelp != null)
             {
@@ -96,9 +96,9 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                     Vector3 screenPos = transform.position;
                     screenPos.x += x_offset;
                     screenPos.y += y_offset;
-                    while (GameManager.instance.tooltipHelpScript.CheckTooltipActive() == false && GameManager.instance.guiScript.CheckIsBlocked(2) == false)
+                    while (GameManager.i.tooltipHelpScript.CheckTooltipActive() == false && GameManager.i.guiScript.CheckIsBlocked(2) == false)
                     {
-                        GameManager.instance.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
+                        GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
                         yield return null;
                     }
                 }

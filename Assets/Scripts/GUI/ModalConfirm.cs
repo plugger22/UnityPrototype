@@ -108,7 +108,7 @@ public class ModalConfirm : MonoBehaviour
         if (details != null)
         {
             //close tooltips
-            GameManager.instance.guiScript.SetTooltipsOff();
+            GameManager.i.guiScript.SetTooltipsOff();
 
             topText.text = details.topText;
             bottomText.text = details.bottomText;
@@ -116,12 +116,12 @@ public class ModalConfirm : MonoBehaviour
             trueText.text = details.buttonTrue;
 
             //set modal true
-            GameManager.instance.guiScript.SetIsBlocked(true, details.modalLevel);
+            GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
             //pass through data for when the confirm window is closed
             modalLevel = details.modalLevel;
             modalState = details.modalState;
             //set states
-            GameManager.instance.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Confirm });
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Confirm });
             Debug.LogFormat("[UI] ModalConfirm.cs -> SetModalConfirm{0}", "\n");
             //switch on object
             confirmObject.SetActive(true);
@@ -158,11 +158,11 @@ public class ModalConfirm : MonoBehaviour
         confirmObject.SetActive(false);
         Debug.LogFormat("[UI] ModalConfirm.cs -> CloseModalConfirm{0}", "\n");
         //set modal false
-        GameManager.instance.guiScript.SetIsBlocked(false, modalLevel);
+        GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
-        GameManager.instance.inputScript.ResetStates(modalState);
+        GameManager.i.inputScript.ResetStates(modalState);
         //clear flag so execution can continue (if halted to await outcome)
-        GameManager.instance.guiScript.waitUntilDone = false;
+        GameManager.i.guiScript.waitUntilDone = false;
     }
 
     /// <summary>

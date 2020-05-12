@@ -115,7 +115,7 @@ public class TopicUI : MonoBehaviour
             case GameState.FollowOnInitialisation:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -127,7 +127,7 @@ public class TopicUI : MonoBehaviour
     private void SubInitialiseSessionStart()
     {
         //initialise arrays
-        int maxNumOfOptions = GameManager.instance.topicScript.maxOptions;
+        int maxNumOfOptions = GameManager.i.topicScript.maxOptions;
         //hard coded max num of options based on how many fields in class (need to change if maxOptions increases)
         if (maxNumOfOptions > 0 && maxNumOfOptions < 5)
         {
@@ -225,9 +225,9 @@ public class TopicUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        topicDefault = GameManager.instance.guiScript.topicDefaultSprite;
-        topicOptionValid = GameManager.instance.guiScript.topicOptionValidSprite;
-        topicOptionInvalid = GameManager.instance.guiScript.topicOptionInvalidSprite;
+        topicDefault = GameManager.i.guiScript.topicDefaultSprite;
+        topicOptionValid = GameManager.i.guiScript.topicOptionValidSprite;
+        topicOptionInvalid = GameManager.i.guiScript.topicOptionInvalidSprite;
         Debug.Assert(topicDefault != null, "Invalid topicDefault sprite (Null)");
         Debug.Assert(topicOptionValid != null, "Invalid topicOptionValid sprite (Null)");
         Debug.Assert(topicOptionInvalid != null, "Invalid topicOptionInvalid sprite (Null)");
@@ -337,7 +337,7 @@ public class TopicUI : MonoBehaviour
     private void InitialiseTooltips()
     {
         //guiManager.cs provides a standard ShowMe tooltip implementation
-        Tuple<string, string, string> texts = GameManager.instance.guiScript.GetShowMeTooltip();
+        Tuple<string, string, string> texts = GameManager.i.guiScript.GetShowMeTooltip();
         tooltipShowMe.tooltipHeader = texts.Item1;
         tooltipShowMe.tooltipMain = texts.Item2;
         tooltipShowMe.tooltipDetails = texts.Item3;
@@ -348,7 +348,7 @@ public class TopicUI : MonoBehaviour
         tooltipImage.y_offset = 10;
         tooltipBoss.x_offset = -275;
         //help
-        List<HelpData> listOfHelp = GameManager.instance.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
+        List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
             //generic help
@@ -408,7 +408,7 @@ public class TopicUI : MonoBehaviour
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                imageTopic.sprite = GameManager.instance.guiScript.topicDefaultSprite;
+                imageTopic.sprite = GameManager.i.guiScript.topicDefaultSprite;
             }
             //HQ boss
             if (data.isBoss == true)
@@ -492,7 +492,7 @@ public class TopicUI : MonoBehaviour
                 buttonHelp_specific.gameObject.SetActive(true);
                 if (helpSpecific != null)
                 {
-                    List<HelpData> listOfHelpData = GameManager.instance.helpScript.GetHelpData(data.listOfHelp);
+                    List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(data.listOfHelp);
                     if (listOfHelpData != null)
                     { helpSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
                     else { buttonHelp_specific.gameObject.SetActive(false); }
@@ -528,8 +528,8 @@ public class TopicUI : MonoBehaviour
             topicObject.transform.position = screenPos;
             //set states
             ModalStateData package = new ModalStateData() { mainState = ModalSubState.Topic };
-            GameManager.instance.inputScript.SetModalState(package);
-            GameManager.instance.guiScript.SetIsBlocked(true);
+            GameManager.i.inputScript.SetModalState(package);
+            GameManager.i.guiScript.SetIsBlocked(true);
             Debug.LogFormat("[UI] TopicUI.cs -> SetTopicDisplay{0}", "\n");
             //initialise Canvas (switches one everything once all ready to go)
             topicCanvas.gameObject.SetActive(true);
@@ -544,12 +544,12 @@ public class TopicUI : MonoBehaviour
     /// </summary>
     private void CloseTopicUI(int isOutcome)
     {
-        GameManager.instance.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
-        GameManager.instance.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         topicCanvas.gameObject.SetActive(false);
         Debug.LogFormat("[UI] TopicUI.cs -> CloseTopicDisplay{0}", "\n");
         //switch of AlertUI 
-        GameManager.instance.alertScript.CloseAlertUI();
+        GameManager.i.alertScript.CloseAlertUI();
 
         /*//set game state -> EDIT: Don't do this as you are going straight to the maininfoApp on every occasion and resetting the state allows clicks to node in the interim.
         GameManager.instance.inputScript.ResetStates();
@@ -559,7 +559,7 @@ public class TopicUI : MonoBehaviour
         if (isOutcome < 0)
         {
             //No outcome -> close topicUI and go straight to MainInfoApp
-            GameManager.instance.guiScript.waitUntilDone = false;
+            GameManager.i.guiScript.waitUntilDone = false;
         }
     }
 
@@ -571,7 +571,7 @@ public class TopicUI : MonoBehaviour
         //set game state
         ModalStateData package = new ModalStateData();
         package.mainState = ModalSubState.Topic;
-        GameManager.instance.inputScript.SetModalState(package);
+        GameManager.i.inputScript.SetModalState(package);
         //restore topicUI
         topicCanvas.gameObject.SetActive(true);
         Debug.LogFormat("[UI] TopicUI.cs -> RestoreTopicUI after 'ShowMe'{0}", "\n");
@@ -590,14 +590,14 @@ public class TopicUI : MonoBehaviour
                 //close TopicUI (with an arbitrary parameter > -1 to indicate outcome window required)
                 CloseTopicUI(1);
                 //actual processing of selected option is handled by topicManager.cs
-                GameManager.instance.topicScript.ProcessIgnore();
+                GameManager.i.topicScript.ProcessIgnore();
             }
             else
             {
                 //close TopicUI without an Outcome dialogue
                 CloseTopicUI(-1);
-                GameManager.instance.topicScript.ProcessIgnoreBossOpinion();
-                GameManager.instance.topicScript.ProcessTopicAdmin();
+                GameManager.i.topicScript.ProcessIgnoreBossOpinion();
+                GameManager.i.topicScript.ProcessTopicAdmin();
             }
         }
         else
@@ -622,7 +622,7 @@ public class TopicUI : MonoBehaviour
                 restoreEvent = EventType.TopicDisplayRestore,
                 nodeID = dataPackage.nodeID
             };
-            GameManager.instance.guiScript.SetShowMe(data);
+            GameManager.i.guiScript.SetShowMe(data);
         }
         /*else { Debug.LogWarningFormat("Invalid nodeID \"{0}\" (expected to be > -1)", dataPackage.nodeID); } -> Edit: commented out as you could press SPACE and there might not be a showMe button*/
     }
@@ -633,7 +633,7 @@ public class TopicUI : MonoBehaviour
     /// <param name="optionIndex"></param>
     private void ProcessTopicOption(int optionIndex)
     {
-        if (optionIndex >= 0 && optionIndex < GameManager.instance.topicScript.maxOptions)
+        if (optionIndex >= 0 && optionIndex < GameManager.i.topicScript.maxOptions)
         {
             //check option is valid
             if (dataPackage.listOfOptions[optionIndex].isValid == true)
@@ -641,7 +641,7 @@ public class TopicUI : MonoBehaviour
                 //close TopicUI (with parameter > -1 to indicate outcome window required)
                 CloseTopicUI(optionIndex);
                 //actual processing of selected option is handled by topicManager.cs
-                GameManager.instance.topicScript.ProcessOption(optionIndex);
+                GameManager.i.topicScript.ProcessOption(optionIndex);
             }
         }
         else

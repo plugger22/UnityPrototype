@@ -59,7 +59,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         /*mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;*/
     }
 
@@ -98,7 +98,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (myCoroutine != null)
         {
             StopCoroutine(myCoroutine);
-            GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerExit");
+            GameManager.i.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerExit");
             //cancel node highlight
             if (nodeID > -1 && isNodeHighlightOn == true)
             {
@@ -125,7 +125,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerClick");
+            GameManager.i.tooltipGenericScript.CloseTooltip("GenericTooltipUI.cs -> OnPointerClick");
         }
     }
 
@@ -141,10 +141,10 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             Vector3 position = transform.position;
             position.x += x_offset;
             position.y += y_offset;
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
                 GenericTooltipData data = new GenericTooltipData() { screenPos = position, main = tooltipMain, header = tooltipHeader, details = tooltipDetails, tooltipType = tooltipType };
-                GameManager.instance.tooltipGenericScript.SetTooltip (data);
+                GameManager.i.tooltipGenericScript.SetTooltip (data);
                 yield return null;
             }
             /*//fade in

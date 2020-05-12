@@ -149,7 +149,7 @@ public class InputManager : MonoBehaviour
     {
         ModalSubState = modal;
         //reset gamestate only if modalLevel is 0
-        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 0)
+        if (GameManager.i.modalGUIScript.CheckModalLevel() == 0)
         {
             //only reset back to normal if there is no longer a modal state
             if (modal == ModalSubState.None)
@@ -212,12 +212,12 @@ public class InputManager : MonoBehaviour
                                 break;
                             default:
                                 //if debug overlay on then switch this off first before any game UI element
-                                if (GameManager.instance.debugScript.showGUI == false)
+                                if (GameManager.i.debugScript.showGUI == false)
                                 {
                                     //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
                                     EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
                                 }
-                                else { GameManager.instance.debugScript.showGUI = false; }
+                                else { GameManager.i.debugScript.showGUI = false; }
                                 break;
                         }
                     }
@@ -295,7 +295,7 @@ public class InputManager : MonoBehaviour
                     }
                     else if (Input.GetButtonDown("ShowAutoRun") == true)
                     {
-                        GameManager.instance.sideScript.ShowAutoRunMessage();
+                        GameManager.i.sideScript.ShowAutoRunMessage();
                         /*//debug
                         GameManager.instance.actorScript.InitialiseReview();*/
                     }
@@ -416,7 +416,7 @@ public class InputManager : MonoBehaviour
                                     if (Input.GetButtonDown("Multipurpose") == true)
                                     {
                                         Debug.LogFormat("[Tst] InputManager.cs -> ProcessKeyInput: SKIP REVIEW{0}", "\n");
-                                        GameManager.instance.reviewScript.reviewWaitTime = 0.0f;
+                                        GameManager.i.reviewScript.reviewWaitTime = 0.0f;
                                     }
                                     break;
                                 case ModalReviewSubState.Close:
@@ -443,7 +443,7 @@ public class InputManager : MonoBehaviour
                             break;
                         case ModalSubState.InfoDisplay:
                             //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
-                            if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                            if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
                             {
                                 //what type of info display?
                                 switch (_modalInfoState)
@@ -523,7 +523,7 @@ public class InputManager : MonoBehaviour
                             break;
                         case ModalSubState.MetaGame:
                             //MetaGame displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
-                            if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                            if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
                             {
                                 if (Input.GetButtonDown("Cancel") == true)
                                 {
@@ -622,7 +622,7 @@ public class InputManager : MonoBehaviour
                         break;
                     case ModalSubState.InfoDisplay:
                         //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
-                        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                        if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
                         {
                             //what type of info display?
                             switch (_modalInfoState)
@@ -642,7 +642,7 @@ public class InputManager : MonoBehaviour
                         break;
                     case ModalSubState.MetaGame:
                         //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
-                        if (GameManager.instance.modalGUIScript.CheckModalLevel() == 1)
+                        if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
                         {
                             switch (_modalMetaState)
                             {
@@ -671,7 +671,7 @@ public class InputManager : MonoBehaviour
     public string DebugDisplayGameState()
     {
         StringBuilder builder = new StringBuilder();
-        int modalLevel = GameManager.instance.modalGUIScript.CheckModalLevel();
+        int modalLevel = GameManager.i.modalGUIScript.CheckModalLevel();
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
@@ -679,27 +679,27 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalSubState -> {0}{1}", ModalSubState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
         builder.AppendFormat(" ModalInfo -> {0}{1}", ModalInfoState, "\n");
-        builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.instance.guiScript.CheckIsBlocked(modalLevel), "\n");
-        builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.instance.nodeScript.NodeShowFlag, "\n");
-        builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.instance.turnScript.haltExecution, "\n");
-        builder.AppendFormat(" {0} PlayerSide -> {1}{2}{3}", "\n", GameManager.instance.sideScript.PlayerSide.name, "\n", "\n");
-        builder.AppendFormat(" currentSide -> {0}{1}", GameManager.instance.turnScript.currentSide.name, "\n");
-        builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.instance.sideScript.authorityCurrent, "\n");
-        builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.instance.sideScript.resistanceCurrent, "\n", "\n");
-        builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.instance.sideScript.authorityOverall, "\n");
-        builder.AppendFormat(" ResistanceOverall -> {0}{1}{2}", GameManager.instance.sideScript.resistanceOverall, "\n", "\n");
-        builder.AppendFormat(" AuthoritySecurityState -> {0}{1}", GameManager.instance.turnScript.authoritySecurityState, "\n");
+        builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.i.guiScript.CheckIsBlocked(modalLevel), "\n");
+        builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.i.nodeScript.NodeShowFlag, "\n");
+        builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.i.turnScript.haltExecution, "\n");
+        builder.AppendFormat(" {0} PlayerSide -> {1}{2}{3}", "\n", GameManager.i.sideScript.PlayerSide.name, "\n", "\n");
+        builder.AppendFormat(" currentSide -> {0}{1}", GameManager.i.turnScript.currentSide.name, "\n");
+        builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.i.sideScript.authorityCurrent, "\n");
+        builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.i.sideScript.resistanceCurrent, "\n", "\n");
+        builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.i.sideScript.authorityOverall, "\n");
+        builder.AppendFormat(" ResistanceOverall -> {0}{1}{2}", GameManager.i.sideScript.resistanceOverall, "\n", "\n");
+        builder.AppendFormat(" AuthoritySecurityState -> {0}{1}", GameManager.i.turnScript.authoritySecurityState, "\n");
         /*builder.AppendFormat(" ResistanceState -> {0}{1}{2}", GameManager.instance.turnScript.resistanceState, "\n", "\n");*/
-        builder.AppendFormat(" immediateAuthorityFlag -> {0}{1}", GameManager.instance.aiScript.immediateFlagAuthority, "\n");
-        builder.AppendFormat(" immediateResistanceFlag -> {0}{1}{2}", GameManager.instance.aiScript.immediateFlagResistance, "\n", "\n");
-        builder.AppendFormat(" Authority Player -> {0}{1}", GameManager.instance.playerScript.GetPlayerNameAuthority(), "\n");
-        builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.instance.playerScript.GetPlayerNameResistance(), "\n", "\n");
-        builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.instance.hqScript.ApprovalAuthority, "\n");
-        builder.AppendFormat(" HQ Approval Resistance -> {0}{1}", GameManager.instance.hqScript.ApprovalResistance, "\n");
+        builder.AppendFormat(" immediateAuthorityFlag -> {0}{1}", GameManager.i.aiScript.immediateFlagAuthority, "\n");
+        builder.AppendFormat(" immediateResistanceFlag -> {0}{1}{2}", GameManager.i.aiScript.immediateFlagResistance, "\n", "\n");
+        builder.AppendFormat(" Authority Player -> {0}{1}", GameManager.i.playerScript.GetPlayerNameAuthority(), "\n");
+        builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.i.playerScript.GetPlayerNameResistance(), "\n", "\n");
+        builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.i.hqScript.ApprovalAuthority, "\n");
+        builder.AppendFormat(" HQ Approval Resistance -> {0}{1}", GameManager.i.hqScript.ApprovalResistance, "\n");
         //backgrounds
         builder.AppendLine();
         builder.AppendLine();
-        builder.Append(GameManager.instance.modalGUIScript.DebugDisplayBackgrounds());
+        builder.Append(GameManager.i.modalGUIScript.DebugDisplayBackgrounds());
         return builder.ToString();
     }
     #endregion

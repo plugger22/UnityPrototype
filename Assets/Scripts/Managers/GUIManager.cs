@@ -412,16 +412,16 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourDataGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourDataTerrible = GameManager.instance.colourScript.GetColour(ColourType.dataTerrible);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourDataGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourDataTerrible = GameManager.i.colourScript.GetColour(ColourType.dataTerrible);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
         //colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
 
@@ -440,7 +440,7 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
         arrayIsBlocked[level] = isBlocked;
         Debug.Log(string.Format("GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
-        GameManager.instance.modalGUIScript.SetModalMasks(isBlocked, level);
+        GameManager.i.modalGUIScript.SetModalMasks(isBlocked, level);
     }
 
     /// <summary>
@@ -465,7 +465,7 @@ public class GUIManager : MonoBehaviour
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         //sprite can be override in case statements below
         details.sprite = infoSprite;
-        details.side = GameManager.instance.sideScript.PlayerSide;
+        details.side = GameManager.i.sideScript.PlayerSide;
         switch (type)
         {
             case AlertType.SomethingWrong:
@@ -479,14 +479,14 @@ public class GUIManager : MonoBehaviour
                 details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
                 break;
             case AlertType.PlayerStatus:
-                switch (GameManager.instance.playerScript.status)
+                switch (GameManager.i.playerScript.status)
                 {
                     case ActorStatus.Captured:
                         details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
                         break;
                     case ActorStatus.Inactive:
-                        details.sprite = GameManager.instance.playerScript.sprite;
-                        switch (GameManager.instance.playerScript.inactiveStatus)
+                        details.sprite = GameManager.i.playerScript.sprite;
+                        switch (GameManager.i.playerScript.inactiveStatus)
                         {
                             case ActorInactive.Breakdown:
                                 details.textTop = string.Format("This action can't be taken because you{0}are undergoing a{1}{2}{3}STRESS BREAKDOWN{4}", "\n", "\n", "\n",
@@ -507,7 +507,7 @@ public class GUIManager : MonoBehaviour
                 break;
             case AlertType.ActorStatus:
                 //data is actorID
-                Actor actor = GameManager.instance.dataScript.GetActor(data);
+                Actor actor = GameManager.i.dataScript.GetActor(data);
                 if (actor != null)
                 {
                     details.sprite = actor.sprite;
@@ -548,7 +548,7 @@ public class GUIManager : MonoBehaviour
                 details.textBottom = string.Format("The Player now has {0}<b>Manual control</b>{1} of both sides", colourNeutral, colourEnd);
                 break;
             case AlertType.DebugPlayer:
-                switch (GameManager.instance.sideScript.PlayerSide.level)
+                switch (GameManager.i.sideScript.PlayerSide.level)
                 {
                     case 1:
                         //authority
@@ -606,10 +606,10 @@ public class GUIManager : MonoBehaviour
                 //set game state
                 ModalStateData package = new ModalStateData();
                 package.mainState = ModalSubState.ShowMe;
-                GameManager.instance.inputScript.SetModalState(package);
+                GameManager.i.inputScript.SetModalState(package);
                 //alert message
-                GameManager.instance.nodeScript.NodeShowFlag = 1;
-                GameManager.instance.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
+                GameManager.i.nodeScript.NodeShowFlag = 1;
+                GameManager.i.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
                 //highlight
                 if (data.nodeID > -1)
                 { EventManager.instance.PostNotification(EventType.FlashNodeStart, this, showMeData.nodeID, "GUIManager.cs -> SetShowMe"); }
@@ -673,7 +673,7 @@ public class GUIManager : MonoBehaviour
         if (details != null)
         {
             //don't add anything to the pipeline during an autorun
-            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+            if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
                 if (details.type != MsgPipelineType.None)
                 {
@@ -730,7 +730,7 @@ public class GUIManager : MonoBehaviour
         }
         InfoPipelineDictClear();
         //only do topic if level or campaign win state is 'None' (level win state incorporates campaign win state where appropriate)
-        if (GameManager.instance.turnScript.winStateLevel == WinStateLevel.None)
+        if (GameManager.i.turnScript.winStateLevel == WinStateLevel.None)
         {
             yield return StartCoroutine("Topic");
             yield return new WaitForSecondsRealtime(pipelineWait);
@@ -777,12 +777,12 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator Topic()
     {
-        TopicGlobal topicGlobal = GameManager.instance.topicScript.GetTopicGlobal();
+        TopicGlobal topicGlobal = GameManager.i.topicScript.GetTopicGlobal();
         Debug.LogFormat("[Pip] GUIManager.cs -> show {0} topic{1}", topicGlobal, "\n");
         switch (topicGlobal)
         {
             case TopicGlobal.Decision:
-                if (GameManager.instance.topicDisplayScript.CheckIsTopic() == true)
+                if (GameManager.i.topicDisplayScript.CheckIsTopic() == true)
                 {
                     //switch of all modal 0 tooltips
                     SetTooltipsOff();
@@ -795,7 +795,7 @@ public class GUIManager : MonoBehaviour
                 //switch of all modal 0 tooltips
                 SetTooltipsOff();
                 waitUntilDone = true;
-                GameManager.instance.actorScript.InitialiseReview();
+                GameManager.i.actorScript.InitialiseReview();
                 break;
             case TopicGlobal.None:
             default:
@@ -821,7 +821,7 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     private void InitialiseTopic()
     {
-        GameManager.instance.topicDisplayScript.ActivateTopicDisplay();
+        GameManager.i.topicDisplayScript.ActivateTopicDisplay();
     }
 
     /// <summary>
@@ -830,39 +830,39 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     private void InitialiseInfoApp(GlobalSide playerSide)
     {
-        MainInfoData data = GameManager.instance.dataScript.UpdateCurrentItemData();
+        MainInfoData data = GameManager.i.dataScript.UpdateCurrentItemData();
         //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
-        ActorStatus playerStatus = GameManager.instance.playerScript.status;
+        ActorStatus playerStatus = GameManager.i.playerScript.status;
         if (playerStatus == ActorStatus.Active)
         { EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
         else
         {
-            Sprite sprite = GameManager.instance.guiScript.errorSprite;
+            Sprite sprite = GameManager.i.guiScript.errorSprite;
             string text = ""; //empty
             switch (playerStatus)
             {
                 case ActorStatus.Captured:
                     //special case of player losing campaign by being locked up permanently
-                    if (GameManager.instance.turnScript.winReasonCampaign != WinReasonCampaign.Innocence)
+                    if (GameManager.i.turnScript.winReasonCampaign != WinReasonCampaign.Innocence)
                     {
                         text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
-                        sprite = GameManager.instance.guiScript.capturedSprite;
+                        sprite = GameManager.i.guiScript.capturedSprite;
                     }
                     break;
                 case ActorStatus.Inactive:
-                    switch (GameManager.instance.playerScript.inactiveStatus)
+                    switch (GameManager.i.playerScript.inactiveStatus)
                     {
                         case ActorInactive.Breakdown:
                             text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
+                            sprite = GameManager.i.guiScript.infoSprite;
                             break;
                         case ActorInactive.LieLow:
                             text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
+                            sprite = GameManager.i.guiScript.infoSprite;
                             break;
                         case ActorInactive.StressLeave:
                             text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.instance.guiScript.infoSprite;
+                            sprite = GameManager.i.guiScript.infoSprite;
                             break;
                     }
                     break;
@@ -896,9 +896,9 @@ public class GUIManager : MonoBehaviour
                 {
                     ModalOutcomeDetails details = new ModalOutcomeDetails();
                     if (string.IsNullOrEmpty(pipe.sideName) == false)
-                    { details.side = GameManager.instance.dataScript.GetGlobalSide(pipe.sideName); }
+                    { details.side = GameManager.i.dataScript.GetGlobalSide(pipe.sideName); }
                     if (string.IsNullOrEmpty(pipe.spriteName) == false)
-                    { details.sprite = GameManager.instance.dataScript.GetSprite(pipe.spriteName); }
+                    { details.sprite = GameManager.i.dataScript.GetSprite(pipe.spriteName); }
                     details.textTop = pipe.textTop;
                     details.textBottom = pipe.textBottom;
                     details.modalLevel = pipe.modalLevel;
@@ -929,9 +929,9 @@ public class GUIManager : MonoBehaviour
     public void SetTooltipsOff()
     {
         //exit any generic or node tooltips
-        GameManager.instance.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
-        GameManager.instance.tooltipNodeScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
-        GameManager.instance.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.i.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.i.tooltipNodeScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.i.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
     }
 
     /// <summary>
@@ -1003,7 +1003,7 @@ public class GUIManager : MonoBehaviour
     public GenericTooltipData GetCompatibilityTooltip()
     {
         string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player",
-            GameManager.instance.guiScript.compatibilityIcon,
+            GameManager.i.guiScript.compatibilityIcon,
             GameManager.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
         string tooltipMain = string.Format("<align=\"left\">Due to Personalities{0}   {1} Good relations{2}   {3} Bad relations {4}{5} of Stars shows {6} of relationship.{7}{8}, doesn't change", "\n",
             GameManager.GetFormattedString(starIconGood, ColourType.goodText), "\n",

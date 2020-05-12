@@ -25,24 +25,24 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
         {
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                if (GameManager.i.guiScript.CheckIsBlocked() == false)
                 {
-                    switch (GameManager.instance.aiSideTabScript.hackingStatus)
+                    switch (GameManager.i.aiSideTabScript.hackingStatus)
                     {
                         case HackingStatus.Initialising:
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInitialising);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingInitialising);
                             break;
                         case HackingStatus.Rebooting:
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
                             break;
                         case HackingStatus.Offline:
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingOffline);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingOffline);
                             break;
                         case HackingStatus.InsufficientRenown:
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
                             break;
                         case HackingStatus.Indisposed:
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.HackingIndisposed);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingIndisposed);
                             break;
                         case HackingStatus.Possible:
                             /*//update hacking status
@@ -51,8 +51,8 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                             EventManager.instance.PostNotification(EventType.AIDisplayOpen, this, null, "AISideTabMouseUI.cs -> OnPointerClick");
                             break;
                         default:
-                            Debug.LogWarningFormat("Invalid aiSideTabUI.cs hackingStatus {0}", GameManager.instance.aiSideTabScript.hackingStatus);
-                            GameManager.instance.guiScript.SetAlertMessage(AlertType.SomethingWrong);
+                            Debug.LogWarningFormat("Invalid aiSideTabUI.cs hackingStatus {0}", GameManager.i.aiSideTabScript.hackingStatus);
+                            GameManager.i.guiScript.SetAlertMessage(AlertType.SomethingWrong);
                             break;
                     }
                 }

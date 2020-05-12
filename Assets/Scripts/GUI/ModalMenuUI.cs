@@ -35,10 +35,10 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// </summary>
     private void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
-        mouseOverFade = GameManager.instance.guiScript.tooltipFade;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        mouseOverFade = GameManager.i.guiScript.tooltipFade;
         //need to get nodeObject details at start to accomodate OnPointerEnter & node component details later in coroutine
-        nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
+        nodeObject = GameManager.i.dataScript.GetNodeObject(nodeID);
 
     }
 
@@ -84,16 +84,16 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             case ActionMenuType.Node:
             case ActionMenuType.NodeGear:
-                GameManager.instance.tooltipNodeScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
+                GameManager.i.tooltipNodeScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
             case ActionMenuType.Actor:
-                GameManager.instance.tooltipActorScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
+                GameManager.i.tooltipActorScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
             case ActionMenuType.Player:
-                GameManager.instance.tooltipPlayerScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
+                GameManager.i.tooltipPlayerScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
             case ActionMenuType.Gear:
-                GameManager.instance.tooltipGenericScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
+                GameManager.i.tooltipGenericScript.CloseTooltip("ModalMenuUI.cs -> OnPointerExit");
                 break;
         }
     }
@@ -115,25 +115,25 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 case ActionMenuType.Node:
                 case ActionMenuType.NodeGear:
                     //need to regularly update node details, rather than just at game start
-                    nodeObject = GameManager.instance.dataScript.GetNodeObject(nodeID);
+                    nodeObject = GameManager.i.dataScript.GetNodeObject(nodeID);
                     if (nodeObject != null)
                     { node = nodeObject.GetComponent<Node>(); }
                     //do once
-                    while (GameManager.instance.tooltipNodeScript.CheckTooltipActive() == false)
+                    while (GameManager.i.tooltipNodeScript.CheckTooltipActive() == false)
                     {
                         List<string> activeList = new List<string>();
-                        switch (GameManager.instance.turnScript.currentSide.level)
+                        switch (GameManager.i.turnScript.currentSide.level)
                         {
                             case 1:
                                 //Authority 
-                                activeList = GameManager.instance.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
+                                activeList = GameManager.i.dataScript.GetActiveContactsAtNodeAuthority(nodeID);
                                 break;
                             case 2:
-                                activeList = GameManager.instance.dataScript.GetActiveContactsAtNodeResistance(nodeID);
+                                activeList = GameManager.i.dataScript.GetActiveContactsAtNodeResistance(nodeID);
                                 break;
                         }
                         List<EffectDataTooltip> effectsList = node.GetListOfOngoingEffectTooltips();
-                        List<string> targetList = GameManager.instance.targetScript.GetTargetTooltip(node.targetName, node.isTargetKnown);
+                        List<string> targetList = GameManager.i.targetScript.GetTargetTooltip(node.targetName, node.isTargetKnown);
                         List<string> teamList = new List<string>();
                         List<Team> listOfTeams = node.GetListOfTeams();
                         if (listOfTeams.Count > 0)
@@ -158,40 +158,40 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                             listOfTargets = targetList,
                             tooltipPos = positionNode
                         };
-                        GameManager.instance.tooltipNodeScript.SetTooltip(nodeTooltip);
+                        GameManager.i.tooltipNodeScript.SetTooltip(nodeTooltip);
                         yield return null;
                     }
                     //fade in
-                    while (GameManager.instance.tooltipNodeScript.GetOpacity() < 1.0)
+                    while (GameManager.i.tooltipNodeScript.GetOpacity() < 1.0)
                     {
-                        alphaCurrent = GameManager.instance.tooltipNodeScript.GetOpacity();
+                        alphaCurrent = GameManager.i.tooltipNodeScript.GetOpacity();
                         alphaCurrent += Time.deltaTime / mouseOverFade;
-                        GameManager.instance.tooltipNodeScript.SetOpacity(alphaCurrent);
+                        GameManager.i.tooltipNodeScript.SetOpacity(alphaCurrent);
                         yield return null;
                     }
                     break;
                 case ActionMenuType.Gear:
-                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
                     if (gear != null)
                     {
-                        GenericTooltipDetails details = GameManager.instance.gearScript.GetGearTooltip(gear);
+                        GenericTooltipDetails details = GameManager.i.gearScript.GetGearTooltip(gear);
                         if (details != null)
                         {
                             //do once
-                            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false)
+                            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
                             {
                                 //adjust position prior to sending
                                 Vector3 positionGear = rectTransform.position;
                                 GenericTooltipData data = new GenericTooltipData()
                                 { screenPos = positionGear, main = details.textMain, header = details.textHeader, details = details.textDetails};
-                                GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                                GameManager.i.tooltipGenericScript.SetTooltip(data);
                                 yield return null;
                                 //fade in
-                                while (GameManager.instance.tooltipGenericScript.GetOpacity() < 1.0)
+                                while (GameManager.i.tooltipGenericScript.GetOpacity() < 1.0)
                                 {
-                                    alphaCurrent = GameManager.instance.tooltipGenericScript.GetOpacity();
+                                    alphaCurrent = GameManager.i.tooltipGenericScript.GetOpacity();
                                     alphaCurrent += Time.deltaTime / mouseOverFade;
-                                    GameManager.instance.tooltipGenericScript.SetOpacity(alphaCurrent);
+                                    GameManager.i.tooltipGenericScript.SetOpacity(alphaCurrent);
                                     yield return null;
                                 }
                             }
@@ -199,26 +199,26 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
                 case ActionMenuType.Actor:
-                    GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(actorSlotID, side);
+                    GlobalSide side = GameManager.i.sideScript.PlayerSide;
+                    Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, side);
                     if (actor != null)
                     {
                         //do once
-                        while (GameManager.instance.tooltipActorScript.CheckTooltipActive() == false)
+                        while (GameManager.i.tooltipActorScript.CheckTooltipActive() == false)
                         {
                             //adjust position prior to sending
                             Vector3 positionActor = rectTransform.position;
                             positionActor.x += 70;
                             positionActor.y -= 100;
                             ActorTooltipData actorTooltip = actor.GetTooltipData(positionActor);
-                            GameManager.instance.tooltipActorScript.SetTooltip(actorTooltip, actor.slotID);
+                            GameManager.i.tooltipActorScript.SetTooltip(actorTooltip, actor.slotID);
                             yield return null;
                             //fade in
-                            while (GameManager.instance.tooltipActorScript.GetOpacity() < 1.0)
+                            while (GameManager.i.tooltipActorScript.GetOpacity() < 1.0)
                             {
-                                alphaCurrent = GameManager.instance.tooltipActorScript.GetOpacity();
+                                alphaCurrent = GameManager.i.tooltipActorScript.GetOpacity();
                                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                                GameManager.instance.tooltipActorScript.SetOpacity(alphaCurrent);
+                                GameManager.i.tooltipActorScript.SetOpacity(alphaCurrent);
                                 yield return null;
                             }
                         }
@@ -226,20 +226,20 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     break;
                 case ActionMenuType.Player:
                         //do once
-                        while (GameManager.instance.tooltipPlayerScript.CheckTooltipActive() == false)
+                        while (GameManager.i.tooltipPlayerScript.CheckTooltipActive() == false)
                         {
                             //adjust position prior to sending
                             Vector3 positionPlayer = rectTransform.position;
                             positionPlayer.x += 70;
                             positionPlayer.y -= 100;
-                            GameManager.instance.tooltipPlayerScript.SetTooltip(positionPlayer);
+                            GameManager.i.tooltipPlayerScript.SetTooltip(positionPlayer);
                             yield return null;
                             //fade in
-                            while (GameManager.instance.tooltipPlayerScript.GetOpacity() < 1.0)
+                            while (GameManager.i.tooltipPlayerScript.GetOpacity() < 1.0)
                             {
-                                alphaCurrent = GameManager.instance.tooltipPlayerScript.GetOpacity();
+                                alphaCurrent = GameManager.i.tooltipPlayerScript.GetOpacity();
                                 alphaCurrent += Time.deltaTime / mouseOverFade;
-                                GameManager.instance.tooltipPlayerScript.SetOpacity(alphaCurrent);
+                                GameManager.i.tooltipPlayerScript.SetOpacity(alphaCurrent);
                                 yield return null;
                             }
                         }

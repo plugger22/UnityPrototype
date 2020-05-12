@@ -62,7 +62,7 @@ public class SecretManager : MonoBehaviour
                 SubInitialiseLevelStart();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -75,7 +75,7 @@ public class SecretManager : MonoBehaviour
         //
         // - - - SecretTypes - - -
         //
-        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.instance.dataScript.GetDictOfSecretTypes();
+        Dictionary<string, SecretType> dictOfSecretTypes = GameManager.i.dataScript.GetDictOfSecretTypes();
         if (dictOfSecretTypes != null)
         {
             foreach (var secretType in dictOfSecretTypes)
@@ -109,12 +109,12 @@ public class SecretManager : MonoBehaviour
         //
         // - - - - Secrets - - - 
         //
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
-        List<Secret> listOfPlayerSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
-        List<Secret> listOfOrganisationSecrets = GameManager.instance.dataScript.GetListOfOrganisationSecrets();
-        List<Secret> listOfStorySecrets = GameManager.instance.dataScript.GetListOfStorySecrets();
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
+        List<Secret> listOfPlayerSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfOrganisationSecrets = GameManager.i.dataScript.GetListOfOrganisationSecrets();
+        List<Secret> listOfStorySecrets = GameManager.i.dataScript.GetListOfStorySecrets();
 
-        int playerLevel = GameManager.instance.sideScript.PlayerSide.level;
+        int playerLevel = GameManager.i.sideScript.PlayerSide.level;
         if (dictOfSecrets != null)
         {
             if (listOfPlayerSecrets != null)
@@ -169,7 +169,7 @@ public class SecretManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //Initialise always (Level based) -> reset all player secrets to known 0
-        List<Secret> listOfSecrets = GameManager.instance.dataScript.GetListOfPlayerSecrets();
+        List<Secret> listOfSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
         if (listOfSecrets != null)
         {
             foreach (Secret secret in listOfSecrets)
@@ -188,7 +188,7 @@ public class SecretManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //Fast Access
-        conditionBlackmail = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
+        conditionBlackmail = GameManager.i.dataScript.GetCondition("BLACKMAILER");
         Debug.Assert(conditionBlackmail != null, "Invalid conditionBlackmail (Null)");
     }
     #endregion
@@ -241,42 +241,42 @@ public class SecretManager : MonoBehaviour
     /// <param name="secretID"></param>
     public bool RemoveSecretFromAll(string secretName, bool isDeletedSecret = false)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Secret secret = GameManager.instance.dataScript.GetSecret(secretName);
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        Secret secret = GameManager.i.dataScript.GetSecret(secretName);
         bool isSuccess = true;
         if (secret != null)
         {
             //remove from player
-            GameManager.instance.playerScript.RemoveSecret(secretName);
+            GameManager.i.playerScript.RemoveSecret(secretName);
             if (isDeletedSecret == true)
             {
                 //message
                 string playerMsg = string.Format("Player loses secret \"{0}\"", secret.tag);
-                GameManager.instance.messageScript.PlayerSecret(playerMsg, secret, false);
+                GameManager.i.messageScript.PlayerSecret(playerMsg, secret, false);
             }
             //remove actors from secret list
             secret.RemoveAllActors();
             //Create a list of all current actors plus all actors in Reserve
             List<Actor> listOfActors = new List<Actor>();
             //add current actors
-            Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
             if (arrayOfActors != null)
             {
                 for (int i = 0; i < arrayOfActors.Length; i++)
                 {
                     //check actor is present in slot (not vacant)
-                    if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                    if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
                     { listOfActors.Add(arrayOfActors[i]); }
                 }
             }
             else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
             //add reserve actors
-            List<int> listOfReserveActors = GameManager.instance.dataScript.GetActorList(GameManager.instance.sideScript.PlayerSide, ActorList.Reserve);
+            List<int> listOfReserveActors = GameManager.i.dataScript.GetActorList(GameManager.i.sideScript.PlayerSide, ActorList.Reserve);
             if (listOfReserveActors.Count > 0)
             {
                 for (int i = 0; i < listOfReserveActors.Count; i++)
                 {
-                    Actor actor = GameManager.instance.dataScript.GetActor(listOfReserveActors[i]);
+                    Actor actor = GameManager.i.dataScript.GetActor(listOfReserveActors[i]);
                     if (actor != null)
                     { listOfActors.Add(actor); }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfReserveActors[i]); }
@@ -293,7 +293,7 @@ public class SecretManager : MonoBehaviour
                     {
                         //message (any situation where a blackmail check is needed is going to be a deleted secret, hence the need for a message
                         string msgText = string.Format("{0} loses secret \"{1}\"", actor.arc.name, secret.tag);
-                        GameManager.instance.messageScript.ActorSecret(msgText, actor, secret, false);
+                        GameManager.i.messageScript.ActorSecret(msgText, actor, secret, false);
                         if (actor.CheckConditionPresent(conditionBlackmail) == true)
                         {
                             if (actor.CheckNumOfSecrets() == 0)
@@ -302,22 +302,22 @@ public class SecretManager : MonoBehaviour
                                 //additional explanatory message (why has condition gone?)
                                 string blackText = string.Format("{0} can no longer Blackmail (no Secret)", actor.arc.name);
                                 string reason = "The secret they hold has no value";
-                                GameManager.instance.messageScript.ActorBlackmail(blackText, actor, secret, true, reason);
+                                GameManager.i.messageScript.ActorBlackmail(blackText, actor, secret, true, reason);
                             }
                         }
                     }
                 }
             }
             //chance Investigation launched
-            if (GameManager.instance.playerScript.CheckInvestigationPossible() == true)
+            if (GameManager.i.playerScript.CheckInvestigationPossible() == true)
             {
                 //revealed secrets only (no investigation possible for deleted secrets)
                 if (isDeletedSecret == false)
                 {
                     string text;
                     int rnd = Random.Range(0, 100);
-                    int chance = GameManager.instance.playerScript.chanceInvestigation;
-                    int gameTurn = GameManager.instance.turnScript.Turn;
+                    int chance = GameManager.i.playerScript.chanceInvestigation;
+                    int gameTurn = GameManager.i.turnScript.Turn;
                     if (rnd < chance)
                     {
                         //create a new investigation
@@ -327,47 +327,47 @@ public class SecretManager : MonoBehaviour
                             tag = secret.investigationTag,
                             evidence = secret.investigationEvidence,
                             turnStart = gameTurn,
-                            lead = GameManager.instance.hqScript.GetRandomHqPosition(),
-                            city = GameManager.instance.campaignScript.scenario.city.name,
+                            lead = GameManager.i.hqScript.GetRandomHqPosition(),
+                            city = GameManager.i.campaignScript.scenario.city.name,
                             status = InvestStatus.Ongoing,
                             outcome = InvestOutcome.None
                         };
                         //add to player's list
-                        GameManager.instance.playerScript.AddInvestigation(invest);
+                        GameManager.i.playerScript.AddInvestigation(invest);
                         //stats
-                        GameManager.instance.dataScript.StatisticIncrement(StatType.InvestigationsLaunched);
+                        GameManager.i.dataScript.StatisticIncrement(StatType.InvestigationsLaunched);
                         //msgs
                         Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: INVESTIGATION commences, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                         text = "INVESTIGATION commences";
-                        GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
+                        GameManager.i.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
                         text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
-                        GameManager.instance.messageScript.InvestigationNew(text, invest);
+                        GameManager.i.messageScript.InvestigationNew(text, invest);
                         //outcome (message pipeline)
                         text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.GetFormattedString(invest.tag, ColourType.neutralText));
                         string bottomText = "Unknown";
-                        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(invest.lead);
+                        Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(invest.lead);
                         if (actor == null)
                         {
-                            Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.instance.hqScript.GetHqTitle(invest.lead));
+                            Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.i.hqScript.GetHqTitle(invest.lead));
                             bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
-                            actor.actorName, GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                            actor.actorName, GameManager.GetFormattedString(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
                         }
                         else
                         {
                             bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName,
-                                GameManager.GetFormattedString(GameManager.instance.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                                GameManager.GetFormattedString(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
                         }
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                         {
                             textTop = text,
                             textBottom = bottomText,
-                            sprite = GameManager.instance.guiScript.investigationSprite,
+                            sprite = GameManager.i.guiScript.investigationSprite,
                             isAction = false,
-                            side = GameManager.instance.sideScript.PlayerSide,
+                            side = GameManager.i.sideScript.PlayerSide,
                             type = MsgPipelineType.InvestigationLaunched,
                             help0 = "invest_10"
                         };
-                        if (GameManager.instance.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                        if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                         { Debug.LogWarningFormat("Investigation Launched InfoPipeline message FAILED to be added to dictOfPipeline"); }
                     }
                     else
@@ -375,7 +375,7 @@ public class SecretManager : MonoBehaviour
                         //msgs
                         Debug.LogFormat("[Rnd] SecretManager.cs -> RemoveSecretFromAll: No Investigation, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                         text = "No INVESTIGATION";
-                        GameManager.instance.messageScript.GeneralRandom(text, "Investigation", chance, rnd, false, "rand_4");
+                        GameManager.i.messageScript.GeneralRandom(text, "Investigation", chance, rnd, false, "rand_4");
                     }
                 }
             }
@@ -433,8 +433,8 @@ public class SecretManager : MonoBehaviour
     public string DebugDisplaySecretData()
     {
         StringBuilder builder = new StringBuilder();
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Dictionary<string, Secret> dictOfSecrets = GameManager.instance.dataScript.GetDictOfSecrets();
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        Dictionary<string, Secret> dictOfSecrets = GameManager.i.dataScript.GetDictOfSecrets();
         builder.AppendFormat(" Secret Data {0}{1}", "\n", "\n");
         //main dictionary data
         builder.Append("- dictOfSecrets");
@@ -450,29 +450,29 @@ public class SecretManager : MonoBehaviour
         else { Debug.LogWarning("Invalid dictOfSecrets (Null)"); }
         //player secrets data
         builder.AppendFormat("{0}{1}- listOfPlayerSecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfPlayerSecrets()));
+        builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfPlayerSecrets()));
         //organisation secrets data
         builder.AppendFormat("{0}{1}- listOfOrganisationSecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfOrganisationSecrets()));
+        builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfOrganisationSecrets()));
         //story secrets data
         builder.AppendFormat("{0}{1}- listOfStorySecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfStorySecrets()));
+        builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfStorySecrets()));
         //revealed secrets data
         builder.AppendFormat("{0}{1}- listOfRevealedSecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfRevealedSecrets()));
+        builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfRevealedSecrets()));
         //deleted secrets data
         builder.AppendFormat("{0}{1}- listOfDeletedSecrets", "\n", "\n");
-        builder.Append(DisplaySecretList(GameManager.instance.dataScript.GetListOfDeletedSecrets()));
+        builder.Append(DisplaySecretList(GameManager.i.dataScript.GetListOfDeletedSecrets()));
         //player data
         builder.AppendFormat("{0}{1}- PLAYER", "\n", "\n");
-        builder.Append(GameManager.instance.playerScript.DebugDisplaySecrets());
+        builder.Append(GameManager.i.playerScript.DebugDisplaySecrets());
         //actor data
-        for (int i = 0; i < GameManager.instance.actorScript.maxNumOfOnMapActors; i++)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
         {
             //actor present
-            if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+            if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
             {
-                Actor actor = GameManager.instance.dataScript.GetCurrentActor(i, side);
+                Actor actor = GameManager.i.dataScript.GetCurrentActor(i, side);
                 if (actor != null)
                 {
                     builder.AppendFormat("{0}{1}- {2} ID {3}", "\n", "\n", actor.arc.name, actor.actorID);
@@ -502,10 +502,10 @@ public class SecretManager : MonoBehaviour
                 {
                     if (secret.revealedWhen.turn > -1)
                     { builderTemp.AppendFormat("{0} {1} ({2}), {3} t {4} at {5}, {6}", "\n", secret.name, secret.tag, secret.revealedWho, secret.revealedWhen.turn, 
-                        GameManager.instance.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag, secret.status); }
+                        GameManager.i.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag, secret.status); }
                     else if (secret.deletedWhen.turn > -1)
                     { builderTemp.AppendFormat("{0} {1}, {2} t {3} at {4}, {5}", "\n", secret.name, secret.tag, secret.deletedWhen.turn, 
-                        GameManager.instance.campaignScript.GetScenario(secret.deletedWhen.scenario).city.tag, secret.status); }
+                        GameManager.i.campaignScript.GetScenario(secret.deletedWhen.scenario).city.tag, secret.status); }
                     else { builderTemp.AppendFormat("{0} {1} ({2}) {3}", "\n", secret.name, secret.tag, secret.status ); }
                 }
             }

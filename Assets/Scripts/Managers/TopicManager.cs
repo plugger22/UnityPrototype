@@ -279,7 +279,7 @@ public class TopicManager : MonoBehaviour
                 //do nothing
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -291,9 +291,9 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseStartUp()
     {
         //debug topic pool
-        debugTopicPool = GameManager.instance.testScript.debugTopicPool;
+        debugTopicPool = GameManager.i.testScript.debugTopicPool;
         //initialise Topic Profile delays
-        TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles;
+        TopicProfile[] arrayOfProfiles = GameManager.i.loadScript.arrayOfTopicProfiles;
         if (arrayOfProfiles != null)
         {
             for (int i = 0; i < arrayOfProfiles.Length; i++)
@@ -314,7 +314,7 @@ public class TopicManager : MonoBehaviour
         arrayOfOptionActorIDs = new int[maxOptions];
         arrayOfOptionInactiveIDs = new int[maxOptions];
         //calculates topicType/SubType minimum Intervals based on global setting (minTopicTypeTurns)
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        List<TopicType> listOfTopicTypes = GameManager.i.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
         {
             //loop topicTypes and update minIntervals
@@ -325,7 +325,7 @@ public class TopicManager : MonoBehaviour
                 {
                     topicType.minInterval = topicType.minIntervalFactor * minIntervalGlobal;
                     //update topicTypeData minInteval
-                    TopicTypeData dataType = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                    TopicTypeData dataType = GameManager.i.dataScript.GetTopicTypeData(topicType.name);
                     if (dataType != null)
                     { dataType.minInterval = topicType.minInterval; }
                     else { Debug.LogWarningFormat("Invaid topicTypeData (Null) for topicType \"{0}\"", topicType.name); }
@@ -340,7 +340,7 @@ public class TopicManager : MonoBehaviour
                             {
                                 subType.minInterval = subType.minIntervalFactor * minIntervalGlobal;
                                 //update topicTypeData minInteval
-                                TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                                TopicTypeData dataSub = GameManager.i.dataScript.GetTopicSubTypeData(subType.name);
                                 if (dataSub != null)
                                 { dataSub.minInterval = subType.minInterval; }
                                 else { Debug.LogWarningFormat("Invaid topicTypeData (Null) for topicSubType \"{0}\"", subType.name); }
@@ -362,7 +362,7 @@ public class TopicManager : MonoBehaviour
     {
         SetColours();
         //reset all topics to isCurrent False prior to changes
-        GameManager.instance.dataScript.ResetTopics();
+        GameManager.i.dataScript.ResetTopics();
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
         UpdateTopicPools();
     }
@@ -486,15 +486,15 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         /*colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);*/
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
     #endregion
 
@@ -516,19 +516,19 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void UpdateTopicPools()
     {
-        List<TopicType> listOfTopicTypesLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        List<TopicType> listOfTopicTypesLevel = GameManager.i.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypesLevel != null)
         {
             //get current topicTypes
-            List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+            List<TopicType> listOfTopicTypes = GameManager.i.dataScript.GetListOfTopicTypes();
             if (listOfTopicTypes != null)
             {
                 //get current campaign
-                Campaign campaign = GameManager.instance.campaignScript.campaign;
+                Campaign campaign = GameManager.i.campaignScript.campaign;
                 if (campaign != null)
                 {
                     //get current city
-                    City city = GameManager.instance.campaignScript.scenario.city;
+                    City city = GameManager.i.campaignScript.scenario.city;
                     if (city != null)
                     {
                         string subTypeName;
@@ -538,7 +538,7 @@ public class TopicManager : MonoBehaviour
                             TopicType topicType = listOfTopicTypes[i];
                             if (topicType != null)
                             {
-                                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                                GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
                                 //only proceed with topicType if either the same as Player side or 'Both'
                                 if (topicType.side.level == playerSide.level || topicType.side.level == 3)
                                 {
@@ -562,7 +562,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.actorPoliticPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.actorPoliticPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorPoliticPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorPoliticPool.listOfTopics);
                                                             isValid = true;
@@ -575,7 +575,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.actorContactPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.actorContactPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorContactPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorContactPool.listOfTopics);
                                                             isValid = true;
@@ -588,7 +588,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.actorDistrictPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.actorDistrictPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorDistrictPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorDistrictPool.listOfTopics);
                                                             isValid = true;
@@ -601,7 +601,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.actorGearPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.actorGearPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorGearPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorGearPool.listOfTopics);
                                                             isValid = true;
@@ -614,7 +614,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.actorMatchPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.actorMatchPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.actorMatchPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.actorMatchPool.listOfTopics);
                                                             isValid = true;
@@ -627,7 +627,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.playerDistrictPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.playerDistrictPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerDistrictPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerDistrictPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.playerDistrictPool.listOfTopics);
                                                             isValid = true;
@@ -640,7 +640,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.playerGeneralPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.playerGeneralPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGeneralPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.playerGeneralPool.listOfTopics);
                                                             isValid = true;
@@ -653,7 +653,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.playerStatsPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.playerStatsPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerStatsPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerStatsPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.playerStatsPool.listOfTopics);
                                                             isValid = true;
@@ -666,7 +666,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.playerGearPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.playerGearPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGearPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerGearPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.playerGearPool.listOfTopics);
                                                             isValid = true;
@@ -679,7 +679,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.playerConditionsPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.playerConditionsPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerConditionsPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.playerConditionsPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.playerConditionsPool.listOfTopics);
                                                             isValid = true;
@@ -692,7 +692,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.authorityCampaignPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.authorityCampaignPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.authorityCampaignPool.listOfTopics);
                                                             isValid = true;
@@ -705,7 +705,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.authorityGeneralPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.authorityGeneralPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.authorityGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.authorityGeneralPool.listOfTopics);
                                                             isValid = true;
@@ -718,7 +718,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.teamPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.teamPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.teamPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.teamPool.listOfTopics);
                                                             isValid = true;
@@ -731,7 +731,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.resistanceCampaignPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.resistanceCampaignPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceCampaignPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.resistanceCampaignPool.listOfTopics);
                                                             isValid = true;
@@ -744,7 +744,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.resistanceGeneralPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.resistanceGeneralPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.resistanceGeneralPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.resistanceGeneralPool.listOfTopics);
                                                             isValid = true;
@@ -757,7 +757,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.campaignAlphaPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.campaignAlphaPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignAlphaPool.listOfTopics);
                                                             isValid = true;
@@ -770,7 +770,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.campaignBravoPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.campaignBravoPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignBravoPool.listOfTopics);
                                                             isValid = true;
@@ -783,7 +783,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.campaignCharliePool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.campaignCharliePool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.campaignCharliePool.listOfTopics);
                                                             isValid = true;
@@ -800,7 +800,7 @@ public class TopicManager : MonoBehaviour
                                                                     if (city.cityPoolAuthority.listOfSubSubTypePools.Count > 0)
                                                                     { LoadSubSubTypePools(city.cityPoolAuthority, campaign.side); }
                                                                     //populate dictionary
-                                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolAuthority.listOfTopics);
+                                                                    GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolAuthority.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                                     SetTopicDynamicData(city.cityPoolAuthority.listOfTopics);
                                                                     isValid = true;
@@ -814,7 +814,7 @@ public class TopicManager : MonoBehaviour
                                                                     if (city.cityPoolResistance.listOfSubSubTypePools.Count > 0)
                                                                     { LoadSubSubTypePools(city.cityPoolResistance, campaign.side); }
                                                                     //populate dictionary   
-                                                                    GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolResistance.listOfTopics);
+                                                                    GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, city.cityPoolResistance.listOfTopics);
                                                                     AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                                     SetTopicDynamicData(city.cityPoolResistance.listOfTopics);
                                                                     isValid = true;
@@ -832,7 +832,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.familyAlphaPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.familyAlphaPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyAlphaPool.listOfTopics);
                                                             isValid = true;
@@ -845,7 +845,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.familyBravoPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.familyBravoPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyBravoPool.listOfTopics);
                                                             isValid = true;
@@ -858,7 +858,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.familyCharliePool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.familyCharliePool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.familyCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.familyCharliePool.listOfTopics);
                                                             isValid = true;
@@ -871,7 +871,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.hqPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.hqPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.hqPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.hqPool.listOfTopics);
                                                             isValid = true;
@@ -884,7 +884,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.capturePool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.capturePool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.capturePool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.capturePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.capturePool.listOfTopics);
                                                             isValid = true;
@@ -897,7 +897,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.orgCurePool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.orgCurePool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgCurePool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgCurePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.orgCurePool.listOfTopics);
                                                             isValid = true;
@@ -910,7 +910,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.orgContractPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.orgContractPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgContractPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgContractPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.orgContractPool.listOfTopics);
                                                             isValid = true;
@@ -923,7 +923,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.orgHQPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.orgHQPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgHQPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgHQPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.orgHQPool.listOfTopics);
                                                             isValid = true;
@@ -936,7 +936,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.orgEmergencyPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.orgEmergencyPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgEmergencyPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgEmergencyPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.orgEmergencyPool.listOfTopics);
                                                             isValid = true;
@@ -949,7 +949,7 @@ public class TopicManager : MonoBehaviour
                                                             if (campaign.orgInfoPool.listOfSubSubTypePools.Count > 0)
                                                             { LoadSubSubTypePools(campaign.orgInfoPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.instance.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgInfoPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.orgInfoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
                                                             SetTopicDynamicData(campaign.orgInfoPool.listOfTopics);
                                                             isValid = true;
@@ -960,7 +960,7 @@ public class TopicManager : MonoBehaviour
                                                         break;
                                                 }
                                                 //set subType topicTypeData 'isAvailable' to appropriate value
-                                                TopicTypeData data = GameManager.instance.dataScript.GetTopicSubTypeData(topicSubType.name);
+                                                TopicTypeData data = GameManager.i.dataScript.GetTopicSubTypeData(topicSubType.name);
                                                 if (data != null)
                                                 { data.isAvailable = isValid; }
                                                 else
@@ -992,7 +992,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="listOfTopics"></param>
     private void SetTopicDynamicData(List<Topic> listOfTopics)
     {
-        bool isFirstScenario = GameManager.instance.campaignScript.CheckIsFirstScenario();
+        bool isFirstScenario = GameManager.i.campaignScript.CheckIsFirstScenario();
         //Review topics
         reviewCountdown = reviewPeriod;
         reviewActivationMiss = false;
@@ -1076,12 +1076,12 @@ public class TopicManager : MonoBehaviour
         {
             topicGlobal = TopicGlobal.None;
             //Player must be Active or Captured
-            if (CheckPlayerStatus(playerSide) == true || GameManager.instance.playerScript.status == ActorStatus.Captured)
+            if (CheckPlayerStatus(playerSide) == true || GameManager.i.playerScript.status == ActorStatus.Captured)
             {
                 //
                 // - - - topic Global 
                 //
-                if (GameManager.instance.playerScript.status != ActorStatus.Captured)
+                if (GameManager.i.playerScript.status != ActorStatus.Captured)
                 {
                     //chance of Review topic if not captured
                     if (reviewCountdown > 0) { reviewCountdown--; }
@@ -1102,7 +1102,7 @@ public class TopicManager : MonoBehaviour
                                 string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
                                 string explanation = string.Format("<b>Your peers will assess you, all being well, {0}tomorrow</b>{1}", colourNormal, colourEnd);
                                 List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
-                                GameManager.instance.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
+                                GameManager.i.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
                             }
                         }
                         else { topicGlobal = TopicGlobal.Review; }
@@ -1116,7 +1116,7 @@ public class TopicManager : MonoBehaviour
                             string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
                             string explanation = string.Format("<b>Your peers will assess you, all being well, {0}<b>within the next couple of days</b>{1}", colourNormal, colourEnd);
                             List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
-                            GameManager.instance.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
+                            GameManager.i.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
                         }
                     }
                 }
@@ -1170,7 +1170,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void CheckTopics()
     {
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
+        Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
             foreach (var topic in dictOfTopics)
@@ -1313,22 +1313,22 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void CheckForValidTopicTypes()
     {
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         //clear list at start of selection (not done in ResetTopicAdmin as it should only be done once at start, not every iteration inside the selection loop
         listOfTopicTypesTurn.Clear();
         //special case of resistance player being captured
-        if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+        if (GameManager.i.playerScript.status == ActorStatus.Captured)
         {
             //Add org type, if valid. NOTE: All org subTypes have criteria re: capture so that only one activates, eg. orgEmergency
             TopicType topicType = captureType;
-            TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+            TopicTypeData topicTypeData = GameManager.i.dataScript.GetTopicTypeData(topicType.name);
             CheckForValidSubType(topicType, topicTypeData, turn);
         }
         //normal
         else
         {
             //by value, not reference, as you'll be passing them onto listOfTopicTypesTurn and removing occasionally
-            List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.instance.dataScript.GetListOfTopicTypesLevel());
+            List<TopicType> listOfTopicTypesLevel = new List<TopicType>(GameManager.i.dataScript.GetListOfTopicTypesLevel());
             if (listOfTopicTypesLevel != null)
             {
                 //loop list of Topic Types
@@ -1337,7 +1337,7 @@ public class TopicManager : MonoBehaviour
                     //Topic Types can be switched on/off for debugging purposes
                     if (topicType.isDisabled == false)
                     {
-                        TopicTypeData topicTypeData = GameManager.instance.dataScript.GetTopicTypeData(topicType.name);
+                        TopicTypeData topicTypeData = GameManager.i.dataScript.GetTopicTypeData(topicType.name);
                         CheckForValidSubType(topicType, topicTypeData, turn);
                     }
                 }
@@ -1363,7 +1363,7 @@ public class TopicManager : MonoBehaviour
                 //check individual topicType criteria
                 CriteriaDataInput criteriaInput = new CriteriaDataInput()
                 { listOfCriteria = topicType.listOfCriteria };
-                criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+                criteriaCheck = GameManager.i.effectScript.CheckCriteria(criteriaInput);
                 if (criteriaCheck == null)
                 {
                     //get list of SubTypes
@@ -1516,7 +1516,7 @@ public class TopicManager : MonoBehaviour
                         if (subType.side.level == playerSide.level || subType.side.level == 3)
                         {
                             //check TopicSubTypes isValid (topicType may have been approved with some subTypes O.K and others not)
-                            TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                            TopicTypeData dataSub = GameManager.i.dataScript.GetTopicSubTypeData(subType.name);
                             if (dataSub != null)
                             {
                                 //subType CRITERIA check
@@ -1524,10 +1524,10 @@ public class TopicManager : MonoBehaviour
                                 {
                                     //reset 'isProceed' ready for data checks
                                     isProceed = false;
-                                    if (CheckTopicTypeData(dataSub, GameManager.instance.turnScript.Turn, true) == true)
+                                    if (CheckTopicTypeData(dataSub, GameManager.i.turnScript.Turn, true) == true)
                                     {
                                         //check that there are Live topics available for subType
-                                        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                                        List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(subType);
                                         if (listOfTopics != null)
                                         {
                                             //loop topics looking for the first valid topic (only need one) in order to validate subType
@@ -1609,7 +1609,7 @@ public class TopicManager : MonoBehaviour
         if (turnTopicSubType != null)
         {
             List<Topic> listOfPotentialTopics = new List<Topic>();
-            List<Topic> listOfSubTypeTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
+            List<Topic> listOfSubTypeTopics = GameManager.i.dataScript.GetListOfTopics(turnTopicSubType);
             if (listOfSubTypeTopics != null)
             {
                 GroupType group;
@@ -1635,13 +1635,13 @@ public class TopicManager : MonoBehaviour
                     case "FamilyBravo":
                     case "FamilyCharlie":
                         //based on PlayerMood
-                        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                        group = GetGroupMood(GameManager.i.playerScript.GetMood());
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     //Dynamic topic
                     case "CitySub":
                         //based on City Loyalty
-                        group = GetGroupLoyalty(GameManager.instance.hqScript.ApprovalResistance);
+                        group = GetGroupLoyalty(GameManager.i.hqScript.ApprovalResistance);
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     case "AuthorityTeam":
@@ -1751,7 +1751,7 @@ public class TopicManager : MonoBehaviour
                         if (count > 0)
                         {
                             turnTopic = listOfTopicPool[Random.Range(0, count)];
-                            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, {1} -> {2} -> {3}{4}", GameManager.instance.turnScript.Turn, turnTopicType.name, turnTopicSubType.name, turnTopic.name, "\n");
+                            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, {1} -> {2} -> {3}{4}", GameManager.i.turnScript.Turn, turnTopicType.name, turnTopicSubType.name, turnTopic.name, "\n");
                         }
                         else { Debug.LogWarningFormat("Invalid listOfTopicPool (EMPTY) for topicSubType \"{0}\"", turnTopicSubType.name); }
                     }
@@ -1764,7 +1764,7 @@ public class TopicManager : MonoBehaviour
         else
         {
             //No topic selected
-            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, No Topic Selected{1}", GameManager.instance.turnScript.Turn, "\n");
+            Debug.LogFormat("[Top] TopicManager.cs -> GetTopic: t {0}, No Topic Selected{1}", GameManager.i.turnScript.Turn, "\n");
         }
     }
     #endregion
@@ -1787,7 +1787,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //get all active, onMap actors
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
         {
             if (listOfActors.Count > 0)
@@ -1828,11 +1828,11 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
 
         //group depends on player mood
-        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+        group = GetGroupMood(GameManager.i.playerScript.GetMood());
         //if no entries use entire list by default
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         //get a candidate actor (may change later in ProcessSpecialTopicData) -> aim for actor with motivation that coresponds to group
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
         {
             List<Actor> selectionList = new List<Actor>();
@@ -1866,7 +1866,7 @@ public class TopicManager : MonoBehaviour
                 if (actor != null)
                 { tagActorID = actor.actorID; }
                 //get a random nodeID (used for news items)
-                Node node = GameManager.instance.dataScript.GetRandomNode();
+                Node node = GameManager.i.dataScript.GetRandomNode();
                 if (node != null)
                 { tagNodeID = node.nodeID; }
                 else { Debug.LogError("Invalid random node (Null)"); }
@@ -1889,7 +1889,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //Get a random possible relationship pair of actors from a weighted pool that favours the stronger compatibilities over the weaker
-        RelationSelectData data = GameManager.instance.dataScript.GetPossibleRelationData();
+        RelationSelectData data = GameManager.i.dataScript.GetPossibleRelationData();
         if (data != null)
         {
             //need data for dual actor effect and also relationship type
@@ -1903,7 +1903,7 @@ public class TopicManager : MonoBehaviour
                 if (Random.Range(0, 100) < 50) { tagRelation = ActorRelationship.Friend; } else { tagRelation = ActorRelationship.Enemy; }
             }
             //group based on Player Mood
-            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+            group = GetGroupMood(GameManager.i.playerScript.GetMood());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -1922,7 +1922,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //get all active, onMap actors
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActors(playerSide);
+        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
         {
             List<Actor> selectionList = new List<Actor>();
@@ -1961,7 +1961,7 @@ public class TopicManager : MonoBehaviour
                 //proceed only if actor has gear (should do as only those with gear have been selected)
                 if (string.IsNullOrEmpty(gearName) == false)
                 {
-                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
                     if (gear != null)
                     {
                         tagGear = gear.tag;
@@ -1997,7 +1997,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //Get all actors with at least one district action available
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide);
+        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide);
         count = listOfActors.Count;
         if (count > 0)
         {
@@ -2046,7 +2046,7 @@ public class TopicManager : MonoBehaviour
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
                     foreach (Topic topic in listOfTopics)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
                 }
                 else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
@@ -2060,7 +2060,7 @@ public class TopicManager : MonoBehaviour
                 tagTarget = data.dataName;
                 tagTeam = data.dataName;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
         }
         else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
         return listOfTopics;
@@ -2079,11 +2079,11 @@ public class TopicManager : MonoBehaviour
     private List<Topic> GetPlayerDistrictTopicsArchive(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
     {
         bool isProceed = false;
-        string playerName = GameManager.instance.playerScript.PlayerName;
+        string playerName = GameManager.i.playerScript.PlayerName;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //get the most recent Player node action
-        NodeActionData data = GameManager.instance.playerScript.GetMostRecentNodeAction();
+        NodeActionData data = GameManager.i.playerScript.GetMostRecentNodeAction();
         if (data != null)
         {
             //check that it is a viable subSubType group
@@ -2099,7 +2099,7 @@ public class TopicManager : MonoBehaviour
             if (isProceed == true)
             {
                 //group depends on player mood
-                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                group = GetGroupMood(GameManager.i.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
 
@@ -2132,12 +2132,12 @@ public class TopicManager : MonoBehaviour
     {
         bool isProceed = false;
         int numToCheck = 4;
-        string playerName = GameManager.instance.playerScript.PlayerName;
+        string playerName = GameManager.i.playerScript.PlayerName;
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         NodeActionData data = null;
         //Find a recent node action with a corresponding active, onMap actor present
-        List<NodeActionData> listOfNodeActions = GameManager.instance.playerScript.GetListOfNodeActions();
+        List<NodeActionData> listOfNodeActions = GameManager.i.playerScript.GetListOfNodeActions();
         if (listOfNodeActions != null)
         {
             int count = listOfNodeActions.Count();
@@ -2163,7 +2163,7 @@ public class TopicManager : MonoBehaviour
                                 if (slotID > -1)
                                 {
                                     //Action and actor combo found
-                                    Actor actor = GameManager.instance.dataScript.GetCurrentActor(slotID, GameManager.instance.sideScript.PlayerSide);
+                                    Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, GameManager.i.sideScript.PlayerSide);
                                     if (actor != null)
                                     {
                                         Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: SubsubType \"{0}\" has suitable actor {1}, {2}, ID {3}{4}", turnTopicSubSubType.name,
@@ -2190,7 +2190,7 @@ public class TopicManager : MonoBehaviour
         if (isProceed == true && data != null)
         {
             //group depends on player mood
-            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+            group = GetGroupMood(GameManager.i.playerScript.GetMood());
             
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
@@ -2235,13 +2235,13 @@ public class TopicManager : MonoBehaviour
             arrayOfOptionInactiveIDs[i] = -1;
         }
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -2267,7 +2267,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         //group based on Player Mood
-        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+        group = GetGroupMood(GameManager.i.playerScript.GetMood());
         //if no entries use entire list by default
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         return listOfTopics;
@@ -2290,13 +2290,13 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         List<int> listOfActors = new List<int>();
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -2321,7 +2321,7 @@ public class TopicManager : MonoBehaviour
             if (tagActorID > -1)
             {
                 //group based on Actor Motivation
-                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                group = GetGroupMood(GameManager.i.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
@@ -2348,13 +2348,13 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         List<string> listOfGear = new List<string>();
         //All topics based of a randomly selected item of gear from player Inventory
-        listOfGear = GameManager.instance.playerScript.GetListOfGear();
+        listOfGear = GameManager.i.playerScript.GetListOfGear();
         if (listOfGear != null)
         {
             string gearName = listOfGear[Random.Range(0, listOfGear.Count)];
             if (string.IsNullOrEmpty(gearName) == false)
             {
-                Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                Gear gear = GameManager.i.dataScript.GetGear(gearName);
                 if (gear != null)
                 {
                     tagGear = gear.name;
@@ -2362,7 +2362,7 @@ public class TopicManager : MonoBehaviour
                     if (string.IsNullOrEmpty(tagGear) == false)
                     {
                         //group based on Actor Motivation
-                        group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                        group = GetGroupMood(GameManager.i.playerScript.GetMood());
                         //if no entries use entire list by default
                         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     }
@@ -2393,13 +2393,13 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         List<int> listOfActors = new List<int>();
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
                 //check actor is present in slot (not vacant)
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, playerSide) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, playerSide) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -2424,7 +2424,7 @@ public class TopicManager : MonoBehaviour
             if (tagActorID > -1)
             {
                 //group based on Player Mood
-                group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+                group = GetGroupMood(GameManager.i.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
@@ -2450,12 +2450,12 @@ public class TopicManager : MonoBehaviour
     {
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
-        Actor[] arrayOfHqActors = GameManager.instance.dataScript.GetArrayOfActorsHQ();
+        Actor[] arrayOfHqActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfHqActors != null)
         {
             //exlude 'None' and 'Boss' (Boss can't be involved in internal politics)
             int offset = 2;
-            int numOfHierarchy = GameManager.instance.hqScript.numOfActorsHQ;
+            int numOfHierarchy = GameManager.i.hqScript.numOfActorsHQ;
             //get first actor from hq hierarchy
             List<int> tempList = new List<int>();
             //loop through hierarchy and get array indexes for any valid actors
@@ -2491,8 +2491,8 @@ public class TopicManager : MonoBehaviour
                             tagActorOtherID = actorSecond.hqID;
                             tagHqActorName = actorFirst.actorName;
                             tagHqOtherName = actorSecond.actorName;
-                            tagHqTitleActor = GameManager.instance.hqScript.GetHqTitle(actorFirst.statusHQ);
-                            tagHqTitleOther = GameManager.instance.hqScript.GetHqTitle(actorSecond.statusHQ);
+                            tagHqTitleActor = GameManager.i.hqScript.GetHqTitle(actorFirst.statusHQ);
+                            tagHqTitleOther = GameManager.i.hqScript.GetHqTitle(actorSecond.statusHQ);
                         }
                         else
                         {
@@ -2500,11 +2500,11 @@ public class TopicManager : MonoBehaviour
                             tagActorOtherID = actorFirst.hqID;
                             tagHqActorName = actorSecond.actorName;
                             tagHqOtherName = actorFirst.actorName;
-                            tagHqTitleActor = GameManager.instance.hqScript.GetHqTitle(actorSecond.statusHQ);
-                            tagHqTitleOther = GameManager.instance.hqScript.GetHqTitle(actorFirst.statusHQ);
+                            tagHqTitleActor = GameManager.i.hqScript.GetHqTitle(actorSecond.statusHQ);
+                            tagHqTitleOther = GameManager.i.hqScript.GetHqTitle(actorFirst.statusHQ);
                         }
                         //group based on faction approval
-                        group = GetGroupApproval(GameManager.instance.hqScript.GetHqApproval());
+                        group = GetGroupApproval(GameManager.i.hqScript.GetHqApproval());
                         //if no entries use entire list by default
                         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     }
@@ -2532,16 +2532,16 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgEmergency;
+        Organisation org = GameManager.i.campaignScript.campaign.orgEmergency;
         if (org != null)
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagNodeID = -1;
             tagActorID = -1;
-            tagNodeID = GameManager.instance.nodeScript.nodeCaptured;
+            tagNodeID = GameManager.i.nodeScript.nodeCaptured;
             //group based on player's mood (how well do they respond to the experience of being captured?)
-            group = GetGroupMood(GameManager.instance.playerScript.GetMood());
+            group = GetGroupMood(GameManager.i.playerScript.GetMood());
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         }
@@ -2565,7 +2565,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgCure;
+        Organisation org = GameManager.i.campaignScript.campaign.orgCure;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2574,7 +2574,7 @@ public class TopicManager : MonoBehaviour
             tagNodeID = -1;
             tagActorID = -1;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Cure);
+            OrgData data = GameManager.i.dataScript.GetRandomOrgData(OrganisationType.Cure);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2605,12 +2605,12 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgContract;
+        Organisation org = GameManager.i.campaignScript.campaign.orgContract;
         if (org != null)
         {
 
             //Select an Actor with numOfConflicts (For topics 0/1 -> offer service -> contract hit, ignore for rest)
-            List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide);
+            List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide);
             if (listOfActors != null)
             {
                 if (listOfActors.Count > 0)
@@ -2631,7 +2631,7 @@ public class TopicManager : MonoBehaviour
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Contract);
+            OrgData data = GameManager.i.dataScript.GetRandomOrgData(OrganisationType.Contract);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2663,14 +2663,14 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgHQ;
+        Organisation org = GameManager.i.campaignScript.campaign.orgHQ;
         if (org != null)
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.HQ);
+            OrgData data = GameManager.i.dataScript.GetRandomOrgData(OrganisationType.HQ);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2701,14 +2701,14 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgEmergency;
+        Organisation org = GameManager.i.campaignScript.campaign.orgEmergency;
         if (org != null)
         {
             tagOrgName = org.name;
             tagOrgTag = org.tag;
             tagOrgWant = org.textWant;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Emergency);
+            OrgData data = GameManager.i.dataScript.GetRandomOrgData(OrganisationType.Emergency);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2739,7 +2739,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
 
-        Organisation org = GameManager.instance.campaignScript.campaign.orgInfo;
+        Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
         if (org != null)
         {
             tagOrgName = org.name;
@@ -2748,7 +2748,7 @@ public class TopicManager : MonoBehaviour
             tagNodeID = -1;
             tagActorID = -1;
             //Get random OrgData (if available, otherwise ignore, used for 'Payback' topics)
-            OrgData data = GameManager.instance.dataScript.GetRandomOrgData(OrganisationType.Info);
+            OrgData data = GameManager.i.dataScript.GetRandomOrgData(OrganisationType.Info);
             if (data != null)
             {
                 tagOrgText = data.text;
@@ -2780,7 +2780,7 @@ public class TopicManager : MonoBehaviour
         GroupType group = GroupType.Neutral;
         List<Topic> listOfTopics = new List<Topic>();
         //Get all actors with at least one team action available
-        List<Actor> listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide);
+        List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide);
         count = listOfActors.Count;
         if (count > 0)
         {
@@ -2830,7 +2830,7 @@ public class TopicManager : MonoBehaviour
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
                     foreach (Topic topic in listOfTopics)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
                 }
                 else { Debug.LogErrorFormat("Invalid teamActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
@@ -2840,7 +2840,7 @@ public class TopicManager : MonoBehaviour
                 tagTurn = data.turn;
                 tagStringData = data.dataName;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.instance.turnScript.Turn, "\n"); }
+            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
         }
         else { Debug.LogWarning("No active, onMap actors present with at least one TeamAction"); }
         return listOfTopics;
@@ -2890,7 +2890,7 @@ public class TopicManager : MonoBehaviour
                     else
                     {
                         //Resistance player Captured
-                        if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                        if (GameManager.i.playerScript.status == ActorStatus.Captured)
                         {
                             //valid topic selected, ignore otherwise
                             if (turnTopic != null)
@@ -2953,7 +2953,7 @@ public class TopicManager : MonoBehaviour
                             turnTopic = null;
                             Debug.LogFormat("[Top] TopicManager.cs -> InitialiseTopicUI: Topic OVERRIDE for debugTopicPool \"{0}\"{1}", debugTopicPool.name, "\n");
                             tagHqActors = false; //needed to prevent the previously selected topic, eg. HQ, sending a 'true' result forward to the debug topic
-                            GetTopic(GameManager.instance.sideScript.PlayerSide);
+                            GetTopic(GameManager.i.sideScript.PlayerSide);
                         }
                         if (turnTopic != null)
                         {
@@ -2965,10 +2965,10 @@ public class TopicManager : MonoBehaviour
                         else
                         {
                             //revert back to normally selected topic
-                            turnTopic = GameManager.instance.dataScript.GetTopic(topicNormal);
+                            turnTopic = GameManager.i.dataScript.GetTopic(topicNormal);
                             if (turnTopic != null)
                             {
-                                turnTopicSubType = GameManager.instance.dataScript.GetTopicSubType(subTypeNormal);
+                                turnTopicSubType = GameManager.i.dataScript.GetTopicSubType(subTypeNormal);
                                 if (turnTopicSubType != null)
                                 {
                                     tagHqActors = tagHqActorsOriginalValue;
@@ -2996,7 +2996,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
-                data.colour = GameManager.instance.guiScript.colourTopicNormal;
+                data.colour = GameManager.i.guiScript.colourTopicNormal;
                 data.listOfHelp = GetTopicSubTypeHelp();
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
@@ -3103,7 +3103,7 @@ public class TopicManager : MonoBehaviour
                             if (turnTopic.subType.isBoss == true)
                             { InitialiseBossDetails(data); }
                             //send to TopicUI
-                            GameManager.instance.topicDisplayScript.InitialiseData(data);
+                            GameManager.i.topicDisplayScript.InitialiseData(data);
                         }
                         else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
                     }
@@ -3138,7 +3138,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
-                data.colour = GameManager.instance.guiScript.colourTopicCapture;
+                data.colour = GameManager.i.guiScript.colourTopicCapture;
                 data.listOfHelp = GetTopicSubTypeHelp();
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
@@ -3205,7 +3205,7 @@ public class TopicManager : MonoBehaviour
                             if (turnTopic.subType.isBoss == true)
                             { InitialiseBossDetails(data); }
                             //send to TopicUI
-                            GameManager.instance.topicDisplayScript.InitialiseData(data);
+                            GameManager.i.topicDisplayScript.InitialiseData(data);
                         }
                         else { Debug.LogErrorFormat("Invalid listOfOptions (no valid option found) for topic \"{0}\" -> No topic for this turn", turnTopic.name); }
                     }
@@ -3265,7 +3265,7 @@ public class TopicManager : MonoBehaviour
                     builderBottom.AppendFormat("{0}SUCCESS{1}", colourNeutral, colourEnd);
                     //random message
                     string text = string.Format("\'{0}\' event, \'{1}\' option, SUCCEEDS", turnTopic.tag, turnOption.tag);
-                    GameManager.instance.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
+                    GameManager.i.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
                 }
                 else
                 {
@@ -3274,7 +3274,7 @@ public class TopicManager : MonoBehaviour
                     builderBottom.AppendFormat("{0}FAILED{1}", colourCancel, colourEnd);
                     //random message
                     string text = string.Format("\'{0}\' event, \'{1}\' option, FAILS", turnTopic.tag, turnOption.tag);
-                    GameManager.instance.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
+                    GameManager.i.messageScript.GeneralRandom(text, "Event Option", threshold, rnd);
                 }
             }
             //check valid effects present
@@ -3285,10 +3285,10 @@ public class TopicManager : MonoBehaviour
                 //pass through data package
                 EffectDataInput dataInput = new EffectDataInput();
                 dataInput.originText = string.Format("Event {0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
-                dataInput.side = GameManager.instance.sideScript.PlayerSide;
+                dataInput.side = GameManager.i.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured
-                Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
                 if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
                 {
@@ -3314,7 +3314,7 @@ public class TopicManager : MonoBehaviour
                         if (node != null)
                         {
                             //process effect
-                            effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                            effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
                             if (effectReturn != null)
                             {
                                 //builderBottom
@@ -3346,15 +3346,15 @@ public class TopicManager : MonoBehaviour
             {
                 if (turnOption.moodEffect != null)
                 {
-                    Actor actorHQ = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
+                    Actor actorHQ = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                     if (actorHQ != null)
                     {
-                        int opinionChange = GameManager.instance.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isDislikedByHQ, turnOption.isIgnoredByHQ);
+                        int opinionChange = GameManager.i.personScript.UpdateHQOpinion(turnOption.moodEffect.belief, actorHQ, turnOption.isPreferredByHQ, turnOption.isDislikedByHQ, turnOption.isIgnoredByHQ);
                         if (opinionChange != 0)
                         {
-                            int bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
+                            int bossOpinion = GameManager.i.hqScript.GetBossOpinion();
                             bossOpinion += opinionChange;
-                            GameManager.instance.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
+                            GameManager.i.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
                             builderBottom.AppendLine();
                             if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
                             else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
@@ -3373,7 +3373,7 @@ public class TopicManager : MonoBehaviour
             {
                 string newsSnippet = CheckTopicText(turnOption.news, false);
                 NewsItem item = new NewsItem() { text = newsSnippet };
-                GameManager.instance.dataScript.AddNewsItem(item);
+                GameManager.i.dataScript.AddNewsItem(item);
                 Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
             }
             //outcome dialogue
@@ -3409,8 +3409,8 @@ public class TopicManager : MonoBehaviour
             //pass through data package
             EffectDataInput dataInput = new EffectDataInput();
             dataInput.originText = string.Format("{0} IGNORE", turnTopic.tag);
-            dataInput.side = GameManager.instance.sideScript.PlayerSide;
-            Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
+            dataInput.side = GameManager.i.sideScript.PlayerSide;
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
             //top text
             builderTop.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, turnTopic.tag, colourEnd, "\n", colourAlert, "Ignored", colourEnd);
             //loop effects
@@ -3419,7 +3419,7 @@ public class TopicManager : MonoBehaviour
                 if (node != null)
                 {
                     //process effect
-                    effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, dataInput);
+                    effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
                     if (effectReturn != null)
                     {
                         //builderBottom
@@ -3453,7 +3453,7 @@ public class TopicManager : MonoBehaviour
             builderBottom.AppendFormat("{0}{1}Your Boss Disapproves of your inability to make a decision{2}", "\n", colourBad, colourEnd);
         }
         //stats
-        GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsIgnored);
+        GameManager.i.dataScript.StatisticIncrement(StatType.TopicsIgnored);
         //outcome dialogue
         SetTopicOutcome(builderTop, builderBottom);
         //message
@@ -3470,9 +3470,9 @@ public class TopicManager : MonoBehaviour
     public void ProcessIgnoreBossOpinion()
     {
         //hq boss's opinion
-        int bossOpinion = GameManager.instance.hqScript.GetBossOpinion();
+        int bossOpinion = GameManager.i.hqScript.GetBossOpinion();
         bossOpinion += -1;
-        GameManager.instance.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', Ignored", turnTopic.tag));
+        GameManager.i.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', Ignored", turnTopic.tag));
     }
     #endregion
 
@@ -3484,7 +3484,7 @@ public class TopicManager : MonoBehaviour
     {
         string upperText, lowerText;
         //default sprite
-        if (sprite == null) { sprite = GameManager.instance.guiScript.infoSprite; }
+        if (sprite == null) { sprite = GameManager.i.guiScript.infoSprite; }
         if (top == null || top.Length == 0)
         {
             if (string.IsNullOrEmpty(turnOption.tag) == false)
@@ -3529,41 +3529,41 @@ public class TopicManager : MonoBehaviour
                 {
                     case "ContactsActorMin":
                         //need to find an actor with at least one contact
-                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactMin, GameManager.instance.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactMin, GameManager.i.sideScript.PlayerSide);
                         //choose actor and update tag data
                         isSuccess = ProcessActorContact(listOfActors);
                         break;
                     case "ContactsActorNOTMax":
                         //need an actor with less than the max number of contacts allowed
-                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactNOTMax, GameManager.instance.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.ActorContactNOTMax, GameManager.i.sideScript.PlayerSide);
                         //choose actor and update tag data
                         isSuccess = ProcessActorContact(listOfActors);
                         break;
                     case "ActorsKnowSecret":
                         //need an actor with at least one secret who doesn't have blackmailer trait
-                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.instance.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
                     case "RenownActorsLess":
                         //need an actor with less renown than player
-                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownLess, GameManager.instance.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.RenownLess, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
                     case "RenownActorsMore":
                         //need an actor with more renown than player
-                        listOfActors = GameManager.instance.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.instance.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
                     case "InvestigationNormal":
                         //need an investigation that meets normal criteria (status.ongoing, isOrgHQNormal false)
-                        Investigation invest = GameManager.instance.playerScript.GetInvestigationNormal();
+                        Investigation invest = GameManager.i.playerScript.GetInvestigationNormal();
                         if (invest != null)
                         { tagStringData = invest.reference; tagInvestTag = invest.tag; }
                         else { isSuccess = false; Debug.LogWarning("No valid Normal Investigation found (Null)"); }
                         break;
                     case "InvestigationTimer":
                         //need an investigation that meets timer criteria (status.resolution, outcome.Guilty, isOrgHQTimer false)
-                        invest = GameManager.instance.playerScript.GetInvestigationTimer();
+                        invest = GameManager.i.playerScript.GetInvestigationTimer();
                         if (invest != null)
                         { tagStringData = invest.reference; tagInvestTag = invest.tag; }
                         else { isSuccess = false; Debug.LogWarning("No valid Timer Investigation found (Null)"); }
@@ -3684,9 +3684,9 @@ public class TopicManager : MonoBehaviour
     {
         if (turnTopic != null)
         {
-            int turn = GameManager.instance.turnScript.Turn;
+            int turn = GameManager.i.turnScript.Turn;
             //update TopicType topicTypeData
-            TopicTypeData typeData = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
+            TopicTypeData typeData = GameManager.i.dataScript.GetTopicTypeData(turnTopicType.name);
             if (typeData != null)
             {
                 typeData.timesUsedLevel++;
@@ -3694,7 +3694,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid topicTypeData (Null) for turnTopicType \"{0}\"", turnTopicType.name); }
             //update TopicSubType topicTypeData
-            TopicTypeData typeSubData = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
+            TopicTypeData typeSubData = GameManager.i.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
             if (typeSubData != null)
             {
                 typeSubData.timesUsedLevel++;
@@ -3711,7 +3711,7 @@ public class TopicManager : MonoBehaviour
                     if (turnTopicSubType.name.Equals(actorDistrictSubType.name, StringComparison.Ordinal) == true)
                     {
                         //get actor and delete most recent NodeAction record
-                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                         if (actor != null)
                         { actor.RemoveMostRecentNodeAction(); }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
@@ -3724,7 +3724,7 @@ public class TopicManager : MonoBehaviour
                     if (turnTopicSubType.name.Equals(playerDistrictSubType.name, StringComparison.Ordinal) == true)
                     {
                         //delete most recent nodeAction from Player
-                        GameManager.instance.playerScript.RemoveLastUsedNodeAction(tagTurn, tagNodeID, tagNodeAction);
+                        GameManager.i.playerScript.RemoveLastUsedNodeAction(tagTurn, tagNodeID, tagNodeAction);
                     }
                 }
                 //Authority
@@ -3734,7 +3734,7 @@ public class TopicManager : MonoBehaviour
                     if (turnTopicSubType.name.Equals(authorityTeamSubType.name, StringComparison.Ordinal) == true)
                     {
                         //get actor and delete most recent TeamAction record
-                        Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                         if (actor != null)
                         { actor.RemoveMostRecentTeamAction(); }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
@@ -3750,7 +3750,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicAdmin: NO OPTION selected for topic \"{0}\"{1}", turnTopic.name, "\n"); }
             //topic Message (not for autoRun)
-            if (GameManager.instance.turnScript.CheckIsAutoRun() == false)
+            if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
                 TopicMessageData data = new TopicMessageData()
                 {
@@ -3772,7 +3772,7 @@ public class TopicManager : MonoBehaviour
                     data.optionName = string.Format("{0}Event IGNORED{1}", colourAlert, colourEnd);
                     data.text = string.Format("Topic \'{0}\', option IGNORED, actorID {1}, nodeID {2}", turnTopic.tag, tagActorID, tagNodeID);
                 }
-                GameManager.instance.messageScript.TopicDecision(data);
+                GameManager.i.messageScript.TopicDecision(data);
             }
             //topic history
             HistoryTopic history = new HistoryTopic()
@@ -3784,12 +3784,12 @@ public class TopicManager : MonoBehaviour
                 topic = turnTopic.name,
                 option = optionName
             };
-            GameManager.instance.dataScript.AddTopicHistory(history);
+            GameManager.i.dataScript.AddTopicHistory(history);
             //stats
             switch (turnTopic.group.name)
             {
-                case "Good": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsGood); break;
-                case "Bad": GameManager.instance.dataScript.StatisticIncrement(StatType.TopicsBad); break;
+                case "Good": GameManager.i.dataScript.StatisticIncrement(StatType.TopicsGood); break;
+                case "Bad": GameManager.i.dataScript.StatisticIncrement(StatType.TopicsBad); break;
                 default: Debug.LogWarningFormat("Unrecognised group \"{0}\" for topic \"{1}\"", turnTopic.group.name, turnTopic.name); break;
             }
         }
@@ -3951,11 +3951,11 @@ public class TopicManager : MonoBehaviour
             {
                 switch (topic.subType.name)
                 {
-                    case "OrgCure": tagOrgName = GameManager.instance.campaignScript.campaign.orgCure.name; break;
-                    case "OrgContract": tagOrgName = GameManager.instance.campaignScript.campaign.orgContract.name; break;
-                    case "OrgHQ": tagOrgName = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
-                    case "OrgEmergency": tagOrgName = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
-                    case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                    case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
+                    case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
+                    case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
+                    case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
+                    case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
                 }
             }
@@ -3964,7 +3964,7 @@ public class TopicManager : MonoBehaviour
                 listOfCriteria = topic.listOfCriteria,
                 orgName = tagOrgName
             };
-            string criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+            string criteriaCheck = GameManager.i.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck == null)
             {
                 //criteria check passed O.K
@@ -4008,11 +4008,11 @@ public class TopicManager : MonoBehaviour
                 if (subType != null)
                 {
                     //check subType pool present
-                    List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                    List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(subType);
                     if (listOfTopics != null)
                     {
                         //check subType topicTypeData
-                        TopicTypeData dataSub = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                        TopicTypeData dataSub = GameManager.i.dataScript.GetTopicSubTypeData(subType.name);
                         if (dataSub != null)
                         {
                             if (CheckTopicTypeData(dataSub, turn, true) == true)
@@ -4086,11 +4086,11 @@ public class TopicManager : MonoBehaviour
             {
                 switch (subType.name)
                 {
-                    case "OrgCure": tagOrgName = GameManager.instance.campaignScript.campaign.orgCure.name; break;
-                    case "OrgContract": tagOrgName = GameManager.instance.campaignScript.campaign.orgContract.name; break;
-                    case "OrgHQ": tagOrgName = GameManager.instance.campaignScript.campaign.orgHQ.name; break;
-                    case "OrgEmergency": tagOrgName = GameManager.instance.campaignScript.campaign.orgEmergency.name; break;
-                    case "OrgInfo": tagOrgName = GameManager.instance.campaignScript.campaign.orgInfo.name; break;
+                    case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
+                    case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
+                    case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
+                    case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
+                    case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
                     default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", subType.name); break;
                 }
             }
@@ -4100,7 +4100,7 @@ public class TopicManager : MonoBehaviour
                 listOfCriteria = subType.listOfCriteria,
                 orgName = tagOrgName
             };
-            criteriaCheck = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+            criteriaCheck = GameManager.i.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
             {
                 Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
@@ -4130,14 +4130,14 @@ public class TopicManager : MonoBehaviour
         //check if at least one entry in listOfTopicTypesTurn
         if (listOfTopicTypesTurn.Count > 0)
         {
-            int turn = GameManager.instance.turnScript.Turn;
+            int turn = GameManager.i.turnScript.Turn;
             int interval;
             //
             // - - - topicType
             //
             if (turnTopic != null)
             {
-                TopicTypeData dataType = GameManager.instance.dataScript.GetTopicTypeData(turnTopicType.name);
+                TopicTypeData dataType = GameManager.i.dataScript.GetTopicTypeData(turnTopicType.name);
                 if (dataType != null)
                 {
                     //check global interval
@@ -4167,7 +4167,7 @@ public class TopicManager : MonoBehaviour
             //
             if (turnTopicSubType != null)
             {
-                TopicTypeData dataSubType = GameManager.instance.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
+                TopicTypeData dataSubType = GameManager.i.dataScript.GetTopicSubTypeData(turnTopicSubType.name);
                 if (dataSubType != null)
                 {
                     //check isAvailable 
@@ -4258,7 +4258,7 @@ public class TopicManager : MonoBehaviour
             case 2: group = GroupType.Neutral; break;
             case 1: group = GroupType.Bad; break;
             case 0: group = GroupType.VeryBad; break;
-            default: Debug.LogWarningFormat("Unrecognised Player Mood \"{0}\" for {1}, {2}. Default GroupType.Neutral used", mood, GameManager.instance.playerScript.PlayerName, "Player"); break;
+            default: Debug.LogWarningFormat("Unrecognised Player Mood \"{0}\" for {1}, {2}. Default GroupType.Neutral used", mood, GameManager.i.playerScript.PlayerName, "Player"); break;
         }
         return group;
     }
@@ -4625,7 +4625,7 @@ public class TopicManager : MonoBehaviour
         if (arc != null)
         {
             //check present on map
-            slotID = GameManager.instance.dataScript.CheckActorPresent(arc, GameManager.instance.sideScript.PlayerSide);
+            slotID = GameManager.i.dataScript.CheckActorPresent(arc, GameManager.i.sideScript.PlayerSide);
         }
         return slotID;
     }
@@ -4644,35 +4644,35 @@ public class TopicManager : MonoBehaviour
         {
             case 1:
                 //Authority
-                switch (GameManager.instance.sideScript.authorityOverall)
+                switch (GameManager.i.sideScript.authorityOverall)
                 {
                     case SideState.Human:
-                        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                        if (GameManager.i.playerScript.status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     case SideState.AI:
-                        if (GameManager.instance.aiScript.status == ActorStatus.Active)
+                        if (GameManager.i.aiScript.status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     default:
-                        Debug.LogWarningFormat("Unrecognised authorityOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                        Debug.LogWarningFormat("Unrecognised authorityOverall \"{0}\"", GameManager.i.sideScript.authorityOverall);
                         break;
                 }
                 break;
             case 2:
                 //Resistance
-                switch (GameManager.instance.sideScript.resistanceOverall)
+                switch (GameManager.i.sideScript.resistanceOverall)
                 {
                     case SideState.Human:
-                        if (GameManager.instance.playerScript.status == ActorStatus.Active)
+                        if (GameManager.i.playerScript.status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     case SideState.AI:
-                        if (GameManager.instance.aiRebelScript.status == ActorStatus.Active)
+                        if (GameManager.i.aiRebelScript.status == ActorStatus.Active)
                         { isValid = true; }
                         break;
                     default:
-                        Debug.LogWarningFormat("Unrecognised resistanceOverall \"{0}\"", GameManager.instance.sideScript.authorityOverall);
+                        Debug.LogWarningFormat("Unrecognised resistanceOverall \"{0}\"", GameManager.i.sideScript.authorityOverall);
                         break;
                 }
                 break;
@@ -4779,14 +4779,14 @@ public class TopicManager : MonoBehaviour
                 //normal actor uses slotID, HQ actor uses hqID
                 if (tagHqActors == false)
                 {
-                    actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                    actor = GameManager.i.dataScript.GetActor(tagActorID);
                     if (actor != null)
                     { actorCurrentSlotID = actor.slotID; }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID); }
                 }
                 else
                 {
-                    actor = GameManager.instance.dataScript.GetHqActor(tagActorID);
+                    actor = GameManager.i.dataScript.GetHqActor(tagActorID);
                     if (actor != null)
                     { actorCurrentHqID = actor.hqID; }
                 }
@@ -4800,14 +4800,14 @@ public class TopicManager : MonoBehaviour
                 orgName = tagOrgName,
                 nodeID = tagNodeID
             };
-            effectCriteria = GameManager.instance.effectScript.CheckCriteria(criteriaInput);
+            effectCriteria = GameManager.i.effectScript.CheckCriteria(criteriaInput);
 
         }
         //if no criteria has yet failed
         if (string.IsNullOrEmpty(effectCriteria) == true)
         {
             //player stressed
-            if (GameManager.instance.playerScript.isStressed == true)
+            if (GameManager.i.playerScript.isStressed == true)
             {
                 //Player stressed, random chance option unavailable (can be bypassed)
                 if (option.isIgnoreStress == false)
@@ -4833,7 +4833,7 @@ public class TopicManager : MonoBehaviour
             if (option.isIgnoreMood == false)
             {
                 if (option.moodEffect != null)
-                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                { option.tooltipDetails = GameManager.i.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
                 else
                 {
                     option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
@@ -4923,8 +4923,8 @@ public class TopicManager : MonoBehaviour
             if (option.moodEffect != null)
             {
                 //ignoreMood only applies if player is Stressed
-                if (GameManager.instance.playerScript.isStressed == false)
-                { option.tooltipDetails = GameManager.instance.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
+                if (GameManager.i.playerScript.isStressed == false)
+                { option.tooltipDetails = GameManager.i.personScript.GetMoodTooltip(option.moodEffect.belief, "Player"); }
                 else { option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
             }
             else
@@ -5110,7 +5110,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="data"></param>
     private void InitialiseBossDetails(TopicUIData data)
     {
-        Actor actor = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
+        Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
         if (actor != null)
         {
             //sprite
@@ -5148,7 +5148,7 @@ public class TopicManager : MonoBehaviour
                                 else if (option.isIgnoredByHQ == true)
                                 { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                                 else
-                                { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.instance.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
+                                { builder.AppendFormat("{0}{1}: {2} {3}", colourCancel, option.tag, colourEnd, GameManager.i.personScript.GetHQTooltip(option.moodEffect.belief, actor)); }
                             }
                             else { builder.AppendFormat("{0}{1}: {2} {3}no view{4}", colourCancel, option.tag, colourEnd, colourGrey, colourEnd); }
                         }
@@ -5179,7 +5179,7 @@ public class TopicManager : MonoBehaviour
             data.bossTooltipMain = builder.ToString();
             //Boss's view of your decision making ability
             data.bossTooltipDetails = string.Format("Boss's opinion of your Decisions{0}<b><size=115%>{1}{2}{3}</size></b>", "\n",
-                colourNeutral, GameManager.instance.hqScript.GetBossOpinionFormatted(), colourEnd);
+                colourNeutral, GameManager.i.hqScript.GetBossOpinionFormatted(), colourEnd);
         }
         else { Debug.LogError("Invalid actor (Null) for HQ Boss"); }
     }
@@ -5206,13 +5206,13 @@ public class TopicManager : MonoBehaviour
                     Actor actor = null;
                     if (tagHqActors == false)
                     {
-                        actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                        actor = GameManager.i.dataScript.GetActor(tagActorID);
                         if (actor != null) { prefix = actor.arc.name; }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for tagActorID {0}", tagActorID); }
                     }
                     else
                     {
-                        actor = GameManager.instance.dataScript.GetHqActor(tagActorID);
+                        actor = GameManager.i.dataScript.GetHqActor(tagActorID);
                         if (actor != null) { prefix = tagHqTitleActor; }
                         else { Debug.LogErrorFormat("Invalid HQ actor (Null) for tagActorID {0}", tagActorID); }
                     }
@@ -5222,13 +5222,13 @@ public class TopicManager : MonoBehaviour
                     Actor actorOther = null;
                     if (tagHqActors == false)
                     {
-                        actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                        actorOther = GameManager.i.dataScript.GetActor(tagActorOtherID);
                         if (actorOther != null) { prefix = actorOther.arc.name; }
                         else { Debug.LogErrorFormat("Invalid actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
                     }
                     else
                     {
-                        actorOther = GameManager.instance.dataScript.GetHqActor(tagActorOtherID);
+                        actorOther = GameManager.i.dataScript.GetHqActor(tagActorOtherID);
                         if (actorOther != null) { prefix = tagHqTitleOther; }
                         else { Debug.LogErrorFormat("Invalid HQ actorOther (Null) for tagActorOtherID {0}", tagActorOtherID); }
                     }
@@ -5284,7 +5284,7 @@ public class TopicManager : MonoBehaviour
         Dictionary<string, int> dictOfTags = null;
         if (isValidate == true)
         {
-            dictOfTags = GameManager.instance.dataScript.GetDictOfTags();
+            dictOfTags = GameManager.i.dataScript.GetDictOfTags();
             if (dictOfTags == null)
             { Debug.LogError("Invalid dictOfTags (Null)"); }
         }
@@ -5296,11 +5296,11 @@ public class TopicManager : MonoBehaviour
             int tagStart, tagFinish, length; //indexes
             Node node = null;
             if (tagNodeID > -1)
-            { node = GameManager.instance.dataScript.GetNode(tagNodeID); }
+            { node = GameManager.i.dataScript.GetNode(tagNodeID); }
             else
             {
                 //get default node 0 to accomdodate jobs tag, if required, but still not display 'Show Me' button (tagNodeID > -1)
-                node = GameManager.instance.dataScript.GetNode(0);
+                node = GameManager.i.dataScript.GetNode(0);
             }
             if (node == null)
             { Debug.LogWarning("Invalid node (Null)"); }
@@ -5319,8 +5319,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.instance.playerScript.PlayerName, colourEnd); }
-                            else { replaceText = GameManager.instance.playerScript.PlayerName; }
+                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.i.playerScript.PlayerName, colourEnd); }
+                            else { replaceText = GameManager.i.playerScript.PlayerName; }
                         }
                         else { CountTextTag("player", dictOfTags); }
                         break;
@@ -5330,7 +5330,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tagActorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5350,7 +5350,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tagActorOtherID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                                Actor actor = GameManager.i.dataScript.GetActor(tagActorOtherID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5370,7 +5370,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tagActorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5391,7 +5391,7 @@ public class TopicManager : MonoBehaviour
                             int actorID = arrayOfOptionActorIDs[0];
                             if (actorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5426,7 +5426,7 @@ public class TopicManager : MonoBehaviour
                             int actorID = arrayOfOptionActorIDs[1];
                             if (actorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5461,7 +5461,7 @@ public class TopicManager : MonoBehaviour
                             int actorID = arrayOfOptionActorIDs[2];
                             if (actorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5496,7 +5496,7 @@ public class TopicManager : MonoBehaviour
                             int actorID = arrayOfOptionActorIDs[3];
                             if (actorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(actorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(actorID);
                                 if (actor != null)
                                 {
                                     if (isColourHighlighting == true)
@@ -5556,7 +5556,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tagContactID > -1)
                             {
-                                Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                                Contact contact = GameManager.i.dataScript.GetContact(tagContactID);
                                 if (contact != null)
                                 {
                                     if (node != null)
@@ -5580,7 +5580,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tagContactID > -1)
                             {
-                                Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                                Contact contact = GameManager.i.dataScript.GetContact(tagContactID);
                                 if (contact != null)
                                 {
                                     if (node != null)
@@ -5718,7 +5718,7 @@ public class TopicManager : MonoBehaviour
                         //how many turns ago expressed as '3 days'. Mincap at '1 day'
                         if (isValidate == false)
                         {
-                            int turnsAgo = GameManager.instance.turnScript.Turn - tagTurn;
+                            int turnsAgo = GameManager.i.turnScript.Turn - tagTurn;
                             turnsAgo = Mathf.Max(1, turnsAgo);
                             replaceText = string.Format("<b>{0} day{1} ago</b>", turnsAgo, turnsAgo != 1 ? "s" : "");
                         }
@@ -5741,22 +5741,22 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             replaceText = "Special Character";
-                            if (GameManager.instance.missionScript.mission.npc != null)
-                            { replaceText = GameManager.instance.missionScript.mission.npc.tag; }
+                            if (GameManager.i.missionScript.mission.npc != null)
+                            { replaceText = GameManager.i.missionScript.mission.npc.tag; }
                         }
                         else { CountTextTag("vip", dictOfTags); }
                         break;
                     case "npc":
                         if (isValidate == false)
                         {
-                            if (Random.Range(0, 100) < 50) { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                            else { replaceText = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                            if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
                             if (isColourHighlighting == true)
                             {
-                                replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                                replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
                                 replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, replaceText, colourEnd);
                             }
-                            else { replaceText += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord(); }
+                            else { replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord(); }
                         }
                         else { CountTextTag("npc", dictOfTags); }
                         break;
@@ -5787,8 +5787,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
-                            else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().mayor.mayorName, colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().mayor.mayorName; }
                         }
                         else { CountTextTag("mayor", dictOfTags); }
                         break;
@@ -5807,8 +5807,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
-                            else { replaceText = GameManager.instance.cityScript.GetCity().name; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().name, colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().name; }
                         }
                         else { CountTextTag("city", dictOfTags); }
                         break;
@@ -5817,8 +5817,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().name, colourEnd); }
-                            else { replaceText = string.Format("{0}'s", GameManager.instance.cityScript.GetCity().name); }
+                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().name, colourEnd); }
+                            else { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCity().name); }
                         }
                         else { CountTextTag("citys", dictOfTags); }
                         break;
@@ -5861,15 +5861,15 @@ public class TopicManager : MonoBehaviour
                                 switch (tagRelation)
                                 {
                                     case ActorRelationship.Friend:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriend.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriend.GetRandomRecord(), colourEnd);
                                         break;
                                     case ActorRelationship.Enemy:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemy.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemy.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
-                            else { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriend.GetRandomRecord() : GameManager.instance.topicScript.textListEnemy.GetRandomRecord(); }
+                            else { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriend.GetRandomRecord() : GameManager.i.topicScript.textListEnemy.GetRandomRecord(); }
                         }
                         else { CountTextTag("relation", dictOfTags); }
                         break;
@@ -5882,16 +5882,16 @@ public class TopicManager : MonoBehaviour
                                 switch (tagRelation)
                                 {
                                     case ActorRelationship.Friend:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriendAction.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriendAction.GetRandomRecord(), colourEnd);
                                         break;
                                     case ActorRelationship.Enemy:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemyAction.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemyAction.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
                             else
-                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriendAction.GetRandomRecord() : GameManager.instance.topicScript.textListEnemyAction.GetRandomRecord(); }
+                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriendAction.GetRandomRecord() : GameManager.i.topicScript.textListEnemyAction.GetRandomRecord(); }
                         }
                         else { CountTextTag("relAct", dictOfTags); }
                         break;
@@ -5904,16 +5904,16 @@ public class TopicManager : MonoBehaviour
                                 switch (tagRelation)
                                 {
                                     case ActorRelationship.Friend:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListFriendReason.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListFriendReason.GetRandomRecord(), colourEnd);
                                         break;
                                     case ActorRelationship.Enemy:
-                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.topicScript.textListEnemyReason.GetRandomRecord(), colourEnd);
+                                        replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.topicScript.textListEnemyReason.GetRandomRecord(), colourEnd);
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised tagRelation \"{0}\"", tagRelation); break;
                                 }
                             }
                             else
-                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.instance.topicScript.textListFriendReason.GetRandomRecord() : GameManager.instance.topicScript.textListEnemyReason.GetRandomRecord(); }
+                            { replaceText = tagRelation == ActorRelationship.Friend ? GameManager.i.topicScript.textListFriendReason.GetRandomRecord() : GameManager.i.topicScript.textListEnemyReason.GetRandomRecord(); }
                         }
                         else { CountTextTag("relRes", dictOfTags); }
                         break;
@@ -5941,8 +5941,8 @@ public class TopicManager : MonoBehaviour
                         //My '[best friend]'s [crazy] [sister]' 
                         if (isValidate == false)
                         {
-                            replaceText = string.Format("{0}'s {1} {2}", GameManager.instance.topicScript.textListWho0.GetRandomRecord(), GameManager.instance.topicScript.textListCondition.GetRandomRecord(),
-                              GameManager.instance.topicScript.textListWho1.GetRandomRecord());
+                            replaceText = string.Format("{0}'s {1} {2}", GameManager.i.topicScript.textListWho0.GetRandomRecord(), GameManager.i.topicScript.textListCondition.GetRandomRecord(),
+                              GameManager.i.topicScript.textListWho1.GetRandomRecord());
                         }
                         else { CountTextTag("who", dictOfTags); }
                         break;
@@ -5951,8 +5951,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerNodeActions), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerNodeActions).ToString(); }
                         }
                         else { CountTextTag("stat0", dictOfTags); }
                         break;
@@ -5961,8 +5961,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.NodeActionsResistance), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeActionsResistance).ToString(); }
                         }
                         else { CountTextTag("stat1", dictOfTags); }
                         break;
@@ -5971,8 +5971,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts).ToString(); }
                         }
                         else { CountTextTag("stat2", dictOfTags); }
                         break;
@@ -5981,8 +5981,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.TargetAttempts), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetAttempts).ToString(); }
                         }
                         else { CountTextTag("stat3", dictOfTags); }
                         break;
@@ -5991,8 +5991,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveActions), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveActions).ToString(); }
                         }
                         else { CountTextTag("stat4", dictOfTags); }
                         break;
@@ -6001,8 +6001,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays).ToString(); }
                         }
                         else { CountTextTag("stat5", dictOfTags); }
                         break;
@@ -6011,8 +6011,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal).ToString(); }
                         }
                         else { CountTextTag("stat6", dictOfTags); }
                         break;
@@ -6021,8 +6021,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerGiveGear), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerGiveGear).ToString(); }
                         }
                         else { CountTextTag("stat7", dictOfTags); }
                         break;
@@ -6031,8 +6031,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal).ToString(); }
                         }
                         else { CountTextTag("stat8", dictOfTags); }
                         break;
@@ -6041,8 +6041,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerManageActions), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerManageActions).ToString(); }
                         }
                         else { CountTextTag("stat9", dictOfTags); }
                         break;
@@ -6051,8 +6051,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing), colourEnd); }
-                            else { replaceText = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing).ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerDoNothing), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerDoNothing).ToString(); }
                         }
                         else { CountTextTag("stat10", dictOfTags); }
                         break;
@@ -6061,8 +6061,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.turnScript.Turn, colourEnd); }
-                            else { replaceText = GameManager.instance.turnScript.Turn.ToString(); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.turnScript.Turn, colourEnd); }
+                            else { replaceText = GameManager.i.turnScript.Turn.ToString(); }
                         }
                         else { CountTextTag("turn", dictOfTags); }
                         break;
@@ -6071,8 +6071,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.globalScript.tagGlobalDrug, colourEnd); }
-                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagGlobalDrug, colourEnd); }
+                            else { replaceText = GameManager.i.globalScript.tagGlobalDrug; }
                         }
                         else { CountTextTag("drug", dictOfTags); }
                         break;
@@ -6082,7 +6082,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (isColourHighlighting == true)
                             { replaceText = GetInnocenceDescriptor(); }
-                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                            else { replaceText = GameManager.i.globalScript.tagGlobalDrug; }
                         }
                         else { CountTextTag("capture", dictOfTags); }
                         break;
@@ -6151,8 +6151,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.instance.cityScript.GetCity().mayor.mayorName, colourEnd); }
-                            else { replaceText = GameManager.instance.cityScript.GetCity().mayor.mayorName; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().mayor.mayorName, colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().mayor.mayorName; }
                         }
                         else { CountTextTag("cap0", dictOfTags); }
                         break;
@@ -6161,8 +6161,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>Innocence {1} stars</b>{2}", colourCheckText, GameManager.instance.playerScript.Innocence, colourEnd); }
-                            else { replaceText = GameManager.instance.globalScript.tagGlobalDrug; }
+                            { replaceText = string.Format("{0}<b>Innocence {1} stars</b>{2}", colourCheckText, GameManager.i.playerScript.Innocence, colourEnd); }
+                            else { replaceText = GameManager.i.globalScript.tagGlobalDrug; }
                         }
                         else { CountTextTag("innocence", dictOfTags); }
                         break;
@@ -6170,9 +6170,9 @@ public class TopicManager : MonoBehaviour
                         //man or woman -> Player
                         if (isValidate == false)
                         {
-                            if (GameManager.instance.playerScript.sex == ActorSex.Male) { replaceText = "man"; }
-                            else if (GameManager.instance.playerScript.sex == ActorSex.Female) { replaceText = "woman"; }
-                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.instance.playerScript.sex); replaceText = "unknown"; }
+                            if (GameManager.i.playerScript.sex == ActorSex.Male) { replaceText = "man"; }
+                            else if (GameManager.i.playerScript.sex == ActorSex.Female) { replaceText = "woman"; }
+                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.i.playerScript.sex); replaceText = "unknown"; }
                         }
                         else { CountTextTag("manP", dictOfTags); }
                         break;
@@ -6180,9 +6180,9 @@ public class TopicManager : MonoBehaviour
                         //men or women -> Player
                         if (isValidate == false)
                         {
-                            if (GameManager.instance.playerScript.sex == ActorSex.Male) { replaceText = "men"; }
-                            else if (GameManager.instance.playerScript.sex == ActorSex.Female) { replaceText = "women"; }
-                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.instance.playerScript.sex); replaceText = "unknown"; }
+                            if (GameManager.i.playerScript.sex == ActorSex.Male) { replaceText = "men"; }
+                            else if (GameManager.i.playerScript.sex == ActorSex.Female) { replaceText = "women"; }
+                            else { Debug.LogWarningFormat("Unrecognised player sex \"{0}\"", GameManager.i.playerScript.sex); replaceText = "unknown"; }
                         }
                         else { CountTextTag("menP", dictOfTags); }
                         break;
@@ -6190,7 +6190,7 @@ public class TopicManager : MonoBehaviour
                         //man or woman -> Actor
                         if (isValidate == false)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                             if (actor != null)
                             {
                                 if (actor.sex == ActorSex.Male) { replaceText = "man"; }
@@ -6205,7 +6205,7 @@ public class TopicManager : MonoBehaviour
                         //men or women -> Actor
                         if (isValidate == false)
                         {
-                            Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                            Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                             if (actor != null)
                             {
                                 if (actor.sex == ActorSex.Male) { replaceText = "men"; }
@@ -6220,7 +6220,7 @@ public class TopicManager : MonoBehaviour
                         //'guy' or 'girl' depending on player sex as in 'I'm not that kind of [guy]
                         if (isValidate == false)
                         {
-                            ActorSex sex = GameManager.instance.playerScript.sex;
+                            ActorSex sex = GameManager.i.playerScript.sex;
                             if (sex == ActorSex.Male) { replaceText = "guy"; }
                             else if (sex == ActorSex.Female) { replaceText = "girl"; }
                             else { Debug.LogWarningFormat("Unrecognised actor sex \"{0}\"", sex); replaceText = "unknown"; }
@@ -6302,7 +6302,7 @@ public class TopicManager : MonoBehaviour
                     case "side":
                         //Player side
                         if (isValidate == false)
-                        { replaceText = string.Format("<b>{0}</b>", GameManager.instance.sideScript.PlayerSide.name); }
+                        { replaceText = string.Format("<b>{0}</b>", GameManager.i.sideScript.PlayerSide.name); }
                         else { CountTextTag("side", dictOfTags); }
                         break;
                     default:
@@ -6331,13 +6331,13 @@ public class TopicManager : MonoBehaviour
     public string GetInnocenceDescriptor()
     {
         string replaceText = "Unknown";
-        switch (GameManager.instance.playerScript.Innocence)
+        switch (GameManager.i.playerScript.Innocence)
         {
             case 3: replaceText = string.Format("{0}<b>Low level street Operative</b>{1}", colourAlert, colourEnd); break;
             case 2: replaceText = string.Format("{0}<b>Mid level Organiser</b>{1}", colourAlert, colourEnd); break;
             case 1: replaceText = string.Format("{0}<b>High level Operative</b>{1}", colourAlert, colourEnd); break;
             case 0: replaceText = string.Format("{0}<b>City Commander</b>{1}", colourAlert, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised Innocence {0}", GameManager.instance.playerScript.Innocence); break;
+            default: Debug.LogWarningFormat("Unrecognised Innocence {0}", GameManager.i.playerScript.Innocence); break;
         }
         return replaceText;
     }
@@ -6397,7 +6397,7 @@ public class TopicManager : MonoBehaviour
                             //use tagActorOtherID
                             if (tagActorOtherID > -1)
                             {
-                                Actor actorOther = GameManager.instance.dataScript.GetActor(tagActorOtherID);
+                                Actor actorOther = GameManager.i.dataScript.GetActor(tagActorOtherID);
                                 if (actorOther != null)
                                 {
                                     turnSprite = actorOther.sprite;
@@ -6422,7 +6422,7 @@ public class TopicManager : MonoBehaviour
                             //use tagActorID
                             if (tagActorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                                 if (actor != null)
                                 {
                                     turnSprite = actor.sprite;
@@ -6453,8 +6453,8 @@ public class TopicManager : MonoBehaviour
                 case "Family":
                     break;
                 case "HQ":
-                    turnSprite = GameManager.instance.hqScript.GetHqMainSpirte();
-                    tagSpriteName = GameManager.instance.sideScript.PlayerSide.name;
+                    turnSprite = GameManager.i.hqScript.GetHqMainSpirte();
+                    tagSpriteName = GameManager.i.sideScript.PlayerSide.name;
                     //based on HQ approval
                     Tuple<string, string> resultsHQ = GetHqTooltip();
                     if (string.IsNullOrEmpty(resultsHQ.Item1) == false)
@@ -6468,7 +6468,7 @@ public class TopicManager : MonoBehaviour
                     { data.imageTooltipDetails = resultsHQ.Item2; }
                     break;
                 case "Capture":
-                    turnSprite = GameManager.instance.guiScript.capturedSprite;
+                    turnSprite = GameManager.i.guiScript.capturedSprite;
                     tagSpriteName = "Prisoner";
                     string tooltipName = "Incarcerated";
                     //tooltip
@@ -6487,11 +6487,11 @@ public class TopicManager : MonoBehaviour
                     Organisation org = null;
                     switch (turnTopicSubType.name)
                     {
-                        case "OrgCure": org = GameManager.instance.campaignScript.campaign.orgCure; break;
-                        case "OrgContract": org = GameManager.instance.campaignScript.campaign.orgContract; break;
-                        case "OrgHQ": org = GameManager.instance.campaignScript.campaign.orgHQ; break;
-                        case "OrgEmergency": org = GameManager.instance.campaignScript.campaign.orgEmergency; break;
-                        case "OrgInfo": org = GameManager.instance.campaignScript.campaign.orgInfo; break;
+                        case "OrgCure": org = GameManager.i.campaignScript.campaign.orgCure; break;
+                        case "OrgContract": org = GameManager.i.campaignScript.campaign.orgContract; break;
+                        case "OrgHQ": org = GameManager.i.campaignScript.campaign.orgHQ; break;
+                        case "OrgEmergency": org = GameManager.i.campaignScript.campaign.orgEmergency; break;
+                        case "OrgInfo": org = GameManager.i.campaignScript.campaign.orgInfo; break;
                         default: Debug.LogWarningFormat("Unrecognised turnTopicSubType.name \"{0}\"", turnTopicSubType.name); break;
                     }
                     if (org != null)
@@ -6513,19 +6513,19 @@ public class TopicManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid org (Null) for {0}", turnTopicSubType.name); }
                     break;
                 case "Player":
-                    tooltipName = GameManager.instance.playerScript.PlayerName;
+                    tooltipName = GameManager.i.playerScript.PlayerName;
                     switch (turnTopicSubType.name)
                     {
                         case "PlayerDistrict":
                         case "PlayerGeneral":
-                            turnSprite = GameManager.instance.playerScript.sprite;
-                            tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            turnSprite = GameManager.i.playerScript.sprite;
+                            tagSpriteName = GameManager.i.playerScript.PlayerName;
                             break;
                         case "PlayerGear":
                             //use gear sprite
                             if (string.IsNullOrEmpty(tagGear) == false)
                             {
-                                Gear gear = GameManager.instance.dataScript.GetGear(tagGear);
+                                Gear gear = GameManager.i.dataScript.GetGear(tagGear);
                                 if (gear != null)
                                 {
                                     turnSprite = gear.sprite;
@@ -6540,7 +6540,7 @@ public class TopicManager : MonoBehaviour
                             //use actor sprite
                             if (tagActorID > -1)
                             {
-                                Actor actor = GameManager.instance.dataScript.GetActor(tagActorID);
+                                Actor actor = GameManager.i.dataScript.GetActor(tagActorID);
                                 if (actor != null)
                                 {
                                     turnSprite = actor.sprite;
@@ -6551,23 +6551,23 @@ public class TopicManager : MonoBehaviour
                                 {
                                     Debug.LogWarningFormat("Invalid actor (Null) for tagActorID \"{0}\"", tagActorID);
                                     //use player sprite as a backup
-                                    turnSprite = GameManager.instance.playerScript.sprite;
-                                    tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                                    turnSprite = GameManager.i.playerScript.sprite;
+                                    tagSpriteName = GameManager.i.playerScript.PlayerName;
                                 }
                             }
                             else
                             {
                                 Debug.LogWarning("Invalid tagActorID (less than Zero)");
                                 //use player sprite as a backup
-                                turnSprite = GameManager.instance.playerScript.sprite;
-                                tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                                turnSprite = GameManager.i.playerScript.sprite;
+                                tagSpriteName = GameManager.i.playerScript.PlayerName;
                             }
                             break;
                         default:
                             Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType);
                             //use player sprite as a backup
-                            turnSprite = GameManager.instance.playerScript.sprite;
-                            tagSpriteName = GameManager.instance.playerScript.PlayerName;
+                            turnSprite = GameManager.i.playerScript.sprite;
+                            tagSpriteName = GameManager.i.playerScript.PlayerName;
                             break;
                     }
                     //tooltip
@@ -6607,13 +6607,13 @@ public class TopicManager : MonoBehaviour
                 case "ActorContact":
                     if (tagContactID > -1)
                     {
-                        Contact contact = GameManager.instance.dataScript.GetContact(tagContactID);
+                        Contact contact = GameManager.i.dataScript.GetContact(tagContactID);
                         if (contact != null)
                         {
                             builder.AppendFormat("{0}CONTACT{1}{2}", colourCancel, colourEnd, "\n");
                             builder.AppendFormat("{0}{1} {2}{3}{4}", colourNormal, contact.nameFirst, contact.nameLast, colourEnd, "\n");
                             builder.AppendFormat("{0}{1}{2}{3}", colourNeutral, contact.job, colourEnd, "\n");
-                            builder.AppendFormat("<b>{0} {1}</b>", contact.nameFirst, GameManager.instance.contactScript.GetEffectivenessFormatted(contact.effectiveness));
+                            builder.AppendFormat("<b>{0} {1}</b>", contact.nameFirst, GameManager.i.contactScript.GetEffectivenessFormatted(contact.effectiveness));
                             textMain = builder.ToString();
                             builder.Clear();
                             builder.AppendFormat("{0}Active for {1}{2}{3}{4} {5}turn{6}{7}{8}", colourAlert, colourEnd, colourNeutral,
@@ -6698,7 +6698,7 @@ public class TopicManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
                     }
                     //details
-                    int mood = GameManager.instance.playerScript.GetMood();
+                    int mood = GameManager.i.playerScript.GetMood();
                     int oddsGood = chanceNeutralGood;
                     int oddsBad = 100 - chanceNeutralGood;
                     builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Mood</size>{6}{7}", "\n", colourAlert, "Player", colourEnd, "\n", colourNeutral, colourEnd, "\n");
@@ -6787,7 +6787,7 @@ public class TopicManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
         }
         //details
-        int approval = GameManager.instance.hqScript.GetHqApproval();
+        int approval = GameManager.i.hqScript.GetHqApproval();
         int oddsGood = 50;
         int oddsBad = 100 - oddsGood;
         builder.AppendFormat("Determined by{0}{1}<size=110%>HQ Approval</size>{2}{3}", "\n", colourAlert, colourEnd, "\n");
@@ -6851,8 +6851,8 @@ public class TopicManager : MonoBehaviour
     public void ProcessMetaTopics()
     {
         //dictOfType/SubType
-        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicTypeData());
-        UpdateTopicTypes(GameManager.instance.dataScript.GetDictOfTopicSubTypeData());
+        UpdateTopicTypes(GameManager.i.dataScript.GetDictOfTopicTypeData());
+        UpdateTopicTypes(GameManager.i.dataScript.GetDictOfTopicSubTypeData());
     }
 
     /// <summary>
@@ -6882,22 +6882,22 @@ public class TopicManager : MonoBehaviour
     public void DebugTestNews()
     {
         string newsSnippet = "";
-        TopicPool pool = GameManager.instance.testScript.debugTopicPool;
+        TopicPool pool = GameManager.i.testScript.debugTopicPool;
         if (pool != null)
         {
             List<Topic> listOfTopics = pool.listOfTopics;
             if (listOfTopics != null)
             {
-                int maxNodeID = GameManager.instance.nodeScript.maxNodeValue;
-                tagOrgTag = GameManager.instance.campaignScript.campaign.orgInfo.tag;
-                if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.instance.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                else { tagRecruit = GameManager.instance.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                tagRecruit += " " + GameManager.instance.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                int maxNodeID = GameManager.i.nodeScript.maxNodeValue;
+                tagOrgTag = GameManager.i.campaignScript.campaign.orgInfo.tag;
+                if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                else { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                tagRecruit += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
                 tagTeam = "ERASURE Team Alpha";
                 int count = listOfTopics.Count;
                 if (count > 0)
                 {
-                    Sprite debugSprite = GameManager.instance.guiScript.topicDefaultSprite;
+                    Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
                     coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite, maxNodeID);
                     StartCoroutine(coroutine);
                 }
@@ -6957,20 +6957,20 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicTypes()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.instance.dataScript.GetDictOfTopicTypeData();
+        Dictionary<string, TopicTypeData> dictOfTopicTypes = GameManager.i.dataScript.GetDictOfTopicTypeData();
         if (dictOfTopicTypes != null)
         {
-            Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.instance.dataScript.GetDictOfTopicSubTypeData();
+            Dictionary<string, TopicTypeData> dictOfTopicSubTypes = GameManager.i.dataScript.GetDictOfTopicSubTypeData();
             if (dictOfTopicSubTypes != null)
             {
-                GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+                GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
                 builder.AppendFormat("- TopicTypeData for TopicTypes ('*' topic/subType -> valid Criteria){0}{1}", "\n", "\n");
                 //used to print a '*' to indicate topic / subType is valid and ready to go
                 bool isValidType, isValidSubType;
                 //loop topic Types
                 foreach (var topicTypeData in dictOfTopicTypes)
                 {
-                    TopicType topicType = GameManager.instance.dataScript.GetTopicType(topicTypeData.Key);
+                    TopicType topicType = GameManager.i.dataScript.GetTopicType(topicTypeData.Key);
                     if (topicType != null)
                     {
                         if (topicType.side.level == playerSide.level || topicType.side.level == 3)
@@ -6983,7 +6983,7 @@ public class TopicManager : MonoBehaviour
                                 //needs to be the correct side
                                 if (subType.side.level == playerSide.level || subType.side.level == 3)
                                 {
-                                    TopicTypeData subData = GameManager.instance.dataScript.GetTopicSubTypeData(subType.name);
+                                    TopicTypeData subData = GameManager.i.dataScript.GetTopicSubTypeData(subType.name);
                                     if (subData != null)
                                     {
                                         isValidSubType = false;
@@ -7028,7 +7028,7 @@ public class TopicManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         //listOfTopicTypesLevel
         builder.AppendFormat("- listOfTopicTypesLevel{0}", "\n");
-        List<TopicType> listOfTopicTypeLevel = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        List<TopicType> listOfTopicTypeLevel = GameManager.i.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypeLevel != null)
         {
             if (listOfTopicTypeLevel.Count > 0)
@@ -7052,7 +7052,7 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfTopicTypesTurn (Null)"); }
         //topicHistory
-        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.instance.dataScript.GetDictOfTopicHistory();
+        Dictionary<int, HistoryTopic> dictOfTopicHistory = GameManager.i.dataScript.GetDictOfTopicHistory();
         if (dictOfTopicHistory != null)
         {
             builder.AppendFormat("{0} - dictOfTopicHistory ({1} records){2}", "\n", dictOfTopicHistory.Count, "\n");
@@ -7076,11 +7076,11 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayCriteria()
     {
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
         //listOfTopicTypes
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypes();
+        List<TopicType> listOfTopicTypes = GameManager.i.dataScript.GetListOfTopicTypes();
         if (listOfTopicTypes != null)
         {
             foreach (TopicType topicType in listOfTopicTypes)
@@ -7121,7 +7121,7 @@ public class TopicManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- dictOfTopicPools{0}", "\n");
-        List<TopicType> listOfTopicTypes = GameManager.instance.dataScript.GetListOfTopicTypesLevel();
+        List<TopicType> listOfTopicTypes = GameManager.i.dataScript.GetListOfTopicTypesLevel();
         if (listOfTopicTypes != null)
         {
             //loop topic types by level
@@ -7136,7 +7136,7 @@ public class TopicManager : MonoBehaviour
                     {
                         builder.AppendFormat("   {0}{1}", subType.tag, "\n");
                         //find entry in dictOfTopicPools and display all topics for that subType
-                        List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(subType);
+                        List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(subType);
                         {
                             if (listOfTopics != null)
                             {
@@ -7179,7 +7179,7 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat("- dictOfTopicPools{0}", "\n");
         if (turnTopicSubType != null)
         {
-            List<Topic> listOfTopics = GameManager.instance.dataScript.GetListOfTopics(turnTopicSubType);
+            List<Topic> listOfTopics = GameManager.i.dataScript.GetListOfTopics(turnTopicSubType);
             if (listOfTopics != null)
             {
 
@@ -7274,8 +7274,8 @@ public class TopicManager : MonoBehaviour
     public string DebugDisplayTopicProfileData()
     {
         StringBuilder builder = new StringBuilder();
-        Dictionary<string, Topic> dictOfTopics = GameManager.instance.dataScript.GetDictOfTopics();
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (dictOfTopics != null)
         {
             builder.AppendFormat("- Topic Profile Data{0}{1}", "\n", "\n");
@@ -7304,7 +7304,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     private bool DebugCheckValidType(TopicTypeData data)
     {
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         if (data != null)
         {
             if (data.minInterval == 0)

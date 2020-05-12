@@ -282,7 +282,7 @@ public class DebugGUI : MonoBehaviour
                     case TeamDebug.None: debugDisplay = 2; teamStatus = TeamDebug.Pools; break;
                     case TeamDebug.Pools: debugDisplay = 2; teamStatus = TeamDebug.Roster; break;
                     case TeamDebug.Roster:
-                        if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                        if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                         { debugDisplay = 2; teamStatus = TeamDebug.Actors; }
                         else { debugDisplay = 0; teamStatus = TeamDebug.None; }
                         break;
@@ -502,10 +502,10 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Colour Palette"))
             {
                 Debug.Log("[Dbg] Button -> Colour Palette");
-                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
+                if (GameManager.i.inputScript.ModalState == ModalState.Normal)
                 {
                     //display outcome dialogue showing colour Palette
-                    GameManager.instance.colourScript.DebugDisplayColourPalette();
+                    GameManager.i.colourScript.DebugDisplayColourPalette();
                 }
             }
 
@@ -513,14 +513,14 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), optionAutoGear))
             {
                 Debug.Log("[Dbg] Button -> Toggle OptionAutoGear");
-                if (GameManager.instance.optionScript.autoGearResolution == true)
+                if (GameManager.i.optionScript.autoGearResolution == true)
                 {
-                    GameManager.instance.optionScript.autoGearResolution = false;
+                    GameManager.i.optionScript.autoGearResolution = false;
                     optionAutoGear = "Auto Gear ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.autoGearResolution = true;
+                    GameManager.i.optionScript.autoGearResolution = true;
                     optionAutoGear = "Auto Gear OFF";
                 }
             }
@@ -529,35 +529,35 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionFogOfWar))
             {
                 Debug.Log("[Dbg] Button -> Toggle Fog Of War");
-                if (GameManager.instance.optionScript.fogOfWar == true)
+                if (GameManager.i.optionScript.fogOfWar == true)
                 {
                     //sets both FOW and Nemesis settings in tandem
-                    GameManager.instance.optionScript.fogOfWar = false;
-                    GameManager.instance.nemesisScript.isShown = true;
+                    GameManager.i.optionScript.fogOfWar = false;
+                    GameManager.i.nemesisScript.isShown = true;
                     optionFogOfWar = "Fog Of War ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.fogOfWar = true;
-                    GameManager.instance.nemesisScript.isShown = false;
+                    GameManager.i.optionScript.fogOfWar = true;
+                    GameManager.i.nemesisScript.isShown = false;
                     optionFogOfWar = "Fog Of War OFF";
                 }
                 //redraw and update nodes
-                GameManager.instance.nodeScript.NodeRedraw = true;
+                GameManager.i.nodeScript.NodeRedraw = true;
             }
 
             //fourth button
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), optionConnectorTooltips))
             {
                 Debug.Log("[Dbg] Button -> Toggle Connection Tooltips");
-                if (GameManager.instance.optionScript.connectorTooltips == true)
+                if (GameManager.i.optionScript.connectorTooltips == true)
                 {
-                    GameManager.instance.optionScript.connectorTooltips = false;
+                    GameManager.i.optionScript.connectorTooltips = false;
                     optionConnectorTooltips = "Conn Tooltips ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.connectorTooltips = true;
+                    GameManager.i.optionScript.connectorTooltips = true;
                     optionConnectorTooltips = "Conn Tooltips OFF";
                 }
             }
@@ -566,82 +566,82 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), optionDebugData))
             {
                 Debug.Log("[Dbg] Button -> Toggle Debug Data");
-                if (GameManager.instance.optionScript.debugData == true)
+                if (GameManager.i.optionScript.debugData == true)
                 {
-                    GameManager.instance.optionScript.debugData = false;
+                    GameManager.i.optionScript.debugData = false;
                     optionDebugData = "Debug Data ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.debugData = true;
+                    GameManager.i.optionScript.debugData = true;
                     optionDebugData = "Debug Data OFF";
                 }
             }
 
             //sixth button
-            if (GameManager.instance.turnScript.Turn > 0) { optionNoAI = "Unavailable"; }
+            if (GameManager.i.turnScript.Turn > 0) { optionNoAI = "Unavailable"; }
             {
                 if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), optionNoAI))
                 {
                     Debug.Log("[Dbg] Button -> Toggle NO AI");
                     //option only available on first turn
-                    if (GameManager.instance.turnScript.Turn == 0)
+                    if (GameManager.i.turnScript.Turn == 0)
                     {
 
-                        switch (GameManager.instance.sideScript.PlayerSide.level)
+                        switch (GameManager.i.sideScript.PlayerSide.level)
                         {
                             //authority player
                             case 1:
                                 //switch AI Off -> Manual player control for both sides
-                                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                                if (GameManager.i.sideScript.resistanceOverall == SideState.AI)
                                 {
                                     optionNoAI = "NO AI OFF";
-                                    GameManager.instance.optionScript.noAI = true;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
+                                    GameManager.i.optionScript.noAI = true;
+                                    GameManager.i.sideScript.authorityCurrent = SideState.Human;
+                                    GameManager.i.sideScript.resistanceCurrent = SideState.Human;
+                                    GameManager.i.sideScript.authorityOverall = SideState.Human;
+                                    GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugAI);
                                 }
                                 //reverts back to Authority Player, Resistance AI
-                                else if (GameManager.instance.sideScript.resistanceOverall == SideState.Human)
+                                else if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
-                                    GameManager.instance.optionScript.noAI = false;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.AI;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.AI;
+                                    GameManager.i.optionScript.noAI = false;
+                                    GameManager.i.sideScript.authorityCurrent = SideState.Human;
+                                    GameManager.i.sideScript.resistanceCurrent = SideState.AI;
+                                    GameManager.i.sideScript.authorityOverall = SideState.Human;
+                                    GameManager.i.sideScript.resistanceOverall = SideState.AI;
                                     //notification
-                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugPlayer);
                                 }
                                 break;
                             //resistance player
                             case 2:
                                 //switch AI Off -> Manual player control for both sides
-                                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                                if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                                 {
                                     optionNoAI = "NO AI OFF";
-                                    GameManager.instance.optionScript.noAI = true;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.Human;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
+                                    GameManager.i.optionScript.noAI = true;
+                                    GameManager.i.sideScript.authorityCurrent = SideState.Human;
+                                    GameManager.i.sideScript.resistanceCurrent = SideState.Human;
+                                    GameManager.i.sideScript.authorityOverall = SideState.Human;
+                                    GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugAI);
                                 }
                                 //reverts back to Resistance Player, Authority AI
-                                else if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
+                                else if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
-                                    GameManager.instance.optionScript.noAI = false;
-                                    GameManager.instance.sideScript.authorityCurrent = SideState.AI;
-                                    GameManager.instance.sideScript.resistanceCurrent = SideState.Human;
-                                    GameManager.instance.sideScript.authorityOverall = SideState.AI;
-                                    GameManager.instance.sideScript.resistanceOverall = SideState.Human;
+                                    GameManager.i.optionScript.noAI = false;
+                                    GameManager.i.sideScript.authorityCurrent = SideState.AI;
+                                    GameManager.i.sideScript.resistanceCurrent = SideState.Human;
+                                    GameManager.i.sideScript.authorityOverall = SideState.AI;
+                                    GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.instance.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugPlayer);
                                 }
                                 break;
                         }
@@ -653,14 +653,14 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionRenownUI))
             {
                 Debug.Log("[Dbg] Button -> Toggle Info UI Display");
-                if (GameManager.instance.actorPanelScript.CheckInfoUIStatus() == true)
+                if (GameManager.i.actorPanelScript.CheckInfoUIStatus() == true)
                 {
-                    GameManager.instance.actorPanelScript.SetActorInfoUI(false);
+                    GameManager.i.actorPanelScript.SetActorInfoUI(false);
                     optionRenownUI = "Renown ON";
                 }
                 else
                 {
-                    GameManager.instance.actorPanelScript.SetActorInfoUI(true);
+                    GameManager.i.actorPanelScript.SetActorInfoUI(true);
                     optionRenownUI = "Compatibility ON";
                 }
             }
@@ -669,14 +669,14 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), optionContacts))
             {
                 Debug.Log("[Dbg] Button -> Toggle Show Contacts in Node tooltips");
-                if (GameManager.instance.optionScript.showContacts == true)
+                if (GameManager.i.optionScript.showContacts == true)
                 {
-                    GameManager.instance.optionScript.showContacts = false;
+                    GameManager.i.optionScript.showContacts = false;
                     optionContacts = "Contacts ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.showContacts = true;
+                    GameManager.i.optionScript.showContacts = true;
                     optionContacts = "Contacts OFF";
                 }
             }
@@ -685,14 +685,14 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), optionMoodInfo))
             {
                 Debug.Log("[Dbg] Button -> Toggle Full Mood Info option");
-                if (GameManager.instance.optionScript.fullMoodInfo == true)
+                if (GameManager.i.optionScript.fullMoodInfo == true)
                 {
-                    GameManager.instance.optionScript.fullMoodInfo = false;
+                    GameManager.i.optionScript.fullMoodInfo = false;
                     optionMoodInfo = "Mood Info ON";
                 }
                 else
                 {
-                    GameManager.instance.optionScript.fullMoodInfo = true;
+                    GameManager.i.optionScript.fullMoodInfo = true;
                     optionMoodInfo = "MoodInfo OFF";
                 }
             }
@@ -707,10 +707,10 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Remove Secret"))
             {
                 Debug.Log("[Dbg] Button -> Remove Random Secret");
-                if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
+                if (GameManager.i.inputScript.ModalState == ModalState.Normal)
                 {
                     //Remove a random secret from Player and anyone else
-                    GameManager.instance.playerScript.DebugRemoveRandomSecret();
+                    GameManager.i.playerScript.DebugRemoveRandomSecret();
                 }
             }
 
@@ -718,16 +718,16 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Toggle Orgs"))
             {
                 Debug.Log("[Dbg] Button -> Toggle All Organisations (isContact)");
-                GameManager.instance.orgScript.DebugToggleAllOrganisations();
+                GameManager.i.orgScript.DebugToggleAllOrganisations();
             }
 
             //third button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
             {
-                Debug.LogFormat("[Dbg] Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.instance.nodeScript.nodePlayer, "\n");
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                Debug.LogFormat("[Dbg] Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.i.nodeScript.nodePlayer, "\n");
+                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
                 {
-                    Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                     if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
                 }
             }
@@ -735,7 +735,7 @@ public class DebugGUI : MonoBehaviour
             //fourth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "News Tester"))
             {
-                GameManager.instance.topicScript.DebugTestNews();
+                GameManager.i.topicScript.DebugTestNews();
                 Debug.Log("[Dbg] Button -> News Tester");
             }
 
@@ -765,7 +765,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 6 + button_height * 6, button_width, button_height), "Give Gear"))
             {
                 //Resistance player only
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
                 {
                     Debug.Log("[Dbg] Button -> Give Gear");
                     if (debugDisplay != 16)
@@ -793,15 +793,15 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Renown"))
             {
                 Debug.Log("[Dbg] Button -> Give Player Renown");
-                int renown = GameManager.instance.playerScript.Renown;
+                int renown = GameManager.i.playerScript.Renown;
                 renown += 10;
-                GameManager.instance.playerScript.Renown = renown;
+                GameManager.i.playerScript.Renown = renown;
             }
 
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give CaptureTool" /*optionAITraceback*/))
             {
                 //Resistance player only
-                if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
+                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
                 {
                     Debug.Log("[Dbg] Button -> Give CaptureTool");
                     if (debugDisplay != 84)
@@ -883,7 +883,7 @@ public class DebugGUI : MonoBehaviour
                     optionAIScreamer = "AIScreamer OFF";
                 }*/
                 Debug.Log("[Dbg] Button -> Capture Player");
-                GameManager.instance.captureScript.DebugCapturePlayer();
+                GameManager.i.captureScript.DebugCapturePlayer();
             }
 
 
@@ -898,7 +898,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 16 + button_height * 16, button_width, button_height), "Give Secret"))
             {
                 Debug.Log("[Dbg] Button -> Give Player a Random Secret");
-                GameManager.instance.playerScript.DebugAddRandomSecret();
+                GameManager.i.playerScript.DebugAddRandomSecret();
             }
 
             //fourteenth button
@@ -943,9 +943,9 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Help Debug");
                 //toggle help on/off
-                if (GameManager.instance.tooltipHelpScript.CheckTooltipActive() == false)
-                { GameManager.instance.helpScript.DebugShowHelp(); }
-                else { GameManager.instance.tooltipHelpScript.CloseTooltip(); }
+                if (GameManager.i.tooltipHelpScript.CheckTooltipActive() == false)
+                { GameManager.i.helpScript.DebugShowHelp(); }
+                else { GameManager.i.tooltipHelpScript.CloseTooltip(); }
             }
 
             //nineteenth button
@@ -961,15 +961,15 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Activate Cures"))
             {
                 Debug.Log("[Dbg] Button -> Activate Cures");
-                GameManager.instance.dataScript.DebugActivateAllCures();
+                GameManager.i.dataScript.DebugActivateAllCures();
             }
 
             //twentyFifth button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "Export Data"))
             {
                 Debug.Log("[Dbg] Button -> Export Data");
-                GameManager.instance.textScript.Export();
-                GameManager.instance.textScript.ExportTopicOptions();
+                GameManager.i.textScript.Export();
+                GameManager.i.textScript.ExportTopicOptions();
             }
 
             //twentySixth button
@@ -977,7 +977,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Import Data"))
             {
                 Debug.Log("[Dbg] Button -> Import Data");
-                GameManager.instance.textScript.Import();
+                GameManager.i.textScript.Import();
             }
 
             //twentySeventh button
@@ -1005,7 +1005,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Add Investigation"))
             {
                 Debug.Log("[Dbg] Button -> Add Investigation");
-                GameManager.instance.playerScript.DebugAddInvestigation();
+                GameManager.i.playerScript.DebugAddInvestigation();
             }
 
             //
@@ -1023,7 +1023,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 1 + button_height * 1, button_width, button_height), "Centre Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Centre Nodes");
-                GameManager.instance.debugGraphicsScript.SetCentrePane(true);
+                GameManager.i.debugGraphicsScript.SetCentrePane(true);
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
             }
 
@@ -1052,7 +1052,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 5 + button_height * 5, button_width, button_height), "Show NodeID"))
             {
                 Debug.Log("[Dbg] Button -> Show All NodeID's");
-                GameManager.instance.nodeScript.ShowAllNodeID();
+                GameManager.i.nodeScript.ShowAllNodeID();
             }
 
             //seventh button
@@ -1074,7 +1074,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), "Recalc Weighted"))
             {
                 Debug.Log("[Dbg] Button -> Recaculate Weighted Dijkstra data");
-                GameManager.instance.dijkstraScript.RecalculateWeightedData();
+                GameManager.i.dijkstraScript.RecalculateWeightedData();
             }
 
             //ninth button
@@ -1110,7 +1110,7 @@ public class DebugGUI : MonoBehaviour
                     //City / Level analysis
                     case 1:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugLevelAnalysis();
+                        analysis = GameManager.i.dataScript.DebugLevelAnalysis();
                         GUI.Box(new Rect(Screen.width - 305, 10, 300, 500), analysis, customBackground);
                         break;
                     //toggle team data
@@ -1121,15 +1121,15 @@ public class DebugGUI : MonoBehaviour
                         switch (teamStatus)
                         {
                             case TeamDebug.Pools:
-                                analysis = GameManager.instance.teamScript.DebugDisplayTeamAnalysis();
+                                analysis = GameManager.i.teamScript.DebugDisplayTeamAnalysis();
                                 GUI.Box(new Rect(Screen.width - 205, 10, 200, 240), analysis, customBackground);
                                 break;
                             case TeamDebug.Roster:
-                                analysis = GameManager.instance.teamScript.DebugDisplayIndividualTeams();
+                                analysis = GameManager.i.teamScript.DebugDisplayIndividualTeams();
                                 GUI.Box(new Rect(Screen.width - 405, 10, 400, 320), analysis, customBackground);
                                 break;
                             case TeamDebug.Actors:
-                                analysis = GameManager.instance.teamScript.DebugDisplayTeamActorAnalysis();
+                                analysis = GameManager.i.teamScript.DebugDisplayTeamActorAnalysis();
                                 GUI.Box(new Rect(Screen.width - 205, 10, 200, 280), analysis, customBackground);
                                 break;
                         }
@@ -1143,25 +1143,25 @@ public class DebugGUI : MonoBehaviour
                     //Game state
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.inputScript.DebugDisplayGameState();
+                        analysis = GameManager.i.inputScript.DebugDisplayGameState();
                         GUI.Box(new Rect(Screen.width - 255, 10, 250, 650), analysis, customBackground);
                         break;
                     //actor Pools
                     case 6:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.actorScript.DebugDisplayPools();
+                        analysis = GameManager.i.actorScript.DebugDisplayPools();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 900), analysis, customBackground);
                         break;
                     //actor Lists
                     case 7:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorLists();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorLists();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 700), analysis, customBackground);
                         break;
                     //Player data
                     case 8:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DebugDisplayPlayerStats();
+                        analysis = GameManager.i.playerScript.DebugDisplayPlayerStats();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
                         break;
                     //Toggle Messages
@@ -1171,15 +1171,15 @@ public class DebugGUI : MonoBehaviour
                         switch (messageToggle)
                         {
                             case 1:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Pending); break;
+                                analysis = GameManager.i.dataScript.DebugDisplayMessages(MessageCategory.Pending); break;
                             case 2:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Current); break;
+                                analysis = GameManager.i.dataScript.DebugDisplayMessages(MessageCategory.Current); break;
                             case 3:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.Archive); break;
+                                analysis = GameManager.i.dataScript.DebugDisplayMessages(MessageCategory.Archive); break;
                             case 4:
-                                analysis = GameManager.instance.dataScript.DebugDisplayMessages(MessageCategory.AI); break;
+                                analysis = GameManager.i.dataScript.DebugDisplayMessages(MessageCategory.AI); break;
                             case 5:
-                                analysis = GameManager.instance.guiScript.DebugDisplayInfoPipeLine(); break;
+                                analysis = GameManager.i.guiScript.DebugDisplayInfoPipeLine(); break;
                         }
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 1000), analysis, customBackground);
                         break;
@@ -1190,19 +1190,19 @@ public class DebugGUI : MonoBehaviour
                         switch (aiStatus)
                         {
                             case AIDebugData.Task:
-                                analysis = GameManager.instance.aiScript.DisplayTaskData();
+                                analysis = GameManager.i.aiScript.DisplayTaskData();
                                 break;
                             case AIDebugData.Node:
-                                analysis = GameManager.instance.aiScript.DisplayNodeData();
+                                analysis = GameManager.i.aiScript.DisplayNodeData();
                                 break;
                             case AIDebugData.Spider:
-                                analysis = GameManager.instance.aiScript.DisplaySpiderData();
+                                analysis = GameManager.i.aiScript.DisplaySpiderData();
                                 break;
                             case AIDebugData.Erasure:
-                                analysis = GameManager.instance.aiScript.DisplayErasureData();
+                                analysis = GameManager.i.aiScript.DisplayErasureData();
                                 break;
                             case AIDebugData.Decision:
-                                analysis = GameManager.instance.aiScript.DisplayDecisionData();
+                                analysis = GameManager.i.aiScript.DisplayDecisionData();
                                 break;
                         }
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
@@ -1210,31 +1210,31 @@ public class DebugGUI : MonoBehaviour
                     //HQs
                     case 11:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.hqScript.DebugDisplayHq();
+                        analysis = GameManager.i.hqScript.DebugDisplayHq();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //Show Options
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.optionScript.DisplayOptions();
+                        analysis = GameManager.i.optionScript.DisplayOptions();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 300), analysis, customBackground);
                         break;
                     //Help
                     case 13:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.helpScript.DisplayHelp();
+                        analysis = GameManager.i.helpScript.DisplayHelp();
                         GUI.Box(new Rect(Screen.width - 305, 10, 300, 800), analysis, customBackground);
                         break;
                     //Ongoing Register
                     case 14:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayOngoingRegister();
+                        analysis = GameManager.i.dataScript.DebugDisplayOngoingRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                     //Actions Adjustment Register
                     case 15:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActionsRegister();
+                        analysis = GameManager.i.dataScript.DebugDisplayActionsRegister();
                         GUI.Box(new Rect(Screen.width - 460, 10, 450, 350), analysis, customBackground);
                         break;
                     //Give Gear Input
@@ -1249,7 +1249,7 @@ public class DebugGUI : MonoBehaviour
                     //Give Gear processing & Output
                     case 17:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.playerScript.DebugAddGear(textInput_0); }
+                        { textOutput = GameManager.i.playerScript.DebugAddGear(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1268,7 +1268,7 @@ public class DebugGUI : MonoBehaviour
                     //Give Condition processing and Output
                     case 19:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.actorScript.DebugAddCondition(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.actorScript.DebugAddCondition(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1287,7 +1287,7 @@ public class DebugGUI : MonoBehaviour
                     //Give Trait to Actor processing and Output
                     case 21:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.actorScript.DebugAddTrait(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.actorScript.DebugAddTrait(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1306,7 +1306,7 @@ public class DebugGUI : MonoBehaviour
                     //Assign state
                     case 23:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.turnScript.DebugSetState(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.turnScript.DebugSetState(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1314,19 +1314,19 @@ public class DebugGUI : MonoBehaviour
                     //Gear Info Display
                     case 24:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayGearData();
+                        analysis = GameManager.i.dataScript.DebugDisplayGearData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                     //Secret Info Display
                     case 25:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.secretScript.DebugDisplaySecretData();
+                        analysis = GameManager.i.secretScript.DebugDisplaySecretData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                     //Node Crisis Data Display
                     case 26:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayCrisisNodes();
+                        analysis = GameManager.i.dataScript.DebugDisplayCrisisNodes();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 400), analysis, customBackground);
                         break;
                     //Add Contact to Actor
@@ -1343,7 +1343,7 @@ public class DebugGUI : MonoBehaviour
                     //Add Contact to Actor processing and Output
                     case 28:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.dataScript.DebugAddContact(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.dataScript.DebugAddContact(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1362,7 +1362,7 @@ public class DebugGUI : MonoBehaviour
                     //Remove Actor Contact processing and Output
                     case 30:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.dataScript.DebugRemoveContact(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.dataScript.DebugRemoveContact(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1380,7 +1380,7 @@ public class DebugGUI : MonoBehaviour
                     //toggle isContactKnown processing
                     case 32:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.contactScript.DebugToggleIsContactKnown(textInput_0); }
+                        { textOutput = GameManager.i.contactScript.DebugToggleIsContactKnown(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1388,27 +1388,27 @@ public class DebugGUI : MonoBehaviour
                     //Contacts -> Resistance
                     case 33:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.contactScript.DebugDisplayContacts();
+                        analysis = GameManager.i.contactScript.DebugDisplayContacts();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Targets Generic
                     case 34:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugShowGenericTargets();
+                        analysis = GameManager.i.dataScript.DebugShowGenericTargets();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
                         break;
                     //Target Pools
                     case 35:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
-                        analysis = GameManager.instance.dataScript.DebugShowTargetPools();
+                        analysis = GameManager.i.dataScript.DebugShowTargetPools();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
                         break;
                     //Target Dictionary
                     case 36:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
-                        analysis = GameManager.instance.dataScript.DebugShowTargetDict();
+                        analysis = GameManager.i.dataScript.DebugShowTargetDict();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 800), analysis, customBackground);
                         break;
                     //Show / Toggle Path (between two nodes)
@@ -1429,7 +1429,7 @@ public class DebugGUI : MonoBehaviour
                         {
                             optionPath = "Path OFF";
                             status = GUIStatus.ShowPathOff;
-                            textOutput = GameManager.instance.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1), true);
+                            textOutput = GameManager.i.dijkstraScript.DebugShowPath(Convert.ToInt32(textInput_0), Convert.ToInt32(textInput_1), true);
                         }
                         break;
                     //Swith Path OFF
@@ -1441,7 +1441,7 @@ public class DebugGUI : MonoBehaviour
                     //Nemesis Data
                     case 40:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.nemesisScript.DebugShowNemesisStatus();
+                        analysis = GameManager.i.nemesisScript.DebugShowNemesisStatus();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Control Nemesis -> Input
@@ -1474,7 +1474,7 @@ public class DebugGUI : MonoBehaviour
                                     break;
                             }
                             if (nodeID > -1)
-                            {  GameManager.instance.nemesisScript.SetPlayerControlStart(nodeID, goal); }
+                            {  GameManager.i.nemesisScript.SetPlayerControlStart(nodeID, goal); }
                             status = GUIStatus.None;
                         }
                         if (textOutput == null)
@@ -1485,25 +1485,25 @@ public class DebugGUI : MonoBehaviour
                     //Rebel AI data
                     case 43:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.aiRebelScript.DebugShowRebelAIStatus();
+                        analysis = GameManager.i.aiRebelScript.DebugShowRebelAIStatus();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
                         break;
                     //Rebel Tracker data
                     case 44:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugShowRebelMoves();
+                        analysis = GameManager.i.dataScript.DebugShowRebelMoves();
                         GUI.Box(new Rect(Screen.width - 305, 10, 300, 600), analysis, customBackground);
                         break;
                     //Nemesis Tracker data
                     case 45:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugShowNemesisMoves();
+                        analysis = GameManager.i.dataScript.DebugShowNemesisMoves();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Contacts by Node data
                     case 46:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.contactScript.DebugDisplayContactsByNode();
+                        analysis = GameManager.i.contactScript.DebugDisplayContactsByNode();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Toggle Contact Active / Inactive
@@ -1524,7 +1524,7 @@ public class DebugGUI : MonoBehaviour
                             { contactID = Convert.ToInt32(textInput_0); }
                             catch (FormatException) { Debug.LogWarningFormat("Invalid nodeID {0} input (Not a Number)", textInput_0); }
                             if (contactID > -1)
-                            { analysis = GameManager.instance.dataScript.ContactToggleActive(contactID); }
+                            { analysis = GameManager.i.dataScript.ContactToggleActive(contactID); }
                             status = GUIStatus.None;
                         }
                         if (textOutput == null)
@@ -1535,19 +1535,19 @@ public class DebugGUI : MonoBehaviour
                     //Contact dict
                     case 49:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.contactScript.DebugDisplayContactsDict();
+                        analysis = GameManager.i.contactScript.DebugDisplayContactsDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Statistics Data
                     case 50:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.statScript.DebugShowStatistics();
+                        analysis = GameManager.i.statScript.DebugShowStatistics();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //AI Analysis Data
                     case 51:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = string.Format("{0}{1}", GameManager.instance.aiScript.DebugShowTaskAnalysis(), GameManager.instance.aiRebelScript.DebugShowTaskAnalysis());
+                        analysis = string.Format("{0}{1}", GameManager.i.aiScript.DebugShowTaskAnalysis(), GameManager.i.aiRebelScript.DebugShowTaskAnalysis());
                         GUI.Box(new Rect(Screen.width - 355, 10, 500, 350), analysis, customBackground);
                         break;
                     //Remove Condition
@@ -1564,7 +1564,7 @@ public class DebugGUI : MonoBehaviour
                     //Remove Condition processing and Output
                     case 53:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.actorScript.DebugRemoveCondition(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.actorScript.DebugRemoveCondition(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 475, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1572,163 +1572,163 @@ public class DebugGUI : MonoBehaviour
                     //actor dictionary
                     case 54:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorDict();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
                         break;
                     //campaign data
                     case 55:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.campaignScript.DebugDisplayCampaignData();
+                        analysis = GameManager.i.campaignScript.DebugDisplayCampaignData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 700), analysis, customBackground);
                         break;
                     //scenario data
                     case 56:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.campaignScript.DebugDisplayScenarioData();
+                        analysis = GameManager.i.campaignScript.DebugDisplayScenarioData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 750), analysis, customBackground);
                         break;
                     //Personality data (OnMap actors)
                     case 57:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugDisplayAllPersonalities();
+                        analysis = GameManager.i.personScript.DebugDisplayAllPersonalities();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Actor Compatibility Range
                     case 58:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugCheckActorCompatibilityRange();
+                        analysis = GameManager.i.personScript.DebugCheckActorCompatibilityRange();
                         GUI.Box(new Rect(Screen.width - 405, 10, 500, 800), analysis, customBackground);
                         break;
                     //Actor Emotional History
                     case 59:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugDisplayActorMotivationHistory();
+                        analysis = GameManager.i.personScript.DebugDisplayActorMotivationHistory();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //player stats -> mood history
                     case 60:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DebugDisplayMoodHistory();
+                        analysis = GameManager.i.playerScript.DebugDisplayMoodHistory();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Personality -> Player Preferences
                     case 61:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugDisplayPlayerLikes();
+                        analysis = GameManager.i.personScript.DebugDisplayPlayerLikes();
                         GUI.Box(new Rect(Screen.width - 455, 10, 455, 800), analysis, customBackground);
                         break;
                     //Topic Data
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicTypes();
+                        analysis = GameManager.i.topicScript.DebugDisplayTopicTypes();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 750), analysis, customBackground);
                         break;
                     //Topic Type lists
                     case 63:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicTypeLists();
+                        analysis = GameManager.i.topicScript.DebugDisplayTopicTypeLists();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Pools
                     case 64:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayCurrentTopicPool();
+                        analysis = GameManager.i.topicScript.DebugDisplayCurrentTopicPool();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Selection data
                     case 65:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicSelectionData();
+                        analysis = GameManager.i.topicScript.DebugDisplayTopicSelectionData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 700), analysis, customBackground);
                         break;
                     //Topic Profile data
                     case 66:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayTopicProfileData();
+                        analysis = GameManager.i.topicScript.DebugDisplayTopicProfileData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Topic Criteria data
                     case 67:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.topicScript.DebugDisplayCriteria();
+                        analysis = GameManager.i.topicScript.DebugDisplayCriteria();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
                         break;
                     //Actor NodeActionData
                     case 68:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorNodeActionData();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorNodeActionData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                     //Actor TeamActionData
                     case 69:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorTeamActionData();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorTeamActionData();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                     //Personality data (HQ actors)
                     case 70:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugDisplayHQPersonalities();
+                        analysis = GameManager.i.personScript.DebugDisplayHQPersonalities();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //HQs
                     case 71:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.hqScript.DebugDisplayHqActors();
+                        analysis = GameManager.i.hqScript.DebugDisplayHqActors();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
                         break;
                     //News Items
                     case 72:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.newsScript.DebugDisplayNewsItems();
+                        analysis = GameManager.i.newsScript.DebugDisplayNewsItems();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                     //Adverts
                     case 73:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.newsScript.DebugDisplayAdverts();
+                        analysis = GameManager.i.newsScript.DebugDisplayAdverts();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                     //HQ dictionary
                     case 74:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayHQDict();
+                        analysis = GameManager.i.dataScript.DebugDisplayHQDict();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 850), analysis, customBackground);
                         break;
                     //belief frequency analysis
                     case 75:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayBeliefCount();
+                        analysis = GameManager.i.dataScript.DebugDisplayBeliefCount();
                         GUI.Box(new Rect(Screen.width - 355, 10, 500, 300), analysis, customBackground);
                         break;
                     //topic and topicOption text tag frequency analysis
                     case 76:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayTextTagCount();
+                        analysis = GameManager.i.dataScript.DebugDisplayTextTagCount();
                         GUI.Box(new Rect(Screen.width - 355, 10, 500, 800), analysis, customBackground);
                         break;
                     //Statistics Data
                     case 77:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.statScript.DebugShowRatios();
+                        analysis = GameManager.i.statScript.DebugShowRatios();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Organisation Data
                     case 78:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayCurrentOrganisations();
+                        analysis = GameManager.i.dataScript.DebugDisplayCurrentOrganisations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //V.I.P Tracker data
                     case 79:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugShowNpcMoves();
+                        analysis = GameManager.i.dataScript.DebugShowNpcMoves();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Actor (Current) Details
                     case 80:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorDetails();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorDetails();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 800), analysis, customBackground);
                         break;
                     //Initiate a Relationship conflict
@@ -1744,7 +1744,7 @@ public class DebugGUI : MonoBehaviour
                     //Start relationship conflict
                     case 82:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.actorScript.DebugCreateConflict(textInput_0); }
+                        { textOutput = GameManager.i.actorScript.DebugCreateConflict(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 375, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1752,7 +1752,7 @@ public class DebugGUI : MonoBehaviour
                     //player stats -> investigations
                     case 83:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DebugDisplayInvestigations();
+                        analysis = GameManager.i.playerScript.DebugDisplayInvestigations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                     //Give CaptureTool input
@@ -1767,7 +1767,7 @@ public class DebugGUI : MonoBehaviour
                     //Give CaptureTool processing & Output
                     case 85:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.playerScript.DebugAddCaptureTool(textInput_0); }
+                        { textOutput = GameManager.i.playerScript.DebugAddCaptureTool(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1784,7 +1784,7 @@ public class DebugGUI : MonoBehaviour
                     //Set Innocence processing & Output
                     case 87:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.playerScript.DebugSetInnocence(textInput_0); }
+                        { textOutput = GameManager.i.playerScript.DebugSetInnocence(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1801,7 +1801,7 @@ public class DebugGUI : MonoBehaviour
                     //Set Mood processing & Output
                     case 89:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.playerScript.DebugSetMood(textInput_0); }
+                        { textOutput = GameManager.i.playerScript.DebugSetMood(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1809,13 +1809,13 @@ public class DebugGUI : MonoBehaviour
                     //Actor Compatibility with other Actors
                     case 90:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.personScript.DebugDisplayActorCompatibility();
+                        analysis = GameManager.i.personScript.DebugDisplayActorCompatibility();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Actor Relationship with other Actors
                     case 91:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorRelations();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorRelations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Set Friend Input
@@ -1832,7 +1832,7 @@ public class DebugGUI : MonoBehaviour
                     //Set Friend processing & Output
                     case 93:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.dataScript.DebugSetFriend(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.dataScript.DebugSetFriend(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1851,7 +1851,7 @@ public class DebugGUI : MonoBehaviour
                     //Set Enemy processing & Output
                     case 95:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.dataScript.DebugSetEnemy(textInput_0, textInput_1); }
+                        { textOutput = GameManager.i.dataScript.DebugSetEnemy(textInput_0, textInput_1); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1859,7 +1859,7 @@ public class DebugGUI : MonoBehaviour
                     //Actor Relationship with other Actors
                     case 96:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.playerScript.DebugDisplayPlayerNodeActions();
+                        analysis = GameManager.i.playerScript.DebugDisplayPlayerNodeActions();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 800), analysis, customBackground);
                         break;
                     //Set City Loyalty Input
@@ -1874,7 +1874,7 @@ public class DebugGUI : MonoBehaviour
                     //City Loyalty process and output
                     case 98:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.cityScript.DebugSetLoyalty(textInput_0); }
+                        { textOutput = GameManager.i.cityScript.DebugSetLoyalty(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1882,25 +1882,25 @@ public class DebugGUI : MonoBehaviour
                     //HQ actors renown history
                     case 99:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.hqScript.DebugDisplayHqActorRenown();
+                        analysis = GameManager.i.hqScript.DebugDisplayHqActorRenown();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //OnMap Actors History
                     case 100:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayActorsHistory();
+                        analysis = GameManager.i.dataScript.DebugDisplayActorsHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                     //Player History
                     case 101:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayPlayerHistory();
+                        analysis = GameManager.i.dataScript.DebugDisplayPlayerHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                     //HQ Hierarchy History
                     case 102:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplayHqHierarchyHistory();
+                        analysis = GameManager.i.dataScript.DebugDisplayHqHierarchyHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                     //Set Traitor
@@ -1915,7 +1915,7 @@ public class DebugGUI : MonoBehaviour
                     //Set Mood processing & Output
                     case 104:
                         if (textOutput == null)
-                        { textOutput = GameManager.instance.actorScript.DebugSetTraitor(textInput_0); }
+                        { textOutput = GameManager.i.actorScript.DebugSetTraitor(textInput_0); }
                         customBackground.alignment = TextAnchor.UpperLeft;
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
@@ -1923,13 +1923,13 @@ public class DebugGUI : MonoBehaviour
                     //MetaGame data
                     case 105:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.metaUIScript.DebugDisplaySelected();
+                        analysis = GameManager.i.metaUIScript.DebugDisplaySelected();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 500), analysis, customBackground);
                         break;
                     //Secret Details Display
                     case 106:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.instance.dataScript.DebugDisplaySecretDetails();
+                        analysis = GameManager.i.dataScript.DebugDisplaySecretDetails();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }

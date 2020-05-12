@@ -28,7 +28,7 @@ public class StatisticManager : MonoBehaviour
                 SubInitialiseSessionStart();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseEarly)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -46,7 +46,7 @@ public class StatisticManager : MonoBehaviour
                 SubInitialiseSessionInProgress();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (InitialiseLate)", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -62,7 +62,7 @@ public class StatisticManager : MonoBehaviour
     {
         //instantiate statistic trackers if a new sessession
         foreach (var stat in Enum.GetValues(typeof(StatType)))
-        { GameManager.instance.dataScript.StatisticAddNew((StatType)stat); }
+        { GameManager.i.dataScript.StatisticAddNew((StatType)stat); }
     }
     #endregion
 
@@ -70,7 +70,7 @@ public class StatisticManager : MonoBehaviour
     private void SubInitialiseSessionInProgress()
     {
         //session underway -> reset trackers
-        GameManager.instance.dataScript.StatisticReset();
+        GameManager.i.dataScript.StatisticReset();
     }
     #endregion
 
@@ -82,10 +82,10 @@ public class StatisticManager : MonoBehaviour
     /// </summary>
     public void ProcessMetaStatistics()
     {
-        Dictionary<StatType, int> dictOfStatsLevel = GameManager.instance.dataScript.GetDictOfStatisticsLevel();
+        Dictionary<StatType, int> dictOfStatsLevel = GameManager.i.dataScript.GetDictOfStatisticsLevel();
         if (dictOfStatsLevel != null)
         {
-            Dictionary<StatType, int> dictOfStatsCampaign = GameManager.instance.dataScript.GetDictOfStatisticsCampaign();
+            Dictionary<StatType, int> dictOfStatsCampaign = GameManager.i.dataScript.GetDictOfStatisticsCampaign();
             if (dictOfStatsCampaign != null)
             {
                 int statValue;
@@ -109,7 +109,7 @@ public class StatisticManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfStatisticsLevel (Null)"); }
         //reset all level based statistics back to zero
-        GameManager.instance.dataScript.StatisticReset();
+        GameManager.i.dataScript.StatisticReset();
     }
     #endregion
 
@@ -121,93 +121,93 @@ public class StatisticManager : MonoBehaviour
     public void UpdateRatios()
     {
         float dataTop, dataBottom;
-        bool isAutoRun = GameManager.instance.turnScript.CheckIsAutoRun();
-        int turn = GameManager.instance.turnScript.Turn;
+        bool isAutoRun = GameManager.i.turnScript.CheckIsAutoRun();
+        int turn = GameManager.i.turnScript.Turn;
         //adjust turn to take into account lie low, captured and breakdown days for the Player
-        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
-        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
-        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerCapturedDays);
+        turn -= GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+        turn -= GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
+        turn -= GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCapturedDays);
         turn = Mathf.Max(1, turn);
         //PlayerNodeActions
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayNodeAct == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayNodeAct == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
-            dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerNodeActions);
+            dataBottom = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeActionsResistance);
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerNodeActions = dataTop / dataBottom; }
             else { ratioPlayerNodeActions = 0; }
         }
-        else { ratioPlayerNodeActions = GameManager.instance.testScript.testRatioPlayNodeAct; }
+        else { ratioPlayerNodeActions = GameManager.i.testScript.testRatioPlayNodeAct; }
         //PlayerTargetAttempts
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayTargetAtt == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayTargetAtt == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
-            dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerTargetAttempts);
+            dataBottom = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetAttempts);
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerTargetAttempts = dataTop / dataBottom; }
             else { ratioPlayerTargetAttempts = 0; }
         }
-        else { ratioPlayerTargetAttempts = GameManager.instance.testScript.testRatioPlayTargetAtt; }
+        else { ratioPlayerTargetAttempts = GameManager.i.testScript.testRatioPlayTargetAtt; }
         //PlayerMoveActions
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayMoveAct == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayMoveAct == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerMoveActions);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerMoveActions);
             dataBottom = turn;
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerMoveActions = dataTop / dataBottom; }
             else { ratioPlayerMoveActions = 0; }
         }
-        else { ratioPlayerMoveActions = GameManager.instance.testScript.testRatioPlayMoveAct; }
+        else { ratioPlayerMoveActions = GameManager.i.testScript.testRatioPlayMoveAct; }
         //PlayerLieLowDays
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayLieLow == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayLieLow == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
-            dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+            dataBottom = GameManager.i.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal);
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerLieLowDays = dataTop / dataBottom; }
             else { ratioPlayerLieLowDays = 0; }
         }
-        else { ratioPlayerLieLowDays = GameManager.instance.testScript.testRatioPlayLieLow; }
+        else { ratioPlayerLieLowDays = GameManager.i.testScript.testRatioPlayLieLow; }
         //PlayerGiveGear
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayGiveGear == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayGiveGear == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
-            dataBottom = GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerGiveGear);
+            dataBottom = GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal);
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerGiveGear = dataTop / dataBottom; }
             else { ratioPlayerGiveGear = 0; }
         }
-        else { ratioPlayerGiveGear = GameManager.instance.testScript.testRatioPlayGiveGear; }
+        else { ratioPlayerGiveGear = GameManager.i.testScript.testRatioPlayGiveGear; }
         //PlayerManageActions
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioPlayManageAct == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioPlayManageAct == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerManageActions);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerManageActions);
             dataBottom = turn;
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerManageActions = dataTop / dataBottom; }
             else { ratioPlayerManageActions = 0; }
         }
-        else { ratioPlayerManageActions = GameManager.instance.testScript.testRatioPlayManageAct; }
+        else { ratioPlayerManageActions = GameManager.i.testScript.testRatioPlayManageAct; }
         //PlayerDoNothing
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioDoNothing == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioDoNothing == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerDoNothing);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerDoNothing);
             dataBottom = turn;
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerDoNothing = dataTop / dataBottom; }
             else { ratioPlayerDoNothing = 0; }
         }
-        else { ratioPlayerDoNothing = GameManager.instance.testScript.testRatioDoNothing; }
+        else { ratioPlayerDoNothing = GameManager.i.testScript.testRatioDoNothing; }
         //PlayerAddictedDays
-        if (isAutoRun == false && GameManager.instance.testScript.testRatioAddictedDays == 0)
+        if (isAutoRun == false && GameManager.i.testScript.testRatioAddictedDays == 0)
         {
-            dataTop = GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerAddictedDays);
+            dataTop = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerAddictedDays);
             dataBottom = turn;
             if (dataTop != 0 && dataBottom != 0)
             { ratioPlayerAddictedDays = dataTop / dataBottom; }
             else { ratioPlayerAddictedDays = 0; }
         }
-        else { ratioPlayerAddictedDays = GameManager.instance.testScript.testRatioAddictedDays; }
+        else { ratioPlayerAddictedDays = GameManager.i.testScript.testRatioAddictedDays; }
     }
     #endregion
 
@@ -227,8 +227,8 @@ public class StatisticManager : MonoBehaviour
         //loop each stat type
         foreach (var stat in Enum.GetValues(typeof(StatType)))
         {
-            builder.AppendFormat("{0}: {1} (total {2}){3}", (StatType)stat, GameManager.instance.dataScript.StatisticGetLevel((StatType)stat),
-              GameManager.instance.dataScript.StatisticGetCampaign((StatType)stat), "\n");
+            builder.AppendFormat("{0}: {1} (total {2}){3}", (StatType)stat, GameManager.i.dataScript.StatisticGetLevel((StatType)stat),
+              GameManager.i.dataScript.StatisticGetCampaign((StatType)stat), "\n");
         }
         return builder.ToString();
     }
@@ -239,10 +239,10 @@ public class StatisticManager : MonoBehaviour
     /// <returns></returns>
     public string DebugShowRatios()
     {
-        int turn = GameManager.instance.turnScript.Turn;
+        int turn = GameManager.i.turnScript.Turn;
         //adjust turn to take into account lie low and breakdown days for the Player
-        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
-        turn -= GameManager.instance.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
+        turn -= GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerLieLowDays);
+        turn -= GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerBreakdown);
         turn = Mathf.Max(1, turn);
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Ratios (turns {0}){1}{2}", turn, "\n", "\n");

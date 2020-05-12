@@ -3634,7 +3634,6 @@ MonoBehaviour:
   arrayOfSubBoss1Options:
   - {fileID: 11400000, guid: c7237b838393d9145894260735abca84, type: 2}
   - {fileID: 11400000, guid: 2323ed15344bed541b60bf80b7758a77, type: 2}
-  - {fileID: 11400000, guid: 9cb725a4e4cddae4d9d4006345978eb1, type: 2}
   - {fileID: 11400000, guid: b25a20080bc9df949982400a2c2566e3, type: 2}
   - {fileID: 11400000, guid: 634b1a2b825750341bb36bbc1a7ed79b, type: 2}
   - {fileID: 11400000, guid: efc853c09fb606c458a8cab6cfa8eb96, type: 2}
@@ -5123,6 +5122,7 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
+  popUiScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1

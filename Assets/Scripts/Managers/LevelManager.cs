@@ -82,7 +82,7 @@ public class LevelManager : MonoBehaviour
                 SubInitialiseAll();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }        
     }
@@ -94,7 +94,7 @@ public class LevelManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {        
         //fast access
-        city = GameManager.instance.cityScript.GetCity();
+        city = GameManager.i.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid city (Null)");
     }
     #endregion
@@ -113,7 +113,7 @@ public class LevelManager : MonoBehaviour
         InitialiseNodeArcs();
         AssignSecurityLevels();
         InitialiseDistrictNames();
-        GameManager.instance.RestoreRandomDevState();
+        GameManager.i.RestoreRandomDevState();
     }
     #endregion
 
@@ -125,9 +125,9 @@ public class LevelManager : MonoBehaviour
     private void InitialiseLevelRandomSeed()
     {
         //save existing random dev state
-        GameManager.instance.SaveRandomDevState();
+        GameManager.i.SaveRandomDevState();
         //reset to level specific random seed
-        int seed = GameManager.instance.campaignScript.scenario.seedCity;
+        int seed = GameManager.i.campaignScript.scenario.seedCity;
         Random.InitState(seed);
         string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.tag, city.country.name) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
@@ -149,7 +149,7 @@ public class LevelManager : MonoBehaviour
             if (nodeHolder.childCount > 0 && listOfNodes.Count > 0)
             {
                 for (int i = listOfNodes.Count - 1; i >= 0; i--)
-                { GameManager.instance.SafeDestroy(listOfNodes[i].gameObject); }
+                { GameManager.i.SafeDestroy(listOfNodes[i].gameObject); }
             }
         }
         if (connectionHolder != null)
@@ -157,7 +157,7 @@ public class LevelManager : MonoBehaviour
             if (connectionHolder.childCount > 0 && listOfConnections.Count > 0)
             {
                 for (int i = listOfConnections.Count - 1; i >= 0; i--)
-                { GameManager.instance.SafeDestroy(listOfConnections[i]); }
+                { GameManager.i.SafeDestroy(listOfConnections[i]); }
             }
         }
         instanceNode = null;
@@ -191,9 +191,9 @@ public class LevelManager : MonoBehaviour
         //initialise arrays (independent off city being valid or not)
         for (int index = 0; index < maxConnections; index++)
         {
-            List<NodeArc> tempListDefault = GameManager.instance.dataScript.GetDefaultNodeArcList(index + 1);
+            List<NodeArc> tempListDefault = GameManager.i.dataScript.GetDefaultNodeArcList(index + 1);
             if (tempListDefault != null) { listOfConnArcsDefault[index] = tempListDefault; }
-            List<NodeArc> tempListPreferred = GameManager.instance.dataScript.GetPreferredNodeArcList(index + 1);
+            List<NodeArc> tempListPreferred = GameManager.i.dataScript.GetPreferredNodeArcList(index + 1);
             if (tempListPreferred != null) { listOfConnArcsPreferred[index] = tempListPreferred; }
 
         }
@@ -322,7 +322,7 @@ public class LevelManager : MonoBehaviour
                 instanceNode.transform.SetParent(nodeHolder);
                 //assign nodeID
                 nodeTemp = instanceNode.GetComponent<Node>();
-                nodeTemp.nodeID = GameManager.instance.nodeScript.nodeIDCounter++;
+                nodeTemp.nodeID = GameManager.i.nodeScript.nodeIDCounter++;
                 //add to node list & add to coord list for lookups
                 listOfNodeObjects.Add(instanceNode);
                 listOfNodes.Add(nodeTemp);
@@ -332,7 +332,7 @@ public class LevelManager : MonoBehaviour
                 { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: nodeID {0}, position {1}  {2}  {3}{4}", nodeTemp.nodeID, randomPos.x, randomPos.y, randomPos.z, "\n"); }*/
 
                 //add to dictionary of Nodes
-                GameManager.instance.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
+                GameManager.i.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
             }
         }
         //update Number of Nodes as there could be less than anticipated due to spacing requirements
@@ -534,7 +534,7 @@ public class LevelManager : MonoBehaviour
         instanceConnection.transform.localScale = new Vector3(instanceScale.x, distance, instanceScale.z);
         //set up Connection fields
         Connection connectionTemp = instanceConnection.GetComponent<Connection>();
-        connectionTemp.connID = GameManager.instance.nodeScript.connIDCounter++;
+        connectionTemp.connID = GameManager.i.nodeScript.connIDCounter++;
         connectionTemp.InitialiseConnection(node1, node2);
         //add an edge to Graph
         graph.AddEdge(node1, node2);
@@ -543,7 +543,7 @@ public class LevelManager : MonoBehaviour
         //set parent
         instanceConnection.transform.SetParent(connectionHolder);
         //add to collections
-        if (GameManager.instance.dataScript.AddConnection(connectionTemp) == true)
+        if (GameManager.i.dataScript.AddConnection(connectionTemp) == true)
         {
 
             /*if (node1 == 17 || node2 == 17)
@@ -629,13 +629,13 @@ public class LevelManager : MonoBehaviour
     {
         int minValue = 0;
         //initialiseArray
-        int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+        int numRecords = GameManager.i.dataScript.CheckNumOfNodeArcs();
         arrayOfNodeArcTotals = new int[(int)NodeArcTally.Count, numRecords];
         //get minimum number of each type of NodeArc
         minValue = city.Arc.size.minNum;
         Debug.Assert(minValue > 0, "Invalid minValue (Zero)");
         //loop nodeArcs
-        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.instance.dataScript.GetDictOfNodeArcs();
+        Dictionary<int, NodeArc> dictOfNodeArcs = GameManager.i.dataScript.GetDictOfNodeArcs();
         if (dictOfNodeArcs != null)
         {
             //assign a minimum number of nodes that must be this nodeArc type
@@ -833,7 +833,7 @@ public class LevelManager : MonoBehaviour
     {
         int index, rndIndex, current, minimum, numConnections, remainingNodes;
         bool isRepeat;
-        int numRecords = GameManager.instance.dataScript.CheckNumOfNodeArcs();
+        int numRecords = GameManager.i.dataScript.CheckNumOfNodeArcs();
         current = (int)NodeArcTally.Current;
         minimum = (int)NodeArcTally.Minimum;
         //create a temporary list of all nodes
@@ -901,7 +901,7 @@ public class LevelManager : MonoBehaviour
                     if (node != null)
                     {
                         //assign node arc, set node details and adjust count
-                        NodeArc nodeArc = GameManager.instance.dataScript.GetNodeArc(i);
+                        NodeArc nodeArc = GameManager.i.dataScript.GetNodeArc(i);
                         if (nodeArc != null)
                         {
                             SetNodeDetails(node, nodeArc);
@@ -1015,7 +1015,7 @@ public class LevelManager : MonoBehaviour
             node.Support = node.Arc.Support;
             node.Security = node.Arc.Security;
             //keep within range of 0 to 3
-            int maxNodeValue = GameManager.instance.nodeScript.maxNodeValue;
+            int maxNodeValue = GameManager.i.nodeScript.maxNodeValue;
             node.Stability = Mathf.Clamp(node.Stability, 0, maxNodeValue);
             node.Security = Mathf.Clamp(node.Security, 0, maxNodeValue);
             node.Support = Mathf.Clamp(node.Support, 0, maxNodeValue);
@@ -1027,13 +1027,13 @@ public class LevelManager : MonoBehaviour
             node.defaultChar = '\0';
             switch (nodeArc.name)
             {
-                case "CORPORATE": node.defaultChar = GameManager.instance.guiScript.corporateChar; break;
-                case "GATED": node.defaultChar = GameManager.instance.guiScript.gatedChar; break;
-                case "INDUSTRIAL": node.defaultChar = GameManager.instance.guiScript.industrialChar; break;
-                case "RESEARCH": node.defaultChar = GameManager.instance.guiScript.researchChar; break;
-                case "GOVERNMENT": node.defaultChar = GameManager.instance.guiScript.governmentChar; break;
-                case "SPRAWL": node.defaultChar = GameManager.instance.guiScript.sprawlChar; break;
-                case "UTILITY": node.defaultChar = GameManager.instance.guiScript.utilityChar; break;
+                case "CORPORATE": node.defaultChar = GameManager.i.guiScript.corporateChar; break;
+                case "GATED": node.defaultChar = GameManager.i.guiScript.gatedChar; break;
+                case "INDUSTRIAL": node.defaultChar = GameManager.i.guiScript.industrialChar; break;
+                case "RESEARCH": node.defaultChar = GameManager.i.guiScript.researchChar; break;
+                case "GOVERNMENT": node.defaultChar = GameManager.i.guiScript.governmentChar; break;
+                case "SPRAWL": node.defaultChar = GameManager.i.guiScript.sprawlChar; break;
+                case "UTILITY": node.defaultChar = GameManager.i.guiScript.utilityChar; break;
                 default: Debug.LogWarningFormat("Unrecognised nodeArc \"{0}\"", node.Arc.name); break;
             }
             /*Debug.LogFormat("[Tst] LevelManager.cs -> SetNodeDetails: {0}, nodeID {1}{2}", node.Arc.name, node.nodeID, "\n");*/
@@ -1099,12 +1099,12 @@ public class LevelManager : MonoBehaviour
                                 Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Mayor & City Hall at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                 record.Key.nodeName = "City Centre";
                                 record.Key.specialName = "Town Hall";
-                                record.Key.defaultChar = GameManager.instance.guiScript.cityHallChar;
+                                record.Key.defaultChar = GameManager.i.guiScript.cityHallChar;
                                 //make city hall a larger cylinder
                                 record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
                                 //Mayor placed at CityHall at game start
-                                GameManager.instance.cityScript.mayorDistrictID = record.Key.nodeID;
-                                GameManager.instance.cityScript.cityHallDistrictID = record.Key.nodeID;
+                                GameManager.i.cityScript.mayorDistrictID = record.Key.nodeID;
+                                GameManager.i.cityScript.cityHallDistrictID = record.Key.nodeID;
                                 break;
                             }
                         }
@@ -1127,10 +1127,10 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Airport at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.airportDistrict;
                                     record.Key.specialName = "Airport";
-                                    record.Key.defaultChar = GameManager.instance.guiScript.airportChar;
+                                    record.Key.defaultChar = GameManager.i.guiScript.airportChar;
                                     //make airport a larger cylinder
                                     record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
-                                    GameManager.instance.cityScript.airportDistrictID = record.Key.nodeID;
+                                    GameManager.i.cityScript.airportDistrictID = record.Key.nodeID;
                                 }
                                 else { Debug.LogWarning("Missing airportDistrict name"); }
                             }
@@ -1142,10 +1142,10 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Harbour at {0}, {1}, ID {2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n");
                                     record.Key.nodeName = city.harbourDistrict;
                                     record.Key.specialName = "Harbour";
-                                    record.Key.defaultChar = GameManager.instance.guiScript.harbourChar;
+                                    record.Key.defaultChar = GameManager.i.guiScript.harbourChar;
                                     //make harbour a larger cylinder
                                     record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
-                                    GameManager.instance.cityScript.harbourDistrictID = record.Key.nodeID;
+                                    GameManager.i.cityScript.harbourDistrictID = record.Key.nodeID;
                                 }
                                 /*else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }*/
                                 break;
@@ -1156,11 +1156,11 @@ public class LevelManager : MonoBehaviour
                         if (string.IsNullOrEmpty(city.iconDistrict) == false)
                         {
                             List<int> listOfSpecialDistricts = new List<int>();
-                            nodeID = GameManager.instance.cityScript.mayorDistrictID;
+                            nodeID = GameManager.i.cityScript.mayorDistrictID;
                             if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
-                            nodeID = GameManager.instance.cityScript.airportDistrictID;
+                            nodeID = GameManager.i.cityScript.airportDistrictID;
                             if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
-                            nodeID = GameManager.instance.cityScript.harbourDistrictID;
+                            nodeID = GameManager.i.cityScript.harbourDistrictID;
                             if (nodeID > -1) { listOfSpecialDistricts.Add(nodeID); }
                             isSuccess = false;
                             //randomly assign but check not an existing special district
@@ -1174,8 +1174,8 @@ public class LevelManager : MonoBehaviour
                                     Debug.LogFormat("LevelManager.cs -> InitialiseDistrictNames: Icon \"{0}\" district at {1}, {2}, ID {3}{4}", city.iconName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                                     node.nodeName = city.iconDistrict;
                                     node.specialName = city.iconName;
-                                    node.defaultChar = GameManager.instance.guiScript.iconChar;
-                                    GameManager.instance.cityScript.iconDistrictID = node.nodeID;
+                                    node.defaultChar = GameManager.i.guiScript.iconChar;
+                                    GameManager.i.cityScript.iconDistrictID = node.nodeID;
                                     break;
                                 }
                                 counter++;
@@ -1207,7 +1207,7 @@ public class LevelManager : MonoBehaviour
         for (int i = 0; i < numRecords; i++)
         {
             num = arrayOfNodeArcTotals[(int)NodeArcTally.Current, i];
-            name = GameManager.instance.dataScript.GetNodeArc(i).name;
+            name = GameManager.i.dataScript.GetNodeArc(i).name;
             Debug.Log(string.Format("  Node {0} total {1}{2}", name, num, "\n"));
         }
     }
@@ -1249,13 +1249,13 @@ public class LevelManager : MonoBehaviour
             node1 = connection.GetNode1();
             node2 = connection.GetNode2();
             //get the highest node security level of the two
-            GameObject nodeObj1 = GameManager.instance.dataScript.GetNodeObject(node1);
+            GameObject nodeObj1 = GameManager.i.dataScript.GetNodeObject(node1);
             if (nodeObj1 != null)
             {
                 Node node = nodeObj1.GetComponent<Node>();
                 security = node.Security;
             }
-            GameObject nodeObj2 = GameManager.instance.dataScript.GetNodeObject(node2);
+            GameObject nodeObj2 = GameManager.i.dataScript.GetNodeObject(node2);
             if (nodeObj2 != null)
             {
                 Node node = nodeObj2.GetComponent<Node>();

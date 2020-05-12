@@ -140,7 +140,7 @@ public class EffectManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -152,8 +152,8 @@ public class EffectManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        delayNoSpider = GameManager.instance.nodeScript.nodeNoSpiderDelay;
-        delayYesSpider = GameManager.instance.nodeScript.nodeYesSpiderDelay;
+        delayNoSpider = GameManager.i.nodeScript.nodeNoSpiderDelay;
+        delayYesSpider = GameManager.i.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = "ActorInvisibilityStress";
         actorDoubleRenown = "ActorDoubleRenown";
         actorBlackmailNone = "ActorBlackmailNone";
@@ -162,17 +162,17 @@ public class EffectManager : MonoBehaviour
         actorNeverResigns = "ActorResignNone";
         actorReserveTimerDoubled = "ActorReserveTimerDoubled";
         actorReserveTimerHalved = "ActorReserveTimerHalved";
-        conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
-        conditionCorrupt = GameManager.instance.dataScript.GetCondition("CORRUPT");
-        conditionIncompetent = GameManager.instance.dataScript.GetCondition("INCOMPETENT");
-        conditionQuestionable = GameManager.instance.dataScript.GetCondition("QUESTIONABLE");
-        conditionBlackmailer = GameManager.instance.dataScript.GetCondition("BLACKMAILER");
-        conditionStar = GameManager.instance.dataScript.GetCondition("STAR");
-        conditionTagged = GameManager.instance.dataScript.GetCondition("TAGGED");
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
-        conditionImaged = GameManager.instance.dataScript.GetCondition("IMAGED");
-        conditionDoomed = GameManager.instance.dataScript.GetCondition("DOOMED");
-        conditionAddicted = GameManager.instance.dataScript.GetCondition("ADDICTED");
+        conditionStressed = GameManager.i.dataScript.GetCondition("STRESSED");
+        conditionCorrupt = GameManager.i.dataScript.GetCondition("CORRUPT");
+        conditionIncompetent = GameManager.i.dataScript.GetCondition("INCOMPETENT");
+        conditionQuestionable = GameManager.i.dataScript.GetCondition("QUESTIONABLE");
+        conditionBlackmailer = GameManager.i.dataScript.GetCondition("BLACKMAILER");
+        conditionStar = GameManager.i.dataScript.GetCondition("STAR");
+        conditionTagged = GameManager.i.dataScript.GetCondition("TAGGED");
+        conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
+        conditionImaged = GameManager.i.dataScript.GetCondition("IMAGED");
+        conditionDoomed = GameManager.i.dataScript.GetCondition("DOOMED");
+        conditionAddicted = GameManager.i.dataScript.GetCondition("ADDICTED");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionCorrupt != null, "Invalid conditionCorrupt (Null)");
         Debug.Assert(conditionIncompetent != null, "Invalid conditionIncompetent (Null)");
@@ -185,19 +185,19 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(conditionDoomed != null, "Invalid conditionDoomed (Null)");
         Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
         //fast access -> teams
-        teamArcCivil = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
-        teamArcControl = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
-        teamArcMedia = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-        teamArcProbe = GameManager.instance.dataScript.GetTeamArcID("PROBE");
-        teamArcSpider = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
-        teamArcDamage = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
-        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
+        teamArcCivil = GameManager.i.dataScript.GetTeamArcID("CIVIL");
+        teamArcControl = GameManager.i.dataScript.GetTeamArcID("CONTROL");
+        teamArcMedia = GameManager.i.dataScript.GetTeamArcID("MEDIA");
+        teamArcProbe = GameManager.i.dataScript.GetTeamArcID("PROBE");
+        teamArcSpider = GameManager.i.dataScript.GetTeamArcID("SPIDER");
+        teamArcDamage = GameManager.i.dataScript.GetTeamArcID("DAMAGE");
+        teamArcErasure = GameManager.i.dataScript.GetTeamArcID("ERASURE");
         //fast access -> other
-        maxTargetInfo = GameManager.instance.targetScript.maxTargetInfo;
-        maxStatValue = GameManager.instance.actorScript.maxStatValue;
-        maxSecretsAllowed = GameManager.instance.secretScript.secretMaxNum;
-        neutralStatValue = GameManager.instance.actorScript.neutralStatValue;
-        chanceMotivationShift = GameManager.instance.actorScript.chanceRelationShift;
+        maxTargetInfo = GameManager.i.targetScript.maxTargetInfo;
+        maxStatValue = GameManager.i.actorScript.maxStatValue;
+        maxSecretsAllowed = GameManager.i.secretScript.secretMaxNum;
+        neutralStatValue = GameManager.i.actorScript.neutralStatValue;
+        chanceMotivationShift = GameManager.i.actorScript.chanceRelationShift;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia (-1)");
@@ -251,30 +251,30 @@ public class EffectManager : MonoBehaviour
     public void SetColours()
     {
         //output colours for good and bad depend on player side
-        switch (GameManager.instance.sideScript.PlayerSide.name)
+        switch (GameManager.i.sideScript.PlayerSide.name)
         {
             case "Resistance":
-                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
+                colourGoodSide = GameManager.i.colourScript.GetColour(ColourType.goodText);
+                colourBadSide = GameManager.i.colourScript.GetColour(ColourType.badText);
                 break;
             case "Authority":
-                colourGoodSide = GameManager.instance.colourScript.GetColour(ColourType.badText);
-                colourBadSide = GameManager.instance.colourScript.GetColour(ColourType.goodText);
+                colourGoodSide = GameManager.i.colourScript.GetColour(ColourType.badText);
+                colourBadSide = GameManager.i.colourScript.GetColour(ColourType.goodText);
                 break;
             default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name));
+                Debug.LogError(string.Format("Invalid side \"{0}\"", GameManager.i.sideScript.PlayerSide.name));
                 break;
         }
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourDefault = GameManager.instance.colourScript.GetColour(ColourType.whiteText);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourCancel = GameManager.instance.colourScript.GetColour(ColourType.moccasinText);
-        colourActor = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
-        colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.goodText);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.badText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
+        colourActor = GameManager.i.colourScript.GetColour(ColourType.neutralText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
     }
     #endregion
 
@@ -295,7 +295,7 @@ public class EffectManager : MonoBehaviour
         Actor actor = null;
         TeamArc teamArc = null;
         Organisation org = null;
-        GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (data.listOfCriteria != null && data.listOfCriteria.Count > 0)
         {
             //
@@ -304,7 +304,7 @@ public class EffectManager : MonoBehaviour
             //Get node if required
             if (data.nodeID > -1)
             {
-                node = GameManager.instance.dataScript.GetNode(data.nodeID);
+                node = GameManager.i.dataScript.GetNode(data.nodeID);
                 if (node == null)
                 { Debug.LogError("Invalid node (null)"); errorFlag = true; }
             }
@@ -312,7 +312,7 @@ public class EffectManager : MonoBehaviour
             if (data.actorSlotID > -1)
             {
                 //OnMap actor
-                actor = GameManager.instance.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
+                actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                 if (actor == null)
                 {
                     Debug.LogErrorFormat("Invalid actorSlotID \"{0}\" -> Criteria Check cancelled", data.actorSlotID);
@@ -322,7 +322,7 @@ public class EffectManager : MonoBehaviour
             else if (data.actorHqID > -1)
             {
                 //HQ actor
-                actor = GameManager.instance.dataScript.GetHqActor(data.actorHqID);
+                actor = GameManager.i.dataScript.GetHqActor(data.actorHqID);
                 if (actor == null)
                 {
                     Debug.LogErrorFormat("Invalid actorHqID \"{0}\" -> Criteria Check cancelled", data.actorHqID);
@@ -333,7 +333,7 @@ public class EffectManager : MonoBehaviour
             if (data.teamArcID > -1)
             {
                 //get team
-                teamArc = GameManager.instance.dataScript.GetTeamArc(data.teamArcID);
+                teamArc = GameManager.i.dataScript.GetTeamArc(data.teamArcID);
                 if (teamArc == null)
                 {
                     Debug.LogError(string.Format("Invalid TeamArc (null) for teamArcID \"{0}\" -> Criteria check cancelled", data.teamArcID));
@@ -344,7 +344,7 @@ public class EffectManager : MonoBehaviour
             if (string.IsNullOrEmpty(data.orgName) == false)
             {
                 //get org
-                org = GameManager.instance.dataScript.GetOrganisaton(data.orgName);
+                org = GameManager.i.dataScript.GetOrganisaton(data.orgName);
                 if (org == null)
                 {
                     Debug.LogErrorFormat("Invalid Organisation (Null) for orgName \"{0}\"", data.orgName);
@@ -374,55 +374,55 @@ public class EffectManager : MonoBehaviour
                                             switch (criteria.effectCriteria.name)
                                             {
                                                 case "NodeSecurityNOTMin":
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    val = GameManager.i.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Security " + compareTip); }
                                                     break;
                                                 case "NodeSecurityNOTMax":
-                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    val = GameManager.i.nodeScript.maxNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Security, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Security " + compareTip); }
                                                     break;
                                                 case "NodeStabilityNOTMin":
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    val = GameManager.i.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Stability " + compareTip); }
                                                     break;
                                                 case "NodeStabilityLow":
-                                                    val = GameManager.instance.nodeScript.medNodeValue;
+                                                    val = GameManager.i.nodeScript.medNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Stability " + compareTip); }
                                                     break;
                                                 case "NodeStabilityNOTMax":
-                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    val = GameManager.i.nodeScript.maxNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Stability, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Stability " + compareTip); }
                                                     break;
                                                 case "NodeSupportNOTMax":
-                                                    val = GameManager.instance.nodeScript.maxNodeValue;
+                                                    val = GameManager.i.nodeScript.maxNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Support " + compareTip); }
                                                     break;
                                                 case "NodeSupportNOTMin":
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    val = GameManager.i.nodeScript.minNodeValue;
                                                     compareTip = ComparisonCheck(val, node.Support, criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Support " + compareTip); }
                                                     break;
                                                 case "NumTeamsMin":
-                                                    val = GameManager.instance.teamScript.minTeamsAtNode;
+                                                    val = GameManager.i.teamScript.minTeamsAtNode;
                                                     compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "no Teams present"); }
                                                     break;
                                                 case "NumTeamsMax":
-                                                    val = GameManager.instance.teamScript.maxTeamsAtNode;
+                                                    val = GameManager.i.teamScript.maxTeamsAtNode;
                                                     compareTip = ComparisonCheck(val, node.CheckNumOfTeams(), criteria.comparison);
                                                     if (compareTip != null)
                                                     { BuildString(result, "Max teams present"); }
@@ -432,8 +432,8 @@ public class EffectManager : MonoBehaviour
                                                     { BuildString(result, "Tracer already present"); }
                                                     break;
                                                 case "TargetInfoMax":
-                                                    val = GameManager.instance.targetScript.maxTargetInfo;
-                                                    Target target = GameManager.instance.dataScript.GetTarget(node.targetName);
+                                                    val = GameManager.i.targetScript.maxTargetInfo;
+                                                    Target target = GameManager.i.dataScript.GetTarget(node.targetName);
                                                     if (target != null)
                                                     {
                                                         compareTip = ComparisonCheck(val, target.intel, criteria.comparison);
@@ -466,7 +466,7 @@ public class EffectManager : MonoBehaviour
                                                     //there must be a spare team in the reserve pool of the actors preferred type
                                                     if (teamArc != null)
                                                     {
-                                                        if (GameManager.instance.dataScript.CheckTeamInfo(data.teamArcID, TeamInfo.Reserve) < 1)
+                                                        if (GameManager.i.dataScript.CheckTeamInfo(data.teamArcID, TeamInfo.Reserve) < 1)
                                                         { BuildString(result, string.Format("No {0} Team available", teamArc.name)); }
                                                     }
                                                     else
@@ -476,7 +476,7 @@ public class EffectManager : MonoBehaviour
                                                     //there must be a spare team of any type in the reserve pool
                                                     if (teamArc != null)
                                                     {
-                                                        if (GameManager.instance.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
+                                                        if (GameManager.i.dataScript.CheckTeamPoolCount(TeamPool.Reserve) < 1)
                                                         { BuildString(result, string.Format("No Teams available", teamArc.name)); }
                                                     }
                                                     else
@@ -545,7 +545,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 case "NodeStabilityNOTMin":
                                                     //at least one neighbouring node must have stability > 0
-                                                    val = GameManager.instance.nodeScript.minNodeValue;
+                                                    val = GameManager.i.nodeScript.minNodeValue;
                                                     List<Node> listOfNeighbouringNodes = node.GetNeighbouringNodes();
                                                     if (listOfNeighbouringNodes != null)
                                                     {
@@ -585,7 +585,7 @@ public class EffectManager : MonoBehaviour
                                             {
                                                 case "TargetPresent":
                                                     //There must be at least one Live target
-                                                    List<Target> listOfLiveTargets = GameManager.instance.dataScript.GetTargetPool(Status.Live);
+                                                    List<Target> listOfLiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
                                                     if (listOfLiveTargets != null)
                                                     {
                                                         if (listOfLiveTargets.Count == 0)
@@ -625,11 +625,11 @@ public class EffectManager : MonoBehaviour
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "CityLoyaltyNOTMin":
-                                                if (GameManager.instance.cityScript.CityLoyalty == 0)
+                                                if (GameManager.i.cityScript.CityLoyalty == 0)
                                                 { BuildString(result, string.Format(" City Loyalty can't be Zero")); }
                                                 break;
                                             case "CityLoyaltyNOTMax":
-                                                if (GameManager.instance.cityScript.CityLoyalty >= GameManager.instance.cityScript.maxCityLoyalty)
+                                                if (GameManager.i.cityScript.CityLoyalty >= GameManager.i.cityScript.maxCityLoyalty)
                                                 { BuildString(result, string.Format(" City Loyalty can't be MAX")); }
                                                 break;
                                         }
@@ -653,7 +653,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -672,7 +672,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already {0}STRESSED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -690,7 +690,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already {0}CORRUPT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -708,7 +708,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionCorrupt, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}CORRUPT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -726,7 +726,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -744,7 +744,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionIncompetent, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}INCOMPETENT{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -761,7 +761,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -778,7 +778,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionQuestionable, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}QUESTIONABLE{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -795,7 +795,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionStar, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already a {0}STAR{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -812,7 +812,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionStar, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionStar, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't a {0}STAR{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -829,7 +829,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == true)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == true)
                                                         { BuildString(result, string.Format(" Player already {0}ADDICTED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -846,7 +846,7 @@ public class EffectManager : MonoBehaviour
                                                     else
                                                     {
                                                         //player
-                                                        if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == false)
+                                                        if (GameManager.i.playerScript.CheckConditionPresent(conditionAddicted, playerSide) == false)
                                                         { BuildString(result, string.Format(" Player isn't {0}ADDICTED{1}", colourNeutral, colourEnd)); }
                                                     }
                                                 }
@@ -932,8 +932,8 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "RenownReserveMin":
                                                 //player
-                                                int renownReserve = GameManager.instance.actorScript.manageReserveRenown;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                int renownReserve = GameManager.i.actorScript.manageReserveRenown;
+                                                playerRenown = GameManager.i.playerScript.Renown;
                                                 if (playerRenown < renownReserve)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve,
@@ -942,9 +942,9 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "RenownDismissMin":
                                                 //player -> extra cost for actor knowing secrets and threatening player
-                                                ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                                                ManageRenownCost manageDismissCost = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDismissRenown);
                                                 int renownDismiss = manageDismissCost.renownCost;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                playerRenown = GameManager.i.playerScript.Renown;
                                                 if (playerRenown < renownDismiss)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
@@ -955,9 +955,9 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "RenownDisposeMin":
                                                 //player -> extra cost for actor knowing secrets and threatening player
-                                                ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
+                                                ManageRenownCost manageDisposeCost = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDisposeRenown);
                                                 int renownDispose = manageDisposeCost.renownCost;
-                                                playerRenown = GameManager.instance.playerScript.Renown;
+                                                playerRenown = GameManager.i.playerScript.Renown;
                                                 if (playerRenown < renownDispose)
                                                 {
                                                     BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
@@ -975,8 +975,8 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             case "NumRecruitsCurrent":
                                                 //check max. number of recruits in reserve pool not exceeded
-                                                val = GameManager.instance.dataScript.CheckNumOfActorsInReserve();
-                                                compareTip = ComparisonCheck(GameManager.instance.actorScript.maxNumOfReserveActors, val, criteria.comparison);
+                                                val = GameManager.i.dataScript.CheckNumOfActorsInReserve();
+                                                compareTip = ComparisonCheck(GameManager.i.actorScript.maxNumOfReserveActors, val, criteria.comparison);
                                                 if (compareTip != null)
                                                 { BuildString(result, "maxxed Recruit allowance"); }
                                                 break;
@@ -984,15 +984,15 @@ public class EffectManager : MonoBehaviour
                                                 //check invisibility is less than the max value -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                                else { val = GameManager.instance.playerScript.Invisibility; }
-                                                if (val == GameManager.instance.actorScript.maxStatValue)
+                                                else { val = GameManager.i.playerScript.Invisibility; }
+                                                if (val == GameManager.i.actorScript.maxStatValue)
                                                 { BuildString(result, "Invisibility at Max"); }
                                                 break;
                                             case "InvisibilityNOTZero":
                                                 //check invisibility greater than Zero -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                                else { val = GameManager.instance.playerScript.Invisibility; }
+                                                else { val = GameManager.i.playerScript.Invisibility; }
                                                 if (val == 0)
                                                 { BuildString(result, "Invisibility Zero"); }
                                                 break;
@@ -1000,7 +1000,7 @@ public class EffectManager : MonoBehaviour
                                                 //check invisibility Less than 2 -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.GetDatapoint(ActorDatapoint.Invisibility2); }
-                                                else { val = GameManager.instance.playerScript.Invisibility; }
+                                                else { val = GameManager.i.playerScript.Invisibility; }
                                                 if (val > 1)
                                                 { BuildString(result, "Invisibility > 1"); }
                                                 break;
@@ -1008,7 +1008,7 @@ public class EffectManager : MonoBehaviour
                                                 //check num of secrets greater than Zero -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.CheckNumOfSecrets(); }
-                                                else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
+                                                else { val = GameManager.i.playerScript.CheckNumOfSecrets(); }
                                                 if (val == 0)
                                                 { BuildString(result, "Secrets Zero"); }
                                                 break;
@@ -1016,28 +1016,28 @@ public class EffectManager : MonoBehaviour
                                                 //check num of secrets less than Max allowed -> Actor / Player
                                                 if (actor != null)
                                                 { val = actor.CheckNumOfSecrets(); }
-                                                else { val = GameManager.instance.playerScript.CheckNumOfSecrets(); }
+                                                else { val = GameManager.i.playerScript.CheckNumOfSecrets(); }
                                                 if (val >= maxSecretsAllowed)
                                                 { BuildString(result, "Secrets MAX"); }
                                                 break;
                                             case "ActiveActorSlot0":
                                                 //check there is an active actor present onMap at slot 0
-                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(0, playerSide) == false)
+                                                if (GameManager.i.dataScript.CheckActiveActorPresent(0, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
                                             case "ActiveActorSlot1":
                                                 //check there is an active actor present onMap at slot 1
-                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(1, playerSide) == false)
+                                                if (GameManager.i.dataScript.CheckActiveActorPresent(1, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
                                             case "ActiveActorSlot2":
                                                 //check there is an active actor present onMap at slot 2
-                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(2, playerSide) == false)
+                                                if (GameManager.i.dataScript.CheckActiveActorPresent(2, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
                                             case "ActiveActorSlot3":
                                                 //check there is an active actor present onMap at slot 3
-                                                if (GameManager.instance.dataScript.CheckActiveActorPresent(3, playerSide) == false)
+                                                if (GameManager.i.dataScript.CheckActiveActorPresent(3, playerSide) == false)
                                                 { BuildString(result, "No Active Subordinate"); }
                                                 break;
                                             default:
@@ -1057,7 +1057,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only  does NOT have the 'Tagged' condition
                                                 if (conditionTagged != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == true)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionTagged, playerSide) == true)
                                                     { BuildString(result, string.Format(" Player already {0}TAGGED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionTagged (Null)"); errorFlag = true; }
@@ -1066,7 +1066,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only has the 'Tagged' condition
                                                 if (conditionTagged != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, playerSide) == false)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionTagged, playerSide) == false)
                                                     { BuildString(result, string.Format(" Player not {0}TAGGED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionTagged (Null)"); errorFlag = true; }
@@ -1075,7 +1075,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only  does NOT have the 'Wounded' condition
                                                 if (conditionWounded != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, playerSide) == true)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, playerSide) == true)
                                                     { BuildString(result, string.Format(" Player already {0}WOUNDED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionWounded (Null)"); errorFlag = true; }
@@ -1084,7 +1084,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only has the 'Blackmailer' condition
                                                 if (conditionWounded != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, playerSide) == false)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, playerSide) == false)
                                                     { BuildString(result, string.Format(" Player not {0}WOUNDED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionWounded (Null)"); errorFlag = true; }
@@ -1093,7 +1093,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only  does NOT have the 'Imaged' condition
                                                 if (conditionImaged != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, playerSide) == true)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionImaged, playerSide) == true)
                                                     { BuildString(result, string.Format(" Player already {0}IMAGED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionImaged (Null)"); errorFlag = true; }
@@ -1102,7 +1102,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only has the 'Imaged' condition
                                                 if (conditionImaged != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionImaged, playerSide) == false)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionImaged, playerSide) == false)
                                                     { BuildString(result, string.Format(" Player not {0}IMAGED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionImaged (Null)"); errorFlag = true; }
@@ -1111,7 +1111,7 @@ public class EffectManager : MonoBehaviour
                                                 //player only  does NOT have the 'Doomed' condition
                                                 if (conditionDoomed != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == true)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == true)
                                                     { BuildString(result, string.Format(" Player already {0}DOOMED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionDoomed (Null)"); errorFlag = true; }
@@ -1120,109 +1120,109 @@ public class EffectManager : MonoBehaviour
                                                 //player only has the 'Doomed' condition
                                                 if (conditionDoomed != null)
                                                 {
-                                                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == false)
+                                                    if (GameManager.i.playerScript.CheckConditionPresent(conditionDoomed, playerSide) == false)
                                                     { BuildString(result, string.Format(" Player not {0}DOOMED{1}", colourNeutral, colourEnd)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid conditionDoomed (Null)"); errorFlag = true; }
                                                 break;
                                             case "NodeActionsNOTZero":
                                                 //player has listOfNodeActions.Count > 0
-                                                if (GameManager.instance.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
+                                                if (GameManager.i.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
                                                 { BuildString(result, "Player has NO NodeActions"); }
                                                 break;
                                             case "RenownPlayerLow":
                                                 //Player has Renown Low or better
-                                                if (GameManager.instance.playerScript.Renown < renownLow)
+                                                if (GameManager.i.playerScript.Renown < renownLow)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownLow)); }
                                                 break;
                                             case "RenownPlayerMed":
                                                 //Player has Renown Med or better
-                                                if (GameManager.instance.playerScript.Renown < renownMed)
+                                                if (GameManager.i.playerScript.Renown < renownMed)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownMed)); }
                                                 break;
                                             case "RenownPlayerHigh":
                                                 //Player has Renown High or better
-                                                if (GameManager.instance.playerScript.Renown < renownHigh)
+                                                if (GameManager.i.playerScript.Renown < renownHigh)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownHigh)); }
                                                 break;
                                             case "RenownPlayerExt":
                                                 //Player has Renown Low or better
-                                                if (GameManager.instance.playerScript.Renown < renownExtreme)
+                                                if (GameManager.i.playerScript.Renown < renownExtreme)
                                                 { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownExtreme)); }
                                                 break;
                                             case "RenownNOTZeroPlayer":
                                                 //Player
-                                                if (GameManager.instance.playerScript.Renown == 0)
+                                                if (GameManager.i.playerScript.Renown == 0)
                                                 { BuildString(result, "Renown Zero"); }
                                                 break;
                                             case "InvestigationNormal":
                                                 //Player has a current, normal, ongoing investigation that hasn't had intervention by orgHQ
-                                                if (GameManager.instance.playerScript.CheckInvestigationNormal() == false)
+                                                if (GameManager.i.playerScript.CheckInvestigationNormal() == false)
                                                 { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
                                                 break;
                                             case "InvestigationTimer":
                                                 //Player has a current, resolution phase, guilty verdict imminent, investigation that hasn't had intervention by orgHQ
-                                                if (GameManager.instance.playerScript.CheckInvestigationTimer() == false)
+                                                if (GameManager.i.playerScript.CheckInvestigationTimer() == false)
                                                 { BuildString(result, string.Format("No valid Investigation present{0}", "\n")); }
                                                 break;
                                             case "PlayerCapturedNo":
                                                 //Player (Human) not captured
-                                                if (GameManager.instance.playerScript.status == ActorStatus.Captured)
+                                                if (GameManager.i.playerScript.status == ActorStatus.Captured)
                                                 { BuildString(result, string.Format("Player Captured{0}", "\n")); }
                                                 break;
                                             case "PlayerCapturedYes":
                                                 //Player (Human) not captured
-                                                if (GameManager.instance.playerScript.status != ActorStatus.Captured)
+                                                if (GameManager.i.playerScript.status != ActorStatus.Captured)
                                                 { BuildString(result, string.Format("Player not Captured{0}", "\n")); }
                                                 break;
                                             case "InnocenceHigh":
                                                 //Player Innocence at 3 stars exactly
-                                                if (GameManager.instance.playerScript.Innocence != 3)
+                                                if (GameManager.i.playerScript.Innocence != 3)
                                                 { BuildString(result, string.Format("Innocence not 3 stars{0}", "\n")); }
                                                 break;
                                             case "InnocenceMedium":
                                                 //Player Innocence at 2 stars exactly
-                                                if (GameManager.instance.playerScript.Innocence != 2)
+                                                if (GameManager.i.playerScript.Innocence != 2)
                                                 { BuildString(result, string.Format("Innocence not 2 stars{0}", "\n")); }
                                                 break;
                                             case "InnocenceLow":
                                                 //Player Innocence at 1 star exactly
-                                                if (GameManager.instance.playerScript.Innocence != 1)
+                                                if (GameManager.i.playerScript.Innocence != 1)
                                                 { BuildString(result, string.Format("Innocence not 1 star{0}", "\n")); }
                                                 break;
                                             case "InnocenceZero":
                                                 //Player Innocence at 0 stars exactly
-                                                if (GameManager.instance.playerScript.Innocence != 0)
+                                                if (GameManager.i.playerScript.Innocence != 0)
                                                 { BuildString(result, string.Format("Innocence not 0 stars{0}", "\n")); }
                                                 break;
                                             case "InnocenceNOTMin":
                                                 //Player Innocence > 0
-                                                if (GameManager.instance.playerScript.Innocence == 0)
+                                                if (GameManager.i.playerScript.Innocence == 0)
                                                 { BuildString(result, string.Format("Innocence is Zero{0}", "\n")); }
                                                 break;
                                             case "InnocenceNOTMax":
                                                 //Player Innocence < Max
-                                                if (GameManager.instance.playerScript.Innocence == 3)
+                                                if (GameManager.i.playerScript.Innocence == 3)
                                                 { BuildString(result, string.Format("Innocence is Maxxed{0}", "\n")); }
                                                 break;
                                             case "CaptureTool0":
                                                 //Player has CaptureTool for innocence level 0 incarceration in their possession
-                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(0) == false)
+                                                if (GameManager.i.playerScript.CheckCaptureToolPresent(0) == false)
                                                 { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
                                                 break;
                                             case "CaptureTool1":
                                                 //Player has CaptureTool for innocence level 1 incarceration in their possession
-                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(1) == false)
+                                                if (GameManager.i.playerScript.CheckCaptureToolPresent(1) == false)
                                                 { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
                                                 break;
                                             case "CaptureTool2":
                                                 //Player has CaptureTool for innocence level 2 incarceration in their possession
-                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(2) == false)
+                                                if (GameManager.i.playerScript.CheckCaptureToolPresent(2) == false)
                                                 { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
                                                 break;
                                             case "CaptureTool3":
                                                 //Player has CaptureTool for innocence level 1 incarceration in their possession
-                                                if (GameManager.instance.playerScript.CheckCaptureToolPresent(3) == false)
+                                                if (GameManager.i.playerScript.CheckCaptureToolPresent(3) == false)
                                                 { BuildString(result, string.Format("Player doesn't have Item{0}", "\n")); }
                                                 break;
                                             default:
@@ -1240,86 +1240,86 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "ActiveActorsNOTZero":
                                                 //at least one active, onMap actor preesent
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActors(playerSide) == 0)
                                                 { BuildString(result, "No Active Actors OnMap"); }
                                                 break;
                                             case "ActiveActorsMinTwo":
                                                 //at least two active, onMap actor preesent
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActors(playerSide) < 2)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActors(playerSide) < 2)
                                                 { BuildString(result, "Less than two active actors OnMap"); }
                                                 break;
                                             case "ActiveActorsConflict":
                                                 //at least one active, OnMap actor who has had a relationship conflict with Player
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorConflictNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with conflicts"); }
                                                 break;
                                             case "ActiveActorGear":
                                                 //at least one active actor has personal gear
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearYes, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearYes, playerSide) == 0)
                                                 { BuildString(result, "No Active Actors with Gear"); }
                                                 break;
                                             case "ActiveActorGearNo":
                                                 //at least one active actor does NOT have personal gear
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearNo, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PersonalGearNo, playerSide) == 0)
                                                 { BuildString(result, "No Active Actors WITHOUT Gear"); }
                                                 break;
                                             case "ActorCompatibilityNOTZero":
                                                 //at least one actor with Compatibility NOT Zero (+/- 1 or 2)
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.CompatibilityNOTZero, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.CompatibilityNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No Compatibility NOT Zero Actors OnMap"); }
                                                 break;
                                             case "NodeActionsNOTZero":
                                                 //at least one actor has listOfNodeActions.Count > 0 with valid topics present
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.NodeActionsNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
                                             case "TeamActionsNOTZero":
                                                 //at least one actor has listOfTeamActions.Count > 0 with valid topics present
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.TeamActionsNOTZero, playerSide) == 0)
                                                 { BuildString(result, "No actors with TeamActions OnMap"); }
                                                 break;
                                             case "ContactsActorMin":
                                                 //at least one actor present who has one active contact
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactMin, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactMin, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
                                             case "ContactsActorNOTMax":
                                                 //at least one actor has less than the max. allowed number of contacts
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactNOTMax, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactNOTMax, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
                                             case "RenownActorsMore":
                                                 //at least one actor has more renown than player
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownMore, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownMore, playerSide) == 0)
                                                 { BuildString(result, "No actors with more Renown than Player"); }
                                                 break;
                                             case "RenownActorsLess":
                                                 //at least one actor has less renown than player
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownLess, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.RenownLess, playerSide) == 0)
                                                 { BuildString(result, "No actors with less Renown than Player"); }
                                                 break;
                                             case "ActorsKnowSecret":
                                                 //at least one actor knows at least one of the player's secrets
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsSecret, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsSecret, playerSide) == 0)
                                                 { BuildString(result, "No actors know any Player Secrets"); }
                                                 break;
                                             case "ActorsKnowNothing":
                                                 //at least one actor knows none of the player's secrets
-                                                if (GameManager.instance.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsNothing, playerSide) == 0)
+                                                if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.KnowsNothing, playerSide) == 0)
                                                 { BuildString(result, "All actors know Player Secrets"); }
                                                 break;
                                             case "RelationshipPossible":
                                                 //1+ actors present onMap who are active and don't have a current relationship (or do and their timer is zero)
-                                                if (GameManager.instance.dataScript.CheckIfRelationPossible() == false)
+                                                if (GameManager.i.dataScript.CheckIfRelationPossible() == false)
                                                 { BuildString(result, "Relationship isn't possible"); }
                                                 break;
                                             case "DismissedActorsNOTZero":
-                                                List<int> tempDismissedActors = new List<int>(GameManager.instance.dataScript.GetListOfDismissedActors(playerSide));
+                                                List<int> tempDismissedActors = new List<int>(GameManager.i.dataScript.GetListOfDismissedActors(playerSide));
                                                 if (tempDismissedActors.Count == 0)
                                                 { BuildString(result, "no Dismissed Subordinates"); }
                                                 break;
                                             case "ResignedActorsNOTZero":
-                                                List<int> tempResignedActors = new List<int>(GameManager.instance.dataScript.GetListOfResignedActors(playerSide));
+                                                List<int> tempResignedActors = new List<int>(GameManager.i.dataScript.GetListOfResignedActors(playerSide));
                                                 if (tempResignedActors.Count == 0)
                                                 { BuildString(result, "no Resigned Subordinates"); }
                                                 break;
@@ -1338,29 +1338,29 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "GearInventoryMin":
                                                 //at least one item in player's gear inventory
-                                                if (GameManager.instance.playerScript.CheckNumOfGear() == 0)
+                                                if (GameManager.i.playerScript.CheckNumOfGear() == 0)
                                                 { BuildString(result, "no gear in Inventory"); }
                                                 break;
                                             case "GearInventoryNOTMax":
                                                 //space remaining in Player's gear inventory
-                                                if (GameManager.instance.playerScript.CheckNumOfGear() >= GameManager.instance.gearScript.maxNumOfGear)
+                                                if (GameManager.i.playerScript.CheckNumOfGear() >= GameManager.i.gearScript.maxNumOfGear)
                                                 { BuildString(result, "maxxed Gear Allowance"); }
                                                 break;
                                             case "GearAvailableCommon":
                                                 //checks to see if at least 1 piece of unused Common gear is available
-                                                List<string> tempCommonGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearCommon));
+                                                List<string> tempCommonGear = new List<string>(GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearCommon));
                                                 if (tempCommonGear.Count == 0)
                                                 { BuildString(result, "no Common Gear available"); }
                                                 break;
                                             case "GearAvailableRare":
                                                 //checks to see if at least 1 piece of unused Rare gear is available
-                                                List<string> tempRareGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearRare));
+                                                List<string> tempRareGear = new List<string>(GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearRare));
                                                 if (tempRareGear.Count == 0)
                                                 { BuildString(result, "no Rare Gear available"); }
                                                 break;
                                             case "GearAvailableUnique":
                                                 //checks to see if at least 1 piece of unused Unique gear is available
-                                                List<string> tempUniqueGear = new List<string>(GameManager.instance.dataScript.GetListOfGear(GameManager.instance.gearScript.gearUnique));
+                                                List<string> tempUniqueGear = new List<string>(GameManager.i.dataScript.GetListOfGear(GameManager.i.gearScript.gearUnique));
                                                 if (tempUniqueGear.Count == 0)
                                                 { BuildString(result, "no Unique Gear available"); }
                                                 break;
@@ -1377,38 +1377,38 @@ public class EffectManager : MonoBehaviour
                                     case "Topic":
                                         //uses topicType from ValidationManager.cs to run checks in TopicManager.cs
                                         bool isValid = false;
-                                        int turn = GameManager.instance.turnScript.Turn;
+                                        int turn = GameManager.i.turnScript.Turn;
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "TopicActor":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.actorType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.actorType, turn);
                                                 break;
                                             case "TopicCampaign":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.campaignType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.campaignType, turn);
                                                 break;
                                             case "TopicCity":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.cityType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.cityType, turn);
                                                 break;
                                             case "TopicFamily":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.familyType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.familyType, turn);
                                                 break;
                                             case "TopicHQ":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.hqType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.hqType, turn);
                                                 break;
                                             case "TopicCapture":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.captureType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.captureType, turn);
                                                 break;
                                             case "TopicRebel":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.resistanceType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.resistanceType, turn);
                                                 break;
                                             case "TopicAuthority":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.authorityType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.authorityType, turn);
                                                 break;
                                             case "TopicPlayer":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.playerType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.playerType, turn);
                                                 break;
                                             case "TopicOrganisation":
-                                                isValid = GameManager.instance.topicScript.CheckTopicsAvailable(GameManager.instance.validateScript.organisationType, turn);
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.organisationType, turn);
                                                 break;
                                             default:
                                                 Debug.LogWarning(string.Format("Topic: Invalid effect.criteriaEffect \"{0}\"", criteria.effectCriteria.name));
@@ -1429,121 +1429,121 @@ public class EffectManager : MonoBehaviour
                                             //
                                             case "StatDaysLieLowMin":
                                                 //auto success if testManager.cs -> testRatioPlayLieLow != 0
-                                                if (GameManager.instance.testScript.testRatioPlayLieLow == 0)
+                                                if (GameManager.i.testScript.testRatioPlayLieLow == 0)
                                                 {
-                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal) < statDaysLieLowMin)
+                                                    if (GameManager.i.dataScript.StatisticGetLevel(StatType.LieLowDaysTotal) < statDaysLieLowMin)
                                                     { BuildString(result, "Insufficient days Lying Low"); }
                                                 }
                                                 break;
                                             case "StatGearItemsMin":
                                                 //auto success if testManager.cs -> testRatioPlayGiveGear != 0
-                                                if (GameManager.instance.testScript.testRatioPlayGiveGear == 0)
+                                                if (GameManager.i.testScript.testRatioPlayGiveGear == 0)
                                                 {
-                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
+                                                    if (GameManager.i.dataScript.StatisticGetLevel(StatType.GearTotal) < statGearItemsMin)
                                                     { BuildString(result, "Insufficient Gear items acquired"); }
                                                 }
                                                 break;
                                             case "StatNodeActionsMin":
                                                 //auto success if testManager.cs -> testRatioPlayNodeAct != 0
-                                                if (GameManager.instance.testScript.testRatioPlayNodeAct == 0)
+                                                if (GameManager.i.testScript.testRatioPlayNodeAct == 0)
                                                 {
-                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.NodeActionsResistance) < statNodeActionsMin)
+                                                    if (GameManager.i.dataScript.StatisticGetLevel(StatType.NodeActionsResistance) < statNodeActionsMin)
                                                     { BuildString(result, "Insufficient Node Actions"); }
                                                 }
                                                 break;
                                             case "StatTargetAttemptsMin":
                                                 //auto success if testManager.cs -> testRatioTargetAttempts != 0
-                                                if (GameManager.instance.testScript.testRatioPlayTargetAtt == 0)
+                                                if (GameManager.i.testScript.testRatioPlayTargetAtt == 0)
                                                 {
-                                                    if (GameManager.instance.dataScript.StatisticGetLevel(StatType.TargetAttempts) < statTargetAttemptsMin)
+                                                    if (GameManager.i.dataScript.StatisticGetLevel(StatType.TargetAttempts) < statTargetAttemptsMin)
                                                     { BuildString(result, "Insufficient Target Attempts"); }
                                                 }
                                                 break;
                                             case "StatOrgCuresNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgCures) == 0)
+                                                if (GameManager.i.dataScript.StatisticGetLevel(StatType.OrgCures) == 0)
                                                 { BuildString(result, "Org has provided no cures"); }
                                                 break;
                                             case "StatOrgContractsNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgContractHits) == 0)
+                                                if (GameManager.i.dataScript.StatisticGetLevel(StatType.OrgContractHits) == 0)
                                                 { BuildString(result, "Org has provided no contract Hits"); }
                                                 break;
                                             case "StatOrgInfoNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgInfoHacks) == 0)
+                                                if (GameManager.i.dataScript.StatisticGetLevel(StatType.OrgInfoHacks) == 0)
                                                 { BuildString(result, "Org has provided no Info Services"); }
                                                 break;
                                             case "StatOrgHQNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgHQDropped) == 0)
+                                                if (GameManager.i.dataScript.StatisticGetLevel(StatType.OrgHQDropped) == 0)
                                                 { BuildString(result, "Org has dropped no investigations"); }
                                                 break;
                                             case "StatOrgEmergencyNOTZero":
-                                                if (GameManager.instance.dataScript.StatisticGetLevel(StatType.OrgEscapes) == 0)
+                                                if (GameManager.i.dataScript.StatisticGetLevel(StatType.OrgEscapes) == 0)
                                                 { BuildString(result, "Org hasn't helped you Escape"); }
                                                 break;
                                             //
                                             // - - - Ratios
                                             //
                                             case "RatioPlayNodeActLow":
-                                                if (GameManager.instance.statScript.ratioPlayerNodeActions > ratioPlayNodeActLow)
+                                                if (GameManager.i.statScript.ratioPlayerNodeActions > ratioPlayNodeActLow)
                                                 { BuildString(result, "To many Player Node Actions for Low"); }
                                                 break;
                                             case "RatioPlayNodeActHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerNodeActions < ratioPlayNodeActHigh)
+                                                if (GameManager.i.statScript.ratioPlayerNodeActions < ratioPlayNodeActHigh)
                                                 { BuildString(result, "Insufficient Player Node Actions for High"); }
                                                 break;
                                             case "RatioPlayTargetAttLow":
-                                                if (GameManager.instance.statScript.ratioPlayerTargetAttempts > ratioPlayTargetAttLow)
+                                                if (GameManager.i.statScript.ratioPlayerTargetAttempts > ratioPlayTargetAttLow)
                                                 { BuildString(result, "To many Player Attempts for Low"); }
                                                 break;
                                             case "RatioPlayTargetAttHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerTargetAttempts < ratioPlayTargetAttHigh)
+                                                if (GameManager.i.statScript.ratioPlayerTargetAttempts < ratioPlayTargetAttHigh)
                                                 { BuildString(result, "Insufficient Player Attempts for High"); }
                                                 break;
                                             case "RatioPlayMoveActLow":
-                                                if (GameManager.instance.statScript.ratioPlayerMoveActions > ratioPlayMoveActLow)
+                                                if (GameManager.i.statScript.ratioPlayerMoveActions > ratioPlayMoveActLow)
                                                 { BuildString(result, "To many Player Move Actions for Low"); }
                                                 break;
                                             case "RatioPlayMoveActHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerMoveActions < ratioPlayMoveActHigh)
+                                                if (GameManager.i.statScript.ratioPlayerMoveActions < ratioPlayMoveActHigh)
                                                 { BuildString(result, "Insufficient Player Move Actions for High"); }
                                                 break;
                                             case "RatioPlayLieLowLow":
-                                                if (GameManager.instance.statScript.ratioPlayerLieLowDays > ratioPlayLieLowLow)
+                                                if (GameManager.i.statScript.ratioPlayerLieLowDays > ratioPlayLieLowLow)
                                                 { BuildString(result, "To many Player Days Lie Low for Low"); }
                                                 break;
                                             case "RatioPlayLieLowHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerLieLowDays < ratioPlayLieLowHigh)
+                                                if (GameManager.i.statScript.ratioPlayerLieLowDays < ratioPlayLieLowHigh)
                                                 { BuildString(result, "Insufficient Player Days Lie Low for High"); }
                                                 break;
                                             case "RatioPlayGiveGearLow":
-                                                if (GameManager.instance.statScript.ratioPlayerGiveGear > ratioGiveGearLow)
+                                                if (GameManager.i.statScript.ratioPlayerGiveGear > ratioGiveGearLow)
                                                 { BuildString(result, "To many Give Gear actions for Low"); }
                                                 break;
                                             case "RatioPlayGiveGearHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerGiveGear < ratioGiveGearHigh)
+                                                if (GameManager.i.statScript.ratioPlayerGiveGear < ratioGiveGearHigh)
                                                 { BuildString(result, "Insufficient Give Gear actions for High"); }
                                                 break;
                                             case "RatioPlayManageActLow":
-                                                if (GameManager.instance.statScript.ratioPlayerManageActions > ratioPlayManageActLow)
+                                                if (GameManager.i.statScript.ratioPlayerManageActions > ratioPlayManageActLow)
                                                 { BuildString(result, "To many Player Manage actions for Low"); }
                                                 break;
                                             case "RatioPlayManageActHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerManageActions < ratioPlayManageActHigh)
+                                                if (GameManager.i.statScript.ratioPlayerManageActions < ratioPlayManageActHigh)
                                                 { BuildString(result, "Insufficient Player Manage actions for High"); }
                                                 break;
                                             case "RatioPlayDoNothingLow":
-                                                if (GameManager.instance.statScript.ratioPlayerDoNothing > ratioPlayDoNothingLow)
+                                                if (GameManager.i.statScript.ratioPlayerDoNothing > ratioPlayDoNothingLow)
                                                 { BuildString(result, "To many Player Do Nothing actions for Low"); }
                                                 break;
                                             case "RatioPlayDoNothingHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerDoNothing < ratioPlayDoNothingHigh)
+                                                if (GameManager.i.statScript.ratioPlayerDoNothing < ratioPlayDoNothingHigh)
                                                 { BuildString(result, "Insufficient Player Do Nothing actions for High"); }
                                                 break;
                                             case "RatioPlayAddictLow":
-                                                if (GameManager.instance.statScript.ratioPlayerAddictedDays > ratioPlayAddictLow)
+                                                if (GameManager.i.statScript.ratioPlayerAddictedDays > ratioPlayAddictLow)
                                                 { BuildString(result, "To many Player Addicted Days for Low"); }
                                                 break;
                                             case "RatioPlayAddictHigh":
-                                                if (GameManager.instance.statScript.ratioPlayerAddictedDays < ratioPlayAddictHigh)
+                                                if (GameManager.i.statScript.ratioPlayerAddictedDays < ratioPlayAddictHigh)
                                                 { BuildString(result, "Insufficient Player Addicted Days for High"); }
                                                 break;
                                             default:
@@ -1603,7 +1603,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                             //OrgInfo not currently active (may or may not be known)
                                             case "OrgInfoNOTActive":
-                                                if (GameManager.instance.dataScript.CheckOrgInfoActive() == true)
+                                                if (GameManager.i.dataScript.CheckOrgInfoActive() == true)
                                                 { BuildString(result, "Org providing Direct Feed"); }
                                                 break;
                                             //Player knows Organisation secret
@@ -1663,51 +1663,51 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "HqRelocatingNo":
                                                 //HQ not currently relocating
-                                                if (GameManager.instance.hqScript.isHqRelocating == true)
+                                                if (GameManager.i.hqScript.isHqRelocating == true)
                                                 { BuildString(result, "HQ is Relocating"); }
                                                 break;
                                             case "HqApprovalNOTZero":
                                                 //Player HQ Approval 1+
-                                                if (GameManager.instance.hqScript.GetHqApproval() == 0)
+                                                if (GameManager.i.hqScript.GetHqApproval() == 0)
                                                 { BuildString(result, "HQ Approval Zero"); }
                                                 break;
                                             case "MotNeutMinHqBoss":
                                                 //Boss of HQ has motivation 2+
-                                                Actor actorBoss = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
+                                                Actor actorBoss = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                                                 if (actorBoss != null)
                                                 {
                                                     if (actorBoss.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.Boss))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss1":
                                                 //subBoss 1 of HQ has motivation 2+
-                                                Actor actorSubBoss1 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
+                                                Actor actorSubBoss1 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
                                                 if (actorSubBoss1 != null)
                                                 {
                                                     if (actorSubBoss1.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss2":
                                                 //subBoss 2 of HQ has motivation 2+
-                                                Actor actorSubBoss2 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
+                                                Actor actorSubBoss2 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
                                                 if (actorSubBoss2 != null)
                                                 {
                                                     if (actorSubBoss2.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss3":
                                                 //subBoss 3 of HQ has motivation 2+
-                                                Actor actorSubBoss3 = GameManager.instance.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
+                                                Actor actorSubBoss3 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
                                                 if (actorSubBoss3 != null)
                                                 {
                                                     if (actorSubBoss3.GetDatapoint(ActorDatapoint.Motivation1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.instance.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
+                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss3 (Null)"); }
                                                 break;
@@ -1726,46 +1726,46 @@ public class EffectManager : MonoBehaviour
                                         {
                                             case "CureAddictedNo":
                                                 //No active cure is present OnMap for Addicted Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionAddicted.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionAddicted.cure) == true)
                                                 { BuildString(result, "Addicted Cure unavailable"); }
                                                 break;
                                             case "CureTaggedNo":
                                                 //No active cure is present OnMap for Tagged Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionTagged.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionTagged.cure) == true)
                                                 { BuildString(result, "Tagged Cure unavailable"); }
                                                 break;
                                             case "CureWoundedNo":
                                                 //No active cure is present OnMap for Wounded Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionWounded.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionWounded.cure) == true)
                                                 { BuildString(result, "Wounded Cure unavailable"); }
                                                 break;
                                             case "CureImagedNo":
                                                 //No active cure is present OnMap for Imaged Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionImaged.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionImaged.cure) == true)
                                                 { BuildString(result, "Imaged Cure unavailable"); }
                                                 break;
                                             case "CureDoomedNo":
                                                 //No active cure is present OnMap for Doomed Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionDoomed.cure) == true)
                                                 { BuildString(result, "Doomed Cure unavailable"); }
                                                 break;
                                             case "CureQuestionableNo":
                                                 //No active cure is present OnMap for Questionable Condition
-                                                if (GameManager.instance.dataScript.CheckCurePresent(conditionQuestionable.cure) == true)
+                                                if (GameManager.i.dataScript.CheckCurePresent(conditionQuestionable.cure) == true)
                                                 { BuildString(result, "Questionable Cure unavailable"); }
                                                 break;
                                             case "NemesisActive":
                                                 //Nemesis is present and active
-                                                if (GameManager.instance.nemesisScript.nemesis == null)
+                                                if (GameManager.i.nemesisScript.nemesis == null)
                                                 { BuildString(result, "Nemesis not present"); }
-                                                else if (GameManager.instance.nemesisScript.GetMode() == NemesisMode.Inactive)
+                                                else if (GameManager.i.nemesisScript.GetMode() == NemesisMode.Inactive)
                                                 { BuildString(result, "Nemesis inactive"); }
                                                 break;
                                             case "NpcActive":
                                                 //Npc is present and active
-                                                if (GameManager.instance.missionScript.mission.npc == null)
+                                                if (GameManager.i.missionScript.mission.npc == null)
                                                 { BuildString(result, "Special Character not present"); }
-                                                else if (GameManager.instance.missionScript.mission.npc.status != NpcStatus.Active)
+                                                else if (GameManager.i.missionScript.mission.npc.status != NpcStatus.Active)
                                                 { BuildString(result, "Special Character not Active"); }
                                                 break;
                                             default:
@@ -2054,7 +2054,7 @@ public class EffectManager : MonoBehaviour
                     //
                     case "InvestigationDropped":
                         //Remove an investigation into the Player
-                        effectReturn.bottomText = GameManager.instance.playerScript.DropInvestigation(dataInput.dataName);
+                        effectReturn.bottomText = GameManager.i.playerScript.DropInvestigation(dataInput.dataName);
                         break;
                     //
                     // - - - Secrets - - -
@@ -2064,13 +2064,13 @@ public class EffectManager : MonoBehaviour
                         if (actor == null)
                         {
                             //Player
-                            Secret secret = GameManager.instance.playerScript.GetRandomCurrentSecret();
+                            Secret secret = GameManager.i.playerScript.GetRandomCurrentSecret();
                             if (secret != null)
                             {
                                 secret.status = gameAPI.SecretStatus.Deleted;
                                 secret.deletedWhen = GameManager.SetTimeStamp();
                                 //remove secret from game
-                                if (GameManager.instance.secretScript.RemoveSecretFromAll(secret.name, true) == true)
+                                if (GameManager.i.secretScript.RemoveSecretFromAll(secret.name, true) == true)
                                 { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secret.tag, colourEnd); }
                                 else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secret.tag, colourEnd); }
                                 effectReturn.isAction = true;
@@ -2091,13 +2091,13 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Secret":
                         //Remove a specific secret from Player (removes all instances)
-                        Secret secretPlayer = GameManager.instance.playerScript.GetSecret(dataInput.dataName);
+                        Secret secretPlayer = GameManager.i.playerScript.GetSecret(dataInput.dataName);
                         if (secretPlayer != null)
                         {
                             secretPlayer.status = gameAPI.SecretStatus.Deleted;
                             secretPlayer.deletedWhen = GameManager.SetTimeStamp();
                             //remove secret from game
-                            if (GameManager.instance.secretScript.RemoveSecretFromAll(secretPlayer.name, true) == true)
+                            if (GameManager.i.secretScript.RemoveSecretFromAll(secretPlayer.name, true) == true)
                             { effectReturn.bottomText = string.Format("{0}\"{1}\" secret deleted{2}", colourGood, secretPlayer.tag, colourEnd); }
                             else { effectReturn.bottomText = string.Format("{0}\"{1}\" secret NOT deleted{2}", colourBad, secretPlayer.tag, colourEnd); }
                             effectReturn.isAction = true;
@@ -2109,7 +2109,7 @@ public class EffectManager : MonoBehaviour
                     case "OrgContact":
                         if (string.IsNullOrEmpty(dataInput.dataName) == false)
                         {
-                            Organisation org = GameManager.instance.dataScript.GetOrganisaton(dataInput.dataName);
+                            Organisation org = GameManager.i.dataScript.GetOrganisaton(dataInput.dataName);
                             if (org != null)
                             {
                                 switch (effect.operand.name)
@@ -2177,7 +2177,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "CityLoyalty":
                         //depends on player side
-                        int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+                        int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
                         switch (dataInput.side.level)
                         {
                             case 1:
@@ -2187,8 +2187,8 @@ public class EffectManager : MonoBehaviour
                                     case 2:
                                         //Good 
                                         cityLoyalty += effect.value;
-                                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        cityLoyalty = Mathf.Min(GameManager.i.cityScript.maxCityLoyalty, cityLoyalty);
+                                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                                         effectReturn.topText = string.Format("{0}The City grows closer to the Authority{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd);
                                         break;
@@ -2196,7 +2196,7 @@ public class EffectManager : MonoBehaviour
                                         //Bad 
                                         cityLoyalty -= effect.value;
                                         cityLoyalty = Mathf.Max(0, cityLoyalty);
-                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                                         effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourBad, effect.value, colourEnd);
                                         break;
@@ -2214,15 +2214,15 @@ public class EffectManager : MonoBehaviour
                                         //Good
                                         cityLoyalty -= effect.value;
                                         cityLoyalty = Mathf.Max(0, cityLoyalty);
-                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                                         effectReturn.topText = string.Format("{0}The City grows closer to the Resistance{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourGood, effect.value, colourEnd);
                                         break;
                                     case 0:
                                         //Bad
                                         cityLoyalty += effect.value;
-                                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                                        cityLoyalty = Mathf.Min(GameManager.i.cityScript.maxCityLoyalty, cityLoyalty);
+                                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                                         effectReturn.topText = string.Format("{0}The City grows closer to the Authority{1}", colourText, colourEnd);
                                         effectReturn.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd);
                                         break;
@@ -2243,12 +2243,12 @@ public class EffectManager : MonoBehaviour
                         switch (effect.operand.name)
                         {
                             case "Add":
-                                GameManager.instance.hqScript.ChangeHqApproval(effect.value, dataInput.side, dataInput.originText);
+                                GameManager.i.hqScript.ChangeHqApproval(effect.value, dataInput.side, dataInput.originText);
                                 effectReturn.topText = string.Format("{0}HQ have a better opinion of you{1}", colourText, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
                                 break;
                             case "Subtract":
-                                GameManager.instance.hqScript.ChangeHqApproval(effect.value * -1, dataInput.side, dataInput.originText);
+                                GameManager.i.hqScript.ChangeHqApproval(effect.value * -1, dataInput.side, dataInput.originText);
                                 effectReturn.topText = string.Format("{0}HQ's opinion of you has diminished{1}", colourText, colourEnd);
                                 effectReturn.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
                                 break;
@@ -2307,7 +2307,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             //player
-                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
                             { effectReturn.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
                             else
                             {
@@ -2332,7 +2332,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             //Player
-                            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
                             { effectReturn.bottomText = ExecutePlayerRenown(effect); }
                             else
                             {
@@ -2359,10 +2359,10 @@ public class EffectManager : MonoBehaviour
                         // Not needed as handled by a different process, keep for reference
                         break;
                     case "CivilTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("CIVIL");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("CIVIL");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
                         //insert team
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
@@ -2370,54 +2370,54 @@ public class EffectManager : MonoBehaviour
                         effectReturn.isAction = true;
                         break;
                     case "ControlTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("CONTROL");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("CONTROL");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
                     case "DamageTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("DAMAGE");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("DAMAGE");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
                     case "ErasureTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("ERASURE");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
                     case "MediaTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("MEDIA");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("MEDIA");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
                     case "ProbeTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("PROBE");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("PROBE");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
                         effectReturn.isAction = true;
                         break;
                     case "SpiderTeam":
-                        teamArcID = GameManager.instance.dataScript.GetTeamArcID("SPIDER");
-                        teamID = GameManager.instance.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
-                        GameManager.instance.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
+                        teamArcID = GameManager.i.dataScript.GetTeamArcID("SPIDER");
+                        teamID = GameManager.i.dataScript.GetTeamInPool(TeamPool.Reserve, teamArcID);
+                        GameManager.i.teamScript.MoveTeam(TeamPool.OnMap, teamID, actor.slotID, node);
                         //return texts
                         effectReturn.topText = SetTopTeamText(teamID);
                         effectReturn.bottomText = SetBottomTeamText(actor);
@@ -2479,11 +2479,11 @@ public class EffectManager : MonoBehaviour
     public string SetTopTeamText(int teamID, bool isInserted = true)
     {
         //get team
-        Team team = GameManager.instance.dataScript.GetTeam(teamID);
+        Team team = GameManager.i.dataScript.GetTeam(teamID);
         if (team != null)
         {
             //get node
-            Node node = GameManager.instance.dataScript.GetNode(team.nodeID);
+            Node node = GameManager.i.dataScript.GetNode(team.nodeID);
             if (node != null)
             {
                 string operation = "inserted";
@@ -2521,7 +2521,7 @@ public class EffectManager : MonoBehaviour
             if (actor.CheckNumOfTeams() == actor.GetDatapoint(ActorDatapoint.Ability2))
             { colourNumbers = colourBadSide; }
             return string.Format("{0}, {1} of {2}{3}{4} has now deployed {5}{6}{7} of {8}{9}{10} teams",
-                actor.actorName, GameManager.instance.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
+                actor.actorName, GameManager.i.metaScript.GetAuthorityTitle(), colourActor, actor.arc.name, colourEnd,
                 colourNumbers, actor.CheckNumOfTeams(), colourEnd, colourNumbers, actor.GetDatapoint(ActorDatapoint.Ability2), colourEnd);
         }
         else
@@ -2543,13 +2543,13 @@ public class EffectManager : MonoBehaviour
     private bool ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
     {
         bool isSuccess = true;
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.instance.dataScript.GetCurrentActors(side);
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
-                if (GameManager.instance.dataScript.CheckActorSlotStatus(i, side) == true)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
                 {
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
@@ -2573,12 +2573,12 @@ public class EffectManager : MonoBehaviour
                                     {
                                         case "Add":
                                             motivation += effect.value;
-                                            motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                                            motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
                                             actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                             break;
                                         case "Subtract":
                                             motivation -= effect.value;
-                                            motivation = Mathf.Max(GameManager.instance.actorScript.minStatValue, motivation);
+                                            motivation = Mathf.Max(GameManager.i.actorScript.minStatValue, motivation);
                                             actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
                                             break;
                                         default:
@@ -2639,7 +2639,7 @@ public class EffectManager : MonoBehaviour
             }
             //motivation shift, update topBarUI item
             if (effect.outcome.name.Equals("Motivation") == true)
-            { GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors()); }
+            { GameManager.i.topBarScript.UpdateConflicts(GameManager.i.actorScript.CheckNumOfConflictActors()); }
         }
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
         return isSuccess;
@@ -2952,7 +2952,7 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all nodes
-                List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                List<Node> listOfAllNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfAllNodes != null)
                 {
                     foreach (Node nodeTemp in listOfAllNodes)
@@ -3050,7 +3050,7 @@ public class EffectManager : MonoBehaviour
                 //Process Node effect for current node
                 node.ProcessNodeEffect(effectProcess);
                 //Process Node effect for all same ARC nodes
-                List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfNodes != null)
                 {
                     foreach (var nodeTemp in listOfNodes)
@@ -3196,7 +3196,7 @@ public class EffectManager : MonoBehaviour
                 if (listOfNeighbours != null)
                 {
                     //clear all connection flags first to prevent double dipping
-                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    GameManager.i.connScript.SetAllFlagsToFalse();
                     //process current node
                     node.ProcessConnectionEffect(effectProcess);
                     //process all neighbouring nodes
@@ -3244,11 +3244,11 @@ public class EffectManager : MonoBehaviour
                     GameManager.instance.dataScript.AddOngoingIDToDict(effectProcess.effectOngoing.ongoingID, "Connection Security");*/
                 }
                 //Process Connection effect
-                List<Node> listOfAllNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                List<Node> listOfAllNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfAllNodes != null)
                 {
                     //clear all connection flags first to prevent double dipping
-                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    GameManager.i.connScript.SetAllFlagsToFalse();
                     //current node
                     node.ProcessConnectionEffect(effectProcess);
                     foreach (var nodeTemp in listOfAllNodes)
@@ -3296,11 +3296,11 @@ public class EffectManager : MonoBehaviour
                     ProcessOngoingEffect(effect, effectProcess, effectResolve, effectInput, node, value);
                 }
                 //Process Connection effect
-                List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
                 if (listOfNodes != null)
                 {
                     //clear all connection flags first to prevent double dipping
-                    GameManager.instance.connScript.SetAllFlagsToFalse();
+                    GameManager.i.connScript.SetAllFlagsToFalse();
                     foreach (Node nodeTemp in listOfNodes)
                     { nodeTemp.ProcessConnectionEffect(effectProcess); }
                 }
@@ -3346,24 +3346,24 @@ public class EffectManager : MonoBehaviour
                 if (condition != null)
                 {
                     //assign condition to player if at their node, otherwise actor
-                    if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                    if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
                     {
                         //Player Condition
                         switch (effect.operand.name)
                         {
                             case "Add":
                                 //only add condition if NOT already present
-                                if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
+                                if (GameManager.i.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                                 {
-                                    GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                                    GameManager.i.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player gains condition {1}{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
                             case "Subtract":
                                 //only remove  condition if present
-                                if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
+                                if (GameManager.i.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                                 {
-                                    GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                                    GameManager.i.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                     effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
                                 }
                                 break;
@@ -3413,7 +3413,7 @@ public class EffectManager : MonoBehaviour
                 string effectType = "Good";
                 string colourConditionAdd = colourGoodSide;
                 string colourConditionRemove = colourBadSide;
-                GlobalType type = GameManager.instance.globalScript.typeGood;
+                GlobalType type = GameManager.i.globalScript.typeGood;
                 //get type
                 switch (effect.outcome.name)
                 {
@@ -3421,7 +3421,7 @@ public class EffectManager : MonoBehaviour
                         //default condition, no need to reassign
                         break;
                     case "ConditionGroupBad":
-                        type = GameManager.instance.globalScript.typeBad;
+                        type = GameManager.i.globalScript.typeBad;
                         effectType = "Bad";
                         colourConditionAdd = colourBadSide;
                         colourConditionRemove = colourGoodSide;
@@ -3431,11 +3431,11 @@ public class EffectManager : MonoBehaviour
                         break;
                 }
                 //Player
-                if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
+                if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
                 {
-                    if (GameManager.instance.playerScript.CheckNumOfConditions(dataInput.side) > 0)
+                    if (GameManager.i.playerScript.CheckNumOfConditions(dataInput.side) > 0)
                     {
-                        listOfConditions = GameManager.instance.playerScript.GetListOfConditions(dataInput.side);
+                        listOfConditions = GameManager.i.playerScript.GetListOfConditions(dataInput.side);
                         switch (effect.apply.name)
                         {
                             case "ConditionRandom":
@@ -3446,7 +3446,7 @@ public class EffectManager : MonoBehaviour
                                         conditionRandom = GetRandomCondition(listOfConditions, type, effect.operand.name);
                                         if (conditionRandom != null)
                                         {
-                                            GameManager.instance.playerScript.AddCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                                            GameManager.i.playerScript.AddCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition gained{2}", colourConditionAdd, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -3458,7 +3458,7 @@ public class EffectManager : MonoBehaviour
                                         if (conditionRandom != null)
                                         {
                                             //remove condition
-                                            GameManager.instance.playerScript.RemoveCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                                            GameManager.i.playerScript.RemoveCondition(conditionRandom, dataInput.side, string.Format("due to {0}", dataInput.originText));
                                             effectResolve.bottomText = string.Format("{0}{1} condition removed{2}", colourConditionRemove, conditionRandom.name, colourEnd);
                                         }
                                         else
@@ -3478,7 +3478,7 @@ public class EffectManager : MonoBehaviour
                                         //remove all good conditions
                                         if (listOfConditions.Count > 0)
                                         {
-                                            typeCompare = GameManager.instance.globalScript.typeGood.name;
+                                            typeCompare = GameManager.i.globalScript.typeGood.name;
                                             for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                             {
                                                 if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
@@ -3491,7 +3491,7 @@ public class EffectManager : MonoBehaviour
                                         //remove all bad conditions
                                         if (listOfConditions.Count > 0)
                                         {
-                                            typeCompare = GameManager.instance.globalScript.typeBad.name;
+                                            typeCompare = GameManager.i.globalScript.typeBad.name;
                                             for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                             {
                                                 if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
@@ -3563,7 +3563,7 @@ public class EffectManager : MonoBehaviour
                                             //remove all good conditions
                                             if (listOfConditions.Count > 0)
                                             {
-                                                typeCompare = GameManager.instance.globalScript.typeGood.name;
+                                                typeCompare = GameManager.i.globalScript.typeGood.name;
                                                 for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                                 {
                                                     if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
@@ -3576,7 +3576,7 @@ public class EffectManager : MonoBehaviour
                                             //remove all bad conditions
                                             if (listOfConditions.Count > 0)
                                             {
-                                                typeCompare = GameManager.instance.globalScript.typeBad.name;
+                                                typeCompare = GameManager.i.globalScript.typeBad.name;
                                                 for (int i = listOfConditions.Count - 1; i >= 0; i--)
                                                 {
                                                     if (listOfConditions[i].type.name.Equals(typeCompare, StringComparison.Ordinal) == true)
@@ -3639,7 +3639,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "Add":
                         //randomly select a new condition of the required type that is NOT on the provided list
-                        Dictionary<string, Condition> dictOfConditionsByType = GameManager.instance.dataScript.GetDictOfConditionsByType(type);
+                        Dictionary<string, Condition> dictOfConditionsByType = GameManager.i.dataScript.GetDictOfConditionsByType(type);
                         if (dictOfConditionsByType.Count > 0)
                         {
                             //loop listOfConditions and remove any identical entries in the temp dict
@@ -3711,7 +3711,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "ActorPromoted":
                 effectResolve.bottomText = string.Format("{0}{1} promoted and will join {2}{3}", colourEffect, actor.actorName,
-                    GameManager.instance.hqScript.GetCurrentHQ().tag, colourEnd);
+                    GameManager.i.hqScript.GetCurrentHQ().tag, colourEnd);
                 break;
             case "ActorDismissed":
                 effectResolve.bottomText = string.Format("{0}{1} dismissed{2}", colourEffect, actor.actorName, colourEnd);
@@ -3720,14 +3720,14 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}{1} killed{2}", colourEffect, actor.actorName, colourEnd);
                 break;
             case "ManageReserveRenown":
-                data = GameManager.instance.actorScript.manageReserveRenown;
-                GameManager.instance.playerScript.Renown -= data;
+                data = GameManager.i.actorScript.manageReserveRenown;
+                GameManager.i.playerScript.Renown -= data;
                 effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
                 break;
             case "ManageDismissRenown":
-                ManageRenownCost manageDismissCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDismissRenown);
+                ManageRenownCost manageDismissCost = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDismissRenown);
                 data = manageDismissCost.renownCost;
-                GameManager.instance.playerScript.Renown -= data;
+                GameManager.i.playerScript.Renown -= data;
                 StringBuilder builderDismiss = new StringBuilder();
                 if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
                 { builderDismiss.AppendLine(manageDismissCost.tooltip); builderDismiss.AppendLine(); }
@@ -3735,9 +3735,9 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = builderDismiss.ToString();
                 break;
             case "ManageDisposeRenown":
-                ManageRenownCost manageDisposeCost = GameManager.instance.actorScript.GetManageRenownCost(actor, GameManager.instance.actorScript.manageDisposeRenown);
+                ManageRenownCost manageDisposeCost = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDisposeRenown);
                 data = manageDisposeCost.renownCost;
-                GameManager.instance.playerScript.Renown -= data;
+                GameManager.i.playerScript.Renown -= data;
                 StringBuilder builderDispose = new StringBuilder();
                 if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
                 { builderDispose.AppendLine(manageDisposeCost.tooltip); builderDispose.AppendLine(); }
@@ -3745,18 +3745,18 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = builderDispose.ToString();
                 break;
             case "UnhappyTimerCurrent":
-                data = GameManager.instance.actorScript.currentReserveTimer;
+                data = GameManager.i.actorScript.currentReserveTimer;
                 //traits that affect unhappy timer
                 string traitText = "";
                 if (actor.CheckTraitEffect(actorReserveTimerDoubled) == true)
                 {
                     data *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
+                    GameManager.i.actorScript.TraitLogMessage(actor, "for their willingness to wait", "to DOUBLE Reserve Unhappy Timer");
                 }
                 else if (actor.CheckTraitEffect(actorReserveTimerHalved) == true)
                 {
                     data /= 2; data = Mathf.Max(1, data); traitText = string.Format(" ({0})", actor.GetTrait().tag);
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
+                    GameManager.i.actorScript.TraitLogMessage(actor, "for their reluctance to wait", "to HALVE Reserve Unhappy Timer");
                 }
                 //set timer
                 actor.unhappyTimer = data;
@@ -3791,20 +3791,20 @@ public class EffectManager : MonoBehaviour
                 //NOTE: Not a Manage option
                 if (actor.CheckTraitEffect(actorNeverResigns) == false)
                 {
-                    if (GameManager.instance.dataScript.RemoveCurrentActor(GameManager.instance.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                    if (GameManager.i.dataScript.RemoveCurrentActor(GameManager.i.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
                     { effectResolve.bottomText = string.Format("{0}{1} Resigns{2}", colourBadSide, actor.arc.name, colourEnd); }
                 }
                 else
                 {
                     //trait actorResignNone "Loyal"
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
+                    GameManager.i.actorScript.TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
                     effectResolve.bottomText = string.Format("{0}{1} has {2}{3}{4}{5}{6} trait{7}", colourAlert, actor.arc.name, colourEnd,
                         colourNeutral, actor.GetTrait().tag, colourEnd, colourAlert, colourEnd);
                 }
                 break;
             case "ActorKills":
                 //NOTE: Not a Manage option
-                effectResolve.bottomText = GameManager.instance.actorScript.ProcessKillRandomActor(actor);
+                effectResolve.bottomText = GameManager.i.actorScript.ProcessKillRandomActor(actor);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid effect.outcome \"{0}\"", effect.outcome.name));
@@ -3821,7 +3821,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private EffectDataResolve ResolvePlayerData(Effect effect, EffectDataInput dataInput)
     {
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         //sort out colour based on type (which is effect benefit from POV of Resistance)
         string colourEffect = colourDefault;
         //data package to return to the calling methods
@@ -3863,13 +3863,13 @@ public class EffectManager : MonoBehaviour
                             {
                                 case "Add":
                                     actionAdjustment.value = effect.value;
-                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    GameManager.i.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} {7}{8}{9}{10}", colourEffect, colourEnd,
                                         colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, appliesWhen, colourEnd);
                                     break;
                                 case "Subtract":
                                     actionAdjustment.value = effect.value * -1;
-                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    GameManager.i.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} action{6} {7}{8}{9}{10}", colourEffect, colourEnd,
                                         colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral, appliesWhen, colourEnd);
                                     break;
@@ -3880,14 +3880,14 @@ public class EffectManager : MonoBehaviour
                             break;
                         case "Ongoing":
                             //NOTE: Ongoing effects are handled differently here than a standard ongoing effect (there is also an extra +1 due to decrement at end of turn)
-                            actionAdjustment.timer = GameManager.instance.effectScript.ongoingEffectTimer + 1;
+                            actionAdjustment.timer = GameManager.i.effectScript.ongoingEffectTimer + 1;
                             actionAdjustment.descriptor = dataInput.originText;
                             switch (effect.operand.name)
                             {
                                 case "Add":
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value);
                                     actionAdjustment.value = effect.value;
-                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    GameManager.i.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player gains {1}{2}{3}{4}{5} extra action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}{14}{15}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, appliesWhen, colourEnd);
@@ -3896,7 +3896,7 @@ public class EffectManager : MonoBehaviour
                                 case "Subtract":
                                     actionAdjustment.ongoingID = AddOngoingEffectToDict(effect, dataInput, effect.value * -1);
                                     actionAdjustment.value = effect.value * -1;
-                                    GameManager.instance.dataScript.AddActionAdjustment(actionAdjustment);
+                                    GameManager.i.dataScript.AddActionAdjustment(actionAdjustment);
                                     effectResolve.bottomText = string.Format("{0}Player loses {1}{2}{3}{4}{5} action{6} for {7}{8}{9}{10}{11} turns commencing {12}{13}{14}{15}",
                                         colourEffect, colourEnd, colourNeutral, effect.value, colourEnd, colourEffect, effect.value != 1 ? "s" : "", colourEnd, colourNeutral,
                                         actionAdjustment.timer - 1, colourEnd, colourEffect, colourEnd, colourNeutral, appliesWhen, colourEnd);
@@ -3916,11 +3916,11 @@ public class EffectManager : MonoBehaviour
                     switch (effect.operand.name)
                     {
                         case "Add":
-                            GameManager.instance.playerScript.Innocence++;
+                            GameManager.i.playerScript.Innocence++;
                             effectResolve.bottomText = string.Format("{0}Player Innocence +1{1}", colourEffect, colourEnd);
                             break;
                         case "Subtract":
-                            GameManager.instance.playerScript.Innocence--;
+                            GameManager.i.playerScript.Innocence--;
                             effectResolve.bottomText = string.Format("{0}Player Innocence -1{1}", colourEffect, colourEnd);
                             break;
                     }
@@ -3947,12 +3947,12 @@ public class EffectManager : MonoBehaviour
         if (effect.belief != null)
         {
             if (dataInput.data == 0)
-            { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
+            { effectResolve.bottomText = GameManager.i.personScript.UpdateMood(effect.belief, dataInput.originText); }
             else
             {
                 //topic.option.isIgnoreMood only applies if Player is Stressed
-                if (GameManager.instance.playerScript.isStressed == false)
-                { effectResolve.bottomText = GameManager.instance.personScript.UpdateMood(effect.belief, dataInput.originText); }
+                if (GameManager.i.playerScript.isStressed == false)
+                { effectResolve.bottomText = GameManager.i.personScript.UpdateMood(effect.belief, dataInput.originText); }
                 else { effectResolve.bottomText = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
             }
         }
@@ -3981,7 +3981,7 @@ public class EffectManager : MonoBehaviour
         effectOngoing.text = string.Format("{0} ({1} turn{2})", effect.description, effectOngoing.timer, effectOngoing.timer != 1 ? "s" : "");
         effectOngoing.nodeTooltip = effect.ongoingTooltip;
         //add to register & create message
-        GameManager.instance.dataScript.AddOngoingEffectToDict(effectOngoing);
+        GameManager.i.dataScript.AddOngoingEffectToDict(effectOngoing);
         return effectOngoing.ongoingID;
     }
 
@@ -4028,31 +4028,31 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "MetaOptionDismissed":
-                GameManager.instance.metaScript.SetMetaGameDismissed(false);
+                GameManager.i.metaScript.SetMetaGameDismissed(false);
                 effectResolve.bottomText = string.Format("{0}Dismissed Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionResigned":
-                GameManager.instance.metaScript.SetMetaGameResigned(false);
+                GameManager.i.metaScript.SetMetaGameResigned(false);
                 effectResolve.bottomText = string.Format("{0}Subordinates who Resigned are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionTraitor":
-                GameManager.instance.metaScript.SetMetaGameTraitor(false);
+                GameManager.i.metaScript.SetMetaGameTraitor(false);
                 effectResolve.bottomText = string.Format("{0}Traitorous Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionMotivation":
-                GameManager.instance.metaScript.SetMetaGameMotivation(false);
+                GameManager.i.metaScript.SetMetaGameMotivation(false);
                 effectResolve.bottomText = string.Format("{0}Low Motivation Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionLevel2":
                 //level 2 and 3 are binary choices
-                GameManager.instance.metaScript.SetMetaGameLevelTwo(true);
-                GameManager.instance.metaScript.SetMetaGameLevelThree(false);
+                GameManager.i.metaScript.SetMetaGameLevelTwo(true);
+                GameManager.i.metaScript.SetMetaGameLevelThree(false);
                 effectResolve.bottomText = string.Format("{0}All Subordinates will be level 2{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionLevel3":
                 //level 2 and 3 are binary choices
-                GameManager.instance.metaScript.SetMetaGameLevelThree(true);
-                GameManager.instance.metaScript.SetMetaGameLevelTwo(false);
+                GameManager.i.metaScript.SetMetaGameLevelThree(true);
+                GameManager.i.metaScript.SetMetaGameLevelTwo(false);
                 effectResolve.bottomText = string.Format("{0}All Subordinates will be level 3{1}", colourEffect, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
@@ -4075,7 +4075,7 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //get topic data
-        TopicEffectData data = GameManager.instance.topicScript.GetTopicEffectData();
+        TopicEffectData data = GameManager.i.topicScript.GetTopicEffectData();
         if (data != null)
         {
             //topic effects use a specific naming convention, eg. 'X_...'
@@ -4093,8 +4093,8 @@ public class EffectManager : MonoBehaviour
                             Actor actor = null;
                             //check for HQ actor
                             if (data.isHqActors == false)
-                            { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
-                            else { actor = GameManager.instance.dataScript.GetHqActor(data.actorID); }
+                            { actor = GameManager.i.dataScript.GetActor(data.actorID); }
+                            else { actor = GameManager.i.dataScript.GetHqActor(data.actorID); }
                             if (actor != null)
                             { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actor); }
                             else
@@ -4118,14 +4118,14 @@ public class EffectManager : MonoBehaviour
                                 Actor actor = null;
                                 //check for HQ actors
                                 if (data.isHqActors == false)
-                                { actor = GameManager.instance.dataScript.GetActor(data.actorID); }
-                                else { actor = GameManager.instance.dataScript.GetHqActor(data.actorID); }
+                                { actor = GameManager.i.dataScript.GetActor(data.actorID); }
+                                else { actor = GameManager.i.dataScript.GetHqActor(data.actorID); }
                                 if (actor != null)
                                 {
                                     Actor actorOther = null;
                                     if (data.isHqActors == false)
-                                    { actorOther = GameManager.instance.dataScript.GetActor(data.actorOtherID); }
-                                    else { actorOther = GameManager.instance.dataScript.GetHqActor(data.actorOtherID); }
+                                    { actorOther = GameManager.i.dataScript.GetActor(data.actorOtherID); }
+                                    else { actorOther = GameManager.i.dataScript.GetHqActor(data.actorOtherID); }
                                     if (actorOther != null)
                                     { effectResolve = ResolveTopicDualActorEffect(effect, dataInput, data, actor, actorOther); }
                                     else
@@ -4154,7 +4154,7 @@ public class EffectManager : MonoBehaviour
                         break;
                     case 'R':
                         //Random Active Actor (if resistance chooses one with the highest invisibility)
-                        Actor actorHighest = GameManager.instance.dataScript.GetActiveActorHighestInvisibility(dataInput.side);
+                        Actor actorHighest = GameManager.i.dataScript.GetActiveActorHighestInvisibility(dataInput.side);
                         if (actorHighest != null)
                         { effectResolve = ResolveTopicActorEffect(effect, dataInput, data, actorHighest); }
                         else
@@ -4232,7 +4232,7 @@ public class EffectManager : MonoBehaviour
         //get node (sometimes won't be needed)
         Node node = null;
         if (dataTopic.nodeID > -1)
-        { node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID); }
+        { node = GameManager.i.dataScript.GetNode(dataTopic.nodeID); }
         //outcome
         switch (effect.outcome.name)
         {
@@ -4264,7 +4264,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "Secret":
                 //remove a secret from actor
-                Secret secret = GameManager.instance.dataScript.GetSecret(dataTopic.secret);
+                Secret secret = GameManager.i.dataScript.GetSecret(dataTopic.secret);
                 if (secret != null)
                 {
                     if (actor.RemoveSecret(dataTopic.secret) == true)
@@ -4279,27 +4279,27 @@ public class EffectManager : MonoBehaviour
                 break;
             case "ActorDismissed":
                 //fire actor
-                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Dismissed) == true)
+                if (GameManager.i.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Dismissed) == true)
                 { effectResolve.bottomText = string.Format("{0}{1}, {2}, Fired{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
                 break;
             case "ActorToReserves":
                 //move actor to reserves
-                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Reserve) == true)
+                if (GameManager.i.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Reserve) == true)
                 { effectResolve.bottomText = string.Format("{0}{1}, {2}, moved to Reserves{3}", colourBad, actor.actorName, actor.arc.name, colourEnd); }
                 break;
             case "ActorKilledOrg":
                 //OrgContract kills an actor
-                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
+                if (GameManager.i.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
                 {
                     effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed{3}", colourBad, actor.actorName, actor.arc.name, colourEnd);
-                    OrgData data = new OrgData() { text = actor.arc.name, turn = GameManager.instance.turnScript.Turn };
-                    GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Contract);
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgContractHits);
+                    OrgData data = new OrgData() { text = actor.arc.name, turn = GameManager.i.turnScript.Turn };
+                    GameManager.i.dataScript.AddOrgData(data, OrganisationType.Contract);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.OrgContractHits);
                 }
                 break;
             case "ActorKilledCapture":
                 //Player reveals location of actor while in capture
-                if (GameManager.instance.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
+                if (GameManager.i.dataScript.RemoveCurrentActor(dataInput.side, actor, ActorStatus.Killed) == true)
                 { effectResolve.bottomText = string.Format("{0}{1}, {2}, Killed (Betrayed by Player){3}{4}", colourBad, actor.actorName, actor.arc.name, colourEnd, "\n"); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4330,7 +4330,7 @@ public class EffectManager : MonoBehaviour
             case "Relationship":
                 //assign relationship
                 ActorRelationship relationship = dataTopic.relation;
-                if (GameManager.instance.dataScript.AddRelationship(actor.slotID, actorOther.slotID, actor.actorID, actorOther.actorID, relationship) == true)
+                if (GameManager.i.dataScript.AddRelationship(actor.slotID, actorOther.slotID, actor.actorID, actorOther.actorID, relationship) == true)
                 {
                     effectResolve.bottomText = string.Format("{0}{1} and {2} are now {3}{4}", colourBad, actor.arc.name, actorOther.arc.name,
                       relationship == ActorRelationship.Friend ? "Friends" : "Enemies", colourEnd);
@@ -4379,7 +4379,7 @@ public class EffectManager : MonoBehaviour
         //get node (sometimes won't be needed)
         Node node = null;
         if (dataTopic.nodeID > -1)
-        { node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID); }
+        { node = GameManager.i.dataScript.GetNode(dataTopic.nodeID); }
         //outcome
         switch (effect.outcome.name)
         {
@@ -4390,7 +4390,7 @@ public class EffectManager : MonoBehaviour
                 if (node == null)
                 {
                     //get player node for a general loss of invisibility effect, if none present
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                 }
                 if (node != null)
                 { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
@@ -4437,13 +4437,13 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = ExecutePlayerChanceAddicted(effect, dataInput);
                 break;
             case "InvestigationNormal":
-                effectResolve.bottomText = GameManager.instance.playerScript.SetInvestigationFlagNormal(dataTopic.investigationRef);
+                effectResolve.bottomText = GameManager.i.playerScript.SetInvestigationFlagNormal(dataTopic.investigationRef);
                 break;
             case "InvestigationTimer":
-                effectResolve.bottomText = GameManager.instance.playerScript.SetInvestigationFlagTimer(dataTopic.investigationRef);
+                effectResolve.bottomText = GameManager.i.playerScript.SetInvestigationFlagTimer(dataTopic.investigationRef);
                 break;
             case "InvestigationDropped":
-                effectResolve.bottomText = GameManager.instance.playerScript.DropInvestigation(dataTopic.investigationRef);
+                effectResolve.bottomText = GameManager.i.playerScript.DropInvestigation(dataTopic.investigationRef);
                 break;
             case "Innocence":
                 effectResolve = ResolvePlayerData(effect, dataInput);
@@ -4480,7 +4480,7 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
-        Node node = GameManager.instance.dataScript.GetNode(dataTopic.nodeID);
+        Node node = GameManager.i.dataScript.GetNode(dataTopic.nodeID);
         if (node != null)
         {
             //data process package to send to node
@@ -4562,7 +4562,7 @@ public class EffectManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
                     }
                     //Process Node effect for all same ARC nodes
-                    List<Node> listOfNodes = GameManager.instance.dataScript.GetListOfAllNodes();
+                    List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
                     if (listOfNodes != null)
                     {
                         foreach (var nodeTemp in listOfNodes)
@@ -4605,11 +4605,11 @@ public class EffectManager : MonoBehaviour
                 switch (effect.operand.name)
                 {
                     case "Add":
-                        GameManager.instance.hqScript.ChangeHqApproval(effect.value, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.i.hqScript.ChangeHqApproval(effect.value, GameManager.i.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
                         break;
                     case "Subtract":
-                        GameManager.instance.hqScript.ChangeHqApproval(effect.value * -1, GameManager.instance.sideScript.PlayerSide, dataInput.originText);
+                        GameManager.i.hqScript.ChangeHqApproval(effect.value * -1, GameManager.i.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4617,7 +4617,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "HQRelocate":
                 //HQ relocates (takes time, services unavailable during relocation)
-                GameManager.instance.hqScript.RelocateHq("Player reveals Location");
+                GameManager.i.hqScript.RelocateHq("Player reveals Location");
                 effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}{2}{3}Location Compromised{4}{5}", colourBad, colourEnd, "\n", colourAlert, colourEnd, "\n");
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4641,7 +4641,7 @@ public class EffectManager : MonoBehaviour
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
         //Organisation
-        Organisation org = GameManager.instance.dataScript.GetOrganisaton(dataTopic.orgName);
+        Organisation org = GameManager.i.dataScript.GetOrganisaton(dataTopic.orgName);
         if (org != null)
         {
             //outcome
@@ -4690,7 +4690,7 @@ public class EffectManager : MonoBehaviour
                             org.isCutOff = true;
                             effectResolve.bottomText = string.Format("{0}The {1} will no longer deal with you{2}", colourBad, org.tag, colourEnd);
                             Debug.LogFormat("[Org] EffectManager.cs -> ResolveTopicOrganisationEffect: {0} ends all contact{1}", org.tag, "\n");
-                            GameManager.instance.dataScript.ResetOrgInfoArray(false);
+                            GameManager.i.dataScript.ResetOrgInfoArray(false);
                             break;
                         default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                     }
@@ -4699,7 +4699,7 @@ public class EffectManager : MonoBehaviour
                     //Player gains org secret
                     if (org.secret != null)
                     {
-                        if (GameManager.instance.playerScript.AddSecret(org.secret) == true)
+                        if (GameManager.i.playerScript.AddSecret(org.secret) == true)
                         {
                             org.isSecretKnown = true;
                             effectResolve.bottomText = string.Format("{0}You gain the {1} Secret{2}", colourBad, org.secret.tag, colourEnd);
@@ -4715,29 +4715,29 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "OrgTrackNemesis":
                     //OrgInfo provides a direct feed of Nemesis's location to Player
-                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
-                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Nemesis", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
+                    GameManager.i.dataScript.SetOrgInfoType(OrgInfoType.Nemesis, true);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.i.dataScript.AddOrgData(new OrgData() { text = "Nemesis", turn = GameManager.i.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}Nemesis will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.i.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackErasure":
                     //OrgInfo provides a direct feed of Erasure teams locations to Player
-                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.ErasureTeams, true);
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
-                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = "Erasure Teams", turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
+                    GameManager.i.dataScript.SetOrgInfoType(OrgInfoType.ErasureTeams, true);
+                    GameManager.i.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.i.dataScript.AddOrgData(new OrgData() { text = "Erasure Teams", turn = GameManager.i.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}Erasure Teams will be tracked for {1}{2}{3}{4}{5} days{6}", colourGood, colourEnd, colourCancel, GameManager.i.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 case "OrgTrackNpc":
                     //OrgInfo provides a direct feed of Npc's location to Player
-                    GameManager.instance.dataScript.SetOrgInfoType(OrgInfoType.Npc, true);
+                    GameManager.i.dataScript.SetOrgInfoType(OrgInfoType.Npc, true);
                     string npcName = "Unknown";
-                    if (GameManager.instance.missionScript.mission.npc != null)
-                    { npcName = GameManager.instance.missionScript.mission.npc.tag; }
-                    GameManager.instance.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
-                    GameManager.instance.dataScript.AddOrgData(new OrgData() { text = npcName, turn = GameManager.instance.turnScript.Turn }, OrganisationType.Info);
-                    effectResolve.bottomText = string.Format("{0}{1} will be tracked for {2}{3}{4}{5}{6} days{7}", colourGood, npcName, colourEnd, colourCancel, GameManager.instance.orgScript.timerOrgInfoMax,
+                    if (GameManager.i.missionScript.mission.npc != null)
+                    { npcName = GameManager.i.missionScript.mission.npc.tag; }
+                    GameManager.i.dataScript.StatisticIncrement(StatType.OrgInfoHacks);
+                    GameManager.i.dataScript.AddOrgData(new OrgData() { text = npcName, turn = GameManager.i.turnScript.Turn }, OrganisationType.Info);
+                    effectResolve.bottomText = string.Format("{0}{1} will be tracked for {2}{3}{4}{5}{6} days{7}", colourGood, npcName, colourEnd, colourCancel, GameManager.i.orgScript.timerOrgInfoMax,
                         colourEnd, colourGood, colourEnd);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
@@ -4775,12 +4775,12 @@ public class EffectManager : MonoBehaviour
                 {
                     case "Add":
                         //all live targets gain effect.value target info
-                        if (GameManager.instance.targetScript.ChangeTargetInfoAll(effect.value) == true)
+                        if (GameManager.i.targetScript.ChangeTargetInfoAll(effect.value) == true)
                         { effectResolve.bottomText = string.Format("{0}All Target Info +1{1}", colourGood, colourEnd); }
                         break;
                     case "Subtract":
                         //all live targets lose effect.value target info
-                        if (GameManager.instance.targetScript.ChangeTargetInfoAll(effect.value, false) == true)
+                        if (GameManager.i.targetScript.ChangeTargetInfoAll(effect.value, false) == true)
                         { effectResolve.bottomText = string.Format("{0}All Target Info -1{1}", colourBad, colourEnd); }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4813,16 +4813,16 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "CityLoyalty":
-                int cityLoyalty = GameManager.instance.cityScript.CityLoyalty;
+                int cityLoyalty = GameManager.i.cityScript.CityLoyalty;
                 switch (effect.operand.name)
                 {
                     case "Add":
                         cityLoyalty += effect.value;
-                        cityLoyalty = Mathf.Min(GameManager.instance.cityScript.maxCityLoyalty, cityLoyalty);
-                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                        cityLoyalty = Mathf.Min(GameManager.i.cityScript.maxCityLoyalty, cityLoyalty);
+                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                         change = effect.value;
                         //good for authority, bad for resistance
-                        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+                        if (GameManager.i.sideScript.PlayerSide.level == 1)
                         { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
                         else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
                         break;
@@ -4830,9 +4830,9 @@ public class EffectManager : MonoBehaviour
                         cityLoyalty -= effect.value;
                         cityLoyalty = Mathf.Max(0, cityLoyalty);
                         change = effect.value * -1;
-                        GameManager.instance.cityScript.CityLoyalty = cityLoyalty;
+                        GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                         //bad for authority, good for resistance
-                        if (GameManager.instance.sideScript.PlayerSide.level == 1)
+                        if (GameManager.i.sideScript.PlayerSide.level == 1)
                         { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
                         else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
                         break;
@@ -4840,7 +4840,7 @@ public class EffectManager : MonoBehaviour
                 }
                 //message
                 if (change != 0)
-                { GameManager.instance.messageScript.CityLoyalty(effectResolve.bottomText, dataInput.originText, cityLoyalty, change); }
+                { GameManager.i.messageScript.CityLoyalty(effectResolve.bottomText, dataInput.originText, cityLoyalty, change); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -4860,7 +4860,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerRenown(Effect effect)
     {
         string bottomText = "Unknown";
-        int playerRenown = GameManager.instance.playerScript.Renown;
+        int playerRenown = GameManager.i.playerScript.Renown;
         //Player effect
         switch (effect.operand.name)
         {
@@ -4875,7 +4875,7 @@ public class EffectManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
-        GameManager.instance.playerScript.Renown = playerRenown;
+        GameManager.i.playerScript.Renown = playerRenown;
         return bottomText;
     }
 
@@ -4902,16 +4902,16 @@ public class EffectManager : MonoBehaviour
                     changeAmount += effect.value;
                     actor.Renown += effect.value;
                     bottomText = string.Format("{0}{1} Renown +{2}{3} ({4}{5}{6} trait)", isHqActor == false ? colourBad : colourGood,
-                        isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
+                        isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                         effect.value * 2, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd);
                     //logger
-                    GameManager.instance.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
+                    GameManager.i.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
                 }
                 else
                 {
                     //no trait
                     bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourBad : colourGood,
-                        isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
+                        isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                         effect.description, colourEnd);
                 }
                 break;
@@ -4920,7 +4920,7 @@ public class EffectManager : MonoBehaviour
                 changeAmount -= effect.value;
                 actor.Renown = Mathf.Max(0, actor.Renown);
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
-                    isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
+                    isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                     effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -4930,7 +4930,7 @@ public class EffectManager : MonoBehaviour
         {
             HqRenownData dataRenown = new HqRenownData()
             {
-                turn = GameManager.instance.turnScript.Turn,
+                turn = GameManager.i.turnScript.Turn,
                 change = changeAmount,
                 newRenown = actor.Renown,
                 reason = dataInput.originText
@@ -4938,7 +4938,7 @@ public class EffectManager : MonoBehaviour
             actor.AddHqRenownData(dataRenown);
         }
         //admin
-        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
+        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
             dataBefore, actor.Renown, "\n");
         return bottomText;
     }
@@ -4963,16 +4963,16 @@ public class EffectManager : MonoBehaviour
                     switch (effect.operand.name)
                     {
                         case "Add":
-                            int newNodeID = GameManager.instance.contactScript.GetNewContactNodeID(actor);
+                            int newNodeID = GameManager.i.contactScript.GetNewContactNodeID(actor);
                             //viable node found -> add contact
                             if (newNodeID > -1)
                             {
-                                GameManager.instance.dataScript.AddContactSingle(actor.actorID, newNodeID);
+                                GameManager.i.dataScript.AddContactSingle(actor.actorID, newNodeID);
                                 bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
                             }
                             break;
                         case "Subtract":
-                            if (GameManager.instance.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
+                            if (GameManager.i.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
                             { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
                             else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
                             break;
@@ -4983,19 +4983,19 @@ public class EffectManager : MonoBehaviour
                     //Contact effectiveness changes to Max or Min
                     if (data.contactID > -1)
                     {
-                        Contact contact = GameManager.instance.dataScript.GetContact(data.contactID);
+                        Contact contact = GameManager.i.dataScript.GetContact(data.contactID);
                         if (contact != null)
                         {
                             switch (effect.operand.name)
                             {
                                 case "Add":
-                                    contact.effectiveness = GameManager.instance.contactScript.maxEffectiveness;
+                                    contact.effectiveness = GameManager.i.contactScript.maxEffectiveness;
                                     bottomText = string.Format("{0}Contact Effectiveness now MAX{1}", colourGood, colourEnd);
                                     Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MAX ({5}){6}", contact.nameFirst, contact.nameLast,
                                         contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
                                     break;
                                 case "Subtract":
-                                    contact.effectiveness = GameManager.instance.contactScript.minEffectiveness;
+                                    contact.effectiveness = GameManager.i.contactScript.minEffectiveness;
                                     bottomText = string.Format("{0}Contact Effectiveness now MIN{1}", colourBad, colourEnd);
                                     Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MIN ({5}){6}", contact.nameFirst, contact.nameLast,
                                         contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
@@ -5011,7 +5011,7 @@ public class EffectManager : MonoBehaviour
                     //Contact status changed to Inactive
                     if (data.contactID > -1)
                     {
-                        Contact contact = GameManager.instance.dataScript.GetContact(data.contactID);
+                        Contact contact = GameManager.i.dataScript.GetContact(data.contactID);
                         if (contact != null)
                         {
                             switch (effect.operand.name)
@@ -5050,7 +5050,7 @@ public class EffectManager : MonoBehaviour
         {
             bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
             //relationship motivational shift in a friend or enemy
-            RelationshipData data = GameManager.instance.dataScript.GetRelationshipData(actor.slotID);
+            RelationshipData data = GameManager.i.dataScript.GetRelationshipData(actor.slotID);
             if (data != null)
             {
                 if (data.relationship != ActorRelationship.None)
@@ -5058,7 +5058,7 @@ public class EffectManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
             //update topBarUI conflict
-            GameManager.instance.topBarScript.UpdateConflicts(GameManager.instance.actorScript.CheckNumOfConflictActors());
+            GameManager.i.topBarScript.UpdateConflicts(GameManager.i.actorScript.CheckNumOfConflictActors());
         }
         else
         {
@@ -5083,7 +5083,7 @@ public class EffectManager : MonoBehaviour
         bool isGood = true;
         if (data.actorID > -1)
         {
-            Actor actor = GameManager.instance.dataScript.GetActor(data.actorID);
+            Actor actor = GameManager.i.dataScript.GetActor(data.actorID);
             if (actor != null)
             {
                 //other actor must be active to be affected
@@ -5131,7 +5131,7 @@ public class EffectManager : MonoBehaviour
                     if (chanceMotivationShift < 100)
                     {
                         string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
-                        GameManager.instance.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood, "rand_6");
+                        GameManager.i.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood, "rand_6");
                     }
                 }
             }
@@ -5160,9 +5160,9 @@ public class EffectManager : MonoBehaviour
         {
             case "Add":
                 motivation += Mathf.Abs(amount);
-                motivation = Mathf.Min(GameManager.instance.actorScript.maxStatValue, motivation);
+                motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
-                bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+                bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                 break;
             case "Subtract":
                 motivation -= Mathf.Abs(amount);
@@ -5174,18 +5174,18 @@ public class EffectManager : MonoBehaviour
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}{1}{2} Motivation too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
                         builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
-                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.instance.actorScript.ProcessActorConflict(actor));
+                        builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.i.actorScript.ProcessActorConflict(actor));
                         motivation = Mathf.Max(0, motivation);
                         bottomText = builder.ToString();
                     }
                     else
                     {
                         motivation = Mathf.Max(0, motivation);
-                        bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+                        bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                     }
                 }
                 else
-                { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
+                { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
                 actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
@@ -5193,7 +5193,7 @@ public class EffectManager : MonoBehaviour
         //log entry
         if (motivation != dataBefore)
         {
-            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.instance.hqScript.GetHqTitle(actor.statusHQ),
+            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                 dataBefore, motivation, "\n");
         }
         return bottomText;
@@ -5213,26 +5213,26 @@ public class EffectManager : MonoBehaviour
         switch (effect.operand.name)
         {
             case "Add":
-                if (GameManager.instance.playerScript.Invisibility < GameManager.instance.actorScript.maxStatValue)
+                if (GameManager.i.playerScript.Invisibility < GameManager.i.actorScript.maxStatValue)
                 {
                     //adds a variable amount
-                    int invis = GameManager.instance.playerScript.Invisibility;
+                    int invis = GameManager.i.playerScript.Invisibility;
                     invis += effect.value;
-                    invis = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invis);
-                    GameManager.instance.playerScript.Invisibility = invis;
+                    invis = Mathf.Min(GameManager.i.actorScript.maxStatValue, invis);
+                    GameManager.i.playerScript.Invisibility = invis;
                 }
                 bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
                 break;
             case "Subtract":
                 //does player have any invisibility type gear?
-                string gearName = GameManager.instance.playerScript.CheckGearTypePresent(GameManager.instance.gearScript.typeInvisibility);
+                string gearName = GameManager.i.playerScript.CheckGearTypePresent(GameManager.i.gearScript.typeInvisibility);
                 if (string.IsNullOrEmpty(gearName) == false)
                 {
                     //gear present -> No drop in Invisibility
-                    Gear gear = GameManager.instance.dataScript.GetGear(gearName);
+                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
                     if (gear != null)
                     {
-                        GameManager.instance.gearScript.SetGearUsed(gear, "stay Invisible");
+                        GameManager.i.gearScript.SetGearUsed(gear, "stay Invisible");
                         bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
                             colourEnd, colourNormal, colourEnd);
                     }
@@ -5241,9 +5241,9 @@ public class EffectManager : MonoBehaviour
                 else
                 {
                     //No gear present
-                    int invisibility = GameManager.instance.playerScript.Invisibility;
+                    int invisibility = GameManager.i.playerScript.Invisibility;
                     //condition TAGGED
-                    if (GameManager.instance.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
+                    if (GameManager.i.playerScript.CheckConditionPresent(conditionTagged, dataInput.side) == true)
                     {
                         //invisibility auto Zero
                         invisibility = 0;
@@ -5252,7 +5252,7 @@ public class EffectManager : MonoBehaviour
                             string.Format("{0}Player Invisibility 0 (TAGGED){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                             colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                         reason = "TAGGED condition";
-                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                        GameManager.i.aiScript.immediateFlagResistance = true;
                     }
                     //NOT Tagged
                     else
@@ -5269,7 +5269,7 @@ public class EffectManager : MonoBehaviour
                                 bottomText =
                                     string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                     colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                GameManager.i.aiScript.immediateFlagResistance = true;
                             }
                         }
                         else
@@ -5282,14 +5282,14 @@ public class EffectManager : MonoBehaviour
                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
                                 bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
                                     colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
-                                GameManager.instance.aiScript.immediateFlagResistance = true;
+                                GameManager.i.aiScript.immediateFlagResistance = true;
                             }
 
                         }
                     }
                     //mincap zero
                     invisibility = Mathf.Max(0, invisibility);
-                    GameManager.instance.playerScript.Invisibility = invisibility;
+                    GameManager.i.playerScript.Invisibility = invisibility;
                 }
                 //AI activity message
                 if (isGearUsed == false)
@@ -5297,12 +5297,12 @@ public class EffectManager : MonoBehaviour
                     int delay;
                     if (node.isSpider == true) { delay = delayYesSpider; }
                     else { delay = delayNoSpider; }
-                    GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
-                        dataInput.originText), node, GameManager.instance.playerScript.actorID, delay);
+                    GameManager.i.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" (Player)",
+                        dataInput.originText), node, GameManager.i.playerScript.actorID, delay);
                     //AI Immediate message
-                    if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                    if (GameManager.i.aiScript.immediateFlagResistance == true)
                     {
-                        GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
+                        GameManager.i.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" (Player)",
                             dataInput.originText), reason, node.nodeID, -1);
                     }
                 }
@@ -5325,11 +5325,11 @@ public class EffectManager : MonoBehaviour
         switch (effect.operand.name)
         {
             case "Add":
-                if (invisibility < GameManager.instance.actorScript.maxStatValue)
+                if (invisibility < GameManager.i.actorScript.maxStatValue)
                 {
                     //adds a variable amount
                     invisibility += effect.value;
-                    invisibility = Mathf.Min(GameManager.instance.actorScript.maxStatValue, invisibility);
+                    invisibility = Mathf.Min(GameManager.i.actorScript.maxStatValue, invisibility);
                     actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
                     Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                         dataBefore, invisibility, "\n");
@@ -5350,7 +5350,7 @@ public class EffectManager : MonoBehaviour
                         //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
                         bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
                             colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
-                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                        GameManager.i.aiScript.immediateFlagResistance = true;
                     }
                 }
                 else
@@ -5363,7 +5363,7 @@ public class EffectManager : MonoBehaviour
                         //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
                         bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
                             colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
-                        GameManager.instance.aiScript.immediateFlagResistance = true;
+                        GameManager.i.aiScript.immediateFlagResistance = true;
                     }
                 }
                 //mincap zero
@@ -5375,24 +5375,24 @@ public class EffectManager : MonoBehaviour
                 int delay;
                 if (node.isSpider == true) { delay = delayYesSpider; }
                 else { delay = delayNoSpider; }
-                GameManager.instance.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
+                GameManager.i.messageScript.AINodeActivity(string.Format("Resistance Activity \"{0}\" ({1})",
                     dataInput.originText, actor.arc.name), node, actor.actorID, delay);
                 //AI Immediate message
-                if (GameManager.instance.aiScript.immediateFlagResistance == true)
+                if (GameManager.i.aiScript.immediateFlagResistance == true)
                 {
-                    GameManager.instance.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
+                    GameManager.i.messageScript.AIImmediateActivity(string.Format("Immediate Activity \"{0}\" ({1})",
                         dataInput.originText, actor.arc.name), dataInput.originText, node.nodeID, -1, actor.actorID);
                 }
                 //Coward trait -> gets Stressed everytime they lose invisibility
                 if (actor.CheckTraitEffect(actorStressedOverInvisibility) == true)
                 {
-                    Condition conditionStressed = GameManager.instance.dataScript.GetCondition("STRESSED");
+                    Condition conditionStressed = GameManager.i.dataScript.GetCondition("STRESSED");
                     if (conditionStressed != null)
                     {
                         if (actor.CheckConditionPresent(conditionStressed) == false)
                         {
                             actor.AddCondition(conditionStressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
-                            GameManager.instance.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
+                            GameManager.i.actorScript.TraitLogMessage(actor, "for a Stress check", "to become STRESSED due to a loss of Invisibility");
                             StringBuilder builder = new StringBuilder();
                             builder.Append(bottomText);
 
@@ -5439,18 +5439,18 @@ public class EffectManager : MonoBehaviour
             {
                 case "Add":
                     //only add condition if NOT already present
-                    if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
+                    if (GameManager.i.playerScript.CheckConditionPresent(condition, dataInput.side) == false)
                     {
-                        GameManager.instance.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                        GameManager.i.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
                     }
                     else { bottomText = string.Format("{0}Player already has {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
                     break;
                 case "Subtract":
                     //only remove condition if present
-                    if (GameManager.instance.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
+                    if (GameManager.i.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                     {
-                        GameManager.instance.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
+                        GameManager.i.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
                     }
                     else { bottomText = string.Format("{0}Player doesn't have {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
@@ -5500,22 +5500,22 @@ public class EffectManager : MonoBehaviour
             {
                 case "Add":
                     //activate cure
-                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, true, isOrgCure) == true)
+                    if (GameManager.i.dataScript.SetCureNodeStatus(condition.cure, true, isOrgCure) == true)
                     {
-                        GameManager.instance.dataScript.StatisticIncrement(StatType.OrgCures);
+                        GameManager.i.dataScript.StatisticIncrement(StatType.OrgCures);
                         bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd);
                         //org data
                         OrgData data = new OrgData()
                         {
                             text = condition.cure.cureName,
-                            turn = GameManager.instance.turnScript.Turn
+                            turn = GameManager.i.turnScript.Turn
                         };
-                        GameManager.instance.dataScript.AddOrgData(data, OrganisationType.Cure);
+                        GameManager.i.dataScript.AddOrgData(data, OrganisationType.Cure);
                     }
                     break;
                 case "Subtract":
                     //deactivate cure
-                    if (GameManager.instance.dataScript.SetCureNodeStatus(condition.cure, false, isOrgCure) == true)
+                    if (GameManager.i.dataScript.SetCureNodeStatus(condition.cure, false, isOrgCure) == true)
                     { bottomText = string.Format("{0}Cure for {1} gone{2}", colourEffect, condition.tag, colourEnd); }
                     break;
                 default:
@@ -5535,8 +5535,8 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private string ExecutePlayerTakeDrugs(Effect effect)
     {
-        GameManager.instance.playerScript.TakeDrugs();
-        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.instance.globalScript.tagGlobalDrug, "\n", "\n", colourEnd);
+        GameManager.i.playerScript.TakeDrugs();
+        return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.i.globalScript.tagGlobalDrug, "\n", "\n", colourEnd);
     }
 
     /// <summary>
@@ -5551,7 +5551,7 @@ public class EffectManager : MonoBehaviour
         {
             case "Gear":
                 //Player loses a random piece of Gear
-                List<string> listOfGear = GameManager.instance.playerScript.GetListOfGear();
+                List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
                 if (listOfGear != null)
                 {
                     int count = listOfGear.Count;
@@ -5561,7 +5561,7 @@ public class EffectManager : MonoBehaviour
                         if (string.IsNullOrEmpty(gearName) == false)
                         {
                             //remove gear (lost forever)
-                            GameManager.instance.playerScript.RemoveGear(gearName, true);
+                            GameManager.i.playerScript.RemoveGear(gearName, true);
                         }
                         else
                         { Debug.LogWarning("Invalid gearName (Null or Empty)"); }
@@ -5577,7 +5577,7 @@ public class EffectManager : MonoBehaviour
                 {
                     gearName = dataTopic.gearName;
                     //remove gear (lost forever)
-                    GameManager.instance.playerScript.RemoveGear(gearName, true);
+                    GameManager.i.playerScript.RemoveGear(gearName, true);
                 }
                 else
                 { Debug.LogWarning("Invalid dataTopic.gearName (Null or Empty)"); }
@@ -5607,20 +5607,20 @@ public class EffectManager : MonoBehaviour
         if (rnd < numNeeded)
         {
             //add Addicted Condition -> check not already present
-            if (GameManager.instance.playerScript.CheckConditionPresent(conditionAddicted, dataInput.side) == false)
+            if (GameManager.i.playerScript.CheckConditionPresent(conditionAddicted, dataInput.side) == false)
             {
-                GameManager.instance.playerScript.AddCondition(conditionAddicted, dataInput.side, string.Format("Due to {0}", dataInput.originText));
+                GameManager.i.playerScript.AddCondition(conditionAddicted, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                 bottomText = string.Format("{0}Player becomes {1}{2}", colourBad, conditionAddicted.name, colourEnd);
             }
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: SUCEEDED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
-            GameManager.instance.messageScript.GeneralRandom("Addiction Check SUCCEEDED", "Addiciton", numNeeded, rnd, true, "rand_3");
+            GameManager.i.messageScript.GeneralRandom("Addiction Check SUCCEEDED", "Addiciton", numNeeded, rnd, true, "rand_3");
         }
         else
         {
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: FAILED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
-            GameManager.instance.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true, "rand_3");
+            GameManager.i.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true, "rand_3");
         }
 
         //return
@@ -5635,7 +5635,7 @@ public class EffectManager : MonoBehaviour
     /// <returns></returns>
     private string ExecutePlayerRelease(Effect effect, EffectDataInput data)
     {
-        GameManager.instance.captureScript.ReleasePlayer(false);
+        GameManager.i.captureScript.ReleasePlayer(false);
         return string.Format("{0}Player Released by the Authority{1}{2}", colourGood, colourEnd, "\n");
     }
 
@@ -5648,21 +5648,21 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerEscape(Effect effect, EffectDataInput data)
     {
         //org data (do prior to escape) -> use name of node as place of incarceration from which the player escaped from
-        string nodeName = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured).nodeName;
+        string nodeName = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeCaptured).nodeName;
         if (string.IsNullOrEmpty(nodeName) == false)
         {
             OrgData dataOrg = new OrgData()
             {
                 text = nodeName,
-                turn = GameManager.instance.turnScript.Turn
+                turn = GameManager.i.turnScript.Turn
             };
-            GameManager.instance.dataScript.AddOrgData(dataOrg, OrganisationType.Emergency);
+            GameManager.i.dataScript.AddOrgData(dataOrg, OrganisationType.Emergency);
         }
-        else { Debug.LogWarningFormat("Invalid nodeName (Null or Empty) for nodeCaptured ID {0}", GameManager.instance.nodeScript.nodeCaptured); }
+        else { Debug.LogWarningFormat("Invalid nodeName (Null or Empty) for nodeCaptured ID {0}", GameManager.i.nodeScript.nodeCaptured); }
         //escape
-        GameManager.instance.captureScript.ReleasePlayer(false, false);
+        GameManager.i.captureScript.ReleasePlayer(false, false);
         //stat
-        GameManager.instance.dataScript.StatisticIncrement(StatType.OrgEscapes);
+        GameManager.i.dataScript.StatisticIncrement(StatType.OrgEscapes);
         return string.Format("{0}Player Escapes from Captivity{1}{2}", colourGood, colourEnd, "\n");
     }
 
@@ -5681,7 +5681,7 @@ public class EffectManager : MonoBehaviour
             if (org != null)
             {
                 //check Player has secret (revealWho is the player 'cause they didn't meet org's demand)
-                if (GameManager.instance.playerScript.CheckSecretPresent(secret) == true)
+                if (GameManager.i.playerScript.CheckSecretPresent(secret) == true)
                 {
                     secret.revealedWho = org.tag;
                     secret.revealedWhen = GameManager.SetTimeStamp();
@@ -5695,7 +5695,7 @@ public class EffectManager : MonoBehaviour
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Org Reveals Secret";
                         effectInput.dataName = secret.org.name;
-                        Node node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
                         if (node != null)
                         {
                             if (secret.listOfEffects.Count > 0)
@@ -5703,20 +5703,20 @@ public class EffectManager : MonoBehaviour
                             //loop effects
                             foreach (Effect effect in secret.listOfEffects)
                             {
-                                effectReturn = GameManager.instance.effectScript.ProcessEffect(effect, node, effectInput);
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 builder.Append(effectReturn.bottomText);
                             }
 
                             //message
                             string text = string.Format("{0} revealed \"{1}\" secret{2}", org.tag, secret.tag, "\n");
-                            GameManager.instance.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");
+                            GameManager.i.messageScript.OrganisationRevealSecret(text, org, secret, "You refused to cooperate");
                         }
                         else { Debug.LogWarning("Invalid player node (Null)"); }
 
                     }
                     //remove secret from all actors and player
-                    GameManager.instance.secretScript.RemoveSecretFromAll(secret.name);
+                    GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
                 }
                 else
                 { Debug.LogWarningFormat("Invalid Org Secret {0} (Player doesn't have secret)"); builder.Append("Secret NOT FOUND"); }
@@ -5790,7 +5790,7 @@ public class EffectManager : MonoBehaviour
         string bottomText = "Unknown";
         string colourEffect = GetColourEffect(effect.typeOfEffect);
         int innocenceLevel = effect.value;
-        CaptureTool tool = GameManager.instance.captureScript.GetCaptureTool(effect.value);
+        CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(effect.value);
         if (tool != null)
         {
             //Actor Condition
@@ -5798,12 +5798,12 @@ public class EffectManager : MonoBehaviour
             {
                 case "Add":
                     //Add item to Player's inventory -> check if an appropriate level capture tool is even feasible (may not be present)
-                    if (GameManager.instance.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
+                    if (GameManager.i.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
                     {
                         //check if player already has this particular capture tool
-                        if (GameManager.instance.playerScript.CheckCaptureToolPresent(innocenceLevel) == false)
+                        if (GameManager.i.playerScript.CheckCaptureToolPresent(innocenceLevel) == false)
                         {
-                            if (GameManager.instance.playerScript.AddCaptureTool(innocenceLevel) == true)
+                            if (GameManager.i.playerScript.AddCaptureTool(innocenceLevel) == true)
                             { bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd); }
                             else
                             {
@@ -5818,9 +5818,9 @@ public class EffectManager : MonoBehaviour
                     break;
                 case "Subtract":
                     //Remove item from Player's inventory
-                    if (GameManager.instance.playerScript.CheckCaptureToolPresent(innocenceLevel) == true)
+                    if (GameManager.i.playerScript.CheckCaptureToolPresent(innocenceLevel) == true)
                     {
-                        if (GameManager.instance.playerScript.RemoveCaptureTool(innocenceLevel) == true)
+                        if (GameManager.i.playerScript.RemoveCaptureTool(innocenceLevel) == true)
                         { bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd); }
                         else
                         {
@@ -5851,13 +5851,13 @@ public class EffectManager : MonoBehaviour
     {
         //fail state for Campaign
         string text = "Unknown";
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1: text = GameManager.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
             case 2: text = GameManager.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
-            default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.instance.sideScript.PlayerSide.name); break;
+            default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.i.sideScript.PlayerSide.name); break;
         }
-        GameManager.instance.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
+        GameManager.i.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
         return "Player locked up permanently";
     }
 

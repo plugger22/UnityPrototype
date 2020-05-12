@@ -119,7 +119,7 @@ public class TurnManager : MonoBehaviour
             case GameState.LoadGame:
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -131,14 +131,14 @@ public class TurnManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //actions
-        UpdateActionsLimit(GameManager.instance.sideScript.PlayerSide);
+        UpdateActionsLimit(GameManager.i.sideScript.PlayerSide);
         //states
         authoritySecurityState = AuthoritySecurityState.Normal;
         //current side
-        currentSide = GameManager.instance.sideScript.PlayerSide;
+        currentSide = GameManager.i.sideScript.PlayerSide;
         Debug.Assert(currentSide != null, "Invalid currentSide (Null)");
         //scenarion time (update for each new scenario so not in fast access)
-        scenarioTimer = GameManager.instance.campaignScript.scenario.timer;
+        scenarioTimer = GameManager.i.campaignScript.scenario.timer;
         Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
 
     }
@@ -148,8 +148,8 @@ public class TurnManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        teamArcErasure = GameManager.instance.dataScript.GetTeamArcID("ERASURE");
-        conditionWounded = GameManager.instance.dataScript.GetCondition("WOUNDED");
+        teamArcErasure = GameManager.i.dataScript.GetTeamArcID("ERASURE");
+        conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
     }
@@ -203,15 +203,15 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourNeutral = GameManager.instance.colourScript.GetColour(ColourType.neutralText);
+        colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         /*colourAuthority = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourRebel = GameManager.instance.colourScript.GetColour(ColourType.blueText);
         colourGrey = GameManager.instance.colourScript.GetColour(ColourType.greyText);*/
-        colourGood = GameManager.instance.colourScript.GetColour(ColourType.dataGood);
-        colourBad = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
-        colourAlert = GameManager.instance.colourScript.GetColour(ColourType.salmonText);
-        colourNormal = GameManager.instance.colourScript.GetColour(ColourType.normalText);
-        colourEnd = GameManager.instance.colourScript.GetEndTag();
+        colourGood = GameManager.i.colourScript.GetColour(ColourType.dataGood);
+        colourBad = GameManager.i.colourScript.GetColour(ColourType.dataBad);
+        colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
+        colourEnd = GameManager.i.colourScript.GetEndTag();
         //current Player side colour
         /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideAuthority.level)
         { colourSide = colourAuthority; }
@@ -224,21 +224,21 @@ public class TurnManager : MonoBehaviour
     public void SetAutoRun(int autoTurns)
     {
         numOfTurns = autoTurns;
-        GameManager.instance.inputScript.GameState = GameState.PlayGame;
+        GameManager.i.inputScript.GameState = GameState.PlayGame;
         if (autoTurns > 0)
         {
             isAutoRun = true;
             Debug.LogFormat("AUTORUN for {0} turns", numOfTurns);
             //check any test conditions are within parameters
-            if (GameManager.instance.testScript.conditionTurnResistance >= autoTurns)
+            if (GameManager.i.testScript.conditionTurnResistance >= autoTurns)
             {
                 Debug.LogWarningFormat("Invalid conditionTurnResistance (Test) turn {0} (outside of autorun period of {1}) -> will be ignored",
-                    GameManager.instance.testScript.conditionTurnResistance, autoTurns);
+                    GameManager.i.testScript.conditionTurnResistance, autoTurns);
             }
-            if (GameManager.instance.testScript.conditionTurnAuthority >= autoTurns)
+            if (GameManager.i.testScript.conditionTurnAuthority >= autoTurns)
             {
                 Debug.LogWarningFormat("Invalid conditionTurnAuthority (Test) turn {0} (outside of autorun period of {1}) -> will be ignored",
-                    GameManager.instance.testScript.conditionTurnAuthority, autoTurns);
+                    GameManager.i.testScript.conditionTurnAuthority, autoTurns);
             }
             //Execute AutoRun
             do
@@ -246,18 +246,18 @@ public class TurnManager : MonoBehaviour
                 ProcessNewTurn();
                 if (winStateLevel == WinStateLevel.None)
                 {
-                    GameManager.instance.dataScript.UpdateCurrentItemData();
+                    GameManager.i.dataScript.UpdateCurrentItemData();
                     numOfTurns--;
                 }
             }
             while (numOfTurns > 0 && winStateLevel == WinStateLevel.None);
             isAutoRun = false;
             //in case of AI vs AI revert the player side to human control
-            GameManager.instance.sideScript.RevertToHumanPlayer();
-            currentSide = GameManager.instance.sideScript.PlayerSide;
+            GameManager.i.sideScript.RevertToHumanPlayer();
+            currentSide = GameManager.i.sideScript.PlayerSide;
             //Data Integrity check
-            if (GameManager.instance.isIntegrityCheck == true)
-            { GameManager.instance.validateScript.ExecuteIntegrityCheck(); }
+            if (GameManager.i.isIntegrityCheck == true)
+            { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
 
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
@@ -279,9 +279,9 @@ public class TurnManager : MonoBehaviour
         if (isLevelOver == false && isCampaignOver == false)
         {
             Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
-            GlobalSide playerSide = GameManager.instance.sideScript.PlayerSide;
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
-            if (GameManager.instance.inputScript.ModalState == ModalState.Normal)
+            if (GameManager.i.inputScript.ModalState == ModalState.Normal)
             {
                 //pre-processing admin
                 haltExecution = false;
@@ -307,7 +307,7 @@ public class TurnManager : MonoBehaviour
                     {
                         Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
                         //select topic
-                        GameManager.instance.topicScript.SelectTopic(playerSide);
+                        GameManager.i.topicScript.SelectTopic(playerSide);
                         
                         /*//Debugging only (temporary) -> don't forget to switch on below and delete this
                         GameManager.instance.topicScript.ProcessTopic(playerSide);*/
@@ -318,10 +318,10 @@ public class TurnManager : MonoBehaviour
                     {
                         Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
                         //switch off any node Alerts
-                        GameManager.instance.alertScript.CloseAlertUI(true);
+                        GameManager.i.alertScript.CloseAlertUI(true);
 
                         //generate topic
-                        GameManager.instance.topicScript.ProcessTopic(playerSide);
+                        GameManager.i.topicScript.ProcessTopic(playerSide);
 
                         /*//debug
                         DebugCreatePipelineMessages();*/
@@ -386,10 +386,10 @@ public class TurnManager : MonoBehaviour
         if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
         builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
         details.textBottom = builderBottom.ToString();
-        details.sprite = GameManager.instance.guiScript.aiCountermeasureSprite;
+        details.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
         //add to start of turn info Pipeline
         details.type = MsgPipelineType.Nemesis;
-        if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+        if (GameManager.i.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Nemesis infoPipeline message FAILED to be added to dictOfPipeline"); }
         //outcome dialogue -> Compromised Gear
         details = new ModalOutcomeDetails();
@@ -405,7 +405,7 @@ public class TurnManager : MonoBehaviour
         details.textBottom = builderBottom.ToString();
         //add to start of turn info Pipeline
         details.type = MsgPipelineType.WinLoseLevel;
-        if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+        if (GameManager.i.guiScript.InfoPipelineAdd(details) == false)
         { Debug.LogWarningFormat("Compromised Gear infoPipeline message FAILED to be added to dictOfPipeline"); }
     }
     #endregion
@@ -419,7 +419,7 @@ public class TurnManager : MonoBehaviour
     IEnumerator StartPipeline(GlobalSide playerSide)
     {
         yield return new WaitUntil(() => haltExecution == false);
-        GameManager.instance.guiScript.InfoPipelineStart(playerSide);
+        GameManager.i.guiScript.InfoPipelineStart(playerSide);
         yield return null;
     }
 
@@ -437,10 +437,10 @@ public class TurnManager : MonoBehaviour
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 details.textTop = winTextTop;
                 details.textBottom = winTextBottom;
-                details.side = GameManager.instance.sideScript.PlayerSide;
+                details.side = GameManager.i.sideScript.PlayerSide;
                 details.sprite = winSprite;
                 details.type = MsgPipelineType.WinLoseLevel;
-                if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+                if (GameManager.i.guiScript.InfoPipelineAdd(details) == false)
                 { Debug.LogWarningFormat("WinLoseLevel infoPipeline message FAILED to be added to dictOfPipeline"); }
                 break;
             default:
@@ -462,10 +462,10 @@ public class TurnManager : MonoBehaviour
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 details.textTop = winTextTop;
                 details.textBottom = winTextBottom;
-                details.side = GameManager.instance.sideScript.PlayerSide;
+                details.side = GameManager.i.sideScript.PlayerSide;
                 details.sprite = winSprite;
                 details.type = MsgPipelineType.WinLoseCampaign;
-                if (GameManager.instance.guiScript.InfoPipelineAdd(details) == false)
+                if (GameManager.i.guiScript.InfoPipelineAdd(details) == false)
                 { Debug.LogWarningFormat("WinLoseCampaign infoPipeline message FAILED to be added to dictOfPipeline"); }
                 break;
             default:
@@ -480,16 +480,16 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
-        currentSide = GameManager.instance.sideScript.PlayerSide;
+        currentSide = GameManager.i.sideScript.PlayerSide;
         //increment turn counter
         _turn++;
         Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
-            _turn, GameManager.instance.sideScript.PlayerSide.name, currentSide.name, "\n");
+            _turn, GameManager.i.sideScript.PlayerSide.name, currentSide.name, "\n");
         Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.StartTurnEarly, this, null, "TurnManager.cs -> StartTurnEarly");
         //reset nodes and connections if not in normal state
-        if (GameManager.instance.nodeScript.activityState != ActivityUI.None)
-        { GameManager.instance.nodeScript.ResetAll(); }
+        if (GameManager.i.nodeScript.activityState != ActivityUI.None)
+        { GameManager.i.nodeScript.ResetAll(); }
         //update turn in top widget UI
         EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn, "TurnManager.cs -> StartTurnEarly");
         //check Scenario timer (winstate if expires)
@@ -502,7 +502,7 @@ public class TurnManager : MonoBehaviour
     private void StartTurnLate()
     {
         Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
-        currentSide = GameManager.instance.sideScript.PlayerSide;
+        currentSide = GameManager.i.sideScript.PlayerSide;
         EventManager.instance.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
     }
@@ -515,43 +515,43 @@ public class TurnManager : MonoBehaviour
     private void EndTurnAI()
     {
         Debug.LogFormat("TurnManager: - - - EndTurnAI - - - turn {0}{1}", _turn, "\n");
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 //AUTHORITY Player -> process Resistance AI
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                if (GameManager.i.sideScript.resistanceOverall == SideState.AI)
                 {
-                    currentSide = GameManager.instance.globalScript.sideResistance;
-                    GameManager.instance.aiScript.ProcessAISideResistance();
+                    currentSide = GameManager.i.globalScript.sideResistance;
+                    GameManager.i.aiScript.ProcessAISideResistance();
                     //have AI run nemesis even if Human Authority player
-                    if (GameManager.instance.sideScript.authorityOverall == SideState.Human)
-                    { GameManager.instance.aiScript.ProcessNemesis(); }
+                    if (GameManager.i.sideScript.authorityOverall == SideState.Human)
+                    { GameManager.i.aiScript.ProcessNemesis(); }
                 }
-                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                 {
-                    currentSide = GameManager.instance.globalScript.sideAuthority;
-                    GameManager.instance.aiScript.ProcessAISideAuthority();
+                    currentSide = GameManager.i.globalScript.sideAuthority;
+                    GameManager.i.aiScript.ProcessAISideAuthority();
                 }
                 break;
             case 2:
                 //RESISTANCE Player -> process Authority AI
-                if (GameManager.instance.sideScript.resistanceOverall == SideState.AI)
+                if (GameManager.i.sideScript.resistanceOverall == SideState.AI)
                 {
-                    currentSide = GameManager.instance.globalScript.sideResistance;
-                    GameManager.instance.aiScript.ProcessAISideResistance();
+                    currentSide = GameManager.i.globalScript.sideResistance;
+                    GameManager.i.aiScript.ProcessAISideResistance();
                 }
-                if (GameManager.instance.sideScript.authorityOverall == SideState.AI)
+                if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                 {
-                    currentSide = GameManager.instance.globalScript.sideAuthority;
-                    GameManager.instance.aiScript.ProcessAISideAuthority();
+                    currentSide = GameManager.i.globalScript.sideAuthority;
+                    GameManager.i.aiScript.ProcessAISideAuthority();
                 }
                 break;
             default:
-                Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.instance.sideScript.PlayerSide.name);
+                Debug.LogErrorFormat("Invalid player Side \"{0}\"", GameManager.i.sideScript.PlayerSide.name);
                 break;
         }
         //Ongoing effects from AI Decisions
-        GameManager.instance.aiScript.ProcessOngoingEffects();
+        GameManager.i.aiScript.ProcessOngoingEffects();
     }
 
     /// <summary>
@@ -560,11 +560,11 @@ public class TurnManager : MonoBehaviour
     private void EndTurnEarly()
     {
         Debug.LogFormat("TurnManager: - - - EndTurnEarly - - - turn {0}{1}", _turn, "\n");
-        currentSide = GameManager.instance.sideScript.PlayerSide;
+        currentSide = GameManager.i.sideScript.PlayerSide;
         //any unused actions are converted to mood improvements (human player, ACTIVE, only)
         int unusedActions = _actionsTotal - _actionsCurrent;
-        if (unusedActions > 0 && GameManager.instance.sideScript.CheckInteraction() == true)
-        { GameManager.instance.playerScript.ProcessDoNothing(unusedActions); }
+        if (unusedActions > 0 && GameManager.i.sideScript.CheckInteraction() == true)
+        { GameManager.i.playerScript.ProcessDoNothing(unusedActions); }
         //broadcast event
         EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
     }
@@ -575,12 +575,12 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     private void EndTurnLate()
     {
-        currentSide = GameManager.instance.sideScript.PlayerSide;
+        currentSide = GameManager.i.sideScript.PlayerSide;
         //decrement any action adjustments
-        GameManager.instance.dataScript.UpdateActionAdjustments();
+        GameManager.i.dataScript.UpdateActionAdjustments();
         //actions
         _actionsCurrent = 0;
-        _actionsTotal = _actionsLimit + GameManager.instance.dataScript.GetActionAdjustment(GameManager.instance.sideScript.PlayerSide);
+        _actionsTotal = _actionsLimit + GameManager.i.dataScript.GetActionAdjustment(GameManager.i.sideScript.PlayerSide);
         _actionsTotal = Mathf.Max(0, _actionsTotal);
         Debug.LogFormat("TurnManager: - - - EndTurnLate - - - turn {0}{1}", _turn, "\n");
         EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> EndTurnLate");
@@ -610,7 +610,7 @@ public class TurnManager : MonoBehaviour
             default: Debug.LogErrorFormat("Invalid side {0}", side.name); break;
         }
         //calculate total actions available
-        _actionsAdjust = GameManager.instance.dataScript.GetActionAdjustment(side);
+        _actionsAdjust = GameManager.i.dataScript.GetActionAdjustment(side);
         _actionsTotal = _actionsLimit + _actionsAdjust;
     }
 
@@ -620,16 +620,16 @@ public class TurnManager : MonoBehaviour
     private void UseAction(string text = "Unknown")
     {
         int remainder;
-        if (GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, GameManager.instance.sideScript.PlayerSide) == true)
+        if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide) == true)
         {
             remainder = 0;
             _actionsCurrent = _actionsTotal;
-            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of 1 actions (condition WOUNDED), turn {2}{3}", text, _actionsCurrent, GameManager.instance.turnScript.Turn, "\n");
+            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of 1 actions (condition WOUNDED), turn {2}{3}", text, _actionsCurrent, GameManager.i.turnScript.Turn, "\n");
         }
         else
         {
             _actionsCurrent++;
-            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, GameManager.instance.turnScript.Turn, "\n");
+            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, GameManager.i.turnScript.Turn, "\n");
             //exceed action limit? (total includes any temporary adjustments)
             remainder = _actionsTotal - _actionsCurrent;
         }
@@ -684,7 +684,7 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckPlayerWounded()
-    { return GameManager.instance.playerScript.CheckConditionPresent(conditionWounded, GameManager.instance.sideScript.PlayerSide); }
+    { return GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide); }
 
     /// <summary>
     /// returns a colour formatted string detailing action adjustments (if any) for the action tooltips (details). Null if none.
@@ -693,14 +693,14 @@ public class TurnManager : MonoBehaviour
     public string GetActionAdjustmentTooltip()
     {
         StringBuilder builder = new StringBuilder();
-        GlobalSide side = GameManager.instance.sideScript.PlayerSide;
+        GlobalSide side = GameManager.i.sideScript.PlayerSide;
         //standard action allowance
         if (side.level == 1)
         { builder.AppendFormat("{0}Base Actions{1} {2}{3}{4} per turn", colourNormal, colourEnd, colourNeutral, actionsAuthority, colourEnd); }
         else if (side.level == 2)
         { builder.AppendFormat("{0}Base Actions{1} {2}{3}{4} per turn", colourNormal, colourEnd, colourNeutral, actionsResistance, colourEnd); }
         //get adjustments
-        List<ActionAdjustment> listOfAdjustments = GameManager.instance.dataScript.GetListOfActionAdjustments();
+        List<ActionAdjustment> listOfAdjustments = GameManager.i.dataScript.GetListOfActionAdjustments();
         if (listOfAdjustments != null)
         {
             if (listOfAdjustments.Count > 0)
@@ -737,7 +737,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public string GetTurnRemainingTip()
     {
-        int turnsRemaining = GameManager.instance.campaignScript.scenario.timer - Turn;
+        int turnsRemaining = GameManager.i.campaignScript.scenario.timer - Turn;
         return string.Format("You have {0}{1}{2} day{3} remaining to complete your mission", colourAlert, turnsRemaining, colourEnd, turnsRemaining != 1 ? "s" : "");
     }
 
@@ -755,11 +755,11 @@ public class TurnManager : MonoBehaviour
     public string GetSecurityMeasureTooltip()
     {
         StringBuilder builder = new StringBuilder();
-        switch (GameManager.instance.sideScript.PlayerSide.level)
+        switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1:
                 //Authority Player
-                switch (GameManager.instance.turnScript.authoritySecurityState)
+                switch (GameManager.i.turnScript.authoritySecurityState)
                 {
                     case AuthoritySecurityState.Normal:
                         builder.AppendFormat("{0}No Security Measures in place{1}", colourBad, colourEnd);
@@ -785,14 +785,14 @@ public class TurnManager : MonoBehaviour
                             colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);
                         builder.AppendFormat("{0}No data available on Security Measures{1}", colourAlert, colourEnd);
                         break;
                 }
                 break;
             case 2:
                 //Resistance Player
-                switch (GameManager.instance.turnScript.authoritySecurityState)
+                switch (GameManager.i.turnScript.authoritySecurityState)
                 {
                     case AuthoritySecurityState.Normal:
                         builder.AppendFormat("{0}No Security Measures in place{1}", colourGood, colourEnd);
@@ -818,7 +818,7 @@ public class TurnManager : MonoBehaviour
                             colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     default:
-                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.instance.turnScript.authoritySecurityState);
+                        Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);
                         builder.AppendFormat("{0}No data available on Security Measures{1}", colourAlert, colourEnd);
                         break;
                 }
@@ -857,7 +857,7 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.APB);
+                        GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.APB);
 
                         break;
                     case "sec":
@@ -868,7 +868,7 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SecurityAlert);
+                        GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SecurityAlert);
                         break;
                     case "sur":
                     case "SUR":
@@ -878,13 +878,13 @@ public class TurnManager : MonoBehaviour
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
                         { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SurveillanceCrackdown);
+                        GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SurveillanceCrackdown);
                         break;
                     case "nor":
                     case "NOR":
                         //reset back to normal
                         text = string.Format("AuthorityState reset to {0}", state);
-                        GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Debug Action");
+                        GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action");
                         //stop flashing red alarm
                         EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");
                         break;
@@ -921,9 +921,9 @@ public class TurnManager : MonoBehaviour
         if (string.IsNullOrEmpty(text) == false)
         {
             //if no Erasure teams currently on map, revert state to normal
-            if (GameManager.instance.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
+            if (GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap) <= 0)
             {
-                GameManager.instance.authorityScript.SetAuthoritySecurityState(text, "Security Measures Cancelled");
+                GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Security Measures Cancelled");
                 //switch off flashing red indicator on top widget UI
                 EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
             }
@@ -940,7 +940,7 @@ public class TurnManager : MonoBehaviour
         //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
         isAutoRun = false;
         //get approriate sprite
-        Sprite sprite = GameManager.instance.guiScript.firedSprite;
+        Sprite sprite = GameManager.i.guiScript.firedSprite;
         switch (reason)
         {
             case WinReasonLevel.CityLoyaltyMax:
@@ -949,7 +949,7 @@ public class TurnManager : MonoBehaviour
             case WinReasonLevel.HqSupportMin:
             case WinReasonLevel.MissionTimerMin:
             case WinReasonLevel.ObjectivesCompleted:
-                sprite = GameManager.instance.guiScript.firedSprite;
+                sprite = GameManager.i.guiScript.firedSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
@@ -986,17 +986,17 @@ public class TurnManager : MonoBehaviour
         //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
         isAutoRun = false;
         //get approriate sprite
-        Sprite sprite = GameManager.instance.guiScript.firedSprite;
+        Sprite sprite = GameManager.i.guiScript.firedSprite;
         switch (reason)
         {
             case WinReasonCampaign.BlackMarks:
             case WinReasonCampaign.Commendations:
             case WinReasonCampaign.DoomTimerMin:
             case WinReasonCampaign.MainGoal:
-                sprite = GameManager.instance.guiScript.firedSprite;
+                sprite = GameManager.i.guiScript.firedSprite;
                 break;
             case WinReasonCampaign.Innocence:
-                sprite = GameManager.instance.guiScript.capturedSprite;
+                sprite = GameManager.i.guiScript.capturedSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
@@ -1035,7 +1035,7 @@ public class TurnManager : MonoBehaviour
         {
             topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
             //level win state achieved
-            switch (GameManager.instance.campaignScript.scenario.missionResistance.side.level)
+            switch (GameManager.i.campaignScript.scenario.missionResistance.side.level)
             {
                 case 1:
                     //Authority mission, timer expired so Resistance wins
@@ -1048,7 +1048,7 @@ public class TurnManager : MonoBehaviour
                     SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.MissionTimerMin, topText, bottomText);
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.instance.campaignScript.scenario.missionResistance.side.name);
+                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.i.campaignScript.scenario.missionResistance.side.name);
                     break;
             }
         }
@@ -1061,7 +1061,7 @@ public class TurnManager : MonoBehaviour
             topText = "Mission Timer WARNING";
             string reason = string.Format("{0}You have {1}<b>{2} turn{3}</b>{4} remaining to carry out your <b>Objectives</b>", "\n", colourNeutral, turnsRemaining, turnsRemaining != 1 ? "s" : "", colourEnd);
             string warning = "You will LOSE if you do not complete your Objectives in time";
-            GameManager.instance.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
+            GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
         }
     }
 
@@ -1072,7 +1072,7 @@ public class TurnManager : MonoBehaviour
     public void Quit()
     {
         //set game state
-        GameManager.instance.inputScript.GameState = GameState.ExitGame;
+        GameManager.i.inputScript.GameState = GameState.ExitGame;
         //switch off main info app if running
         if (myCoroutineStartPipeline != null)
         { StopCoroutine(myCoroutineStartPipeline); }

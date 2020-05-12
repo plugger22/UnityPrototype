@@ -54,7 +54,7 @@ public class CampaignManager : MonoBehaviour
                 SubInitialiseEvents();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -74,7 +74,7 @@ public class CampaignManager : MonoBehaviour
                 SubInitialiseAllLate();
                 break;
             default:
-                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.instance.inputScript.GameState);
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
         }
     }
@@ -100,9 +100,9 @@ public class CampaignManager : MonoBehaviour
         // City (Early)
         if (scenario.city != null)
         {
-            GameManager.instance.cityScript.SetCity(scenario.city);
+            GameManager.i.cityScript.SetCity(scenario.city);
             //NOTE: currently chooses a random city (overrides scenario.city). Need to sort out. DEBUG
-            GameManager.instance.cityScript.InitialiseEarly(scenario.leaderAuthority);
+            GameManager.i.cityScript.InitialiseEarly(scenario.leaderAuthority);
         }
         else { Debug.LogError("Invalid City (Null) for scenario"); }
     }
@@ -112,23 +112,23 @@ public class CampaignManager : MonoBehaviour
     private void SubInitialiseAllLate()
     {
         // City (Late)
-        GameManager.instance.cityScript.InitialiseLate();
+        GameManager.i.cityScript.InitialiseLate();
         if (scenario.challengeResistance != null)
         {
             // Mission
             if (scenario.missionResistance != null)
             {
-                GameManager.instance.missionScript.mission = scenario.missionResistance;
-                GameManager.instance.objectiveScript.mission = scenario.missionResistance;
-                if (GameManager.instance.inputScript.GameState != GameState.LoadGame)
-                { GameManager.instance.missionScript.Initialise(); }
+                GameManager.i.missionScript.mission = scenario.missionResistance;
+                GameManager.i.objectiveScript.mission = scenario.missionResistance;
+                if (GameManager.i.inputScript.GameState != GameState.LoadGame)
+                { GameManager.i.missionScript.Initialise(); }
             }
             else { Debug.LogError("Invalid mission (Null) for scenario"); }
             // Nemesis -> may or may not be present
             if (scenario.challengeResistance.nemesisFirst != null)
             {
-                GameManager.instance.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
-                GameManager.instance.nemesisScript.Initialise();
+                GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
+                GameManager.i.nemesisScript.Initialise();
             }
             else { Debug.LogFormat("[Nem] CampaignManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
         }
@@ -169,29 +169,29 @@ public class CampaignManager : MonoBehaviour
         if (commendations >= awardsWinLose && blackmarks < commendations)
         {
             WinStateCampaign win = WinStateCampaign.None;
-            switch (GameManager.instance.sideScript.PlayerSide.level)
+            switch (GameManager.i.sideScript.PlayerSide.level)
             {
                 case 1: win = WinStateCampaign.Authority; break;
                 case 2: win = WinStateCampaign.Resistance; break;
-                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.i.sideScript.PlayerSide.name); break;
             }
             topText = string.Format("<b>{0}</b>", GameManager.GetFormattedString("Your performance has been Outstanding", ColourType.goodText));
             bottomText = string.Format("<b>You have {0} Commendations</b>", commendations);
-            GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.Commendations, topText, bottomText);
+            GameManager.i.turnScript.SetWinStateCampaign(win, WinReasonCampaign.Commendations, topText, bottomText);
         }
         //loss -> BlackMarks >= 10 and commendations < blackmarks
         else if (blackmarks >= awardsWinLose && commendations < blackmarks)
         {
             WinStateCampaign win = WinStateCampaign.None;
-            switch (GameManager.instance.sideScript.PlayerSide.level)
+            switch (GameManager.i.sideScript.PlayerSide.level)
             {
                 case 1: win = WinStateCampaign.Resistance; break;
                 case 2: win = WinStateCampaign.Authority; break;
-                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.instance.sideScript.PlayerSide.name); break;
+                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.i.sideScript.PlayerSide.name); break;
             }
             topText = string.Format("<b>{0}</b>", GameManager.GetFormattedString("Your performance has been a huge Disappointment", ColourType.badText));
             bottomText = string.Format("<b>You have {0} Blackmarks</b>",  blackmarks);
-            GameManager.instance.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
+            GameManager.i.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
         }
     }
 
@@ -313,12 +313,12 @@ public class CampaignManager : MonoBehaviour
             case 1:
                 //Authority mission
                 if (scenario.missionAuthority != null)
-                { GameManager.instance.missionScript.mission = scenario.missionAuthority; }
+                { GameManager.i.missionScript.mission = scenario.missionAuthority; }
                 break;
             case 2:
                 //Resistance mission
                 if (scenario.missionResistance != null)
-                { GameManager.instance.missionScript.mission = scenario.missionResistance; }
+                { GameManager.i.missionScript.mission = scenario.missionResistance; }
                 else { Debug.LogError("Invalid Resistance mission (Null) for scenario"); }
                 break;
             default:
@@ -347,10 +347,10 @@ public class CampaignManager : MonoBehaviour
     public void SetBlackMarks(int value)
     {
         blackmarks = value;
-        if (GameManager.instance.controlScript.GetExistingGameState() == GameState.PlayGame)
+        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame)
         {
             //update topBar
-            GameManager.instance.topBarScript.UpdateBlackmarks(blackmarks);
+            GameManager.i.topBarScript.UpdateBlackmarks(blackmarks);
         }
     }
 
@@ -361,10 +361,10 @@ public class CampaignManager : MonoBehaviour
     public void SetCommendations(int value)
     {
         commendations = value;
-        if (GameManager.instance.controlScript.GetExistingGameState() == GameState.PlayGame)
+        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame)
         {
             //update topBar
-            GameManager.instance.topBarScript.UpdateCommendations(commendations);
+            GameManager.i.topBarScript.UpdateCommendations(commendations);
         }
     }
 
@@ -386,9 +386,9 @@ public class CampaignManager : MonoBehaviour
         blackmarks += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeBlackmarks: Black Marks now {0}, was {1} (due to {2}){3}", blackmarks, previous, reason, "\n");
         //update topBar
-        GameManager.instance.topBarScript.UpdateBlackmarks(blackmarks);
+        GameManager.i.topBarScript.UpdateBlackmarks(blackmarks);
         //add to collection
-        GameManager.instance.dataScript.AddBlackmark(reason);
+        GameManager.i.dataScript.AddBlackmark(reason);
     }
 
     /// <summary>
@@ -402,9 +402,9 @@ public class CampaignManager : MonoBehaviour
         commendations += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeCommendations: Commendations now {0}, was {1} (due to {2}){3}", commendations, previous, reason, "\n");
         //update topBar
-        GameManager.instance.topBarScript.UpdateCommendations(commendations);
+        GameManager.i.topBarScript.UpdateCommendations(commendations);
         //add to collection
-        GameManager.instance.dataScript.AddCommendation(reason);
+        GameManager.i.dataScript.AddCommendation(reason);
     }
 
     /*/// <summary>  -> EDIT fixed cost of 1 black mark per investigation
@@ -490,10 +490,10 @@ public class CampaignManager : MonoBehaviour
         builder.AppendFormat(" Investigation Black Marks (if Guilty): {0}{1}", investigationBlackmarks, "\n");
         //win/loss
         builder.AppendFormat("{0} Win/Loss Status{1}", "\n", "\n");
-        builder.AppendFormat(" Level WinState: {0}{1}", GameManager.instance.turnScript.winStateLevel, "\n");
-        builder.AppendFormat(" Level WinReason: {0}{1}", GameManager.instance.turnScript.winReasonLevel, "\n");
-        builder.AppendFormat(" Campaign WinState: {0}{1}", GameManager.instance.turnScript.winStateCampaign, "\n");
-        builder.AppendFormat(" Campaign WinReason: {0}{1}", GameManager.instance.turnScript.winReasonCampaign, "\n");
+        builder.AppendFormat(" Level WinState: {0}{1}", GameManager.i.turnScript.winStateLevel, "\n");
+        builder.AppendFormat(" Level WinReason: {0}{1}", GameManager.i.turnScript.winReasonLevel, "\n");
+        builder.AppendFormat(" Campaign WinState: {0}{1}", GameManager.i.turnScript.winStateCampaign, "\n");
+        builder.AppendFormat(" Campaign WinReason: {0}{1}", GameManager.i.turnScript.winReasonCampaign, "\n");
         //story Status array
         builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
         /*for (int i = 0; i < arrayOfStoryStatus.Length; i++)
@@ -591,7 +591,7 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
         //Npc
-        if (GameManager.instance.missionScript.mission.npc != null)
+        if (GameManager.i.missionScript.mission.npc != null)
         {
             builder.AppendFormat("{0}{1}-Npc{2}", "\n", "\n", "\n");
             builder.AppendFormat(" Npc Name: {0}{1}", mission.npc.tag, "\n");

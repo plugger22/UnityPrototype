@@ -38,7 +38,7 @@ public class OptionManager : MonoBehaviour
         {
             _colourOption = value;
             //Post notification - colour scheme has been changed
-            if (GameManager.instance.inputScript.GameState != GameState.LoadAtStart)
+            if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
             {
                 EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
                 Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
@@ -64,7 +64,7 @@ public class OptionManager : MonoBehaviour
     {
         return new StringBuilder()
             .AppendFormat(" Current Option Settings{0}{1}", "\n", "\n")
-            .AppendFormat(" Side -> {0}{1}", GameManager.instance.sideScript.PlayerSide, "\n")
+            .AppendFormat(" Side -> {0}{1}", GameManager.i.sideScript.PlayerSide, "\n")
             .AppendFormat("{0}- Game Options{1}", "\n", "\n")
             .AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n")
             .AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n")

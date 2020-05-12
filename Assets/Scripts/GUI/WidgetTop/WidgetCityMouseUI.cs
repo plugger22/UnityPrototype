@@ -23,7 +23,7 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
 
     public void Start()
     {
-        mouseOverDelay = GameManager.instance.guiScript.tooltipDelay;
+        mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         //mouseOverFade = GameManager.instance.tooltipScript.tooltipFade;
     }
 
@@ -33,13 +33,13 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     public void OnPointerEnter(PointerEventData eventData)
     {
         //check modal block isn't in place
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             //Tool tip
             onMouseFlag = true;
             //exit any node tooltip that might be open
             /*StopCoroutine("ShowTooltip"); */
-            GameManager.instance.tooltipNodeScript.CloseTooltip("WidgetCityMouseUI.cs -> OnPointerEnter");
+            GameManager.i.tooltipNodeScript.CloseTooltip("WidgetCityMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
         }
@@ -51,12 +51,12 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+        if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
-            GameManager.instance.tooltipGenericScript.CloseTooltip("WidgetCityMouseUI.cs -> OnPointerExit");
+            GameManager.i.tooltipGenericScript.CloseTooltip("WidgetCityMouseUI.cs -> OnPointerExit");
         }
     }
 
@@ -69,10 +69,10 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         {
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                if (GameManager.instance.guiScript.CheckIsBlocked() == false)
+                if (GameManager.i.guiScript.CheckIsBlocked() == false)
                 {
                     //activate city Info Display
-                    EventManager.instance.PostNotification(EventType.CityInfoOpen, this, GameManager.instance.cityScript.GetCity(), "WidgetCityMouseUI.cs -> OnPointerClick");
+                    EventManager.instance.PostNotification(EventType.CityInfoOpen, this, GameManager.i.cityScript.GetCity(), "WidgetCityMouseUI.cs -> OnPointerClick");
                 }
                 break;
             default:
@@ -90,19 +90,19 @@ public class WidgetCityMouseUI : MonoBehaviour, IPointerClickHandler, IPointerEn
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.instance.inputScript.ModalState == ModalState.Normal)
+        if (onMouseFlag == true && GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
             //do once
             Vector3 screenPos = transform.position;
             screenPos.x -= 280;
             screenPos.y -= 90;
-            while (GameManager.instance.tooltipGenericScript.CheckTooltipActive() == false && GameManager.instance.guiScript.CheckIsBlocked() == false)
+            while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false && GameManager.i.guiScript.CheckIsBlocked() == false)
             {
-                tooltipHeader = string.Format("{0}{1}", GameManager.instance.cityScript.GetCityNameFormatted(), GameManager.instance.cityScript.GetCityArcFormatted());
-                tooltipMain = GameManager.instance.cityScript.GetCityDescriptionFormatted();
-                tooltipDetails = GameManager.instance.cityScript.GetCityDetails();
+                tooltipHeader = string.Format("{0}{1}", GameManager.i.cityScript.GetCityNameFormatted(), GameManager.i.cityScript.GetCityArcFormatted());
+                tooltipMain = GameManager.i.cityScript.GetCityDescriptionFormatted();
+                tooltipDetails = GameManager.i.cityScript.GetCityDetails();
                 GenericTooltipData data = new GenericTooltipData() { screenPos = screenPos, main = tooltipMain, header = tooltipHeader, details = tooltipDetails };
-                GameManager.instance.tooltipGenericScript.SetTooltip(data);
+                GameManager.i.tooltipGenericScript.SetTooltip(data);
                 yield return null;
             }
             /*//fade in
