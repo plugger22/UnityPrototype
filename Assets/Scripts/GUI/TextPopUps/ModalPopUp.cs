@@ -15,12 +15,15 @@ public class ModalPopUp : MonoBehaviour
     private bool isActive;              //true if displayed on screen
     private Coroutine myCoroutine;
     private Vector3 localScaleDefault;
+    private Color textColorDefault;
+
 
     private float timerMax = 1.5f;     //maximum time onscreen
     private float moveSpeed = 1.0f;      //y_axis move speed (upwards)
-    private float threshold;           //halfway point of popUp life (timerMax * 0.5f)
     private float increaseScale = 1.0f;   //factor to increase size of text
     private float decreaseScale = 1.0f;   //factor to decrease size of text
+    private float fadeSpeed = 1.0f;         //factor to fade text
+    private float threshold;           //halfway point of popUp life (timerMax * 0.5f)
 
     static ModalPopUp modalPopUp;
 
@@ -33,8 +36,9 @@ public class ModalPopUp : MonoBehaviour
         popObject.SetActive(false);
         //threshold
         threshold = timerMax * 0.5f;
-        //local scale default
+        //defaults
         localScaleDefault = popTransform.localScale;
+        textColorDefault = popText.color;
     }
 
     /// <summary>
@@ -101,6 +105,8 @@ public class ModalPopUp : MonoBehaviour
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
+        popText.color = textColorDefault;
+        Color color = popText.color;
         popTransform.localScale = localScaleDefault;
         do
         {
@@ -114,6 +120,9 @@ public class ModalPopUp : MonoBehaviour
             {
                 //second half of popUp lifetime -> shrink
                 popTransform.localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                //fade
+                color.a -= fadeSpeed * Time.deltaTime;
+                popText.color = color;
             }
             //increment time
             elapsedTime += Time.deltaTime;
