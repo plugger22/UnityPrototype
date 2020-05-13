@@ -35,7 +35,7 @@
     public enum DebugRegister { None, Ongoing, Actions }
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
     public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
-    public enum PopUp { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopWidget, Count}  //used for fixed UI PopUps
+    public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
     //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,

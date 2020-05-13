@@ -1811,7 +1811,7 @@ public class MetaGameUI : MonoBehaviour
             y_offset = 50,
             text = string.Format("Renown {0}{1}", amount > 0 ? "+" : "", amount)
         };
-        GameManager.i.popUpScript.SetPopUp(data);
+        GameManager.i.popUpDynamicScript.ExecuteDynamic(data);
     }
 
     /// <summary>
@@ -2049,7 +2049,7 @@ public class MetaGameUI : MonoBehaviour
             EffectDataInput effectInput = new EffectDataInput();
             StringBuilder builder = new StringBuilder();
             //stop renown coroutine
-            GameManager.i.popUpScript.StopCoroutine();
+            GameManager.i.popUpDynamicScript.StopCoroutine();
             //
             // - - - Process Effects
             //

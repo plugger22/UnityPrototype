@@ -44,3 +44,16 @@ City seed 765 -> New York, America
 
 Dev seed 54986 -> Wednesday, 13 May 2020 9:55 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 46302 -> Wednesday, 13 May 2020 2:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21003 -> Wednesday, 13 May 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9760 -> Wednesday, 13 May 2020 2:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34423 -> Wednesday, 13 May 2020 2:53 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

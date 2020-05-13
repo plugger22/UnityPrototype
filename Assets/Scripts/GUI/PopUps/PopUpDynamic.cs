@@ -4,9 +4,10 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Generic class to provide floating text pop ups of status changes for UI elements (Not really modal, it just sits above everything else in the hierarchy)
+/// Generic class to provide dynamic floating text pop ups of status changes for UI elements (Not really modal, it just sits above everything else in the hierarchy)
+/// Has a single instance but can be positioned anywhere on any UI element
 /// </summary>
-public class ModalPopUp : MonoBehaviour
+public class PopUpDynamic : MonoBehaviour
 {
     public GameObject popObject;
     public Transform popTransform;
@@ -25,7 +26,7 @@ public class ModalPopUp : MonoBehaviour
     private float fadeSpeed = 1.0f;         //factor to fade text
     private float threshold;           //halfway point of popUp life (timerMax * 0.5f)
 
-    static ModalPopUp modalPopUp;
+    static PopUpDynamic popUpDynamic;
 
     public void Awake()
     {
@@ -42,25 +43,25 @@ public class ModalPopUp : MonoBehaviour
     }
 
     /// <summary>
-    /// provide a static reference to TextPopUpUI that can be accessed from any script
+    /// provide a static reference to PopUpDynamic that can be accessed from any script
     /// </summary>
     /// <returns></returns>
-    public static ModalPopUp Instance()
+    public static PopUpDynamic Instance()
     {
-        if (!modalPopUp)
+        if (!popUpDynamic)
         {
-            modalPopUp = FindObjectOfType(typeof(ModalPopUp)) as ModalPopUp;
-            if (!modalPopUp)
-            { Debug.LogError("There needs to be one active modalPopUp script on a GameObject in your scene"); }
+            popUpDynamic = FindObjectOfType(typeof(PopUpDynamic)) as PopUpDynamic;
+            if (!popUpDynamic)
+            { Debug.LogError("There needs to be one active PopUpDynamic script on a GameObject in your scene"); }
         }
-        return modalPopUp;
+        return popUpDynamic;
     }
 
     /// <summary>
-    /// Initialise and activate pop-up text over a given UI position
+    /// Initialise and activate dynamic pop-up text over a given UI position
     /// </summary>
     /// <param name="data"></param>
-    public void SetPopUp(ModalPopUpData data)
+    public void ExecuteDynamic(ModalPopUpData data)
     {
         if (data != null)
         {

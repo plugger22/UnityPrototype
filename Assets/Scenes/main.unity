@@ -3064,6 +3064,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 76499616}
+--- !u!114 &76499618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 76499616}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &76499619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 76499616}
 --- !u!1 &81398034
 GameObject:
   m_ObjectHideFlags: 0
@@ -3595,7 +3606,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -10647,6 +10658,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 312363993}
+--- !u!114 &312363995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 312363993}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &312363996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 312363993}
 --- !u!1 &317918167
 GameObject:
   m_ObjectHideFlags: 0
@@ -11161,7 +11183,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -18436,7 +18458,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -21026,7 +21048,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03, type: 2}
       propertyPath: m_Name
-      value: modalPopUp
+      value: PopUpDynamic
       objectReference: {fileID: 0}
     - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
         type: 2}
@@ -24036,6 +24058,7 @@ GameObject:
   - component: {fileID: 615421594}
   - component: {fileID: 615421596}
   - component: {fileID: 615421599}
+  - component: {fileID: 615421600}
   m_Layer: 0
   m_Name: UI_Manager
   m_TagString: Untagged
@@ -24887,6 +24910,41 @@ MonoBehaviour:
   popObject: {fileID: 486926381}
   popTransform: {fileID: 558212276}
   popText: {fileID: 486926382}
+--- !u!114 &615421600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 615421569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caa6a7c0ab32eab42860043487f9a72d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popSlot0Object: {fileID: 1680804206}
+  popSlot0Transform: {fileID: 1680804204}
+  popSlot0Text: {fileID: 1680804205}
+  popSlot1Object: {fileID: 76499619}
+  popSlot1Transform: {fileID: 76499617}
+  popSlot1Text: {fileID: 76499618}
+  popSlot2Object: {fileID: 804881450}
+  popSlot2Transform: {fileID: 804881448}
+  popSlot2Text: {fileID: 804881449}
+  popSlot3Object: {fileID: 1268626910}
+  popSlot3Transform: {fileID: 1268626908}
+  popSlot3Text: {fileID: 1268626909}
+  popPlayerObject: {fileID: 312363996}
+  popPlayerTransform: {fileID: 312363994}
+  popPlayerText: {fileID: 312363995}
+  popTopLeftObject: {fileID: 1550775937}
+  popTopLeftTransform: {fileID: 1550775935}
+  popTopLeftText: {fileID: 1550775936}
+  popTopRightObject: {fileID: 892178154}
+  popTopRightTransform: {fileID: 892178152}
+  popTopRightText: {fileID: 892178153}
+  popTopCentreObject: {fileID: 1283788970}
+  popTopCentreTransform: {fileID: 1283788968}
+  popTopCentreText: {fileID: 1283788969}
 --- !u!1001 &617692005
 Prefab:
   m_ObjectHideFlags: 0
@@ -26057,7 +26115,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -27730,6 +27788,17 @@ Prefab:
 --- !u!224 &804881448 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 804881447}
+--- !u!114 &804881449 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 804881447}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &804881450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 804881447}
 --- !u!224 &807473466 stripped
@@ -30105,6 +30174,17 @@ Prefab:
 --- !u!224 &892178152 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 892178151}
+--- !u!114 &892178153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 892178151}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &892178154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 892178151}
 --- !u!224 &892942834 stripped
@@ -34415,7 +34495,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -41759,6 +41839,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 1268626907}
+--- !u!114 &1268626909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1268626907}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &1268626910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1268626907}
 --- !u!1 &1271832223
 GameObject:
   m_ObjectHideFlags: 0
@@ -42058,6 +42149,17 @@ Prefab:
 --- !u!224 &1283788968 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1283788967}
+--- !u!114 &1283788969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1283788967}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &1283788970 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 1283788967}
 --- !u!1 &1283866190
@@ -49607,6 +49709,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 1550775934}
+--- !u!114 &1550775936 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1550775934}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &1550775937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1550775934}
 --- !u!1 &1553332779
 GameObject:
   m_ObjectHideFlags: 0
@@ -50918,7 +51031,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -54164,6 +54277,17 @@ Prefab:
 --- !u!224 &1680804204 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1680804203}
+--- !u!114 &1680804205 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+    type: 2}
+  m_PrefabInternal: {fileID: 1680804203}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+--- !u!1 &1680804206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1062408241019070, guid: f4bd0c584de4fe542b5bde7fd6916d03,
     type: 2}
   m_PrefabInternal: {fileID: 1680804203}
 --- !u!1001 &1683053582

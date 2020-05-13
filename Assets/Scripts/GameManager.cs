@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public DebugGraphics debugGraphicsScript;         //Debug only Graphics
     [HideInInspector] public DebugGUI debugScript;                      //Debug GUI
     [HideInInspector] public TopicUI topicDisplayScript;                //Topic UI
-    [HideInInspector] public ModalPopUp popUpScript;                    //TextPopUp UI
+    [HideInInspector] public PopUpDynamic popUpDynamicScript;           //PopUpDynamic
+    [HideInInspector] public PopUpFixed popUpFixedScript;               //PopUpFixed
     #endregion
 
 
@@ -253,7 +254,8 @@ public class GameManager : MonoBehaviour
         basePanelScript = BasePanelUI.Instance();
         debugGraphicsScript = DebugGraphics.Instance();
         topicDisplayScript = TopicUI.Instance();
-        popUpScript = ModalPopUp.Instance();
+        popUpDynamicScript = PopUpDynamic.Instance();
+        popUpFixedScript = PopUpFixed.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -331,7 +333,8 @@ public class GameManager : MonoBehaviour
         Debug.Assert(basePanelScript != null, "Invalid basePanelScript (Null)");
         Debug.Assert(debugGraphicsScript != null, "Invalid debugGraphicsScript (Null)");
         Debug.Assert(topicDisplayScript != null, "Invalid topicDisplayScript (Null)");
-        Debug.Assert(popUpScript != null, "Invalid popUpScript (Null)");
+        Debug.Assert(popUpDynamicScript != null, "Invalid popUpDynamicScript (Null)");
+        Debug.Assert(popUpFixedScript != null, "Invalid popUpFixedScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
