@@ -1828,11 +1828,15 @@ public class MetaGameUI : MonoBehaviour
                 MetaData data = GetMetaData(highlightIndex);
                 if (data != null)
                 {
-                    //right click
-                    if (data.isSelected == false)
-                    { ExecuteSelect(itemIndex); }
-                    else
-                    { ExecuteDeselect(itemIndex); }
+                    //active option
+                    if (data.isActive == true)
+                    {
+                        //currently selected / deselected
+                        if (data.isSelected == false)
+                        { ExecuteSelect(itemIndex); }
+                        else
+                        { ExecuteDeselect(itemIndex); }
+                    }
                 }
                 else { Debug.LogWarningFormat("Invalid metaData (Null) for highlightIndex \"{0}\"", highlightIndex); }
             }

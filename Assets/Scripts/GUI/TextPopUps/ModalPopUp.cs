@@ -128,7 +128,7 @@ public class ModalPopUp : MonoBehaviour
             elapsedTime += Time.deltaTime;
             //fail safe
             counter++;
-            if (counter > 1000) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
+            if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
             yield return null;
         }
         while (elapsedTime < timerMax);
