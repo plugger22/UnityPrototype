@@ -48,6 +48,7 @@ public class PopUpFixed : MonoBehaviour
     private bool[] arrayOfActive;
 
     private int sizeOfArray;
+    private bool isActive;
     private Coroutine myCoroutine;
     private Vector3 localScaleDefault;
     private Color textColorDefault;
@@ -196,7 +197,79 @@ public class PopUpFixed : MonoBehaviour
     /// </summary>
     public void ExecuteFixed()
     {
-        
+        if (isActive == false)
+        { myCoroutine = StartCoroutine("PopUp"); }
+        else { StopCoroutine("PopUp"); }
+    }
+
+    /// <summary>
+    /// Coroutine -> batch processes all active popUps
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator PopUp()
+    {
+        float elapsedTime = 0f;
+        int counter = 0;
+        isActive = true;
+        Color color = textColorDefault;
+        //set defaults prior to animation
+        for (int i = 0; i < sizeOfArray; i++)
+        {
+            if (arrayOfActive[i] == true)
+            {
+                arrayOfTexts[i].color = textColorDefault;
+                arrayOfTransforms[i].localScale = localScaleDefault;
+                arrayOfObjects[i].SetActive(true);
+            }
+        }
+        //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
+        do
+        {
+            for (int i = 0; i < sizeOfArray; i++)
+            {
+                if (arrayOfActive[i] == true)
+                {
+                    arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
+                }
+
+                if (elapsedTime < threshold)
+                {
+                    //first half of popUp lifetime -> grow in size
+                    arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                }
+                else
+                {
+                    //second half of popUp lifetime -> shrink
+                    arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                    //fade
+                    color.a -= fadeSpeed * Time.deltaTime;
+                    arrayOfTexts[i].color = color;
+                }
+            }
+            //increment time
+            elapsedTime += Time.deltaTime;
+            //fail safe
+            counter++;
+            if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
+            yield return null;
+        }
+        while (elapsedTime < timerMax);
+        //deactive objects once done
+        for (int i = 0; i < sizeOfArray; i++)
+        {
+            if (arrayOfActive[i] == true)
+            { arrayOfObjects[i].SetActive(false); }
+        }
+    }
+
+
+        /// <summary>
+        /// Stop coroutine
+        /// </summary>
+        public void StopCoroutine()
+    {
+        StopCoroutine("PopUp");
+        isActive = false;
     }
 
     //new methods above here
