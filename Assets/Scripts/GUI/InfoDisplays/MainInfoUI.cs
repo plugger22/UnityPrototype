@@ -800,6 +800,8 @@ public class MainInfoUI : MonoBehaviour
             package.infoState = ModalInfoSubState.MainInfo;
             GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] MainInfoUI.cs -> SetMainInfo{0}", "\n");
+            //PopUps
+            GameManager.i.popUpFixedScript.ExecuteFixed();
         }
         else { Debug.LogWarning("Invalid MainInfoData package (Null)"); }
     }
@@ -1068,6 +1070,8 @@ public class MainInfoUI : MonoBehaviour
         isRunning = false;
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
+        //fixed popUps
+        GameManager.i.popUpFixedScript.Reset();
     }
 
 

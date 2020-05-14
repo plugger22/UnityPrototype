@@ -81,11 +81,6 @@ public class PopUpFixed : MonoBehaviour
 
     public void Awake()
     {
-        //threshold
-        threshold = timerMax * 0.5f;
-        //defaults (all the same, use first item in arrays as defaults)
-        localScaleDefault = arrayOfTransforms[0].localScale;
-        textColorDefault = arrayOfTexts[0].color;
         //initialise arrays
         sizeOfArray = (int)PopUpPosition.Count;
         arrayOfObjects = new GameObject[sizeOfArray];
@@ -144,6 +139,11 @@ public class PopUpFixed : MonoBehaviour
         arrayOfTexts[5] = popTopLeftText;
         arrayOfTexts[6] = popTopRightText;
         arrayOfTexts[7] = popTopCentreText;
+        //threshold
+        threshold = timerMax * 0.5f;
+        //defaults (all the same, use first item in arrays as defaults)
+        localScaleDefault = arrayOfTransforms[0].localScale;
+        textColorDefault = arrayOfTexts[0].color;
     }
 
     /// <summary>
@@ -198,7 +198,15 @@ public class PopUpFixed : MonoBehaviour
     public void ExecuteFixed()
     {
         if (isActive == false)
-        { myCoroutine = StartCoroutine("PopUp"); }
+        {
+            //run only during main game, eg. not during metaGame
+            if (GameManager.i.inputScript.GameState == GameState.PlayGame)
+            {
+                //run only if data present to display
+                if (CheckIfActive() == true)
+                { myCoroutine = StartCoroutine("PopUp"); }
+            }
+        }
         else { StopCoroutine("PopUp"); }
     }
 
@@ -217,49 +225,55 @@ public class PopUpFixed : MonoBehaviour
         {
             if (arrayOfActive[i] == true)
             {
+                counter++;
                 arrayOfTexts[i].color = textColorDefault;
                 arrayOfTransforms[i].localScale = localScaleDefault;
                 arrayOfObjects[i].SetActive(true);
             }
         }
-        //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
-        do
+        if (counter > 0)
         {
+            counter = 0;
+            //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
+            do
+            {
+                for (int i = 0; i < sizeOfArray; i++)
+                {
+                    if (arrayOfActive[i] == true)
+                    {
+                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
+                    }
+
+                    if (elapsedTime < threshold)
+                    {
+                        //first half of popUp lifetime -> grow in size
+                        arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                    }
+                    else
+                    {
+                        //second half of popUp lifetime -> shrink
+                        arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                        //fade
+                        color.a -= fadeSpeed * Time.deltaTime;
+                        arrayOfTexts[i].color = color;
+                    }
+                }
+                //increment time
+                elapsedTime += Time.deltaTime;
+                //fail safe
+                counter++;
+                if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
+                yield return null;
+            }
+            while (elapsedTime < timerMax);
+            //deactive objects once done
             for (int i = 0; i < sizeOfArray; i++)
             {
                 if (arrayOfActive[i] == true)
-                {
-                    arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
-                }
-
-                if (elapsedTime < threshold)
-                {
-                    //first half of popUp lifetime -> grow in size
-                    arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
-                }
-                else
-                {
-                    //second half of popUp lifetime -> shrink
-                    arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
-                    //fade
-                    color.a -= fadeSpeed * Time.deltaTime;
-                    arrayOfTexts[i].color = color;
-                }
+                { arrayOfObjects[i].SetActive(false); }
             }
-            //increment time
-            elapsedTime += Time.deltaTime;
-            //fail safe
-            counter++;
-            if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
-            yield return null;
         }
-        while (elapsedTime < timerMax);
-        //deactive objects once done
-        for (int i = 0; i < sizeOfArray; i++)
-        {
-            if (arrayOfActive[i] == true)
-            { arrayOfObjects[i].SetActive(false); }
-        }
+        else { Debug.LogWarning("PopUpFixed coroutine running but there is NO data to display"); }
     }
 
 

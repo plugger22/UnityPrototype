@@ -198,6 +198,8 @@ public class ModalOutcome : MonoBehaviour
                 modalLevel = details.modalLevel;
                 modalState = details.modalState;
                 Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
+                //fixed popUps
+                GameManager.i.popUpFixedScript.ExecuteFixed();
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
@@ -249,6 +251,8 @@ public class ModalOutcome : MonoBehaviour
         GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)
         GameManager.i.guiScript.waitUntilDone = false;
+        //reset fixed popUps
+        GameManager.i.popUpFixedScript.Reset();
     }
 
 
