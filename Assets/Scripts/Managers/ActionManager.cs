@@ -431,6 +431,7 @@ public class ActionManager : MonoBehaviour
                                     //add to player's personal list
                                     GameManager.i.playerScript.AddNodeAction(nodeActionData);
                                     Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
+                                    Debug.LogFormat("[Act] ActionManager.cs -> ProcessNodeAction: Player node Action \"{0}\"{1}", nodeActionPlayer, "\n");
                                     //statistics
                                     GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }

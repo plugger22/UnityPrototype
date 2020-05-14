@@ -226,7 +226,10 @@ public class PopUpFixed : MonoBehaviour
             int index = (int)popPos;
             //update text to display and set to active
             arrayOfObjects[index].SetActive(false);
-            arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay);
+            //if existing text use line break
+            if (arrayOfTexts[index].text.Length > 0)
+            { arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay); }
+            else { arrayOfTexts[index].text = textToDisplay; }
             arrayOfActive[index] = true;
             Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
         }
@@ -257,7 +260,7 @@ public class PopUpFixed : MonoBehaviour
     /// returns true if any fixed popUp has text waiting to display, false if none
     /// </summary>
     /// <returns></returns>
-    public bool CheckIfActive()
+    public bool CheckIfDataToDisplay()
     {
         for (int i = 0; i < sizeOfArray; i++)
         {
@@ -278,7 +281,7 @@ public class PopUpFixed : MonoBehaviour
             if (GameManager.i.inputScript.GameState == GameState.PlayGame)
             {
                 //run only if data present to display
-                if (CheckIfActive() == true)
+                if (CheckIfDataToDisplay() == true)
                 { myCoroutine = StartCoroutine("PopUp", timeDelay); }
                 else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }
             }
@@ -297,6 +300,7 @@ public class PopUpFixed : MonoBehaviour
     /// <returns></returns>
     IEnumerator PopUp(float timeDelay)
     {
+        Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
@@ -326,7 +330,9 @@ public class PopUpFixed : MonoBehaviour
                 {
                     if (arrayOfActive[i] == true)
                     {
-                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
+                        /*//use for y axis movement
+                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;*/
+
                         if (elapsedTime < threshold)
                         {
                             //first half of popUp lifetime -> grow in size
@@ -364,7 +370,6 @@ public class PopUpFixed : MonoBehaviour
     {
         StopCoroutine("PopUp");
         Reset();
-        isActive = false;
     }
 
     //new methods above here

@@ -1072,7 +1072,6 @@ public class MetaGameUI : MonoBehaviour
                 rightTextBottom.text = "Unknown";
                 break;
         }
-        string leader = arrayOfSideTabItems[tabIndex].title.text.ToUpper();
         rightImage.sprite = rightImageDefault;
         //reset buttons
         buttonSelect.gameObject.SetActive(false);

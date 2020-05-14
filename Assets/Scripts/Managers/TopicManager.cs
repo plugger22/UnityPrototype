@@ -2054,8 +2054,8 @@ public class TopicManager : MonoBehaviour
                             listOfSelection.Add(actorTemp);
                             if (isTestLog)
                             {
-                                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
-                                actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                                  actorTemp.actorID, turnTopicSubSubType.name, "\n");
                             }
                         }
                         else
@@ -2085,8 +2085,11 @@ public class TopicManager : MonoBehaviour
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
-                    foreach (Topic topic in listOfTopics)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
+                    if (isTestLog)
+                    {
+                        foreach (Topic topic in listOfTopics)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
+                    }
                 }
                 else { Debug.LogErrorFormat("Invalid nodeActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
@@ -2100,7 +2103,11 @@ public class TopicManager : MonoBehaviour
                 tagTarget = data.dataName;
                 tagTeam = data.dataName;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: No topics found for ActorDistrict actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
+            }
         }
         else { Debug.LogWarning("No active, onMap actors present with at least one NodeAction"); }
         return listOfTopics;
