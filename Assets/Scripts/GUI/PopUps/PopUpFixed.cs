@@ -1,6 +1,5 @@
 ﻿using gameAPI;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -199,7 +198,7 @@ public class PopUpFixed : MonoBehaviour
 
 
     /// <summary>
-    /// Resets relevant arrays ready for next turn
+    /// Resets relevant arrays ready for next lot of data
     /// </summary>
     public void Reset()
     {
@@ -211,6 +210,7 @@ public class PopUpFixed : MonoBehaviour
             arrayOfActive[i] = false;
         }
         isActive = false;
+        Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ public class PopUpFixed : MonoBehaviour
             arrayOfObjects[index].SetActive(false);
             arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay);
             arrayOfActive[index] = true;
-            
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
         }
         else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
     }
@@ -268,9 +268,9 @@ public class PopUpFixed : MonoBehaviour
     }
 
     /// <summary>
-    /// display any active fixed texts
+    /// display any active fixed texts. Optional time delay in seconds prior to start of animation
     /// </summary>
-    public void ExecuteFixed()
+    public void ExecuteFixed(float timeDelay = 0f)
     {
         if (isActive == false)
         {
@@ -279,22 +279,31 @@ public class PopUpFixed : MonoBehaviour
             {
                 //run only if data present to display
                 if (CheckIfActive() == true)
-                { myCoroutine = StartCoroutine("PopUp"); }
+                { myCoroutine = StartCoroutine("PopUp", timeDelay); }
+                else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }
             }
+            else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: GameState \"{0}\" (NOT PlayGame){1}", GameManager.i.inputScript.GameState, "\n"); }
         }
-        else { StopCoroutine("PopUp"); }
+        else
+        {
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: isActive FALSE{0}", "\n");
+            StopCoroutine("PopUp");
+        }
     }
 
     /// <summary>
     /// Coroutine -> batch processes all active popUps
     /// </summary>
     /// <returns></returns>
-    IEnumerator PopUp()
+    IEnumerator PopUp(float timeDelay)
     {
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
         Color color = textColorDefault;
+        //optional time delay prior to commencing animation
+        if (timeDelay > 0)
+        { yield return new WaitForSeconds(timeDelay); }
         //set defaults prior to animation
         for (int i = 0; i < sizeOfArray; i++)
         {
@@ -306,6 +315,7 @@ public class PopUpFixed : MonoBehaviour
                 arrayOfObjects[i].SetActive(true);
             }
         }
+        //should always at least one popUp to display
         if (counter > 0)
         {
             counter = 0;
@@ -347,12 +357,13 @@ public class PopUpFixed : MonoBehaviour
     }
 
 
-        /// <summary>
-        /// Stop coroutine
-        /// </summary>
-        public void StopCoroutine()
+    /// <summary>
+    /// Stop coroutine
+    /// </summary>
+    public void StopCoroutine()
     {
         StopCoroutine("PopUp");
+        Reset();
         isActive = false;
     }
 

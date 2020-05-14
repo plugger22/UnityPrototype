@@ -800,8 +800,6 @@ public class MainInfoUI : MonoBehaviour
             package.infoState = ModalInfoSubState.MainInfo;
             GameManager.i.inputScript.SetModalState(package);
             Debug.LogFormat("[UI] MainInfoUI.cs -> SetMainInfo{0}", "\n");
-            //PopUps
-            GameManager.i.popUpFixedScript.ExecuteFixed();
         }
         else { Debug.LogWarning("Invalid MainInfoData package (Null)"); }
     }

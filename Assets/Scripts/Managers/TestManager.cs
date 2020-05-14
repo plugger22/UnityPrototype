@@ -84,6 +84,10 @@ public class TestManager : MonoBehaviour
     [Tooltip("Any value other than zero will override calculated ratio each turn")]
     [Range(0, 1)] public float testRatioAddictedDays = 0;
 
+    [Header("[Tst] Logging")]
+    [Tooltip("Toggle ON to record [Tst] messages for the class")]
+    public bool isTopicManager;
+
     /*[Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]
     public bool isValidMetaOptions = false;

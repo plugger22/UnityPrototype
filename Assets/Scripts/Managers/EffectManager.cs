@@ -4853,24 +4853,27 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerRenown(Effect effect)
     {
         string bottomText = "Unknown";
+        string popText = "Unknown";
         int playerRenown = GameManager.i.playerScript.Renown;
         //Player effect
         switch (effect.operand.name)
         {
             case "Add":
                 playerRenown += effect.value;
+                popText = $"Renown +{effect.value}";
                 bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
                 break;
             case "Subtract":
                 playerRenown -= effect.value;
                 playerRenown = Mathf.Max(0, playerRenown);
+                popText = $"Renown {effect.value}";
                 bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
         GameManager.i.playerScript.Renown = playerRenown;
         //popUp
-        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, effect.description);
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, popText);
         return bottomText;
     }
 
@@ -5213,6 +5216,7 @@ public class EffectManager : MonoBehaviour
         bool isGearUsed = false;
         string reason = dataInput.originText;
         string bottomText = "Unknown";
+        string popText = "Unknown";
         switch (effect.operand.name)
         {
             case "Add":
@@ -5222,6 +5226,7 @@ public class EffectManager : MonoBehaviour
                     int invis = GameManager.i.playerScript.Invisibility;
                     invis += effect.value;
                     invis = Mathf.Min(GameManager.i.actorScript.maxStatValue, invis);
+                    popText = $"Invisibility +{effect.value}";
                     GameManager.i.playerScript.Invisibility = invis;
                 }
                 bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
@@ -5236,6 +5241,7 @@ public class EffectManager : MonoBehaviour
                     if (gear != null)
                     {
                         GameManager.i.gearScript.SetGearUsed(gear, "stay Invisible");
+                        popText = "Stays Invisible";
                         bottomText = string.Format("{0}{1}{2}{3} used to remain Invisible{4}", colourNeutral, gear.tag.ToUpper(),
                             colourEnd, colourNormal, colourEnd);
                     }
@@ -5256,6 +5262,7 @@ public class EffectManager : MonoBehaviour
                             colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                         reason = "TAGGED condition";
                         GameManager.i.aiScript.immediateFlagResistance = true;
+                        popText = "POSITION KNOWN";
                     }
                     //NOT Tagged
                     else
@@ -5264,6 +5271,7 @@ public class EffectManager : MonoBehaviour
                         if (node.isSpider == true)
                         {
                             invisibility -= 2;
+                            popText = "Invisibility -2";
                             if (invisibility >= 0)
                             { bottomText = string.Format("{0}Player Invisibility -2 (Spider){1}", colourBadSide, colourEnd); }
                             else
@@ -5272,12 +5280,14 @@ public class EffectManager : MonoBehaviour
                                 bottomText =
                                     string.Format("{0}Player Invisibility -2 (Spider){1}{2}{3}{4}<size=110%>Authority will know immediately</size>{5}",
                                     colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
                             }
                         }
                         else
                         {
                             invisibility -= 1;
+                            popText = "Invisibility -1";
                             if (invisibility >= 0)
                             { bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd); }
                             else
@@ -5285,6 +5295,7 @@ public class EffectManager : MonoBehaviour
                                 //immediate notification. AI flag set. Applies if player invis was 0 before action taken
                                 bottomText = string.Format("{0}Player {1}{2}{3}{4}{5}<size=110%>Authority will know immediately</size>{6}",
                                     colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
+                                popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
                             }
 
@@ -5311,6 +5322,8 @@ public class EffectManager : MonoBehaviour
                 }
                 break;
         }
+        //popUp
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, popText);
         return bottomText;
     }
 
@@ -5323,6 +5336,7 @@ public class EffectManager : MonoBehaviour
     private string ExecuteActorInvisibility(Effect effect, EffectDataInput dataInput, Actor actor, Node node)
     {
         string bottomText = "Unknown";
+        string popText = "Unknown";
         int invisibility = actor.GetDatapoint(ActorDatapoint.Invisibility2);
         int dataBefore = actor.GetDatapoint(ActorDatapoint.Invisibility2);
         switch (effect.operand.name)
@@ -5333,6 +5347,7 @@ public class EffectManager : MonoBehaviour
                     //adds a variable amount
                     invisibility += effect.value;
                     invisibility = Mathf.Min(GameManager.i.actorScript.maxStatValue, invisibility);
+                    popText = $"Invisibility +{effect.value}";
                     actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility);
                     Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Invisibility changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                         dataBefore, invisibility, "\n");
@@ -5344,6 +5359,7 @@ public class EffectManager : MonoBehaviour
                 if (node.isSpider == true)
                 {
                     int totalLoss = effect.value + 1;
+                    popText = $"Invisibility -{totalLoss}";
                     totalLoss = Mathf.Min(3, totalLoss);
                     invisibility -= totalLoss;
                     if (invisibility >= 0)
@@ -5353,12 +5369,14 @@ public class EffectManager : MonoBehaviour
                         //immediate notification. AI flag set. Applies if actor invis was 1 (spider effect) or 0 before action taken
                         bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
                             colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
+                        popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                         GameManager.i.aiScript.immediateFlagResistance = true;
                     }
                 }
                 else
                 {
                     invisibility -= effect.value;
+                    popText = $"Invisibility -{effect.value}";
                     if (invisibility >= 0)
                     { bottomText = string.Format("{0}{1} Invisibility -{2}{3}", colourBadSide, actor.arc.name, effect.value, colourEnd); }
                     else
@@ -5366,6 +5384,7 @@ public class EffectManager : MonoBehaviour
                         //immediate notification. AI flag set. Applies if actor invis was 0 before action taken
                         bottomText = string.Format("{0}{1} Invisibility -{2}{3}{4}<size=110%>Authority will know immediately</size>{5}{6}",
                             colourBadSide, actor.arc.name, effect.value, "\n", "\n", colourEnd, "\n");
+                        popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                         GameManager.i.aiScript.immediateFlagResistance = true;
                     }
                 }
@@ -5411,6 +5430,7 @@ public class EffectManager : MonoBehaviour
                 }
                 break;
         }
+        GameManager.i.popUpFixedScript.SetData(actor.slotID, popText);
         return bottomText;
     }
 

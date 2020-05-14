@@ -184,6 +184,7 @@ public class TopicManager : MonoBehaviour
     private TopicPool debugTopicPool;
     private IEnumerator coroutine;
     private bool haltExecution;
+    private bool isTestLog;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
     private int tagActorID;
@@ -290,6 +291,8 @@ public class TopicManager : MonoBehaviour
     #region SubInitialiseStartUp
     private void SubInitialiseStartUp()
     {
+        //[Tst] debug logging on/off
+        isTestLog = GameManager.i.testScript.isTopicManager;
         //debug topic pool
         debugTopicPool = GameManager.i.testScript.debugTopicPool;
         //initialise Topic Profile delays
@@ -1085,7 +1088,8 @@ public class TopicManager : MonoBehaviour
                 {
                     //chance of Review topic if not captured
                     if (reviewCountdown > 0) { reviewCountdown--; }
-                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: reviewCountdown {0}, reviewActivationMiss {1}{2}", reviewCountdown, reviewActivationMiss, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: reviewCountdown {0}, reviewActivationMiss {1}{2}", reviewCountdown, reviewActivationMiss, "\n"); }
                     if (reviewCountdown == 0)
                     {
                         //chance of activation on first turn of possible two turn window, automatic activation on second turn if first missed
@@ -1131,7 +1135,8 @@ public class TopicManager : MonoBehaviour
                     minIntervalGlobalActual = minIntervalGlobal;
                     //initialise listOfTopicTypesTurn prior to selection loop
                     CheckForValidTopicTypes();
-                    Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: listOfTopicTypeTurn has {0} records{1}", listOfTopicTypesTurn.Count, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: listOfTopicTypeTurn has {0} records{1}", listOfTopicTypesTurn.Count, "\n"); }
                     do
                     {
                         //reset needs to be inside the loop
@@ -1146,7 +1151,8 @@ public class TopicManager : MonoBehaviour
                         if (turnTopic == null)
                         {
                             minIntervalGlobalActual--;
-                            Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n");
+                            if (isTestLog)
+                            { Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: REPEAT LOOP, minIntervalGlobalActual now {0}{1}", minIntervalGlobalActual, "\n"); }
                         }
                         else { break; }
                     }
@@ -1385,7 +1391,8 @@ public class TopicManager : MonoBehaviour
                         {
                             //criteria check passed O.K, add to local list of valid TopicTypes for the Turn
                             AddTopicTypeToList(listOfTopicTypesTurn, topicType);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n");
+                            if (isTestLog)
+                            { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" PASSED TopicTypeData check{1}", topicType.name, "\n"); }
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid listOfSubTypes (Null) for topicType \"{0}\"", topicType.name); }
@@ -1394,10 +1401,15 @@ public class TopicManager : MonoBehaviour
                 {
                     //criteria check FAILED
                     //generate message explaining why criteria failed -> debug only, spam otherwise
-                    Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" {1} Criteria check{2}", topicType.tag, criteriaCheck, "\n"); }
                 }
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> CheckForValidTopics: topicType \"{0}\" Failed TopicTypeData check{1}", topicType.tag, "\n"); }
+            }
         }
         else { Debug.LogError("Invalid topicTypeData (Null)"); }
     }
@@ -1481,7 +1493,8 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicType = listOfTypePool[Random.Range(0, listOfTypePool.Count)];
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicType: SELECTED turnTopicType \"{0}\"", turnTopicType.name);
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicType: SELECTED turnTopicType \"{0}\"", turnTopicType.name); }
                 isSuccess = true;
             }
             else { Debug.LogError("Invalid listOfTypePool (Empty) for selecting topicType"); }
@@ -1563,7 +1576,9 @@ public class TopicManager : MonoBehaviour
                         /*else { Debug.LogErrorFormat("Invalid dataTopic (Null) for topicSubType \"{0}\"", subType.name); }*/
                         //O.K to have wrong side here Actor, for example, has subTypes from both sides
                     }
-                    /*else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: subtype \"{0}\" isDisabled True, NOT placed in selection pool{1}", subType.name, "\n"); }*/
+                    /*else { 
+                                    if (isTestLog)     
+                {Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: subtype \"{0}\" isDisabled True, NOT placed in selection pool{1}", subType.name, "\n"); }}*/
                 }
                 else { Debug.LogWarningFormat("Invalid subType (Null) for topicType \"{0}\"", turnTopicType.name); }
             }
@@ -1572,19 +1587,22 @@ public class TopicManager : MonoBehaviour
             {
                 //random draw of pool
                 turnTopicSubType = listOfSubTypePool[Random.Range(0, listOfSubTypePool.Count)];
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: SELECTED turnTopicSubType \"{0}\"", turnTopicSubType.name);
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: SELECTED turnTopicSubType \"{0}\"", turnTopicSubType.name); }
                 return true;
             }
             else
             {
-                Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n");
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: \"{0}\" Empty Pool for topicSubType selection{1}", turnTopicType.name, "\n"); }
                 //remove topicType from listOfTopicTypesTurn (selection list) to prevent it being selected again given that there are no valid topics anywhere within that topicType
                 if (minIntervalGlobalActual > 1)
                 {
                     int index = listOfTopicTypesTurn.FindIndex(x => x.name.Equals(turnTopicType.name, StringComparison.Ordinal) == true);
                     if (index > -1)
                     {
-                        Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: topicType \"{0}\" REMOVED from listOfTopicTypesTurn{1}", turnTopicType.name, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicSubType: topicType \"{0}\" REMOVED from listOfTopicTypesTurn{1}", turnTopicType.name, "\n"); }
                         listOfTopicTypesTurn.RemoveAt(index);
                     }
                 }
@@ -1717,7 +1735,8 @@ public class TopicManager : MonoBehaviour
                 if (listOfPotentialTopics != null)
                 {
                     int count = listOfPotentialTopics.Count;
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, count, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: turnTopicSubType \"{0}\", listOfPotential topics {1} record{2}", turnTopicSubType.name, count, "\n"); }
                     //shouldn't be empty although can be in certain circumstances, eg. Player/actor District actions and no suitable NodeActions
                     if (count > 0)
                     {
@@ -1740,9 +1759,17 @@ public class TopicManager : MonoBehaviour
                                             { listOfTopicPool.Add(topic); }
                                         }
                                     }
-                                    else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, NOT LIVE{2}", topic.name, topic.status, "\n"); }
+                                    else
+                                    {
+                                        if (isTestLog)
+                                        { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, NOT LIVE{2}", topic.name, topic.status, "\n"); }
+                                    }
                                 }
-                                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, DISABLED{2}", topic.name, topic.status, "\n"); }
+                                else
+                                {
+                                    if (isTestLog)
+                                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopic: topic \"{0}\" status {1}, DISABLED{2}", topic.name, topic.status, "\n"); }
+                                }
                             }
                             else { Debug.LogWarningFormat("Invalid topic (Null) for {0}.listOfTopics[{1}]", turnTopicSubType.name, i); }
                         }
@@ -1809,8 +1836,11 @@ public class TopicManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorContact subType"); }
 
         /*//debug
+        if (isTestLog)
+        {        
         foreach (Topic topic in listOfTopics)
-        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }*/
+        { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: \"{0}\"{1}", topic.name, "\n"); }
+        }*/
 
         return listOfTopics;
     }
@@ -1953,7 +1983,7 @@ public class TopicManager : MonoBehaviour
             }
             //check at least one actors present
             if (selectionList.Count > 0 && numOfActors > 0)
-            {                
+            {
                 //randomly select an actor from unweighted list
                 Actor actor = selectionList[Random.Range(0, selectionList.Count)];
                 //Actor gear (null if none present)
@@ -1975,7 +2005,11 @@ public class TopicManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("TopicManager.cs -> GetActorGearTopics: actor ({0}, {1}, ID {2}) doesn't have gear (should do)", actor.actorName, actor.arc.name, actor.actorID); }
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorGearTopics: No topics found (No actors with Gear present){0}", "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorGearTopics: No topics found (No actors with Gear present){0}", "\n"); }
+            }
         }
         else { Debug.LogWarning("Invalid listOfActors (Null) for ActorGear subType"); }
         return listOfTopics;
@@ -2018,13 +2052,19 @@ public class TopicManager : MonoBehaviour
                         {
                             //add to selection pool
                             listOfSelection.Add(actorTemp);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            if (isTestLog)
+                            {
+                                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                            }
                         }
                         else
                         {
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            if (isTestLog)
+                            {
+                                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                            }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor nodeAction \"{0}\"", dataTemp.nodeAction); }
@@ -2093,7 +2133,11 @@ public class TopicManager : MonoBehaviour
                 //check topics of this subSubType present
                 if (CheckSubSubTypeTopicsPresent(listOfSubTypeTopics, turnTopicSubSubType.name) == true)
                 { isProceed = true; }
-                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
+                else
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
+                }
             }
             else { Debug.LogErrorFormat("invalid TopicSubSubType (Null) for Player nodeAction \"{0}\"", data.nodeAction); }
             if (isProceed == true)
@@ -2105,7 +2149,10 @@ public class TopicManager : MonoBehaviour
 
                 /*//debug
                 foreach (Topic topic in listOfTopics)
-                { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n"); }*/
+                { 
+                if (isTestLog)
+                {Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.instance.turnScript.Turn, "\n");}
+                }*/
 
                 //Info tags
                 tagActorID = data.actorID;
@@ -2166,8 +2213,11 @@ public class TopicManager : MonoBehaviour
                                     Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, GameManager.i.sideScript.PlayerSide);
                                     if (actor != null)
                                     {
-                                        Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: SubsubType \"{0}\" has suitable actor {1}, {2}, ID {3}{4}", turnTopicSubSubType.name,
+                                        if (isTestLog)
+                                        {
+                                            Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopic: SubsubType \"{0}\" has suitable actor {1}, {2}, ID {3}{4}", turnTopicSubSubType.name,
                                             actor.actorName, actor.arc.name, actor.actorID, "\n");
+                                        }
                                         //tagActorID is ID of actor who had the arc for the action
                                         tagActorID = actor.actorID;
                                         isProceed = true;
@@ -2175,9 +2225,17 @@ public class TopicManager : MonoBehaviour
                                     }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for slotID {0}", slotID); }
                                 }
-                                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: No valid actor found for NodeAction {0}{1}", data.nodeAction, "\n"); }
+                                else
+                                {
+                                    if (isTestLog)
+                                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: No valid actor found for NodeAction {0}{1}", data.nodeAction, "\n"); }
+                                }
                             }
-                            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
+                            else
+                            {
+                                if (isTestLog)
+                                { Debug.LogFormat("[Tst] TopicManager.cs -> GetPlayerDistrictTopics: Player has an INVALID ActionTopic \"{0}\"{1}", turnTopicSubSubType.name, "\n"); }
+                            }
                         }
                         else { Debug.LogErrorFormat("invalid TopicSubSubType (Null) for Player nodeAction \"{0}\"", data.nodeAction); }
                     }
@@ -2800,13 +2858,19 @@ public class TopicManager : MonoBehaviour
                         {
                             //add to selection pool
                             listOfSelection.Add(actorTemp);
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            if (isTestLog)
+                            {
+                                Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                            }
                         }
                         else
                         {
-                            Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                            if (isTestLog)
+                            {
+                                Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: {0}, {1}, actorID {2} has an INVALID SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
                                 actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                            }
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid TopicSubSubType (Null) for Actor teamAction \"{0}\"", dataTemp.teamAction); }
@@ -2829,8 +2893,11 @@ public class TopicManager : MonoBehaviour
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
-                    foreach (Topic topic in listOfTopics)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
+                    if (isTestLog)
+                    {
+                        foreach (Topic topic in listOfTopics)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopic: listOfTopics -> {0}, turn {1}{2}", topic.name, GameManager.i.turnScript.Turn, "\n"); }
+                    }
                 }
                 else { Debug.LogErrorFormat("Invalid teamActionData (Null) for {0}, {1}, actorID {2}", actor.actorName, actor.arc.name, actor.actorID); }
                 //Info tags
@@ -2840,7 +2907,11 @@ public class TopicManager : MonoBehaviour
                 tagTurn = data.turn;
                 tagStringData = data.dataName;
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> GetAuthorityTeamTopics: No topics found for Actor Team actions for turn {0}{1}", GameManager.i.turnScript.Turn, "\n"); }
+            }
         }
         else { Debug.LogWarning("No active, onMap actors present with at least one TeamAction"); }
         return listOfTopics;
@@ -2939,12 +3010,14 @@ public class TopicManager : MonoBehaviour
                     if (CheckSubTypeCriteria(debugTopicPool.subType) == false)
                     {
                         isProceed = false;
-                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: subType \"{0}\" FAILED CRITERIA check{1}", debugTopicPool.subType.name, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: subType \"{0}\" FAILED CRITERIA check{1}", debugTopicPool.subType.name, "\n"); }
                     }
 
                     if (isProceed == true)
                     {
-                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: DEBUG TOPIC POOL IN USE, subType \"{0}\"{1}", debugTopicPool.subType.name, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: DEBUG TOPIC POOL IN USE, subType \"{0}\"{1}", debugTopicPool.subType.name, "\n"); }
                         //select one of topics from the debug pool at random (enables testing of a small subset of topics)
                         turnTopicSubType = debugTopicPool.subType;
                         if (turnTopicSubType != null)
@@ -2960,7 +3033,8 @@ public class TopicManager : MonoBehaviour
                             //valid debug topic, align the rest with topic
                             turnTopicType = debugTopicPool.type;
                             turnTopicSubSubType = debugTopicPool.subSubType;
-                            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: VALID debug Topic \"{0}\"{1}", turnTopic.name, "\n");
+                            if (isTestLog)
+                            { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: VALID debug Topic \"{0}\"{1}", turnTopic.name, "\n"); }
                         }
                         else
                         {
@@ -2972,7 +3046,8 @@ public class TopicManager : MonoBehaviour
                                 if (turnTopicSubType != null)
                                 {
                                     tagHqActors = tagHqActorsOriginalValue;
-                                    Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT (No valid Debug Topic){0}", "\n");
+                                    if (isTestLog)
+                                    { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: REVERT (No valid Debug Topic){0}", "\n"); }
                                 }
                                 else { Debug.LogWarningFormat("Invalid turnTopicSubType (Null) for subTypeNormal \"{0}\"", subTypeNormal); }
                             }
@@ -2980,9 +3055,14 @@ public class TopicManager : MonoBehaviour
                         }
                     }
                 }
-                else { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: No LIVE topics found in debugTopicPool{0}", "\n"); }
+                else
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: No LIVE topics found in debugTopicPool{0}", "\n"); }
+                }
             }
-            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
+            if (isTestLog)
+            { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n"); }
             //special case (need to do AFTER override otherwise can be set true by pre-override topic
             bool isPlayerGeneral = false;
             if (turnTopicSubType.name.Equals("PlayerGeneral", StringComparison.Ordinal) == true)
@@ -3034,7 +3114,8 @@ public class TopicManager : MonoBehaviour
                                     if (option.optionNumber > -1)
                                     {
                                         tagActorID = arrayOfOptionActorIDs[option.optionNumber];
-                                        Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: optionNumber {0}, tagActorID {1}{2}", option.optionNumber, tagActorID, "\n");
+                                        if (isTestLog)
+                                        { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseTopicUI: optionNumber {0}, tagActorID {1}{2}", option.optionNumber, tagActorID, "\n"); }
                                         if (tagActorID > -1)
                                         {
                                             if (CheckOptionCriteria(option) == true)
@@ -3127,7 +3208,8 @@ public class TopicManager : MonoBehaviour
         if (turnTopic != null)
         {
             TopicUIData data = new TopicUIData();
-            Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseCaptureTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n");
+            if (isTestLog)
+            { Debug.LogFormat("[Tst] TopicManager.cs -> InitialiseCaptureTopicUI: turnTopicSubType \"{0}\", turnTopic {1}{2}", turnTopicSubType.name, turnTopic, "\n"); }
 
             //use normal or debug topic
             if (turnTopic != null)
@@ -3816,7 +3898,8 @@ public class TopicManager : MonoBehaviour
                     {
                         topic.status = Status.Dormant;
                         topic.isCurrent = true;
-                        Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n"); }
                     }
                 }
                 //negate any buddy topics (current link in the chain) that weren't selected (only one topic in the each link in the chain can be selected)
@@ -3827,7 +3910,8 @@ public class TopicManager : MonoBehaviour
                     {
                         topic.status = Status.Done;
                         topic.isCurrent = false;
-                        Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: BUDDY topic \"{0}\" set to Status.Done{1}", topic.name, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: BUDDY topic \"{0}\" set to Status.Done{1}", topic.name, "\n"); }
                     }
                 }
                 //current topic (Fail Safe measure -> should already be included in listOfBuddyTopics)
@@ -3977,7 +4061,10 @@ public class TopicManager : MonoBehaviour
 
                 //generate message explaining why criteria failed -> debug only, spam otherwise
                 if (topic.subType.name.Equals("OrgCure", StringComparison.Ordinal) == true)
-                { Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n"); }
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicCriteria: topic \"{0}\", Criteria FAILED \"{1}\"{2}", topic.name, criteriaCheck, "\n"); }
+                }
             }
         }
         else
@@ -4019,8 +4106,11 @@ public class TopicManager : MonoBehaviour
                             {
                                 /*if (dataSub.minInterval > 0)
                                 {
+                                                    if (isTestLog)
+                                                    {
                                     Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicAvailable: \"{0}\", t {1}, l {2}, m {3}, isValid {4}{5}", subType.name,
                                         turn, dataSub.turnLastUsed, dataSub.minInterval, "True", "\n");
+                                        }
                                 }*/
 
                                 //check subType criteria (bypass the topic checks if fail) 
@@ -4054,8 +4144,11 @@ public class TopicManager : MonoBehaviour
                             {
                                 /*if (dataSub.minInterval > 0)
                                 {
+                                                    if (isTestLog)
+                                                    {
                                     Debug.LogFormat("[Tst] TopicManager.cs -> CheckTopicAvailable: \"{0}\", t {1}, l {2}, m {3}, isValid {4}{5}", subType.name,
                                         turn, dataSub.turnLastUsed, dataSub.minInterval, "False", "\n");
+                                        }
                                 }*/
                             }
                         }
@@ -4103,11 +4196,16 @@ public class TopicManager : MonoBehaviour
             criteriaCheck = GameManager.i.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck != null)
             {
-                Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n");
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" FAILED criteria check -> {1}{2}", subType.name, criteriaCheck, "\n"); }
                 return false;
 
             }
-            else { Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] TopicManager.cs -> CheckSubTypeCriteria: \"{0}\" PASSED criteria check{1}", subType.name, "\n"); }
+            }
         }
         return true;
     }
@@ -4457,10 +4555,15 @@ public class TopicManager : MonoBehaviour
                 //if no entries use entire list by default
                 if (listOfTopics.Count == 0)
                 {
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n"); }
                     listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
                 }
-                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
+                else
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\" group {2}{3}", listOfTopics.Count, subTypeName, group, "\n"); }
+                }
             }
             else
             {
@@ -4492,11 +4595,16 @@ public class TopicManager : MonoBehaviour
                 //if no entries use full sub sub type list by default
                 if (listOfTopics.Count == 0)
                 {
-                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", {1}, group {2}, All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n");
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetActorContactTopics: No topics found for \"{0}\", {1}, group {2}, All relevant topics used{2}", subTypeName, subSubTypeName, group, "\n"); }
                     listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                     t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
                 }
-                else { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\", {2}, group {3}{4}", listOfTopics.Count, subTypeName, subSubTypeName, group, "\n"); }
+                else
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: {0} topics found for \"{1}\", {2}, group {3}{4}", listOfTopics.Count, subTypeName, subSubTypeName, group, "\n"); }
+                }
             }
 
         }
