@@ -21050,21 +21050,6 @@ Prefab:
       propertyPath: m_Name
       value: PopUpDynamic
       objectReference: {fileID: 0}
-    - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.3394431
-      objectReference: {fileID: 0}
-    - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1.3394431
-      objectReference: {fileID: 0}
-    - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1.3394431
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4bd0c584de4fe542b5bde7fd6916d03, type: 2}
   m_IsPrefabAsset: 0

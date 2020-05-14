@@ -1070,8 +1070,6 @@ public class MainInfoUI : MonoBehaviour
         isRunning = false;
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
-        //fixed popUps
-        GameManager.i.popUpFixedScript.Reset();
     }
 
 

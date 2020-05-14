@@ -251,8 +251,6 @@ public class ModalOutcome : MonoBehaviour
         GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)
         GameManager.i.guiScript.waitUntilDone = false;
-        //reset fixed popUps
-        GameManager.i.popUpFixedScript.Reset();
     }
 
 

@@ -1101,5 +1101,16 @@ namespace packageAPI
         { turn = -1; scenario = -1; }
     }
 
+    /// <summary>
+    /// Data package for PopUpDynamic
+    /// </summary>
+    public class PopUpDynamicData
+    {
+        public Vector3 position;                    //objectOfInterest.transform.position
+        public int x_offset;
+        public int y_offset;
+        public string text;                         //text to display
+    }
+
     //new classes above here
 }

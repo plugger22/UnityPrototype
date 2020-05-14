@@ -4869,6 +4869,8 @@ public class EffectManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
         GameManager.i.playerScript.Renown = playerRenown;
+        //popUp
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, effect.description);
         return bottomText;
     }
 
@@ -4882,6 +4884,7 @@ public class EffectManager : MonoBehaviour
     private string ExecuteActorRenown(Effect effect, Actor actor, EffectDataInput dataInput, bool isHqActor = false)
     {
         string bottomText = "Unknown";
+        string popText = "Unknown";
         int dataBefore = actor.Renown;
         int changeAmount = 0;
         switch (effect.operand.name)
@@ -4907,6 +4910,7 @@ public class EffectManager : MonoBehaviour
                         isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                         effect.description, colourEnd);
                 }
+                popText = $"Renown +{changeAmount}";
                 break;
             case "Subtract":
                 actor.Renown -= effect.value;
@@ -4915,6 +4919,7 @@ public class EffectManager : MonoBehaviour
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
                     isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                     effect.description, colourEnd);
+                popText = $"Renown {changeAmount}";
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
@@ -4929,6 +4934,11 @@ public class EffectManager : MonoBehaviour
                 reason = dataInput.originText
             };
             actor.AddHqRenownData(dataRenown);
+        }
+        else
+        {
+            //onMap actor -> popUp
+            GameManager.i.popUpFixedScript.SetData(actor.slotID, popText);
         }
         //admin
         Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),

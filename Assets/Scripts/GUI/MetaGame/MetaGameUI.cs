@@ -1804,11 +1804,11 @@ public class MetaGameUI : MonoBehaviour
     /// <param name="amount"></param>
     private void SetRenownPopUp(int amount)
     {
-        ModalPopUpData data = new ModalPopUpData()
+        PopUpDynamicData data = new PopUpDynamicData()
         {
             position = renownBackground.transform.position,
             x_offset = -50,
-            y_offset = 50,
+            y_offset = 60,
             text = string.Format("Renown {0}{1}", amount > 0 ? "+" : "", amount)
         };
         GameManager.i.popUpDynamicScript.ExecuteDynamic(data);

@@ -2609,6 +2609,9 @@ public class PlayerManager : MonoBehaviour
             int change = moodLevel - GetMood();
             ChangeMood(change, "Debug", "Debug");
             reply = $"Player Mood now {GetMood()}";
+            //Popup
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change));
+            GameManager.i.popUpFixedScript.ExecuteFixed();
         }
         else { Debug.LogError("Invalid moodString (Null or Empty)"); }
         return reply;

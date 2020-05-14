@@ -53,12 +53,12 @@ public class PopUpFixed : MonoBehaviour
     private Vector3 localScaleDefault;
     private Color textColorDefault;
 
-
-    private float timerMax = 1.5f;     //maximum time onscreen
-    private float moveSpeed = 1.0f;      //y_axis move speed (upwards)
-    private float increaseScale = 1.0f;   //factor to increase size of text
-    private float decreaseScale = 1.0f;   //factor to decrease size of text
-    private float fadeSpeed = 1.0f;         //factor to fade text
+    //fast access
+    private float timerMax = -1;     //maximum time onscreen
+    private float moveSpeed = -1;      //y_axis move speed (upwards)
+    private float increaseScale = -1;   //factor to increase size of text
+    private float decreaseScale = -1;   //factor to decrease size of text
+    private float fadeSpeed = -1;         //factor to fade text
     private float threshold;           //halfway point of popUp life (timerMax * 0.5f)
 
     static PopUpFixed popUpFixed;
@@ -78,8 +78,34 @@ public class PopUpFixed : MonoBehaviour
         return popUpFixed;
     }
 
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadGame:
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
 
-    public void Awake()
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    /// <summary>
+    /// Start Session
+    /// </summary>
+    public void SubInitialiseSessionStart()
     {
         //initialise arrays
         sizeOfArray = (int)PopUpPosition.Count;
@@ -139,12 +165,38 @@ public class PopUpFixed : MonoBehaviour
         arrayOfTexts[5] = popTopLeftText;
         arrayOfTexts[6] = popTopRightText;
         arrayOfTexts[7] = popTopCentreText;
-        //threshold
-        threshold = timerMax * 0.5f;
         //defaults (all the same, use first item in arrays as defaults)
         localScaleDefault = arrayOfTransforms[0].localScale;
         textColorDefault = arrayOfTexts[0].color;
+        //reset all to default settings
+        Reset();
     }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// Fast access
+    /// </summary>
+    public void SubInitialiseFastAccess()
+    {
+        //fast access
+        timerMax = GameManager.i.guiScript.timerMax;
+        moveSpeed = GameManager.i.guiScript.moveSpeed;
+        increaseScale = GameManager.i.guiScript.increaseScale;
+        decreaseScale = GameManager.i.guiScript.decreaseScale;
+        fadeSpeed = GameManager.i.guiScript.fadeSpeed;
+        Debug.Assert(timerMax > -1, "Invalid timerMax (-1)");
+        Debug.Assert(moveSpeed > -1, "Invalid moveSpeed (-1)");
+        Debug.Assert(increaseScale > -1, "Invalid increaseScale (-1)");
+        Debug.Assert(decreaseScale > -1, "Invalid decreaseScale (-1)");
+        Debug.Assert(fadeSpeed > -1, "Invalid fadeSpeed (-1)");
+        //threshold
+        threshold = timerMax * 0.5f;
+    }
+    #endregion
+
+    #endregion
+
 
     /// <summary>
     /// Resets relevant arrays ready for next turn
@@ -153,14 +205,17 @@ public class PopUpFixed : MonoBehaviour
     {
         for (int i = 0; i < sizeOfArray; i++)
         {
+            if (arrayOfActive[i] == true)
+            { arrayOfObjects[i].SetActive(false); }
             arrayOfTexts[i].text = "";
             arrayOfActive[i] = false;
         }
-
+        isActive = false;
     }
 
     /// <summary>
     /// Input text to display at a specific fixed popUp (won't display until ExecuteFixed is called)
+    /// NOTE: text is appended to any existing text (on a new line)
     /// </summary>
     /// <param name="popPos"></param>
     /// <param name="textToDisplay"></param>
@@ -171,11 +226,31 @@ public class PopUpFixed : MonoBehaviour
             int index = (int)popPos;
             //update text to display and set to active
             arrayOfObjects[index].SetActive(false);
-            arrayOfTexts[index].text = textToDisplay;
+            arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay);
             arrayOfActive[index] = true;
             
         }
         else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Overloaded method that takes an actors slotID for PopUptext (won't display until ExecuteFixed is called)
+    /// NOTE: text is appended to any existing text (on a new line)
+    /// </summary>
+    /// <param name="actorSlotID"></param>
+    /// <param name="textToDisplay"></param>
+    public void SetData(int actorSlotID, string textToDisplay)
+    {
+        PopUpPosition pop = PopUpPosition.Count;
+        switch (actorSlotID)
+        {
+            case 0: pop = PopUpPosition.ActorSlot0; break;
+            case 1: pop = PopUpPosition.ActorSlot1; break;
+            case 2: pop = PopUpPosition.ActorSlot2; break;
+            case 3: pop = PopUpPosition.ActorSlot3; break;
+        }
+        if (pop != PopUpPosition.Count)
+        { SetData(pop, textToDisplay); }
     }
 
     /// <summary>
@@ -242,20 +317,19 @@ public class PopUpFixed : MonoBehaviour
                     if (arrayOfActive[i] == true)
                     {
                         arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
-                    }
-
-                    if (elapsedTime < threshold)
-                    {
-                        //first half of popUp lifetime -> grow in size
-                        arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
-                    }
-                    else
-                    {
-                        //second half of popUp lifetime -> shrink
-                        arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
-                        //fade
-                        color.a -= fadeSpeed * Time.deltaTime;
-                        arrayOfTexts[i].color = color;
+                        if (elapsedTime < threshold)
+                        {
+                            //first half of popUp lifetime -> grow in size
+                            arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                        }
+                        else
+                        {
+                            //second half of popUp lifetime -> shrink
+                            arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                            //fade
+                            color.a -= fadeSpeed * Time.deltaTime;
+                            arrayOfTexts[i].color = color;
+                        }
                     }
                 }
                 //increment time
@@ -267,11 +341,7 @@ public class PopUpFixed : MonoBehaviour
             }
             while (elapsedTime < timerMax);
             //deactive objects once done
-            for (int i = 0; i < sizeOfArray; i++)
-            {
-                if (arrayOfActive[i] == true)
-                { arrayOfObjects[i].SetActive(false); }
-            }
+            Reset();
         }
         else { Debug.LogWarning("PopUpFixed coroutine running but there is NO data to display"); }
     }

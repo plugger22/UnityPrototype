@@ -40,6 +40,18 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
 
+    [Header("PopUp Texts")]
+    [Tooltip("How long the full animation cycle lasts (seconds)")]
+    [Range(1f, 3f)] public float timerMax = 1.5f;
+    [Tooltip("y_axis move speed (upwards) -> code in place but currently not used")]
+    [Range(0, 3f)] public float moveSpeed = 0;
+    [Tooltip("factor to increase size of text (first half of animation cycle")]
+    [Range(0, 3f)] public float increaseScale = 1.0f;
+    [Tooltip("factor to decrease size of text (second half of animation cycle")]
+    [Range(0, 3f)] public float decreaseScale = 1.0f;
+    [Tooltip("factor to fade text during second half of animation cycle")]
+    [Range(0, 3f)] public float fadeSpeed = 1.0f;
+
     [Header("Alerts")]
     [Tooltip("Default time that Alerts stay on screen before disappearing")]
     [Range(1f, 5f)] public float alertDefaultTime = 3.0f;

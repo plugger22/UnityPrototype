@@ -731,7 +731,14 @@ public class GameManager : MonoBehaviour
         startMethod.handler = tooltipNodeScript.Initialise;
         startMethod.className = "TooltipNode";
         listOfUIMethods.Add(startMethod);
-
+        //PopUpFixed
+        startMethod.handler = popUpFixedScript.Initialise;
+        startMethod.className = "PopUpFixed";
+        listOfUIMethods.Add(startMethod);
+        //PopUpDynamic
+        startMethod.handler = popUpDynamicScript.Initialise;
+        startMethod.className = "PopUpDynamic";
+        listOfUIMethods.Add(startMethod);
         #endregion
 
         #region Debug Methods

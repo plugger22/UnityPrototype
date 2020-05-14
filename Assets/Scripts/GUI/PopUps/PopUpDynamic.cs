@@ -1,4 +1,5 @@
-﻿using modalAPI;
+﻿using gameAPI;
+using packageAPI;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -28,19 +29,72 @@ public class PopUpDynamic : MonoBehaviour
 
     static PopUpDynamic popUpDynamic;
 
-    public void Awake()
+
+
+    public void Initialise(GameState state)
     {
+        switch (state)
+        {
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                break;
+            case GameState.LoadGame:
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    /// <summary>
+    /// Start Session
+    /// </summary>
+    public void SubInitialiseSessionStart()
+    {
+
         Debug.Assert(popObject != null, "Invalid popObject (Null)");
         Debug.Assert(popTransform != null, "Invalid popTransform (Null)");
         Debug.Assert(popText != null, "Invalid popText (Null)");
         //disable object on startup
         popObject.SetActive(false);
-        //threshold
-        threshold = timerMax * 0.5f;
         //defaults
         localScaleDefault = popTransform.localScale;
         textColorDefault = popText.color;
     }
+    #endregion
+
+    #region SubInitialiseFastAccess
+    /// <summary>
+    /// Fast access
+    /// </summary>
+    public void SubInitialiseFastAccess()
+    {
+        //fast access
+        timerMax = GameManager.i.guiScript.timerMax;
+        moveSpeed = GameManager.i.guiScript.moveSpeed;
+        increaseScale = GameManager.i.guiScript.increaseScale;
+        decreaseScale = GameManager.i.guiScript.decreaseScale;
+        fadeSpeed = GameManager.i.guiScript.fadeSpeed;
+        Debug.Assert(timerMax > -1, "Invalid timerMax (-1)");
+        Debug.Assert(moveSpeed > -1, "Invalid moveSpeed (-1)");
+        Debug.Assert(increaseScale > -1, "Invalid increaseScale (-1)");
+        Debug.Assert(decreaseScale > -1, "Invalid decreaseScale (-1)");
+        Debug.Assert(fadeSpeed > -1, "Invalid fadeSpeed (-1)");
+        //threshold
+        threshold = timerMax * 0.5f;
+    }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// provide a static reference to PopUpDynamic that can be accessed from any script
@@ -61,7 +115,7 @@ public class PopUpDynamic : MonoBehaviour
     /// Initialise and activate dynamic pop-up text over a given UI position
     /// </summary>
     /// <param name="data"></param>
-    public void ExecuteDynamic(ModalPopUpData data)
+    public void ExecuteDynamic(PopUpDynamicData data)
     {
         if (data != null)
         {
