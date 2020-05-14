@@ -224,12 +224,11 @@ public class PopUpFixed : MonoBehaviour
         if (string.IsNullOrEmpty(textToDisplay) == false)
         {
             int index = (int)popPos;
-            //update text to display and set to active
-            arrayOfObjects[index].SetActive(false);
             //if existing text use line break
             if (arrayOfTexts[index].text.Length > 0)
             { arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay); }
             else { arrayOfTexts[index].text = textToDisplay; }
+            //set active index true (enables display)
             arrayOfActive[index] = true;
             Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
         }
@@ -313,10 +312,17 @@ public class PopUpFixed : MonoBehaviour
         {
             if (arrayOfActive[i] == true)
             {
+                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}] {1}{2}", i, arrayOfTexts[i].text, "\n");*/
                 counter++;
                 arrayOfTexts[i].color = textColorDefault;
                 arrayOfTransforms[i].localScale = localScaleDefault;
                 arrayOfObjects[i].SetActive(true);
+                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}].color r {1}, g {2}, b {3}, a {4}{5}", i, 
+                    arrayOfTexts[i].color.r, arrayOfTexts[i].color.g, arrayOfTexts[i].color.b, arrayOfTexts[i].color.a, "\n");
+                Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
+                    i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");
+                Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: position[{0}] x {1}, y {2}, z {3}{4}",
+                    i, arrayOfTransforms[i].position.x, arrayOfTransforms[i].position.y, arrayOfTransforms[i].position.z, "\n");*/
             }
         }
         //should always at least one popUp to display
@@ -324,12 +330,15 @@ public class PopUpFixed : MonoBehaviour
         {
             counter = 0;
             //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: Start Animation loop - - -{0}", "\n");
             do
             {
                 for (int i = 0; i < sizeOfArray; i++)
                 {
                     if (arrayOfActive[i] == true)
                     {
+                        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfActive[{0}] {1}{2}", i, arrayOfActive[i], "\n");
+                        Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfObjects[{0}].activeSelf {1}{2}", i, arrayOfObjects[i].activeSelf, "\n");*/
                         /*//use for y axis movement
                         arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;*/
 
@@ -337,19 +346,25 @@ public class PopUpFixed : MonoBehaviour
                         {
                             //first half of popUp lifetime -> grow in size
                             arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
+                                i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");*/
                         }
                         else
                         {
                             //second half of popUp lifetime -> shrink
                             arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
+                                i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");*/
                             //fade
                             color.a -= fadeSpeed * Time.deltaTime;
                             arrayOfTexts[i].color = color;
+                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}].color r {1}, g {2}, b {3}, a {4}{5}", i, color.r, color.g, color.b, color.a, "\n");*/
                         }
                     }
                 }
                 //increment time
                 elapsedTime += Time.deltaTime;
+                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: ElapsedTime {0} - - -{1}", elapsedTime, "\n");*/
                 //fail safe
                 counter++;
                 if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
@@ -359,7 +374,11 @@ public class PopUpFixed : MonoBehaviour
             //deactive objects once done
             Reset();
         }
-        else { Debug.LogWarning("PopUpFixed coroutine running but there is NO data to display"); }
+        else
+        {
+            Debug.LogWarning("PopUpFixed coroutine running but there is NO data to display");
+            yield break;
+        }
     }
 
 

@@ -4476,6 +4476,7 @@ MonoBehaviour:
   testRatioPlayManageAct: 0
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
+  isTopicManager: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4907,6 +4908,11 @@ MonoBehaviour:
   flashNodeTime: 0.4
   flashConnectiontTime: 0.4
   flashInfoTabTime: 0.4
+  timerMax: 1.5
+  moveSpeed: 0
+  increaseScale: 1
+  decreaseScale: 1
+  fadeSpeed: 1
   alertDefaultTime: 3
   tooltipDelay: 0.5
   tooltipFade: 0.5
@@ -5116,7 +5122,8 @@ MonoBehaviour:
   debugGraphicsScript: {fileID: 0}
   debugScript: {fileID: 0}
   topicDisplayScript: {fileID: 0}
-  popUpScript: {fileID: 0}
+  popUpDynamicScript: {fileID: 0}
+  popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1

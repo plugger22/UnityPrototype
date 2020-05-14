@@ -4866,7 +4866,7 @@ public class EffectManager : MonoBehaviour
             case "Subtract":
                 playerRenown -= effect.value;
                 playerRenown = Mathf.Max(0, playerRenown);
-                popText = $"Renown {effect.value}";
+                popText = $"Renown -{effect.value}";
                 bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;

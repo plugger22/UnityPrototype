@@ -170,3 +170,42 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 51287 -> Thursday, 14 May 2020 5:09 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 38646 -> Thursday, 14 May 2020 7:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61562 -> Thursday, 14 May 2020 8:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29614 -> Thursday, 14 May 2020 8:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7435 -> Thursday, 14 May 2020 8:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31019 -> Thursday, 14 May 2020 8:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9590 -> Thursday, 14 May 2020 8:34 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:674)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:845)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:827)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 45003 -> Thursday, 14 May 2020 8:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51811 -> Thursday, 14 May 2020 8:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3984 -> Thursday, 14 May 2020 9:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61917 -> Thursday, 14 May 2020 9:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58340 -> Thursday, 14 May 2020 9:08 PM
+City seed 5678 -> London, United Kingdom
