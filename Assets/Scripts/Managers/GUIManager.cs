@@ -649,7 +649,7 @@ public class GUIManager : MonoBehaviour
     }
 
     //
-    // - - - Start of Turn Information Pipeline
+    // - - - Start of End of Turn Information Pipeline
     //
 
     public Dictionary<MsgPipelineType, ModalOutcomeDetails> GetDictOfPipeline()
@@ -826,6 +826,7 @@ public class GUIManager : MonoBehaviour
         yield return new WaitUntil(() => waitUntilDone == false);
         InitialiseInfoApp(playerSide);
         yield return null;
+        GameManager.i.turnScript.AllowNewTurn();
     }
 
     /// <summary>

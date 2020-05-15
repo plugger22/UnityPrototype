@@ -1957,6 +1957,7 @@ public class EffectManager : MonoBehaviour
                         {
                             effectResolve = ResolveNodeData(effect, node, dataInput);
                             effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                            effectReturn.isAction = true;
                         }
                         else
                         {

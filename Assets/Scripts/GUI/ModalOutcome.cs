@@ -25,7 +25,7 @@ public class ModalOutcome : MonoBehaviour
     private static ModalOutcome modalOutcome;
     private RectTransform rectTransform;
     private Image background;
-    private CanvasGroup canvasGroup;
+    /*private CanvasGroup canvasGroup;*/
     private GenericHelpTooltipUI help;
     /*private float fadeInTime;*/
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
@@ -46,7 +46,7 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(helpButton != null, "Invalid GenericHelpTooltipUI (Null)");
         Debug.Assert(confirmButton != null, "Invalid confirmButton (Null)");
         //Assignments
-        canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();
+        /*canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();*/
         rectTransform = modalOutcomeWindow.GetComponent<RectTransform>();
         help = helpButton.GetComponent<GenericHelpTooltipUI>();
         if (help == null) { Debug.LogError("Invalid help script (Null)"); }
@@ -254,11 +254,11 @@ public class ModalOutcome : MonoBehaviour
     }
 
 
-    public void SetOpacity(float opacity)
+    /*public void SetOpacity(float opacity)
     { canvasGroup.alpha = opacity; }
 
     public float GetOpacity()
-    { return canvasGroup.alpha; }
+    { return canvasGroup.alpha; }*/
 
     /// <summary>
     /// set up sprites on outcome window for the appropriate side

@@ -10589,7 +10589,7 @@ Prefab:
     - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 150
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 224309362659801078, guid: f4bd0c584de4fe542b5bde7fd6916d03,
         type: 2}
@@ -17767,7 +17767,6 @@ GameObject:
   - component: {fileID: 457294003}
   - component: {fileID: 457294005}
   - component: {fileID: 457294004}
-  - component: {fileID: 457294006}
   - component: {fileID: 457294007}
   - component: {fileID: 457294008}
   - component: {fileID: 457294009}
@@ -17834,17 +17833,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 457294002}
   m_CullTransparentMesh: 0
---- !u!225 &457294006
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 457294002}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &457294007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37339,7 +37327,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1111120728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -37348,14 +37336,14 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
 --- !u!114 &1111120731
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1111120728}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

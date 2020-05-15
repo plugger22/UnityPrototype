@@ -55,6 +55,9 @@ public class TurnManager : MonoBehaviour
     private int numOfTurns = 0;
     private bool isAutoRun;
 
+    //new turn
+    private bool isNewTurn;                                                     //flag to prevent multiple new turns in a row (before they can be processed). True -> Player initiated new Turn and processing underway
+
     //win State
     private string winTextTop;                                                  //data passed via SetWinState() so that ProcessNewTurn can output an appropriate win message
     private string winTextBottom;
@@ -130,6 +133,8 @@ public class TurnManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
+        //new turn
+        isNewTurn = false;
         //actions
         UpdateActionsLimit(GameManager.i.sideScript.PlayerSide);
         //states
@@ -267,6 +272,12 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
+    /// toggles flag allowing a new turn (blocked if true while existing new turn processing completes)
+    /// </summary>
+    public void AllowNewTurn()
+    { isNewTurn = false; }
+
+    /// <summary>
     /// autorun active or not
     /// </summary>
     /// <returns></returns>
@@ -278,96 +289,99 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void ProcessNewTurn()
     {
-        //only process new turn if a win State hasn't already been acheived
-        if (isLevelOver == false && isCampaignOver == false)
+        //flag to prevent multiple new turns. No more until processing done
+        if (isNewTurn == false)
         {
-            Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
-            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-            //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
-            if (GameManager.i.inputScript.ModalState == ModalState.Normal)
+            //only process new turn if a win State hasn't already been acheived
+            if (isLevelOver == false && isCampaignOver == false)
             {
-                //pre-processing admin
-                haltExecution = false;
-                //end the current turn
-                EndTurnAI();
-                EndTurnEarly();
-                EndTurnLate();
-                //start the new turn
-                StartTurnEarly();
-                StartTurnLate();
-
-                /*//Debug
-                if (Turn == 22)
-                { GameManager.instance.playerScript.Innocence = -1; }*/
-
-                /*//Debug
-                GameManager.instance.dataScript.DebugCheckConnectionSecurity();*/
-
-                //only do for player
-                if (playerSide != null && currentSide.level == playerSide.level)
+                //set flag to prevent multiple calls to new turn (Set false at end of coroutine.StartPipeline)
+                isNewTurn = true;
+                Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
+                GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+                //only process a new turn if game state is normal (eg. not in the middle of a modal window operation
+                if (GameManager.i.inputScript.ModalState == ModalState.Normal)
                 {
-                    if (winStateLevel == WinStateLevel.None)
+                    //pre-processing admin
+                    haltExecution = false;
+                    //end the current turn
+                    EndTurnAI();
+                    EndTurnEarly();
+                    EndTurnLate();
+                    //start the new turn
+                    StartTurnEarly();
+                    StartTurnLate();
+
+                    //only do for player
+                    if (playerSide != null && currentSide.level == playerSide.level)
                     {
-                        Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
-                        //select topic
-                        GameManager.i.topicScript.SelectTopic(playerSide);
-                        
-                        /*//Debugging only (temporary) -> don't forget to switch on below and delete this
-                        GameManager.instance.topicScript.ProcessTopic(playerSide);*/
-                    }
+                        if (winStateLevel == WinStateLevel.None)
+                        {
+                            Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
+                            //select topic
+                            GameManager.i.topicScript.SelectTopic(playerSide);
+                        }
+                        //turn on info App (only if not autorunning)
+                        if (isAutoRun == false)
+                        {
+                            Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
+                            //switch off any node Alerts
+                            GameManager.i.alertScript.CloseAlertUI(true);
 
-                    //turn on info App (only if not autorunning)
-                    if (isAutoRun == false)
+                            //generate topic
+                            GameManager.i.topicScript.ProcessTopic(playerSide);
+
+                            /*//debug
+                            DebugCreatePipelineMessages();*/
+
+                            //info App displayed AFTER any end of turn Player interactions
+                            myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
+                        }
+                        else
+                        {
+                            //reset flag (only for AutoRun turns)
+                            AllowNewTurn();
+                        }
+
+                    }
+                    if (winStateCampaign != WinStateCampaign.None)
                     {
-                        Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
-                        //switch off any node Alerts
-                        GameManager.i.alertScript.CloseAlertUI(true);
-
-                        //generate topic
-                        GameManager.i.topicScript.ProcessTopic(playerSide);
-
-                        /*//debug
-                        DebugCreatePipelineMessages();*/
-
-                        //info App displayed AFTER any end of turn Player interactions
-                        myCoroutineStartPipeline = StartCoroutine("StartPipeline", playerSide);
+                        //There is a Campaign winner
+                        Debug.LogFormat("TurnManager.cs : - - - Campaign WINNER - - - turn {0}{1}", Turn, "\n");
+                        isCampaignOver = true;
+                        ProcessCampaignOver();
                     }
+                    else if (winStateLevel != WinStateLevel.None)
+                    {
+                        //There is a Level winner
+                        Debug.LogFormat("TurnManager.cs : - - - Level WINNER - - - turn {0}{1}", Turn, "\n");
+                        isLevelOver = true;
+                        ProcessLevelOver();
+                    }
+                }
+            }
+            else
+            {
+                //Win/Loss Conditions
+                if (isLevelOver == true)
+                {
+                    //level over -> start MetaGame
+                    EventManager.instance.PostNotification(EventType.CreateMetaGame, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                    isLevelOver = false;
+                    AllowNewTurn();
+                    winStateLevel = WinStateLevel.None;
+                    winReasonLevel = WinReasonLevel.None;
+                }
+                else if (isCampaignOver == true)
+                {
+                    //campaign over -> start EndGame
+                    EventManager.instance.PostNotification(EventType.ExitCampaign, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                    isCampaignOver = false;
+                }
+            }
 
-                }
-                if (winStateCampaign != WinStateCampaign.None)
-                {
-                    //There is a Campaign winner
-                    Debug.LogFormat("TurnManager.cs : - - - Campaign WINNER - - - turn {0}{1}", Turn, "\n");
-                    isCampaignOver = true;
-                    ProcessCampaignOver();
-                }
-                else if (winStateLevel != WinStateLevel.None)
-                {
-                    //There is a Level winner
-                    Debug.LogFormat("TurnManager.cs : - - - Level WINNER - - - turn {0}{1}", Turn, "\n");
-                    isLevelOver = true;
-                    ProcessLevelOver();
-                }
-            }
         }
-        else
-        {
-            //Win/Loss Conditions
-            if (isLevelOver == true)
-            {
-                //level over -> start MetaGame
-                EventManager.instance.PostNotification(EventType.CreateMetaGame, this, _turn, "TurnManager.cs -> ProcessNewTurn");
-                isLevelOver = false;
-                winStateLevel = WinStateLevel.None;
-                winReasonLevel = WinReasonLevel.None;
-            }
-            else if (isCampaignOver == true)
-            {
-                //campaign over -> start EndGame
-                EventManager.instance.PostNotification(EventType.ExitCampaign, this, _turn, "TurnManager.cs -> ProcessNewTurn");
-                isCampaignOver = false;
-            }
-        }
+        else { Debug.LogFormat("[Tst] TurnManager.cs -> ProcessNewTurn: New Turn event cancelled as already processing a new turn{0}", "\n"); }
     }
 
 

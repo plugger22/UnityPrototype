@@ -210,6 +210,7 @@ public class PopUpFixed : MonoBehaviour
             arrayOfActive[i] = false;
         }
         isActive = false;
+        myCoroutine = null;
         Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");
     }
 
@@ -289,7 +290,7 @@ public class PopUpFixed : MonoBehaviour
         else
         {
             Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: isActive FALSE{0}", "\n");
-            StopCoroutine("PopUp");
+            StopCoroutine();
         }
     }
 
@@ -328,9 +329,9 @@ public class PopUpFixed : MonoBehaviour
         //should always at least one popUp to display
         if (counter > 0)
         {
-            counter = 0;
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: Start Animation loop - - - counter {0}{1}", counter, "\n");
             //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
-            Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: Start Animation loop - - -{0}", "\n");
+            counter = 0;
             do
             {
                 for (int i = 0; i < sizeOfArray; i++)
@@ -340,7 +341,9 @@ public class PopUpFixed : MonoBehaviour
                         /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfActive[{0}] {1}{2}", i, arrayOfActive[i], "\n");
                         Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfObjects[{0}].activeSelf {1}{2}", i, arrayOfObjects[i].activeSelf, "\n");*/
                         /*//use for y axis movement
-                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;*/
+                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
+                        Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: position[{0}] x {1}, y {2}, z {3}{4}",
+                            i, arrayOfTransforms[i].position.x, arrayOfTransforms[i].position.y, arrayOfTransforms[i].position.z, "\n");*/
 
                         if (elapsedTime < threshold)
                         {
@@ -387,8 +390,12 @@ public class PopUpFixed : MonoBehaviour
     /// </summary>
     public void StopCoroutine()
     {
-        StopCoroutine("PopUp");
-        Reset();
+        if (myCoroutine != null)
+        {
+            StopCoroutine("PopUp");
+            myCoroutine = null;
+            Reset();
+        }
     }
 
     //new methods above here
