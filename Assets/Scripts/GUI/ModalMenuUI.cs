@@ -79,7 +79,10 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         onMouseFlag = false;
         if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
         switch (menuType)
         {
             case ActionMenuType.Node:

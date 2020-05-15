@@ -328,7 +328,10 @@ public class Node : MonoBehaviour
         {
             onMouseFlag = false;
             if (myCoroutine != null)
-            { StopCoroutine(myCoroutine); }
+            {
+                StopCoroutine(myCoroutine);
+                myCoroutine = null;
+            }
             GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
         }
     }
