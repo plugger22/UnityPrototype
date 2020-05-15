@@ -251,7 +251,10 @@ public class ModalActionMenu : MonoBehaviour
         //close Alert UI safety check (ignored if not active)
         GameManager.i.alertScript.CloseAlertUI();
         //close Generic toolip (eg. from button)
-        GameManager.i.tooltipGenericScript.CloseTooltip("ModalActionMenu -> CloseActionMenu");
+        GameManager.i.guiScript.SetTooltipsOff();
+
+        /*GameManager.i.tooltipGenericScript.CloseTooltip("ModalActionMenu -> CloseActionMenu");*/
+
         //set game state
         GameManager.i.inputScript.ResetStates(modalState);
         Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");

@@ -39,9 +39,6 @@ public class ModalOutcome : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        /*canvasGroup = modalOutcomeObject.GetComponent<CanvasGroup>();
-        rectTransform = modalOutcomeObject.GetComponent<RectTransform>();*/
-
         //Asserts
         Debug.Assert(helpButton != null, "Invalid GenericHelpTooltipUI (Null)");
         Debug.Assert(confirmButton != null, "Invalid confirmButton (Null)");
@@ -181,7 +178,7 @@ public class ModalOutcome : MonoBehaviour
                 if (details.sprite != null)
                 { outcomeImage.sprite = details.sprite; }
 
-                //get dimensions of dynamic tooltip
+                //get dimensions of outcome window (dynamic)
                 float width = rectTransform.rect.width;
                 float height = rectTransform.rect.height;
 
@@ -199,7 +196,7 @@ public class ModalOutcome : MonoBehaviour
                 modalState = details.modalState;
                 Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
                 //fixed popUps
-                GameManager.i.popUpFixedScript.ExecuteFixed(0.5f);
+                GameManager.i.popUpFixedScript.ExecuteFixed(1.5f);
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
@@ -238,8 +235,11 @@ public class ModalOutcome : MonoBehaviour
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
         //modalOutcomeObject.SetActive(false);
         modalOutcomeWindow.SetActive(false);
-        //close tooltip
-        GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");
+        //close tooltips
+        GameManager.i.guiScript.SetTooltipsOff();
+
+        /*GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");*/
+
         //set modal false
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state

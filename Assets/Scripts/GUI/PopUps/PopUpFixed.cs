@@ -392,7 +392,7 @@ public class PopUpFixed : MonoBehaviour
     {
         if (myCoroutine != null)
         {
-            StopCoroutine("PopUp");
+            StopCoroutine(myCoroutine);
             myCoroutine = null;
             Reset();
         }
