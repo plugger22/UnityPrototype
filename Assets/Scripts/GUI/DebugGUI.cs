@@ -129,7 +129,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
-            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 310), "Action Menu", customBackground);
+            GUI.Box(new Rect(box_action, box_y, box_width, box_height + 340), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Map Menu", customBackground);
 
@@ -1010,6 +1010,14 @@ public class DebugGUI : MonoBehaviour
                 GameManager.i.playerScript.DebugAddInvestigation();
             }
 
+            //thirtieth button
+            modifier = 29;
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "TEST"))
+            {
+                Debug.Log("[Dbg] Button -> TEST");
+                //test condition
+            }
+
             //
             // - - - Level Menu - - -
             //
@@ -1099,6 +1107,8 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Show Contact Nodes");
                 EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowContacts, "DebugGUI.cs -> OnGUI");
             }
+
+
 
             //
             // - - - Analysis at Right Hand side of Screen - - -

@@ -477,3 +477,49 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 47854 -> Friday, 15 May 2020 5:57 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 19862 -> Friday, 15 May 2020 8:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34570 -> Saturday, 16 May 2020 1:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19584 -> Saturday, 16 May 2020 1:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49991 -> Saturday, 16 May 2020 4:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55283 -> Saturday, 16 May 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6340 -> Saturday, 16 May 2020 5:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5334 -> Saturday, 16 May 2020 5:07 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 48551 -> Saturday, 16 May 2020 5:15 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23747 -> Saturday, 16 May 2020 5:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20590 -> Saturday, 16 May 2020 5:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48880 -> Saturday, 16 May 2020 5:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11225 -> Saturday, 16 May 2020 5:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43038 -> Saturday, 16 May 2020 5:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16511 -> Saturday, 16 May 2020 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40066 -> Saturday, 16 May 2020 5:38 PM
+City seed 5678 -> London, United Kingdom

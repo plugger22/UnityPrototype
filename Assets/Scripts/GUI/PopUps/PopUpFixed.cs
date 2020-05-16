@@ -165,7 +165,10 @@ public class PopUpFixed : MonoBehaviour
         arrayOfTexts[6] = popTopRightText;
         arrayOfTexts[7] = popTopCentreText;
         //defaults (all the same, use first item in arrays as defaults)
-        localScaleDefault = arrayOfTransforms[0].localScale;
+
+        //localScaleDefault = arrayOfTransforms[0].localScale;
+
+        localScaleDefault = new Vector3(1.3f, 1.3f, 0);
         textColorDefault = arrayOfTexts[0].color;
         //reset all to default settings
         Reset();
