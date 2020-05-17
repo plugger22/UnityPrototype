@@ -135,7 +135,7 @@ public class PopUpDynamic : MonoBehaviour
                 else
                 {
                     //stop coroutine and update with new data before restarting
-                    StopCoroutine("PopUp");
+                    StopMyCoroutine();
                     popText.text = data.text;
                     data.position.x += data.x_offset;
                     data.position.y += data.y_offset;
@@ -194,9 +194,14 @@ public class PopUpDynamic : MonoBehaviour
     /// <summary>
     /// Stop coroutine
     /// </summary>
-    public void StopCoroutine()
+    public void StopMyCoroutine()
     {
-        StopCoroutine("PopUp");
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
+
         isActive = false;
     }
 }

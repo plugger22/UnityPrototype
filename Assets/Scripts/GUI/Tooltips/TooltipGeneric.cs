@@ -134,7 +134,7 @@ public class TooltipGeneric : MonoBehaviour
     public float GetOpacity()
     { return canvasGroup.alpha; }
 
-    /// <summary>
+    /*/// <summary>
     /// fade in tooltip over time
     /// </summary>
     /// <returns></returns>
@@ -145,7 +145,7 @@ public class TooltipGeneric : MonoBehaviour
             canvasGroup.alpha += Time.deltaTime / fadeInTime;
             yield return null;
         }
-    }
+    }*/
 
     /// <summary>
     /// returns true if tooltip is active and visible

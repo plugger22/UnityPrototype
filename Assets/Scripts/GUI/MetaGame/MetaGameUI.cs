@@ -2048,7 +2048,7 @@ public class MetaGameUI : MonoBehaviour
             EffectDataInput effectInput = new EffectDataInput();
             StringBuilder builder = new StringBuilder();
             //stop renown coroutine
-            GameManager.i.popUpDynamicScript.StopCoroutine();
+            GameManager.i.popUpDynamicScript.StopMyCoroutine();
             //
             // - - - Process Effects
             //

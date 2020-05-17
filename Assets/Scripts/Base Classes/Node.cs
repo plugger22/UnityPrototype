@@ -282,7 +282,6 @@ public class Node : MonoBehaviour
             //exit any tooltip
             if (onMouseFlag == true)
             {
-                onMouseFlag = false;
                 StopMyCoroutine();
                 GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
             }
@@ -326,7 +325,6 @@ public class Node : MonoBehaviour
     {
         if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
-            onMouseFlag = false;
             StopMyCoroutine();
             GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
         }
@@ -345,14 +343,9 @@ public class Node : MonoBehaviour
             //Right click node -> Show either move options (node highlights) or Move Menu
             if (Input.GetMouseButtonDown(1) == true)
             {
-                /*//exit any tooltip
-                if (onMouseFlag == true)
-                { onMouseFlag = false; }*/
                 //exit any tooltip
                 if (onMouseFlag == true)
                 {
-                    onMouseFlag = false;
-
                     StopMyCoroutine();
                     GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
                 }
@@ -575,6 +568,7 @@ public class Node : MonoBehaviour
         {
             StopCoroutine(myCoroutine);
             myCoroutine = null;
+            onMouseFlag = false;
         }
     }
 

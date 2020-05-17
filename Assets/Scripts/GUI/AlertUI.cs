@@ -81,7 +81,10 @@ public class AlertUI : MonoBehaviour
             GameManager.i.nodeScript.NodeShowFlag = 0;
             //stop coroutine if still running
             if (myCoroutine != null)
-            { StopCoroutine("AlertTimer"); }
+            {
+                StopCoroutine(myCoroutine);
+                myCoroutine = null;
+            }
             if (resetFlag == true)
             {
                 //redraw to remove highlighted nodes

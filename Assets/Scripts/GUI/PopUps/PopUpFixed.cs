@@ -207,15 +207,19 @@ public class PopUpFixed : MonoBehaviour
     {
         for (int i = 0; i < sizeOfArray; i++)
         {
-            if (arrayOfActive[i] == true)
-            { arrayOfObjects[i].SetActive(false); }
+            //outside of if statement in order to clear out any texts at start of session (there is a default '100' in the textmeshPro UI object)
             arrayOfTexts[i].text = "";
-            arrayOfTexts[i].gameObject.SetActive(true);
-            arrayOfActive[i] = false;
+            if (arrayOfActive[i] == true)
+            {
+                arrayOfObjects[i].SetActive(false);
+                //needed because attached directly to game object and when object loses focus this is deactivated
+                arrayOfTexts[i].gameObject.SetActive(true);
+                arrayOfActive[i] = false;
+            }
         }
         isActive = false;
-        myCoroutine = null;
-        Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");
+        /*myCoroutine = null;*/
+        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");*/
     }
 
     /// <summary>
@@ -235,7 +239,7 @@ public class PopUpFixed : MonoBehaviour
             else { arrayOfTexts[index].text = textToDisplay; }
             //set active index true (enables display)
             arrayOfActive[index] = true;
-            Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
+            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");*/
         }
         else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
     }
@@ -304,7 +308,7 @@ public class PopUpFixed : MonoBehaviour
     /// <returns></returns>
     IEnumerator PopUp(float timeDelay)
     {
-        Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");
+        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");*/
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
@@ -317,23 +321,15 @@ public class PopUpFixed : MonoBehaviour
         {
             if (arrayOfActive[i] == true)
             {
-                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}] {1}{2}", i, arrayOfTexts[i].text, "\n");*/
                 counter++;
                 arrayOfTexts[i].color = textColorDefault;
                 arrayOfTransforms[i].localScale = localScaleDefault;
                 arrayOfObjects[i].SetActive(true);
-                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}].color r {1}, g {2}, b {3}, a {4}{5}", i, 
-                    arrayOfTexts[i].color.r, arrayOfTexts[i].color.g, arrayOfTexts[i].color.b, arrayOfTexts[i].color.a, "\n");
-                Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
-                    i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");
-                Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: position[{0}] x {1}, y {2}, z {3}{4}",
-                    i, arrayOfTransforms[i].position.x, arrayOfTransforms[i].position.y, arrayOfTransforms[i].position.z, "\n");*/
             }
         }
         //should always at least one popUp to display
         if (counter > 0)
         {
-            Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: Start Animation loop - - - counter {0}{1}", counter, "\n");
             //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
             counter = 0;
             do
@@ -342,36 +338,23 @@ public class PopUpFixed : MonoBehaviour
                 {
                     if (arrayOfActive[i] == true)
                     {
-                        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfActive[{0}] {1}{2}", i, arrayOfActive[i], "\n");
-                        Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfObjects[{0}].activeSelf {1}{2}", i, arrayOfObjects[i].activeSelf, "\n");*/
-                        /*//use for y axis movement
-                        arrayOfTransforms[i].position += new Vector3(0, moveSpeed) * Time.deltaTime;
-                        Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: position[{0}] x {1}, y {2}, z {3}{4}",
-                            i, arrayOfTransforms[i].position.x, arrayOfTransforms[i].position.y, arrayOfTransforms[i].position.z, "\n");*/
-
                         if (elapsedTime < threshold)
                         {
                             //first half of popUp lifetime -> grow in size
                             arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
-                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
-                                i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");*/
                         }
                         else
                         {
                             //second half of popUp lifetime -> shrink
                             arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
-                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: localScale[{0}] x {1}, y {2}, z {3}{4}",
-                                i, arrayOfTransforms[i].localScale.x, arrayOfTransforms[i].localScale.y, arrayOfTransforms[i].localScale.z, "\n");*/
                             //fade
                             color.a -= fadeSpeed * Time.deltaTime;
                             arrayOfTexts[i].color = color;
-                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: arrayOfTexts[{0}].color r {1}, g {2}, b {3}, a {4}{5}", i, color.r, color.g, color.b, color.a, "\n");*/
                         }
                     }
                 }
                 //increment time
                 elapsedTime += Time.deltaTime;
-                /*Debug.LogFormat("[Tst] PopUpFixed.cs -> PopUp: ElapsedTime {0} - - -{1}", elapsedTime, "\n");*/
                 //fail safe
                 counter++;
                 if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }

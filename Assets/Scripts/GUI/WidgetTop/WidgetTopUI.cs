@@ -35,7 +35,9 @@ public class WidgetTopUI : MonoBehaviour
     private RectTransform transformFaction;
     private bool isFading;                                  //flashing red security measure indicator, if true then opacity fading, otherwise increasing
     private bool isSecurityFlash;                           //true if security flash is on
-    private Coroutine myCoroutine;
+    private Coroutine myFlashRedCoroutine;
+    private Coroutine myCityCoroutine;
+    private Coroutine myHqCoroutine;
     private float flashRedTime;
     private Color innerColour;
     private Color outerColour;
@@ -385,18 +387,18 @@ public class WidgetTopUI : MonoBehaviour
         switch (isStart)
         {
             case true:
-                if (myCoroutine == null)
+                if (myFlashRedCoroutine == null)
                 {
-                    myCoroutine = StartCoroutine("ShowFlashRed");
+                    myFlashRedCoroutine = StartCoroutine("ShowFlashRed");
                     isSecurityFlash = true;
                 }
                 break;
             case false:
                 //normally false and not null but could be LoadAtStart and coroutine null
-                if (myCoroutine != null)
+                if (myFlashRedCoroutine != null)
                 {
-                    StopCoroutine(myCoroutine);
-                    myCoroutine = null;
+                    StopCoroutine(myFlashRedCoroutine);
+                    myFlashRedCoroutine = null;
                 }
                 isFading = false;
                 isSecurityFlash = false;
@@ -480,7 +482,11 @@ public class WidgetTopUI : MonoBehaviour
             city.text = GameManager.i.guiScript.cityIcon;
             if (isCityCoroutine == true)
             {
-                StopCoroutine("FlashCtyIcon");
+                if (myCityCoroutine != null)
+                {
+                    StopCoroutine(myCityCoroutine);
+                    myCityCoroutine = null;
+                }
                 isCityCoroutine = false;
                 city.fontSize = minFontSize;
             }
@@ -495,11 +501,11 @@ public class WidgetTopUI : MonoBehaviour
                     {
                         case 0:
                             city.text = GameManager.i.guiScript.cityIconBad;
-                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            if (isCityCoroutine == false) { myCityCoroutine = StartCoroutine("FlashCityIcon"); }
                             break;
                         case 10:
                             city.text = GameManager.i.guiScript.cityIconGood;
-                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            if (isCityCoroutine == false) { myCityCoroutine = StartCoroutine("FlashCityIcon"); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
                     }
@@ -510,11 +516,11 @@ public class WidgetTopUI : MonoBehaviour
                     {
                         case 0:
                             city.text = GameManager.i.guiScript.cityIconGood;
-                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            if (isCityCoroutine == false) { myCityCoroutine = StartCoroutine("FlashCityIcon"); }
                             break;
                         case 10:
                             city.text = GameManager.i.guiScript.cityIconBad;
-                            if (isCityCoroutine == false) { StartCoroutine("FlashCityIcon"); }
+                            if (isCityCoroutine == false) { myCityCoroutine = StartCoroutine("FlashCityIcon"); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised loyalty \"{0}\"", loyalty); break;
                     }
@@ -534,14 +540,18 @@ public class WidgetTopUI : MonoBehaviour
         {
             hq.text = GameManager.i.guiScript.hqIconBad;
             if (isHqCoroutine == false)
-            { StartCoroutine("FlashHqIcon"); }
+            { myHqCoroutine  = StartCoroutine("FlashHqIcon"); }
         }
         else
         {
             hq.text = GameManager.i.guiScript.hqIcon;
             if (isHqCoroutine == true)
             {
-                StopCoroutine("FlashHqIcon");
+                if (myHqCoroutine != null)
+                {
+                    StopCoroutine(myHqCoroutine);
+                    myHqCoroutine = null;
+                }
                 isHqCoroutine = false;
                 hq.fontSize = minFontSize;
             }

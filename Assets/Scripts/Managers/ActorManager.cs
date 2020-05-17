@@ -769,7 +769,8 @@ public class ActorManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
                     }
                 }
-                //Debug
+
+                /*//Debug
                 if (side.level == playerSide.level)
                 {
                     Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: FILTERED listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
@@ -783,7 +784,8 @@ public class ActorManager : MonoBehaviour
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
-                }
+                }*/
+
                 //
                 // - - - process actor list
                 //

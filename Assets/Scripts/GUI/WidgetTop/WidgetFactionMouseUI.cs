@@ -45,7 +45,6 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
             onMouseFlag = true;
 
             //exit any node tooltip that might be open
-            /*StopCoroutine("ShowTooltip");*/
             GameManager.i.tooltipNodeScript.CloseTooltip("WidgetFactionMouseUI.cs -> OnPointerEnter");
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
@@ -67,7 +66,10 @@ public class WidgetFactionMouseUI : MonoBehaviour, IPointerClickHandler, IPointe
         {
             onMouseFlag = false;
             if (myCoroutine != null)
-            { StopCoroutine(myCoroutine); }
+            {
+                StopCoroutine(myCoroutine);
+                myCoroutine = null;
+            }
             GameManager.i.tooltipGenericScript.CloseTooltip("WidgetFactionMouseUI.cs -> OnPointerExit");
         }
     }

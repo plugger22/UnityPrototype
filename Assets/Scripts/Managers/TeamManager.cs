@@ -325,8 +325,8 @@ public class TeamManager : MonoBehaviour
                                         if (listOfActors.Count > 0)
                                         {
                                             actor = listOfActors[Random.Range(0, listOfActors.Count)];
-                                            Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: Random Actor select {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
-                                                actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");
+                                            /*Debug.LogFormat("[Tst] TeamManager.cs -> StartTurnEarly: Random Actor select {0}, {1}, ID {2} for {3} {4}, ID {5}{6}",
+                                                actor.actorName, actor.arc.name, actor.actorID, team.arc.name, team.teamName, team.teamID, "\n");*/
                                         }
                                     }
                                     else { Debug.LogError("Invalid listOfActors (Null)"); }
