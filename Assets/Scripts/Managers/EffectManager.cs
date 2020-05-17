@@ -2544,6 +2544,7 @@ public class EffectManager : MonoBehaviour
     private bool ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
     {
         bool isSuccess = true;
+        int change;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
         if (arrayOfActors != null)
@@ -2561,7 +2562,7 @@ public class EffectManager : MonoBehaviour
                         {
                             if (actorExclude.actorID == actor.actorID)
                             { isProceed = false; }
-                        }
+                        }                       
                         //adjust actor
                         if (isProceed == true)
                         {
@@ -2591,6 +2592,9 @@ public class EffectManager : MonoBehaviour
                                     {
                                         Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                             dataBefore, motivation, "\n");
+                                        //onMap actor -> popUp
+                                        change = dataBefore - motivation;
+                                        GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", change > 0 ? "+" : "", change));
                                     }
                                     break;
                                 case "Renown":
@@ -2600,11 +2604,13 @@ public class EffectManager : MonoBehaviour
                                         case "Add":
                                             renown += effect.value;
                                             actor.Renown = renown;
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Renown +{effect.value}");
                                             break;
                                         case "Subtract":
                                             renown -= effect.value;
                                             renown = Mathf.Max(0, renown);
                                             actor.Renown = renown;
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Renown -{effect.value}");
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
@@ -2618,11 +2624,13 @@ public class EffectManager : MonoBehaviour
                                         case "Add":
                                             invisibility += effect.value;
                                             actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Invisibility +{effect.value}");
                                             break;
                                         case "Subtract":
                                             invisibility -= effect.value;
                                             invisibility = Mathf.Max(0, invisibility);
                                             actor.SetDatapoint(ActorDatapoint.Invisibility2, invisibility, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Invisibiilty -{effect.value}");
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
@@ -5184,6 +5192,7 @@ public class EffectManager : MonoBehaviour
                         builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.i.actorScript.ProcessActorConflict(actor));
                         motivation = Mathf.Max(0, motivation);
                         bottomText = builder.ToString();
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, "CONFLICT!");
                     }
                     else
                     {
@@ -5200,8 +5209,11 @@ public class EffectManager : MonoBehaviour
         //log entry
         if (motivation != dataBefore)
         {
+            int change = dataBefore - motivation;
             Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                 dataBefore, motivation, "\n");
+            if (isHqActor == false)
+            { GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", change > 0 ? "+" : "", change)); }
         }
         return bottomText;
     }

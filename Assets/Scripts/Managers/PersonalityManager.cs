@@ -913,7 +913,10 @@ public class PersonalityManager : MonoBehaviour
         string reason = results.Item4;
         //change mood, add history item, stressed condition added if mood < 0
         if (change != 0)
-        { GameManager.i.playerScript.ChangeMood(change, reason, factorName); }
+        {
+            GameManager.i.playerScript.ChangeMood(change, reason, factorName);
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change));
+        }
         //outcome message string (formatted)
         return GetMoodMessage(results);
     }

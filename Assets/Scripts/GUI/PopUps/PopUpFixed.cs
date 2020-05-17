@@ -224,7 +224,7 @@ public class PopUpFixed : MonoBehaviour
 
     /// <summary>
     /// Input text to display at a specific fixed popUp (won't display until ExecuteFixed is called)
-    /// NOTE: text is appended to any existing text (on a new line)
+    /// NOTE: text is automatically appended to any existing text (on a new line)
     /// </summary>
     /// <param name="popPos"></param>
     /// <param name="textToDisplay"></param>
@@ -291,13 +291,13 @@ public class PopUpFixed : MonoBehaviour
                 //run only if data present to display
                 if (CheckIfDataToDisplay() == true)
                 { myCoroutine = StartCoroutine("PopUp", timeDelay); }
-                else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }
+                /*else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }*/
             }
             else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: GameState \"{0}\" (NOT PlayGame){1}", GameManager.i.inputScript.GameState, "\n"); }
         }
         else
         {
-            Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: isActive FALSE{0}", "\n");
+            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)");
             StopMyCoroutine();
         }
     }

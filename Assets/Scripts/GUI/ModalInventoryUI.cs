@@ -227,6 +227,7 @@ public class ModalInventoryUI : MonoBehaviour
                             {
                                 if (details.arrayOfTooltipsSprite[i] != null)
                                 {
+                                    arrayOfTooltipsSprites[i].gameObject.SetActive(true);
                                     arrayOfTooltipsSprites[i].tooltipHeader = details.arrayOfTooltipsSprite[i].textHeader;
                                     arrayOfTooltipsSprites[i].tooltipMain = details.arrayOfTooltipsSprite[i].textMain;
                                     arrayOfTooltipsSprites[i].tooltipDetails = details.arrayOfTooltipsSprite[i].textDetails;
@@ -243,6 +244,7 @@ public class ModalInventoryUI : MonoBehaviour
                             {
                                 if (details.arrayOfTooltipsStars[i] != null)
                                 {
+                                    arrayOfTooltipsStars[i].gameObject.SetActive(true);
                                     arrayOfTooltipsStars[i].tooltipHeader = details.arrayOfTooltipsStars[i].textHeader;
                                     arrayOfTooltipsStars[i].tooltipMain = details.arrayOfTooltipsStars[i].textMain;
                                     arrayOfTooltipsStars[i].tooltipDetails = details.arrayOfTooltipsStars[i].textDetails;
@@ -262,6 +264,7 @@ public class ModalInventoryUI : MonoBehaviour
                             {
                                 if (details.arrayOfTooltipsCompatibility[i] != null)
                                 {
+                                    arrayOfTooltipsCompatibility[i].gameObject.SetActive(true);
                                     arrayOfTooltipsCompatibility[i].tooltipHeader = details.arrayOfTooltipsCompatibility[i].textHeader;
                                     arrayOfTooltipsCompatibility[i].tooltipMain = details.arrayOfTooltipsCompatibility[i].textMain;
                                     arrayOfTooltipsCompatibility[i].tooltipDetails = details.arrayOfTooltipsCompatibility[i].textDetails;
