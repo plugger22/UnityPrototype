@@ -2617,6 +2617,16 @@ public class PlayerManager : MonoBehaviour
         return reply;
     }
 
+    /// <summary>
+    /// Gives player +10 renown
+    /// </summary>
+    public void DebugGiveRenown()
+    {
+        Renown += 10;
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Renown +10");
+        GameManager.i.popUpFixedScript.ExecuteFixed();
+    }
+
     //
     // - - - Node Actions
     //

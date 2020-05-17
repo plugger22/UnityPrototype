@@ -10650,6 +10650,11 @@ Prefab:
       propertyPath: m_Name
       value: PopUpPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 114552429731591362, guid: f4bd0c584de4fe542b5bde7fd6916d03,
+        type: 2}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 9bbbd256c285d0248a1eeef137a72059, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4bd0c584de4fe542b5bde7fd6916d03, type: 2}
   m_IsPrefabAsset: 0
@@ -11378,7 +11383,7 @@ Transform:
   m_LocalScale: {x: 32.67, y: 19.01, z: 2.4}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
 --- !u!114 &329507965
 MonoBehaviour:
@@ -39270,7 +39275,7 @@ GameObject:
   - component: {fileID: 1177888967}
   - component: {fileID: 1177888966}
   m_Layer: 5
-  m_Name: Canvas_Main
+  m_Name: Canvas_Main -> keep at top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39306,7 +39311,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1600, y: 1200}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -39371,7 +39376,7 @@ RectTransform:
   - {fileID: 741040205}
   - {fileID: 1111120729}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -60635,7 +60640,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1900186436
 GameObject:

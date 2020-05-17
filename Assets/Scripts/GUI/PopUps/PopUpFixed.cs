@@ -210,6 +210,7 @@ public class PopUpFixed : MonoBehaviour
             if (arrayOfActive[i] == true)
             { arrayOfObjects[i].SetActive(false); }
             arrayOfTexts[i].text = "";
+            arrayOfTexts[i].gameObject.SetActive(true);
             arrayOfActive[i] = false;
         }
         isActive = false;
@@ -293,7 +294,7 @@ public class PopUpFixed : MonoBehaviour
         else
         {
             Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: isActive FALSE{0}", "\n");
-            StopCoroutine();
+            StopMyCoroutine();
         }
     }
 
@@ -389,9 +390,9 @@ public class PopUpFixed : MonoBehaviour
 
 
     /// <summary>
-    /// Stop coroutine
+    /// Controlled shut down of coroutine, includes Reset
     /// </summary>
-    public void StopCoroutine()
+    private void StopMyCoroutine()
     {
         if (myCoroutine != null)
         {

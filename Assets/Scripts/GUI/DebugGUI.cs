@@ -793,11 +793,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Give Renown"))
             {
                 Debug.Log("[Dbg] Button -> Give Player Renown");
-                int renown = GameManager.i.playerScript.Renown;
-                renown += 10;
-                GameManager.i.playerScript.Renown = renown;
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Renown +10");
-                GameManager.i.popUpFixedScript.ExecuteFixed();
+                GameManager.i.playerScript.DebugGiveRenown();
             }
 
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Give CaptureTool" /*optionAITraceback*/))

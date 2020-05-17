@@ -594,7 +594,7 @@ public class TooltipNode : MonoBehaviour
         /*}*/
     }
 
-    /// <summary>
+    /*/// <summary>
     /// fade in tooltip over time
     /// </summary>
     /// <returns></returns>
@@ -605,7 +605,7 @@ public class TooltipNode : MonoBehaviour
             canvasGroup.alpha += Time.deltaTime / fadeInTime;
             yield return null;
         }
-    }
+    }*/
 
     private string GetStatColour(int data, NodeData type)
     {

@@ -283,7 +283,7 @@ public class Node : MonoBehaviour
             if (onMouseFlag == true)
             {
                 onMouseFlag = false;
-                StopCoroutine("ShowTooltip");
+                StopMyCoroutine();
                 GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
             }
             //Action Menu -> not valid if AI is active for side
@@ -327,11 +327,7 @@ public class Node : MonoBehaviour
         if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
             onMouseFlag = false;
-            if (myCoroutine != null)
-            {
-                StopCoroutine(myCoroutine);
-                myCoroutine = null;
-            }
+            StopMyCoroutine();
             GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseExit");
         }
     }
@@ -356,7 +352,8 @@ public class Node : MonoBehaviour
                 if (onMouseFlag == true)
                 {
                     onMouseFlag = false;
-                    StopCoroutine("ShowTooltip");
+
+                    StopMyCoroutine();
                     GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
                 }
                 //move action invalid if resistance player is captured, etc.
@@ -401,6 +398,8 @@ public class Node : MonoBehaviour
             }
         }
     }
+
+
 
     /// <summary>
     /// tooltip coroutine
@@ -551,7 +550,6 @@ public class Node : MonoBehaviour
                     }
                     //if Authority contacts present then automatically active
                     else { dataTooltip.isActiveContact = isContactAuthority; }
-
                     GameManager.i.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
                 }
@@ -565,6 +563,18 @@ public class Node : MonoBehaviour
                     yield return null;
                 }*/
             }
+        }
+    }
+
+    /// <summary>
+    /// Controlled shut down of Coroutine
+    /// </summary>
+    private void StopMyCoroutine()
+    {
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
         }
     }
 

@@ -177,6 +177,11 @@ public class InputManager : MonoBehaviour
             //Toggle Actor Info display between Renown and Compatibility
             EventManager.instance.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessKeyInput ActorInfo"));
         }
+        else if (Input.GetButtonDown("Test") == true)
+        {
+            //runs a test condition (whatever you want)
+            GameManager.i.playerScript.DebugGiveRenown();
+        }
         else
         {
             //
