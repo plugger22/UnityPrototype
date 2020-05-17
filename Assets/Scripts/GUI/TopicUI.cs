@@ -421,7 +421,10 @@ public class TopicUI : MonoBehaviour
                 else { Debug.LogWarning("Invalid spriteBoss (Null)"); }
                 //initialise boss image tooltip
                 if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
-                { tooltipBoss.tooltipHeader = data.bossTooltipHeader; }
+                {
+                    tooltipBoss.gameObject.SetActive(true);
+                    tooltipBoss.tooltipHeader = data.bossTooltipHeader;
+                }
                 else { tooltipBoss.tooltipHeader = ""; }
                 if (string.IsNullOrEmpty(data.bossTooltipMain) == false)
                 { tooltipBoss.tooltipMain = data.bossTooltipMain; }
@@ -455,7 +458,10 @@ public class TopicUI : MonoBehaviour
                             }
                             //initialise option tooltip
                             if (string.IsNullOrEmpty(option.tooltipHeader) == false)
-                            { arrayOfTooltips[i].tooltipHeader = option.tooltipHeader; }
+                            {
+                                arrayOfTooltips[i].gameObject.SetActive(true);
+                                arrayOfTooltips[i].tooltipHeader = option.tooltipHeader;
+                            }
                             if (string.IsNullOrEmpty(option.tooltipMain) == false)
                             { arrayOfTooltips[i].tooltipMain = option.tooltipMain; }
                             if (string.IsNullOrEmpty(option.tooltipDetails) == false)
@@ -502,7 +508,10 @@ public class TopicUI : MonoBehaviour
             else { buttonHelp_specific.gameObject.SetActive(false); }
             //initialise Image tooltip
             if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
-            { tooltipImage.tooltipHeader = data.imageTooltipHeader; }
+            {
+                tooltipImage.gameObject.SetActive(true);
+                tooltipImage.tooltipHeader = data.imageTooltipHeader;
+            }
             else { tooltipImage.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
             { tooltipImage.tooltipMain = data.imageTooltipMain; }
@@ -512,7 +521,10 @@ public class TopicUI : MonoBehaviour
             else { tooltipImage.tooltipDetails = ""; }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
-            { tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader; }
+            {
+                tooltipIgnore.gameObject.SetActive(true);
+                tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader;
+            }
             else { tooltipIgnore.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
             { tooltipIgnore.tooltipMain = data.ignoreTooltipMain; }
