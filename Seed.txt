@@ -655,3 +655,51 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30198 -> Monday, 18 May 2020 12:28 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 41001 -> Monday, 18 May 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:314)
+	PlayerManager:DebugGiveRenown() (at Assets/Scripts/Managers/PlayerManager.cs:2627)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:183)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 27800 -> Monday, 18 May 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43108 -> Monday, 18 May 2020 2:56 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PopUpFixed.SubInitialiseSessionStart () (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:186)
+	PopUpFixed.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:96)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:803)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:858)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:376)
+	
+Dev seed 51915 -> Monday, 18 May 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PopUpFixed.SubInitialiseSessionStart () (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:186)
+	PopUpFixed.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:96)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:803)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:858)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:376)
+	
+Dev seed 64014 -> Monday, 18 May 2020 3:06 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+PopUpFixed.SubInitialiseSessionStart () (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:186)
+	PopUpFixed.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:96)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:803)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:858)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:376)
+	
+Dev seed 38793 -> Monday, 18 May 2020 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30128 -> Monday, 18 May 2020 3:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25054 -> Monday, 18 May 2020 3:36 PM
+City seed 5678 -> London, United Kingdom

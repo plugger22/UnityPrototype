@@ -12,38 +12,48 @@ public class PopUpFixed : MonoBehaviour
     public GameObject popSlot0Object;
     public Transform popSlot0Transform;
     public TextMeshProUGUI popSlot0Text;
+    public Canvas popSlot0Canvas;
     [Header("Actor Slot1")]
     public GameObject popSlot1Object;
     public Transform popSlot1Transform;
     public TextMeshProUGUI popSlot1Text;
+    public Canvas popSlot1Canvas;
     [Header("Actor Slot2")]
     public GameObject popSlot2Object;
     public Transform popSlot2Transform;
     public TextMeshProUGUI popSlot2Text;
+    public Canvas popSlot2Canvas;
     [Header("Actor Slot3")]
     public GameObject popSlot3Object;
     public Transform popSlot3Transform;
     public TextMeshProUGUI popSlot3Text;
+    public Canvas popSlot3Canvas;
     [Header("Player")]
     public GameObject popPlayerObject;
     public Transform popPlayerTransform;
     public TextMeshProUGUI popPlayerText;
+    public Canvas popPlayerCanvas;
     [Header("Top Bar Left")]
     public GameObject popTopLeftObject;
     public Transform popTopLeftTransform;
     public TextMeshProUGUI popTopLeftText;
+    public Canvas popTopLeftCanvas;
     [Header("Top Bar Right")]
     public GameObject popTopRightObject;
     public Transform popTopRightTransform;
     public TextMeshProUGUI popTopRightText;
+    public Canvas popTopRightCanvas;
     [Header("Top Widget Centre")]
     public GameObject popTopCentreObject;
     public Transform popTopCentreTransform;
     public TextMeshProUGUI popTopCentreText;
+    public Canvas popTopCentreCanvas;
+
 
     private GameObject[] arrayOfObjects;
     private Transform[] arrayOfTransforms;
     private TextMeshProUGUI[] arrayOfTexts;
+    private Canvas[] arrayOfCanvas;
     private bool[] arrayOfActive;
 
     private int sizeOfArray;
@@ -111,32 +121,41 @@ public class PopUpFixed : MonoBehaviour
         arrayOfObjects = new GameObject[sizeOfArray];
         arrayOfTransforms = new Transform[sizeOfArray];
         arrayOfTexts = new TextMeshProUGUI[sizeOfArray];
+        arrayOfCanvas = new Canvas[sizeOfArray];
         arrayOfActive = new bool[sizeOfArray];
         //popUps present
         Debug.Assert(popSlot0Object != null, "Invalid popSlot0Object (Null)");
         Debug.Assert(popSlot0Transform != null, "Invalid popSlot0Transform (Null)");
         Debug.Assert(popSlot0Text != null, "Invalid popSlot0Text (Null)");
+        Debug.Assert(popSlot0Canvas != null, "Invalid popSlot0Canvas (Null)");
         Debug.Assert(popSlot1Object != null, "Invalid popSlot1Object (Null)");
         Debug.Assert(popSlot1Transform != null, "Invalid popSlot1Transform (Null)");
         Debug.Assert(popSlot1Text != null, "Invalid popSlot1Text (Null)");
+        Debug.Assert(popSlot1Canvas != null, "Invalid popSlot1Canvas (Null)");
         Debug.Assert(popSlot2Object != null, "Invalid popSlot2Object (Null)");
         Debug.Assert(popSlot2Transform != null, "Invalid popSlot2Transform (Null)");
         Debug.Assert(popSlot2Text != null, "Invalid popSlot2Text (Null)");
+        Debug.Assert(popSlot2Canvas != null, "Invalid popSlot2Canvas (Null)");
         Debug.Assert(popSlot3Object != null, "Invalid popSlot3Object (Null)");
         Debug.Assert(popSlot3Transform != null, "Invalid popSlot3Transform (Null)");
         Debug.Assert(popSlot3Text != null, "Invalid popSlot3Text (Null)");
+        Debug.Assert(popSlot3Canvas != null, "Invalid popSlot3Canvas (Null)");
         Debug.Assert(popPlayerObject != null, "Invalid popPlayerObject (Null)");
         Debug.Assert(popPlayerTransform != null, "Invalid popPlayerTransform (Null)");
         Debug.Assert(popPlayerText != null, "Invalid popPlayerText (Null)");
+        Debug.Assert(popPlayerCanvas != null, "Invalid popPlayerCanvas (Null)");
         Debug.Assert(popTopLeftObject != null, "Invalid popTopLeftObject (Null)");
         Debug.Assert(popTopLeftTransform != null, "Invalid popTopLeftTransform (Null)");
         Debug.Assert(popTopLeftText != null, "Invalid popTopLeftText (Null)");
+        Debug.Assert(popTopLeftCanvas != null, "Invalid popTopLeftCanvas (Null)");
         Debug.Assert(popTopRightObject != null, "Invalid popTopRightObject (Null)");
         Debug.Assert(popTopRightTransform != null, "Invalid popTopRightTransform (Null)");
         Debug.Assert(popTopRightText != null, "Invalid popTopRightText (Null)");
+        Debug.Assert(popTopRightCanvas != null, "Invalid popTopRightCanvas (Null)");
         Debug.Assert(popTopCentreObject != null, "Invalid popTopCentreObject (Null)");
         Debug.Assert(popTopCentreTransform != null, "Invalid popTopCentreTransform (Null)");
         Debug.Assert(popTopCentreText != null, "Invalid popTopCentreText (Null)");
+        Debug.Assert(popTopCentreCanvas != null, "Invalid popTopCentreCanvas (Null)");
         //populate arrays -> Objects
         arrayOfObjects[0] = popSlot0Object;
         arrayOfObjects[1] = popSlot1Object;
@@ -164,10 +183,16 @@ public class PopUpFixed : MonoBehaviour
         arrayOfTexts[5] = popTopLeftText;
         arrayOfTexts[6] = popTopRightText;
         arrayOfTexts[7] = popTopCentreText;
+        //populate arrays -> Canvas
+        arrayOfCanvas[0] = popSlot0Canvas;
+        arrayOfCanvas[1] = popSlot1Canvas;
+        arrayOfCanvas[2] = popSlot2Canvas;
+        arrayOfCanvas[3] = popSlot3Canvas;
+        arrayOfCanvas[4] = popPlayerCanvas;
+        arrayOfCanvas[5] = popTopLeftCanvas;
+        arrayOfCanvas[6] = popTopRightCanvas;
+        arrayOfCanvas[7] = popTopCentreCanvas;
         //defaults (all the same, use first item in arrays as defaults)
-
-        //localScaleDefault = arrayOfTransforms[0].localScale;
-
         localScaleDefault = new Vector3(1.3f, 1.3f, 1.3f);
         textColorDefault = arrayOfTexts[0].color;
         //reset all to default settings
@@ -213,6 +238,7 @@ public class PopUpFixed : MonoBehaviour
             {
                 arrayOfObjects[i].SetActive(false);
                 arrayOfActive[i] = false;
+                arrayOfCanvas[i].gameObject.SetActive(false);
             }
         }
         isActive = false;
@@ -294,6 +320,7 @@ public class PopUpFixed : MonoBehaviour
                     {
                         if (arrayOfActive[i] == true)
                         {
+                            arrayOfCanvas[i].gameObject.SetActive(true);
                             arrayOfObjects[i].SetActive(true);
                             arrayOfTexts[i].color = textColorDefault;
                             arrayOfTransforms[i].localScale = localScaleDefault;

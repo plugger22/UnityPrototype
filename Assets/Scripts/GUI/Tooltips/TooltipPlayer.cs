@@ -23,6 +23,7 @@ public class TooltipPlayer : MonoBehaviour
     public Image divider_4;
     public Image divider_5;
     public GameObject tooltipPlayerObject;
+    public Canvas tooltipPlayerCanvas;
 
     private Image background;
     private static TooltipPlayer tooltipPlayer;
@@ -91,6 +92,19 @@ public class TooltipPlayer : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        Debug.Assert(tooltipPlayerObject != null, "Invalid tooltipPlayerObject (Null)");
+        Debug.Assert(tooltipPlayerCanvas != null, "Invalid tooltipPlayerCanvas (Null)");
+        Debug.Assert(playerName != null, "Invalid playerName (Null)");
+        Debug.Assert(playerStatus != null, "Invalid playerStatus (Null)");
+        Debug.Assert(playerConditions != null, "Invalid playerConditions (Null)");
+        Debug.Assert(playerStats != null, "Invalid playerStats (Null)");
+        Debug.Assert(playerMulti_1 != null, "Invalid playerMulti_1 (Null)");
+        Debug.Assert(playerMulti_2 != null, "Invalid playerMulti_2 (Null)");
+        Debug.Assert(divider_1 != null, "Invalid divider_1 (Null)");
+        Debug.Assert(divider_2 != null, "Invalid divider_2 (Null)");
+        Debug.Assert(divider_3 != null, "Invalid divider_3 (Null)");
+        Debug.Assert(divider_4 != null, "Invalid divider_4 (Null)");
+        Debug.Assert(divider_5 != null, "Invalid divider_5 (Null)");
         canvasGroup = tooltipPlayerObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipPlayerObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.i.guiScript.tooltipFade;
@@ -159,11 +173,13 @@ public class TooltipPlayer : MonoBehaviour
         bool isStatus = false;
         bool isConditions = false;
         //open panel at start
+        tooltipPlayerCanvas.gameObject.SetActive(true);
         tooltipPlayerObject.SetActive(true);
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //set opacity to zero (invisible)
         SetOpacity(0f);
         //set state of all items in tooltip window (Status and Conditions are switched on later only if present)
+        
         playerName.gameObject.SetActive(true);
         playerStatus.gameObject.SetActive(false);
         playerConditions.gameObject.SetActive(false);
@@ -384,6 +400,7 @@ public class TooltipPlayer : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipPlayer.cs -> CloseTooltip: calling by {0}{1}", callingMethod, "\n");
         tooltipPlayerObject.SetActive(false);
+        tooltipPlayerCanvas.gameObject.SetActive(false);
     }
 
 

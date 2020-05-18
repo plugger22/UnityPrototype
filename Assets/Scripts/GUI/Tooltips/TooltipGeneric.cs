@@ -20,6 +20,7 @@ public class TooltipGeneric : MonoBehaviour
     public Image dividerTop;                            //use depends on text components
     public Image dividerBottom;                         //use depends on text components
     public GameObject tooltipGenericObject;
+    public Canvas tooltipGenericCanvas;
 
     private static TooltipGeneric tooltipGeneric;
 
@@ -45,6 +46,7 @@ public class TooltipGeneric : MonoBehaviour
         Debug.Assert(dividerTop != null, "Invalid dividerTop (Null)");
         Debug.Assert(dividerBottom != null, "Invalid dividerBottom (Null)");
         Debug.Assert(tooltipGenericObject != null, "Invalid tooltipGenericOjbect (Null)");
+        Debug.Assert(tooltipGenericCanvas != null, "Invalid tooltipGenericCanvas (Null)");
 
     }
 
@@ -71,6 +73,7 @@ public class TooltipGeneric : MonoBehaviour
     public void SetTooltip(GenericTooltipData data)
     {
         //open panel at start
+        tooltipGenericCanvas.gameObject.SetActive(true);
         tooltipGenericObject.SetActive(true);
         genericText.gameObject.SetActive(true);
         genericHeader.gameObject.SetActive(false);
@@ -171,6 +174,7 @@ public class TooltipGeneric : MonoBehaviour
         {
             //close tooltip
             tooltipGenericObject.SetActive(false);
+            tooltipGenericCanvas.gameObject.SetActive(false);
             /*Debug.LogFormat("[UI] TooltipGeneric -> CloseTooltip: called by {0}{1}", text, "\n");*/
         }
     }
