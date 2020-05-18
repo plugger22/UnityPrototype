@@ -9036,7 +9036,7 @@ public class DataManager : MonoBehaviour
                                                             for (int k = 0; k < 1 + (Mathf.Abs(compatibility) * 3); k++)
                                                             { tempList.Add(new RelationSelectData() { actorFirstID = actor.actorID, actorSecondID = actorOther.actorID, compatibility = compatibility }); }
                                                         }
-                                                        else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: actorOther, {0}, not Active, for slotID {1}, {2} check{3}", actorOther.arc.name, i, actor.arc.name, "\n"); }
+                                                        /*else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: actorOther, {0}, not Active, for slotID {1}, {2} check{3}", actorOther.arc.name, i, actor.arc.name, "\n"); }*/
                                                     }
                                                     else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Invalid actor (Null) for slotID {0}{1}", j, "\n"); }
                                                 }

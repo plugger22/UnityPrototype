@@ -19,10 +19,11 @@ public class TooltipConnection : MonoBehaviour
     public Image dividerTop;                   //Side specific sprites for tooltips
     public Image dividerBottom;
     public GameObject tooltipConnectionObject;
+    public Canvas tooltipConnectionCanvas;
 
     private Image background;
     private static TooltipConnection tooltipConnection;
-    RectTransform rectTransform;
+    private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private float fadeInTime;
     private int offset;
@@ -40,6 +41,14 @@ public class TooltipConnection : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        Debug.Assert(textTop != null, "Invalid textTop (Null)");
+        Debug.Assert(textMiddle != null, "Invalid textMiddle (Null)");
+        Debug.Assert(textBottom != null, "Invalid textBottom (Null)");
+        Debug.Assert(dividerTop != null, "Invalid dividerTop (Null)");
+        Debug.Assert(dividerBottom != null, "Invalid dividerBottom (Null)");
+        Debug.Assert(tooltipConnectionObject != null, "Invalid tooltipConnectionObject (Null)");
+        Debug.Assert(tooltipConnectionCanvas != null, "Invalid tooltipConnectionCanvas (Null)");
+        //components
         canvasGroup = tooltipConnectionObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipConnectionObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.i.guiScript.tooltipFade;
@@ -97,6 +106,7 @@ public class TooltipConnection : MonoBehaviour
     }
 
 
+    #region SetTooltip
     /// <summary>
     /// Initialise connection tooltip
     /// </summary>
@@ -108,6 +118,7 @@ public class TooltipConnection : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipConnection -> SetTooltip{0}", "\n");
         //open panel at start
+        tooltipConnectionCanvas.gameObject.SetActive(true);
         tooltipConnectionObject.SetActive(true);
         //set opacity to zero (invisible)
         SetOpacity(0f);
@@ -215,9 +226,10 @@ public class TooltipConnection : MonoBehaviour
         //set new position
         tooltipConnectionObject.transform.position = screenPos;
     }
+    #endregion
 
 
-        public void SetOpacity(float opacity)
+    public void SetOpacity(float opacity)
     { canvasGroup.alpha = opacity; }
 
     public float GetOpacity()
@@ -250,6 +262,7 @@ public class TooltipConnection : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipConnection -> CloseTooltip: called by {0}{1}", callingMethod, "\n");
         tooltipConnectionObject.SetActive(false);
+        tooltipConnectionCanvas.gameObject.SetActive(false);
     }
 
 

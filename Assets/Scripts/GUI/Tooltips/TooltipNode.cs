@@ -36,6 +36,7 @@ public class TooltipNode : MonoBehaviour
     public Image tracer;
 
     public GameObject tooltipNodeObject;
+    public Canvas tooltipNodeCanvas;
 
     private string[] arrayOfIcons = new string[3];
 
@@ -69,6 +70,25 @@ public class TooltipNode : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        Debug.Assert(nodeName != null, "Invalid nodeName (Null)");
+        Debug.Assert(nodeType != null, "Invalid nodeType (Null)");
+        Debug.Assert(nodeActive != null, "Invalid nodeActive (Null)");
+        Debug.Assert(nodeStats != null, "Invalid nodeStats (Null)");
+        Debug.Assert(nodeTeams != null, "Invalid nodeTeams (Null)");
+        Debug.Assert(nodeTarget != null, "Invalid nodeTarget (Null)");
+        Debug.Assert(spiderTimer != null, "Invalid spiderTimer (Null)");
+        Debug.Assert(tracerTimer != null, "Invalid tracerTimer (Null)");
+        Debug.Assert(crisis != null, "Invalid crisis (Null)");
+        Debug.Assert(ongoingEffects != null, "Invalid ongoingEffects (Null)");
+        Debug.Assert(dividerTop != null, "Invalid dividerTop (Null)");
+        Debug.Assert(dividerCrisis != null, "Invalid dividerCrisis (Null)");
+        Debug.Assert(dividerUpperMiddle != null, "Invalid dividerUpperMiddle (Null)");
+        Debug.Assert(dividerLowerMiddle != null, "Invalid dividerLowerMiddle (Null)");
+        Debug.Assert(dividerStats != null, "Invalid dividerStats (Null)");
+        Debug.Assert(dividerBottom != null, "Invalid dividerBottom (Null)");
+        Debug.Assert(spider != null, "Invalid spider (Null)");
+        Debug.Assert(tracer != null, "Invalid tracer (Null)");
+        //components
         canvasGroup = tooltipNodeObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipNodeObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.i.guiScript.tooltipFade;
@@ -198,6 +218,7 @@ public class TooltipNode : MonoBehaviour
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
+    #region SetTooltip
     /// <summary>
     /// Initialise node tooltip
     /// </summary>
@@ -212,6 +233,7 @@ public class TooltipNode : MonoBehaviour
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         GlobalSide currentSide = GameManager.i.turnScript.currentSide;
         //open panel at start
+        tooltipNodeCanvas.gameObject.SetActive(true);
         tooltipNodeObject.SetActive(true);
 
         /*//set opacity to zero (invisible)
@@ -593,6 +615,7 @@ public class TooltipNode : MonoBehaviour
         Debug.LogFormat("[UI] TooltipNode.cs -> SetTooltip{0}", "\n");
         /*}*/
     }
+    #endregion
 
     /*/// <summary>
     /// fade in tooltip over time
@@ -650,6 +673,7 @@ public class TooltipNode : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipNode.cs -> CloseTooltip: called by {0}{1}", callingMethod, "\n");
         tooltipNodeObject.SetActive(false);
+        tooltipNodeCanvas.gameObject.SetActive(false);
     }
 
 

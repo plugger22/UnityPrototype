@@ -5443,7 +5443,7 @@ GameObject:
   - component: {fileID: 161200623}
   - component: {fileID: 161200622}
   m_Layer: 5
-  m_Name: Tooltip_ModalHelp
+  m_Name: Tooltip_Help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24206,6 +24206,7 @@ MonoBehaviour:
   spider: {fileID: 1476494060}
   tracer: {fileID: 581223768}
   tooltipNodeObject: {fileID: 532852882}
+  tooltipNodeCanvas: {fileID: 1111458283}
 --- !u!4 &615421571
 Transform:
   m_ObjectHideFlags: 0
@@ -24259,6 +24260,7 @@ MonoBehaviour:
   dividerGear: {fileID: 1873270664}
   dividerSecrets: {fileID: 1187810053}
   tooltipActorObject: {fileID: 1267282434}
+  tooltipActorCanvas: {fileID: 677001593}
 --- !u!114 &615421574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24497,6 +24499,7 @@ MonoBehaviour:
   dividerTop: {fileID: 1862089058}
   dividerBottom: {fileID: 1976617178}
   tooltipConnectionObject: {fileID: 1779536614}
+  tooltipConnectionCanvas: {fileID: 430956755}
 --- !u!114 &615421585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24778,6 +24781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ab9ec125affbb4b89fa313f9500805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipHelpCanvas: {fileID: 2041611428}
   tooltipHelpObject: {fileID: 161200617}
   topicObject_0: {fileID: 162424368}
   topicObject_1: {fileID: 516140809}
@@ -25019,6 +25023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d5e7fb0d6402a438d4e6a3e1a6e62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popCanvas: {fileID: 1013602396}
   popObject: {fileID: 486926381}
   popTransform: {fileID: 558212276}
   popText: {fileID: 486926382}
@@ -65007,7 +65012,7 @@ GameObject:
   - component: {fileID: 2041611427}
   - component: {fileID: 2041611428}
   m_Layer: 5
-  m_Name: Canvas_Tooltip_ModalHelp
+  m_Name: Canvas_Tooltip_Help
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -101,6 +101,7 @@ public class PopUpFixed : MonoBehaviour
                 break;
             case GameState.LoadGame:
             case GameState.FollowOnInitialisation:
+                SubInitialiseFollowOn();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
@@ -195,6 +196,7 @@ public class PopUpFixed : MonoBehaviour
         //defaults (all the same, use first item in arrays as defaults)
         localScaleDefault = new Vector3(1.3f, 1.3f, 1.3f);
         textColorDefault = arrayOfTexts[0].color;
+        textColorDefault.a = 0.0f;
         //reset all to default settings
         Reset();
     }
@@ -219,6 +221,17 @@ public class PopUpFixed : MonoBehaviour
         Debug.Assert(fadeSpeed > -1, "Invalid fadeSpeed (-1)");
         //threshold
         threshold = timerMax * 0.5f;
+    }
+    #endregion
+
+    #region SubInitialiseFollowOn
+    /// <summary>
+    /// Follow on level
+    /// </summary>
+    private void SubInitialiseFollowOn()
+    {
+        //fixed popUps may have accumulated text by accident during metaGame (wrong key pressed maybe, eg. DebugGivePlayerRenown). Best to be safe otherwise text will carry over to the first time popUp used in new level
+        Reset();
     }
     #endregion
 
@@ -350,6 +363,7 @@ public class PopUpFixed : MonoBehaviour
     IEnumerator PopUp(float timeDelay)
     {
         /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");*/
+
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
@@ -364,23 +378,33 @@ public class PopUpFixed : MonoBehaviour
             {
                 if (arrayOfActive[i] == true)
                 {
-                    if (elapsedTime < threshold)
+                    //fade in stationary text until alpha at 100%
+                    if (arrayOfTexts[i].color.a < 1.0f)
                     {
-                        //first half of popUp lifetime -> grow in size
-                        arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                        color.a += fadeSpeed * Time.deltaTime;
+                        arrayOfTexts[i].color = color;
                     }
                     else
                     {
-                        //second half of popUp lifetime -> shrink
-                        arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
-                        //fade
-                        color.a -= fadeSpeed * Time.deltaTime;
-                        arrayOfTexts[i].color = color;
+                        //scale up text for first half, then scale back and fade for the second
+                        if (elapsedTime < threshold)
+                        {
+                            //first half of popUp lifetime -> grow in size
+                            arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                        }
+                        else
+                        {
+                            //second half of popUp lifetime -> shrink
+                            arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                            //fade
+                            color.a -= fadeSpeed * Time.deltaTime;
+                            arrayOfTexts[i].color = color;
+                        }
+                        //increment time
+                        elapsedTime += Time.deltaTime;
                     }
                 }
             }
-            //increment time
-            elapsedTime += Time.deltaTime;
             //fail safe
             counter++;
             if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }

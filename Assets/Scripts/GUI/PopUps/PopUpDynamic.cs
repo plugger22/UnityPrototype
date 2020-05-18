@@ -10,6 +10,7 @@ using UnityEngine;
 /// </summary>
 public class PopUpDynamic : MonoBehaviour
 {
+    public Canvas popCanvas;
     public GameObject popObject;
     public Transform popTransform;
     public TextMeshProUGUI popText;
@@ -60,7 +61,7 @@ public class PopUpDynamic : MonoBehaviour
     /// </summary>
     public void SubInitialiseSessionStart()
     {
-
+        Debug.Assert(popCanvas != null, "Invalid popCanvas (Null)");
         Debug.Assert(popObject != null, "Invalid popObject (Null)");
         Debug.Assert(popTransform != null, "Invalid popTransform (Null)");
         Debug.Assert(popText != null, "Invalid popText (Null)");
@@ -128,6 +129,7 @@ public class PopUpDynamic : MonoBehaviour
                     data.position.x += data.x_offset;
                     data.position.y += data.y_offset;
                     popTransform.position = data.position;
+                    popCanvas.gameObject.SetActive(true);
                     popObject.SetActive(true);
                     //start coroutine
                     myCoroutine = StartCoroutine("PopUp");
@@ -140,6 +142,7 @@ public class PopUpDynamic : MonoBehaviour
                     data.position.x += data.x_offset;
                     data.position.y += data.y_offset;
                     popTransform.position = data.position;
+                    popCanvas.gameObject.SetActive(true);
                     popObject.SetActive(true);
                     //start coroutine
                     StartCoroutine("PopUp");
@@ -188,6 +191,7 @@ public class PopUpDynamic : MonoBehaviour
         }
         while (elapsedTime < timerMax);
         popObject.SetActive(false);
+        popCanvas.gameObject.SetActive(false);
         isActive = false;
     }
 

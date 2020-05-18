@@ -42,14 +42,14 @@ public class GUIManager : MonoBehaviour
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
-    [Range(1f, 3f)] public float timerMax = 1.5f;
+    [Range(1f, 3f)] public float timerMax = 2.0f;
     [Tooltip("y_axis move speed (upwards) -> code in place but currently not used")]
     [Range(0, 3f)] public float moveSpeed = 0;
     [Tooltip("factor to increase size of text (first half of animation cycle")]
     [Range(0, 3f)] public float increaseScale = 1.0f;
     [Tooltip("factor to decrease size of text (second half of animation cycle")]
     [Range(0, 3f)] public float decreaseScale = 1.0f;
-    [Tooltip("factor to fade text during second half of animation cycle")]
+    [Tooltip("factor to fade in text during first half of animation cycle and fade out in the second")]
     [Range(0, 3f)] public float fadeSpeed = 1.0f;
 
     [Header("Alerts")]

@@ -28,6 +28,7 @@ public class TooltipActor : MonoBehaviour
     public Image dividerGear;
     public Image dividerSecrets;
     public GameObject tooltipActorObject;
+    public Canvas tooltipActorCanvas;
 
     private Image background;
     private static TooltipActor tooltipActor;
@@ -102,6 +103,24 @@ public class TooltipActor : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        Debug.Assert(actorName != null, "Invalid actorName (Null)");
+        Debug.Assert(actorStatus != null, "Invalid actorStatus (Null)");
+        Debug.Assert(actorQualities != null, "Invalid actorQualities (Null)");
+        Debug.Assert(actorConditions != null, "Invalid actorConditions (Null)");
+        Debug.Assert(actorStats != null, "Invalid actorStats (Null)");
+        Debug.Assert(actorTrait != null, "Invalid actorTrait (Null)");
+        Debug.Assert(actorAction != null, "Invalid actorAction (Null)");
+        Debug.Assert(actorGear != null, "Invalid actorGear (Null)");
+        Debug.Assert(actorSecrets != null, "Invalid actorSecrets (Null)");
+        Debug.Assert(dividerTop != null, "Invalid dividerTop (Null)");
+        Debug.Assert(dividerMiddleUpper != null, "Invalid dividerMiddleUpper (Null)");
+        Debug.Assert(dividerMiddleLower != null, "Invalid dividerMiddleLower (Null)");
+        Debug.Assert(dividerBottom != null, "Invalid dividerBottom (Null)");
+        Debug.Assert(dividerGear != null, "Invalid dividerGear (Null)");
+        Debug.Assert(dividerSecrets != null, "Invalid dividerSecrets (Null)");
+        Debug.Assert(tooltipActorObject != null, "Invalid tooltipActorObject (Null)");
+        Debug.Assert(tooltipActorCanvas != null, "Invalid tooltipActorCanvas (Null)");
+        //components
         canvasGroup = tooltipActorObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipActorObject.GetComponent<RectTransform>();
         fadeInTime = GameManager.i.guiScript.tooltipFade;
@@ -166,7 +185,7 @@ public class TooltipActor : MonoBehaviour
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
 
-
+    #region SetTooltip
     /// <summary>
     /// Initialise actor Tool tip
     /// </summary>
@@ -179,6 +198,7 @@ public class TooltipActor : MonoBehaviour
         bool isResistance = true;
         if (GameManager.i.sideScript.PlayerSide.level == 1) { isResistance = false; }
         //open panel at start
+        tooltipActorCanvas.gameObject.SetActive(true);
         tooltipActorObject.SetActive(true);
         //set opacity to zero (invisible)
         SetOpacity(0f);
@@ -372,6 +392,7 @@ public class TooltipActor : MonoBehaviour
         tooltipActorObject.transform.position = worldPos;
         Debug.LogFormat("[UI] TooltipActor.cs -> SetTooltip{0}", "\n");
     }
+    #endregion
 
 
     public void SetOpacity(float opacity)
@@ -407,6 +428,7 @@ public class TooltipActor : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipActor.cs -> CloseTooltip: called by {0}{1}",  callingMethod, "\n");
         tooltipActorObject.SetActive(false);
+        tooltipActorCanvas.gameObject.SetActive(false);
     }
 
 

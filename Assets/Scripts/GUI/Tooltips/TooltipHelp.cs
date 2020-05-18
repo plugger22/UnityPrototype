@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class TooltipHelp : MonoBehaviour
 {
+    public Canvas tooltipHelpCanvas;
     public GameObject tooltipHelpObject;
     public GameObject topicObject_0;
     public GameObject topicObject_1;
@@ -44,6 +45,7 @@ public class TooltipHelp : MonoBehaviour
         offset = GameManager.i.guiScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid offset (Zero)");
         Debug.Assert(tooltipHelpObject != null, "Invalid tooltipHelpOjbect (Null)");
+        Debug.Assert(tooltipHelpCanvas != null, "Invalid tooltipHelpCanvas (Null)");
         Debug.Assert(topicObject_0 != null, "Invalid topicOjbect_0 (Null)");
         Debug.Assert(topicObject_1 != null, "Invalid topicOjbect_1 (Null)");
         Debug.Assert(topicObject_2 != null, "Invalid topicOjbect_2 (Null)");
@@ -90,6 +92,7 @@ public class TooltipHelp : MonoBehaviour
         return tooltipHelp;
     }
 
+    #region SetTooltip
     /// <summary>
     /// Initialise Help Tool tip. General Purpose. Can take one to four text topics and auto divides them as necessary. Topics are displayed in their list order
     /// Colours are set by the calling method
@@ -106,6 +109,7 @@ public class TooltipHelp : MonoBehaviour
             //can't have more than 4 topics
             count = Mathf.Min(4, count);
             //open panel at start
+            tooltipHelpCanvas.gameObject.SetActive(true);
             tooltipHelpObject.SetActive(true);
             //populate topics where required
             for (int index = 0; index < numOfTopics; index++)
@@ -149,7 +153,7 @@ public class TooltipHelp : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfHelpData (Empty)"); }
     }
-
+    #endregion
 
     /// <summary>
     /// close tool tip. Provide an optional string showing calling method
@@ -158,7 +162,7 @@ public class TooltipHelp : MonoBehaviour
     {
         Debug.LogFormat("[UI] TooltipHelp -> CloseTooltip: called by {0}{1}", text, "\n");
         tooltipHelpObject.SetActive(false);
-
+        tooltipHelpCanvas.gameObject.SetActive(false);
     }
 
 
