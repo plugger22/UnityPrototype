@@ -479,13 +479,13 @@ public class SideManager : MonoBehaviour
                 {
                     //normal gear point allocation according to AI gear pool
                     gearPoints = GameManager.i.aiRebelScript.GetGearPoints();
-                    Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: Rebel AIManager Gear points set to {0}{1}", gearPoints, "\n");
+                    /*Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: Rebel AIManager Gear points set to {0}{1}", gearPoints, "\n");*/
                 }
                 else
                 {
                     //Test Manager specified gear points
                     gearPoints = GameManager.i.testScript.numOfGearItems;
-                    Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: TestManager Gear points set to {0}{1}", gearPoints, "\n");
+                    /*Debug.LogFormat("[Tst] SideManager.cs -> RevertToHumanPlayer: TestManager Gear points set to {0}{1}", gearPoints, "\n");*/
                 }
                 if (gearUsed > 0)
                 {

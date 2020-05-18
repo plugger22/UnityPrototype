@@ -168,7 +168,7 @@ public class PopUpFixed : MonoBehaviour
 
         //localScaleDefault = arrayOfTransforms[0].localScale;
 
-        localScaleDefault = new Vector3(1.3f, 1.3f, 0);
+        localScaleDefault = new Vector3(1.3f, 1.3f, 1.3f);
         textColorDefault = arrayOfTexts[0].color;
         //reset all to default settings
         Reset();
@@ -212,13 +212,10 @@ public class PopUpFixed : MonoBehaviour
             if (arrayOfActive[i] == true)
             {
                 arrayOfObjects[i].SetActive(false);
-                //needed because attached directly to game object and when object loses focus this is deactivated
-                arrayOfTexts[i].gameObject.SetActive(true);
                 arrayOfActive[i] = false;
             }
         }
         isActive = false;
-        /*myCoroutine = null;*/
         /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");*/
     }
 
@@ -290,7 +287,24 @@ public class PopUpFixed : MonoBehaviour
             {
                 //run only if data present to display
                 if (CheckIfDataToDisplay() == true)
-                { myCoroutine = StartCoroutine("PopUp", timeDelay); }
+                {
+                    int counter = 0;
+                    //activate relevant objects and set defaults
+                    for (int i = 0; i < sizeOfArray; i++)
+                    {
+                        if (arrayOfActive[i] == true)
+                        {
+                            arrayOfObjects[i].SetActive(true);
+                            arrayOfTexts[i].color = textColorDefault;
+                            arrayOfTransforms[i].localScale = localScaleDefault;
+                            counter++;
+                        }
+                    }
+                    //run coroutine if at least one popUp to display
+                    if (counter > 0)
+                    { myCoroutine = StartCoroutine("PopUp", timeDelay); }
+                    else { Debug.LogWarning("PopUpFixed has NO data to display"); }
+                }
                 /*else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }*/
             }
             else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: GameState \"{0}\" (NOT PlayGame){1}", GameManager.i.inputScript.GameState, "\n"); }
@@ -316,59 +330,38 @@ public class PopUpFixed : MonoBehaviour
         //optional time delay prior to commencing animation
         if (timeDelay > 0)
         { yield return new WaitForSeconds(timeDelay); }
-        //set defaults prior to animation
-        for (int i = 0; i < sizeOfArray; i++)
+        //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
+        do
         {
-            if (arrayOfActive[i] == true)
+            for (int i = 0; i < sizeOfArray; i++)
             {
-                counter++;
-                arrayOfTexts[i].color = textColorDefault;
-                arrayOfTransforms[i].localScale = localScaleDefault;
-                arrayOfObjects[i].SetActive(true);
-            }
-        }
-        //should always at least one popUp to display
-        if (counter > 0)
-        {
-            //animation loop -> text grows in size, in place, then at halfway time point, beings fading and shrinking
-            counter = 0;
-            do
-            {
-                for (int i = 0; i < sizeOfArray; i++)
+                if (arrayOfActive[i] == true)
                 {
-                    if (arrayOfActive[i] == true)
+                    if (elapsedTime < threshold)
                     {
-                        if (elapsedTime < threshold)
-                        {
-                            //first half of popUp lifetime -> grow in size
-                            arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
-                        }
-                        else
-                        {
-                            //second half of popUp lifetime -> shrink
-                            arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
-                            //fade
-                            color.a -= fadeSpeed * Time.deltaTime;
-                            arrayOfTexts[i].color = color;
-                        }
+                        //first half of popUp lifetime -> grow in size
+                        arrayOfTransforms[i].localScale += Vector3.one * increaseScale * Time.deltaTime;
+                    }
+                    else
+                    {
+                        //second half of popUp lifetime -> shrink
+                        arrayOfTransforms[i].localScale -= Vector3.one * decreaseScale * Time.deltaTime;
+                        //fade
+                        color.a -= fadeSpeed * Time.deltaTime;
+                        arrayOfTexts[i].color = color;
                     }
                 }
-                //increment time
-                elapsedTime += Time.deltaTime;
-                //fail safe
-                counter++;
-                if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
-                yield return null;
             }
-            while (elapsedTime < timerMax);
-            //deactive objects once done
-            Reset();
+            //increment time
+            elapsedTime += Time.deltaTime;
+            //fail safe
+            counter++;
+            if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
+            yield return null;
         }
-        else
-        {
-            Debug.LogWarning("PopUpFixed coroutine running but there is NO data to display");
-            yield break;
-        }
+        while (elapsedTime < timerMax);
+        //deactive objects once done
+        Reset();
     }
 
 

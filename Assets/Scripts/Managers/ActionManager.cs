@@ -416,7 +416,7 @@ public class ActionManager : MonoBehaviour
                                     }
                                     //add to actor's personal list
                                     actor.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");
+                                    /*Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                                 }
                                 else
                                 {
@@ -430,7 +430,6 @@ public class ActionManager : MonoBehaviour
                                     };
                                     //add to player's personal list
                                     GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
                                     Debug.LogFormat("[Act] ActionManager.cs -> ProcessNodeAction: Player node Action \"{0}\"{1}", nodeActionPlayer, "\n");
                                     //statistics
                                     GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);

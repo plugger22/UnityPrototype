@@ -592,3 +592,63 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 24887 -> Sunday, 17 May 2020 5:42 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 51901 -> Sunday, 17 May 2020 7:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64623 -> Monday, 18 May 2020 9:31 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1081 -> Monday, 18 May 2020 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37937 -> Monday, 18 May 2020 9:42 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6304 -> Monday, 18 May 2020 9:47 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49212 -> Monday, 18 May 2020 9:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3960 -> Monday, 18 May 2020 10:11 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37311 -> Monday, 18 May 2020 10:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3138 -> Monday, 18 May 2020 10:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3049 -> Monday, 18 May 2020 10:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22931 -> Monday, 18 May 2020 10:48 AM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:317)
+	PlayerManager:DebugGiveRenown() (at Assets/Scripts/Managers/PlayerManager.cs:2627)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:183)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 28152 -> Monday, 18 May 2020 10:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10070 -> Monday, 18 May 2020 10:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16279 -> Monday, 18 May 2020 10:54 AM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:317)
+	PlayerManager:DebugGiveRenown() (at Assets/Scripts/Managers/PlayerManager.cs:2627)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:183)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 500 -> Monday, 18 May 2020 10:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53838 -> Monday, 18 May 2020 11:32 AM
+City seed 5678 -> London, United Kingdom

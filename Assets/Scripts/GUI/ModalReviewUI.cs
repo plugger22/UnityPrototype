@@ -399,9 +399,10 @@ public class ModalReviewUI : MonoBehaviour
         buttonHelpOpen.gameObject.SetActive(false);
         textTop.text = "";
         textBottom.text = "Press SPACE to Skip";
-        Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Pre Coroutine{0}", "\n");
+        /*Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Pre Coroutine{0}", "\n");*/
         StartCoroutine("ShowReview");
-        Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");
+        /*Debug.LogFormat("[Tst] ModalReviewUI.cs -> StartReview: Post Coroutine{0}", "\n");*/
+
         //stats
         GameManager.i.dataScript.StatisticIncrement(StatType.ReviewsTotal);      
     }
