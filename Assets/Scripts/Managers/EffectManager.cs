@@ -4408,7 +4408,6 @@ public class EffectManager : MonoBehaviour
                     {
                         text = string.Format("Has become {0} with {1}, {2}", relationship == ActorRelationship.Friend ? "Friends" : "Enemies",
                         actorOther.actorName, actorOther.arc.name)
-
                     });
                     actorOther.AddHistory(new HistoryActor()
                     {
@@ -4516,6 +4515,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "InvestigationDropped":
                 effectResolve.bottomText = GameManager.i.playerScript.DropInvestigation(dataTopic.investigationRef);
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopBarLeft, "Investigation Dropped");
                 break;
             case "Innocence":
                 effectResolve = ResolvePlayerData(effect, dataInput);
@@ -4679,10 +4679,12 @@ public class EffectManager : MonoBehaviour
                     case "Add":
                         GameManager.i.hqScript.ChangeHqApproval(effect.value, GameManager.i.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval +{1}{2}", colourGood, effect.value, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"HQ Approval +{effect.value}");
                         break;
                     case "Subtract":
                         GameManager.i.hqScript.ChangeHqApproval(effect.value * -1, GameManager.i.sideScript.PlayerSide, dataInput.originText);
                         effectResolve.bottomText = string.Format("{0}HQ Approval -{1}{2}", colourBad, effect.value, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"HQ Approval -{effect.value}");
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }
@@ -4691,6 +4693,7 @@ public class EffectManager : MonoBehaviour
                 //HQ relocates (takes time, services unavailable during relocation)
                 GameManager.i.hqScript.RelocateHq("Player reveals Location");
                 effectResolve.bottomText = string.Format("{0}HQ forced to Relocate{1}{2}{3}Location Compromised{4}{5}", colourBad, colourEnd, "\n", colourAlert, colourEnd, "\n");
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, "HQ Relocates");
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
@@ -4895,8 +4898,9 @@ public class EffectManager : MonoBehaviour
                         change = effect.value;
                         //good for authority, bad for resistance
                         if (GameManager.i.sideScript.PlayerSide.level == 1)
-                        { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
-                        else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
+                        { effectResolve.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourGood, effect.value, colourEnd); }
+                        else { effectResolve.bottomText = string.Format("{0}City Loyalty +{1}{2}", colourBad, effect.value, colourEnd); }
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"City Loyalty +{effect.value}");
                         break;
                     case "Subtract":
                         cityLoyalty -= effect.value;
@@ -4905,8 +4909,9 @@ public class EffectManager : MonoBehaviour
                         GameManager.i.cityScript.CityLoyalty = cityLoyalty;
                         //bad for authority, good for resistance
                         if (GameManager.i.sideScript.PlayerSide.level == 1)
-                        { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourBad, colourEnd); }
-                        else { effectResolve.bottomText = string.Format("{0}City Loyalty +1{1}", colourGood, colourEnd); }
+                        { effectResolve.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourBad, effect.value, colourEnd); }
+                        else { effectResolve.bottomText = string.Format("{0}City Loyalty -{1}{2}", colourGood, effect.value, colourEnd); }
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"City Loyalty -{effect.value}");
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }
@@ -5054,11 +5059,15 @@ public class EffectManager : MonoBehaviour
                             {
                                 GameManager.i.dataScript.AddContactSingle(actor.actorID, newNodeID);
                                 bottomText = string.Format("{0}{1} gains new Contact{2}", colourGoodSide, actor.arc.name, colourEnd);
+                                GameManager.i.popUpFixedScript.SetData(actor.slotID, "New Contact");
                             }
                             break;
                         case "Subtract":
                             if (GameManager.i.dataScript.RemoveContactSingle(actor.actorID, data.nodeID) == true)
-                            { bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd); }
+                            {
+                                bottomText = string.Format("{0}{1} loses Contact{2}", colourBadSide, actor.arc.name, colourEnd);
+                                GameManager.i.popUpFixedScript.SetData(actor.slotID, "Loses Contact");
+                            }
                             else { Debug.LogWarningFormat("{0}, {1}, ID {2} unable to remove contact at nodeID {3}", actor.actorName, actor.arc.name, actor.actorID, data.nodeID); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
@@ -5078,12 +5087,14 @@ public class EffectManager : MonoBehaviour
                                     bottomText = string.Format("{0}Contact Effectiveness now MAX{1}", colourGood, colourEnd);
                                     Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MAX ({5}){6}", contact.nameFirst, contact.nameLast,
                                         contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
+                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Contacts MAX");
                                     break;
                                 case "Subtract":
                                     contact.effectiveness = GameManager.i.contactScript.minEffectiveness;
                                     bottomText = string.Format("{0}Contact Effectiveness now MIN{1}", colourBad, colourEnd);
                                     Debug.LogFormat("[Cnt] EffectManager.cs -> ExecuteActorContact: {0} {1}, {2} at nodeID {3}, actorID {4}, effectiveness now MIN ({5}){6}", contact.nameFirst, contact.nameLast,
                                         contact.job, contact.nodeID, contact.actorID, contact.effectiveness, "\n");
+                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Contacts MIN");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                             }
@@ -5104,6 +5115,7 @@ public class EffectManager : MonoBehaviour
                                 case "Subtract":
                                     contact.SetInactive(string.Format("Decision{0}{1}{2}{3}", "\n", colourNeutral, dataInput.originText, colourEnd));
                                     bottomText = string.Format("{0}Contact now Silent{1}", colourBad, colourEnd);
+                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Contact Silent");
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                             }
@@ -5268,6 +5280,7 @@ public class EffectManager : MonoBehaviour
                     {
                         motivation = Mathf.Max(0, motivation);
                         bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
+
                     }
                 }
                 else
@@ -5279,11 +5292,10 @@ public class EffectManager : MonoBehaviour
         //log entry
         if (motivation != dataBefore)
         {
-            int change = dataBefore - motivation;
             Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                 dataBefore, motivation, "\n");
             if (isHqActor == false)
-            { GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", change > 0 ? "+" : "", change)); }
+            { GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", string.Equals(operandName, "Add") == true ? "+" : "-", amount)); }
         }
         return bottomText;
     }
@@ -5549,6 +5561,7 @@ public class EffectManager : MonoBehaviour
                     {
                         GameManager.i.playerScript.AddCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player gains {1} condition{2}", colourEffect, condition.tag, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Gains {condition.tag}");
                     }
                     else { bottomText = string.Format("{0}Player already has {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
                     break;
@@ -5558,6 +5571,7 @@ public class EffectManager : MonoBehaviour
                     {
                         GameManager.i.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
                         bottomText = string.Format("{0}Player loses {1} condition{2}", colourEffect, condition.tag, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Loses {condition.tag}");
                     }
                     else { bottomText = string.Format("{0}Player doesn't have {1} condition{2}", colourNeutral, condition.tag, colourEnd); }
                     break;
@@ -5610,6 +5624,7 @@ public class EffectManager : MonoBehaviour
                     {
                         GameManager.i.dataScript.StatisticIncrement(StatType.OrgCures);
                         bottomText = string.Format("{0}Cure for {1} available{2}", colourEffect, condition.tag, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Cure Available");
                         //org data
                         OrgData data = new OrgData()
                         {
@@ -5622,7 +5637,10 @@ public class EffectManager : MonoBehaviour
                 case "Subtract":
                     //deactivate cure
                     if (GameManager.i.dataScript.SetCureNodeStatus(condition.cure, false, isOrgCure) == true)
-                    { bottomText = string.Format("{0}Cure for {1} gone{2}", colourEffect, condition.tag, colourEnd); }
+                    {
+                        bottomText = string.Format("{0}Cure for {1} gone{2}", colourEffect, condition.tag, colourEnd);
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Cure Gone");
+                    }
                     break;
                 default:
                     Debug.LogErrorFormat("Invalid operand \"{0}\" for effect outcome \"{1}\"", effect.operand.name, effect.outcome.name);
@@ -5642,6 +5660,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerTakeDrugs(Effect effect)
     {
         GameManager.i.playerScript.TakeDrugs();
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Take Drugs");
         return string.Format("{0}You take {1}{2}STRESSED Condtion removed{3}You gain Stress Immunity{4}", colourGood, GameManager.i.globalScript.tagGlobalDrug, "\n", "\n", colourEnd);
     }
 
@@ -5668,6 +5687,7 @@ public class EffectManager : MonoBehaviour
                         {
                             //remove gear (lost forever)
                             GameManager.i.playerScript.RemoveGear(gearName, true);
+                            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gear Lost");
                         }
                         else
                         { Debug.LogWarning("Invalid gearName (Null or Empty)"); }
@@ -5684,6 +5704,7 @@ public class EffectManager : MonoBehaviour
                     gearName = dataTopic.gearName;
                     //remove gear (lost forever)
                     GameManager.i.playerScript.RemoveGear(gearName, true);
+                    GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gear Lost");
                 }
                 else
                 { Debug.LogWarning("Invalid dataTopic.gearName (Null or Empty)"); }
@@ -5717,6 +5738,7 @@ public class EffectManager : MonoBehaviour
             {
                 GameManager.i.playerScript.AddCondition(conditionAddicted, dataInput.side, string.Format("Due to {0}", dataInput.originText));
                 bottomText = string.Format("{0}Player becomes {1}{2}", colourBad, conditionAddicted.name, colourEnd);
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "ADDICTED");
             }
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: SUCEEDED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
@@ -5727,6 +5749,7 @@ public class EffectManager : MonoBehaviour
             //random message
             Debug.LogFormat("[Rnd] EffectManager.cs -> ExecutePlayerChanceAddicted: FAILED need < {0}, rolled {1}{2}", numNeeded, rnd, "\n");
             GameManager.i.messageScript.GeneralRandom("Addiction Check FAILED", "Addiciton", numNeeded, rnd, true, "rand_3");
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Not Addicted");
         }
 
         //return
@@ -5742,6 +5765,7 @@ public class EffectManager : MonoBehaviour
     private string ExecutePlayerRelease(Effect effect, EffectDataInput data)
     {
         GameManager.i.captureScript.ReleasePlayer(false);
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Released by Authority");
         return string.Format("{0}Player Released by the Authority{1}{2}", colourGood, colourEnd, "\n");
     }
 
@@ -5769,6 +5793,7 @@ public class EffectManager : MonoBehaviour
         GameManager.i.captureScript.ReleasePlayer(false, false);
         //stat
         GameManager.i.dataScript.StatisticIncrement(StatType.OrgEscapes);
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Escaped");
         return string.Format("{0}Player Escapes from Captivity{1}{2}", colourGood, colourEnd, "\n");
     }
 
@@ -5864,6 +5889,7 @@ public class EffectManager : MonoBehaviour
                         {
                             actor.AddCondition(condition, string.Format("due to {0}", dataInput.originText));
                             bottomText = string.Format("{0}{1} condition gained{2}", colourEffect, condition.tag, colourEnd);
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Gains {condition.tag}");
                         }
                         break;
                     case "Subtract":
@@ -5872,6 +5898,7 @@ public class EffectManager : MonoBehaviour
                         {
                             actor.RemoveCondition(condition, string.Format("due to {0}", dataInput.originText));
                             bottomText = string.Format("{0}{1} condition removed{2}", colourEffect, condition.tag, colourEnd);
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Loses {condition.tag}");
                         }
                         break;
                     default:
@@ -5910,7 +5937,10 @@ public class EffectManager : MonoBehaviour
                         if (GameManager.i.playerScript.CheckCaptureToolPresent(innocenceLevel) == false)
                         {
                             if (GameManager.i.playerScript.AddCaptureTool(innocenceLevel) == true)
-                            { bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd); }
+                            {
+                                bottomText = string.Format("{0}{1} gained{2}", colourEffect, tool.tag, colourEnd);
+                                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gains Capture Tool");
+                            }
                             else
                             {
                                 bottomText = string.Format("{0}{1} NOT gained{2}", colourEffect, tool.tag, colourEnd);
@@ -5927,7 +5957,10 @@ public class EffectManager : MonoBehaviour
                     if (GameManager.i.playerScript.CheckCaptureToolPresent(innocenceLevel) == true)
                     {
                         if (GameManager.i.playerScript.RemoveCaptureTool(innocenceLevel) == true)
-                        { bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd); }
+                        {
+                            bottomText = string.Format("{0}{1} no longer effective{2}", colourEffect, tool.tag, colourEnd);
+                            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Loses Capture Tool");
+                        }
                         else
                         {
                             Debug.LogWarningFormat("Capture Tool for innocenceLevel \"{0}\" Failed Removal", innocenceLevel);
