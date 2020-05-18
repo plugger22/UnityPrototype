@@ -5185,6 +5185,7 @@ public class ActorManager : MonoBehaviour
                     //actor should have trait but check just to be sure as there could, perhaps, be another reason for the random killing
                     if (actorKiller.CheckTraitEffect(actorConflictKill) == true)
                     {
+                        GameManager.i.popUpFixedScript.SetData(actorVictim.slotID, "Murdered");
                         //add trait to output
                         outputMsg = string.Format("{0}{1} killed by {2}{3}{4}{5}{6} {7}{8}  ", colourBad, actorVictim.arc.name, colourEnd, colourNeutral, actorKiller.GetTrait().tag,
                             colourEnd, colourBad, actorKiller.arc.name, colourEnd);
