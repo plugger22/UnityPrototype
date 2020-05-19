@@ -85,7 +85,7 @@ public class TestManager : MonoBehaviour
     [Range(0, 1)] public float testRatioAddictedDays = 0;
 
     [Header("[Tst] Logging")]
-    [Tooltip("Toggle ON to record [Tst] messages for the class")]
+    [Tooltip("Toggle ON to record [Tst] messages for the TopicManager.cs class")]
     public bool isTopicManager;
     [Tooltip("Toggle ON to record [Tst] messages for the MetaGame (MetaManager.cs / ActorManager.cs / HQ Manager.cs")]
     public bool isMetaGame;

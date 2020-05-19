@@ -4477,6 +4477,7 @@ MonoBehaviour:
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
   isTopicManager: 0
+  isMetaGame: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

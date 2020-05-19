@@ -52,7 +52,7 @@ public class MetaManager : MonoBehaviour
     {
         //set state
         metaLevel = GameManager.i.globalScript.metaBottom;
-        isTestLog = GameManager.i.testScript.isMetaManager;
+        isTestLog = GameManager.i.testScript.isMetaGame;
         /*metaEffect = new MetaEffectData();*/
     }
 

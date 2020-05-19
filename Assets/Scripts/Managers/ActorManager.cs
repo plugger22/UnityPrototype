@@ -149,6 +149,8 @@ public class ActorManager : MonoBehaviour
     private bool isNewActionResistanceActor;                                    //set to true after resistance player makes a recruit choice at an actor contact's node
     private bool isNewActionAuthority;                                          //set to true after autority makes a recruit choice
 
+    private bool isMetaGame;                                                    //toggles MetaGame related [Tst] messages according to setting in TestManager.cs
+
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -380,6 +382,8 @@ public class ActorManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
+        //toggle metaGame related [Tst] messages on/off
+        isMetaGame = GameManager.i.testScript.isMetaGame;
         //Name set
         nameSet = GameManager.i.cityScript.GetNameSet();
         if (nameSet == null)
@@ -664,14 +668,17 @@ public class ActorManager : MonoBehaviour
                 GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
 
                 //Debug
-                if (side.level == playerSide.level)
+                if (isMetaGame)
                 {
-                    Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: MetaGame options - - - {0}", "\n");
-                    Debug.LogFormat("[Tst] isDismissed: {0}{1}", data.isDismissed, "\n");
-                    Debug.LogFormat("[Tst] isResigned: {0}{1}", data.isResigned, "\n");
-                    Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
-                    Debug.LogFormat("[Tst] isTraitor: {0}{1}", data.isTraitor, "\n");
-                    Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
+                    if (side.level == playerSide.level)
+                    {
+                        Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: MetaGame options - - - {0}", "\n");
+                        Debug.LogFormat("[Tst] isDismissed: {0}{1}", data.isDismissed, "\n");
+                        Debug.LogFormat("[Tst] isResigned: {0}{1}", data.isResigned, "\n");
+                        Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
+                        Debug.LogFormat("[Tst] isTraitor: {0}{1}", data.isTraitor, "\n");
+                        Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
+                    }
                 }
 
                 //can't have duplicate actor arcs on map, need a pick list by value
@@ -702,18 +709,21 @@ public class ActorManager : MonoBehaviour
                     listOfActors.AddRange(GetPreviousActors(1, side));
                 }
                 //Debug
-                if (side.level == playerSide.level)
+                if (isMetaGame)
                 {
-                    Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: Unfiltered listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
-                    for (int i = 0; i < listOfActors.Count; i++)
+                    if (side.level == playerSide.level)
                     {
-                        Actor tempActor = GameManager.i.dataScript.GetActor(listOfActors[i]);
-                        if (tempActor != null)
+                        Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: Unfiltered listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
+                        for (int i = 0; i < listOfActors.Count; i++)
                         {
-                            Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
-                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
+                            Actor tempActor = GameManager.i.dataScript.GetActor(listOfActors[i]);
+                            if (tempActor != null)
+                            {
+                                Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
+                                  tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
+                            }
+                            else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                         }
-                        else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
                 }
                 //
@@ -770,8 +780,10 @@ public class ActorManager : MonoBehaviour
                     }
                 }
 
+
                 /*//Debug
-                if (side.level == playerSide.level)
+                if (isMetaGame)
+                {                if (side.level == playerSide.level)
                 {
                     Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: FILTERED listOfActors - - - {0} records{1}", listOfActors.Count, "\n");
                     for (int i = 0; i < listOfActors.Count; i++)
@@ -783,6 +795,7 @@ public class ActorManager : MonoBehaviour
                               tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
+                    }
                     }
                 }*/
 
@@ -9093,10 +9106,16 @@ public class ActorManager : MonoBehaviour
                                     }
                                 }
                                 else
-                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                {
+                                    if (isMetaGame)
+                                    { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                }
                             }
                             else
-                            { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                            {
+                                if (isMetaGame)
+                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                            }
                             if (isSuccess == false)
                             {
                                 //tidy up and send actor back to recruit pool
@@ -9197,14 +9216,20 @@ public class ActorManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
-                                      actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                                    if (isMetaGame)
+                                    {
+                                        Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
+                                          actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                                    }
                                 }
                             }
                             else
                             {
-                                Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
-                                  actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                                if (isMetaGame)
+                                {
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                      actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
+                                }
                             }
                             if (isSuccess == false)
                             {
@@ -9258,14 +9283,20 @@ public class ActorManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
-                                      actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                                    if (isMetaGame)
+                                    {
+                                        Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
+                                        actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                                    }
                                 }
                             }
                             else
                             {
-                                Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
-                                  actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                                if (isMetaGame)
+                                {
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                      actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
+                                }
                             }
                             if (isSuccess == false)
                             {
@@ -9308,13 +9339,19 @@ public class ActorManager : MonoBehaviour
                     if (actor.Renown * renownFactor <= results.Item2)
                     {
                         isProceed = false;
-                        Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} unable to bump Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
-                            actor.Renown, results.Item2, "\n");
+                        if (isMetaGame)
+                        {
+                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} unable to bump Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                              actor.Renown, results.Item2, "\n");
+                        }
                     }
                     else
                     {
-                        Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} BUMPS Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
-                            actor.Renown, results.Item2, "\n");
+                        if (isMetaGame)
+                        {
+                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} BUMPS Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                                actor.Renown, results.Item2, "\n");
+                        }
                     }
                 }
                 if (isProceed == true)
