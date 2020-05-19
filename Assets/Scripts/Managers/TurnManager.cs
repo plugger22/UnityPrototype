@@ -366,7 +366,7 @@ public class TurnManager : MonoBehaviour
                 if (isLevelOver == true)
                 {
                     //level over -> start MetaGame
-                    EventManager.instance.PostNotification(EventType.CreateMetaGame, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                    EventManager.instance.PostNotification(EventType.ExitLevel, this, _turn, "TurnManager.cs -> ProcessNewTurn");
                     isLevelOver = false;
                     AllowNewTurn();
                     winStateLevel = WinStateLevel.None;
@@ -489,6 +489,8 @@ public class TurnManager : MonoBehaviour
                 Debug.LogWarningFormat("Invalid winStateCampaign \"{0}\"", winStateCampaign);
                 break;
         }
+        //end level campaign data
+        GameManager.i.dataScript.SetCampaignHistoryEnd();
     }
 
 

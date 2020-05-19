@@ -143,6 +143,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.campaignScript.Reset();
         //set up first level in campaign
         GameManager.i.InitialiseNewSession();
+        //campaign history
+        GameManager.i.dataScript.SetCampaignHistoryStart();
         //revert to playGame state by default
         GameManager.i.inputScript.GameState = GameState.PlayGame;
         //close background
@@ -198,6 +200,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.SetBackground(Background.EndLevel);
         //change game state
         GameManager.i.inputScript.GameState = GameState.ExitLevel;
+        //campaign history
+        GameManager.i.dataScript.SetCampaignHistoryEnd();
     }
 
     /// <summary>
@@ -233,6 +237,8 @@ public class ControlManager : MonoBehaviour
             GameManager.i.inputScript.GameState = GameState.FollowOnInitialisation;
             //create new followOn level
             GameManager.i.InitialiseNewLevel();
+            //campaign data
+            GameManager.i.dataScript.SetCampaignHistoryStart();
             //data Integrity check
             if (GameManager.i.isIntegrityCheck == true)
             { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
@@ -377,6 +383,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.SetBackground(Background.EndCampaign);
         //change game state
         GameManager.i.inputScript.GameState = GameState.ExitCampaign;
+        //end level campaign data
+        GameManager.i.dataScript.SetCampaignHistoryEnd();
     }
 
     /// <summary>

@@ -374,6 +374,8 @@ public class GameManager : MonoBehaviour
             //debug -> set to campaign start
             campaignScript.Reset();
             InitialiseNewSession();
+            //campaign data
+            i.dataScript.SetCampaignHistoryStart();
             //commence autorun
             turnScript.SetAutoRun(autoRunTurns);
         }

@@ -586,11 +586,11 @@ namespace packageAPI
         public string cityName;
         //start data
         public int cityLoyaltyStart;
-        public int hqSupportStart;
+        public int hqApprovalStart;
         //end data
         public int turns;                       //number of turns spent in level
         public int cityLoyaltyEnd;
-        public int hqSupportEnd;
+        public int hqApprovalEnd;
     }
 
 

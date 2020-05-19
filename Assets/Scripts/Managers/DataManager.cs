@@ -9436,6 +9436,58 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// sets starting data for a level, adds to relevant entry in dictionary
+    /// </summary>
+    public void SetCampaignHistoryStart()
+    {
+        int index = GameManager.i.campaignScript.GetScenarioIndex();
+        HistoryLevel data = GetHistoryLevel(index);
+        if (data != null)
+        {
+            data.cityLoyaltyStart = GameManager.i.campaignScript.scenario.cityStartLoyalty;
+            data.hqApprovalStart = -1;
+            switch (GameManager.i.sideScript.PlayerSide.level)
+            {
+                case 1: data.hqApprovalStart = GameManager.i.campaignScript.scenario.approvalStartAuthorityHQ; break;
+                case 2: data.hqApprovalStart = GameManager.i.campaignScript.scenario.approvalStartRebelHQ; break;
+                default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.i.sideScript.PlayerSide); break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid HistoryLevel (Null) for scenarioIndex \"{0}\"", index); }
+    }
+
+
+    /// <summary>
+    /// sets Ending data for a level, adds to relevant entry in dictionary
+    /// </summary>
+    public void SetCampaignHistoryEnd()
+    {
+        int index = GameManager.i.campaignScript.GetScenarioIndex();
+        HistoryLevel data = GetHistoryLevel(index);
+        if (data != null)
+        {
+            data.cityLoyaltyEnd = GameManager.i.cityScript.CityLoyalty;
+            data.hqApprovalEnd = GameManager.i.hqScript.GetHqApproval();
+            data.turns = GameManager.i.turnScript.Turn;
+        }
+        else { Debug.LogWarningFormat("Invalid HistoryLevel (Null) for scenarioIndex \"{0}\"", index); }
+    }
+
+    /// <summary>
+    /// Gets relevant entry from dictOfCampaignHistory. Returns null if not found.
+    /// </summary>
+    /// <param name="scenarioIndex"></param>
+    /// <returns></returns>
+    public HistoryLevel GetHistoryLevel(int scenarioIndex)
+    {
+        HistoryLevel data = null;
+        if (dictOfCampaignHistory.ContainsKey(scenarioIndex) == true)
+        { data = dictOfCampaignHistory[scenarioIndex]; }
+        return data;
+    }
+
+
+    /// <summary>
     /// Debug display of level histories
     /// </summary>
     /// <returns></returns>
@@ -9443,15 +9495,14 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("-Campaign History{0}{1}", "\n", "\n");
-        foreach(var data in dictOfCampaignHistory)
-        { 
+        foreach (var data in dictOfCampaignHistory)
+        {
             if (data.Value != null)
             {
                 builder.AppendFormat(" -Scenario {0}{1}", data.Key, "\n");
-                builder.AppendFormat("  \"{0}\"{1}", data.Value.scenarioDescriptor, "\n");
-                builder.AppendFormat("  {0}{1}", data.Value.cityName, "\n");
+                builder.AppendFormat("  \"{0}\", {1}, turns [2}{3}", data.Value.scenarioDescriptor, data.Value.cityName, data.Value.turns, "\n");
                 builder.AppendFormat("  cityLoyalty: start {0}, end {1}{2}", data.Value.cityLoyaltyStart, data.Value.cityLoyaltyEnd, "\n");
-                builder.AppendFormat("  hqApproval: start {0}, end {1}{2}", data.Value.hqSupportStart, data.Value.hqSupportEnd, "\n");
+                builder.AppendFormat("  hqApproval: start {0}, end {1}{2}", data.Value.hqApprovalStart, data.Value.hqApprovalEnd, "\n");
                 builder.AppendLine();
             }
             else { Debug.LogError("Invalid levelHistory (Null) in dictOfCampaignHistory"); }
