@@ -87,6 +87,8 @@ public class TestManager : MonoBehaviour
     [Header("[Tst] Logging")]
     [Tooltip("Toggle ON to record [Tst] messages for the class")]
     public bool isTopicManager;
+    [Tooltip("Toggle ON to record [Tst] messages for the MetaGame (MetaManager.cs / ActorManager.cs / HQ Manager.cs")]
+    public bool isMetaGame;
 
     /*[Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]

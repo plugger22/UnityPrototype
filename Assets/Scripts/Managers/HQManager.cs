@@ -87,10 +87,12 @@ public class HQManager : MonoBehaviour
     #endregion
 
     private bool isZeroTimerThisTurn;                       //only the first zero timer event per turn is processed
+    private bool isMetaLogs;                                //toggles all MetaGame related [Tst] logs via TestManager.cs setting
 
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
+
 
 
     private string colourRebel;
@@ -245,6 +247,8 @@ public class HQManager : MonoBehaviour
         Debug.Assert(subBoss1Res != null, "Invalid subBoss1Res (Null)");
         Debug.Assert(subBoss2Res != null, "Invalid subBoss2Res (Null)");
         Debug.Assert(subBoss3Res != null, "Invalid subBoss3Res (Null)");
+        //logging
+        isMetaLogs = GameManager.i.testScript.isMetaGame;
     }
     #endregion
 
@@ -1062,7 +1066,8 @@ public class HQManager : MonoBehaviour
             }
             //limit of events exceeded?
             numOfEvents++;
-            Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqHierarchy: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n");
+            if (isMetaLogs)
+            { Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqHierarchy: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n"); }
         }
         return numOfEvents;
     }
@@ -1133,7 +1138,8 @@ public class HQManager : MonoBehaviour
             actor.AddHqRenownData(renownData);
             //limit of events exceeded?
             numOfEvents++;
-            Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqWorkers: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n");
+            if (isMetaLogs)
+            { Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqWorkers: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n"); }
             //Renown dropped below Zero, remove actor from hq
             if (renownBefore + change < 0)
             {

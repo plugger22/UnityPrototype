@@ -46,11 +46,13 @@ public class MetaManager : MonoBehaviour
     private List<MetaOption> listOfMetaOptions = new List<MetaOption>();        //metaOptions to be converted to MetaData
     private MetaInfoData metaInfoData = new MetaInfoData();                     //package to send to MetaGameUI
 
+    private bool isTestLog;                                                     //enables toggling of [Tst] log messages
 
     public void Initialise(GameState state)
     {
         //set state
         metaLevel = GameManager.i.globalScript.metaBottom;
+        isTestLog = GameManager.i.testScript.isMetaManager;
         /*metaEffect = new MetaEffectData();*/
     }
 
@@ -262,7 +264,8 @@ public class MetaManager : MonoBehaviour
             //
             // - - - Normal
             //
-            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: NORMAL MetaOptions - - - {0}", "\n");
+            if (isTestLog)
+            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: NORMAL MetaOptions - - - {0}", "\n"); }
             foreach (var metaOption in dictOfMetaOptions)
             {
                 isSuccess = true;
@@ -281,7 +284,8 @@ public class MetaManager : MonoBehaviour
                             if (string.IsNullOrEmpty(result) == false)
                             {
                                 isSuccess = false;
-                                Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED ({1}){2}", metaOption.Key, result, "\n");
+                                if (isTestLog)
+                                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED ({1}){2}", metaOption.Key, result, "\n"); }
                             }
                             else { metaOption.Value.isActive = true; }
                         }
@@ -289,7 +293,8 @@ public class MetaManager : MonoBehaviour
                         {
                             //isAlways false and no criteria - fail (like this to handle specials, eg. all specials should fail this check and instead be handled by the Specials code segment)
                             isSuccess = false;
-                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED (isAlways False and NO Criteria){1}", metaOption.Key, "\n");
+                            if (isTestLog)
+                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" FAILED (isAlways False and NO Criteria){1}", metaOption.Key, "\n"); }
                         }
                     }
                     else
@@ -309,7 +314,8 @@ public class MetaManager : MonoBehaviour
                     if (isSuccess == true)
                     {
                         listOfMetaOptions.Add(metaOption.Value);
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" SUCCESS, isActive {1}, added to list{2}", metaOption.Key, metaOption.Value.isActive, "\n");
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: option \"{0}\" SUCCESS, isActive {1}, added to list{2}", metaOption.Key, metaOption.Value.isActive, "\n"); }
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", metaOption.Key); }
@@ -317,7 +323,8 @@ public class MetaManager : MonoBehaviour
             //
             // - - - Specials -> Organisations / Secrets / Investigations
             //
-            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: SPECIAl MetaOptions - - - {0}", "\n");
+            if (isTestLog)
+            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: SPECIAl MetaOptions - - - {0}", "\n"); }
             //Organisations -> don't exceed max number of org options available
             count = Mathf.Min(listOfOrganisations.Count, arrayOfOrganisationOptions.Length);
             if (count > 0)
@@ -333,17 +340,25 @@ public class MetaManager : MonoBehaviour
                         metaSpecial.dataTag = org.tag;
                         metaSpecial.isActive = true;
                         //swap '*' for org.tag
-                        metaSpecial.text = metaSpecial.template.Replace("*", org.tag);;
+                        metaSpecial.text = metaSpecial.template.Replace("*", org.tag); ;
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Org option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Org option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        if (isTestLog)
+                        {
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Org option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Org option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
                 }
             }
-            else { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: No Organisations currently in contact with Player{0}", "\n"); }
+
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: No Organisations currently in contact with Player{0}", "\n"); }
+            }
             //Secrets -> don't exceed max number of secret options available
             count = Mathf.Min(listOfSecrets.Count, arrayOfSecretOptions.Length);
             if (count > 0)
@@ -363,13 +378,20 @@ public class MetaManager : MonoBehaviour
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Secret option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Secret option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        if (isTestLog)
+                        {
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Secret option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Secret option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid secret (Null) for listOfSecrets[{0}]", i); }
                 }
             }
-            else { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no secrets{0}", "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no secrets{0}", "\n"); }
+            }
 
             //Investigations -> don't exceed max number of investigation options available
             count = Mathf.Min(listOfInvestigations.Count, arrayOfInvestigationOptions.Length);
@@ -390,13 +412,20 @@ public class MetaManager : MonoBehaviour
                         index++;
                         //add to list
                         listOfMetaOptions.Add(metaSpecial);
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Investigation option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
-                        Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Investigation option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        if (isTestLog)
+                        {
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Investigation option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
+                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Investigation option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid Investigation (Null) for listOfInvestigations[{0}]", i); }
                 }
             }
-            else { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no outstanding investigations{0}", "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no outstanding investigations{0}", "\n"); }
+            }
         }
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
@@ -503,7 +532,8 @@ public class MetaManager : MonoBehaviour
                     metaInfoData.listOfRecommended = ordered.ToList();
                 }
 
-                /*Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaData: metaInfoData.listOfStatusData has {0} records{1}", metaInfoData.listOfStatusData.Count, "\n");*/
+                /*if (isTestLog)
+                 {Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaData: metaInfoData.listOfStatusData has {0} records{1}", metaInfoData.listOfStatusData.Count, "\n");}*/
 
                 for (int i = 0; i < listOfMetaData.Count; i++)
                 {
