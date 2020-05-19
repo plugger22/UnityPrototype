@@ -63,12 +63,13 @@ public class PopUpFixed : MonoBehaviour
     private Color textColorDefault;
 
     //fast access
-    private float timerMax = -1;     //maximum time onscreen
+    private float timerMax = -1;     //maximum time onscreen (assumes one popUp running, adjusted upwards for more)
+    private float timeLimit = -1;     //actual max timer on screen (timerMax adjusted for number of popUp's running at once)
     private float moveSpeed = -1;      //y_axis move speed (upwards)
     private float increaseScale = -1;   //factor to increase size of text
     private float decreaseScale = -1;   //factor to decrease size of text
     private float fadeSpeed = -1;         //factor to fade text
-    private float threshold;           //halfway point of popUp life (timerMax * 0.5f)
+    /*private float threshold;           //halfway point of popUp life (timerMax * 0.5f)*/
 
     static PopUpFixed popUpFixed;
 
@@ -219,8 +220,8 @@ public class PopUpFixed : MonoBehaviour
         Debug.Assert(increaseScale > -1, "Invalid increaseScale (-1)");
         Debug.Assert(decreaseScale > -1, "Invalid decreaseScale (-1)");
         Debug.Assert(fadeSpeed > -1, "Invalid fadeSpeed (-1)");
-        //threshold
-        threshold = timerMax * 0.5f;
+        /*//threshold
+        threshold = timerMax * 0.5f;*/
     }
     #endregion
 
@@ -342,7 +343,17 @@ public class PopUpFixed : MonoBehaviour
                     }
                     //run coroutine if at least one popUp to display
                     if (counter > 0)
-                    { myCoroutine = StartCoroutine("PopUp", timeDelay); }
+                    {
+                        timeLimit = timerMax;
+                        //if more than one popUp, adjust max timer upwards to give more time for coroutine to run (otherwise the visuals aren't on the screen for long enough)
+                        if (counter > 1)
+                        {
+                            timeLimit *= (1 + (counter * 0.35f));
+                            Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: timeLimit {0}, counter {1}{2}", timeLimit, counter, "\n");
+                        }
+
+                        myCoroutine = StartCoroutine("PopUp", timeDelay);
+                    }
                     else { Debug.LogWarning("PopUpFixed has NO data to display"); }
                 }
                 /*else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }*/
@@ -363,7 +374,7 @@ public class PopUpFixed : MonoBehaviour
     IEnumerator PopUp(float timeDelay)
     {
         /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");*/
-
+        float threshold = timeLimit * 0.5f;
         float elapsedTime = 0f;
         int counter = 0;
         isActive = true;
@@ -410,7 +421,7 @@ public class PopUpFixed : MonoBehaviour
             if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
             yield return null;
         }
-        while (elapsedTime < timerMax);
+        while (elapsedTime < timeLimit);
         //deactive objects once done
         Reset();
     }

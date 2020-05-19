@@ -866,3 +866,97 @@ City seed 765 -> New York, America
 Dev seed 50231 -> Tuesday, 19 May 2020 5:09 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 46259 -> Wednesday, 20 May 2020 9:19 AM
+City seed 5678 -> London, United Kingdom
+ERROR Failed to call function PopUp of class PopUpFixed
+Calling function PopUp with 1 parameter but the function requires 2.
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:352)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:480)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<GetNodeActions>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:1636)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 560 -> Wednesday, 20 May 2020 9:24 AM
+City seed 5678 -> London, United Kingdom
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(174,18): warning CS0414: The private field `MetaGameUI.isRunning' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(204,12): warning CS0414: The private field `MetaGameUI.colourNormal' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs(29,19): warning CS0414: The private field `TooltipGeneric.fadeInTime' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Tooltips/TooltipNode.cs(47,19): warning CS0414: The private field `TooltipNode.fadeInTime' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:592)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:442)
+	
+Dev seed 55687 -> Wednesday, 20 May 2020 9:40 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid editor window UnityEditor.ConsoleWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
+Dev seed 5136 -> Wednesday, 20 May 2020 9:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43539 -> Wednesday, 20 May 2020 9:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53399 -> Wednesday, 20 May 2020 9:53 AM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	GUIManager:InfoPipelineProcess(MsgPipelineType) (at Assets/Scripts/Managers/GUIManager.cs:779)
+	<InfoPipelineMessage>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:760)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:740)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

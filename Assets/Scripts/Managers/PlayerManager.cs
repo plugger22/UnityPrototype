@@ -2223,14 +2223,14 @@ public class PlayerManager : MonoBehaviour
     { return mood; }
 
     /// <summary>
-    /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record
+    /// Main method to change mood. Give a reason (keep short, eg. "Dismissed FIXER") and the name of the Factor that applied). Auto adds a history record. Auto displays popUp unless isPopUp set to false 
     /// NOTE: You only want to call this method if there is definite change (eg. not Zero)
     /// NOTE: No changes are possible while player is STRESSED
     /// </summary>
     /// <param name="change"></param>
     /// <param name="reason"></param>
     /// <param name="factor"></param>
-    public void ChangeMood(int change, string reason, string factor)
+    public void ChangeMood(int change, string reason, string factor, bool isPopUp = true)
     {
         string text = "Unknown";
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
@@ -2251,7 +2251,8 @@ public class PlayerManager : MonoBehaviour
             //update mood
             bool isStressed = false;
             mood += change;
-            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change));
+            if (isPopUp == true)
+            { GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change)); }
             if (mood < 0)
             {
                 //player immune to stress
@@ -2343,7 +2344,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
                 //only improve mood if there is room for improvement
                 if (mood < moodMax && isStressed == false)
-                { ChangeMood(unusedActions, "Watching SerialFlix", "n.a"); }
+                { ChangeMood(unusedActions, "Watching SerialFlix", "n.a", false); }
             }
         }
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }

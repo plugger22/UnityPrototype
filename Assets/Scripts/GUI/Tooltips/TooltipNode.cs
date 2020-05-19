@@ -44,7 +44,7 @@ public class TooltipNode : MonoBehaviour
     private static TooltipNode tooltipNode;
     RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private float fadeInTime;
+    /*private float fadeInTime;*/
     private int offset;
     //fast access fields
     private GlobalSide globalResistance;
@@ -91,7 +91,7 @@ public class TooltipNode : MonoBehaviour
         //components
         canvasGroup = tooltipNodeObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipNodeObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.i.guiScript.tooltipFade;
+        /*fadeInTime = GameManager.i.guiScript.tooltipFade;*/
         offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipNode");

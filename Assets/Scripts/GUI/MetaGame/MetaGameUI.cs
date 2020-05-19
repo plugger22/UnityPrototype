@@ -171,7 +171,7 @@ public class MetaGameUI : MonoBehaviour
     private ScrollRect scrollRect;                                   //needed to manually disable scrolling when not needed
     private Scrollbar scrollBar;
 
-    private bool isRunning;
+    /*private bool isRunning;*/
     private bool isLastTabTop;                                       //true if last tab pressed was a top tab
     private int highlightIndex = -1;                                 //item index of currently highlighted item
     private int maxHighlightIndex = -1;
@@ -200,9 +200,9 @@ public class MetaGameUI : MonoBehaviour
     string colourGrey;
     string colourAlert;
     /*string colourGood;
-    string colourBlue;*/
+    string colourBlue;
     string colourNormal;
-    /*string colourError;
+    string colourError;
     string colourInvalid;*/
     string colourCancel;
     string colourEnd;
@@ -729,9 +729,9 @@ public class MetaGameUI : MonoBehaviour
         colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
-        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)*/
+        colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)
         colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
-        /*colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
+        colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
@@ -936,8 +936,8 @@ public class MetaGameUI : MonoBehaviour
             helpCentre.gameObject.SetActive(false);
             helpCombined.gameObject.SetActive(false);
             helpMain.gameObject.SetActive(true);
-            //set game state
-            isRunning = true;
+            /*//set game state
+            isRunning = true;*/
             GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.PlayerOptions });
             Debug.LogFormat("[UI] MetaGameUI.cs -> SetMetaUI{0}", "\n");
         }
@@ -953,8 +953,8 @@ public class MetaGameUI : MonoBehaviour
         GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         canvasMeta.gameObject.SetActive(false);
-        //set game state
-        isRunning = false;
+        /*//set game state
+        isRunning = false;*/
         GameManager.i.guiScript.SetIsBlocked(false);
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");

@@ -26,7 +26,7 @@ public class TooltipGeneric : MonoBehaviour
 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private float fadeInTime;
+    /*private float fadeInTime;*/
     private int offset;                         //TooltipManager.cs -> Offset. Used to move tooltip down from screen top if required (otherwise sits right on edge)
     private GenericTooltipType tooltipType;
 
@@ -37,7 +37,7 @@ public class TooltipGeneric : MonoBehaviour
     {
         canvasGroup = tooltipGenericObject.GetComponent<CanvasGroup>();
         rectTransform = tooltipGenericObject.GetComponent<RectTransform>();
-        fadeInTime = GameManager.i.guiScript.tooltipFade / 2;
+        /*fadeInTime = GameManager.i.guiScript.tooltipFade * 0.5;*/
         offset = GameManager.i.guiScript.tooltipOffset;
         Debug.Assert(offset > 0, "Invalid vertical Offset (zero, or less)");
         Debug.Assert(genericHeader != null, "Invalid genericHeader (Null)");
