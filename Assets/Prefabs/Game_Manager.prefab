@@ -4908,10 +4908,10 @@ MonoBehaviour:
   flashNodeTime: 0.4
   flashConnectiontTime: 0.4
   flashInfoTabTime: 0.4
-  timerMax: 1.5
+  timerMax: 2
   moveSpeed: 0
   increaseScale: 1
-  decreaseScale: 1
+  decreaseScale: 1.5
   fadeSpeed: 1
   alertDefaultTime: 3
   tooltipDelay: 0.5

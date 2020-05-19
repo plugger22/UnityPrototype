@@ -4328,6 +4328,16 @@ public class EffectManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid secret (Null) for dataTopic.secret \"{0}\"", dataTopic.secret); }
                 break;
+            case "SecretRandom":
+                secret = actor.GetRandomCurrentSecret();
+                if (secret != null)
+                {
+                    //removes secret from actor only (could still be with other actors and will always be with the player)
+                    actor.RemoveSecret(secret.name);
+                    effectResolve.bottomText = string.Format("{0}\"{1}\" secret deleted from {2}{3}", colourGood, secret.tag, actor.arc.name, colourEnd);
+                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Secret Lost");
+                }
+                break;
             case "Gear":
                 //remove gear from actor
                 if (actor.RemoveGear(GearRemoved.Decision) == true)

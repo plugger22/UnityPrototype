@@ -738,3 +738,56 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 33647 -> Monday, 18 May 2020 8:52 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 57015 -> Tuesday, 19 May 2020 9:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36388 -> Tuesday, 19 May 2020 9:36 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63442 -> Tuesday, 19 May 2020 9:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6980 -> Tuesday, 19 May 2020 9:47 AM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised effect.outcome "SecretRandom" for effect A_LoseSecret
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4374)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4152)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1922)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3406)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 13590 -> Tuesday, 19 May 2020 9:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12861 -> Tuesday, 19 May 2020 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 748 -> Tuesday, 19 May 2020 10:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32749 -> Tuesday, 19 May 2020 10:43 AM
+City seed 5678 -> London, United Kingdom
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(174,18): warning CS0414: The private field `MetaGameUI.isRunning' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/MetaGame/MetaGameUI.cs(204,12): warning CS0414: The private field `MetaGameUI.colourNormal' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs(29,19): warning CS0414: The private field `TooltipGeneric.fadeInTime' is assigned but its value is never used
+WARNING Assets/Scripts/GUI/Tooltips/TooltipNode.cs(47,19): warning CS0414: The private field `TooltipNode.fadeInTime' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
+	
+Dev seed 36280 -> Tuesday, 19 May 2020 10:53 AM
+City seed 5678 -> London, United Kingdom

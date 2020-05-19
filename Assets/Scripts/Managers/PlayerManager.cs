@@ -2251,6 +2251,7 @@ public class PlayerManager : MonoBehaviour
             //update mood
             bool isStressed = false;
             mood += change;
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, string.Format("Mood {0}{1}", change > 0 ? "+" : "", change));
             if (mood < 0)
             {
                 //player immune to stress
@@ -2264,6 +2265,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.i.messageScript.PlayerImmuneStress(text, stressImmunityCurrent, stressImmunityStart, isAddicted);
             }
             mood = Mathf.Clamp(mood, 0, moodMax);
+            Debug.LogFormat("[Sta] PlayerManager.cs -> ChangeMood: Mood {0}{1} (now {2}){3}", change > 0 ? "+" : "", change, mood, "\n");
             //change sprite
             GameManager.i.actorPanelScript.SetPlayerMoodUI(mood, isStressed);
             //add a record

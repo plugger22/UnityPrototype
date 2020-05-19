@@ -48,7 +48,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("factor to increase size of text (first half of animation cycle")]
     [Range(0, 3f)] public float increaseScale = 1.0f;
     [Tooltip("factor to decrease size of text (second half of animation cycle")]
-    [Range(0, 3f)] public float decreaseScale = 1.0f;
+    [Range(0, 3f)] public float decreaseScale = 1.5f;
     [Tooltip("factor to fade in text during first half of animation cycle and fade out in the second")]
     [Range(0, 3f)] public float fadeSpeed = 1.0f;
 
