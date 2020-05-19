@@ -45,6 +45,7 @@ public class DebugGUI : MonoBehaviour
     private int box_level; 
     private int button_width;
     private int targetToggle = 0;
+    private int campaignToggle = 0;
     private int personalityToggle = 0;
     private int playerToggle = 0;
     private int contactToggle = 0;
@@ -159,9 +160,12 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Campaign Data"))
             {
                 Debug.Log("[Dbg] Button -> Toggle Campaign Data");
-                if (debugDisplay != 55)
-                { debugDisplay = 55; }
-                else { debugDisplay = 0; }
+                switch (campaignToggle)
+                {
+                    case 0: debugDisplay = 55; campaignToggle = 1; break;
+                    case 1: debugDisplay = 107; campaignToggle = 2; break;
+                    case 2: debugDisplay = 0; campaignToggle = 0; break;
+                }
             }
 
             // fourth button
@@ -1939,6 +1943,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplaySecretDetails();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Campaign history
+                    case 107:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayCampaignHistory();
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
                         break;
                 }
             }

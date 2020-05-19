@@ -133,6 +133,7 @@ public class SaveDataData
     public List<HistoryNemesisMove> listOfHistoryNemesis = new List<HistoryNemesisMove>();
     public List<HistoryNpcMove> listOfHistoryVip = new List<HistoryNpcMove>();
     public List<HistoryActor> listOfHistoryPlayer = new List<HistoryActor>();
+    public List<HistoryLevel> listOfHistoryLevel = new List<HistoryLevel>();
     //Messages
     public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();

@@ -1097,6 +1097,11 @@ public class FileManager : MonoBehaviour
         if (listOfHistoryPlayer != null)
         { write.dataData.listOfHistoryPlayer.AddRange(listOfHistoryPlayer); }
         else { Debug.LogError("Invalid listOfHistoryPlayer (Null)"); }
+        //Level History
+        List<HistoryLevel> listOfLevelHistory = GameManager.i.dataScript.GetDictOfCampaignHistory().Values.ToList();
+        if (listOfLevelHistory != null)
+        { write.dataData.listOfHistoryLevel.AddRange(listOfLevelHistory); }
+        else { Debug.LogError("Invalid listOfLevelHistory (Null)"); }
         #endregion
 
         #region newsFeed
@@ -2866,6 +2871,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.dataScript.SetListOfHistoryNemesisMove(read.dataData.listOfHistoryNemesis);
         GameManager.i.dataScript.SetListOfHistoryNpcMove(read.dataData.listOfHistoryVip);
         GameManager.i.dataScript.SetListOfHistoryPlayer(read.dataData.listOfHistoryPlayer);
+        GameManager.i.dataScript.SetDictOfCampaignHistory(read.dataData.listOfHistoryLevel);
         #endregion
 
         #region News

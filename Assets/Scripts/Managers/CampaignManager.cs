@@ -47,6 +47,10 @@ public class CampaignManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
+                SubInitialiseNewGame();
+                SubInitialiseAllEarly();
+                SubInitialiseEvents();
+                break;
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
             case GameState.LoadGame:
@@ -86,6 +90,16 @@ public class CampaignManager : MonoBehaviour
     {
         //event listeners
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "CampaignManager");
+    }
+    #endregion
+
+    #region SubInitialiseNewGame
+    /// <summary>
+    /// New game initialisation
+    /// </summary>
+    private void SubInitialiseNewGame()
+    {
+        GameManager.i.dataScript.InitialiseCampaignHistory();
     }
     #endregion
 

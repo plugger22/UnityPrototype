@@ -791,3 +791,25 @@ ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:109)
 	
 Dev seed 36280 -> Tuesday, 19 May 2020 10:53 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 49912 -> Tuesday, 19 May 2020 10:56 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32038 -> Tuesday, 19 May 2020 11:52 AM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:675)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:378)
+	
+Dev seed 12771 -> Tuesday, 19 May 2020 11:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6751 -> Tuesday, 19 May 2020 12:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45276 -> Tuesday, 19 May 2020 12:35 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 5678 -> London, United Kingdom

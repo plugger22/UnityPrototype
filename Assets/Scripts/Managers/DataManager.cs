@@ -231,7 +231,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Secret> dictOfSecrets = new Dictionary<string, Secret>();                        //Key -> secretName, Value -> Secret
     private Dictionary<string, SecretType> dictOfSecretTypes = new Dictionary<string, SecretType>();            //Key -> SecretType.name, Value -> SecretType
     private Dictionary<string, NodeCrisis> dictOfNodeCrisis = new Dictionary<string, NodeCrisis>();             //Key -> nodeCrisisID, Value -> NodeCrisis
-    private Dictionary<int, MainInfoData> dictOfHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
+    private Dictionary<int, MainInfoData> dictOfInfoHistory = new Dictionary<int, MainInfoData>();                  //Key -> turn, Value -> MainInfoData set for turn
     private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();                           //Key -> contactID, Value -> Contact
     private Dictionary<int, List<int>> dictOfActorContacts = new Dictionary<int, List<int>>();                  //Key -> ActorID, Value -> list of nodeID's where actor has contacts
     private Dictionary<int, List<int>> dictOfNodeContactsResistance = new Dictionary<int, List<int>>();         //Key -> NodeID, Value -> list of actorID's who have a contact at node
@@ -254,6 +254,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
     private Dictionary<int, RelationshipData> dictOfRelations = new Dictionary<int, RelationshipData>();        //Key -> slotID, Value -> RelationshipData.cs package
     private Dictionary<string, MetaOption> dictOfMetaOptions = new Dictionary<string, MetaOption>();            //Key -> MetaOption name, Value -> MetaOption
+    private Dictionary<int, HistoryLevel> dictOfCampaignHistory = new Dictionary<int, HistoryLevel>();          //Key -> HistoryLevel.scenarioIndex, Value -> HistoryLevel
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -563,7 +564,7 @@ public class DataManager : MonoBehaviour
         dictOfPendingMessages.Clear();
         dictOfCurrentMessages.Clear();
         dictOfAIMessages.Clear();
-        dictOfHistory.Clear();
+        dictOfInfoHistory.Clear();
         //relations
         dictOfRelations.Clear();
 
@@ -682,7 +683,7 @@ public class DataManager : MonoBehaviour
             { arrayOfItemDataByPriority[outer, inner].Clear(); }
         }
         // archive to History dict
-        if (dictOfHistory != null)
+        if (dictOfInfoHistory != null)
         {
             //pass by value, not reference (otherwise duplicate data for each turn)
             MainInfoData historyData = new MainInfoData(currentInfoData);
@@ -691,7 +692,7 @@ public class DataManager : MonoBehaviour
             historyData.listOfNews = listOfNews;
             historyData.listOfAdverts = listOfAdverts;
             try
-            { dictOfHistory.Add(turn, historyData); }
+            { dictOfInfoHistory.Add(turn, historyData); }
             catch (ArgumentNullException)
             { Debug.LogError("Invalid currentInfoData (Null)"); }
             catch (ArgumentException)
@@ -719,15 +720,15 @@ public class DataManager : MonoBehaviour
         //if no turn number provided, or turn number 0, use current turn
         if (turnNumber < 1) { turnNumber = GameManager.i.turnScript.Turn; }
         //get data set
-        if (dictOfHistory.ContainsKey(turnNumber))
-        { data = dictOfHistory[turnNumber]; }
+        if (dictOfInfoHistory.ContainsKey(turnNumber))
+        { data = dictOfInfoHistory[turnNumber]; }
         else { Debug.LogWarningFormat("Record not found in dictOfHistory for turn number {0}", turnNumber); }
         //return data set
         return data;
     }
 
     public Dictionary<int, MainInfoData> GetDictOfHistory()
-    { return dictOfHistory; }
+    { return dictOfInfoHistory; }
 
     public List<ItemData> GetListOfDelayedItemData()
     { return listOfDelayedItemData; }
@@ -9365,6 +9366,99 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid saveMetaOption (Null)"); }
     }
 
+
+    //
+    // - - - Campaign History
+    //
+
+    public Dictionary<int, HistoryLevel> GetDictOfCampaignHistory()
+    { return dictOfCampaignHistory; }
+
+    /// <summary>
+    /// run at start of campaign to set up dictOfCampaignHistory with an entry for each scenario in the campaign
+    /// </summary>
+    public void InitialiseCampaignHistory()
+    {
+        List<Scenario> listOfScenarios = GameManager.i.campaignScript.campaign.listOfScenarios;
+        if (listOfScenarios != null)
+        {
+            for (int i = 0; i < listOfScenarios.Count; i++)
+            {
+                Scenario scenario = listOfScenarios[i];
+                if (scenario != null)
+                {
+                    HistoryLevel levelData = new HistoryLevel();
+                    levelData.scenarioIndex = i;
+                    levelData.scenarioDescriptor = scenario.descriptor;
+                    levelData.cityName = scenario.city.tag;
+                    //add entry to dict
+                    try
+                    { dictOfCampaignHistory.Add(levelData.scenarioIndex, levelData); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate entry exists for dictOfCampaign[scenarioIndex] \"{0}\"", i); }
+                }
+                else { Debug.LogErrorFormat("Invalid scenario (Null) in listOfScenarios[{i}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfScenarios (Null)"); }
+    }
+
+    /// <summary>
+    /// set dictionary (used for save/load). Wipes existing data prior to adding new
+    /// </summary>
+    /// <param name="listOfLevels"></param>
+    public void SetDictOfCampaignHistory(List<HistoryLevel> listOfLevels)
+    {
+        if (listOfLevels != null)
+        {
+            int count = listOfLevels.Count;
+            if (count > 0)
+            {
+                //clear dictionary
+                dictOfCampaignHistory.Clear();
+                //add new data
+                for (int i = 0; i < count; i++)
+                {
+                    HistoryLevel levelData = listOfLevels[i];
+                    if (levelData != null)
+                    {
+                        try
+                        { dictOfCampaignHistory.Add(levelData.scenarioIndex, levelData); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Duplicate entry exists for dictOfCampaign[scenarioIndex] \"{0}\"", levelData.scenarioIndex); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid levelData (Null) in listOfLevels[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfLevels (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfLevels (Null)"); }
+    }
+
+    /// <summary>
+    /// Debug display of level histories
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayCampaignHistory()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("-Campaign History{0}{1}", "\n", "\n");
+        foreach(var data in dictOfCampaignHistory)
+        { 
+            if (data.Value != null)
+            {
+                builder.AppendFormat(" -Scenario {0}{1}", data.Key, "\n");
+                builder.AppendFormat("  \"{0}\"{1}", data.Value.scenarioDescriptor, "\n");
+                builder.AppendFormat("  {0}{1}", data.Value.cityName, "\n");
+                builder.AppendFormat("  cityLoyalty: start {0}, end {1}{2}", data.Value.cityLoyaltyStart, data.Value.cityLoyaltyEnd, "\n");
+                builder.AppendFormat("  hqApproval: start {0}, end {1}{2}", data.Value.hqSupportStart, data.Value.hqSupportEnd, "\n");
+                builder.AppendLine();
+            }
+            else { Debug.LogError("Invalid levelHistory (Null) in dictOfCampaignHistory"); }
+        }
+
+        return builder.ToString();
+    }
 
     //new methods above here
 }

@@ -574,6 +574,25 @@ namespace packageAPI
         }
     }
 
+    /// <summary>
+    /// History of a level (once completed)
+    /// </summary>
+    [System.Serializable]
+    public class HistoryLevel
+    {
+        //base data
+        public int scenarioIndex;
+        public string scenarioDescriptor;
+        public string cityName;
+        //start data
+        public int cityLoyaltyStart;
+        public int hqSupportStart;
+        //end data
+        public int turns;                       //number of turns spent in level
+        public int cityLoyaltyEnd;
+        public int hqSupportEnd;
+    }
+
 
 
     //
@@ -1111,6 +1130,8 @@ namespace packageAPI
         public int y_offset;
         public string text;                         //text to display
     }
+
+
 
     //new classes above here
 }
