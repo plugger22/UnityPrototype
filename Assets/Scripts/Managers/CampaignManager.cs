@@ -469,6 +469,24 @@ public class CampaignManager : MonoBehaviour
         return title;
     }*/
 
+    /// <summary>
+    /// returns special gear related to specific HQ hierarchy actor. Returns null if not found
+    /// </summary>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public Gear GetHqSpecialGear(ActorHQ actorHQ)
+    {
+        Gear gear = null;
+        switch (actorHQ)
+        {
+            case ActorHQ.Boss: gear = campaign.specialBossGear; break;
+            case ActorHQ.SubBoss1: gear = campaign.specialSubBoss1Gear; break;
+            case ActorHQ.SubBoss2: gear = campaign.specialSubBoss2Gear; break;
+            case ActorHQ.SubBoss3: gear = campaign.specialSubBoss3Gear; break;
+            default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+        }
+        return gear;
+    }
     
 
     //

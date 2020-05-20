@@ -23,13 +23,15 @@ public class MetaManager : MonoBehaviour
     public MetaOption[] arrayOfSecretOptions;
     [Tooltip("Place metaOptions here to handle the max number of possible investigation metaOptions that may be required")]
     public MetaOption[] arrayOfInvestigationOptions;
+    [Tooltip("Place metaOptions here to handle special gear from each member of the HQ hierarchy (1 for each), in order of hierarchy, eg. Boss first, subBoss1 second, etc.")]
+    public MetaOption[] arrayOfGearOptions;
 
     [Header("Renown cost of MetaOptions")]
     [Range(0, 10)] public int costLowPriority = 2;
     [Range(0, 10)] public int costMediumPriority = 4;
     [Range(0, 10)] public int costHighPriority = 6;
     [Range(0, 10)] public int costExtremePriority = 10;
-    
+
 
     //NOTE: the above arrays are checked for various error states in ValidationManager.cs -> ValidateMetaOptions
 
@@ -118,7 +120,7 @@ public class MetaManager : MonoBehaviour
         InitialiseMetaOptions();
         InitialiseMetaData();
         GameManager.i.metaUIScript.SetMetaUI(metaInfoData);
-        
+
 
     }
 
@@ -309,7 +311,7 @@ public class MetaManager : MonoBehaviour
                             else { metaOption.Value.isActive = true; }
                         }
                         else { metaOption.Value.isActive = true; }
-                     }
+                    }
                     //Add to list if viable
                     if (isSuccess == true)
                     {
@@ -426,6 +428,68 @@ public class MetaManager : MonoBehaviour
                 if (isTestLog)
                 { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no outstanding investigations{0}", "\n"); }
             }
+
+            //Special Gear -> offered if relevant HQ characters have a good opinion of you
+            count = arrayOfGearOptions.Length;
+            if (count > 0)
+            {
+                //should be one for each HQ boss in hierarchy (assumed to be in order of hierarchy, eg. Boss -> SubBoss1 -> SubBoss2 -> SubBoss3
+                if (count == GameManager.i.hqScript.numOfActorsHQ)
+                {
+                    index = 0;
+                    Actor actor = null;
+                    string title = "Unknown";
+                    Gear gear = null;
+                    for (int i = 0; i < count; i++)
+                    {
+
+                        ActorHQ actorHQ = ActorHQ.None;
+                        switch (i)
+                        {
+                            case 0: actorHQ = ActorHQ.Boss; break;
+                            case 1: actorHQ = ActorHQ.SubBoss1; break;
+                            case 2: actorHQ = ActorHQ.SubBoss2; break;
+                            case 3: actorHQ = ActorHQ.SubBoss3; break;
+                        }
+                        
+                        actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                        title = GameManager.i.hqScript.GetHqTitle(actorHQ);
+                        gear = GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.Boss);
+
+                        if (actor != null)
+                        {
+                            MetaOption metaSpecial = arrayOfGearOptions[index];
+                            if (gear != null)
+                            {
+                                metaSpecial.dataName = gear.name;
+                                metaSpecial.dataTag = gear.tag;
+                                //option active only if actor has a good opinion of player
+                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                                { metaSpecial.isActive = true; }
+                                else { metaSpecial.isActive = false; }
+                                //swap '*' for investigation.tag
+                                metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
+                                index++;
+                                //add to list
+                                listOfMetaOptions.Add(metaSpecial);
+                                if (isTestLog)
+                                {
+                                    Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
+                                    Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                                }
+                            }
+                            else { Debug.LogWarningFormat("Invalid gear (Null) for listOfGearOptions[{0}]", i); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for listOfGearOptions[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Incorrect number of arrayOfGear metaOptions (is {0}, should be {1})", count, GameManager.i.hqScript.numOfActorsHQ); }
+            }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no gear MetaOptions in arrayOfGearOptions{0}", "\n"); }
+            }
         }
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
@@ -483,7 +547,7 @@ public class MetaManager : MonoBehaviour
                             case 0: metaData.priority = MetaPriority.Low; cost = costLowPriority; break;
                             case 1: metaData.priority = MetaPriority.Medium; cost = costMediumPriority; break;
                             case 2: metaData.priority = MetaPriority.High; cost = costHighPriority; break;
-                            case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority;  break;
+                            case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority; break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
                         //header texts

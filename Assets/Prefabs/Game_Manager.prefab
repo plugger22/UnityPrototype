@@ -563,6 +563,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3eeeae372551a1842b719a1c8fd79361, type: 2}
   - {fileID: 11400000, guid: b8d8fc9942d7fa248928c5af1786bded, type: 2}
   - {fileID: 11400000, guid: 04be7f52e50f64742a7d6a1583a418a1, type: 2}
+  arrayOfGearOptions:
+  - {fileID: 11400000, guid: 72967dc704c5187429cd5fcf4f6cfed5, type: 2}
+  - {fileID: 11400000, guid: e936e13f601975f42a612f930aa2e254, type: 2}
+  - {fileID: 11400000, guid: c4e0544e83379474095f5c880685c975, type: 2}
+  - {fileID: 11400000, guid: 33d887b1b829d3b40a38807a98823873, type: 2}
   costLowPriority: 2
   costMediumPriority: 4
   costHighPriority: 6
@@ -4482,7 +4487,7 @@ MonoBehaviour:
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
   isTopicManager: 0
-  isMetaGame: 0
+  isMetaGame: 1
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1

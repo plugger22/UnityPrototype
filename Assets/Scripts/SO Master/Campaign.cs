@@ -127,6 +127,32 @@ public class Campaign : ScriptableObject
         //Asserts for Resistance side only (Debug measure -> remove once Authority is active)
         if (side.level == 2)
         {
+            Debug.Assert(campaignAlphaPool != null, "Invalid campaignAlphaPool (Null)");
+            Debug.Assert(campaignBravoPool != null, "Invalid campaignBravoPool (Null)");
+            Debug.Assert(campaignCharliePool != null, "Invalid campaignCharliePool (Null)");
+
+            Debug.Assert(familyAlphaPool != null, "Invalid familyAlphaPool (Null)");
+            Debug.Assert(familyBravoPool != null, "Invalid familyBravoPool (Null)");
+            Debug.Assert(familyCharliePool != null, "Invalid familyCharliePool (Null)");
+
+            Debug.Assert(resistanceCampaignPool != null, "Invalid resistanceCampaignPool (Null)");
+            Debug.Assert(resistanceGeneralPool != null, "Invalid resistanceGeneralPool (Null)");
+
+            Debug.Assert(actorContactPool != null, "Invalid actorContactPool (Null)");
+            Debug.Assert(actorDistrictPool != null, "Invalid actorDistrictPool (Null)");
+            Debug.Assert(actorGearPool != null, "Invalid actorGearPool (Null)");
+            Debug.Assert(actorMatchPool != null, "Invalid actorMatchPool (Null)");
+            Debug.Assert(actorPoliticPool != null, "Invalid actorPoliticPool (Null)");
+
+            Debug.Assert(playerDistrictPool != null, "Invalid PlayerDistrictPool (Null)");
+            Debug.Assert(playerGeneralPool != null, "Invalid PlayerGeneralPool (Null)");
+            Debug.Assert(playerStatsPool != null, "Invalid PlayerStatsPool (Null)");
+            Debug.Assert(playerGearPool != null, "Invalid PlayerGearPool (Null)");
+            Debug.Assert(playerConditionsPool != null, "Invalid PlayerConditionsPool (Null)");
+
+            Debug.Assert(hqPool != null, "Invalid hqPool (Null)");
+            Debug.Assert(capturePool != null, "Invalid capturePool (Null)");
+
             Debug.Assert(orgCure != null, "Invalid orgCure (Null)");
             Debug.Assert(orgContract != null, "Invalid orgContract (Null)");
             Debug.Assert(orgHQ != null, "Invalid orgHQ (Null)");
