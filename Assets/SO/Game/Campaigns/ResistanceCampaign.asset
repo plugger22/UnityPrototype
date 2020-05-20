@@ -56,11 +56,10 @@ MonoBehaviour:
   orgHQ: {fileID: 11400000, guid: 6b6344ba25eaa58459fd133e36ec28a2, type: 2}
   orgEmergency: {fileID: 11400000, guid: 61755f069c6a2fd4f83a0a372d5d1b1c, type: 2}
   orgInfo: {fileID: 11400000, guid: 0bc9b805b6132bc4782dc397de118240, type: 2}
-  bossAut: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
-  subBoss1Aut: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
-  subBoss2Aut: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
-  subBoss3Aut: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
-  bossRes: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
-  subBoss1Res: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
-  subBoss2Res: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
-  subBoss3Res: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
+  specialBossGear: {fileID: 11400000, guid: 7c618f3f04e7f2b48bcb09e5a9989467, type: 2}
+  specialSubBoss1Gear: {fileID: 11400000, guid: 43e196e2c34ba0d40917fddc8bf911e5,
+    type: 2}
+  specialSubBoss2Gear: {fileID: 11400000, guid: 46142d0d1b8ab87488e3f3dfdeebfd15,
+    type: 2}
+  specialSubBoss3Gear: {fileID: 11400000, guid: 78c823328e39d9e4baf7795145e717d5,
+    type: 2}

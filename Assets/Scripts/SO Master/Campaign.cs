@@ -108,19 +108,15 @@ public class Campaign : ScriptableObject
     [Tooltip("Org that provides Information services such as location of Nemesis and the cleansing of secret evidence")]
     public Organisation orgInfo;
 
-    /*[Header("HQ Positions -> Authority")]
-    [Tooltip("HQ Position that corresponds to the enum.ActorHQ equivalent. Transferred over to DataManager.cs if playerSide")]
-    public HqPosition bossAut;
-    public HqPosition subBoss1Aut;
-    public HqPosition subBoss2Aut;
-    public HqPosition subBoss3Aut;
-
-    [Header("HQ Positions -> Resistance")]
-    [Tooltip("HQ Position that corresponds to the enum.ActorHQ equivalent. Transferred over to DataManager.cs if playerSide")]
-    public HqPosition bossRes;
-    public HqPosition subBoss1Res;
-    public HqPosition subBoss2Res;
-    public HqPosition subBoss3Res;*/
+    [Header("Special Gear")]
+    [Tooltip("Special gear that is available during MetaGame if Player's relationship with HQ Boss is 2+")]
+    public Gear specialBossGear;
+    [Tooltip("Special gear that is available during MetaGame if Player's relationship with HQ SubBoss1 is 2+")]
+    public Gear specialSubBoss1Gear;
+    [Tooltip("Special gear that is available during MetaGame if Player's relationship with HQ SubBoss2 is 2+")]
+    public Gear specialSubBoss2Gear;
+    [Tooltip("Special gear that is available during MetaGame if Player's relationship with HQ SubBoss3 is 2+")]
+    public Gear specialSubBoss3Gear;
 
     public void OnEnable()
     {
@@ -128,6 +124,20 @@ public class Campaign : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(listOfScenarios.Count > 0, "Invalid listOfScenarios (Empty) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        //Asserts for Resistance side only (Debug measure -> remove once Authority is active)
+        if (side.level == 2)
+        {
+            Debug.Assert(orgCure != null, "Invalid orgCure (Null)");
+            Debug.Assert(orgContract != null, "Invalid orgContract (Null)");
+            Debug.Assert(orgHQ != null, "Invalid orgHQ (Null)");
+            Debug.Assert(orgEmergency != null, "Invalid orgEmergency (Null)");
+            Debug.Assert(orgInfo != null, "Invalid orgInfo (Null)");
+
+            Debug.Assert(specialBossGear != null, "Invalid specialGearBoss (Null)");
+            Debug.Assert(specialSubBoss1Gear != null, "Invalid specialSubBoss1Gear (Null)");
+            Debug.Assert(specialSubBoss2Gear != null, "Invalid specialSubBoss2Gear (Null)");
+            Debug.Assert(specialSubBoss3Gear != null, "Invalid specialSubBoss3Gear (Null)");
+        }
     }
 
 
