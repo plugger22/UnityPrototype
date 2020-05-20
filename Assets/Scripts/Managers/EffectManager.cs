@@ -4108,6 +4108,15 @@ public class EffectManager : MonoBehaviour
                 GameManager.i.metaScript.SetMetaGameLevelTwo(true);
                 effectResolve.bottomText = string.Format("{0}All Subordinates will be level 2{1}", colourEffect, colourEnd);
                 break;
+            case "MetaOptionGear":
+                //special gear available because HQ actor has a good opinion of player
+                Gear gear = GameManager.i.dataScript.GetGear(dataInput.dataName);
+                if (gear != null)
+                {
+                    effectResolve.bottomText = string.Format("gained {0}{1}{2} gear", colourEffect, gear.tag, colourEnd);
+                }
+                break;
+
             default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }
         return effectResolve;

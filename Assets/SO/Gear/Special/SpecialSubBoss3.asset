@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: SpecialSubBoss3
   tag: SpecialSubBoss3
-  rarity: {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
-  type: {fileID: 11400000, guid: 882d30b04fd6dad4c8fab69561033dde, type: 2}
+  rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
+  type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []

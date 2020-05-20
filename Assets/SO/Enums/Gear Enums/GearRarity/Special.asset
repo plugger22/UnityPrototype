@@ -8,7 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eee40986c22a89468f893addafab6ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f1e89eda7c2d9e41acf9af85da5e7e7, type: 3}
   m_Name: Special
   m_EditorClassIdentifier: 
-  descriptor: Only available during MetaGame from HQ
+  descriptor: Only available as HQ favours
+  level: 1

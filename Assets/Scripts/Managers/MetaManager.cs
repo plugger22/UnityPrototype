@@ -442,7 +442,6 @@ public class MetaManager : MonoBehaviour
                     Gear gear = null;
                     for (int i = 0; i < count; i++)
                     {
-
                         ActorHQ actorHQ = ActorHQ.None;
                         switch (i)
                         {
@@ -451,11 +450,9 @@ public class MetaManager : MonoBehaviour
                             case 2: actorHQ = ActorHQ.SubBoss2; break;
                             case 3: actorHQ = ActorHQ.SubBoss3; break;
                         }
-                        
                         actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                         title = GameManager.i.hqScript.GetHqTitle(actorHQ);
                         gear = GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.Boss);
-
                         if (actor != null)
                         {
                             MetaOption metaSpecial = arrayOfGearOptions[index];
