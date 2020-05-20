@@ -1069,3 +1069,126 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
 	City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 3677 -> Wednesday, 20 May 2020 6:24 PM
+WARNING [Val] ValidateSO: MISMATCH on EffectOutcome, array 106, assets 107 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectOutcome[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1776)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on Effect, array 397, assets 398 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1834)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on GearRarity, array 3, assets 4 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GearRarity[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1842)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on GearType, array 8, assets 7 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(GearType[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1844)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 27, assets 31 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1900)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	ERROR Invalid gearType (Null)
+UnityEngine.Debug:LogError(Object)
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1421)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	City seed 5678 -> London, United Kingdom
+ERROR Invalid gearSpecial (Null)
+UnityEngine.Debug:LogError(Object)
+	GearManager:SubInitialiseFastAccess() (at Assets/Scripts/Managers/GearManager.cs:155)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:94)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Duplicate record exists in dictOfGear for "SpecialBoss"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GearManager:SubInitialiseSessionStart() (at Assets/Scripts/Managers/GearManager.cs:265)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:95)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Duplicate record exists in dictOfGear for "SpecialSubBoss1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GearManager:SubInitialiseSessionStart() (at Assets/Scripts/Managers/GearManager.cs:265)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:95)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Duplicate record exists in dictOfGear for "SpecialSubBoss2"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GearManager:SubInitialiseSessionStart() (at Assets/Scripts/Managers/GearManager.cs:265)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:95)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	WARNING Duplicate record exists in dictOfGear for "SpecialSubBoss3"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GearManager:SubInitialiseSessionStart() (at Assets/Scripts/Managers/GearManager.cs:265)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:95)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	
+Dev seed 5661 -> Wednesday, 20 May 2020 6:28 PM
+WARNING [Val] ValidateSO: MISMATCH on EffectOutcome, array 106, assets 107 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectOutcome[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1776)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on Effect, array 397, assets 398 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1834)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 27, assets 31 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1900)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	City seed 5678 -> London, United Kingdom
+ERROR Invalid rarity "Special", level 3
+UnityEngine.Debug:LogError(Object)
+	DataManager:SetGearList(List`1, GearRarity) (at Assets/Scripts/Managers/DataManager.cs:5889)
+	GearManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/GearManager.cs:302)
+	GearManager:Initialise(GameState) (at Assets/Scripts/Managers/GearManager.cs:96)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:859)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:376)
+	
+Dev seed 42088 -> Wednesday, 20 May 2020 6:29 PM
+WARNING [Val] ValidateSO: MISMATCH on EffectOutcome, array 106, assets 107 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectOutcome[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1776)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on Effect, array 397, assets 398 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1834)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	WARNING [Val] ValidateSO: MISMATCH on MetaOption, array 27, assets 31 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(MetaOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1900)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	City seed 5678 -> London, United Kingdom

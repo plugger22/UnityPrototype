@@ -5885,6 +5885,9 @@ public class DataManager : MonoBehaviour
                     listOfUniqueGear.Clear();
                     listOfUniqueGear.AddRange(listOfGear);
                     break;
+                case 3:
+                    //Special -> MetaGame -> do nothing as handled differently
+                    break;
                 default:
                     Debug.LogError(string.Format("Invalid rarity \"{0}\", level {1}", rarity.name, rarity.level));
                     break;

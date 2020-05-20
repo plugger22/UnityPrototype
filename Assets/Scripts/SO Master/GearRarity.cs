@@ -10,5 +10,5 @@ public class GearRarity : ScriptableObject
 {
     public string descriptor;
 
-    [HideInInspector] public int level;         //assigned dynamically during GearManager.initialise (0/1/2 for common/rare/unique)
+    [HideInInspector] public int level;         //assigned dynamically during GearManager.subInitialiseFastAccess (0/1/2/3 for common/rare/unique/metaGame)
 }

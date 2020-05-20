@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Text;
+﻿using gameAPI;
 using modalAPI;
-using gameAPI;
 using packageAPI;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -38,6 +38,7 @@ public class GearManager : MonoBehaviour
     [HideInInspector] public GearRarity gearCommon;
     [HideInInspector] public GearRarity gearRare;
     [HideInInspector] public GearRarity gearUnique;
+    [HideInInspector] public GearRarity gearSpecial;
     //quick reference -> type
     [HideInInspector] public GearType typeHacking;
     [HideInInspector] public GearType typeInfiltration;
@@ -110,7 +111,7 @@ public class GearManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
-        }      
+        }
     }
 
 
@@ -141,12 +142,17 @@ public class GearManager : MonoBehaviour
                         gearUnique = rarity;
                         rarity.level = 2;
                         break;
+                    case "Special":
+                        gearSpecial = rarity;
+                        rarity.level = 3;
+                        break;
                 }
             }
             //error check
             if (gearCommon == null) { Debug.LogError("Invalid gearCommon (Null)"); }
             if (gearRare == null) { Debug.LogError("Invalid gearRare (Null)"); }
             if (gearUnique == null) { Debug.LogError("Invalid gearUnique (Null)"); }
+            if (gearSpecial == null) { Debug.LogError("Invalid gearSpecial (Null)"); }
         }
         else { Debug.LogError("Invalid listOfGearRarity (Null)"); }
         //initialise fast access variables -> type
@@ -236,6 +242,33 @@ public class GearManager : MonoBehaviour
         listOfCompromisedGear = new List<string>();
         //gear save cost
         gearSaveCurrentCost = gearSaveBaseCost;
+
+        /*//add special gear for MetaGame options to dictOfGear (do so here to avoid sequencing issues)
+        List<Gear> listOfSpecialGear = new List<Gear>();
+        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.Boss));
+        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss1));
+        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss2));
+        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss3));
+        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
+        if (dictOfGear != null)
+        {
+            for (int i = 0; i < listOfSpecialGear.Count; i++)
+            {
+                Gear gear = listOfSpecialGear[i];
+                if (gear != null)
+                {
+                    //add to dictOfGear
+                    try {
+                        dictOfGear.Add(gear.name, gear);
+                        Debug.LogFormat("[Tst] GearManager.cs -> SubInitialiseSessionStart: \"{0}\" gear added to dictOfGear{1}", gear.name, "\n");
+                    }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfGear for \"{0}\"", gear.name); }
+                }
+                else { Debug.LogWarningFormat("Invalid Gear (Null) in listOfSpecialGear[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfGear (Null)"); }*/
     }
     #endregion
 
@@ -257,7 +290,9 @@ public class GearManager : MonoBehaviour
                 gearEntry.Value.ResetStats();
                 //assign to a list based on rarity
                 int index = gearEntry.Value.rarity.level;
-                arrayOfGearLists[index].Add(gearEntry.Value.name);
+                //exclude MetaGame special gear
+                if (index < 3)
+                { arrayOfGearLists[index].Add(gearEntry.Value.name); }
             }
             //initialise dataManager lists with local lists
             for (int i = 0; i < arrayOfGearLists.Length; i++)
@@ -372,7 +407,7 @@ public class GearManager : MonoBehaviour
                             for (int j = 0; j < gear.timesUsed; j++)
                             {
                                 rnd = Random.Range(0, 100);
-                                if ( rnd < chance)
+                                if (rnd < chance)
                                 {
                                     //gear COMPROMISED
                                     gear.isCompromised = true;
@@ -432,8 +467,8 @@ public class GearManager : MonoBehaviour
                         builderTop.AppendFormat("{0}to {1}{2}Save{3}{4} any gear{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
                         details.textTop = builderTop.ToString();
                         StringBuilder builderBottom = new StringBuilder();
-                        foreach(string gearName in listOfCompromisedGear)
-                        { 
+                        foreach (string gearName in listOfCompromisedGear)
+                        {
                             if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                             builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
                         }
@@ -478,11 +513,11 @@ public class GearManager : MonoBehaviour
                             timer -= 1;
                             //grace period about to be exceeded
                             if (timer == actorGearGracePeriod)
-                                {
-                                    //let player know that gear will be available
-                                    string msgText = string.Format("{0} gear held by {1}, available next turn", gear.tag, actor.arc.name);
-                                    GameManager.i.messageScript.GearAvailable(msgText, gear, actor);
-                                }
+                            {
+                                //let player know that gear will be available
+                                string msgText = string.Format("{0} gear held by {1}, available next turn", gear.tag, actor.arc.name);
+                                GameManager.i.messageScript.GearAvailable(msgText, gear, actor);
+                            }
                             //grace period exceeded
                             if (timer > actorGearGracePeriod)
                             {
@@ -508,7 +543,7 @@ public class GearManager : MonoBehaviour
                                 {
                                     //Gear LOST
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckActorGear: {0} LOST ({1}), need < {2}{3}, rolled {4}{5}",
-                                        gear.tag, actor.arc.name,  chance, traitName, rnd, "\n");
+                                        gear.tag, actor.arc.name, chance, traitName, rnd, "\n");
                                     //message
                                     string msgText = string.Format("{0} gear lost by {1}, {2}{3}", gear.tag, actor.actorName, actor.arc.name, traitName);
                                     GameManager.i.messageScript.GearLost(msgText, gear, actor);
@@ -741,7 +776,7 @@ public class GearManager : MonoBehaviour
                                 GameManager.i.messageScript.GeneralRandom("Gear Choice, Rare gear SUCCESS", "Rare Gear", chance, rnd);
                                 Debug.LogWarningFormat("Invalid rare gear (Null) for gear {0}", gearName);
                             }
-                            
+
                         }
                         else if (tempCommonGear.Count > 0)
                         {
@@ -888,10 +923,10 @@ public class GearManager : MonoBehaviour
                 //At least one item of gear is present
                 InventoryInputData data = new InventoryInputData();
                 data.textHeader = "Gear Inventory";
-                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourNeutral, colourEnd, 
-                    colourDefault, numOfGear, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourNeutral, 
+                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible item{11} of Gear{12}", colourNeutral, colourEnd,
+                    colourDefault, numOfGear, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfGear, colourEnd, colourNeutral,
                     maxNumOfGear != 1 ? "s" : "", colourEnd);
-                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd, 
+                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} Item for Info, {3}{4}RIGHT CLICK{5}{6} Item for Gear Options{7}", colourAlert, colourEnd,
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
                 data.side = GameManager.i.sideScript.PlayerSide;
                 data.handler = RefreshGearInventory;
@@ -1207,8 +1242,10 @@ public class GearManager : MonoBehaviour
                                         {
                                             //ignore invisiblity effect in case of fixer/player getting invisibility gear 
                                             if (isInvisibility == true && effect.outcome.name.Equals("Invisibility", System.StringComparison.Ordinal) == true)
-                                            { Debug.LogFormat("GearManager.cs -> ProcessGearChoice: {0} effect ignored due to Invisibility{1}", 
-                                                effect.name, "\n"); }
+                                            {
+                                                Debug.LogFormat("GearManager.cs -> ProcessGearChoice: {0} effect ignored due to Invisibility{1}",
+                                                  effect.name, "\n");
+                                            }
                                             else
                                             {
                                                 //process effect normally
@@ -1392,7 +1429,7 @@ public class GearManager : MonoBehaviour
             }
             //Node use
             builderHeader.AppendLine();
-            switch(gear.type.name)
+            switch (gear.type.name)
             {
                 case "Hacking":
                 case "Kinetic":
@@ -1463,7 +1500,7 @@ public class GearManager : MonoBehaviour
                     break;
             }
             builderMain.AppendFormat("{0}<size=115%><cspace=0.5em>COMPROMISED</cspace></size>{1}{2}", colourBad, colourEnd, "\n");
-            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}   <size=90%>({3}{4}{5} time{6})</size>{7}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>", 
+            builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}   <size=90%>({3}{4}{5} time{6})</size>{7}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>",
                 colourNeutral, gear.timesUsed, colourEnd, gear.timesUsed != 1 ? "s" : "", "\n");
             builderMain.AppendFormat("{0}{1}{2}{3}", colourNormal, gear.reasonUsed, colourEnd, "\n");
             builderMain.AppendFormat("{0}LEFT CLICK to SAVE{1}{2}Cost {3}{4}{5} Renown", colourAlert, colourEnd, "\n", colourNeutral, gearSaveCurrentCost, colourEnd);

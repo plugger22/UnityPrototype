@@ -2249,6 +2249,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   - {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
   - {fileID: 11400000, guid: d1310aa157ace304e90910c1b4cee64b, type: 2}
+  - {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
   arrayOfGearType:
   - {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}
   - {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
@@ -2257,7 +2258,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}
   - {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   - {fileID: 11400000, guid: 378cee33565b65c42aff9c940e94919c, type: 2}
-  - {fileID: 11400000, guid: 882d30b04fd6dad4c8fab69561033dde, type: 2}
   arrayOfTopicTypes:
   - {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   - {fileID: 11400000, guid: 93e41b553d6a8ed47922e742a40700d1, type: 2}
@@ -4525,6 +4525,7 @@ MonoBehaviour:
   gearCommon: {fileID: 0}
   gearRare: {fileID: 0}
   gearUnique: {fileID: 0}
+  gearSpecial: {fileID: 0}
   typeHacking: {fileID: 0}
   typeInfiltration: {fileID: 0}
   typeInvisibility: {fileID: 0}
