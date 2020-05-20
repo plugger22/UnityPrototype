@@ -1192,3 +1192,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
 	City seed 5678 -> London, United Kingdom
+
+Dev seed 18784 -> Wednesday, 20 May 2020 7:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64600 -> Wednesday, 20 May 2020 7:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11874 -> Wednesday, 20 May 2020 7:52 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 17190 -> Wednesday, 20 May 2020 8:07 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

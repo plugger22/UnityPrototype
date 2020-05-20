@@ -142,6 +142,7 @@ public class DataManager : MonoBehaviour
     private List<string> listOfUniqueGear = new List<string>();
     private List<string> listOfLostGear = new List<string>();
     private List<string> listOfCurrentGear = new List<string>();                                          //gear held by OnMap resistance player or actors
+    private List<string> listOfSpecialGear = new List<string>();                                          //MetaGame gear, only used for player selections during MetaGame. cleared at level start
 
     //organisations current for campaign
     private List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
@@ -5858,6 +5859,26 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Add an item of special gear to list. Returns true if succesful
+    /// </summary>
+    /// <param name="gearName"></param>
+    public bool AddSpecialGear(Gear gear)
+    {
+        if (gear != null)
+        {
+            //check it's special gear
+            if (gear.rarity.level == 3)
+            {
+                listOfSpecialGear.Add(gear.name);
+                return true;
+            }
+            else { Debug.LogWarningFormat("Invalid gear \"{0}\" (not gear.rarity.Special)", gear.name); }
+        }
+        else { Debug.LogWarning("Invalid gear (Null)"); }
+        return false;
+    }
+
 
     /// <summary>
     /// Initialise lists of gear that are available in the current level (clears first)
@@ -6238,9 +6259,11 @@ public class DataManager : MonoBehaviour
                 for (int i = 0; i < count; i++)
                 { builder.AppendFormat(" {0}{1}", tempList[i], "\n"); }
             }
-            else { builder.Append(" No records"); }
+            else { builder.AppendFormat(" No records{0}", "\n"); }
         }
         else { Debug.LogError("Invalid listOfCompromisedGear (Null)"); }
+        builder.AppendFormat("{0}-- Special Gear{1}", "\n", "\n");
+        builder.Append(DebugDisplayGearList(listOfSpecialGear));
         return builder.ToString();
     }
 

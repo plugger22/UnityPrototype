@@ -1313,6 +1313,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97bf384793feb104ca53f00b1f34be19, type: 2}
   - {fileID: 11400000, guid: 5f64e5e4f1a025b46a3cfc2cc5678ba9, type: 2}
   - {fileID: 11400000, guid: 31a062dc4b17ed74daa7cec61d2ee78a, type: 2}
+  - {fileID: 11400000, guid: 415d3338fbc4be84ab439db3c3f03007, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1880,6 +1881,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce9c1d19ce0d7ab40be439e35aefb4e7, type: 2}
   - {fileID: 11400000, guid: ceafe0fe91cd72d4c9346264d59c6229, type: 2}
   - {fileID: 11400000, guid: 0ae52a64dee4e354ba9b37131ae95987, type: 2}
+  - {fileID: 11400000, guid: 56ba7bee79308fb49b51a8da71f08e19, type: 2}
   arrayOfEffectsPersonality:
   - {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   - {fileID: 11400000, guid: 1e999329041940a41a40affd80546bdf, type: 2}
@@ -3641,12 +3643,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8234632f67da7524cbd43fcc09fb16c4, type: 2}
   - {fileID: 11400000, guid: 205de70b3b2bfbe4fbe48d5e9e4b06c1, type: 2}
   - {fileID: 11400000, guid: 738d449294ea2504994bd5596c265842, type: 2}
+  - {fileID: 11400000, guid: 72967dc704c5187429cd5fcf4f6cfed5, type: 2}
   arrayOfSubBoss1Options:
   - {fileID: 11400000, guid: c7237b838393d9145894260735abca84, type: 2}
   - {fileID: 11400000, guid: 2323ed15344bed541b60bf80b7758a77, type: 2}
   - {fileID: 11400000, guid: b25a20080bc9df949982400a2c2566e3, type: 2}
   - {fileID: 11400000, guid: 634b1a2b825750341bb36bbc1a7ed79b, type: 2}
   - {fileID: 11400000, guid: efc853c09fb606c458a8cab6cfa8eb96, type: 2}
+  - {fileID: 11400000, guid: e936e13f601975f42a612f930aa2e254, type: 2}
   arrayOfSubBoss2Options:
   - {fileID: 11400000, guid: 37c1fd6d6d79e0f4e8f2ceb34b9ab884, type: 2}
   - {fileID: 11400000, guid: 2d8648348b558e74fbeb4d142dc3c8b6, type: 2}
@@ -3657,11 +3661,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8311cecfd0e5b164f895a802f997af92, type: 2}
   - {fileID: 11400000, guid: 16bd06f2010a0dc48b9336ac47a62a11, type: 2}
   - {fileID: 11400000, guid: c34cb9ec398f30340a4f8710acc2a60a, type: 2}
+  - {fileID: 11400000, guid: c4e0544e83379474095f5c880685c975, type: 2}
   arrayOfSubBoss3Options:
   - {fileID: 11400000, guid: 4d4b868b937456041b79835b1696f040, type: 2}
   - {fileID: 11400000, guid: 3eeeae372551a1842b719a1c8fd79361, type: 2}
   - {fileID: 11400000, guid: b8d8fc9942d7fa248928c5af1786bded, type: 2}
   - {fileID: 11400000, guid: 04be7f52e50f64742a7d6a1583a418a1, type: 2}
+  - {fileID: 11400000, guid: 33d887b1b829d3b40a38807a98823873, type: 2}
   arrayOfManageActors:
   - {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
   - {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}

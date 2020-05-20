@@ -4113,7 +4113,9 @@ public class EffectManager : MonoBehaviour
                 Gear gear = GameManager.i.dataScript.GetGear(dataInput.dataName);
                 if (gear != null)
                 {
-                    effectResolve.bottomText = string.Format("gained {0}{1}{2} gear", colourEffect, gear.tag, colourEnd);
+                    //place in listOfSpecialGear
+                    if (GameManager.i.dataScript.AddSpecialGear(gear) == true)
+                    { effectResolve.bottomText = string.Format("{0}gained {1} gear{2}", colourEffect, gear.tag, colourEnd); }
                 }
                 break;
 

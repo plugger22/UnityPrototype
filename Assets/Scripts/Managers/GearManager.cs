@@ -242,33 +242,6 @@ public class GearManager : MonoBehaviour
         listOfCompromisedGear = new List<string>();
         //gear save cost
         gearSaveCurrentCost = gearSaveBaseCost;
-
-        /*//add special gear for MetaGame options to dictOfGear (do so here to avoid sequencing issues)
-        List<Gear> listOfSpecialGear = new List<Gear>();
-        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.Boss));
-        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss1));
-        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss2));
-        listOfSpecialGear.Add(GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.SubBoss3));
-        Dictionary<string, Gear> dictOfGear = GameManager.i.dataScript.GetDictOfGear();
-        if (dictOfGear != null)
-        {
-            for (int i = 0; i < listOfSpecialGear.Count; i++)
-            {
-                Gear gear = listOfSpecialGear[i];
-                if (gear != null)
-                {
-                    //add to dictOfGear
-                    try {
-                        dictOfGear.Add(gear.name, gear);
-                        Debug.LogFormat("[Tst] GearManager.cs -> SubInitialiseSessionStart: \"{0}\" gear added to dictOfGear{1}", gear.name, "\n");
-                    }
-                    catch (ArgumentException)
-                    { Debug.LogWarningFormat("Duplicate record exists in dictOfGear for \"{0}\"", gear.name); }
-                }
-                else { Debug.LogWarningFormat("Invalid Gear (Null) in listOfSpecialGear[{0}]", i); }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfGear (Null)"); }*/
     }
     #endregion
 

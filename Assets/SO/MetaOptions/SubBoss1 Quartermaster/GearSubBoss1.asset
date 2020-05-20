@@ -23,11 +23,10 @@ MonoBehaviour:
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isPlayerStatus: 0
-  isAlways: 1
+  isAlways: 0
   textInactive: <b>Only available</b> if the relevant (current tab) HQ member has
     a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)
-  listOfCriteria:
-  - {fileID: 11400000, guid: 5edfc5490cb9c314b9cc1673397b8f07, type: 2}
+  listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 56ba7bee79308fb49b51a8da71f08e19, type: 2}
   statTimesSelected: 0
