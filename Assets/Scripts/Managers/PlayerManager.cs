@@ -387,10 +387,25 @@ public class PlayerManager : MonoBehaviour
         //if immunity to stress > 0, set to max allowed
         if (stressImmunityCurrent > 0)
         { stressImmunityCurrent = stressImmunityStart; }
-        //empty out gear list
-        listOfGear.Clear();
         //add cures for any existing conditions
         SetCures();
+        //empty out gear list
+        listOfGear.Clear();
+        //Check listOfSpecial gear (populated during MetaGame) Place any gear into Player inventory
+        List<string> listOfSpecialGear = GameManager.i.dataScript.GetListOfSpecialGear();
+        if (listOfSpecialGear != null)
+        {
+            int count = listOfSpecialGear.Count;
+            if (count > 0)
+            {
+                //add to Player's inventory
+                for (int i = 0; i < count; i++)
+                { AddGear(listOfSpecialGear[i]); }
+                //empty out listOfSpecials
+                listOfSpecialGear.Clear();
+            }
+        }
+        else { Debug.LogError("Invalid listOfSpecialGear (Null)"); }
     }
     #endregion
 

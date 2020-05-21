@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: GearSubBoss2
   m_EditorClassIdentifier: 
   template: You are offered special gear (*)
-  text: You are offered special gear (SpecialBoss)
+  text: You are offered special gear (SpecialSubBoss2)
   header: Gain Gear
-  descriptor: Your friendly HQ member has a <b>good opinion</b> of you (<b>Motivation
-    2+ stars</b>)<br><br>This is their <b>gift</b> to you<br><br>It's gear that <b>isn't
-    available</b> anywhere else
+  descriptor: <b>Special gear</b> that is <b>only available</b><br><br>when your friendly
+    <b>HQ member</b> (<b>current tab</b>) has<br><br>a <b>good opinion</b> of you
+    (<b>Motivation 2+ stars</b>)<br><br><b>Maximum of 3 gear options</b> available
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
@@ -24,12 +24,11 @@ MonoBehaviour:
   recommendPriority: {fileID: 0}
   isPlayerStatus: 0
   isAlways: 0
-  textInactive: <b>Only available</b> if the relevant (current tab) HQ member has
-    a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)
+  textInactive: 
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 56ba7bee79308fb49b51a8da71f08e19, type: 2}
   statTimesSelected: 0
-  isActive: 0
-  dataName: SpecialBoss
-  dataTag: SpecialBoss
+  isActive: 1
+  dataName: SpecialSubBoss2
+  dataTag: SpecialSubBoss2

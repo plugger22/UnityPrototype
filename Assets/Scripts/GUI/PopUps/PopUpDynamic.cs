@@ -208,4 +208,15 @@ public class PopUpDynamic : MonoBehaviour
 
         isActive = false;
     }
+
+    /// <summary>
+    /// Use this for external calls
+    /// </summary>
+    public void Close()
+    {
+        popCanvas.gameObject.SetActive(false);
+        popObject.SetActive(false);
+        StopMyCoroutine();
+        Debug.LogFormat("[UI] PopUpDynamic.cs -> Close: PopUpDynamic Closed{0}", "\n");
+    }
 }

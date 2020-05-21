@@ -1355,7 +1355,8 @@ public class MetaGameUI : MonoBehaviour
             }
             else
             {
-                rightTextTop.text = string.Format("{0}{1}{2}", colourGrey, "Option Unavailable", colourEnd);
+                //inactive
+                rightTextTop.text = string.Format("{0}<b>{1}</b>{2}", colourGrey, "Option Unavailable", colourEnd);
                 if (data.isCriteria == true)
                 { rightTextBottom.text = data.inactiveText; }
                 else
@@ -2040,6 +2041,8 @@ public class MetaGameUI : MonoBehaviour
     /// </summary>
     public void ExecuteConfirm()
     {
+        //close popUpDynamic
+        GameManager.i.popUpDynamicScript.Close();
         if (dictOfSelected.Count > 0)
         {
             int count;

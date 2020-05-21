@@ -5859,6 +5859,10 @@ public class DataManager : MonoBehaviour
         return null;
     }
 
+
+    public List<string> GetListOfSpecialGear()
+    { return listOfSpecialGear; }
+
     /// <summary>
     /// Add an item of special gear to list. Returns true if succesful
     /// </summary>

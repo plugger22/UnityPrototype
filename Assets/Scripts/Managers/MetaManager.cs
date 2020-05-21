@@ -15,6 +15,8 @@ public class MetaManager : MonoBehaviour
     [Range(1, 10)] public int numOfChoices = 6;
     [Tooltip("Minimum amount of renown required before Recommendations (button) can be made in MetaGameUI")]
     [Range(0, 10)] public int renownRecommendMin = 2;
+    [Tooltip("Maximum amount of Special Gear available during MetaGame (priority order of enum.ActorHQ.Boss on down)")]
+    [Range(0, 3)] public int maxNumOfGear = 3;
 
     [Header("MetaOption Arrays")]
     [Tooltip("Place metaOptions here to handle the max number of possible organisation metaOptions that may be required")]
@@ -323,7 +325,7 @@ public class MetaManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", metaOption.Key); }
             }
             //
-            // - - - Specials -> Organisations / Secrets / Investigations
+            // - - - Specials -> Organisations / Secrets / Investigations / Gear
             //
             if (isTestLog)
             { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: SPECIAl MetaOptions - - - {0}", "\n"); }
@@ -436,7 +438,7 @@ public class MetaManager : MonoBehaviour
                 //should be one for each HQ boss in hierarchy (assumed to be in order of hierarchy, eg. Boss -> SubBoss1 -> SubBoss2 -> SubBoss3
                 if (count == GameManager.i.hqScript.numOfActorsHQ)
                 {
-                    index = 0;
+                    int numOfGearOptions = 0;
                     Actor actor = null;
                     string title = "Unknown";
                     Gear gear = null;
@@ -450,34 +452,50 @@ public class MetaManager : MonoBehaviour
                             case 2: actorHQ = ActorHQ.SubBoss2; break;
                             case 3: actorHQ = ActorHQ.SubBoss3; break;
                         }
-                        actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                        title = GameManager.i.hqScript.GetHqTitle(actorHQ);
-                        gear = GameManager.i.campaignScript.GetHqSpecialGear(ActorHQ.Boss);
-                        if (actor != null)
+                        if (actorHQ != ActorHQ.None)
                         {
-                            MetaOption metaSpecial = arrayOfGearOptions[index];
-                            if (gear != null)
+                            actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                            title = GameManager.i.hqScript.GetHqTitle(actorHQ);
+                            gear = GameManager.i.campaignScript.GetHqSpecialGear(actorHQ);
+                            if (actor != null)
                             {
-                                metaSpecial.dataName = gear.name;
-                                metaSpecial.dataTag = gear.tag;
-                                //option active only if actor has a good opinion of player
-                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
-                                { metaSpecial.isActive = true; }
-                                else { metaSpecial.isActive = false; }
-                                //swap '*' for investigation.tag
-                                metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
-                                index++;
-                                //add to list
-                                listOfMetaOptions.Add(metaSpecial);
-                                if (isTestLog)
+                                MetaOption metaSpecial = arrayOfGearOptions[i];
+                                if (gear != null)
                                 {
-                                    Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
-                                    Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                                    metaSpecial.dataName = gear.name;
+                                    metaSpecial.dataTag = gear.tag;
+                                    //option active and displayed only if actor has a good opinion of player
+                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                                    {
+                                        metaSpecial.isActive = true;
+                                        numOfGearOptions++;
+                                        //swap '*' for investigation.tag
+                                        metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
+                                        //customise descriptor
+                                        metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
+                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n", 
+                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");
+                                        //add to list
+                                        listOfMetaOptions.Add(metaSpecial);
+                                        if (isTestLog)
+                                        {
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}, {2} added{3}", metaSpecial.name, metaSpecial.dataName, metaSpecial.dataTag, "\n");
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Gear option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                                        }
+                                        //check max number of allowed gear options hasn't been reached
+                                        if (numOfGearOptions >= maxNumOfGear)
+                                        {
+                                            if (isTestLog)
+                                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Gear Options reached (current {0}, max {1}){2}", numOfGearOptions, maxNumOfGear, "\n"); }
+                                            break;
+                                        }
+                                    }
                                 }
+                                else { Debug.LogWarningFormat("Invalid gear (Null) for listOfGearOptions[{0}]", i); }
                             }
-                            else { Debug.LogWarningFormat("Invalid gear (Null) for listOfGearOptions[{0}]", i); }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for listOfGearOptions[{0}]", i); }
                         }
-                        else { Debug.LogWarningFormat("Invalid actor (Null) for listOfGearOptions[{0}]", i); }
+                        else { Debug.LogWarningFormat("Invalid actorHQ (None) for index {0}", i); }
                     }
                 }
                 else { Debug.LogWarningFormat("Incorrect number of arrayOfGear metaOptions (is {0}, should be {1})", count, GameManager.i.hqScript.numOfActorsHQ); }
