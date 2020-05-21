@@ -492,7 +492,7 @@ public class ActionManager : MonoBehaviour
         Node node = null;
         Action action = null;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
-        if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { isPlayer = true; }
+        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
         //renown (do prior to effects as Player renown will change)
         int renownBefore = GameManager.i.playerScript.Renown;
         //resolve action
@@ -1655,6 +1655,10 @@ public class ActionManager : MonoBehaviour
                         string colourMotivation = colourGood;
                         if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Given {0} gear", gear.tag)) == false)
                         { colourMotivation = colourGrey; }
+                        //fixed popUp
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation +{motivationBoost}");
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Gain {gear.tag}");
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Lose {gear.tag}");
                         //motivation message
                         if (isPreferred == true)
                         {
@@ -1774,7 +1778,12 @@ public class ActionManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
                                 builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                                 builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.i.actorScript.ProcessActorConflict(actor));
+                                GameManager.i.popUpFixedScript.SetData(actor.slotID, "CONFLICT");
                             }
+                            //fixed popUp
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation -{motivationCost}");
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Lose {gear.tag}");
+                            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Gain {gear.tag}");
                             //motivation message
                             if (isPreferred == true)
                             {
