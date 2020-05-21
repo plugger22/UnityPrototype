@@ -1532,3 +1532,7 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessMouseWheelInput(Single) (at Assets/Scripts/Managers/InputManager.cs:658)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:406)
 	City seed 765 -> New York, America
+
+Dev seed 32048 -> Thursday, 21 May 2020 4:42 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

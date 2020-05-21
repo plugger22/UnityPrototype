@@ -1496,6 +1496,9 @@ public class MetaGameUI : MonoBehaviour
         else
         {
             //inactive item default help
+            tag0 = "metaInactive_0";
+            tag1 = "metaInactive_1";
+            tag2 = "metaInactive_2";
         }
         return GameManager.i.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }

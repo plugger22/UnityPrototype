@@ -1270,7 +1270,27 @@ public class HelpManager : MonoBehaviour
         #endregion
 
         #region Inactive option
-
+        //
+        // - - - InActive Option - - -
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "metaInactive_0";
+        data.header = "inActive Option";
+        data.text = string.Format("For a variety of reasons this option {0}isn't available{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //why?
+        data = new HelpData();
+        data.tag = "metaInactive_1";
+        data.header = "Why?";
+        data.text = string.Format("Options can have {0}criteria{1} that need to be met or it could be that you {2}don't have enough Renown{3} to pay for it", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Are all inActive options shown?
+        data = new HelpData();
+        data.tag = "metaInactive_2";
+        data.header = "Are all inActive options shown?";
+        data.text = string.Format("{0}No{1}, only certain ones. If your HQ member doesn't like you, for instance, their special gear option won't be shown", colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #endregion
