@@ -46,6 +46,16 @@ public class MetaOption : ScriptableObject
     [Tooltip("Effects of option, if selected. Should be at least one effect present")]
     public List<Effect> listOfEffects;
 
+    [Header("Help")]
+    [Tooltip("HelpManager.cs tag (without hypens) help will only show if this (the first) tag is present. All the rest are optional (default help will be provided if none is specified)")]
+    public string help0;
+    [Tooltip("HelpManager.cs tag (without hypens) help will only show if the first tag is present. All the rest are optional (default help will be provided if none is specified)")]
+    public string help1;
+    [Tooltip("HelpManager.cs tag (without hypens) help will only show if the first tag is present. All the rest are optional (default help will be provided if none is specified)")]
+    public string help2;
+    [Tooltip("HelpManager.cs tag (without hypens) help will only show if the first tag is present. All the rest are optional (default help will be provided if none is specified)")]
+    public string help3;
+
     #region Save Data compatible
     [HideInInspector] public int statTimesSelected;
     #endregion

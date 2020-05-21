@@ -1211,6 +1211,69 @@ public class HelpManager : MonoBehaviour
 
         #endregion
 
+        #region MetaOptions...
+
+        #region Special Gear
+        //
+        // - - - Special Gear - - -
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "metaGear_0";
+        data.header = "Special Gear";
+        data.text = string.Format("Each HQ member has access to a particular piece of special gear {0}unavailable anywhere else{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //motivation
+        data = new HelpData();
+        data.tag = "metaGear_1";
+        data.header = "Good Opinion";
+        data.text = string.Format("They will only {0}offer the gear{1} to you if their opinion of you is positive ({2}Motivation 2 stars{3}, or better). They don't offer their gear to just anyone", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Max options
+        data = new HelpData();
+        data.tag = "metaGear_2";
+        data.header = "Max Options";
+        data.text = string.Format("There is an {0}limit{1} to how many gear options will be presented to you ({2}{3} options{4}). Eligible HQ personnel (Motivation 2+) present options in {5}order of seniority{6}" +
+            " (eg. Director first) until the limit is reached", colourAlert, colourEnd, colourAlert, GameManager.i.metaScript.maxNumOfGear, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //tip
+        data = new HelpData();
+        data.tag = "metaGear_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("Relationships matter. Special Gear, if it's on offer, is {0}gear that you want{1}. Think twice before passing on the opportunity.", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Active option
+        //
+        // - - - Active Option - - -
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "metaActive_0";
+        data.header = "Active Option";
+        data.text = string.Format("This is a live option that you can {0}select{1} if you have {2}enough renown{3} available", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //limit
+        data = new HelpData();
+        data.tag = "metaActive_1";
+        data.header = "How many can I select?";
+        data.text = string.Format("Up to {0}{1} options{2}, in total, from any tab", colourAlert, GameManager.i.metaScript.numOfChoices, colourEnd);
+        listOfHelp.Add(data);
+        //Select tab
+        data = new HelpData();
+        data.tag = "metaActive_2";
+        data.header = "How can I tell if I've selected an Option?";
+        data.text = string.Format("A selected option has a {0}tickmark icon{1} and is displayed in the top {2}Selected tab{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Inactive option
+
+        #endregion
+
+        #endregion
 
 
         #region Player Betrayed

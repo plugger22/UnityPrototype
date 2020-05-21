@@ -1469,7 +1469,7 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Assembles a list of HelpData for the item to pass onto the help components. Returns empty if none.
+    /// Assembles a list of HelpData for the item to pass onto the help components. Returns Empty if none.
     /// </summary>
     /// <param name="data"></param>
     /// <returns></returns>
@@ -1477,19 +1477,25 @@ public class MetaGameUI : MonoBehaviour
     {
         string tag0, tag1, tag2, tag3;
         tag0 = tag1 = tag2 = tag3 = "";
-        //Debug
-        if (string.IsNullOrEmpty(data.tag0) == true)
-        {
-            //default data
-            tag0 = "test0";
-        }
-        else
+        //help only valid if first tag present ('help0/tag0'
+        if (string.IsNullOrEmpty(data.tag0) == false)
         {
             //item specified help
             tag0 = data.tag0;
             tag1 = data.tag1;
             tag2 = data.tag2;
             tag3 = data.tag3;
+        }
+        else if (data.isActive == true)
+        {
+            //active item default help
+            tag0 = "metaActive_0";
+            tag1 = "metaActive_1";
+            tag2 = "metaActive_2";
+        }
+        else
+        {
+            //inactive item default help
         }
         return GameManager.i.helpScript.GetHelpData(tag0, tag1, tag2, tag3);
     }

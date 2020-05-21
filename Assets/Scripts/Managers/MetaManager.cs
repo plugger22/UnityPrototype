@@ -547,7 +547,10 @@ public class MetaManager : MonoBehaviour
                             isRecommended = metaOption.isRecommended,
                             isSelected = false,
                             help = 1,
-                            tag0 = "test0"
+                            tag0 = metaOption.help0,
+                            tag1 = metaOption.help1,
+                            tag2 = metaOption.help2,
+                            tag3 = metaOption.help3,
                         };
                         //criteria
                         if (metaOption.listOfCriteria.Count > 0)

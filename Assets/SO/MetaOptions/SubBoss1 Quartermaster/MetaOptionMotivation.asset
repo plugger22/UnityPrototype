@@ -21,11 +21,16 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
+  isPlayerStatus: 0
   isAlways: 1
   textInactive: 
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: ce9c1d19ce0d7ab40be439e35aefb4e7, type: 2}
+  help0: 
+  help1: 
+  help2: 
+  help3: 
   statTimesSelected: 0
   isActive: 1
   dataName: 
