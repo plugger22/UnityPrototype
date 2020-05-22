@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -553,24 +554,6 @@ public class CampaignManager : MonoBehaviour
         return builder.ToString();
     }
 
-    /*public string DeubgDisplayScenarioDataFunctional()
-    {
-        return new StringBuilder()
-            .AppendFormat("- ScenarioData{0}{1}", "\n", "\n")
-            .AppendFormat(" Scenario: \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n")
-            .AppendFormat(" Side: {0}{1}", scenario.side.name, "\n")
-            .AppendFormat(" City: {0}{1}", scenario.city.tag, "\n")
-            .AppendFormat(" Seed: {0}{1}", scenario.seedCity, "\n")
-            .AppendFormat(" Leader Resistance: {0}{1}", scenario.leaderResistance.tag, "\n")
-            .AppendFormat(" Leader Authority: {0}{1}", scenario.leaderAuthority.mayorName, "\n")
-            .AppendFormat(" RebelHQ Approval: {0}{1}", scenario.approvalStartRebelHQ, "\n")
-            .AppendFormat(" AuthorityHQ Approval: {0}{1}", scenario.approvalStartAuthorityHQ, "\n")
-            .AppendFormat(" City Start Loyalty: {0}{1}", scenario.cityStartLoyalty, "\n")
-            .AppendFormat(" Mission Resistance: {0}{1}", scenario.missionResistance.name, "\n")
-            .AppendFormat(" Challenge Resistance: {0}{1}", scenario.challengeResistance.name, "\n")
-            .AppendFormat(" Number of Turns: {0}{1}", scenario.timer, "\n")
-            .ToString();
-    }*/
 
     /// <summary>
     /// Debug display of current scenario
@@ -648,6 +631,26 @@ public class CampaignManager : MonoBehaviour
                 builder.AppendFormat(" moveChance: {0}{1}", mission.npc.moveChance, "\n");
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
             }
+            //npc stealth nodes
+            builder.AppendFormat("{0}- Npc ListOfStealthNodes{1}", "\n", "\n");
+            List<int> listOfNodes = GameManager.i.missionScript.mission.npc.listOfStealthNodes;
+            if (listOfNodes != null)
+            {
+                int count = listOfNodes.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Node nodeStealth = GameManager.i.dataScript.GetNode(listOfNodes[i]);
+                        if (nodeStealth != null)
+                        { builder.AppendFormat(" {0}, {1}, nodeID {2}{3}", nodeStealth.nodeName, nodeStealth.Arc.name, nodeStealth.nodeID, "\n"); }
+                        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}, listOfStealthNodes[{1}]", listOfNodes[i], i); }
+                    }
+                }
+                else { builder.AppendFormat("  No nodes present{0}", "\n"); }
+            }
+            else { Debug.LogError("Invalid listOfStealthNodes (Null)"); }
+
         }
         return builder.ToString();
     }

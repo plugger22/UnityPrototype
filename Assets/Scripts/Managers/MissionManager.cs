@@ -483,13 +483,9 @@ public class MissionManager : MonoBehaviour
         //check if in same district as Player
         if (npc.currentNode.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
         {
-            //stealth mode?
-            if (npc.CheckIfStealthMode() == false)
-            {
-                //Player Interacts with Npc
-                if (ProcessNpcInteract(npc) == true)
-                { return; }
-            }
+            //Player Interacts with Npc
+            if (ProcessNpcInteract(npc) == true)
+            { return; }
         }
         else
         {
@@ -644,39 +640,43 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Active Player at same node as Npc ->  interacts
+    /// Active Player at same node as Npc ->  interacts (can't happen if Npc in stealth mode)
     /// </summary>
     /// <param name="npc"></param>
     private bool ProcessNpcInteract(Npc npc)
     {
         bool isSuccess = false;
-        //Player interacts with Npc
-        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        if (npc.CheckIfStealthMode() == false)
         {
-            //good effects
-            string effectText = ProcessEffects(npc, true);
-            string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourAlert, npc.action.tag, colourEnd, colourAlert, npc.tag, colourEnd);
-            string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}{6}{7}", npc.tag, npc.action.outcome, colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n", effectText);
-            //pipeline msg
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+            //Player interacts with Npc
+            if (GameManager.i.playerScript.status == ActorStatus.Active)
             {
-                textTop = textTopString,
-                textBottom = textBottomString,
-                sprite = npc.sprite,
-                isAction = false,
-                side = GameManager.i.globalScript.sideResistance,
-                type = MsgPipelineType.Npc
-            };
-            if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-            { Debug.LogWarningFormat("Npc interacts with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
-            //messages (need to be BEFORE depart)
-            Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
-                                npc.currentNode.nodeID, "\n");
-            GameManager.i.messageScript.NpcInteract("Npc interacted with", npc);
-            //Npc departs map
-            ProcessNpcDepart(npc, true);
-            isSuccess = true;
+                //good effects
+                string effectText = ProcessEffects(npc, true);
+                string textTopString = string.Format("You {0}{1}{2} the {3}{4}{5}", colourAlert, npc.action.tag, colourEnd, colourAlert, npc.tag, colourEnd);
+                string textBottomString = string.Format("The {0} {1} at {2}{3}{4}{5}{6}{7}", npc.tag, npc.action.outcome, colourAlert, npc.currentNode.nodeName, colourEnd, "\n", "\n", effectText);
+                //pipeline msg
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                {
+                    textTop = textTopString,
+                    textBottom = textBottomString,
+                    sprite = npc.sprite,
+                    isAction = false,
+                    side = GameManager.i.globalScript.sideResistance,
+                    type = MsgPipelineType.Npc
+                };
+                if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                { Debug.LogWarningFormat("Npc interacts with Player InfoPipeline message FAILED to be added to dictOfPipeline"); }
+                //messages (need to be BEFORE depart)
+                Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
+                                    npc.currentNode.nodeID, "\n");
+                GameManager.i.messageScript.NpcInteract("Npc interacted with", npc);
+                //Npc departs map
+                ProcessNpcDepart(npc, true);
+                isSuccess = true;
+            }
         }
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcInteract: Npc in Stealth Mode, {1}, {2}, nodeID {3}{4}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
         return isSuccess;
     }
 
@@ -705,76 +705,80 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks to see if Npc spotted by contact
+    /// Checks to see if Npc spotted by contact (can't happen if Npc in stealth mode)
     /// </summary>
     private void ProcessContactInteraction(Npc npc)
     {
-        Actor actor;
-        Contact contact;
-        List<int> listOfActorsWithContactsAtNode = GameManager.i.dataScript.CheckContactResistanceAtNode(npc.currentNode.nodeID);
-        if (listOfActorsWithContactsAtNode != null)
+        if (npc.CheckIfStealthMode() == false)
         {
-            int numOfActors = listOfActorsWithContactsAtNode.Count;
-            if (numOfActors > 0)
+            Actor actor;
+            Contact contact;
+            List<int> listOfActorsWithContactsAtNode = GameManager.i.dataScript.CheckContactResistanceAtNode(npc.currentNode.nodeID);
+            if (listOfActorsWithContactsAtNode != null)
             {
-                //Npc stealthRating
-                int stealthRating = npc.stealthRating;
-                //loop actors with contacts
-                for (int i = 0; i < numOfActors; i++)
+                int numOfActors = listOfActorsWithContactsAtNode.Count;
+                if (numOfActors > 0)
                 {
-                    actor = GameManager.i.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
-                    if (actor != null)
+                    //Npc stealthRating
+                    int stealthRating = npc.stealthRating;
+                    //loop actors with contacts
+                    for (int i = 0; i < numOfActors; i++)
                     {
-                        //only active actors can work their contact network
-                        if (actor.Status == ActorStatus.Active)
+                        actor = GameManager.i.dataScript.GetActor(listOfActorsWithContactsAtNode[i]);
+                        if (actor != null)
                         {
-                            contact = actor.GetContact(npc.currentNode.nodeID);
-                            if (contact != null)
+                            //only active actors can work their contact network
+                            if (actor.Status == ActorStatus.Active)
                             {
-                                //contact active
-                                if (contact.status == ContactStatus.Active)
+                                contact = actor.GetContact(npc.currentNode.nodeID);
+                                if (contact != null)
                                 {
-                                    //check Npc stealth rating vs. contact effectiveness
-                                    if (contact.effectiveness >= stealthRating)
+                                    //contact active
+                                    if (contact.status == ContactStatus.Active)
                                     {
-                                        Node node = npc.currentNode;
-                                        //contact spots Npc
-                                        string text = string.Format("Npc {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", npc.tag, contact.nameFirst, contact.nameLast,
-                                            contact.job, node.nodeName, node.nodeID);
-                                        Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Npc {2}, StealthRating {3} at node {4}, id {5}{6}",
-                                            contact.nameFirst, contact.effectiveness, npc.tag, stealthRating, node.nodeName, node.nodeID, "\n");
-                                        GameManager.i.messageScript.ContactNpcSpotted(text, actor, node, contact, npc);
-                                        //contact stats
-                                        contact.statsNpc++;
-                                        //no need to check anymore as one sighting is enough
-                                        break;
+                                        //check Npc stealth rating vs. contact effectiveness
+                                        if (contact.effectiveness >= stealthRating)
+                                        {
+                                            Node node = npc.currentNode;
+                                            //contact spots Npc
+                                            string text = string.Format("Npc {0} has been spotted by Contact {1} {2}, {3}, at node {4}, id {5}", npc.tag, contact.nameFirst, contact.nameLast,
+                                                contact.job, node.nodeName, node.nodeID);
+                                            Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, SPOTS Npc {2}, StealthRating {3} at node {4}, id {5}{6}",
+                                                contact.nameFirst, contact.effectiveness, npc.tag, stealthRating, node.nodeName, node.nodeID, "\n");
+                                            GameManager.i.messageScript.ContactNpcSpotted(text, actor, node, contact, npc);
+                                            //contact stats
+                                            contact.statsNpc++;
+                                            //no need to check anymore as one sighting is enough
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            //contact Fails to spot Npc
+                                            Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Npc {2}, adj StealthRating {3} at nodeID {4}{5}",
+                                                contact.nameFirst, contact.effectiveness, npc.tag, stealthRating, npc.currentNode.nodeID, "\n");
+                                        }
                                     }
-                                    else
-                                    {
-                                        //contact Fails to spot Npc
-                                        Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Contact {0}, effectiveness {1}, FAILS to spot Npc {2}, adj StealthRating {3} at nodeID {4}{5}",
-                                            contact.nameFirst, contact.effectiveness, npc.tag, stealthRating, npc.currentNode.nodeID, "\n");
-                                    }
+                                }
+                                else
+                                {
+                                    Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, npc.currentNode.nodeName,
+                                          npc.currentNode.Arc.name, npc.currentNode.nodeID);
                                 }
                             }
                             else
                             {
-                                Debug.LogFormat("Invalid contact (Null) for actor {0}, id {1} at node {2}, {3}, id {4}", actor.actorName, actor.actorID, npc.currentNode.nodeName,
-                                      npc.currentNode.Arc.name, npc.currentNode.nodeID);
+                                Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
+                                     actor.arc.name, actor.actorID, "\n");
                             }
                         }
-                        else
-                        {
-                            Debug.LogFormat("[Cnt] MissionManager.cs -> ProcessContactInteraction: Actor {0}, {1}, id {2}, is INACTIVE and can't access their contacts{3}", actor.actorName,
-                                 actor.arc.name, actor.actorID, "\n");
-                        }
+                        else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
                     }
-                    else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", listOfActorsWithContactsAtNode[i]); }
                 }
+                else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Empty)"); }
             }
-            else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Empty)"); }
+            /*else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }  Edit -> if no contacts at node this will trigger. No need for warning */
         }
-        /*else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }  Edit -> if no contacts at node this will trigger. No need for warning */
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessContactInteraction: Npc in Stealth Mode, {1}, {2}, nodeID {3}{4}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
     }
 
 
