@@ -593,7 +593,7 @@ public class ActionManager : MonoBehaviour
 
 
     /// <summary>
-    /// Process Manage actor action (first of the nested Manage actor menu's -> provides 'Reserve', 'Dismiss' & 'Dispose' options
+    /// Process Manage actor action (first of the nested Manage actor menu's -> provides 'Reserve', 'Dismiss' and 'Dispose' options
     /// </summary>
     /// <param name="details"></param>
     private void ProcessManageActorAction(ModalActionDetails details)
@@ -1247,6 +1247,8 @@ public class ActionManager : MonoBehaviour
                 GameManager.i.messageScript.ActorStatus(text, "is LYING LOW", reason, actor.actorID, details.side);
                 //history
                 actor.AddHistory(new HistoryActor() { text = "Goes into hiding (Lies Low)" });
+                //popUp
+                GameManager.i.popUpFixedScript.SetData(actor.slotID, "Lie Low");
             }
             else { Debug.LogErrorFormat("Invalid actor (Null) for details.actorSlotID {0}", details.actorDataID); errorFlag = true; }
         }
@@ -1291,6 +1293,8 @@ public class ActionManager : MonoBehaviour
             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
             outcomeDetails.textTop = string.Format("{0}{1}{2} will go to ground and {3}Lie Low{4}", colourAlert, playerName, colourEnd, colourNeutral, colourEnd);
             outcomeDetails.sprite = GameManager.i.playerScript.sprite;
+            //popUp
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Lie Low");
             //message
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLieLowPlayerAction: {0}, {1} Player, commences LYING LOW", GameManager.i.playerScript.GetPlayerName(modalDetails.side), modalDetails.side.name);
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.i.playerScript.status);

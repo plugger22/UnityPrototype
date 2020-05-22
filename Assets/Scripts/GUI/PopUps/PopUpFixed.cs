@@ -349,7 +349,7 @@ public class PopUpFixed : MonoBehaviour
                         if (counter > 1)
                         {
                             timeLimit *= (1 + (counter * 0.35f));
-                            Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: timeLimit {0}, counter {1}{2}", timeLimit, counter, "\n");
+                            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: timeLimit {0}, counter {1}{2}", timeLimit, counter, "\n");*/
                         }
 
                         myCoroutine = StartCoroutine("PopUp", timeDelay);
